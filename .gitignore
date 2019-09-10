@@ -1,0 +1,26 @@
+# IDEs and editors
+/.idea
+.project
+.classpath
+*.launch
+.settings/
+*.ipr
+*.iml
+
+# misc
+*.log
+
+#System Files
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
+
+# compiled output
+**/target
+**/src/main/frontend-resources
+**/src/main/generated-www
+dependency-reduced-pom.xml
+
+# node
+node_modules
