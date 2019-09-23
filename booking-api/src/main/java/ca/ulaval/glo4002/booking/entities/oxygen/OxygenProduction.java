@@ -1,15 +1,17 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
+import java.time.Duration;
+
 public class OxygenProduction {
     private Long id;
     private String name;
     private Double pricePerUnit;
     private Integer producedUnits;
     private Integer producedTanks;
-    private Integer productionTime; // TODO : Oxygen production time in days?
+    private Duration productionTime; // TODO : Oxygen production time in days?
     private OxygenUnitType unitType;
 
-    public OxygenProduction(Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Integer productionTime, OxygenUnitType unitType) {
+    public OxygenProduction(Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Duration productionTime, OxygenUnitType unitType) {
         this.id = id;
         this.name = name;
         this.pricePerUnit = pricePerUnit;
@@ -39,7 +41,7 @@ public class OxygenProduction {
         return producedTanks;
     }
 
-    public Integer getProductionTime() {
+    public Duration getProductionTime() {
         return productionTime;
     }
 

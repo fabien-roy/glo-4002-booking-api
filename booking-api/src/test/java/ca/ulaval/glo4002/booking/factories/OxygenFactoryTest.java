@@ -7,9 +7,9 @@ import ca.ulaval.glo4002.booking.entities.oxygen.OxygenUnitType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.time.Duration;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OxygenFactoryTest {
     private OxygenFactory subject;
@@ -164,7 +164,7 @@ public class OxygenFactoryTest {
         assertEquals(oxygenCategory.getProduction().getId(), productionId);
     }
 
-    private void validateOxygenProduction(OxygenProduction oxygenProduction, Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Integer productionTime, Long unitTypeId) {
+    private void validateOxygenProduction(OxygenProduction oxygenProduction, Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Duration productionTime, Long unitTypeId) {
         assertNotNull(oxygenProduction);
         assertEquals(oxygenProduction.getId(), id);
         assertEquals(oxygenProduction.getName(), name);

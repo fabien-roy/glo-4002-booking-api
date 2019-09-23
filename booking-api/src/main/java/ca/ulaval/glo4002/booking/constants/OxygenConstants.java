@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.constants;
 
+import java.time.Duration;
+
 public class OxygenConstants {
     public static class Categories {
         public static final Long E_ID = 0L;
@@ -36,9 +38,9 @@ public class OxygenConstants {
         public static final Integer ELECTROLYTES_PRODUCED_TANKS = 3;
         public static final Integer SPARK_PLUGS_PRODUCED_TANKS = 5;
 
-        public static final Integer IMMEDIATE_PRODUCTION_TIME = 0;
-        public static final Integer ELECTROLYTES_PRODUCTION_TIME = 10;
-        public static final Integer SPARK_PLUGS_PRODUCTION_TIME = 20;
+        public static final Duration IMMEDIATE_PRODUCTION_TIME = Duration.ofDays(0);
+        public static final Duration ELECTROLYTES_PRODUCTION_TIME = Duration.ofDays(10);
+        public static final Duration SPARK_PLUGS_PRODUCTION_TIME = Duration.ofDays(20);
 
         public static final Long IMMEDIATE_UNIT_TYPE_ID = UnitTypes.OXYGEN_TANKS_ID;
         public static final Long ELECTROLYTES_UNIT_TYPE_ID = UnitTypes.WATER_LITERS_ID;
