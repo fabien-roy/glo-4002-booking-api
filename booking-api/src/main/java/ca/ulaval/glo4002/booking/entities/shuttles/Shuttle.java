@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import java.util.List;
 
 @Entity
-public abstract class Shuttle {
+public class Shuttle {
 	
 	@Id
 	protected Long id;

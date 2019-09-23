@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ShuttleFactoryTest {
@@ -15,6 +16,13 @@ public class ShuttleFactoryTest {
     @BeforeEach
     public void setUp() {
         subject = new ShuttleFactory();
+    }
+
+    @Test
+    public void getShuttleCategoryById_shouldReturnNull_whenCategoryDoesNotExist() {
+        ShuttleCategory shuttleCategory = subject.getShuttleCategoryById(-1L);
+
+        assertNull(shuttleCategory);
     }
 
     @Test
@@ -48,6 +56,13 @@ public class ShuttleFactoryTest {
         assertEquals(shuttleCategory.getName(), ShuttleConstants.Categories.SPACE_X_NAME);
         assertEquals(shuttleCategory.getMaxCapacity(), ShuttleConstants.Categories.SPACE_X_MAX_CAPACITY);
         assertEquals(shuttleCategory.getPrice(), ShuttleConstants.Categories.SPACE_X_PRICE);
+    }
+
+    @Test
+    public void getShuttleTypeById_shouldReturnNull_whenTypeDoesNotExist() {
+        ShuttleType shuttleType = subject.getShuttleTypeById(-1L);
+
+        assertNull(shuttleType);
     }
 
     @Test
