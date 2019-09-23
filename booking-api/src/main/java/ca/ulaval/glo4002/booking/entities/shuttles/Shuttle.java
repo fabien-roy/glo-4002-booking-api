@@ -1,12 +1,13 @@
 package ca.ulaval.glo4002.booking.entities.shuttles;
 
+import ca.ulaval.glo4002.booking.entities.Orderable;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import java.util.List;
 
 @Entity
-public class Shuttle {
+public class Shuttle implements Orderable {
 	
 	@Id
 	protected Long id;
@@ -15,5 +16,10 @@ public class Shuttle {
 	private ShuttleCategory category;
     private ShuttleType type;
 	private List<Passenger> passengers;
-	// TODO : private <?> date;
+    // TODO : private <?> date;
+
+    @Override
+    public Double getPrice() {
+        return price;
+    }
 }
