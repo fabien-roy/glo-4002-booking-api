@@ -1,22 +1,15 @@
 package ca.ulaval.glo4002.booking.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-
+import ca.ulaval.glo4002.booking.entities.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.exceptions.ShuttleNotFoundException;
+import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ca.ulaval.glo4002.booking.data.transport.Shuttle;
-import ca.ulaval.glo4002.booking.data.transport.ShuttleNotFoundException;
-import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/shuttles")
 public class ShuttleController {
@@ -41,7 +34,6 @@ public class ShuttleController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Shuttle getShuttleById(@PathParam("id") Long entityId) {
 		return shuttleRepository.findById(entityId).orElseThrow(ShuttleNotFoundException::new);
-		
 	}
 	
 	@POST
@@ -50,7 +42,4 @@ public class ShuttleController {
 		shuttleRepository.save(shuttle);
 		return Response.status(Response.Status.CREATED.getStatusCode()).build();
 	}
-	
-	
-	
 }
