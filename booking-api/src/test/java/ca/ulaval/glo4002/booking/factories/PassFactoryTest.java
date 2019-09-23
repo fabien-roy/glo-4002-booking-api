@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.entities.passes.PassCategory;
-import ca.ulaval.glo4002.booking.entities.passes.PassOption;
+import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

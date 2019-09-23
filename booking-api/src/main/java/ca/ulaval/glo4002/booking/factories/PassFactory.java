@@ -1,15 +1,20 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.entities.passes.PassCategory;
-import ca.ulaval.glo4002.booking.entities.passes.PassOption;
+import ca.ulaval.glo4002.booking.entities.passes.categories.NebulaPassCategory;
+import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.entities.passes.categories.SupergiantPassCategory;
+import ca.ulaval.glo4002.booking.entities.passes.categories.SupernovaPassCategory;
+import ca.ulaval.glo4002.booking.entities.passes.options.PackagePassOption;
+import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.entities.passes.options.SinglePassPassOption;
 
 import java.util.HashMap;
 
 public class PassFactory {
     // TODO : How do we pass shuttle and oxygen factories?
-    ShuttleFactory shuttleFactory = new ShuttleFactory();
-    OxygenFactory oxygenFactory = new OxygenFactory();
+    private ShuttleFactory shuttleFactory = new ShuttleFactory();
+    private OxygenFactory oxygenFactory = new OxygenFactory();
 
     public PassCategory getPassCategoryById(Long categoryId) {
         // TODO : I wanted to do a switch-case, but apparently static final isn't const?
@@ -40,9 +45,7 @@ public class PassFactory {
         pricePerOption.put(getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERNOVA_PACKAGE_PRICE);
         pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.SUPERNOVA_SINGLE_PASS_PRICE);
 
-        return new PassCategory(
-                PassConstants.Categories.SUPERNOVA_ID,
-                PassConstants.Categories.SUPERNOVA_NAME,
+        return new SupernovaPassCategory(
                 pricePerOption,
                 shuttleFactory.getShuttleCategoryById(PassConstants.Categories.SUPERNOVA_SHUTTLE_CATEGORY_ID),
                 oxygenFactory.getOxygenCategoryById(PassConstants.Categories.SUPERNOVA_OXYGEN_CATEGORY_ID)
@@ -54,9 +57,7 @@ public class PassFactory {
         pricePerOption.put(getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERGIANT_PACKAGE_PRICE);
         pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE);
 
-        return new PassCategory(
-                PassConstants.Categories.SUPERGIANT_ID,
-                PassConstants.Categories.SUPERGIANT_NAME,
+        return new SupergiantPassCategory(
                 pricePerOption,
                 shuttleFactory.getShuttleCategoryById(PassConstants.Categories.SUPERGIANT_SHUTTLE_CATEGORY_ID),
                 oxygenFactory.getOxygenCategoryById(PassConstants.Categories.SUPERGIANT_OXYGEN_CATEGORY_ID)
@@ -68,9 +69,7 @@ public class PassFactory {
         pricePerOption.put(getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.NEBULA_PACKAGE_PRICE);
         pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE);
 
-        return new PassCategory(
-                PassConstants.Categories.NEBULA_ID,
-                PassConstants.Categories.NEBULA_NAME,
+        return new NebulaPassCategory(
                 pricePerOption,
                 shuttleFactory.getShuttleCategoryById(PassConstants.Categories.NEBULA_SHUTTLE_CATEGORY_ID),
                 oxygenFactory.getOxygenCategoryById(PassConstants.Categories.NEBULA_OXYGEN_CATEGORY_ID)
@@ -78,16 +77,10 @@ public class PassFactory {
     }
 
     private PassOption buildPassOptionPackage() {
-        return new PassOption(
-                PassConstants.Options.PACKAGE_ID,
-                PassConstants.Options.PACKAGE_NAME
-        );
+        return new PackagePassOption();
     }
 
     private PassOption buildPassOptionSinglePass() {
-        return new PassOption(
-                PassConstants.Options.SINGLE_PASS_ID,
-                PassConstants.Options.SINGLE_PASS_NAME
-        );
+        return new SinglePassPassOption();
     }
 }

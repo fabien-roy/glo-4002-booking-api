@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.entities.passes;
 
 import ca.ulaval.glo4002.booking.entities.Orderable;
+import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;

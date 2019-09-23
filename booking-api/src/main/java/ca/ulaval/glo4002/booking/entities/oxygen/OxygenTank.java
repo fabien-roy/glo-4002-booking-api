@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.entities.Orderable;
+import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;

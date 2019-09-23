@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.entities.oxygen.OxygenCategory;
-import ca.ulaval.glo4002.booking.entities.oxygen.OxygenProduction;
+import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;
 import ca.ulaval.glo4002.booking.entities.oxygen.OxygenUnitType;
 
 public class OxygenFactory {
