@@ -65,7 +65,23 @@
 		    <artifactId>sonarlint-core</artifactId>
     		<version>1.1</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.glassfish.jersey.ext</groupId>
+		    <artifactId>jersey-spring4</artifactId>
+		    <version>2.26</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-jpa</artifactId>
+		    <version>2.1.10.RELEASE</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-annotations</artifactId>
+		    <version>3.5.6-Final</version>
+		</dependency>
     </dependencies>
+    
 
     <build>
         <plugins>
