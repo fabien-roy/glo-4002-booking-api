@@ -64,6 +64,7 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <scope>test</scope>
+             <version>5.5.2</version>
         </dependency>
         <dependency>
 		    <groupId>org.sonarsource.sonarlint.core</groupId>
