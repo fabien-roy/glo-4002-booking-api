@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import javax.persistence.Entity;
 
 @Entity
-public abstract class User {
+public class User {
 	
 	@Id
 	protected Long id;

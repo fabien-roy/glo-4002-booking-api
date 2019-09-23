@@ -11,6 +11,7 @@ public class Shuttle {
 	@Id
 	protected Long id;
 
+	private Double price;
 	private ShuttleCategory category;
     private ShuttleType type;
 	private List<Passenger> passengers;
