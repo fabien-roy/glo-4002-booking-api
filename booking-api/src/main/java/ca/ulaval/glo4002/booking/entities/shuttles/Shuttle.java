@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.entities.shuttles;
 
 import ca.ulaval.glo4002.booking.entities.Orderable;
+import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
+import ca.ulaval.glo4002.booking.entities.shuttles.types.ShuttleType;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;

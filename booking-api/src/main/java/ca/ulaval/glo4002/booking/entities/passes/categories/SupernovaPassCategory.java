@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.entities.passes.categories;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.entities.shuttles.ShuttleCategory;
+import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
 
 import java.util.HashMap;
 

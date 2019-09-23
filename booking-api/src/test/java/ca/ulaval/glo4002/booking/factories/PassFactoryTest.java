@@ -31,7 +31,7 @@ public class PassFactoryTest {
         PassCategory passCategory = subject.getPassCategoryById(PassConstants.Categories.SUPERNOVA_ID);
         Map<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(subject.getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERNOVA_PACKAGE_PRICE);
-        pricePerOption.put(subject.getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.SUPERNOVA_SINGLE_PASS_PRICE);
+        pricePerOption.put(subject.getPassOptionById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.SUPERNOVA_SINGLE_PASS_PRICE);
 
         validatePassCategory(
                 passCategory,
@@ -48,7 +48,7 @@ public class PassFactoryTest {
         PassCategory passCategory = subject.getPassCategoryById(PassConstants.Categories.SUPERGIANT_ID);
         Map<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(subject.getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERGIANT_PACKAGE_PRICE);
-        pricePerOption.put(subject.getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE);
+        pricePerOption.put(subject.getPassOptionById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE);
 
         validatePassCategory(
                 passCategory,
@@ -65,7 +65,7 @@ public class PassFactoryTest {
         PassCategory passCategory = subject.getPassCategoryById(PassConstants.Categories.NEBULA_ID);
         Map<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(subject.getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.NEBULA_PACKAGE_PRICE);
-        pricePerOption.put(subject.getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE);
+        pricePerOption.put(subject.getPassOptionById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE);
 
         validatePassCategory(
                 passCategory,
@@ -96,13 +96,13 @@ public class PassFactoryTest {
     }
 
     @Test
-    public void getPassOptionById_shouldReturnCorrectPassOption_whenCategoryIsSinglePass() {
-        PassOption passOption = subject.getPassOptionById(PassConstants.Options.SINGLE_PASS_ID);
+    public void getPassOptionById_shouldReturnCorrectPassOption_whenCategoryIsSingle() {
+        PassOption passOption = subject.getPassOptionById(PassConstants.Options.SINGLE_ID);
 
         validatePassOption(
                 passOption,
-                PassConstants.Options.SINGLE_PASS_ID,
-                PassConstants.Options.SINGLE_PASS_NAME
+                PassConstants.Options.SINGLE_ID,
+                PassConstants.Options.SINGLE_NAME
         );
     }
 

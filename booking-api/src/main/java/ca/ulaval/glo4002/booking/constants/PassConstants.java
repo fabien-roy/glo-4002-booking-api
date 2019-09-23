@@ -29,9 +29,9 @@ public class PassConstants {
 
     public static class Options {
         public static final Long PACKAGE_ID = 0L;
-        public static final Long SINGLE_PASS_ID = 1L;
+        public static final Long SINGLE_ID = 1L;
 
         public static final String PACKAGE_NAME = "Package";
-        public static final String SINGLE_PASS_NAME = "Single pass";
+        public static final String SINGLE_NAME = "Single pass";
     }
 }

@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.booking.entities.passes.categories.SupergiantPassCatego
 import ca.ulaval.glo4002.booking.entities.passes.categories.SupernovaPassCategory;
 import ca.ulaval.glo4002.booking.entities.passes.options.PackagePassOption;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.entities.passes.options.SinglePassPassOption;
+import ca.ulaval.glo4002.booking.entities.passes.options.SinglePassOption;
 
 import java.util.HashMap;
 
@@ -19,11 +19,11 @@ public class PassFactory {
     public PassCategory getPassCategoryById(Long categoryId) {
         // TODO : I wanted to do a switch-case, but apparently static final isn't const?
         if (categoryId.equals(PassConstants.Categories.SUPERNOVA_ID)) {
-            return buildPassCategorySupernova();
+            return buildSupernovaPassCategory();
         } else if (categoryId.equals(PassConstants.Categories.SUPERGIANT_ID)) {
-            return buildPassCategorySupergiant();
+            return buildSupergiantPassCategory();
         } else if (categoryId.equals(PassConstants.Categories.NEBULA_ID)) {
-            return buildPassCategoryNebula();
+            return buildNebulaPassCategory();
         }
 
         return null; // TODO : Throw exception?
@@ -32,18 +32,18 @@ public class PassFactory {
     public PassOption getPassOptionById(Long optionId) {
         // TODO : I wanted to do a switch-case, but apparently static final isn't const?
         if (optionId.equals(PassConstants.Options.PACKAGE_ID)) {
-            return buildPassOptionPackage();
-        } else if (optionId.equals(PassConstants.Options.SINGLE_PASS_ID)) {
-            return buildPassOptionSinglePass();
+            return buildPackagePassOption();
+        } else if (optionId.equals(PassConstants.Options.SINGLE_ID)) {
+            return buildSinglePassOption();
         }
 
         return null; // TODO : Throw exception?
     }
 
-    private PassCategory buildPassCategorySupernova() {
+    private PassCategory buildSupernovaPassCategory() {
         HashMap<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERNOVA_PACKAGE_PRICE);
-        pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.SUPERNOVA_SINGLE_PASS_PRICE);
+        pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.SUPERNOVA_SINGLE_PASS_PRICE);
 
         return new SupernovaPassCategory(
                 pricePerOption,
@@ -52,10 +52,10 @@ public class PassFactory {
         );
     }
 
-    private PassCategory buildPassCategorySupergiant() {
+    private PassCategory buildSupergiantPassCategory() {
         HashMap<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERGIANT_PACKAGE_PRICE);
-        pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE);
+        pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE);
 
         return new SupergiantPassCategory(
                 pricePerOption,
@@ -64,10 +64,10 @@ public class PassFactory {
         );
     }
 
-    private PassCategory buildPassCategoryNebula() {
+    private PassCategory buildNebulaPassCategory() {
         HashMap<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(getPassOptionById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.NEBULA_PACKAGE_PRICE);
-        pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_PASS_ID), PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE);
+        pricePerOption.put(getPassOptionById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE);
 
         return new NebulaPassCategory(
                 pricePerOption,
@@ -76,11 +76,11 @@ public class PassFactory {
         );
     }
 
-    private PassOption buildPassOptionPackage() {
+    private PassOption buildPackagePassOption() {
         return new PackagePassOption();
     }
 
-    private PassOption buildPassOptionSinglePass() {
-        return new SinglePassPassOption();
+    private PassOption buildSinglePassOption() {
+        return new SinglePassOption();
     }
 }

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-import ca.ulaval.glo4002.booking.entities.shuttles.ShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.shuttles.ShuttleType;
+import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
+import ca.ulaval.glo4002.booking.entities.shuttles.types.ShuttleType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

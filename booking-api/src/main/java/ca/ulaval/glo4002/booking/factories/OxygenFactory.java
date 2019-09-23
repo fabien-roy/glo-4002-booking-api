@@ -1,20 +1,29 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.entities.oxygen.categories.AOxygenCategory;
+import ca.ulaval.glo4002.booking.entities.oxygen.categories.BOxygenCategory;
+import ca.ulaval.glo4002.booking.entities.oxygen.categories.EOxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.entities.oxygen.productions.ElectrolytesOxygenProduction;
+import ca.ulaval.glo4002.booking.entities.oxygen.productions.ImmediateOxygenProduction;
 import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;
-import ca.ulaval.glo4002.booking.entities.oxygen.OxygenUnitType;
+import ca.ulaval.glo4002.booking.entities.oxygen.productions.SparkPlugsOxygenProduction;
+import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenTankOxygenUnitType;
+import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenUnitType;
+import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.SparkPlugsOxygenUnitType;
+import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.WaterLitersOxygenUnitType;
 
 public class OxygenFactory {
 
     public OxygenCategory getOxygenCategoryById(Long categoryId) {
         // TODO : I wanted to do a switch-case, but apparently static final isn't const?
         if (categoryId.equals(OxygenConstants.Categories.E_ID)) {
-            return buildOxygenCategoryE();
+            return buildEOxygenCategory();
         } else if (categoryId.equals(OxygenConstants.Categories.B_ID)) {
-            return buildOxygenCategoryB();
+            return buildBOxygenCategory();
         } else if (categoryId.equals(OxygenConstants.Categories.A_ID)) {
-            return buildOxygenCategoryA();
+            return buildAOxygenCategory();
         }
 
         return null; // TODO : Throw exception?
@@ -23,11 +32,11 @@ public class OxygenFactory {
     public OxygenProduction getOxygenProductionById(Long productionId) {
         // TODO : I wanted to do a switch-case, but apparently static final isn't const?
         if (productionId.equals(OxygenConstants.Productions.IMMEDIATE_ID)) {
-            return buildOxygenProductionImmediate();
+            return buildImmediateOxygenProduction();
         } else if (productionId.equals(OxygenConstants.Productions.ELECTROLYTES_ID)) {
-            return buildOxygenProductionElectrolytes();
+            return buildElectrolytesOxygenProduction();
         } else if (productionId.equals(OxygenConstants.Productions.SPARK_PLUGS_ID)) {
-            return buildOxygenProductionSparkPlugs();
+            return buildSparkPlugsOxygenProduction();
         }
 
         return null; // TODO : Throw exception?
@@ -36,91 +45,49 @@ public class OxygenFactory {
     public OxygenUnitType getOxygenUnitTypeById(Long unitTypeId) {
         // TODO : I wanted to do a switch-case, but apparently static final isn't const?
         if (unitTypeId.equals(OxygenConstants.UnitTypes.OXYGEN_TANKS_ID)) {
-            return buildOxygenUnitTypeOxygenTanks();
+            return buildOxygenTanksOxygenUnitType();
         } else if (unitTypeId.equals(OxygenConstants.UnitTypes.WATER_LITERS_ID)) {
-            return buildOxygenUnitTypeWaterLiters();
+            return buildWaterLitersOxygenUnitType();
         } else if (unitTypeId.equals(OxygenConstants.UnitTypes.SPARK_PLUGS_ID)) {
-            return buildOxygenUnitTypeSparkPlugs();
+            return buildSparkPlugsOxygenUnitType();
         }
 
         return null; // TODO : Throw exception?
     }
 
-    private OxygenCategory buildOxygenCategoryE() {
-        return new OxygenCategory(
-                OxygenConstants.Categories.E_ID,
-                OxygenConstants.Categories.E_NAME,
-                getOxygenProductionById(OxygenConstants.Categories.E_PRODUCTION_ID));
+    private OxygenCategory buildEOxygenCategory() {
+        return new EOxygenCategory(getOxygenProductionById(OxygenConstants.Categories.E_PRODUCTION_ID));
     }
 
-    private OxygenCategory buildOxygenCategoryB() {
-        return new OxygenCategory(
-                OxygenConstants.Categories.B_ID,
-                OxygenConstants.Categories.B_NAME,
-                getOxygenProductionById(OxygenConstants.Categories.B_PRODUCTION_ID));
+    private OxygenCategory buildBOxygenCategory() {
+        return new BOxygenCategory(getOxygenProductionById(OxygenConstants.Categories.B_PRODUCTION_ID));
     }
 
-    private OxygenCategory buildOxygenCategoryA() {
-        return new OxygenCategory(
-                OxygenConstants.Categories.A_ID,
-                OxygenConstants.Categories.A_NAME,
-                getOxygenProductionById(OxygenConstants.Categories.A_PRODUCTION_ID));
+    private OxygenCategory buildAOxygenCategory() {
+        return new AOxygenCategory(getOxygenProductionById(OxygenConstants.Categories.A_PRODUCTION_ID));
     }
 
-    private OxygenProduction buildOxygenProductionImmediate() {
-        return new OxygenProduction(
-                OxygenConstants.Productions.IMMEDIATE_ID,
-                OxygenConstants.Productions.IMMEDIATE_NAME,
-                OxygenConstants.Productions.IMMEDIATE_PRICE_PER_UNIT,
-                OxygenConstants.Productions.IMMEDIATE_PRODUCED_UNITS,
-                OxygenConstants.Productions.IMMEDIATE_PRODUCED_TANKS,
-                OxygenConstants.Productions.IMMEDIATE_PRODUCTION_TIME,
-                getOxygenUnitTypeById(OxygenConstants.Productions.IMMEDIATE_UNIT_TYPE_ID)
-        );
+    private OxygenProduction buildImmediateOxygenProduction() {
+        return new ImmediateOxygenProduction(getOxygenUnitTypeById(OxygenConstants.Productions.IMMEDIATE_UNIT_TYPE_ID));
     }
 
-    private OxygenProduction buildOxygenProductionElectrolytes() {
-        return new OxygenProduction(
-                OxygenConstants.Productions.ELECTROLYTES_ID,
-                OxygenConstants.Productions.ELECTROLYTES_NAME,
-                OxygenConstants.Productions.ELECTROLYTES_PRICE_PER_UNIT,
-                OxygenConstants.Productions.ELECTROLYTES_PRODUCED_UNITS,
-                OxygenConstants.Productions.ELECTROLYTES_PRODUCED_TANKS,
-                OxygenConstants.Productions.ELECTROLYTES_PRODUCTION_TIME,
-                getOxygenUnitTypeById(OxygenConstants.Productions.ELECTROLYTES_UNIT_TYPE_ID)
-        );
+    private OxygenProduction buildElectrolytesOxygenProduction() {
+        return new ElectrolytesOxygenProduction(getOxygenUnitTypeById(OxygenConstants.Productions.ELECTROLYTES_UNIT_TYPE_ID));
     }
 
-    private OxygenProduction buildOxygenProductionSparkPlugs() {
-        return new OxygenProduction(
-                OxygenConstants.Productions.SPARK_PLUGS_ID,
-                OxygenConstants.Productions.SPARK_PLUGS_NAME,
-                OxygenConstants.Productions.SPARK_PLUGS_PRICE_PER_UNIT,
-                OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_UNITS,
-                OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_TANKS,
-                OxygenConstants.Productions.SPARK_PLUGS_PRODUCTION_TIME,
-                getOxygenUnitTypeById(OxygenConstants.Productions.SPARK_PLUGS_UNIT_TYPE_ID)
-        );
+    private OxygenProduction buildSparkPlugsOxygenProduction() {
+        return new SparkPlugsOxygenProduction(getOxygenUnitTypeById(OxygenConstants.Productions.SPARK_PLUGS_UNIT_TYPE_ID));
     }
 
-    private OxygenUnitType buildOxygenUnitTypeOxygenTanks() {
-        return new OxygenUnitType(
-                OxygenConstants.UnitTypes.OXYGEN_TANKS_ID,
-                OxygenConstants.UnitTypes.OXYGEN_TANKS_NAME
-        );
+    private OxygenUnitType buildOxygenTanksOxygenUnitType() {
+        return new OxygenTankOxygenUnitType();
     }
 
-    private OxygenUnitType buildOxygenUnitTypeWaterLiters() {
-        return new OxygenUnitType(
-                OxygenConstants.UnitTypes.WATER_LITERS_ID,
-                OxygenConstants.UnitTypes.WATER_LITERS_NAME
-        );
+    private OxygenUnitType buildWaterLitersOxygenUnitType() {
+        return new WaterLitersOxygenUnitType();
     }
 
-    private OxygenUnitType buildOxygenUnitTypeSparkPlugs() {
-        return new OxygenUnitType(
-                OxygenConstants.UnitTypes.SPARK_PLUGS_ID,
-                OxygenConstants.UnitTypes.SPARK_PLUGS_NAME
-        );
+    private OxygenUnitType buildSparkPlugsOxygenUnitType() {
+        return new SparkPlugsOxygenUnitType();
     }
 }
