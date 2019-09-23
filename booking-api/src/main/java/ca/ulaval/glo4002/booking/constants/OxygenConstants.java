@@ -36,9 +36,9 @@ public class OxygenConstants {
         public static final Integer ELECTROLYTES_PRODUCED_TANKS = 3;
         public static final Integer SPARK_PLUGS_PRODUCED_TANKS = 5;
 
-        public static final Long IMMEDIATE_PRODUCTION_TIME = 0L;
-        public static final Long ELECTROLYTES_PRODUCTION_TIME = 10L;
-        public static final Long SPARK_PLUGS_PRODUCTION_TIME = 20L;
+        public static final Integer IMMEDIATE_PRODUCTION_TIME = 0;
+        public static final Integer ELECTROLYTES_PRODUCTION_TIME = 10;
+        public static final Integer SPARK_PLUGS_PRODUCTION_TIME = 20;
 
         public static final Long IMMEDIATE_UNIT_TYPE_ID = UnitTypes.OXYGEN_TANKS_ID;
         public static final Long ELECTROLYTES_UNIT_TYPE_ID = UnitTypes.WATER_LITERS_ID;

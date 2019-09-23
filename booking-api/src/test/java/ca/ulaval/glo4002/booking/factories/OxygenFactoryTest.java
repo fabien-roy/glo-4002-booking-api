@@ -30,30 +30,36 @@ public class OxygenFactoryTest {
     public void getOxygenCategoryById_shouldReturnCorrectOxygenCategory_whenCategoryIsE() {
         OxygenCategory oxygenCategory = subject.getOxygenCategoryById(OxygenConstants.Categories.E_ID);
 
-        assertNotNull(oxygenCategory);
-        assertEquals(oxygenCategory.getId(), OxygenConstants.Categories.E_ID);
-        assertEquals(oxygenCategory.getName(), OxygenConstants.Categories.E_NAME);
-        assertEquals(oxygenCategory.getProduction().getId(), OxygenConstants.Categories.E_PRODUCTION_ID);
+        validateOxygenCategory(
+                oxygenCategory,
+                OxygenConstants.Categories.E_ID,
+                OxygenConstants.Categories.E_NAME,
+                OxygenConstants.Categories.E_PRODUCTION_ID
+        );
     }
 
     @Test
     public void getOxygenCategoryById_shouldReturnCorrectOxygenCategory_whenCategoryIsB() {
         OxygenCategory oxygenCategory = subject.getOxygenCategoryById(OxygenConstants.Categories.B_ID);
 
-        assertNotNull(oxygenCategory);
-        assertEquals(oxygenCategory.getId(), OxygenConstants.Categories.B_ID);
-        assertEquals(oxygenCategory.getName(), OxygenConstants.Categories.B_NAME);
-        assertEquals(oxygenCategory.getProduction().getId(), OxygenConstants.Categories.B_PRODUCTION_ID);
+        validateOxygenCategory(
+                oxygenCategory,
+                OxygenConstants.Categories.B_ID,
+                OxygenConstants.Categories.B_NAME,
+                OxygenConstants.Categories.B_PRODUCTION_ID
+        );
     }
 
     @Test
     public void getOxygenCategoryById_shouldReturnCorrectOxygenCategory_whenCategoryIsA() {
         OxygenCategory oxygenCategory = subject.getOxygenCategoryById(OxygenConstants.Categories.A_ID);
 
-        assertNotNull(oxygenCategory);
-        assertEquals(oxygenCategory.getId(), OxygenConstants.Categories.A_ID);
-        assertEquals(oxygenCategory.getName(), OxygenConstants.Categories.A_NAME);
-        assertEquals(oxygenCategory.getProduction().getId(), OxygenConstants.Categories.A_PRODUCTION_ID);
+        validateOxygenCategory(
+                oxygenCategory,
+                OxygenConstants.Categories.A_ID,
+                OxygenConstants.Categories.A_NAME,
+                OxygenConstants.Categories.A_PRODUCTION_ID
+        );
     }
 
     @Test
@@ -67,42 +73,48 @@ public class OxygenFactoryTest {
     public void getOxygenProductionById_shouldReturnCorrectOxygenProduction_whenProductionIsImmediate() {
         OxygenProduction oxygenProduction = subject.getOxygenProductionById(OxygenConstants.Productions.IMMEDIATE_ID);
 
-        assertNotNull(oxygenProduction);
-        assertEquals(oxygenProduction.getId(), OxygenConstants.Productions.IMMEDIATE_ID);
-        assertEquals(oxygenProduction.getName(), OxygenConstants.Productions.IMMEDIATE_NAME);
-        assertEquals(oxygenProduction.getPricePerUnit(), OxygenConstants.Productions.IMMEDIATE_PRICE_PER_UNIT);
-        assertEquals(oxygenProduction.getProducedUnits(), OxygenConstants.Productions.IMMEDIATE_PRODUCED_UNITS);
-        assertEquals(oxygenProduction.getProducedTanks(), OxygenConstants.Productions.IMMEDIATE_PRODUCED_TANKS);
-        assertEquals(oxygenProduction.getProductionTime(), OxygenConstants.Productions.IMMEDIATE_PRODUCTION_TIME);
-        assertEquals(oxygenProduction.getUnitType().getId(), OxygenConstants.Productions.IMMEDIATE_UNIT_TYPE_ID);
+        validateOxygenProduction(
+                oxygenProduction,
+                OxygenConstants.Productions.IMMEDIATE_ID,
+                OxygenConstants.Productions.IMMEDIATE_NAME,
+                OxygenConstants.Productions.IMMEDIATE_PRICE_PER_UNIT,
+                OxygenConstants.Productions.IMMEDIATE_PRODUCED_UNITS,
+                OxygenConstants.Productions.IMMEDIATE_PRODUCED_TANKS,
+                OxygenConstants.Productions.IMMEDIATE_PRODUCTION_TIME,
+                OxygenConstants.Productions.IMMEDIATE_UNIT_TYPE_ID
+        );
     }
 
     @Test
     public void getOxygenProductionById_shouldReturnCorrectOxygenProduction_whenProductionIsElectrolytes() {
         OxygenProduction oxygenProduction = subject.getOxygenProductionById(OxygenConstants.Productions.ELECTROLYTES_ID);
 
-        assertNotNull(oxygenProduction);
-        assertEquals(oxygenProduction.getId(), OxygenConstants.Productions.ELECTROLYTES_ID);
-        assertEquals(oxygenProduction.getName(), OxygenConstants.Productions.ELECTROLYTES_NAME);
-        assertEquals(oxygenProduction.getPricePerUnit(), OxygenConstants.Productions.ELECTROLYTES_PRICE_PER_UNIT);
-        assertEquals(oxygenProduction.getProducedUnits(), OxygenConstants.Productions.ELECTROLYTES_PRODUCED_UNITS);
-        assertEquals(oxygenProduction.getProducedTanks(), OxygenConstants.Productions.ELECTROLYTES_PRODUCED_TANKS);
-        assertEquals(oxygenProduction.getProductionTime(), OxygenConstants.Productions.ELECTROLYTES_PRODUCTION_TIME);
-        assertEquals(oxygenProduction.getUnitType().getId(), OxygenConstants.Productions.ELECTROLYTES_UNIT_TYPE_ID);
+        validateOxygenProduction(
+                oxygenProduction,
+                OxygenConstants.Productions.ELECTROLYTES_ID,
+                OxygenConstants.Productions.ELECTROLYTES_NAME,
+                OxygenConstants.Productions.ELECTROLYTES_PRICE_PER_UNIT,
+                OxygenConstants.Productions.ELECTROLYTES_PRODUCED_UNITS,
+                OxygenConstants.Productions.ELECTROLYTES_PRODUCED_TANKS,
+                OxygenConstants.Productions.ELECTROLYTES_PRODUCTION_TIME,
+                OxygenConstants.Productions.ELECTROLYTES_UNIT_TYPE_ID
+        );
     }
 
     @Test
     public void getOxygenProductionById_shouldReturnCorrectOxygenProduction_whenProductionIsSparkPlugs() {
         OxygenProduction oxygenProduction = subject.getOxygenProductionById(OxygenConstants.Productions.SPARK_PLUGS_ID);
 
-        assertNotNull(oxygenProduction);
-        assertEquals(oxygenProduction.getId(), OxygenConstants.Productions.SPARK_PLUGS_ID);
-        assertEquals(oxygenProduction.getName(), OxygenConstants.Productions.SPARK_PLUGS_NAME);
-        assertEquals(oxygenProduction.getPricePerUnit(), OxygenConstants.Productions.SPARK_PLUGS_PRICE_PER_UNIT);
-        assertEquals(oxygenProduction.getProducedUnits(), OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_UNITS);
-        assertEquals(oxygenProduction.getProducedTanks(), OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_TANKS);
-        assertEquals(oxygenProduction.getProductionTime(), OxygenConstants.Productions.SPARK_PLUGS_PRODUCTION_TIME);
-        assertEquals(oxygenProduction.getUnitType().getId(), OxygenConstants.Productions.SPARK_PLUGS_UNIT_TYPE_ID);
+        validateOxygenProduction(
+                oxygenProduction,
+                OxygenConstants.Productions.SPARK_PLUGS_ID,
+                OxygenConstants.Productions.SPARK_PLUGS_NAME,
+                OxygenConstants.Productions.SPARK_PLUGS_PRICE_PER_UNIT,
+                OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_UNITS,
+                OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_TANKS,
+                OxygenConstants.Productions.SPARK_PLUGS_PRODUCTION_TIME,
+                OxygenConstants.Productions.SPARK_PLUGS_UNIT_TYPE_ID
+        );
     }
 
     @Test
@@ -116,26 +128,56 @@ public class OxygenFactoryTest {
     public void getOxygenUnitTypeById_shouldReturnCorrectOxygenUnitType_whenUnitTypeIsOxygenTanks() {
         OxygenUnitType oxygenUnitType = subject.getOxygenUnitTypeById(OxygenConstants.UnitTypes.OXYGEN_TANKS_ID);
 
-        assertNotNull(oxygenUnitType);
-        assertEquals(oxygenUnitType.getId(), OxygenConstants.UnitTypes.OXYGEN_TANKS_ID);
-        assertEquals(oxygenUnitType.getName(), OxygenConstants.UnitTypes.OXYGEN_TANKS_NAME);
+        validateOxygenUnitType(
+                oxygenUnitType,
+                OxygenConstants.UnitTypes.OXYGEN_TANKS_ID,
+                OxygenConstants.UnitTypes.OXYGEN_TANKS_NAME
+        );
     }
 
     @Test
     public void getOxygenUnitTypeById_shouldReturnCorrectOxygenUnitType_whenUnitTypeIsWaterLiters() {
         OxygenUnitType oxygenUnitType = subject.getOxygenUnitTypeById(OxygenConstants.UnitTypes.WATER_LITERS_ID);
 
-        assertNotNull(oxygenUnitType);
-        assertEquals(oxygenUnitType.getId(), OxygenConstants.UnitTypes.WATER_LITERS_ID);
-        assertEquals(oxygenUnitType.getName(), OxygenConstants.UnitTypes.WATER_LITERS_NAME);
+        validateOxygenUnitType(
+                oxygenUnitType,
+                OxygenConstants.UnitTypes.WATER_LITERS_ID,
+                OxygenConstants.UnitTypes.WATER_LITERS_NAME
+        );
     }
 
     @Test
     public void getOxygenUnitTypeById_shouldReturnCorrectOxygenUnitType_whenUnitTypeIsSparkPlugs() {
         OxygenUnitType oxygenUnitType = subject.getOxygenUnitTypeById(OxygenConstants.UnitTypes.SPARK_PLUGS_ID);
 
+        validateOxygenUnitType(
+                oxygenUnitType,
+                OxygenConstants.UnitTypes.SPARK_PLUGS_ID,
+                OxygenConstants.UnitTypes.SPARK_PLUGS_NAME
+        );
+    }
+
+    private void validateOxygenCategory(OxygenCategory oxygenCategory, Long id, String name, Long productionId) {
+        assertNotNull(oxygenCategory);
+        assertEquals(oxygenCategory.getId(), id);
+        assertEquals(oxygenCategory.getName(), name);
+        assertEquals(oxygenCategory.getProduction().getId(), productionId);
+    }
+
+    private void validateOxygenProduction(OxygenProduction oxygenProduction, Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Integer productionTime, Long unitTypeId) {
+        assertNotNull(oxygenProduction);
+        assertEquals(oxygenProduction.getId(), id);
+        assertEquals(oxygenProduction.getName(), name);
+        assertEquals(oxygenProduction.getPricePerUnit(), pricePerUnit);
+        assertEquals(oxygenProduction.getProducedUnits(), producedUnits);
+        assertEquals(oxygenProduction.getProducedTanks(), producedTanks);
+        assertEquals(oxygenProduction.getProductionTime(), productionTime);
+        assertEquals(oxygenProduction.getUnitType().getId(), unitTypeId);
+    }
+
+    private void validateOxygenUnitType(OxygenUnitType oxygenUnitType, Long id, String name) {
         assertNotNull(oxygenUnitType);
-        assertEquals(oxygenUnitType.getId(), OxygenConstants.UnitTypes.SPARK_PLUGS_ID);
-        assertEquals(oxygenUnitType.getName(), OxygenConstants.UnitTypes.SPARK_PLUGS_NAME);
+        assertEquals(oxygenUnitType.getId(), id);
+        assertEquals(oxygenUnitType.getName(), name);
     }
 }

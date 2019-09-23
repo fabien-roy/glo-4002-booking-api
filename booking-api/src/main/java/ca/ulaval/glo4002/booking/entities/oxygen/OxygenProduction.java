@@ -6,10 +6,10 @@ public class OxygenProduction {
     private Double pricePerUnit;
     private Integer producedUnits;
     private Integer producedTanks;
-    private Long productionTime; // TODO : Oxygen production time in days?
+    private Integer productionTime; // TODO : Oxygen production time in days?
     private OxygenUnitType unitType;
 
-    public OxygenProduction(Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Long productionTime, OxygenUnitType unitType) {
+    public OxygenProduction(Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Integer productionTime, OxygenUnitType unitType) {
         this.id = id;
         this.name = name;
         this.pricePerUnit = pricePerUnit;
@@ -39,7 +39,7 @@ public class OxygenProduction {
         return producedTanks;
     }
 
-    public Long getProductionTime() {
+    public Integer getProductionTime() {
         return productionTime;
     }
 

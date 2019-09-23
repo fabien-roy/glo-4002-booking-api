@@ -29,33 +29,39 @@ public class ShuttleFactoryTest {
     public void getShuttleCategoryById_shouldReturnCorrectShuttleCategory_whenCategoryIsEtSpaceship() {
         ShuttleCategory shuttleCategory = subject.getShuttleCategoryById(ShuttleConstants.Categories.ET_SPACESHIP_ID);
 
-        assertNotNull(shuttleCategory);
-        assertEquals(shuttleCategory.getId(), ShuttleConstants.Categories.ET_SPACESHIP_ID);
-        assertEquals(shuttleCategory.getName(), ShuttleConstants.Categories.ET_SPACESHIP_NAME);
-        assertEquals(shuttleCategory.getMaxCapacity(), ShuttleConstants.Categories.ET_SPACESHIP_MAX_CAPACITY);
-        assertEquals(shuttleCategory.getPrice(), ShuttleConstants.Categories.ET_SPACESHIP_PRICE);
+        validateShuttleCategory(
+                shuttleCategory,
+                ShuttleConstants.Categories.ET_SPACESHIP_ID,
+                ShuttleConstants.Categories.ET_SPACESHIP_NAME,
+                ShuttleConstants.Categories.ET_SPACESHIP_MAX_CAPACITY,
+                ShuttleConstants.Categories.ET_SPACESHIP_PRICE
+        );
     }
 
     @Test
     public void getShuttleCategoryById_shouldReturnCorrectShuttleCategory_whenCategoryIsMillenniumFalcon() {
         ShuttleCategory shuttleCategory = subject.getShuttleCategoryById(ShuttleConstants.Categories.MILLENNIUM_FALCON_ID);
 
-        assertNotNull(shuttleCategory);
-        assertEquals(shuttleCategory.getId(), ShuttleConstants.Categories.MILLENNIUM_FALCON_ID);
-        assertEquals(shuttleCategory.getName(), ShuttleConstants.Categories.MILLENNIUM_FALCON_NAME);
-        assertEquals(shuttleCategory.getMaxCapacity(), ShuttleConstants.Categories.MILLENNIUM_FALCON_MAX_CAPACITY);
-        assertEquals(shuttleCategory.getPrice(), ShuttleConstants.Categories.MILLENNIUM_FALCON_PRICE);
+        validateShuttleCategory(
+                shuttleCategory,
+                ShuttleConstants.Categories.MILLENNIUM_FALCON_ID,
+                ShuttleConstants.Categories.MILLENNIUM_FALCON_NAME,
+                ShuttleConstants.Categories.MILLENNIUM_FALCON_MAX_CAPACITY,
+                ShuttleConstants.Categories.MILLENNIUM_FALCON_PRICE
+        );
     }
 
     @Test
     public void getShuttleCategoryById_shouldReturnCorrectShuttleCategory_whenCategoryIsSpaceX() {
         ShuttleCategory shuttleCategory = subject.getShuttleCategoryById(ShuttleConstants.Categories.SPACE_X_ID);
 
-        assertNotNull(shuttleCategory);
-        assertEquals(shuttleCategory.getId(), ShuttleConstants.Categories.SPACE_X_ID);
-        assertEquals(shuttleCategory.getName(), ShuttleConstants.Categories.SPACE_X_NAME);
-        assertEquals(shuttleCategory.getMaxCapacity(), ShuttleConstants.Categories.SPACE_X_MAX_CAPACITY);
-        assertEquals(shuttleCategory.getPrice(), ShuttleConstants.Categories.SPACE_X_PRICE);
+        validateShuttleCategory(
+                shuttleCategory,
+                ShuttleConstants.Categories.SPACE_X_ID,
+                ShuttleConstants.Categories.SPACE_X_NAME,
+                ShuttleConstants.Categories.SPACE_X_MAX_CAPACITY,
+                ShuttleConstants.Categories.SPACE_X_PRICE
+        );
     }
 
     @Test
@@ -69,17 +75,35 @@ public class ShuttleFactoryTest {
     public void getShuttleTypeById_shouldReturnCorrectShuttleType_whenTypeIsDeparture() {
         ShuttleType shuttleType = subject.getShuttleTypeById(ShuttleConstants.Types.DEPARTURE_ID);
 
-        assertNotNull(shuttleType);
-        assertEquals(shuttleType.getId(), ShuttleConstants.Types.DEPARTURE_ID);
-        assertEquals(shuttleType.getName(), ShuttleConstants.Types.DEPARTURE_NAME);
+        validateShuttleType(
+                shuttleType,
+                ShuttleConstants.Types.DEPARTURE_ID,
+                ShuttleConstants.Types.DEPARTURE_NAME
+        );
     }
 
     @Test
     public void getShuttleTypeById_shouldReturnCorrectShuttleType_whenTypeIsArrival() {
         ShuttleType shuttleType = subject.getShuttleTypeById(ShuttleConstants.Types.ARRIVAL_ID);
 
+        validateShuttleType(
+                shuttleType,
+                ShuttleConstants.Types.ARRIVAL_ID,
+                ShuttleConstants.Types.ARRIVAL_NAME
+        );
+    }
+
+    private void validateShuttleCategory(ShuttleCategory shuttleCategory, Long id, String name, Integer maxCapacity, Double price) {
+        assertNotNull(shuttleCategory);
+        assertEquals(shuttleCategory.getId(), id);
+        assertEquals(shuttleCategory.getName(), name);
+        assertEquals(shuttleCategory.getMaxCapacity(), maxCapacity);
+        assertEquals(shuttleCategory.getPrice(), price);
+    }
+
+    private void validateShuttleType(ShuttleType shuttleType, Long id, String name) {
         assertNotNull(shuttleType);
-        assertEquals(shuttleType.getId(), ShuttleConstants.Types.ARRIVAL_ID);
-        assertEquals(shuttleType.getName(), ShuttleConstants.Types.ARRIVAL_NAME);
+        assertEquals(shuttleType.getId(), id);
+        assertEquals(shuttleType.getName(), name);
     }
 }
