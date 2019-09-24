@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.entities.Order;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenUnitType;
@@ -14,6 +15,13 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.willReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class OxygenFactoryTest {
     private OxygenFactory subject;
@@ -192,5 +200,12 @@ public class OxygenFactoryTest {
         assertNotNull(oxygenUnitType);
         assertEquals(oxygenUnitType.getId(), id);
         assertEquals(oxygenUnitType.getName(), name);
+    }
+
+    //TODO: Split the "Factory" test above in another file when new name will be found
+
+    @Test
+    public void createOxygenTankCategoryA_WhenOrderIsForNebula(){
+        Order mockedOrder = mock(Order.class);
     }
 }

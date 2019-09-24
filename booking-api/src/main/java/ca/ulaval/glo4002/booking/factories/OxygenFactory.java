@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.entities.Order;
+import ca.ulaval.glo4002.booking.entities.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.AOxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.BOxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.EOxygenCategory;
@@ -13,9 +15,12 @@ import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenTankOxygenUnitT
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenUnitType;
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.SparkPlugsOxygenUnitType;
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.WaterLitersOxygenUnitType;
+import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenUnitTypeNotFoundException;
+
+import java.time.LocalDate;
 
 public class OxygenFactory {
 
@@ -58,6 +63,10 @@ public class OxygenFactory {
         }
     }
 
+    public OxygenTank createOxygenTank(PassCategory passCategory, Integer passNumber, LocalDate orderDate) {
+       return null;
+    }
+
     private OxygenCategory buildEOxygenCategory() {
         return new EOxygenCategory(getOxygenProductionById(OxygenConstants.Categories.E_PRODUCTION_ID));
     }
@@ -93,4 +102,5 @@ public class OxygenFactory {
     private OxygenUnitType buildSparkPlugsOxygenUnitType() {
         return new SparkPlugsOxygenUnitType();
     }
+
 }

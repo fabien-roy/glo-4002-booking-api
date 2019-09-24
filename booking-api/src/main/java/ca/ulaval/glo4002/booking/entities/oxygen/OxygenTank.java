@@ -21,4 +21,6 @@ public class OxygenTank implements Orderable {
 	public Double getPrice() {
 	    return 0.0; // TODO : Oxygen tank price calculation
 	}
+
+	public OxygenCategory getOxygenTankCategory() { return category; }
 }
