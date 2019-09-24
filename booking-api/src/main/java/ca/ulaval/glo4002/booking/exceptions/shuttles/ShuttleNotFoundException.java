@@ -1,5 +1,6 @@
-package ca.ulaval.glo4002.booking.data.transport;
+package ca.ulaval.glo4002.booking.exceptions.shuttles;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -7,7 +8,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ShuttleNotFoundException extends RuntimeException {
 	
 	private static final long serialVersionUID = 2019_09_23_0947l;
-	
-	
 
+	public ShuttleNotFoundException() {
+		super(ExceptionConstants.SHUTTLE_NOT_FOUND_MESSAGE);
+	}
 }

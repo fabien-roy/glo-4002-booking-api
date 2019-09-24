@@ -1,8 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.entities.shuttles.Shuttle;
 import org.springframework.data.repository.CrudRepository;
-
-import ca.ulaval.glo4002.booking.data.transport.Shuttle;
 
 public interface ShuttleRepository extends CrudRepository<Shuttle, Long>{
 
