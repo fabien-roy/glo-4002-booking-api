@@ -13,6 +13,9 @@ import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenTankOxygenUnitT
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenUnitType;
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.SparkPlugsOxygenUnitType;
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.WaterLitersOxygenUnitType;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenUnitTypeNotFoundException;
 
 public class OxygenFactory {
 
@@ -24,9 +27,9 @@ public class OxygenFactory {
             return buildBOxygenCategory();
         } else if (categoryId.equals(OxygenConstants.Categories.A_ID)) {
             return buildAOxygenCategory();
+        } else {
+            throw new OxygenCategoryNotFoundException();
         }
-
-        return null; // TODO : Throw exception?
     }
 
     public OxygenProduction getOxygenProductionById(Long productionId) {
@@ -37,9 +40,9 @@ public class OxygenFactory {
             return buildElectrolytesOxygenProduction();
         } else if (productionId.equals(OxygenConstants.Productions.SPARK_PLUGS_ID)) {
             return buildSparkPlugsOxygenProduction();
+        } else {
+            throw new OxygenProductionNotFoundException();
         }
-
-        return null; // TODO : Throw exception?
     }
 
     public OxygenUnitType getOxygenUnitTypeById(Long unitTypeId) {
@@ -50,9 +53,9 @@ public class OxygenFactory {
             return buildWaterLitersOxygenUnitType();
         } else if (unitTypeId.equals(OxygenConstants.UnitTypes.SPARK_PLUGS_ID)) {
             return buildSparkPlugsOxygenUnitType();
+        } else {
+            throw new OxygenUnitTypeNotFoundException();
         }
-
-        return null; // TODO : Throw exception?
     }
 
     private OxygenCategory buildEOxygenCategory() {

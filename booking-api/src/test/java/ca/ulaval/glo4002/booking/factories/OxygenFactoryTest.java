@@ -1,9 +1,13 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenUnitType;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenUnitTypeNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +24,13 @@ public class OxygenFactoryTest {
     }
 
     @Test
-    public void getOxygenCategoryById_shouldReturnNull_whenCategoryDoesNotExist() {
-        OxygenCategory oxygenCategory = subject.getOxygenCategoryById(-1L);
+    public void getOxygenCategoryById_shouldThrowOxygenCategoryNotFoundException_whenCategoryDoesNotExist() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getOxygenCategoryById(-1L)
+        );
 
-        assertNull(oxygenCategory);
+        assertEquals(thrown.getMessage(), ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE);
     }
 
     @Test
@@ -63,10 +70,13 @@ public class OxygenFactoryTest {
     }
 
     @Test
-    public void getOxygenProductionById_shouldReturnNull_whenProductionDoesNotExist() {
-        OxygenProduction oxygenProduction = subject.getOxygenProductionById(-1L);
+    public void getOxygenProductionById_shouldThrowOxygenProductionNotFoundException_whenProductionDoesNotExist() {
+        OxygenProductionNotFoundException thrown = assertThrows(
+                OxygenProductionNotFoundException.class,
+                () -> subject.getOxygenProductionById(-1L)
+        );
 
-        assertNull(oxygenProduction);
+        assertEquals(thrown.getMessage(), ExceptionConstants.OXYGEN_PRODUCTION_NOT_FOUND_MESSAGE);
     }
 
     @Test
@@ -118,10 +128,13 @@ public class OxygenFactoryTest {
     }
 
     @Test
-    public void getOxygenUnitTypeById_shouldReturnNull_whenUnitTypeDoesNotExist() {
-        OxygenUnitType oxygenUnitType = subject.getOxygenUnitTypeById(-1L);
+    public void getOxygenUnitTypeById_shouldThrowOxygenUnitTypeNotFoundException_whenUnitTypeDoesNotExist() {
+        OxygenUnitTypeNotFoundException thrown = assertThrows(
+                OxygenUnitTypeNotFoundException.class,
+                () -> subject.getOxygenUnitTypeById(-1L)
+        );
 
-        assertNull(oxygenUnitType);
+        assertEquals(thrown.getMessage(), ExceptionConstants.OXYGEN_UNIT_TYPE_NOT_FOUND_MESSAGE);
     }
 
     @Test

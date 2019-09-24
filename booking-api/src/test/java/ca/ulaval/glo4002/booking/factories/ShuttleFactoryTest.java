@@ -1,14 +1,15 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
 import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.entities.shuttles.types.ShuttleType;
+import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleCategoryNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleTypeNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ShuttleFactoryTest {
     private ShuttleFactory subject;
@@ -19,10 +20,13 @@ public class ShuttleFactoryTest {
     }
 
     @Test
-    public void getShuttleCategoryById_shouldReturnNull_whenCategoryDoesNotExist() {
-        ShuttleCategory shuttleCategory = subject.getShuttleCategoryById(-1L);
+    public void getShuttleCategoryById_shouldThrowShuttleCategoryNotFoundException_whenCategoryDoesNotExist() {
+        ShuttleCategoryNotFoundException thrown = assertThrows(
+                ShuttleCategoryNotFoundException.class,
+                () -> subject.getShuttleCategoryById(-1L)
+        );
 
-        assertNull(shuttleCategory);
+        assertEquals(thrown.getMessage(), ExceptionConstants.SHUTTLE_CATEGORY_NOT_FOUND_MESSAGE);
     }
 
     @Test
@@ -65,10 +69,13 @@ public class ShuttleFactoryTest {
     }
 
     @Test
-    public void getShuttleTypeById_shouldReturnNull_whenTypeDoesNotExist() {
-        ShuttleType shuttleType = subject.getShuttleTypeById(-1L);
+    public void getShuttleTypeById_shouldThrowShuttleTypeNotFoundException_whenTypeDoesNotExist() {
+        ShuttleTypeNotFoundException thrown = assertThrows(
+                ShuttleTypeNotFoundException.class,
+                () -> subject.getShuttleTypeById(-1L)
+        );
 
-        assertNull(shuttleType);
+        assertEquals(thrown.getMessage(), ExceptionConstants.SHUTTLE_TYPE_NOT_FOUND_MESSAGE);
     }
 
     @Test

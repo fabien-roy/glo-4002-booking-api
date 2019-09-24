@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.entities.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.exceptions.ShuttleNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

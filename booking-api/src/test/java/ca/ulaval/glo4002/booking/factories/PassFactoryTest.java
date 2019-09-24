@@ -1,8 +1,11 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +23,13 @@ public class PassFactoryTest {
     }
 
     @Test
-    public void getPassCategoryById_shouldReturnNull_whenCategoryDoesNotExist() {
-        PassCategory passCategory = subject.getPassCategoryById(-1L);
+    public void getPassCategoryById_shouldThrowPassCategoryNotFoundException_whenCategoryDoesNotExist() {
+        PassCategoryNotFoundException thrown = assertThrows(
+                PassCategoryNotFoundException.class,
+                () -> subject.getPassCategoryById(-1L)
+        );
 
-        assertNull(passCategory);
+        assertEquals(thrown.getMessage(), ExceptionConstants.PASS_CATEGORY_NOT_FOUND_MESSAGE);
     }
 
     @Test
@@ -78,10 +84,13 @@ public class PassFactoryTest {
     }
 
     @Test
-    public void getPassOptionById_shouldReturnNull_whenOptionDoesNotExist() {
-        PassOption passOption = subject.getPassOptionById(-1L);
+    public void getPassOptionById_shouldThrowPassOptionNotFoundException_whenOptionDoesNotExist() {
+        PassOptionNotFoundException thrown = assertThrows(
+                PassOptionNotFoundException.class,
+                () -> subject.getPassOptionById(-1L)
+        );
 
-        assertNull(passOption);
+        assertEquals(thrown.getMessage(), ExceptionConstants.PASS_OPTION_NOT_FOUND_MESSAGE);
     }
 
     @Test

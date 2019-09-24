@@ -8,6 +8,8 @@ import ca.ulaval.glo4002.booking.entities.passes.categories.SupernovaPassCategor
 import ca.ulaval.glo4002.booking.entities.passes.options.PackagePassOption;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.entities.passes.options.SinglePassOption;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
 
 import java.util.HashMap;
 
@@ -24,9 +26,9 @@ public class PassFactory {
             return buildSupergiantPassCategory();
         } else if (categoryId.equals(PassConstants.Categories.NEBULA_ID)) {
             return buildNebulaPassCategory();
+        } else {
+            throw new PassCategoryNotFoundException();
         }
-
-        return null; // TODO : Throw exception?
     }
 
     public PassOption getPassOptionById(Long optionId) {
@@ -35,9 +37,9 @@ public class PassFactory {
             return buildPackagePassOption();
         } else if (optionId.equals(PassConstants.Options.SINGLE_ID)) {
             return buildSinglePassOption();
+        } else {
+            throw new PassOptionNotFoundException();
         }
-
-        return null; // TODO : Throw exception?
     }
 
     private PassCategory buildSupernovaPassCategory() {

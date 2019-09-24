@@ -8,6 +8,8 @@ import ca.ulaval.glo4002.booking.entities.shuttles.categories.SpaceXShuttleCateg
 import ca.ulaval.glo4002.booking.entities.shuttles.types.ArrivalShuttleType;
 import ca.ulaval.glo4002.booking.entities.shuttles.types.DepartureShuttleType;
 import ca.ulaval.glo4002.booking.entities.shuttles.types.ShuttleType;
+import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleCategoryNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleTypeNotFoundException;
 
 public class ShuttleFactory {
 
@@ -19,9 +21,9 @@ public class ShuttleFactory {
             return buildMillenniumFalconShuttleCategory();
         } else if (categoryId.equals(ShuttleConstants.Categories.SPACE_X_ID)) {
             return buildSpaceXShuttleCategory();
+        } else {
+            throw new ShuttleCategoryNotFoundException();
         }
-
-        return null; // TODO : Throw exception?
     }
 
     public ShuttleType getShuttleTypeById(Long typeId) {
@@ -30,9 +32,9 @@ public class ShuttleFactory {
             return buildDepartureShuttleType();
         } else if (typeId.equals(ShuttleConstants.Types.ARRIVAL_ID)) {
             return buildArrivalShuttleType();
+        } else {
+            throw new ShuttleTypeNotFoundException();
         }
-
-        return null; // TODO : Throw exception?
     }
 
     private ShuttleCategory buildEtSpaceshipShuttleCategory() {
