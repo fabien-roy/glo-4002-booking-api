@@ -2,10 +2,15 @@ package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.entities.Order;
+import ca.ulaval.glo4002.booking.entities.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.entities.oxygen.categories.AOxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;
 import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenUnitType;
+import ca.ulaval.glo4002.booking.entities.passes.categories.NebulaPassCategory;
+import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenUnitTypeNotFoundException;
@@ -13,6 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -205,7 +211,39 @@ public class OxygenFactoryTest {
     //TODO: Split the "Factory" test above in another file when new name will be found
 
     @Test
-    public void createOxygenTankCategoryA_WhenOrderIsForNebula(){
-        Order mockedOrder = mock(Order.class);
+    public void createOxygenTankCategoryA_MatchingOrderCategoryNebula() {
+        PassFactory passFactory = new PassFactory();
+
+        PassCategory nebulaCategory = passFactory.getPassCategoryById(PassConstants.Categories.NEBULA_ID);
+
+        OxygenTank tank = subject.createOxygenTank(nebulaCategory, 1, LocalDate.now());
+
+        //assertTrue(nebulaCategory.getOxygenCategory() == tank.getOxygenTankCategory());
     }
+
+    @Test
+    public void createOxygenTankCategoryB_MatchingOrderCategorySupergiant() {
+        //TODO : implement (COS 1)
+    }
+
+    @Test
+    public void createOxygenTankCategoryE_MatchingOrderCategorySupernova() {
+        //TODO : Implement (COS 1)
+    }
+
+    @Test
+    public void createOxygenTankQuantity_MatchingOrderRequirement() {
+        //TODO : implement (COS 1 / COS 2)
+    }
+
+    @Test
+    public void doNotCreateOxygen_IfOrderRequirementsDoNotExceedCurrentStock() {
+        //TODO : implement (COS 3)
+    }
+
+    @Test
+    public void createFasterOxygen_IfDelayDoesNotPermitSlowerProduction() {
+        //TODO : implement (COS 1 / COS 2)
+    }
+
 }

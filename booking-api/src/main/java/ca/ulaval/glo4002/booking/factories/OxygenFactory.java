@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.entities.Order;
 import ca.ulaval.glo4002.booking.entities.oxygen.OxygenTank;
@@ -21,6 +22,7 @@ import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundExcep
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenUnitTypeNotFoundException;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class OxygenFactory {
 
@@ -64,7 +66,7 @@ public class OxygenFactory {
     }
 
     public OxygenTank createOxygenTank(PassCategory passCategory, Integer passNumber, LocalDate orderDate) {
-       return null;
+       return null; 
     }
 
     private OxygenCategory buildEOxygenCategory() {
