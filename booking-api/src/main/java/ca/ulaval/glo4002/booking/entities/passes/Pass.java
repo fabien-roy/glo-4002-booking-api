@@ -26,6 +26,10 @@ public class Pass extends OrderItem implements ParsableEntity {
         this.eventDate = eventDate;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public PassCategory getCategory() {
         return category;
     }
@@ -40,6 +44,6 @@ public class Pass extends OrderItem implements ParsableEntity {
 
 	@Override
 	public Double getPrice() {
-		return this.getCategory().getPricePerOption().get(this.option);
+		return this.category.getPricePerOption().get(this.option);
 	}
 }
