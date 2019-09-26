@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.entities.Order;
+import ca.ulaval.glo4002.booking.entities.orders.Order;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;

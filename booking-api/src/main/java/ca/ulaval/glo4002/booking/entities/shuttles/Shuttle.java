@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.entities.shuttles;
 
-import ca.ulaval.glo4002.booking.entities.Orderable;
+import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
 import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.entities.shuttles.types.ShuttleType;
 import org.springframework.data.annotation.Id;
@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import java.util.List;
 
 @Entity
-public class Shuttle implements Orderable {
+public class Shuttle extends OrderItem {
 	
 	@Id
 	protected Long id;

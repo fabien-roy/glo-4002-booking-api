@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
-import ca.ulaval.glo4002.booking.entities.Orderable;
+import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import org.springframework.data.annotation.Id;
 
@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import java.time.LocalDate;
 
 @Entity
-public class OxygenTank implements Orderable {
+public class OxygenTank extends OrderItem {
 	
 	@Id
 	protected Long id;
