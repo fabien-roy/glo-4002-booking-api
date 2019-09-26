@@ -12,6 +12,5 @@ public class Order {
 	protected Long id;
 
 	private Vendor vendor;
-	private User user;
 	private List<Orderable> orderables;
 }
