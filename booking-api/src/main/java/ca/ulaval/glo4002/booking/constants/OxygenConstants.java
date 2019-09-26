@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.constants;
 import java.time.Duration;
 
 public class OxygenConstants {
+
     public static class Categories {
         public static final Long E_ID = 0L;
         public static final Long B_ID = 1L;
@@ -15,6 +16,10 @@ public class OxygenConstants {
         public static final Long E_PRODUCTION_ID = Productions.IMMEDIATE_ID;
         public static final Long B_PRODUCTION_ID = Productions.ELECTROLYTES_ID;
         public static final Long A_PRODUCTION_ID = Productions.SPARK_PLUGS_ID;
+
+        private Categories(){
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        }
     }
 
     public static class Productions {
@@ -45,6 +50,10 @@ public class OxygenConstants {
         public static final Long IMMEDIATE_UNIT_TYPE_ID = UnitTypes.OXYGEN_TANKS_ID;
         public static final Long ELECTROLYTES_UNIT_TYPE_ID = UnitTypes.WATER_LITERS_ID;
         public static final Long SPARK_PLUGS_UNIT_TYPE_ID = UnitTypes.SPARK_PLUGS_ID;
+
+        private Productions(){
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        }
     }
 
     public static class UnitTypes {
@@ -55,5 +64,13 @@ public class OxygenConstants {
         public static final String OXYGEN_TANKS_NAME = "Oxygen tank";
         public static final String WATER_LITERS_NAME = "Water liter";
         public static final String SPARK_PLUGS_NAME = "Spark plug";
+
+        private UnitTypes(){
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private OxygenConstants(){
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
     }
 }
