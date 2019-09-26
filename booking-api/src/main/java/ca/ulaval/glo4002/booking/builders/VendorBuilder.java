@@ -16,5 +16,14 @@ public class VendorBuilder {
         }
     }
 
+    public Vendor buildByVendorCode(String vendorCode) {
+        if(vendorCode.equals(VendorConstants.VendorCode.TEAM_VENDOR_CODE)) {
+            return buildTeamVendor();
+        }
+        else{
+            throw new VendorNotFoundException();
+        }
+    }
+
     private Vendor buildTeamVendor(){ return new TeamVendor(); }
 }
