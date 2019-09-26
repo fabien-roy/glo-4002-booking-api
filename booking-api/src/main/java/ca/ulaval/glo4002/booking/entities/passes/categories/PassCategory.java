@@ -1,16 +1,15 @@
 package ca.ulaval.glo4002.booking.entities.passes.categories;
 
-import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.entities.Qualifiable;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
+import ca.ulaval.glo4002.booking.entities.qualities.Quality;
 
 import java.util.Map;
 
-public abstract class PassCategory {
+public abstract class PassCategory implements Qualifiable {
 	protected Long id;
 	protected String name;
-	protected ShuttleCategory shuttleCategory;
-	protected OxygenCategory oxygenCategory;
+	protected Quality quality;
     protected Map<PassOption, Double> pricePerOption; // TODO : Conditions for rebate are not implemented yet
 
     public Long getId() {
@@ -21,15 +20,7 @@ public abstract class PassCategory {
         return name;
     }
 
-    public Map<PassOption, Double> getPricePerOption() {
-        return pricePerOption;
-    }
-
-    public ShuttleCategory getShuttleCategory() {
-        return shuttleCategory;
-    }
-
-    public OxygenCategory getOxygenCategory() {
-        return oxygenCategory;
+    public Quality getQuality() {
+        return quality;
     }
 }

@@ -1,8 +1,6 @@
 package ca.ulaval.glo4002.booking.builders.passes;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
-import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
-import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.entities.passes.categories.NebulaPassCategory;
 import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
@@ -12,12 +10,10 @@ import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class PassCategoryBuilder implements Builder<PassCategory> {
 
-    // TODO : How do we pass shuttle and oxygen builders?
-    private ShuttleCategoryBuilder shuttleBuilder = new ShuttleCategoryBuilder();
-    private OxygenCategoryBuilder oxygenCategoryBuilder = new OxygenCategoryBuilder();
     private PassOptionBuilder optionBuilder = new PassOptionBuilder();
 
     public PassCategory buildById(Long id) {
@@ -45,38 +41,26 @@ public class PassCategoryBuilder implements Builder<PassCategory> {
     }
 
     private PassCategory buildSupernovaPassCategory() {
-        HashMap<PassOption, Double> pricePerOption = new HashMap<>();
+        Map<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(optionBuilder.buildById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERNOVA_PACKAGE_PRICE);
         pricePerOption.put(optionBuilder.buildById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.SUPERNOVA_SINGLE_PASS_PRICE);
 
-        return new SupernovaPassCategory(
-                pricePerOption,
-                shuttleBuilder.buildById(PassConstants.Categories.SUPERNOVA_SHUTTLE_CATEGORY_ID),
-                oxygenCategoryBuilder.buildById(PassConstants.Categories.SUPERNOVA_OXYGEN_CATEGORY_ID)
-        );
+        return new SupernovaPassCategory(pricePerOption);
     }
 
     private PassCategory buildSupergiantPassCategory() {
-        HashMap<PassOption, Double> pricePerOption = new HashMap<>();
+        Map<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(optionBuilder.buildById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.SUPERGIANT_PACKAGE_PRICE);
         pricePerOption.put(optionBuilder.buildById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE);
 
-        return new SupergiantPassCategory(
-                pricePerOption,
-                shuttleBuilder.buildById(PassConstants.Categories.SUPERGIANT_SHUTTLE_CATEGORY_ID),
-                oxygenCategoryBuilder.buildById(PassConstants.Categories.SUPERGIANT_OXYGEN_CATEGORY_ID)
-        );
+        return new SupergiantPassCategory(pricePerOption);
     }
 
     private PassCategory buildNebulaPassCategory() {
-        HashMap<PassOption, Double> pricePerOption = new HashMap<>();
+        Map<PassOption, Double> pricePerOption = new HashMap<>();
         pricePerOption.put(optionBuilder.buildById(PassConstants.Options.PACKAGE_ID), PassConstants.Categories.NEBULA_PACKAGE_PRICE);
         pricePerOption.put(optionBuilder.buildById(PassConstants.Options.SINGLE_ID), PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE);
 
-        return new NebulaPassCategory(
-                pricePerOption,
-                shuttleBuilder.buildById(PassConstants.Categories.NEBULA_SHUTTLE_CATEGORY_ID),
-                oxygenCategoryBuilder.buildById(PassConstants.Categories.NEBULA_OXYGEN_CATEGORY_ID)
-        );
+        return new NebulaPassCategory(pricePerOption);
     }
 }
