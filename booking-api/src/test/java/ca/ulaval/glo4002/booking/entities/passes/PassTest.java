@@ -1,23 +1,17 @@
 package ca.ulaval.glo4002.booking.entities.passes;
 
-import ca.ulaval.glo4002.booking.entities.passes.categories.NebulaPassCategory;
 import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.entities.passes.options.SinglePassOption;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 class PassTest {
 
     private Pass subjectWithDefaultPrice;
     private Pass subjectWithCustomPrice;
-
 
     @BeforeEach
     void setUp() {
