@@ -40,7 +40,6 @@ public class Pass extends OrderItem implements ParsableEntity {
 
 	@Override
 	public Double getPrice() {
-        // TODO : Calculate price with PassOption
-		return 0.0;
+		return this.getCategory().getPricePerOption().get(this.option);
 	}
 }
