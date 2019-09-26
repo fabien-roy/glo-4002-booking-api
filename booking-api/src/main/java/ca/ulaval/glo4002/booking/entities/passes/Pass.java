@@ -7,12 +7,24 @@ import ca.ulaval.glo4002.booking.parsers.ParsableEntity;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import java.time.LocalDate;
 
 @Entity
 public class Pass extends OrderItem implements ParsableEntity {
 
 	@Id
 	protected Long id;
+
+    private PassCategory category;
+    private PassOption option;
+    private LocalDate eventDate;
+
+    public Pass(PassCategory passCategory, PassOption passOption, Long id, LocalDate eventDate) {
+        this.id = id;
+        this.category = passCategory;
+        this.option = passOption;
+        this.eventDate = eventDate;
+    }
 
     public PassCategory getCategory() {
         return category;
@@ -22,26 +34,13 @@ public class Pass extends OrderItem implements ParsableEntity {
         return option;
     }
 
-    private Double price;
-	private PassCategory category;
-    private PassOption option;
-	// TODO : private List<?> eventDates;
+    public LocalDate getEventDate() {
+        return eventDate;
+    }
 
 	@Override
 	public Double getPrice() {
-		return price;
+        // TODO : Calculate price with PassOption
+		return 0.0;
 	}
-
-	public Pass(PassCategory passCategory, PassOption passOption, Long id){
-		this.id = id;
-		this.category = passCategory;
-		this.option = passOption;
-	}
-    public Pass(PassCategory passCategory, PassOption passOption, Long id, Double price){
-        this.id = id;
-        this.category = passCategory;
-        this.option = passOption;
-        this.price = price;
-    }
-
 }
