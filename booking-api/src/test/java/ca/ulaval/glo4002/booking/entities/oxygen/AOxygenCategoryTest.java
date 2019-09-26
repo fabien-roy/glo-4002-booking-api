@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.entitites.oxygen;
+package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.AOxygenCategory;
 import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;

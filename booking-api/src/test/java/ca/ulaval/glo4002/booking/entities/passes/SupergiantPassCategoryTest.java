@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.entitites.passes;
+package ca.ulaval.glo4002.booking.entities.passes;
 
 import ca.ulaval.glo4002.booking.entities.passes.categories.SupergiantPassCategory;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
