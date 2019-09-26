@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.entities.passes.Pass;
 import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
@@ -19,7 +20,7 @@ public class PassParser implements Parser<List<Pass>, PassDto> {
 
     private PassCategoryBuilder categoryBuilder;
     private PassOptionBuilder optionBuilder;
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // TODO : Place this format in constants
+    private final static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FestivalConstants.Dates.FORMAT);
 
     public void setBuilders(PassCategoryBuilder categoryBuilder, PassOptionBuilder optionBuilder) {
         this.categoryBuilder = categoryBuilder;
@@ -51,7 +52,7 @@ public class PassParser implements Parser<List<Pass>, PassDto> {
         return passes;
     }
 
-    public Pass parseSingle(Long id, PassCategory category, PassOption option, String eventDate) throws PassDtoInvalidException {
+    private Pass parseSingle(Long id, PassCategory category, PassOption option, String eventDate) throws PassDtoInvalidException {
         LocalDate parsedEventDate;
 
         try {
@@ -60,6 +61,15 @@ public class PassParser implements Parser<List<Pass>, PassDto> {
             throw new PassDtoInvalidException();
         }
 
+        validateEventDate(parsedEventDate);
+
         return new Pass(category, option, id, parsedEventDate);
+    }
+
+    private void validateEventDate(LocalDate eventDate) throws PassDtoInvalidException {
+        if (eventDate.isBefore(FestivalConstants.Dates.START_DATE)
+            || eventDate.isAfter(FestivalConstants.Dates.END_DATE)) {
+            throw new PassDtoInvalidException();
+        }
     }
 }

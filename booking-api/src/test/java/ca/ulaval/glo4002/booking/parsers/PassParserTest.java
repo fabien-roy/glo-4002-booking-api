@@ -94,8 +94,6 @@ public class PassParserTest {
 
     @Test
     public void parse_shouldThrowInvalidPassDtoException_whenEventDatesAreNotInFestivalDates() {
-        // TODO : Check if pass eventDates are in festival
-        /*
         dto.eventDates = SOME_EVENT_DATES_NOT_IN_FESTIVAL;
 
         PassDtoInvalidException thrown = assertThrows(
@@ -104,7 +102,6 @@ public class PassParserTest {
         );
 
         assertEquals(ExceptionConstants.PASS_DTO_INVALID_MESSAGE, thrown.getMessage());
-        */
     }
 
     @Test
