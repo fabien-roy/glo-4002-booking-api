@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.entities.passes;
 
-import ca.ulaval.glo4002.booking.entities.Orderable;
+import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
 import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
 import org.springframework.data.annotation.Id;
@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Entity
-public class Pass implements Orderable {
+public class Pass extends OrderItem {
 	
 	@Id
 	protected Long id;

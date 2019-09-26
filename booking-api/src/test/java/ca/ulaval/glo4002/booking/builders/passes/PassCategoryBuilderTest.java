@@ -47,9 +47,7 @@ public class PassCategoryBuilderTest {
                 passCategory,
                 PassConstants.Categories.SUPERNOVA_ID,
                 PassConstants.Categories.SUPERNOVA_NAME,
-                pricePerOption,
-                PassConstants.Categories.SUPERNOVA_SHUTTLE_CATEGORY_ID,
-                PassConstants.Categories.SUPERNOVA_OXYGEN_CATEGORY_ID
+                pricePerOption
         );
     }
 
@@ -64,9 +62,7 @@ public class PassCategoryBuilderTest {
                 passCategory,
                 PassConstants.Categories.SUPERGIANT_ID,
                 PassConstants.Categories.SUPERGIANT_NAME,
-                pricePerOption,
-                PassConstants.Categories.SUPERGIANT_SHUTTLE_CATEGORY_ID,
-                PassConstants.Categories.SUPERGIANT_OXYGEN_CATEGORY_ID
+                pricePerOption
         );
     }
 
@@ -81,9 +77,7 @@ public class PassCategoryBuilderTest {
                 passCategory,
                 PassConstants.Categories.NEBULA_ID,
                 PassConstants.Categories.NEBULA_NAME,
-                pricePerOption,
-                PassConstants.Categories.NEBULA_SHUTTLE_CATEGORY_ID,
-                PassConstants.Categories.NEBULA_OXYGEN_CATEGORY_ID
+                pricePerOption
         );
     }
 
@@ -108,9 +102,7 @@ public class PassCategoryBuilderTest {
                 passCategory,
                 PassConstants.Categories.SUPERNOVA_ID,
                 PassConstants.Categories.SUPERNOVA_NAME,
-                pricePerOption,
-                PassConstants.Categories.SUPERNOVA_SHUTTLE_CATEGORY_ID,
-                PassConstants.Categories.SUPERNOVA_OXYGEN_CATEGORY_ID
+                pricePerOption
         );
     }
 
@@ -125,9 +117,7 @@ public class PassCategoryBuilderTest {
                 passCategory,
                 PassConstants.Categories.SUPERGIANT_ID,
                 PassConstants.Categories.SUPERGIANT_NAME,
-                pricePerOption,
-                PassConstants.Categories.SUPERGIANT_SHUTTLE_CATEGORY_ID,
-                PassConstants.Categories.SUPERGIANT_OXYGEN_CATEGORY_ID
+                pricePerOption
         );
     }
 
@@ -142,19 +132,15 @@ public class PassCategoryBuilderTest {
                 passCategory,
                 PassConstants.Categories.NEBULA_ID,
                 PassConstants.Categories.NEBULA_NAME,
-                pricePerOption,
-                PassConstants.Categories.NEBULA_SHUTTLE_CATEGORY_ID,
-                PassConstants.Categories.NEBULA_OXYGEN_CATEGORY_ID
+                pricePerOption
         );
     }
 
-    private void validatePassCategory(PassCategory passCategory, Long id, String name, Map<PassOption, Double> pricePerOption, Long shuttleCategoryId, Long oxygenCategoryId) {
+    private void validatePassCategory(PassCategory passCategory, Long id, String name, Map<PassOption, Double> pricePerOption) {
         assertNotNull(passCategory);
         assertEquals(passCategory.getId(), id);
         assertEquals(passCategory.getName(), name);
         // TODO : Find a correct way to assert what is in pricePerOption
         // assertTrue(Maps.difference(passCategory.getPricePerOption(), pricePerOption).areEqual());
-        assertEquals(passCategory.getShuttleCategory().getId(), shuttleCategoryId);
-        assertEquals(passCategory.getOxygenCategory().getId(), oxygenCategoryId);
     }
 }
