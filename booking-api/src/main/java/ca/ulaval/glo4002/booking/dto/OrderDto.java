@@ -1,8 +1,10 @@
 package ca.ulaval.glo4002.booking.dto;
 
-public class OrderDto {
+import java.util.List;
+
+public class OrderDto implements Dto {
 
     public String orderDate;
     public String vendorCode;
-    public PassDto passes;
+    public List<PassDto> passes;
 }
