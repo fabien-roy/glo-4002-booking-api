@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Path("/passes")
+@Path("/orders")
 public class OrderController {
 
     @Autowired
