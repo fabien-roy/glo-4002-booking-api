@@ -23,11 +23,9 @@ public class PassParser implements Parser<List<Pass>, PassDto> {
 
         PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
         PassOptionBuilder optionBuilder = new PassOptionBuilder();
-        PassCategory category;
-        PassOption option;
 
-        category = categoryBuilder.buildByName(dto.passCategory);
-        option = optionBuilder.buildByName(dto.passOption);
+        PassCategory category = categoryBuilder.buildByName(dto.passCategory);
+        PassOption option = optionBuilder.buildByName(dto.passOption);
 
         List<Pass> passes = new ArrayList<>();
 
@@ -38,14 +36,13 @@ public class PassParser implements Parser<List<Pass>, PassDto> {
         return passes;
     }
 
-    private Pass parseSingle(Long id, PassCategory category, PassOption option, LocalDate eventDate){
-
+    private Pass parseSingle(Long id, PassCategory category, PassOption option, LocalDate eventDate) {
         validateEventDate(eventDate);
 
         return new Pass(category, option, id, eventDate);
     }
 
-    private void validateEventDate(LocalDate eventDate){
+    private void validateEventDate(LocalDate eventDate) {
         if (eventDate.isBefore(FestivalConstants.Dates.START_DATE)
             || eventDate.isAfter(FestivalConstants.Dates.END_DATE)) {
             throw new PassDtoInvalidException();

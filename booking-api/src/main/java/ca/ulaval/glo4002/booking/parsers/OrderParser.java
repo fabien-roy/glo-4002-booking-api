@@ -8,29 +8,23 @@ import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 
 import java.time.LocalDateTime;
 
-
 class OrderParser {
 
-    private Order order;
-
-    Order parse(OrderDto orderDto) {
-        order = new Order();
+    public Order parse(OrderDto orderDto) {
+        Order order = new Order();
         VendorBuilder vendorBuilder = new VendorBuilder();
 
-        checkOrderDate(orderDto.getOrderDate());
-        order.setOrderDate(orderDto.getOrderDate());
-        order.setVendor(vendorBuilder.buildByVendorCode(orderDto.getVendorCode()));
+        checkOrderDate(orderDto.orderDate);
+
+        order.setOrderDate(orderDto.orderDate);
+        order.setVendor(vendorBuilder.buildByVendorCode(orderDto.vendorCode));
 
         return order;
     }
 
-    Order getOrder() {
-        return this.order;
-    }
-
     private void checkOrderDate(LocalDateTime orderDate){
-        if(orderDate.isBefore(FestivalConstants.Dates.FESTIVAL_START_ORDER) ||
-                orderDate.isAfter(FestivalConstants.Dates.FESTIVAL_END_ORDER)){
+        if(orderDate.isBefore(FestivalConstants.Dates.ORDER_START_DATE_TIME)
+           || orderDate.isAfter(FestivalConstants.Dates.ORDER_END_DATE_TIME)){
             throw new OrderDtoInvalidException();
         }
     }

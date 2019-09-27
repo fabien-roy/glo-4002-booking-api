@@ -1,10 +1,11 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
+import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.entities.orders.Order;
 import ca.ulaval.glo4002.booking.exceptions.VendorNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,25 +15,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderParserTest {
 
-    private static final LocalDateTime INVALID_DATE_BEFORE = LocalDateTime.of(2049, 1, 1, 0, 0, 0);
-    private static final LocalDateTime INVALID_DATE_AFTER = LocalDateTime.of(2051, 1, 1, 0, 0);
-    private static final LocalDateTime VALID_DATE = LocalDateTime.of(2050, 6, 6, 1, 0);
-    private static final String INVALID_VENDOR_CODE = "FOO";
-    private static final String VALID_VENDOR_CODE = "TEAM";
+    private static final LocalDateTime A_DATE_BEFORE_ORDER_START_DATE_TIME = LocalDateTime.of(2049, 1, 1, 0, 0, 0);
+    private static final LocalDateTime A_DATE_AFTER_ORDER_START_END_TIME = LocalDateTime.of(2051, 1, 1, 0, 0);
+    private static final LocalDateTime A_VALID_DATE = LocalDateTime.of(2050, 6, 6, 1, 0);
+    private static final String AN_INVALID_VENDOR_CODE = "FOO";
+    private static final String A_VALID_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
     private OrderParser subject;
-    private OrderDto orderDto;
+    private OrderDto orderDto = new OrderDto();
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         subject = new OrderParser();
-        orderDto = new OrderDto();
-        orderDto.setVendorCode(VALID_VENDOR_CODE);
-        orderDto.setOrderDate(VALID_DATE);
+        orderDto.orderDate = A_VALID_DATE;
+        orderDto.vendorCode = A_VALID_VENDOR_CODE;
     }
 
     @Test
-    void whenOrderDateIsBeforeOrderStart_thenOrderDtoInvalidExceptionIsThrown(){
-        orderDto.setOrderDate(INVALID_DATE_BEFORE);
+    void whenOrderDateIsBeforeOrderStart_thenOrderDtoInvalidExceptionIsThrown() {
+        orderDto.orderDate = A_DATE_BEFORE_ORDER_START_DATE_TIME;
+
         OrderDtoInvalidException thrown = assertThrows(
                 OrderDtoInvalidException.class,
                 ()->subject.parse(orderDto)
@@ -42,8 +43,9 @@ class OrderParserTest {
     }
 
     @Test
-    void whenOrderDateIsAfterOrderStart_thenOrderDtoInvalidExceptionIsThrown(){
-        orderDto.setOrderDate(INVALID_DATE_AFTER);
+    void whenOrderDateIsAfterOrderStart_thenOrderDtoInvalidExceptionIsThrown() {
+        orderDto.orderDate = A_DATE_AFTER_ORDER_START_END_TIME;
+
         OrderDtoInvalidException thrown = assertThrows(
                 OrderDtoInvalidException.class,
                 ()->subject.parse(orderDto)
@@ -53,26 +55,34 @@ class OrderParserTest {
     }
 
     @Test
-    void whenOrderDateIsBetweenValidOrderDate_thenOrderDateIsAssignedToOrder(){
-        subject.parse(orderDto);
-        assertTrue(VALID_DATE.isEqual(subject.getOrder().getOrderDate()));
+    void whenOrderDateIsBetweenValidOrderDate_thenOrderDateIsAssignedToOrder() {
+        orderDto.orderDate = A_VALID_DATE;
+
+        Order order = subject.parse(orderDto);
+
+        assertEquals(A_VALID_DATE, order.getOrderDate());
     }
 
     @Test
-    void whenVendorCodeIsInvalid_thenVendorNotFoundExceptionIsThrown(){
-        orderDto.setVendorCode(INVALID_VENDOR_CODE);
+    void whenVendorCodeIsInvalid_thenVendorNotFoundExceptionIsThrown() {
+        orderDto.vendorCode = AN_INVALID_VENDOR_CODE;
+
         VendorNotFoundException thrown = assertThrows(
                 VendorNotFoundException.class,
                 ()->subject.parse(orderDto)
         );
+
         assertEquals(ExceptionConstants.VENDOR_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
-    void whenVendorCodeIsValid_thenVendorIsAssignedToOrder(){
-        subject.parse(orderDto);
-        assertNotNull(subject.getOrder().getVendor().getName());
-        assertEquals(VALID_VENDOR_CODE, subject.getOrder().getVendor().getName());
+    void whenVendorCodeIsValid_thenVendorIsAssignedToOrder() {
+        orderDto.vendorCode = A_VALID_VENDOR_CODE;
+
+        Order order = subject.parse(orderDto);
+
+        assertNotNull(order.getVendor().getName());
+        assertEquals(A_VALID_VENDOR_CODE, order.getVendor().getName());
     }
 
 }

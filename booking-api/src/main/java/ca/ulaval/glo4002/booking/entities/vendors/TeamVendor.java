@@ -4,8 +4,8 @@ import ca.ulaval.glo4002.booking.constants.VendorConstants;
 
 public class TeamVendor extends Vendor {
 
-    public TeamVendor(){
-        this.id = VendorConstants.VendorCode.TEAM_VENDOR_ID;
-        this.name = VendorConstants.VendorCode.TEAM_VENDOR_CODE;
+    public TeamVendor() {
+        this.id = VendorConstants.TEAM_VENDOR_ID;
+        this.name = VendorConstants.TEAM_VENDOR_CODE;
     }
 }
