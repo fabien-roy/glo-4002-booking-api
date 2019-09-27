@@ -26,6 +26,8 @@ class OrderParserTest {
     void setUp(){
         subject = new OrderParser();
         orderDto = new OrderDto();
+        orderDto.setVendorCode(VALID_VENDOR_CODE);
+        orderDto.setOrderDate(VALID_DATE);
     }
 
     @Test
@@ -52,14 +54,12 @@ class OrderParserTest {
 
     @Test
     void whenOrderDateIsBetweenValidOrderDate_thenOrderDateIsAssignedToOrder(){
-        orderDto.setOrderDate(VALID_DATE);
         subject.parse(orderDto);
         assertTrue(VALID_DATE.isEqual(subject.getOrder().getOrderDate()));
     }
 
     @Test
     void whenVendorCodeIsInvalid_thenVendorNotFoundExceptionIsThrown(){
-        orderDto.setOrderDate(VALID_DATE);
         orderDto.setVendorCode(INVALID_VENDOR_CODE);
         VendorNotFoundException thrown = assertThrows(
                 VendorNotFoundException.class,
@@ -70,8 +70,6 @@ class OrderParserTest {
 
     @Test
     void whenVendorCodeIsValid_thenVendorIsAssignedToOrder(){
-        orderDto.setOrderDate(VALID_DATE);
-        orderDto.setVendorCode(VALID_VENDOR_CODE);
         subject.parse(orderDto);
         assertNotNull(subject.getOrder().getVendor().getName());
         assertEquals(VALID_VENDOR_CODE, subject.getOrder().getVendor().getName());
