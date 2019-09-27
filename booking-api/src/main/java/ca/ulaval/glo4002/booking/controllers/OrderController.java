@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.entities.Order;
-import ca.ulaval.glo4002.booking.exceptions.order.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.entities.orders.Order;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

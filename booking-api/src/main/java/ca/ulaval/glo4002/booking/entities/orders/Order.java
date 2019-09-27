@@ -1,5 +1,6 @@
-package ca.ulaval.glo4002.booking.entities;
+package ca.ulaval.glo4002.booking.entities.orders;
 
+import ca.ulaval.glo4002.booking.entities.Vendor;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
@@ -12,6 +13,5 @@ public class Order {
 	protected Long id;
 
 	private Vendor vendor;
-	private User user;
-	private List<Orderable> orderables;
+	private List<OrderItem> orderItems;
 }
