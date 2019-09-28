@@ -14,7 +14,6 @@ public class OxygenTank extends OrderItem {
 	protected Long id;
 
 	private OxygenCategory category;
-	private LocalDate requestedTime;
 	private LocalDate producedTime;
 
 	@Override
