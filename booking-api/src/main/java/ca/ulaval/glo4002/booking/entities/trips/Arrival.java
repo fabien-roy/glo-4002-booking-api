@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.entities.shuttles.Passenger;
-import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
+import ca.ulaval.glo4002.booking.entities.shuttles.Shuttle;
 
 public class Arrival extends Trip {
 
