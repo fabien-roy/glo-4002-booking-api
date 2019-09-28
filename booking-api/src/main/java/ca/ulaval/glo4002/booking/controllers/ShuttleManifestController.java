@@ -9,29 +9,24 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response.Status;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.entities.shuttles.ShuttleManifest;
 import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
-import ca.ulaval.glo4002.booking.responses.ShuttleManifestResponse;
+import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
 
 @Path("/shuttle-manifests")
 @Produces(MediaType.APPLICATION_JSON)
 public class ShuttleManifestController {
 	
 	@GET
-	public ShuttleManifestResponse getShuttleManifests(@QueryParam("date") String date) {
+	public ShuttleManifest getShuttleManifests(@QueryParam("date") String date) {
 		LocalDate manifestDate = LocalDate.parse(date);
 		
-		if (!dateIsOutsideFestivalDates(manifestDate)) {
+		if (!FestivalDateValidator.dateIsOutsideFestivalDates(manifestDate)) {
 			
 		} else throw new InvalidDateException(Status.BAD_REQUEST);
 		
 		return null;
 		
-	}
-	
-	public boolean dateIsOutsideFestivalDates(LocalDate date) {
-		return date.isBefore(FestivalConstants.Dates.START_DATE) 
-				|| date.isAfter(FestivalConstants.Dates.END_DATE);
 	}
 
 }
