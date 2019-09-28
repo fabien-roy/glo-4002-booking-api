@@ -13,7 +13,4 @@ public class Arrival extends Trip {
 		this.passengers = passengers;
 		this.shuttleName = shuttleName;
 	}
-	
-	
-
 }

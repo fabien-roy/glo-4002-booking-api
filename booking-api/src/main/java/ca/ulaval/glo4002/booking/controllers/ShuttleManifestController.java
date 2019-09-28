@@ -9,10 +9,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.entities.shuttles.ShuttleManifest;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
+import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
 
 @Path("/shuttle-manifests")
@@ -25,7 +25,7 @@ public class ShuttleManifestController {
 		
 		if (!FestivalDateValidator.dateIsOutsideFestivalDates(manifestDate)) {
 			//TODO : manifest generation logic
-		} else throw new InvalidDateException(Status.BAD_REQUEST);
+		} else throw new FestivalException(ExceptionConstants.INVALID_EVENT_DATE_MESSAGE);
 		
 		return Response.ok().entity(new ShuttleManifest(manifestDate, new ArrayList<>(), new ArrayList<>())).build();
 		

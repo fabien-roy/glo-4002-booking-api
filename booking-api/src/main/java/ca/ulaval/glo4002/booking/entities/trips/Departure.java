@@ -14,5 +14,4 @@ public class Departure extends Trip {
 		this.shuttleName = shuttleName;
 		
 	}
-
 }
