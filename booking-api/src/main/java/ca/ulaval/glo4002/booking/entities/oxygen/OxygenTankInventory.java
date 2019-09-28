@@ -31,7 +31,7 @@ public class OxygenTankInventory {
         inventory.replace(categoryID, quantityStored + quantityAdded);
     }
 
-    public Long requestOxygenTank(Long categoryID, Long quantityRequested) {;
+    public Long requestOxygenTank(Long categoryID, Long quantityRequested) {
         Long quantityStored = ofNullable(inventory.get(categoryID))
                 .orElseThrow(OxygenCategoryNotFoundException::new);
         Long quantityInUse = ofNullable(tankInUse.get(categoryID))

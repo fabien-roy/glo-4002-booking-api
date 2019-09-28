@@ -43,7 +43,7 @@ public class OxygenTankInventoryTest {
     }
 
     @Test
-    void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenShouldReturnTheNumberThatRemainsToBeCovered() {
+    void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenShouldReturnTheNumberThatRemainsToBeCovered_andTankInUseIsUpdated() {
         subject.addTankInInventory(Categories.E_ID, 3L);
         Long numberStillNeeded = subject.requestOxygenTank(Categories.E_ID, 5L);
 
@@ -73,6 +73,16 @@ public class OxygenTankInventoryTest {
         OxygenCategoryNotFoundException thrown = assertThrows(
                 OxygenCategoryNotFoundException.class,
                 () -> subject.getInventoryByCategoryID(AN_INVALID_CATEGORY)
+        );
+
+        assertEquals(ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+    }
+
+    @Test
+    void whenGetTankInUseByCategoryIsIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getTankInUseByCategoryID(AN_INVALID_CATEGORY)
         );
 
         assertEquals(ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
