@@ -8,4 +8,8 @@ public class QualityConstants {
     public static final String SUPERNOVA_NAME = "Supernova";
     public static final String SUPERGIANT_NAME = "Supergiant";
     public static final String NEBULA_NAME = "Nebula";
+
+    private QualityConstants(){
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+    }
 }

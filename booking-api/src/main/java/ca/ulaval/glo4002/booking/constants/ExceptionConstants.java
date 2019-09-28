@@ -12,4 +12,12 @@ public class ExceptionConstants {
     public static final String OXYGEN_PRODUCTION_NOT_FOUND_MESSAGE = "Oxygen production not found";
     public static final String OXYGEN_UNIT_TYPE_NOT_FOUND_MESSAGE = "Oxygen unit type not found";
     public static final String ORDER_NOT_FOUND_MESSAGE = "Order not found";
+    public static final String VENDOR_NOT_FOUND_MESSAGE = "Vendor not found";
+    public static final String PASS_DTO_INVALID_MESSAGE = "Invalid pass DTO";
+
+    static final String UTILITY_CLASS_EXCEPTION_MESSAGE = "Utility Class";
+
+    private ExceptionConstants(){
+        throw new IllegalStateException(UTILITY_CLASS_EXCEPTION_MESSAGE);
+    }
 }

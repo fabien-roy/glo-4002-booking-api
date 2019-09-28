@@ -17,6 +17,10 @@ public class ShuttleConstants {
         public static final Double ET_SPACESHIP_PRICE = 100000.0;
         public static final Double MILLENNIUM_FALCON_PRICE = 65000.0;
         public static final Double SPACE_X_PRICE = 30000.0;
+
+        private Categories(){
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        }
     }
 
     public static class Types {
@@ -25,5 +29,13 @@ public class ShuttleConstants {
 
         public static final String DEPARTURE_NAME = "Departure";
         public static final String ARRIVAL_NAME = "Arrival";
+
+        private Types(){
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private ShuttleConstants(){
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
     }
 }

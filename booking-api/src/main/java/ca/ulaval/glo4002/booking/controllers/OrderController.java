@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.controllers;
 
+import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.entities.orders.Order;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
@@ -37,7 +38,9 @@ public class OrderController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addOrder(Order order) {
+    public Response addOrder(OrderDto orderDto) {
+        //TODO : Validate the DTO and create the order object if it's valid
+        Order order = new Order(); // TODO : Remove
         orderRepository.save(order);
         return Response.status(Response.Status.CREATED.getStatusCode()).build();
     }

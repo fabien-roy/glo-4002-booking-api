@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.constants;
 
 public class PassConstants {
+
     public static class Categories {
         public static final Long SUPERNOVA_ID = 0L;
         public static final Long SUPERGIANT_ID = 1L;
@@ -25,6 +26,10 @@ public class PassConstants {
         public static final Long SUPERNOVA_OXYGEN_CATEGORY_ID = OxygenConstants.Categories.E_ID;
         public static final Long SUPERGIANT_OXYGEN_CATEGORY_ID = OxygenConstants.Categories.B_ID;
         public static final Long NEBULA_OXYGEN_CATEGORY_ID = OxygenConstants.Categories.A_ID;
+
+        private Categories(){
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        }
     }
 
     public static class Options {
@@ -33,5 +38,13 @@ public class PassConstants {
 
         public static final String PACKAGE_NAME = "Package";
         public static final String SINGLE_NAME = "Single pass";
+
+        private Options(){
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        }
+    }
+
+    private PassConstants(){
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
     }
 }

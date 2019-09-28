@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.entitites.shuttles;
+package ca.ulaval.glo4002.booking.entities.shuttles;
 
 import ca.ulaval.glo4002.booking.entities.qualities.SupergiantQuality;
 import ca.ulaval.glo4002.booking.entities.shuttles.categories.MillenniumFalconShuttleCategory;

@@ -23,4 +23,8 @@ public abstract class PassCategory implements Qualifiable {
     public Quality getQuality() {
         return quality;
     }
+
+    public Map<PassOption, Double> getPricePerOption() {
+        return pricePerOption;
+    }
 }
