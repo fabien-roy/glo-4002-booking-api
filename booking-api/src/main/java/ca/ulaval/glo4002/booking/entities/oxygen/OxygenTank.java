@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
@@ -15,6 +16,10 @@ public class OxygenTank extends OrderItem {
 
 	private OxygenCategory category;
 	private LocalDate producedTime;
+
+	public OxygenTank(PassCategory passCategory, int i, LocalDate now) {
+
+	}
 
 	@Override
 	public Double getPrice() {
