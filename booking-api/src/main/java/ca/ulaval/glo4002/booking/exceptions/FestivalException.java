@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
-import javax.ws.rs.core.Response;
-
 public class FestivalException extends RuntimeException {
     public FestivalException(){
         super();
