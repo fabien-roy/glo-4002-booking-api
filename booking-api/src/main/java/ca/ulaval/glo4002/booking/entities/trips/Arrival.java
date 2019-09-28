@@ -8,9 +8,9 @@ import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
 
 public class Arrival extends Trip {
 
-	public Arrival(LocalDate date, List<Passenger> passengers, ShuttleCategory shuttleName) {
+	public Arrival(LocalDate date, List<Passenger> passengers, ShuttleCategory shuttleCategory) {
 		this.date = date;
 		this.passengers = passengers;
-		this.shuttleName = shuttleName;
+		this.shuttleCategory = shuttleCategory;
 	}
 }

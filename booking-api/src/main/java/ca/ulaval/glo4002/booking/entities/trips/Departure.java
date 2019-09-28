@@ -8,10 +8,10 @@ import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
 
 public class Departure extends Trip {
 	
-	public Departure(LocalDate date, List<Passenger> passengers, ShuttleCategory shuttleName) {
+	public Departure(LocalDate date, List<Passenger> passengers, ShuttleCategory shuttleCategory) {
 		this.date = date;
 		this.passengers = passengers;
-		this.shuttleName = shuttleName;
+		this.shuttleCategory = shuttleCategory;
 		
 	}
 }

@@ -9,6 +9,6 @@ import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
 public abstract class Trip {
 
 	protected LocalDate date;
-	protected ShuttleCategory shuttleName;
+	protected ShuttleCategory shuttleCategory;
 	protected List<Passenger> passengers;
 }
