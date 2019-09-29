@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.domainObjects.vendors.Vendor;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
+import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -56,10 +57,8 @@ public class OrderParser implements Parser<Order, OrderDto, OrderEntity> {
         );
     }
 
-    // TODO : Use FestivalDateChecker from TRANS
     private void validateOrderDate(LocalDateTime orderDate){
-        if(orderDate.isBefore(FestivalConstants.Dates.ORDER_START_DATE_TIME)
-           || orderDate.isAfter(FestivalConstants.Dates.ORDER_END_DATE_TIME)){
+        if (FestivalDateValidator.isOutsideOrderDates(orderDate)){
             throw new OrderDtoInvalidException();
         }
     }

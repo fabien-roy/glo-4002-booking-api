@@ -24,7 +24,7 @@ class PassTest {
     }
 
     @Test
-    void whenPassIsCreated_thenNewUniqueIdIsAssigned(){
+    void whenPassIsCreated_thenIdIsAssigned(){
         assertNotNull(subject.getId());
     }
 

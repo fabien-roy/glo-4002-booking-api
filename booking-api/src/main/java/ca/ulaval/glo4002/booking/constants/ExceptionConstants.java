@@ -24,8 +24,9 @@ public class ExceptionConstants {
 
     public static final String UTILITY_CLASS_MESSAGE = "Utility class";
     public static final String UNUSED_METHOD_MESSAGE = "Unused method";
+    public static final String INVALID_EVENT_DATE_MESSAGE = "Invalid event date";
 
-    private ExceptionConstants(){
+    private ExceptionConstants() {
         throw new IllegalStateException(UTILITY_CLASS_MESSAGE);
     }
 }

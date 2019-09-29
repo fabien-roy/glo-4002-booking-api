@@ -9,6 +9,7 @@ import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
+import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -92,10 +93,8 @@ public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
         return new Pass(id, category, option, eventDate);
     }
 
-    // TODO : Use FestivalDateChecker from TRANS
     private void validateEventDate(LocalDate eventDate) {
-        if (eventDate.isBefore(FestivalConstants.Dates.START_DATE)
-            || eventDate.isAfter(FestivalConstants.Dates.END_DATE)) {
+        if (FestivalDateValidator.isOutsideFestivalDates(eventDate)) {
             throw new PassDtoInvalidException();
         }
     }
