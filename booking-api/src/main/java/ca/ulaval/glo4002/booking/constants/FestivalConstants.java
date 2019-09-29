@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.constants;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
