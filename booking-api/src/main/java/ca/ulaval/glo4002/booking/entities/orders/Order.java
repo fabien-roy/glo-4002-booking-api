@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Order implements ParsableEntity {
@@ -14,20 +15,23 @@ public class Order implements ParsableEntity {
 	protected Long id;
     private LocalDateTime orderDate;
     private Vendor vendor;
+    private List<OrderItem> orderItems;
 
-    public void setOrderDate(LocalDateTime orderDate) {
+    public Order(Long id, LocalDateTime orderDate, Vendor vendor) {
+        this.id = id;
         this.orderDate = orderDate;
+        this.vendor = vendor;
     }
 
     public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
-    public void setVendor(Vendor vendor) {
-        this.vendor = vendor;
-    }
-
     public Vendor getVendor(){
         return this.vendor;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 }

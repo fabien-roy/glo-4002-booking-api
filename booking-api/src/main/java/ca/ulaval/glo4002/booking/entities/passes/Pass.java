@@ -19,10 +19,10 @@ public class Pass extends OrderItem implements ParsableEntity {
     private PassOption option;
     private LocalDate eventDate;
 
-    public Pass(PassCategory passCategory, PassOption passOption, Long id, LocalDate eventDate) {
+    public Pass(Long id, PassCategory category, PassOption option, LocalDate eventDate) {
         this.id = id;
-        this.category = passCategory;
-        this.option = passOption;
+        this.category = category;
+        this.option = option;
         this.eventDate = eventDate;
     }
 

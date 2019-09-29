@@ -20,7 +20,7 @@ class PassTest {
     void setUp() {
         PassCategory passCategory = mock(PassCategory.class);
         PassOption passOption = mock(PassOption.class);
-        subject = new Pass(passCategory, passOption, aId, aEventDate);
+        subject = new Pass(aId, passCategory, passOption, aEventDate);
     }
 
     @Test

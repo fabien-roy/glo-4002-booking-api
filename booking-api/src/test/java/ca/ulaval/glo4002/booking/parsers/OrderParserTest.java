@@ -18,7 +18,7 @@ class OrderParserTest {
     private static final LocalDateTime A_DATE_BEFORE_ORDER_START_DATE_TIME = LocalDateTime.of(2049, 1, 1, 0, 0, 0);
     private static final LocalDateTime A_DATE_AFTER_ORDER_START_END_TIME = LocalDateTime.of(2051, 1, 1, 0, 0);
     private static final LocalDateTime A_VALID_DATE = LocalDateTime.of(2050, 6, 6, 1, 0);
-    private static final String AN_INVALID_VENDOR_CODE = "FOO";
+    private static final String AN_INVALID_VENDOR_CODE = "An invalid vendor code";
     private static final String A_VALID_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
     private OrderParser subject;
     private OrderDto orderDto = new OrderDto();

@@ -39,7 +39,7 @@ public class PassParser implements Parser<List<Pass>, PassDto> {
     private Pass parseSingle(Long id, PassCategory category, PassOption option, LocalDate eventDate) {
         validateEventDate(eventDate);
 
-        return new Pass(category, option, id, eventDate);
+        return new Pass(id, category, option, eventDate);
     }
 
     private void validateEventDate(LocalDate eventDate) {
