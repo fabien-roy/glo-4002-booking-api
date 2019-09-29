@@ -22,8 +22,6 @@ public class OxygenTankInventory {
         inventory.put(OxygenConstants.Categories.A_ID, 0L);
     }
 
-
-
     public void addTankInInventory(Long categoryID, Long quantityAdded) {
         Long quantityStored = ofNullable(inventory.get(categoryID))
                 .orElseThrow(OxygenCategoryNotFoundException::new);
