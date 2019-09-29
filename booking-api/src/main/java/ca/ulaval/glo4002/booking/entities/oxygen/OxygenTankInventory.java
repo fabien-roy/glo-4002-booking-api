@@ -39,8 +39,7 @@ public class OxygenTankInventory {
         if(numberOfTankNeeded < 0) {
             tankInUse.replace(categoryID, quantityStored);
             return abs(numberOfTankNeeded);
-        }
-        else {
+        } else {
             tankInUse.replace(categoryID, quantityInUse + quantityRequested);
             return 0L;
         }

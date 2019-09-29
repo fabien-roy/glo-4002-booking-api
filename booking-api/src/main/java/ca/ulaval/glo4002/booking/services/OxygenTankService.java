@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class OxygenTankServices {
+public class OxygenTankService {
 
     public OxygenCategory getOxygenCategoryForTimeTable(OxygenCategory category, LocalDate timeRequested) {
         Long timeToProduce = category.getProduction().getProductionTime().toDays();
@@ -18,12 +18,10 @@ public class OxygenTankServices {
 
         if(timeReady.isBefore(FestivalConstants.Dates.START_DATE)) {
             return category;
-        }
-        else if(timeRequested.plus(10, DAYS).isBefore(FestivalConstants.Dates.START_DATE)){
+        } else if(timeRequested.plus(10, DAYS).isBefore(FestivalConstants.Dates.START_DATE)){
             return  oxygenCategoryBuilder.buildById(OxygenConstants.Categories.B_ID);
-        }
-        else {
-            return oxygenCategoryBuilder.buildById(OxygenConstants.Categories.E_ID);
+        } else {
+        	return oxygenCategoryBuilder.buildById(OxygenConstants.Categories.E_ID);
         }
     }
 }

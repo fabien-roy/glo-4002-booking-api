@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
-import ca.ulaval.glo4002.booking.services.OxygenTankServices;
+import ca.ulaval.glo4002.booking.services.OxygenTankService;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class OxygenTank extends OrderItem {
 	private OxygenCategory category;
 	private LocalDate timeProduced;
 	private LocalDate timeRequested;
-	private OxygenTankServices oxygenTankServices = new OxygenTankServices();
+	private OxygenTankService oxygenTankServices = new OxygenTankService();
 
 	public OxygenTank(OxygenCategory category, LocalDate timeRequested) {
 		if(timeRequested.isAfter(FestivalConstants.Dates.START_DATE)) {
