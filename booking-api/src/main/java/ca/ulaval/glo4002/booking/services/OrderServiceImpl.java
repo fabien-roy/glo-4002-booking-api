@@ -1,15 +1,14 @@
 package ca.ulaval.glo4002.booking.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -23,29 +22,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(Long id) {
-        Optional<OrderEntity> orderEntity = orderRepository.findById(id);
+        OrderEntity orderEntity = orderRepository.findById(id)
+        		.orElseThrow(OrderNotFoundException::new);
 
-        if (orderEntity.isPresent()) {
-            return orderParser.parseEntity(orderEntity.get());
-        } else {
-            throw new OrderNotFoundException();
-        }
+        return orderParser.parseEntity(orderEntity);
     }
 
     @Override
     public Iterable<Order> findAll() {
         List<Order> orders = new ArrayList<>();
 
-        orderRepository.findAll().forEach(orderEntity -> orders.add(orderParser.parseEntity(orderEntity)));
+        orderRepository.findAll()
+        .forEach(orderEntity -> orders.add(orderParser.parseEntity(orderEntity)));
 
         return orders;
     }
 
     @Override
     public Order save(Order order) {
-        OrderEntity orderEntity = orderParser.toEntity(order);
-
-        orderRepository.save(orderEntity);
+    	
+        orderRepository.save(orderParser.toEntity(order));
 
         return order;
     }
