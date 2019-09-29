@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +50,7 @@ public class OxygenTankTest {
                 .buildById(OxygenConstants.Categories.A_ID), LocalDate.parse("2050-07-05") );
 
         assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.B_ID);
+        assertTrue(tank.getTimeProduced().isBefore(FestivalConstants.Dates.START_DATE));
     }
 
     @Test
@@ -56,7 +58,10 @@ public class OxygenTankTest {
         OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
                 .buildById(OxygenConstants.Categories.A_ID), LocalDate.parse("2050-07-11") );
 
-        assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.B_ID);
+        System.out.println(tank.getTimeProduced());
+
+        assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.E_ID);
+        assertTrue(tank.getTimeProduced().isBefore(FestivalConstants.Dates.START_DATE));
     }
 
 
