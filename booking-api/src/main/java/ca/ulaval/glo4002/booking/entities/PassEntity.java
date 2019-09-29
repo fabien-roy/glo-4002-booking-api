@@ -1,15 +1,18 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 public class PassEntity {
 
-    @javax.persistence.Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
     public Long categoryId;
     public Long optionId;
     public String eventDate;
+    @OneToOne(mappedBy = "pass")
+    public OrderItemEntity orderItem;
 
     public PassEntity() {
     }

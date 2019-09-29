@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class PassRepositoryImpl implements PassRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public PassRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;

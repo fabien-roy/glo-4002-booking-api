@@ -68,6 +68,7 @@ public class PassRepositoryTest {
 
     @Test
     public void saveAll_shouldSavePasses() {
+        context.setUpEntityManagerForSaveAll();
         List<PassEntity> newPasses = new ArrayList<>(Collections.singletonList(context.aNonExistentPass));
 
         subject.saveAll(newPasses);

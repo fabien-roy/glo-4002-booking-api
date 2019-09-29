@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class OrderRepositoryImpl implements OrderRepository {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public OrderRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;

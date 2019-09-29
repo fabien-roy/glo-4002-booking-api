@@ -1,16 +1,19 @@
 package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import java.util.Arrays;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class OrderRepositoryContext {
 
-    private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ca.ulaval.glo4002.booking.noPersistence");
     private final static String A_ORDER_DATE_TIME = FestivalConstants.Dates.ORDER_START_DATE_TIME.toString();
     private final static Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     public EntityManager entityManager;
@@ -47,11 +50,18 @@ public class OrderRepositoryContext {
     }
 
     private void setUpEntityManager() {
-        entityManager = entityManagerFactory.createEntityManager();
+        entityManager = mock(EntityManager.class);
+        TypedQuery<OrderEntity> createQuery = mock(TypedQuery.class);
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(aOrder);
-        entityManager.persist(anotherOrder);
-        entityManager.getTransaction().commit();
+        when(createQuery.getResultList()).thenReturn(Arrays.asList(aOrder, anotherOrder));
+        when(entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OrderEntity.class)).thenReturn(createQuery);
+        when(entityManager.find(OrderEntity.class, A_ORDER_ID)).thenReturn(aOrder);
+        when(entityManager.find(OrderEntity.class, ANOTHER_ORDER_ID)).thenReturn(anotherOrder);
+        when(entityManager.find(OrderEntity.class, A_NON_EXISTANT_ORDER_ID)).thenReturn(null);
+    }
+
+    public void setUpEntityManagerForSave() {
+        aNonExistentOrder.id = null;
+        when(entityManager.find(OrderEntity.class, A_NON_EXISTANT_ORDER_ID)).thenReturn(aNonExistentOrder);
     }
 }

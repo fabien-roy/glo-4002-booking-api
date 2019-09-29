@@ -6,8 +6,7 @@ import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.PassServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import ca.ulaval.glo4002.booking.services.PassService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,16 +17,12 @@ import java.util.List;
 @Path("/orders")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private PassServiceImpl passService;
-    @Autowired
-    private OrderParser orderParser;
-    @Autowired
-    private PassParser passParser;
+    private final OrderService orderService;
+    private final PassService passService;
+    private final OrderParser orderParser;
+    private final PassParser passParser;
 
-    public OrderController(OrderService orderService, PassServiceImpl passService, OrderParser orderParser, PassParser passParser) {
+    public OrderController(OrderService orderService, PassService passService, OrderParser orderParser, PassParser passParser) {
         this.orderService = orderService;
         this.passService = passService;
         this.orderParser = orderParser;

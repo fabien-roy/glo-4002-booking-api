@@ -1,15 +1,19 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class OrderEntity {
 
-    @javax.persistence.Id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
     public String orderDate;
     public Long vendorId;
-
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    List<OrderItemEntity> orderItems = new ArrayList<>();
 
     public OrderEntity() {
 

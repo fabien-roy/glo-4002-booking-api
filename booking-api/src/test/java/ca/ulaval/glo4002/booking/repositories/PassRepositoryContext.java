@@ -2,15 +2,18 @@ package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
+import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import java.util.Arrays;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PassRepositoryContext {
 
-    private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ca.ulaval.glo4002.booking.noPersistence");
     private final static String A_PASS_EVENT_DATE = FestivalConstants.Dates.START_DATE.toString();
     public EntityManager entityManager;
     public PassEntity aPass;
@@ -49,11 +52,18 @@ public class PassRepositoryContext {
     }
 
     private void setUpEntityManager() {
-        entityManager = entityManagerFactory.createEntityManager();
+        entityManager = mock(EntityManager.class);
+        TypedQuery<PassEntity> createQuery = mock(TypedQuery.class);
 
-        entityManager.getTransaction().begin();
-        entityManager.persist(aPass);
-        entityManager.persist(anotherPass);
-        entityManager.getTransaction().commit();
+        when(createQuery.getResultList()).thenReturn(Arrays.asList(aPass, anotherPass));
+        when(entityManager.createQuery(RepositoryConstants.PASS_FIND_ALL_QUERY, PassEntity.class)).thenReturn(createQuery);
+        when(entityManager.find(PassEntity.class, A_PASS_ID)).thenReturn(aPass);
+        when(entityManager.find(PassEntity.class, ANOTHER_PASS_ID)).thenReturn(anotherPass);
+        when(entityManager.find(PassEntity.class, A_NON_EXISTANT_PASS_ID)).thenReturn(null);
+    }
+
+    public void setUpEntityManagerForSaveAll() {
+        aNonExistentPass.id = null;
+        when(entityManager.find(PassEntity.class, A_NON_EXISTANT_PASS_ID)).thenReturn(aNonExistentPass);
     }
 }

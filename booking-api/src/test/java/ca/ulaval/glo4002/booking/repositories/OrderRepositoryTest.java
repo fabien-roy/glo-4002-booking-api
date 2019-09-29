@@ -63,6 +63,8 @@ public class OrderRepositoryTest {
 
     @Test
     public void save_shouldSaveOrder() {
+        context.setUpEntityManagerForSave();
+
         subject.save(context.aNonExistentOrder);
         OrderEntity order = subject.findById(OrderRepositoryContext.A_NON_EXISTANT_ORDER_ID).get();
 

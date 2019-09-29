@@ -11,8 +11,8 @@ import java.util.*;
 
 public class PassServiceImpl implements PassService {
 
-    private PassRepository passRepository;
-    private PassParser passParser;
+    private final PassRepository passRepository;
+    private final PassParser passParser;
 
     public PassServiceImpl(PassRepository passRepository) {
         this.passRepository = passRepository;

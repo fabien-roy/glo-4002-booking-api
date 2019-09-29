@@ -1,8 +1,5 @@
 package ca.ulaval.glo4002.booking.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
@@ -10,10 +7,13 @@ import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
-    private OrderParser orderParser;
+    private final OrderRepository orderRepository;
+    private final OrderParser orderParser;
 
     public OrderServiceImpl(OrderRepository orderRepository) {
         this.orderRepository = orderRepository;
