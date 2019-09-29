@@ -6,5 +6,7 @@ public interface Service<T, ID> {
 
     Iterable<T> findAll();
 
-    Iterable<T> saveAll(Iterable<T> passes);
+    T save(T object);
+
+    Iterable<T> saveAll(Iterable<T> objects);
 }

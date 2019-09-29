@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 
@@ -10,7 +11,7 @@ import javax.persistence.Persistence;
 public class PassRepositoryContext {
 
     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ca.ulaval.glo4002.booking.noPersistence");
-    private final static String A_PASS_EVENT_DATE = "2050-07-17";
+    private final static String A_PASS_EVENT_DATE = FestivalConstants.Dates.START_DATE.toString();
     public EntityManager entityManager;
     public PassEntity aPass;
     public PassEntity anotherPass;

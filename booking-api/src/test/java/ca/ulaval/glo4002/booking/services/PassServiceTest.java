@@ -15,13 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PassServiceTest {
 
-    private PassService subject;
+    private PassServiceImpl subject;
     private PassServiceContext context;
 
     @BeforeEach
     public void setUp() {
         context = new PassServiceContext();
-        subject = new PassService(context.repository);
+        subject = new PassServiceImpl(context.repository);
     }
 
     @Test
@@ -43,16 +43,13 @@ public class PassServiceTest {
 
     @Test
     public void findAll_shouldReturnCorrectPasses() {
-        List<Pass> passesAsList = new ArrayList<>();
+        List<Pass> passes = new ArrayList<>();
 
-        Iterable<Pass> passes = subject.findAll();
-        for (Pass pass : passes) {
-            passesAsList.add(pass);
-        }
+        subject.findAll().forEach(passes::add);
 
-        assertEquals(2, passesAsList.size());
-        assertTrue(passesAsList.contains(context.aPass));
-        assertTrue(passesAsList.contains(context.anotherPass));
+        assertEquals(2, passes.size());
+        assertTrue(passes.contains(context.aPass));
+        assertTrue(passes.contains(context.anotherPass));
     }
 
     @Test
@@ -61,7 +58,7 @@ public class PassServiceTest {
         List<Pass> newPasses = new ArrayList<>(Collections.singletonList(context.aNonExistentPass));
 
         subject.saveAll(newPasses);
-        Pass pass = subject.findById(PassRepositoryContext.A_NON_EXISTANT_PASS_ID);
+        Pass pass = subject.findById(PassServiceContext.A_NON_EXISTANT_PASS_ID);
 
         assertEquals(context.aNonExistentPass, pass);
     }

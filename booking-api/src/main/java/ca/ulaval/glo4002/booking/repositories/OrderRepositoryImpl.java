@@ -1,53 +1,51 @@
 package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
-import ca.ulaval.glo4002.booking.entities.PassEntity;
+import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
 
-public class PassRepositoryImpl implements PassRepository {
+public class OrderRepositoryImpl implements OrderRepository {
 
     private EntityManager entityManager;
 
-    public PassRepositoryImpl(EntityManager entityManager) {
+    public OrderRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public Optional<PassEntity> findById(Long id) {
-        PassEntity passEntity = entityManager.find(PassEntity.class, id);
+    public Optional<OrderEntity> findById(Long id) {
+        OrderEntity orderEntity = entityManager.find(OrderEntity.class, id);
 
-        if (passEntity == null) {
+        if (orderEntity == null) {
             throw new PassNotFoundException();
         }
 
-        return Optional.of(passEntity);
+        return Optional.of(orderEntity);
     }
 
     @Override
-    public Iterable<PassEntity> findAll() {
-        return entityManager.createQuery(RepositoryConstants.PASS_FIND_ALL_QUERY, PassEntity.class).getResultList();
+    public Iterable<OrderEntity> findAll() {
+        return entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OrderEntity.class).getResultList();
     }
 
     @Override
-    public <S extends PassEntity> Iterable<S> saveAll(Iterable<S> passes) {
-        passes.forEach(pass -> {
-            if (pass.id == null) {
-                entityManager.persist(pass);
-            } else {
-                throw new PassAlreadyCreatedException();
-            }
-        });
+    public <S extends OrderEntity> S save(S order) {
+        if (order.id == null) {
+            entityManager.persist(order);
+        } else {
+            throw new OrderAlreadyCreatedException();
+        }
 
-        return passes;
+        return order;
     }
 
     @Override
-    public <S extends PassEntity> S save(S pass) {
+    public <S extends OrderEntity> Iterable<S> saveAll(Iterable<S> orders) {
         throw new UnusedMethodException();
     }
 
@@ -57,7 +55,7 @@ public class PassRepositoryImpl implements PassRepository {
     }
 
     @Override
-    public Iterable<PassEntity> findAllById(Iterable<Long> passes) {
+    public Iterable<OrderEntity> findAllById(Iterable<Long> orders) {
         throw new UnusedMethodException();
     }
 
@@ -72,12 +70,12 @@ public class PassRepositoryImpl implements PassRepository {
     }
 
     @Override
-    public void delete(PassEntity pass) {
+    public void delete(OrderEntity order) {
         throw new UnusedMethodException();
     }
 
     @Override
-    public void deleteAll(Iterable<? extends PassEntity> passes) {
+    public void deleteAll(Iterable<? extends OrderEntity> orders) {
         throw new UnusedMethodException();
     }
 

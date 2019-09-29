@@ -45,16 +45,13 @@ public class PassRepositoryTest {
 
     @Test
     public void findAll_shouldReturnCorrectPasses() {
-        List<PassEntity> passesAsList = new ArrayList<>();
+        List<PassEntity> passes = new ArrayList<>();
 
-        Iterable<PassEntity> passes = subject.findAll();
-        for (PassEntity pass : passes) {
-            passesAsList.add(pass);
-        }
+        subject.findAll().forEach(passes::add);
 
-        assertEquals(2, passesAsList.size());
-        assertTrue(passesAsList.contains(context.aPass));
-        assertTrue(passesAsList.contains(context.anotherPass));
+        assertEquals(2, passes.size());
+        assertTrue(passes.contains(context.aPass));
+        assertTrue(passes.contains(context.anotherPass));
     }
 
     @Test

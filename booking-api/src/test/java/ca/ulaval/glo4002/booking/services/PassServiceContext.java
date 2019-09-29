@@ -2,12 +2,12 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
-import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 public class PassServiceContext {
 
-    private final static LocalDate A_PASS_EVENT_DATE = LocalDate.of(2050, 7, 17);
+    private final static LocalDate A_PASS_EVENT_DATE = FestivalConstants.Dates.START_DATE;
     private final static PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
     private final static PassOptionBuilder optionBuilder = new PassOptionBuilder();
     private PassParser parser = new PassParser();
@@ -65,7 +65,7 @@ public class PassServiceContext {
     }
 
     private void setUpRepository() {
-        repository = mock(PassRepositoryImpl.class);
+        repository = mock(PassRepository.class);
 
         when(repository.findById(A_PASS_ID)).thenReturn(Optional.of(aPassEntity));
         when(repository.findById(ANOTHER_PASS_ID)).thenReturn(Optional.of(anotherPassEntity));

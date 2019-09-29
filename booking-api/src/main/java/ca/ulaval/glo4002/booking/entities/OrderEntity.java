@@ -8,5 +8,9 @@ public class OrderEntity {
     @javax.persistence.Id
 	public Long id;
 
-    // TODO
+    // TODO : OrderEntity data
+
+    public OrderEntity(Long id) {
+
+    }
 }
