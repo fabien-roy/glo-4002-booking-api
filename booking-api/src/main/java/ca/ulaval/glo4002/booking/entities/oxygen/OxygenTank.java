@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
@@ -9,6 +10,8 @@ import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import java.time.LocalDate;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Entity
 public class OxygenTank extends OrderItem {
@@ -25,7 +28,7 @@ public class OxygenTank extends OrderItem {
 			throw new InvalidEventDateException();
 		}
 		
-		this.category = generateTheCorrectCategoryForTheTimeTable(category, timeRequested);
+		this.category = getOxygenCategoryForTimeTable(category, timeRequested);
 		this.timeRequested = timeRequested;
 		this.timeProduced = timeRequested.plusDays(this.category.getProduction().getProductionTime().toDays());
 	}
@@ -47,19 +50,20 @@ public class OxygenTank extends OrderItem {
 		return timeProduced;
 	}
 
-	private OxygenCategory generateTheCorrectCategoryForTheTimeTable(OxygenCategory category, LocalDate timeRequested) {
+	private OxygenCategory getOxygenCategoryForTimeTable(OxygenCategory category, LocalDate timeRequested) {
 		Long timeToProduce = category.getProduction().getProductionTime().toDays();
-		LocalDate timeProduced = timeRequested.plusDays(timeToProduce);
+		LocalDate timeReady = timeRequested.plusDays(timeToProduce);
 		OxygenCategoryBuilder oxygenCategoryBuilder = new OxygenCategoryBuilder();
 
-		if(timeProduced.isAfter(FestivalConstants.Dates.START_DATE)){
-			//TODO : faire ça plus proprement, pas de -1, (pas de recursion ?)
-			category = oxygenCategoryBuilder.buildById(category.getId() - 1);
-			category = generateTheCorrectCategoryForTheTimeTable(category, timeRequested);
+		if(timeReady.isBefore(FestivalConstants.Dates.START_DATE)) {
 			return category;
+		}
+		else if(timeRequested.plus(10, DAYS).isBefore(FestivalConstants.Dates.START_DATE)){
+			return  oxygenCategoryBuilder.buildById(OxygenConstants.Categories.B_ID);
 		}
 		else {
-			return category;
+			return oxygenCategoryBuilder.buildById(OxygenConstants.Categories.E_ID);
 		}
 	}
+
 }
