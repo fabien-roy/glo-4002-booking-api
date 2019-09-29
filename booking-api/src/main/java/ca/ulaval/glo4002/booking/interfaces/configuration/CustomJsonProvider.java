@@ -36,4 +36,8 @@ public class CustomJsonProvider extends JacksonJaxbJsonProvider {
         super();
         setMapper(mapper);
     }
+
+    public static ObjectMapper getMapper(){
+        return mapper;
+    }
 }
