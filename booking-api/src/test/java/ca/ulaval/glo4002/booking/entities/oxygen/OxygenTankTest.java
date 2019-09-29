@@ -1,8 +1,11 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +18,9 @@ public class OxygenTankTest {
 
     private OxygenCategoryBuilder oxygenCategoryBuilder;
     private final LocalDate VALID_DATE = FestivalConstants.Dates.START_DATE.minus(30, DAYS);
-    private final  LocalDate VALID_DATE_15DAYS_BEFORE_START = FestivalConstants.Dates.START_DATE.minus(15, DAYS);
-    private final  LocalDate VALID_DATE_5DAYS_BEFORE_START = FestivalConstants.Dates.START_DATE.minus(5, DAYS);
+    private final LocalDate VALID_DATE_15DAYS_BEFORE_START = FestivalConstants.Dates.START_DATE.minus(15, DAYS);
+    private final LocalDate VALID_DATE_5DAYS_BEFORE_START = FestivalConstants.Dates.START_DATE.minus(5, DAYS);
+    private final LocalDate INVALID_DATE = FestivalConstants.Dates.START_DATE.plus(1, DAYS);
 
     @BeforeEach
     void setup() {
@@ -65,5 +69,23 @@ public class OxygenTankTest {
         assertTrue(tank.getTimeProduced().isBefore(FestivalConstants.Dates.START_DATE));
     }
 
+    @Test
+    void oxygenCategory_shouldBeCategoryE_whenOrderIsOnTheStartingDateOfFestival() {
+        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
+                .buildById(OxygenConstants.Categories.A_ID), FestivalConstants.Dates.START_DATE);
+
+        assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
+        assertTrue(tank.getTimeProduced().isEqual(FestivalConstants.Dates.START_DATE));
+    }
+
+    @Test
+    void createOxygenTank_afterTheStartingDateOfFestival_shouldThrowInvalidEventDateException() {
+        InvalidEventDateException thrown = assertThrows(
+                InvalidEventDateException.class,
+                () -> new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), INVALID_DATE)
+        );
+
+        assertEquals(ExceptionConstants.INVALID_EVENT_DATE_MESSAGE, thrown.getMessage());
+    }
 
 }
