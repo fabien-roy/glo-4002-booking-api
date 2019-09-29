@@ -1,11 +1,14 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
+import ca.ulaval.glo4002.booking.builders.Builder;
+import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
 import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
-import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
+import java.time.Duration;
 import java.time.LocalDate;
 
 @Entity
@@ -15,10 +18,12 @@ public class OxygenTank extends OrderItem {
 	protected Long id;
 
 	private OxygenCategory category;
-	private LocalDate producedTime;
+	private LocalDate timeProduced;
+	private LocalDate timeRequested;
 
-	public OxygenTank(PassCategory passCategory, int i, LocalDate now) {
-
+	public OxygenTank(OxygenCategory category, LocalDate timeRequested) {
+		this.category = getCategoryForExpectedTimeTable(category, timeRequested);
+		this.timeRequested = timeRequested;
 	}
 
 	@Override
@@ -27,4 +32,19 @@ public class OxygenTank extends OrderItem {
 	}
 
 	public OxygenCategory getOxygenTankCategory() { return category; }
+
+	private OxygenCategory getCategoryForExpectedTimeTable(OxygenCategory category, LocalDate timeRequested) {
+		Long timeToProduce = category.getProduction().getProductionTime().toDays();
+		LocalDate timeProduced = timeRequested.plusDays(timeToProduce);
+		OxygenCategoryBuilder oxygenCategoryBuilder = new OxygenCategoryBuilder();
+
+		if(timeProduced.isAfter(FestivalConstants.Dates.START_DATE)){
+			category = oxygenCategoryBuilder.buildById(category.getId() - 1);
+			getCategoryForExpectedTimeTable(category, timeRequested);
+			return category;
+		}
+		else {
+			return category;
+		}
+	}
 }

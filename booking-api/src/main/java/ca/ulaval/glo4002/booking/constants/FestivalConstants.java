@@ -10,7 +10,7 @@ public class FestivalConstants {
         private final static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FestivalConstants.Dates.FORMAT);
         public static final LocalDate START_DATE = LocalDate.parse("2050-07-17", dateTimeFormatter);
         public static final LocalDate END_DATE = LocalDate.parse("2050-07-24", dateTimeFormatter);
-        public static final Integer TOTAL_DURATION_IN_DAYS = 8;
+        public static final Long TOTAL_DURATION_IN_DAYS = 8L;
         public static final String FORMAT = "yyyy-MM-dd";
 
         private Dates() {
