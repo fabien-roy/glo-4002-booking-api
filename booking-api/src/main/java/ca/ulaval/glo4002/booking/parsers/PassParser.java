@@ -3,72 +3,98 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
-import ca.ulaval.glo4002.booking.dto.PassDto;
-import ca.ulaval.glo4002.booking.entities.passes.Pass;
-import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
-import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.exceptions.FestivalException;
+import ca.ulaval.glo4002.booking.dto.PassesDto;
+import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
+import ca.ulaval.glo4002.booking.entities.PassEntity;
+import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
+import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class PassParser implements Parser<List<Pass>, PassDto> {
+public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
 
-    private PassCategoryBuilder categoryBuilder;
-    private PassOptionBuilder optionBuilder;
-    private final static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FestivalConstants.Dates.FORMAT);
-
-    public void setBuilders(PassCategoryBuilder categoryBuilder, PassOptionBuilder optionBuilder) {
-        this.categoryBuilder = categoryBuilder;
-        this.optionBuilder = optionBuilder;
-    }
+    private PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
+    private PassOptionBuilder optionBuilder = new PassOptionBuilder();
 
     @Override
-    public List<Pass> parse(PassDto dto) throws PassDtoInvalidException {
+    public List<Pass> parseDto(PassesDto dto) {
         if (dto.passNumber < 1L) {
             throw new PassDtoInvalidException();
         }
 
-        PassCategory category;
-        PassOption option;
-
-        try {
-            category = categoryBuilder.buildByName(dto.passCategory);
-            option = optionBuilder.buildByName(dto.passOption);
-        } catch (FestivalException exception) {
-            throw new PassDtoInvalidException();
-        }
+        PassCategory category = categoryBuilder.buildByName(dto.passCategory);
+        PassOption option = optionBuilder.buildByName(dto.passOption);
 
         List<Pass> passes = new ArrayList<>();
 
-        for (String eventDate : dto.eventDates) {
+        for (LocalDate eventDate : dto.eventDates) {
             passes.add(parseSingle(dto.passNumber, category, option, eventDate));
         }
 
         return passes;
     }
 
-    private Pass parseSingle(Long id, PassCategory category, PassOption option, String eventDate) throws PassDtoInvalidException {
-        LocalDate parsedEventDate;
+    @Override
+    public List<Pass> parseEntity(PassEntity entity) {
+        PassCategory category = categoryBuilder.buildById(entity.categoryId);
+        PassOption option = optionBuilder.buildById(entity.optionId);
 
-        try {
-            parsedEventDate = LocalDate.parse(eventDate, dateTimeFormatter);
-        } catch (DateTimeParseException exception) {
-            throw new PassDtoInvalidException();
+        LocalDate eventDate = null;
+
+        if (entity.eventDate != null) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(FestivalConstants.Dates.DATE_FORMAT);
+            eventDate = LocalDate.parse(entity.eventDate, dateTimeFormatter);
         }
 
-        validateEventDate(parsedEventDate);
-
-        return new Pass(category, option, id, parsedEventDate);
+        return new ArrayList<>(Collections.singletonList(new Pass(entity.id, category, option, eventDate)));
     }
 
-    private void validateEventDate(LocalDate eventDate) throws PassDtoInvalidException {
-        if (eventDate.isBefore(FestivalConstants.Dates.START_DATE)
-            || eventDate.isAfter(FestivalConstants.Dates.END_DATE)) {
+    // TODO : This should work for a list of passes (but never will be used this way)
+    @Override
+    public PassesDto toDto(List<Pass> passes) {
+        Pass pass = passes.get(0);
+
+        PassesDto dto = new PassesDto();
+        dto.passNumber = pass.getId();
+        dto.passCategory = pass.getCategory().getName();
+        dto.passOption = pass.getOption().getName();
+        dto.eventDates = new ArrayList<>(Collections.singletonList(pass.getEventDate()));
+
+        return dto;
+    }
+
+    // TODO : This should work for a list of passes (but never will be used this way)
+    @Override
+    public PassEntity toEntity(List<Pass> passes) {
+        Pass pass = passes.get(0);
+        String eventDate = null;
+
+        if (pass.getEventDate() != null) {
+            eventDate = pass.getEventDate().toString();
+        }
+
+        return new PassEntity(
+                pass.getId(),
+                pass.getCategory().getId(),
+                pass.getOption().getId(),
+                eventDate
+        );
+    }
+
+    private Pass parseSingle(Long id, PassCategory category, PassOption option, LocalDate eventDate) {
+        validateEventDate(eventDate);
+
+        return new Pass(id, category, option, eventDate);
+    }
+
+    private void validateEventDate(LocalDate eventDate) {
+        if (FestivalDateValidator.isOutsideFestivalDates(eventDate)) {
             throw new PassDtoInvalidException();
         }
     }

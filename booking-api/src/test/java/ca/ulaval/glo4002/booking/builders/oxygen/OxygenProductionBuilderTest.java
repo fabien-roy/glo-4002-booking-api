@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.OxygenProduction;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class OxygenProductionBuilderTest {
 
     private OxygenProductionBuilder subject;
     private static final Long AN_INVALID_ID = -1L;
-    private static final String AN_INVALID_NAME = "An invalid name";
+    private static final String AN_INVALID_NAME = "An invalid code";
 
     @BeforeEach
     public void setUp(){

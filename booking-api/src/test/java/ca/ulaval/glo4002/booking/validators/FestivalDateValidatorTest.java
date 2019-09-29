@@ -24,18 +24,18 @@ public class FestivalDateValidatorTest {
 	@Test
 	public void dateIsBeforeFestival() {
 		assertTrue(FestivalDateValidator
-				.dateIsOutsideFestivalDates(DATE_BEFORE_FESTIVAL));
+				.isOutsideFestivalDates(DATE_BEFORE_FESTIVAL));
 	}
 	
 	@Test
 	public void dateIsAfterFestival() {
 		assertTrue(FestivalDateValidator
-				.dateIsOutsideFestivalDates(DATE_AFTER_FESTIVAL));
+				.isOutsideFestivalDates(DATE_AFTER_FESTIVAL));
 	}
 	
 	@Test
 	public void dateIsDuringFestival() {
 		assertFalse(FestivalDateValidator
-				.dateIsOutsideFestivalDates(DATE_DURING_FESTIVAL));
+				.isOutsideFestivalDates(DATE_DURING_FESTIVAL));
 	}
 }

@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.builders.shuttles;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-import ca.ulaval.glo4002.booking.entities.shuttles.categories.EtSpaceshipShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.shuttles.categories.MillenniumFalconShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.shuttles.categories.SpaceXShuttleCategory;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.EtSpaceshipShuttleCategory;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.MillenniumFalconShuttleCategory;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.ShuttleCategory;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.SpaceXShuttleCategory;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleCategoryNotFoundException;
 
 public class ShuttleCategoryBuilder implements Builder<ShuttleCategory> {

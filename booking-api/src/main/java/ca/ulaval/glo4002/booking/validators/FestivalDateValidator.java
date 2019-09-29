@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.booking.validators;
 
-import java.time.LocalDate;
-
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public final class FestivalDateValidator {
 
@@ -10,8 +11,13 @@ public final class FestivalDateValidator {
 		
 	}
 	
-	public static boolean dateIsOutsideFestivalDates(LocalDate date) {
+	public static boolean isOutsideFestivalDates(LocalDate date) {
 		return date.isBefore(FestivalConstants.Dates.START_DATE) 
 				|| date.isAfter(FestivalConstants.Dates.END_DATE);
+	}
+
+	public static boolean isOutsideOrderDates(LocalDateTime date) {
+		return date.isBefore(FestivalConstants.Dates.ORDER_START_DATE_TIME)
+				|| date.isAfter(FestivalConstants.Dates.ORDER_END_DATE_TIME);
 	}
 }

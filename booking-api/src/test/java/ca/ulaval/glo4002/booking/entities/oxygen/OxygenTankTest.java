@@ -4,15 +4,15 @@ import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static java.time.temporal.ChronoUnit.DAYS;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OxygenTankTest {
 

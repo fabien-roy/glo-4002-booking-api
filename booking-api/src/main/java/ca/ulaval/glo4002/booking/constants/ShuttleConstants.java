@@ -19,7 +19,7 @@ public class ShuttleConstants {
         public static final Double SPACE_X_PRICE = 30000.0;
 
         private Categories(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
         }
     }
 
@@ -31,11 +31,11 @@ public class ShuttleConstants {
         public static final String ARRIVAL_NAME = "Arrival";
 
         private Types(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
         }
     }
 
     private ShuttleConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
     }
 }

@@ -10,6 +10,6 @@ public class QualityConstants {
     public static final String NEBULA_NAME = "Nebula";
 
     private QualityConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
     }
 }

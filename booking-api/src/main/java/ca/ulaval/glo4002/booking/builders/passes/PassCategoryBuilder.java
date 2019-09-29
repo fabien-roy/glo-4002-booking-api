@@ -2,11 +2,11 @@ package ca.ulaval.glo4002.booking.builders.passes;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.entities.passes.categories.NebulaPassCategory;
-import ca.ulaval.glo4002.booking.entities.passes.categories.PassCategory;
-import ca.ulaval.glo4002.booking.entities.passes.categories.SupergiantPassCategory;
-import ca.ulaval.glo4002.booking.entities.passes.categories.SupernovaPassCategory;
-import ca.ulaval.glo4002.booking.entities.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domainObjects.passes.categories.NebulaPassCategory;
+import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.domainObjects.passes.categories.SupergiantPassCategory;
+import ca.ulaval.glo4002.booking.domainObjects.passes.categories.SupernovaPassCategory;
+import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
 
 import java.util.HashMap;

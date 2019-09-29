@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.builders.shuttles;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-import ca.ulaval.glo4002.booking.entities.shuttles.types.ShuttleType;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.types.ShuttleType;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleTypeNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ public class ShuttleTypeBuilderTest {
 
     private ShuttleTypeBuilder subject;
     private static final Long AN_INVALID_ID = -1L;
-    private static final String AN_INVALID_NAME = "An invalid name";
+    private static final String AN_INVALID_NAME = "An invalid code";
 
     @BeforeEach
     public void setUp() {

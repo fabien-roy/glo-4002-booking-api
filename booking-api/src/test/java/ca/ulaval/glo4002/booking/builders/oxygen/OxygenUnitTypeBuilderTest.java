@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.entities.oxygen.unitTypes.OxygenUnitType;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.unitTypes.OxygenUnitType;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenUnitTypeNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ public class OxygenUnitTypeBuilderTest {
 
     private OxygenUnitTypeBuilder subject;
     private static final Long AN_INVALID_ID = -1L;
-    private static final String AN_INVALID_NAME = "An invalid name";
+    private static final String AN_INVALID_NAME = "An invalid code";
 
     @BeforeEach
     public void setUp(){

@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-// TODO : Got to make sure T implements ParsableEntity and U implements Dto
-public interface Parser<T, U> {
-    public T parse(U dto);
+public interface Parser<T, U, V> {
+    T parseDto(U dto);
+    T parseEntity(V entity);
+    U toDto(T object);
+    V toEntity(T object);
 }
