@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
@@ -22,7 +22,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         OrderEntity orderEntity = entityManager.find(OrderEntity.class, id);
 
         if (orderEntity == null) {
-            throw new PassNotFoundException();
+            throw new OrderNotFoundException();
         }
 
         return Optional.of(orderEntity);
