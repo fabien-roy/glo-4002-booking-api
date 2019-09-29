@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.entities.oxygen.categories.AOxygenCategory;
-import ca.ulaval.glo4002.booking.entities.oxygen.categories.BOxygenCategory;
-import ca.ulaval.glo4002.booking.entities.oxygen.categories.EOxygenCategory;
-import ca.ulaval.glo4002.booking.entities.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.AOxygenCategory;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.BOxygenCategory;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.EOxygenCategory;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 
 public class OxygenCategoryBuilder implements Builder<OxygenCategory> {

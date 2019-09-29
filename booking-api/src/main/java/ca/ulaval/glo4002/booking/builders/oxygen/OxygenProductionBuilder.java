@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.entities.oxygen.productions.ElectrolytesOxygenProduction;
-import ca.ulaval.glo4002.booking.entities.oxygen.productions.ImmediateOxygenProduction;
-import ca.ulaval.glo4002.booking.entities.oxygen.productions.OxygenProduction;
-import ca.ulaval.glo4002.booking.entities.oxygen.productions.SparkPlugsOxygenProduction;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.ElectrolytesOxygenProduction;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.ImmediateOxygenProduction;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.OxygenProduction;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.SparkPlugsOxygenProduction;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundException;
 
 public class OxygenProductionBuilder implements Builder<OxygenProduction> {

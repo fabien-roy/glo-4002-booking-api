@@ -1,12 +1,11 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.entities.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.repositories.OxygenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
