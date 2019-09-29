@@ -28,7 +28,7 @@ public class OxygenTankTest {
         OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
                 .buildById(OxygenConstants.Categories.A_ID), VALID_DATE);
 
-        assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.A_ID);
+        assertEquals(OxygenConstants.Categories.A_ID, tank.getOxygenTankCategory().getId());
     }
 
     @Test
@@ -36,7 +36,7 @@ public class OxygenTankTest {
         OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
                 .buildById(OxygenConstants.Categories.B_ID), VALID_DATE);
 
-        assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.B_ID);
+        assertEquals(OxygenConstants.Categories.B_ID, tank.getOxygenTankCategory().getId());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class OxygenTankTest {
         OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
                 .buildById(OxygenConstants.Categories.E_ID), VALID_DATE);
 
-        assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.E_ID);
+        assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class OxygenTankTest {
         OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
                 .buildById(OxygenConstants.Categories.A_ID), VALID_DATE_15DAYS_BEFORE_START);
 
-        assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.B_ID);
+        assertEquals(OxygenConstants.Categories.B_ID, tank.getOxygenTankCategory().getId());
         assertTrue(tank.getTimeProduced().isBefore(FestivalConstants.Dates.START_DATE));
     }
 
@@ -61,7 +61,7 @@ public class OxygenTankTest {
         OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
                 .buildById(OxygenConstants.Categories.A_ID), VALID_DATE_5DAYS_BEFORE_START);
 
-        assertEquals(tank.getOxygenTankCategory().getId(), OxygenConstants.Categories.E_ID);
+        assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
         assertTrue(tank.getTimeProduced().isBefore(FestivalConstants.Dates.START_DATE));
     }
 
