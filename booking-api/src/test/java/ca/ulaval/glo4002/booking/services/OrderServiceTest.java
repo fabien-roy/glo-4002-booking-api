@@ -36,18 +36,18 @@ public class OrderServiceTest {
     public void findById_shouldReturnCorrectOrder() {
         Order order = subject.findById(OrderServiceContext.A_ORDER_ID);
 
-        assertEquals(context.aOrder, order);
+        assertEquals(context.aOrder.getId(), order.getId());
     }
 
     @Test
     public void findAll_shouldReturnCorrectOrders() {
-        List<Order> orders = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
 
-        subject.findAll().forEach(orders::add);
+        subject.findAll().forEach(order -> ids.add(order.getId()));
 
-        assertEquals(2, orders.size());
-        assertTrue(orders.contains(context.aOrder));
-        assertTrue(orders.contains(context.anotherOrder));
+        assertEquals(2, ids.size());
+        assertTrue(ids.contains(context.aOrder.getId()));
+        assertTrue(ids.contains(context.anotherOrder.getId()));
     }
 
     @Test
@@ -57,6 +57,6 @@ public class OrderServiceTest {
         subject.save(context.aNonExistentOrder);
         Order order = subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID);
 
-        assertEquals(context.aNonExistentOrder, order);
+        assertEquals(context.aNonExistentOrder.getId(), order.getId());
     }
 }

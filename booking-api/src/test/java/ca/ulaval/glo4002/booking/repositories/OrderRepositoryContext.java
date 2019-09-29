@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 
 import javax.persistence.EntityManager;
@@ -9,6 +11,8 @@ import javax.persistence.Persistence;
 public class OrderRepositoryContext {
 
     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ca.ulaval.glo4002.booking.noPersistence");
+    private final static String A_ORDER_DATE_TIME = FestivalConstants.Dates.ORDER_START_DATE_TIME.toString();
+    private final static Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     public EntityManager entityManager;
     public OrderEntity aOrder;
     public OrderEntity anotherOrder;
@@ -23,9 +27,23 @@ public class OrderRepositoryContext {
     }
 
     private void setUpOrders() {
-        aOrder = new OrderEntity(A_ORDER_ID);
-        anotherOrder = new OrderEntity(ANOTHER_ORDER_ID);
-        aNonExistentOrder = new OrderEntity(A_NON_EXISTANT_ORDER_ID);
+        aOrder = new OrderEntity(
+                A_ORDER_ID,
+                A_ORDER_DATE_TIME,
+                A_VENDOR_ID
+        );
+
+        anotherOrder = new OrderEntity(
+                ANOTHER_ORDER_ID,
+                A_ORDER_DATE_TIME,
+                A_VENDOR_ID
+        );
+
+        aNonExistentOrder = new OrderEntity(
+                A_NON_EXISTANT_ORDER_ID,
+                A_ORDER_DATE_TIME,
+                A_VENDOR_ID
+        );
     }
 
     private void setUpEntityManager() {

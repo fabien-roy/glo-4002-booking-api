@@ -23,6 +23,10 @@ public class Order implements ParsableEntity {
         this.vendor = vendor;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public LocalDateTime getOrderDate() {
         return orderDate;
     }

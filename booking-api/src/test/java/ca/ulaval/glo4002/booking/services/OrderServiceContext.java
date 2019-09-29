@@ -9,6 +9,7 @@ import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
@@ -31,11 +32,11 @@ public class OrderServiceContext {
     public final static Long A_NON_EXISTANT_ORDER_ID = 0L;
 
     public OrderServiceContext() {
-        setUpPasses();
+        setUpOrders();
         setUpRepository();
     }
 
-    private void setUpPasses() {
+    private void setUpOrders() {
         aOrder = new Order(
                 A_ORDER_ID,
                 A_ORDER_EVENT_DATE,
@@ -62,6 +63,7 @@ public class OrderServiceContext {
     private void setUpRepository() {
         repository = mock(OrderRepository.class);
 
+        when(repository.findAll()).thenReturn(Arrays.asList(aOrderEntity, anotherOrderEntity));
         when(repository.findById(A_ORDER_ID)).thenReturn(Optional.of(aOrderEntity));
         when(repository.findById(ANOTHER_ORDER_ID)).thenReturn(Optional.of(anotherOrderEntity));
         when(repository.findById(A_NON_EXISTANT_ORDER_ID)).thenReturn(Optional.empty());

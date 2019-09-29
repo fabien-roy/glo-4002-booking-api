@@ -11,6 +11,7 @@ import ca.ulaval.glo4002.booking.repositories.PassRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -67,6 +68,7 @@ public class PassServiceContext {
     private void setUpRepository() {
         repository = mock(PassRepository.class);
 
+        when(repository.findAll()).thenReturn(new ArrayList<>(Arrays.asList(aPassEntity, anotherPassEntity)));
         when(repository.findById(A_PASS_ID)).thenReturn(Optional.of(aPassEntity));
         when(repository.findById(ANOTHER_PASS_ID)).thenReturn(Optional.of(anotherPassEntity));
         when(repository.findById(A_NON_EXISTANT_PASS_ID)).thenReturn(Optional.empty());

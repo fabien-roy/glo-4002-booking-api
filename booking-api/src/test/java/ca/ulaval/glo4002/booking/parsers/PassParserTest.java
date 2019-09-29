@@ -142,4 +142,8 @@ class PassParserTest {
     }
 
     // TODO : Test parseEntity
+
+    // TODO : Test toEntity
+
+    // TODO : Test toDto
 }

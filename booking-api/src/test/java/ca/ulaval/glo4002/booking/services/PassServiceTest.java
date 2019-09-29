@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
-import ca.ulaval.glo4002.booking.repositories.PassRepositoryContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,18 +37,18 @@ public class PassServiceTest {
     public void findById_shouldReturnCorrectPass() {
         Pass pass = subject.findById(PassServiceContext.A_PASS_ID);
 
-        assertEquals(context.aPass, pass);
+        assertEquals(context.aPass.getId(), pass.getId());
     }
 
     @Test
     public void findAll_shouldReturnCorrectPasses() {
-        List<Pass> passes = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
 
-        subject.findAll().forEach(passes::add);
+        subject.findAll().forEach(pass -> ids.add(pass.getId()));
 
-        assertEquals(2, passes.size());
-        assertTrue(passes.contains(context.aPass));
-        assertTrue(passes.contains(context.anotherPass));
+        assertEquals(2, ids.size());
+        assertTrue(ids.contains(context.aPass.getId()));
+        assertTrue(ids.contains(context.anotherPass.getId()));
     }
 
     @Test
@@ -60,6 +59,6 @@ public class PassServiceTest {
         subject.saveAll(newPasses);
         Pass pass = subject.findById(PassServiceContext.A_NON_EXISTANT_PASS_ID);
 
-        assertEquals(context.aNonExistentPass, pass);
+        assertEquals(context.aNonExistentPass.getId(), pass.getId());
     }
 }
