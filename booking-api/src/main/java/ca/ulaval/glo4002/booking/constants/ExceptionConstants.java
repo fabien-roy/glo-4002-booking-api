@@ -17,9 +17,10 @@ public class ExceptionConstants {
     public static final String PASS_DTO_INVALID_MESSAGE = "Invalid pass DTO";
     public static final String ORDER_DTO_INVALID_MESSAGE = "Invalid order DTO";
 
-    static final String UTILITY_CLASS_EXCEPTION_MESSAGE = "Utility Class";
+    public static final String UTILITY_CLASS_MESSAGE = "Utility class";
+    public static final String UNUSED_METHOD_MESSAGE = "Unused method";
 
     private ExceptionConstants(){
-        throw new IllegalStateException(UTILITY_CLASS_EXCEPTION_MESSAGE);
+        throw new IllegalStateException(UTILITY_CLASS_MESSAGE);
     }
 }

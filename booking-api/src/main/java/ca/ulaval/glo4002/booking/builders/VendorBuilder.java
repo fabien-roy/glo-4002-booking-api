@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.booking.builders;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.entities.vendors.TeamVendor;
 import ca.ulaval.glo4002.booking.entities.vendors.Vendor;
-import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.exceptions.VendorNotFoundException;
 
-public class VendorBuilder implements Builder {
+public class VendorBuilder implements Builder<Vendor> {
 
     public Vendor buildById(Long id) {
         if(id.equals(VendorConstants.TEAM_VENDOR_ID)){
@@ -16,7 +16,7 @@ public class VendorBuilder implements Builder {
         }
     }
 
-    public Vendor buildByVendorCode(String vendorCode) {
+    public Vendor buildByCode(String vendorCode) {
         if(vendorCode.equals(VendorConstants.TEAM_VENDOR_CODE)) {
             return buildTeamVendor();
         } else {
@@ -25,9 +25,8 @@ public class VendorBuilder implements Builder {
     }
 
     @Override
-    public Object buildByName(String name) {
-        // This has to throw something, since it must not be called
-        throw new FestivalException();
+    public Vendor buildByName(String name) {
+        throw new IllegalStateException(ExceptionConstants.UNUSED_METHOD_MESSAGE);
     }
 
     private Vendor buildTeamVendor() {

@@ -17,7 +17,7 @@ class OrderParser {
         checkOrderDate(orderDto.orderDate);
 
         order.setOrderDate(orderDto.orderDate);
-        order.setVendor(vendorBuilder.buildByVendorCode(orderDto.vendorCode));
+        order.setVendor(vendorBuilder.buildByCode(orderDto.vendorCode));
 
         return order;
     }

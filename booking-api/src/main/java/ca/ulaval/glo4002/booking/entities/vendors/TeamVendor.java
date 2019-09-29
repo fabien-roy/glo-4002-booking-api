@@ -6,6 +6,6 @@ public class TeamVendor extends Vendor {
 
     public TeamVendor() {
         this.id = VendorConstants.TEAM_VENDOR_ID;
-        this.name = VendorConstants.TEAM_VENDOR_CODE;
+        this.code = VendorConstants.TEAM_VENDOR_CODE;
     }
 }

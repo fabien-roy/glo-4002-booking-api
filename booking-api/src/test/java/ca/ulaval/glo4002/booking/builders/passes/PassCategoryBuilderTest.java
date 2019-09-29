@@ -18,7 +18,7 @@ public class PassCategoryBuilderTest {
     private PassCategoryBuilder subject;
     private PassOptionBuilder optionBuilder;
     private static final Long AN_INVALID_ID = -1L;
-    private static final String AN_INVALID_NAME = "An invalid name";
+    private static final String AN_INVALID_NAME = "An invalid code";
 
     @BeforeEach
     public void setUp() {

@@ -81,8 +81,7 @@ class OrderParserTest {
 
         Order order = subject.parse(orderDto);
 
-        assertNotNull(order.getVendor().getName());
-        assertEquals(A_VALID_VENDOR_CODE, order.getVendor().getName());
+        assertNotNull(order.getVendor().getCode());
+        assertEquals(A_VALID_VENDOR_CODE, order.getVendor().getCode());
     }
-
 }

@@ -12,11 +12,11 @@ public class FestivalConstants {
         public static final LocalDateTime ORDER_END_DATE_TIME = LocalDateTime.of(2050, 7, 16, 23, 59, 59);
 
         private Dates() {
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
         }
     }
 
     private FestivalConstants() {
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_EXCEPTION_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
     }
 }
