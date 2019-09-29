@@ -16,6 +16,7 @@ public class ExceptionConstants {
     public static final String PASS_DTO_INVALID_MESSAGE = "Invalid pass DTO";
     public static final String INVALID_EVENT_DATE_MESSAGE = "Invalid event date";
 
+
     static final String UTILITY_CLASS_EXCEPTION_MESSAGE = "Utility Class";
 
     private ExceptionConstants(){
