@@ -13,9 +13,9 @@ public class ExceptionConstants {
     public static final String OXYGEN_UNIT_TYPE_NOT_FOUND_MESSAGE = "Oxygen unit type not found";
     public static final String ORDER_NOT_FOUND_MESSAGE = "Order not found";
     public static final String VENDOR_NOT_FOUND_MESSAGE = "Vendor not found";
-    public static final String PASS_DTO_INVALID_MESSAGE = "Invalid pass DTO";
+    public static final String PASS_DTO_INVALID_MESSAGE = "Invalid pass DTO"; 
     public static final String INVALID_EVENT_DATE_MESSAGE = "Invalid event date";
-
+    public static final String SHUTTLE_FULL_MESSAGE = "Shuttle capacity is full";
 
     static final String UTILITY_CLASS_EXCEPTION_MESSAGE = "Utility Class";
 
