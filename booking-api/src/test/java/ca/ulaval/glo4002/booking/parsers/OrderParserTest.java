@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
-import ca.ulaval.glo4002.booking.entities.orders.Order;
+import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
 import ca.ulaval.glo4002.booking.exceptions.VendorNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ class OrderParserTest {
 
         OrderDtoInvalidException thrown = assertThrows(
                 OrderDtoInvalidException.class,
-                ()->subject.parse(orderDto)
+                ()->subject.parseDto(orderDto)
         );
 
         assertEquals(ExceptionConstants.ORDER_DTO_INVALID_MESSAGE, thrown.getMessage());
@@ -48,7 +48,7 @@ class OrderParserTest {
 
         OrderDtoInvalidException thrown = assertThrows(
                 OrderDtoInvalidException.class,
-                ()->subject.parse(orderDto)
+                ()->subject.parseDto(orderDto)
         );
 
         assertEquals(ExceptionConstants.ORDER_DTO_INVALID_MESSAGE, thrown.getMessage());
@@ -58,7 +58,7 @@ class OrderParserTest {
     void whenOrderDateIsBetweenValidOrderDate_thenOrderDateIsAssignedToOrder() {
         orderDto.orderDate = A_VALID_DATE;
 
-        Order order = subject.parse(orderDto);
+        Order order = subject.parseDto(orderDto);
 
         assertEquals(A_VALID_DATE, order.getOrderDate());
     }
@@ -69,7 +69,7 @@ class OrderParserTest {
 
         VendorNotFoundException thrown = assertThrows(
                 VendorNotFoundException.class,
-                ()->subject.parse(orderDto)
+                ()->subject.parseDto(orderDto)
         );
 
         assertEquals(ExceptionConstants.VENDOR_NOT_FOUND_MESSAGE, thrown.getMessage());
@@ -79,9 +79,15 @@ class OrderParserTest {
     void whenVendorCodeIsValid_thenVendorIsAssignedToOrder() {
         orderDto.vendorCode = A_VALID_VENDOR_CODE;
 
-        Order order = subject.parse(orderDto);
+        Order order = subject.parseDto(orderDto);
 
         assertNotNull(order.getVendor().getCode());
         assertEquals(A_VALID_VENDOR_CODE, order.getVendor().getCode());
     }
+
+    // TODO : Test parseEntity
+
+    // TODO : Test toEntity
+
+    // TODO : Test toDto
 }

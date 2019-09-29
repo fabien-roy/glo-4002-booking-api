@@ -7,5 +7,5 @@ public class OrderDto implements Dto {
     public Long orderNumber;
     public LocalDateTime orderDate;
     public String vendorCode;
-    public PassDto passes;
+    public PassesDto passes;
 }

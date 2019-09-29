@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.entities.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.repositories.OxygenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

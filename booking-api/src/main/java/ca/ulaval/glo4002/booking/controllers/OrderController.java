@@ -1,11 +1,12 @@
 package ca.ulaval.glo4002.booking.controllers;
 
+import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
-import ca.ulaval.glo4002.booking.entities.orders.Order;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.repositories.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import ca.ulaval.glo4002.booking.parsers.PassParser;
+import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.PassService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,41 +14,58 @@ import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Path("/orders")
 public class OrderController {
 
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderParser orderParser;
+    private final OrderService orderService;
+    private final PassService passService;
+    private final OrderParser orderParser;
+    private final PassParser passParser;
 
-    public OrderController(OrderRepository orderRepository, OrderParser orderParser) {
-        this.orderRepository = orderRepository;
+    public OrderController(OrderService orderService, PassService passService, OrderParser orderParser, PassParser passParser) {
+        this.orderService = orderService;
+        this.passService = passService;
         this.orderParser = orderParser;
+        this.passParser = passParser;
     }
 
+    // TODO : Test this
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Order> getOrders() {
+    public List<OrderDto> getOrders() {
         List<Order> orders = new ArrayList<>();
-        orderRepository.findAll().forEach(orders::add);
-        return orders;
+        orderService.findAll().forEach(orders::add);
+
+        // TODO : Get passes (passService.findAll)
+        // passService.findAll();
+
+        List<OrderDto> orderDtos = new ArrayList<>();
+        orders.forEach(order -> orderDtos.add(orderParser.toDto(order)));
+
+        return orderDtos;
     }
 
+    // TODO : Test this
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Order getOrderById(@PathParam("id") Long entityId){
-        return orderRepository.findById(entityId).orElseThrow(OrderNotFoundException::new);
+    public OrderDto getOrderById(@PathParam("id") Long entityId){
+        // TODO : Get pass (passService.findById)
+        // passService.findById(?);
+        Order order = orderService.findById(entityId);
+
+        return orderParser.toDto(order);
     }
 
+    // TODO : Test this
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addOrder(OrderDto dto) {
-        Order order = orderParser.parse(dto);
+        Order order = orderParser.parseDto(dto);
+        List<Pass> passes = passParser.parseDto(dto.passes);
 
-        orderRepository.save(order);
+        orderService.save(order);
+        passService.saveAll(passes);
 
         return Response.status(Response.Status.CREATED.getStatusCode()).build();
     }
