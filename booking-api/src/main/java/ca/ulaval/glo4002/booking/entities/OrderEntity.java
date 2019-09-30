@@ -8,6 +8,7 @@ public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
 	public Long id;
     public LocalDateTime orderDate;
     public Long vendorId;

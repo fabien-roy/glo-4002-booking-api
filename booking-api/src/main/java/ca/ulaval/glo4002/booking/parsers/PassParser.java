@@ -7,8 +7,9 @@ import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
+import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
-import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
+import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
 
         List<Pass> passes = new ArrayList<>();
 
-        for (LocalDate eventDate : dto.eventDates) {
-            passes.add(parseSingle(dto.passNumber, category, option, eventDate));
+        for (String eventDate : dto.eventDates) {
+            passes.add(parseSingle(dto.passNumber, category, option, parseEventDate(eventDate)));
         }
 
         return passes;
@@ -55,7 +56,7 @@ public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
         dto.passNumber = pass.getId();
         dto.passCategory = pass.getCategory().getName();
         dto.passOption = pass.getOption().getName();
-        dto.eventDates = new ArrayList<>(Collections.singletonList(pass.getEventDate()));
+        // dto.eventDates = new ArrayList<>(Collections.singletonList(pass.getEventDate()));
 
         return dto;
     }
@@ -79,8 +80,16 @@ public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
         return new Pass(id, category, option, eventDate);
     }
 
+    private LocalDate parseEventDate(String eventDate) {
+        try {
+            return FestivalDateUtil.toLocalDate(eventDate);
+        } catch(InvalidDateException exception) {
+            throw new PassDtoInvalidException();
+        }
+    }
+
     private void validateEventDate(LocalDate eventDate) {
-        if (FestivalDateValidator.isOutsideFestivalDates(eventDate)) {
+        if (FestivalDateUtil.isOutsideFestivalDates(eventDate)) {
             throw new PassDtoInvalidException();
         }
     }

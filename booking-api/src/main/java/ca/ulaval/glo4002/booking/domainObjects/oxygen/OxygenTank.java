@@ -1,10 +1,11 @@
 package ca.ulaval.glo4002.booking.domainObjects.oxygen;
 
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.domainObjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
-import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
 import ca.ulaval.glo4002.booking.services.OxygenTankService;
+
 import java.time.LocalDate;
 
 public class OxygenTank extends OrderItem {
@@ -17,7 +18,7 @@ public class OxygenTank extends OrderItem {
 
 	public OxygenTank(OxygenCategory category, LocalDate timeRequested) {
 		if (timeRequested.isAfter(FestivalConstants.Dates.START_DATE)) {
-			throw new InvalidEventDateException();
+			throw new InvalidDateException();
 		}
 		
 		this.category = oxygenTankService.getOxygenCategoryForTimeTable(category, timeRequested);

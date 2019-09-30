@@ -1,17 +1,21 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.EntityManagerFactoryUtil;
+import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 public class OrderRepositoryImpl implements OrderRepository {
 
+    @PersistenceContext
     private final EntityManager entityManager;
 
     public OrderRepositoryImpl() {
@@ -39,6 +43,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public <S extends OrderEntity> S save(S order) {
         if (order.id == null) {
             entityManager.persist(order);

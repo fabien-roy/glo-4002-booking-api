@@ -2,16 +2,12 @@ package ca.ulaval.glo4002.booking.domainObjects.orders;
 
 import ca.ulaval.glo4002.booking.domainObjects.vendors.Vendor;
 import ca.ulaval.glo4002.booking.parsers.ParsableEntity;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
 public class Order implements ParsableEntity {
 	
-	@Id
 	protected Long id;
     private LocalDateTime orderDate;
     private Vendor vendor;

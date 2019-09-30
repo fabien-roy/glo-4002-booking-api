@@ -1,16 +1,16 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
+import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
+import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,16 +26,16 @@ class PassParserTest {
     private final static Long A_PASS_NUMBER = 1L;
     private final static String A_PASS_CATEGORY = PassConstants.Categories.SUPERNOVA_NAME;
     private final static String A_PASS_OPTION = PassConstants.Options.SINGLE_NAME;
-    private final static List<LocalDate> SOME_EVENT_DATES = new ArrayList<>(Arrays.asList(
-            LocalDate.of(2050, 7, 17),
-            LocalDate.of(2050, 7, 18)
+    private final static List<String> SOME_EVENT_DATES = new ArrayList<>(Arrays.asList(
+            FestivalConstants.Dates.START_DATE.toString(),
+            FestivalConstants.Dates.START_DATE.plusDays(1).toString()
     ));
     private final static Long AN_INVALID_PASS_NUMBER = -1L;
     private final static String AN_INVALID_PASS_CATEGORY = "anInvalidPassCategory";
     private final static String AN_INVALID_PASS_OPTION = "anInvalidPassOption";
-    private final static List<LocalDate> SOME_EVENT_DATES_NOT_IN_FESTIVAL = new ArrayList<>(
-            Collections.singletonList(LocalDate.of(2001, 7,17))
-    );
+    private final static List<String> SOME_EVENT_DATES_NOT_IN_FESTIVAL = new ArrayList<>(Collections.singletonList(
+            FestivalConstants.Dates.END_DATE.plusDays(1).toString()
+    ));
 
     @BeforeEach
     void setUp() {

@@ -5,8 +5,9 @@ import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainObjects.vendors.Vendor;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
+import ca.ulaval.glo4002.booking.exceptions.InvalidDateTimeException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
-import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
+import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDateTime;
 
@@ -18,9 +19,10 @@ public class OrderParser implements Parser<Order, OrderDto, OrderEntity> {
     public Order parseDto(OrderDto dto) {
         Vendor vendor = vendorBuilder.buildByCode(dto.vendorCode);
 
-        validateOrderDate(dto.orderDate);
+        LocalDateTime orderDate = parseOrderDate(dto.orderDate);
+        validateOrderDate(orderDate);
 
-        return new Order(dto.orderNumber, dto.orderDate, vendor);
+        return new Order(dto.orderNumber, orderDate, vendor);
     }
 
     @Override
@@ -34,7 +36,7 @@ public class OrderParser implements Parser<Order, OrderDto, OrderEntity> {
     public OrderDto toDto(Order order) {
         OrderDto dto = new OrderDto();
         dto.orderNumber = order.getId();
-        dto.orderDate = order.getOrderDate();
+        dto.orderDate = FestivalDateUtil.toZonedDateTimeString(order.getOrderDate());
         dto.vendorCode = order.getVendor().getCode();
         // TODO : dto.passes
 
@@ -50,8 +52,16 @@ public class OrderParser implements Parser<Order, OrderDto, OrderEntity> {
         );
     }
 
+    private LocalDateTime parseOrderDate(String orderDate) {
+        try {
+            return FestivalDateUtil.toLocalDateTime(orderDate);
+        } catch(InvalidDateTimeException exception) {
+            throw new OrderDtoInvalidException();
+        }
+    }
+
     private void validateOrderDate(LocalDateTime orderDate){
-        if (FestivalDateValidator.isOutsideOrderDates(orderDate)){
+        if (FestivalDateUtil.isOutsideOrderDates(orderDate)){
             throw new OrderDtoInvalidException();
         }
     }
