@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.dto;
 
 import java.time.LocalDate;
 
-public class InventoryItemDto {
+public class InventoryItemDto implements Dto {
 
     public LocalDate date;
     public Long qtyOxygenTankBought;

@@ -4,35 +4,37 @@ import java.time.LocalDate;
 
 import javax.persistence.Entity;
 
+import ca.ulaval.glo4002.booking.parsers.ParsableEntity;
 import org.springframework.data.annotation.Id;
 
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
-import ca.ulaval.glo4002.booking.domainObjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import ca.ulaval.glo4002.booking.services.OxygenTankService;
 
 @Entity
-public class OxygenTank extends OrderItem {
+public class OxygenTank implements ParsableEntity {
 
 	@Id
 	protected Long id;
 	private OxygenCategory category;
 	private LocalDate timeProduced;
 	private LocalDate timeRequested;
-	private OxygenTankService oxygenTankService = new OxygenTankService();
 
 	public OxygenTank(OxygenCategory category, LocalDate timeRequested) {
 		if (timeRequested.isAfter(FestivalConstants.Dates.START_DATE)) {
 			throw new InvalidEventDateException();
 		}
 
+		// TODO : Refactor, when calling constructor the services should already have been called by the requester
+		// TODO : and the correct category should by passed.
+		OxygenTankService oxygenTankService = new OxygenTankService();
+
 		this.category = oxygenTankService.getOxygenCategoryForTimeTable(category, timeRequested);
 		this.timeRequested = timeRequested;
 		this.timeProduced = timeRequested.plusDays(this.category.getProduction().getProductionTime().toDays());
 	}
 
-	@Override
 	public Double getPrice() {
 		return 0.0; // TODO : Oxygen tank price calculation
 	}

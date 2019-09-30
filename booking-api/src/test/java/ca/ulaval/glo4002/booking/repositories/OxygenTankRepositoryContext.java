@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.repositories;
 
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import javax.persistence.EntityManager;
@@ -22,7 +23,7 @@ public class OxygenTankRepositoryContext {
 	public final static Long B_OXYGEN_ID = 2L;
 	public final static Long E_OXYGEN_ID = 3L;
 	public final static Long NON_EXISTANT_OXYGEN_ID = 0L;
-	private final static String OXYGEN_DATE_TIME = FestivalConstants.Dates.ORDER_START_DATE_TIME.toString();
+	private final static LocalDate A_DATE_BEFORE_FESTIVAL = FestivalConstants.Dates.START_DATE.minusDays(30);
 
 	public OxygenTankRepositoryContext() {
 		this.setUpOxygenTanks();
@@ -31,13 +32,13 @@ public class OxygenTankRepositoryContext {
 
 	private void setUpOxygenTanks() {
 		this.oxygenTankA = new OxygenTankEntity(this.A_OXYGEN_ID, OxygenConstants.Categories.A_ID,
-				this.OXYGEN_DATE_TIME);
+				this.A_DATE_BEFORE_FESTIVAL);
 		this.oxygenTankB = new OxygenTankEntity(this.B_OXYGEN_ID, OxygenConstants.Categories.B_ID,
-				this.OXYGEN_DATE_TIME);
+				this.A_DATE_BEFORE_FESTIVAL);
 		this.oxygenTankE = new OxygenTankEntity(this.E_OXYGEN_ID, OxygenConstants.Categories.E_ID,
-				this.OXYGEN_DATE_TIME);
+				this.A_DATE_BEFORE_FESTIVAL);
 		this.oxygenTankNotExist = new OxygenTankEntity(this.NON_EXISTANT_OXYGEN_ID, OxygenConstants.Categories.A_ID,
-				this.OXYGEN_DATE_TIME);
+				this.A_DATE_BEFORE_FESTIVAL);
 	}
 
 	private void setUpEntityManager() {

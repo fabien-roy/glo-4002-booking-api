@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class OxygenTankEntity {
@@ -11,9 +12,18 @@ public class OxygenTankEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
 	public Long catId;
-	public String requestDate;
+	public LocalDate requestDate;
 
-	public OxygenTankEntity(Long id, Long catId, String requestDate) {
+	public OxygenTankEntity() {
+
+	}
+
+	public OxygenTankEntity(Long catId, LocalDate requestDate) {
+		this.catId = catId;
+		this.requestDate = requestDate;
+	}
+
+	public OxygenTankEntity(Long id, Long catId, LocalDate requestDate) {
 		this.id = id;
 		this.catId = catId;
 		this.requestDate = requestDate;
