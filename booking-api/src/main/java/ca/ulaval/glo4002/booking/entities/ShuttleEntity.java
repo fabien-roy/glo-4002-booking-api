@@ -28,5 +28,9 @@ public class ShuttleEntity {
 		this.shuttleTypeId = shuttleTypeId;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	
 
 }
