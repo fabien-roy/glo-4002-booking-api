@@ -10,7 +10,6 @@ import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.ShuttleCatego
 import ca.ulaval.glo4002.booking.domainObjects.shuttles.types.ShuttleType;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
 
-@Entity
 public class Shuttle extends OrderItem {
 	
 	@Id
