@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.EntityManagerFactoryUtil;
+import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;

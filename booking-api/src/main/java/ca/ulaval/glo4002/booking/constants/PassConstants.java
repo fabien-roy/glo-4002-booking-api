@@ -7,9 +7,9 @@ public class PassConstants {
         public static final Long SUPERGIANT_ID = 1L;
         public static final Long NEBULA_ID = 2L;
 
-        public static final String SUPERNOVA_NAME = "Supernova";
-        public static final String SUPERGIANT_NAME = "Supergiant";
-        public static final String NEBULA_NAME = "Nebula";
+        public static final String SUPERNOVA_NAME = "supernova";
+        public static final String SUPERGIANT_NAME = "supergiant";
+        public static final String NEBULA_NAME = "nebula";
 
         public static final Double SUPERNOVA_PACKAGE_PRICE = 700000.0;
         public static final Double SUPERGIANT_PACKAGE_PRICE = 500000.0;
@@ -36,8 +36,8 @@ public class PassConstants {
         public static final Long PACKAGE_ID = 0L;
         public static final Long SINGLE_ID = 1L;
 
-        public static final String PACKAGE_NAME = "Package";
-        public static final String SINGLE_NAME = "Single pass";
+        public static final String PACKAGE_NAME = "package";
+        public static final String SINGLE_NAME = "singlePass";
 
         private Options(){
             throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
