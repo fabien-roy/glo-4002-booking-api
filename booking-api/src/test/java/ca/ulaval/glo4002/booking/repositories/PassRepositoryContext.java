@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.entities.PassEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.mock;
@@ -14,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class PassRepositoryContext {
 
-    private final static String A_PASS_EVENT_DATE = FestivalConstants.Dates.START_DATE.toString();
+    private final static LocalDate A_PASS_EVENT_DATE = FestivalConstants.Dates.START_DATE;
     public EntityManager entityManager;
     public PassEntity aPass;
     public PassEntity anotherPass;

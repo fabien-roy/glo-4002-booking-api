@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.entities.OrderEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.mock;
@@ -14,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class OrderRepositoryContext {
 
-    private final static String A_ORDER_DATE_TIME = FestivalConstants.Dates.ORDER_START_DATE_TIME.toString();
+    private final static LocalDateTime A_ORDER_DATE_TIME = FestivalConstants.Dates.ORDER_START_DATE_TIME;
     private final static Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     public EntityManager entityManager;
     public OrderEntity aOrder;
