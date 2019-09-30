@@ -1,14 +1,16 @@
 package ca.ulaval.glo4002.booking.entities.shuttles;
 
-import ca.ulaval.glo4002.booking.entities.orders.OrderItem;
-import ca.ulaval.glo4002.booking.entities.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.shuttles.types.ShuttleType;
-import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
+import java.util.List;
+
+import javax.persistence.Entity;
 
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import java.util.List;
+import ca.ulaval.glo4002.booking.domainObjects.orders.OrderItem;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.ShuttleCategory;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.types.ShuttleType;
+import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
 
 @Entity
 public class Shuttle extends OrderItem {
