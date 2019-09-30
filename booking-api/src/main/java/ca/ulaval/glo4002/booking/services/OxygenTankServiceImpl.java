@@ -11,6 +11,8 @@ import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OxygenTankParser;
 import ca.ulaval.glo4002.booking.repositories.OxygenRepository;
 
@@ -43,7 +45,8 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 
 	@Override
 	public OxygenTank save(OxygenTank oxygenTank) {
-		return null;
+		this.oxygenRepository.save(this.oxygenTankParser.toEntity(oxygenTank));
+		return oxygenTank;
 	}
 
 	public Iterable<OxygenTank> findAll() {
@@ -57,8 +60,10 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 
 	@Override
 	public OxygenTank findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		OxygenTankEntity oxygenTankEntity = this.oxygenRepository.findById(id)
+				.orElseThrow(OxygenTankNotFoundException::new);
+
+		return this.oxygenTankParser.parseEntity(oxygenTankEntity);
 	}
 
 	@Override

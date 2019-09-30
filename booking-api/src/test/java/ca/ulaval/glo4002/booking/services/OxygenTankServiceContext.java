@@ -18,12 +18,15 @@ public class OxygenTankServiceContext {
 	public OxygenTank oxygenTankA;
 	public OxygenTank oxygenTankB;
 	public OxygenTank oxygenTankE;
+	public OxygenTank oxygenTankNonExistant;
 	public OxygenTankEntity oxygenTankAEntity;
 	public OxygenTankEntity oxygenTankBEntity;
 	public OxygenTankEntity oxygenTankEEntity;
-	private Long oxygenTankAId;
+	public OxygenTankEntity oxygenTankNonExistantEntity;
+	public Long oxygenTankAId;
 	private Long oxygenTankBId;
 	private Long oxygenTankEId;
+	public Long oxygenTankNonExistantId = 0L;
 	private LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private OxygenTankParser parser = new OxygenTankParser();
 
@@ -49,6 +52,7 @@ public class OxygenTankServiceContext {
 				this.A_VALID_DATE);
 		this.oxygenTankE = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.E_ID),
 				this.A_VALID_DATE);
+		this.oxygenTankNonExistant = new OxygenTank(categoryBuilder.buildById(0L), this.A_VALID_DATE);
 
 		this.oxygenTankAEntity = this.parser.toEntity(this.oxygenTankA);
 		this.oxygenTankAId = this.oxygenTankAEntity.id;
@@ -56,5 +60,11 @@ public class OxygenTankServiceContext {
 		this.oxygenTankBId = this.oxygenTankBEntity.id;
 		this.oxygenTankEEntity = this.parser.toEntity(this.oxygenTankE);
 		this.oxygenTankEId = this.oxygenTankEEntity.id;
+		this.oxygenTankNonExistantEntity = this.parser.toEntity(this.oxygenTankNonExistant);
+	}
+
+	public void setUpRepositoryForSave() {
+		when(repository.findById(this.oxygenTankNonExistantId))
+				.thenReturn(Optional.of(this.oxygenTankNonExistantEntity));
 	}
 }
