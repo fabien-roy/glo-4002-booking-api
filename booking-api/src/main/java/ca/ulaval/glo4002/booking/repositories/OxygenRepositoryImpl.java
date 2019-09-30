@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
 
 public class OxygenRepositoryImpl implements OxygenRepository {
 
@@ -22,9 +24,14 @@ public class OxygenRepositoryImpl implements OxygenRepository {
 	}
 
 	@Override
-	public <S extends OxygenTankEntity> S save(S entity) {
-		// TODO Write this code
-		return null;
+	public <S extends OxygenTankEntity> S save(S oxygenTank) {
+		if (oxygenTank.id == null) {
+			entityManager.persist(oxygenTank);
+		} else {
+			throw new OrderAlreadyCreatedException();
+		}
+
+		return oxygenTank;
 	}
 
 	@Override
@@ -35,8 +42,13 @@ public class OxygenRepositoryImpl implements OxygenRepository {
 
 	@Override
 	public Optional<OxygenTankEntity> findById(Long id) {
-		// TODO Write this code
-		return null;
+		OxygenTankEntity oxygenTankEntity = entityManager.find(OxygenTankEntity.class, id);
+
+		if (oxygenTankEntity == null) {
+			throw new OxygenTankNotFoundException();
+		}
+
+		return Optional.of(oxygenTankEntity);
 	}
 
 	@Override

@@ -54,4 +54,9 @@ public class OxygenTankRepositoryContext {
 		when(entityManager.find(OxygenTankEntity.class, E_OXYGEN_ID)).thenReturn(this.oxygenTankE);
 		when(entityManager.find(OxygenTankEntity.class, NON_EXISTANT_OXYGEN_ID)).thenReturn(null);
 	}
+
+	public void setUpEntityManagerForSave() {
+		oxygenTankNotExist.id = null;
+		when(entityManager.find(OxygenTankEntity.class, NON_EXISTANT_OXYGEN_ID)).thenReturn(oxygenTankNotExist);
+	}
 }
