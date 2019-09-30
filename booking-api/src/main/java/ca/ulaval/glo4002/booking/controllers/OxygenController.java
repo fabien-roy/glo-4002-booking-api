@@ -27,7 +27,7 @@ public class OxygenController {
 		this.oxygenTankParser = oxygenTankParser;
 	}
 
-	// TODO : Test this
+	// TODO : I think we don't need this method, oxygenTank will never require a post
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addOxygenTank(OxygenTank oxygenTank) {
