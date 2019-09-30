@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.exceptions.InvalidDateTimeException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public final class FestivalDateUtil {
@@ -30,9 +31,8 @@ public final class FestivalDateUtil {
         }
 	}
 
-    // TODO : This should not work this way
     public static String toZonedDateTimeString(LocalDateTime orderDate) {
-        return orderDate.toString() + ":00.000Z";
+        return ZonedDateTime.of(orderDate, ZoneId.of("UTC")).toString();
     }
 
 	public static boolean isOutsideFestivalDates(LocalDate date) {
