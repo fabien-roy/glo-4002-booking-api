@@ -1,12 +1,19 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
-import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
+import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
+import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
 import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.OrderServiceImpl;
 import ca.ulaval.glo4002.booking.services.PassService;
+import ca.ulaval.glo4002.booking.services.PassServiceImpl;
+import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -17,23 +24,27 @@ import java.util.List;
 @Path("/orders")
 public class OrderController {
 
-    private final OrderService orderService;
-    private final PassService passService;
-    private final OrderParser orderParser;
-    private final PassParser passParser;
+    private OrderService orderService;
+    private PassService passService;
+    private final OrderParser orderParser = new OrderParser();
+    private final PassParser passParser = new PassParser();
 
-    public OrderController(OrderService orderService, PassService passService, OrderParser orderParser, PassParser passParser) {
-        this.orderService = orderService;
-        this.passService = passService;
-        this.orderParser = orderParser;
-        this.passParser = passParser;
+    public OrderController() {
+        // TODO : Inject this
+        this.orderService = new OrderServiceImpl(new OrderRepositoryImpl());
+        this.passService = new PassServiceImpl(new PassRepositoryImpl());
     }
 
-    // TODO : Test this
+    public OrderController(OrderService orderService, PassService passService) {
+        this.orderService = orderService;
+        this.passService = passService;
+    }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<OrderDto> getOrders() {
+    public ResponseEntity<List<OrderDto>> getOrders() {
         List<Order> orders = new ArrayList<>();
+
         orderService.findAll().forEach(orders::add);
 
         // TODO : Get passes (passService.findAll)
@@ -42,31 +53,46 @@ public class OrderController {
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> orderDtos.add(orderParser.toDto(order)));
 
-        return orderDtos;
+        return ResponseEntity.ok().body(orderDtos);
     }
 
-    // TODO : Test this
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public OrderDto getOrderById(@PathParam("id") Long entityId){
+    public ResponseEntity<?> getOrderById(@PathParam("id") Long entityId){
         // TODO : Get pass (passService.findById)
         // passService.findById(?);
-        Order order = orderService.findById(entityId);
 
-        return orderParser.toDto(order);
+        Order order;
+
+        try {
+            order = orderService.findById(entityId);
+        } catch (OrderNotFoundException exception) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(orderParser.toDto(order));
     }
 
-    // TODO : Test this
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addOrder(OrderDto dto) {
-        Order order = orderParser.parseDto(dto);
-        List<Pass> passes = passParser.parseDto(dto.passes);
+    public ResponseEntity<?> addOrder(OrderDto dto) {
+        Order order;
 
-        orderService.save(order);
-        passService.saveAll(passes);
+        try {
+            order = orderParser.parseDto(dto);
+            // List<Pass> passes = passParser.parseDto(dto.passes);
+        } catch (OrderDtoInvalidException exception) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        return Response.status(Response.Status.CREATED.getStatusCode()).build();
+        try {
+            order = orderService.save(order);
+            // passService.saveAll(passes);
+        } catch (OrderAlreadyCreatedException exception) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).body(orderParser.toDto(order));
     }
 }

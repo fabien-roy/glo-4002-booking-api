@@ -6,11 +6,15 @@ import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
+@Service
 public class PassServiceImpl implements PassService {
 
+    @Resource
     private final PassRepository passRepository;
     private final PassParser passParser;
 

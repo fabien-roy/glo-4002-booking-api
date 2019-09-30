@@ -8,6 +8,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 
 public class BookingServer implements Runnable {
     private static final int PORT = 8181;
+
     public static void main(String[] args) {
         new BookingServer().run();
     }
