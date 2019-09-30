@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class OrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
 	public Long id;
     public LocalDateTime orderDate;
