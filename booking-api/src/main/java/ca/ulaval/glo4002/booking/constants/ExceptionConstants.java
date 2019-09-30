@@ -21,8 +21,13 @@ public class ExceptionConstants {
     public static final String ORDER_DTO_INVALID_MESSAGE = "Invalid order DTO";
 
     public static final String VENDOR_NOT_FOUND_MESSAGE = "Vendor not found";
+<<<<<<< HEAD
     public static final String INVALID_EVENT_DATE_MESSAGE = "Invalid event date";
 
+=======
+    public static final String PASS_DTO_INVALID_MESSAGE = "Invalid pass DTO"; 
+    public static final String INVALID_EVENT_DATE_MESSAGE = "Invalid event date";
+>>>>>>> 9d2923c52d1e07949464acc64313f268a26d4c6b
     public static final String SHUTTLE_FULL_MESSAGE = "Shuttle capacity is full";
 
     public static final String UTILITY_CLASS_MESSAGE = "Utility class";
