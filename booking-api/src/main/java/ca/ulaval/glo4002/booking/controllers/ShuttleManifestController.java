@@ -19,18 +19,18 @@ import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.ShuttleService;
+import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.validators.FestivalDateValidator;
 
 @Path("/shuttle-manifests")
 public class ShuttleManifestController {
 	
-	private final ShuttleService shuttleService;
+	private final ShuttleManifestService shuttleService;
 	private final OrderService orderService;
 	private final OrderParser orderParser;
 	
 	
-	public ShuttleManifestController(ShuttleService shuttleService, OrderService orderService,
+	public ShuttleManifestController(ShuttleManifestService shuttleService, OrderService orderService,
 			OrderParser orderParser) {
 		this.shuttleService = shuttleService;
 		this.orderService = orderService;

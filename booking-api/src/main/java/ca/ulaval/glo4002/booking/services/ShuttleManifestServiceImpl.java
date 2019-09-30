@@ -3,12 +3,12 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.domainObjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 
-public class ShuttleServiceImpl implements ShuttleService {
+public class ShuttleManifestServiceImpl implements ShuttleManifestService {
 	
 	private final ShuttleRepository shuttleRepository;
 	
 	
-	public ShuttleServiceImpl(ShuttleRepository shuttleRepository) {
+	public ShuttleManifestServiceImpl(ShuttleRepository shuttleRepository) {
 		this.shuttleRepository = shuttleRepository;
 	}
 
