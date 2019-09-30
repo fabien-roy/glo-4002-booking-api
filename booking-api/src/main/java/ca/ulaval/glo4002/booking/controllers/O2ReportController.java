@@ -22,12 +22,12 @@ public class O2ReportController {
 
 	private final OxygenTankService oxygenTankService;
 	private final OxygenTankParser oxygenTankParser;
-	private final HistoryItemParser historyItemParser;
+	//private final HistoryItemParser historyItemParser;
 
-	public O2ReportController(OxygenTankService oxygenTankService, OxygenTankParser oxygenTankParser, HistoryItemParser historyItemParser) {
+	public O2ReportController(OxygenTankService oxygenTankService, OxygenTankParser oxygenTankParser) {
 		this.oxygenTankService = oxygenTankService;
 		this.oxygenTankParser = oxygenTankParser;
-		this.historyItemParser = historyItemParser;
+		//this.historyItemParser = historyItemParser;
 	}
 
 	@GET
