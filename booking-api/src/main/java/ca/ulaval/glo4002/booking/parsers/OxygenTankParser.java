@@ -19,8 +19,8 @@ public class OxygenTankParser implements Parser<OxygenTank, OxygenTankDto, Oxyge
 	public OxygenTank parseDto(OxygenTankDto dto) {
 		OxygenCategory category = oxygenCategoryBuilder.buildById(dto.oxygenCategory);
 		LocalDate requestDate = LocalDate.parse(dto.requestDate, dateTimeFormatter);
-
-		return new OxygenTank(category, requestDate);
+		OxygenTank oxy = new OxygenTank(category, requestDate);
+		return oxy;
 	}
 
 	@Override
@@ -42,7 +42,6 @@ public class OxygenTankParser implements Parser<OxygenTank, OxygenTankDto, Oxyge
 
 	@Override
 	public OxygenTankEntity toEntity(OxygenTank tank) {
-		return new OxygenTankEntity(tank.getId(), tank.getOxygenTankCategory().getId(),
-				tank.getTimeRequested());
+		return new OxygenTankEntity(tank.getId(), tank.getOxygenTankCategory().getId(), tank.getTimeRequested());
 	}
 }
