@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 
 class OxygenTankServiceTest {
 
-	OxygenTankService subject;
+	OxygenTankServiceImpl subject;
 	OxygenTankServiceContext context;
 
 	@BeforeEach
 	public void setUp() {
 		this.context = new OxygenTankServiceContext();
-		this.subject = new OxygenTankService(this.context.repository);
+		this.subject = new OxygenTankServiceImpl(this.context.repository);
 	}
 
 	@Test

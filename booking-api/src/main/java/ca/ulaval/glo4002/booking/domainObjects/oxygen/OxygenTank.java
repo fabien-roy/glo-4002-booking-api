@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import ca.ulaval.glo4002.booking.parsers.ParsableEntity;
-import ca.ulaval.glo4002.booking.services.OxygenTankService;
+import ca.ulaval.glo4002.booking.services.OxygenTankServiceImpl;
 
 @Entity
 public class OxygenTank implements ParsableEntity {
@@ -29,7 +29,7 @@ public class OxygenTank implements ParsableEntity {
 		// TODO : Refactor, when calling constructor the services should already have
 		// been called by the requester
 		// TODO : and the correct category should by passed.
-		OxygenTankService oxygenTankService = new OxygenTankService();
+		OxygenTankServiceImpl oxygenTankService = new OxygenTankServiceImpl();
 
 		this.category = oxygenTankService.getOxygenCategoryForTimeTable(category, timeRequested);
 		this.timeRequested = timeRequested;
