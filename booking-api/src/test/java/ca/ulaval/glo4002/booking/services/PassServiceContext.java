@@ -12,7 +12,6 @@ import ca.ulaval.glo4002.booking.repositories.PassRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.mockito.Mockito.mock;
@@ -60,9 +59,9 @@ public class PassServiceContext {
                 optionBuilder.buildById(PassConstants.Options.PACKAGE_ID)
         );
 
-        aPassEntity = parser.toEntity(new ArrayList<>(Collections.singletonList(aPass)));
-        anotherPassEntity = parser.toEntity(new ArrayList<>(Collections.singletonList(anotherPass)));
-        aNonExistentPassEntity = parser.toEntity(new ArrayList<>(Collections.singletonList(aNonExistentPass)));
+        aPassEntity = parser.toEntity(aPass);
+        anotherPassEntity = parser.toEntity(anotherPass);
+        aNonExistentPassEntity = parser.toEntity(aNonExistentPass);
     }
 
     private void setUpRepository() {

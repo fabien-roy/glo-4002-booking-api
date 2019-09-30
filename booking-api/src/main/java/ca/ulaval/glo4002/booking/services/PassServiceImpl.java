@@ -25,18 +25,16 @@ public class PassServiceImpl implements PassService {
 
     @Override
     public Pass findById(Long id) {
-        PassEntity passEntity = passRepository.findById(id)
-        		.orElseThrow(PassNotFoundException::new);
+        PassEntity passEntity = passRepository.findById(id).orElseThrow(PassNotFoundException::new);
 
-        return passParser.parseEntity(passEntity).get(0);
+        return passParser.parseEntity(passEntity);
     }
 
     @Override
     public Iterable<Pass> findAll() {
         List<Pass> passes = new ArrayList<>();
 
-        passRepository.findAll()
-        .forEach(passEntity -> passes.add(passParser.parseEntity(passEntity).get(0)));
+        passRepository.findAll().forEach(passEntity -> passes.add(passParser.parseEntity(passEntity)));
 
         return passes;
     }
@@ -45,8 +43,7 @@ public class PassServiceImpl implements PassService {
     public Iterable<Pass> saveAll(Iterable<Pass> passes) {
         List<PassEntity> passEntities = new ArrayList<>();
 
-        passes.forEach(pass -> passEntities
-        		.add(passParser.toEntity(new ArrayList<>(Collections.singletonList(pass)))));
+        passes.forEach(pass -> passEntities.add(passParser.toEntity(pass)));
 
         passRepository.saveAll(passEntities);
 

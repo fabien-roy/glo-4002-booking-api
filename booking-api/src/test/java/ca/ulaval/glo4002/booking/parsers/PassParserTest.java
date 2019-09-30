@@ -167,9 +167,9 @@ class PassParserTest {
 
     @Test
     void whenParsingEntity_orderShouldBeValid() {
-        PassEntity entity = subject.toEntity(getPassAsList());
+        PassEntity entity = subject.toEntity(pass);
 
-        Pass parsedPass = subject.parseEntity(entity).get(0);
+        Pass parsedPass = subject.parseEntity(entity);
 
         assertEquals(entity.id, parsedPass.getId());
         assertEquals(entity.categoryId, parsedPass.getCategory().getId());
@@ -179,7 +179,7 @@ class PassParserTest {
 
     @Test
     void whenParsingToEntity_entityShouldBeValid() {
-        PassEntity entity = subject.toEntity(getPassAsList());
+        PassEntity entity = subject.toEntity(pass);
 
         assertEquals(pass.getId(), entity.id);
         assertEquals(pass.getCategory().getId(), entity.categoryId);
@@ -189,15 +189,11 @@ class PassParserTest {
 
     @Test
     void whenParsingToDto_dtoShouldBeValid() {
-        PassesDto dto = subject.toDto(getPassAsList());
+        PassesDto dto = subject.toDto(new ArrayList<>(Collections.singletonList(pass)));
 
         assertEquals(pass.getId(), dto.passNumber);
         assertEquals(pass.getCategory().getName(), dto.passCategory);
         assertEquals(pass.getOption().getName(), dto.passOption);
         // assertEquals(pass.getEventDate().toString(), dto.eventDates.get(0));
-    }
-
-    private List<Pass> getPassAsList() {
-        return new ArrayList<>(Collections.singletonList(pass));
     }
 }

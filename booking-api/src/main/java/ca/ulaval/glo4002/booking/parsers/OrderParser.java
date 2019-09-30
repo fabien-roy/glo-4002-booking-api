@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDateTime;
 
-public class OrderParser implements Parser<Order, OrderDto, OrderEntity> {
+public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<Order, OrderDto> {
 
     private VendorBuilder vendorBuilder = new VendorBuilder();
 

@@ -13,10 +13,9 @@ import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
+public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<List<Pass>, PassesDto> {
 
     private PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
     private PassOptionBuilder optionBuilder = new PassOptionBuilder();
@@ -40,14 +39,13 @@ public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
     }
 
     @Override
-    public List<Pass> parseEntity(PassEntity entity) {
+    public Pass parseEntity(PassEntity entity) {
         PassCategory category = categoryBuilder.buildById(entity.categoryId);
         PassOption option = optionBuilder.buildById(entity.optionId);
 
-        return new ArrayList<>(Collections.singletonList(new Pass(entity.id, category, option, entity.eventDate)));
+        return new Pass(entity.id, category, option, entity.eventDate);
     }
 
-    // TODO : This should work for a list of passes (but never will be used this way)
     @Override
     public PassesDto toDto(List<Pass> passes) {
         Pass pass = passes.get(0);
@@ -61,11 +59,8 @@ public class PassParser implements Parser<List<Pass>, PassesDto, PassEntity> {
         return dto;
     }
 
-    // TODO : This should work for a list of passes (but never will be used this way)
     @Override
-    public PassEntity toEntity(List<Pass> passes) {
-        Pass pass = passes.get(0);
-
+    public PassEntity toEntity(Pass pass) {
         return new PassEntity(
                 pass.getId(),
                 pass.getCategory().getId(),
