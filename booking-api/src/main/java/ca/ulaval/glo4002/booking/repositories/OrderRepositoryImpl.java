@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.EntityManagerFactoryUtil;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
@@ -12,6 +13,10 @@ import java.util.Optional;
 public class OrderRepositoryImpl implements OrderRepository {
 
     private final EntityManager entityManager;
+
+    public OrderRepositoryImpl() {
+        this.entityManager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
+    }
 
     public OrderRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
