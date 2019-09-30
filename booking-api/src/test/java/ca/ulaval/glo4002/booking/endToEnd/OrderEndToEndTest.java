@@ -1,12 +1,13 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import javax.ws.rs.core.Response;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrderEndToEndTest {
 
@@ -21,49 +22,41 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnHttpErrorPageNotFound_whenOrderNumberIsNonExistent() {
         context.setUp();
 
-        OrderNotFoundException thrown = assertThrows(
-                OrderNotFoundException.class,
-                () -> context.orderController.getOrderById(context.anOrderId)
-        );
+        ResponseEntity response = context.orderController.getOrderById(context.anOrderId);
 
-        assertEquals(ExceptionConstants.ORDER_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatusCodeValue());
     }
 
     @Test
     public void getOrderController_shouldReturnHttpErrorPageNotFound_whenOrderNumberIsInvalid() {
         context.setUp();
 
-        OrderNotFoundException thrown = assertThrows(
-                OrderNotFoundException.class,
-                () -> context.orderController.getOrderById(OrderEndToEndContext.AN_INVALID_ORDER_ID)
-        );
+        ResponseEntity response = context.orderController.getOrderById(OrderEndToEndContext.AN_INVALID_ORDER_ID);
 
-        assertEquals(ExceptionConstants.ORDER_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatusCodeValue());
     }
 
     @Test
     public void getOrderController_shouldReturnCorrectOrderDot_whenOrderNumberIsExistent() {
         context.setUp().withAnOrder();
 
-        OrderDto aDto = context.orderController.getOrderById(context.anOrderId);
-        OrderNotFoundException thrown = assertThrows(
-                OrderNotFoundException.class,
-                () -> context.orderController.getOrderById(context.anotherOrderId)
-        );
+        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.anOrderId);
 
-        assertNotNull(aDto);
-        assertEquals(ExceptionConstants.ORDER_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
+        assertEquals(context.anOrderId, response.getBody().orderNumber);
     }
 
     @Test
     public void getOrderController_shouldReturnCorrectOrderDot_whenManyOrderNumberAreExistent() {
         context.setUp().withAnOrder().withAnotherOrder();
 
-        OrderDto aDto = context.orderController.getOrderById(context.anOrderId);
-        OrderDto anotherDto = context.orderController.getOrderById(context.anotherOrderId);
+        ResponseEntity<OrderDto> aResponse = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.anOrderId);
+        ResponseEntity<OrderDto> anotherResponse = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.anotherOrderId);
 
-        assertNotNull(aDto);
-        assertNotNull(anotherDto);
+        assertEquals(Response.Status.OK.getStatusCode(), aResponse.getStatusCodeValue());
+        assertEquals(Response.Status.OK.getStatusCode(), anotherResponse.getStatusCodeValue());
+        assertEquals(context.anOrderId, aResponse.getBody().orderNumber);
+        assertEquals(context.anotherOrderId, anotherResponse.getBody().orderNumber);
     }
 
     // TODO : Get all tests

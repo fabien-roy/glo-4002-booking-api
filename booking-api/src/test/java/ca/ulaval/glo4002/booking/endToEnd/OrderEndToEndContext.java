@@ -29,13 +29,12 @@ public class OrderEndToEndContext {
     public static final Long AN_INVALID_ORDER_ID = -1L;
 
     private EntityManager entityManager;
-    private OrderParser orderParser = new OrderParser();
     private PassParser passParser = new PassParser();
     private OrderEntity anOrder;
     private OrderEntity anotherOrder;
+    private OrderParser orderParser = new OrderParser();
     public Long anOrderId = 1L;
     public Long anotherOrderId = 2L;
-
     public OrderController orderController;
 
     public OrderEndToEndContext() {
