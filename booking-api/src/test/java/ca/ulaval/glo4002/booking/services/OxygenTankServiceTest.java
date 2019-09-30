@@ -1,18 +1,17 @@
 package ca.ulaval.glo4002.booking.services;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class OxygenTankServiceTest {
 
+	OxygenTankService subject;
+	OxygenTankServiceContext context;
+
 	@BeforeEach
 	public void setUp() {
-
+		this.context = new OxygenTankServiceContext();
+		this.subject = new OxygenTankService(this.context.repository);
 	}
 
-	@Test
-	public void findAll_shouldReturnCorrectOxygenTankss() {
-		// TODO Do this test
-	}
-
+	// TODO Test something
 }
