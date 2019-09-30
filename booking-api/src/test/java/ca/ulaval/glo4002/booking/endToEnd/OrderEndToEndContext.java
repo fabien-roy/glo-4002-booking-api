@@ -30,9 +30,9 @@ public class OrderEndToEndContext {
 
     private EntityManager entityManager;
     private PassParser passParser = new PassParser();
-    private OrderEntity anOrder;
-    private OrderEntity anotherOrder;
-    private OrderParser orderParser = new OrderParser();
+    public OrderEntity anOrder;
+    public OrderEntity anotherOrder;
+    public OrderParser orderParser = new OrderParser();
     public Long anOrderId = 1L;
     public Long anotherOrderId = 2L;
     public OrderController orderController;

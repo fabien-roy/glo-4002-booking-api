@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
-import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
@@ -33,7 +34,7 @@ public class OrderController {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getOrders() {
+    public ResponseEntity<List<OrderDto>> getOrders() {
         List<Order> orders = new ArrayList<>();
 
         orderService.findAll().forEach(orders::add);
@@ -68,11 +69,21 @@ public class OrderController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> addOrder(OrderDto dto) {
-        Order order = orderParser.parseDto(dto);
-        List<Pass> passes = passParser.parseDto(dto.passes);
+        Order order;
 
-        orderService.save(order);
-        passService.saveAll(passes);
+        try {
+            order = orderParser.parseDto(dto);
+            // List<Pass> passes = passParser.parseDto(dto.passes);
+        } catch (OrderDtoInvalidException exception) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        try {
+            orderService.save(order);
+            // passService.saveAll(passes);
+        } catch (OrderAlreadyCreatedException exception) {
+            return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).body(orderParser.toDto(order));
     }
