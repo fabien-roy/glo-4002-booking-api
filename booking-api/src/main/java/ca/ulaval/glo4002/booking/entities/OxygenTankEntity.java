@@ -1,12 +1,13 @@
 package ca.ulaval.glo4002.booking.entities;
 
+import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
-@Entity
+@Entity(name = "OxygenTank")
 public class OxygenTankEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
