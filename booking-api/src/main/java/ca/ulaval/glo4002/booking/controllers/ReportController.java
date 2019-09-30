@@ -40,16 +40,9 @@ public class ReportController {
 
 		List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
 		List<HistoryItemDto> historyItemDtos = new ArrayList<>();
+		
 
-		InventoryDto inventory = new InventoryDto();
-		HistoryDto history = new HistoryDto();
-
-		List<Dto> report = new ArrayList<>();
-
-		report.add(inventory);
-		report.add(history);
-
-		return ResponseEntity.ok().body(report);
+		return null;
 	}
 
 	// TODO : To delete oxygenTank does not take post
