@@ -2,8 +2,13 @@ package ca.ulaval.glo4002.booking.services;
 
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Optional;
+
+import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.OxygenProduction;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.parsers.OxygenTankParser;
 import ca.ulaval.glo4002.booking.repositories.OxygenRepository;
@@ -16,7 +21,10 @@ public class OxygenTankServiceContext {
 	public OxygenTankEntity oxygenTankAEntity;
 	public OxygenTankEntity oxygenTankBEntity;
 	public OxygenTankEntity oxygenTankEEntity;
-	private OxygenProduction oxygenProduction;
+	private Long oxygenTankAId;
+	private Long oxygenTankBId;
+	private Long oxygenTankEId;
+	private LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private OxygenTankParser parser = new OxygenTankParser();
 
 	public OxygenTankServiceContext() {
@@ -26,10 +34,27 @@ public class OxygenTankServiceContext {
 
 	private void setUpRepository() {
 		this.repository = mock(OxygenRepository.class);
-		// TODO write this
+		when(repository.findAll()).thenReturn(Arrays.asList(oxygenTankAEntity, oxygenTankBEntity, oxygenTankEEntity));
+		when(repository.findById(oxygenTankAId)).thenReturn(Optional.of(oxygenTankAEntity));
+		when(repository.findById(oxygenTankBId)).thenReturn(Optional.of(oxygenTankBEntity));
+		when(repository.findById(oxygenTankEId)).thenReturn(Optional.of(oxygenTankEEntity));
 	}
 
 	private void setUpOxygenTanks() {
-		// TODO write this
+		OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
+
+		this.oxygenTankA = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.A_ID),
+				this.A_VALID_DATE);
+		this.oxygenTankB = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.B_ID),
+				this.A_VALID_DATE);
+		this.oxygenTankE = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.E_ID),
+				this.A_VALID_DATE);
+
+		this.oxygenTankAEntity = this.parser.toEntity(this.oxygenTankA);
+		this.oxygenTankAId = this.oxygenTankAEntity.id;
+		this.oxygenTankBEntity = this.parser.toEntity(this.oxygenTankB);
+		this.oxygenTankBId = this.oxygenTankBEntity.id;
+		this.oxygenTankEEntity = this.parser.toEntity(this.oxygenTankE);
+		this.oxygenTankEId = this.oxygenTankEEntity.id;
 	}
 }
