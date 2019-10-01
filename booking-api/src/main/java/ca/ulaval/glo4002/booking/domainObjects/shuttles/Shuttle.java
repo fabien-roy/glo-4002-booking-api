@@ -13,6 +13,10 @@ public class Shuttle extends OrderItem {
 	private List<Trip> trips;
     // TODO : private <?> date;
 
+    public Shuttle(Long id, Double price, ShuttleCategory category, List<Trip> trip) {
+
+    }
+
     @Override
     public Double getPrice() {
         return price;
