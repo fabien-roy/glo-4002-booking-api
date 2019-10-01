@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.dto.TripDto;
+import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 
 public class ShuttleManifestParser implements DtoParser<ShuttleManifest, ShuttleManifestDto> {
 	
@@ -15,8 +16,7 @@ public class ShuttleManifestParser implements DtoParser<ShuttleManifest, Shuttle
 
 	@Override
 	public ShuttleManifest parseDto(ShuttleManifestDto dto) {
-	    // TODO
-		return null;
+	    throw new UnusedMethodException();
 	}
 
 	@Override
