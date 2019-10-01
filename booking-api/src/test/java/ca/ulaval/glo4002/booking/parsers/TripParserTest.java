@@ -18,7 +18,7 @@ class TripParserTest {
     private final static Long A_TRIP_ID = 1L;
     private final static Long ANOTHER_TRIP_ID = 2L;
     private final static LocalDate A_TRIP_DATE = DateConstants.START_DATE;
-    private TripParser subject = new TripParser();
+    private TripParser subject;
     private Trip aDepartureTrip;
     private Trip anArrivalTrip;
 

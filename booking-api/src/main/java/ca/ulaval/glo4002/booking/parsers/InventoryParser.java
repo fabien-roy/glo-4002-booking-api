@@ -16,7 +16,10 @@ public class InventoryParser implements DtoParser<Inventory, List<InventoryItemD
 
     @Override
     public List<InventoryItemDto> toDto(Inventory object) {
-        // TODO
-        return new ArrayList<>();
+        List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
+
+        //object.getInventory().forEach(item -> item.);
+
+        return null;
     }
 }

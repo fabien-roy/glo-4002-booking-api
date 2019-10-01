@@ -66,6 +66,7 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 		OxygenCategory requestedCategory = categoryBuilder.buildByQualityId(requestedQuality.getId());
 		LocalDate readyDate = getReadyDate(requestedCategory, orderDate);
 		OxygenCategory category = getCategoryForTimeToProduce(requestedCategory, orderDate, readyDate);
+		readyDate = getReadyDate(category, orderDate);
 
 		OxygenTank oxygenTank = new OxygenTank(category, orderDate, readyDate);
 
@@ -79,7 +80,8 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 	private OxygenCategory getCategoryForTimeToProduce(OxygenCategory requestedCategory, LocalDate requestDate, LocalDate readyDate) {
 		if (readyDate.isBefore(DateConstants.START_DATE)) {
 			return requestedCategory;
-		} else if (requestDate.plus(OxygenConstants.Productions.ELECTROLYTES_PRODUCTION_TIME).isBefore(DateConstants.START_DATE)) {
+		} else if (requestDate.plusDays(OxygenConstants.Productions.ELECTROLYTES_PRODUCTION_TIME.toDays())
+				.isBefore(DateConstants.START_DATE)) {
 			return categoryBuilder.buildById(OxygenConstants.Categories.B_ID);
 		} else {
 			return categoryBuilder.buildById(OxygenConstants.Categories.E_ID);
