@@ -30,4 +30,8 @@ public class ShuttleManifest {
 	public List<ArrivalTrip> getArrivals() {
 		return arrivals;
 	}
+	
+	public LocalDate getDate() {
+		return tripDate;
+	}
 }
