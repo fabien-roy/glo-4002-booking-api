@@ -37,9 +37,6 @@ public class OrderController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getOrderById(@PathParam("id") Long entityId){
-        // TODO : Get pass (passService.findById)
-        // passService.findById(?);
-
         Order order;
 
         try {

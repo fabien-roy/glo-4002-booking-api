@@ -14,6 +14,7 @@ import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<List<Pass>, PassesDto> {
@@ -23,9 +24,16 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
 
     @Override
     public List<Pass> parseDto(PassesDto dto) {
-        // TODO : Test if category or option is invalid
         PassCategory category = categoryBuilder.buildByName(dto.passCategory);
         PassOption option = optionBuilder.buildByName(dto.passOption);
+
+        if (option.getId().equals(PassConstants.Options.PACKAGE_ID)) {
+            if (dto.eventDates != null) {
+                throw new PassDtoInvalidException();
+            }
+
+            return new ArrayList<>(Collections.singletonList(new Pass(dto.passNumber, category, option)));
+        }
 
         List<Pass> passes = new ArrayList<>();
 
@@ -52,7 +60,7 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
         dto.passNumber = pass.getId();
         dto.passCategory = pass.getCategory().getName();
         dto.passOption = pass.getOption().getName();
-        // dto.eventDates = new ArrayList<>(Collections.singletonList(pass.getEventDate()));
+        dto.eventDates = new ArrayList<>(Collections.singletonList(pass.getEventDate().toString()));
 
         return dto;
     }

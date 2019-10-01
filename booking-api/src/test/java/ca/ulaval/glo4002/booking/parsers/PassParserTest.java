@@ -31,7 +31,6 @@ class PassParserTest {
             DateConstants.START_DATE,
             DateConstants.START_DATE.plusDays(1)
     ));
-    private final static Long AN_INVALID_PASS_NUMBER = -1L;
     private final static String AN_INVALID_PASS_CATEGORY = "anInvalidPassCategory";
     private final static String AN_INVALID_PASS_OPTION = "anInvalidPassOption";
     private final static List<LocalDate> SOME_EVENT_DATES_NOT_IN_FESTIVAL = new ArrayList<>(Collections.singletonList(
@@ -59,18 +58,6 @@ class PassParserTest {
                 optionBuilder.buildByName(A_PASS_OPTION),
                 SOME_EVENT_DATES.get(0)
         );
-    }
-
-    @Test
-    void parseDto_shouldThrowInvalidPassDtoException_whenPassNumberIsInvalid() {
-        dto.passNumber = AN_INVALID_PASS_NUMBER;
-
-        PassDtoInvalidException thrown = assertThrows(
-                PassDtoInvalidException.class,
-                () -> subject.parseDto(dto)
-        );
-
-        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -110,6 +97,19 @@ class PassParserTest {
     }
 
     @Test
+    void parseDto_shouldThrowInvalidPassDtoException_whenEventDatesIsNotNull_andOptionIsPackage() {
+        SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
+        dto.passOption = PassConstants.Options.PACKAGE_NAME;
+
+        PassDtoInvalidException thrown = assertThrows(
+                PassDtoInvalidException.class,
+                () -> subject.parseDto(dto)
+        );
+
+        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
+    }
+
+    @Test
     void parseDto_shouldReturnPassWithSupernovaPassCategory_whenPassCategoryIsSupernova() {
         dto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;
 
@@ -139,8 +139,7 @@ class PassParserTest {
     @Test
     void parseDto_shouldReturnPassWithPackagePassOption_whenPassOptionIsPackage() {
         dto.passOption = PassConstants.Options.PACKAGE_NAME;
-        // TODO : Readd eventDates = null when checking for package and single pass
-        // dto.eventDates = null;
+        dto.eventDates = null;
 
         Pass pass = subject.parseDto(dto).get(0);
 

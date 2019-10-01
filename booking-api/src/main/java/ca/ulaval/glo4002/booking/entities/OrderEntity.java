@@ -53,8 +53,4 @@ public class OrderEntity {
     public List<? extends OrderItemEntity> getOrderItems() {
         return orderItems;
     }
-
-    public void addToOrderItems(OrderItemEntity orderItem) {
-        orderItems.add(orderItem);
-    }
 }

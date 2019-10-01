@@ -122,45 +122,44 @@ public class PassEndToEndContext {
     }
 
     public PassEndToEndContext withASinglePassOrder() {
+        aSinglePassOrderId = addOrder(aSinglePassOrder);
+
         aSinglePass.setOrder(aSinglePassOrder);
         aSinglePassId = addPass(aSinglePass);
         aSinglePass.setId(aSinglePassId);
-        aSinglePassOrder.addToOrderItems(aSinglePass);
-        aSinglePassOrderId = addOrder(aSinglePassOrder);
 
         return this;
     }
 
     public PassEndToEndContext withAnotherSinglePassOrder() {
+        anotherSinglePassOrderId = addOrder(anotherSinglePassOrder);
+
         anotherSinglePass.setOrder(anotherSinglePassOrder);
         anotherSinglePassId = addPass(anotherSinglePass);
         anotherSinglePass.setId(anotherSinglePassId);
-        anotherSinglePassOrder.addToOrderItems(anotherSinglePass);
-        anotherSinglePassOrderId = addOrder(anotherSinglePassOrder);
 
         return this;
     }
 
     public PassEndToEndContext withMultipleSinglePassOrder() {
+        aSinglePassOrderId = addOrder(aSinglePassOrder);
+
         aSinglePass.setOrder(aSinglePassOrder);
         aSinglePassId = addPass(aSinglePass);
         aSinglePass.setId(aSinglePassId);
-        anotherSinglePass.setOrder(anotherSinglePassOrder);
+        anotherSinglePass.setOrder(aSinglePassOrder);
         anotherSinglePassId = addPass(anotherSinglePass);
         anotherSinglePass.setId(anotherSinglePassId);
-        aSinglePassOrder.addToOrderItems(aSinglePass);
-        anotherSinglePassOrder.addToOrderItems(anotherSinglePass);
-        aSinglePassOrderId = addOrder(aSinglePassOrder);
 
         return this;
     }
 
     public PassEndToEndContext withAPackagePassOrder() {
+        aPackagePassOrderId = addOrder(aPackagePassOrder);
+
         aPackagePass.setOrder(aPackagePassOrder);
         aPackagePassId = addPass(aPackagePass);
         aPackagePass.setId(aPackagePassId);
-        aPackagePassOrder.addToOrderItems(aPackagePass);
-        aPackagePassOrderId = addOrder(aPackagePassOrder);
 
         return this;
     }
@@ -191,8 +190,12 @@ public class PassEndToEndContext {
         entityManager.persist(passEntity);
         entityManager.createQuery(RepositoryConstants.PASS_FIND_ALL_QUERY, PassEntity.class).getResultList()
                 .forEach(currentPassEntity -> {
-                    if (currentPassEntity.getEventDate().equals(passEntity.getEventDate())) {
+                    if (currentPassEntity.getOptionId().equals(PassConstants.Options.PACKAGE_ID)) {
                         passId[0] = currentPassEntity.getId();
+                    } else if (currentPassEntity.getOptionId().equals(PassConstants.Options.SINGLE_ID)) {
+                        if (currentPassEntity.getEventDate().equals(passEntity.getEventDate())) {
+                            passId[0] = currentPassEntity.getId();
+                        }
                     }
                 });
 
