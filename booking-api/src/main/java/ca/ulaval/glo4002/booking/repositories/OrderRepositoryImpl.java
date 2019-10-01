@@ -55,6 +55,13 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
+    public <S extends OrderEntity> S update(S order) {
+        entityManager.persist(order);
+
+        return order;
+    }
+
+    @Override
     public <S extends OrderEntity> Iterable<S> saveAll(Iterable<S> orders) {
         throw new UnusedMethodException();
     }

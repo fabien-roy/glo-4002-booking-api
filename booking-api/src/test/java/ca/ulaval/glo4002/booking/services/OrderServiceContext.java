@@ -105,7 +105,9 @@ public class OrderServiceContext {
     }
 
     public void setUpForSave() {
-        when(passService.order(any())).thenReturn(Collections.singletonList(aPass));
+        when(passService.order(any(), any())).thenReturn(Collections.singletonList(aPass));
         when(repository.findById(A_NON_EXISTANT_ORDER_ID)).thenReturn(Optional.of(aNonExistentOrderEntity));
+        when(repository.save(aOrderEntity)).thenReturn(aOrderEntity);
+        when(repository.update(aOrderEntity)).thenReturn(aOrderEntity);
     }
 }

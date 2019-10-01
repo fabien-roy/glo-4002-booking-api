@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
@@ -40,6 +41,7 @@ public class PassServiceImpl implements PassService {
         return passes;
     }
 
+    // TODO : Only used by tests, could be deleted
     @Override
     public Iterable<Pass> saveAll(Iterable<Pass> passes) {
         List<PassEntity> passEntities = new ArrayList<>();
@@ -51,9 +53,20 @@ public class PassServiceImpl implements PassService {
         return passes;
     }
 
+    // TODO : Test
     @Override
-    public Iterable<Pass> order(Iterable<Pass> passes) {
-        return saveAll(passes);
+    public Iterable<Pass> order(OrderEntity order, Iterable<Pass> passes) {
+        List<PassEntity> passEntities = new ArrayList<>();
+
+        passes.forEach(pass -> passEntities.add(passParser.toEntity(pass)));
+        passEntities.forEach(passEntity -> passEntity.setOrder(order));
+
+        passRepository.saveAll(passEntities);
+
+        order.clearOrderItems();
+        order.addOrderItems(passEntities);
+
+        return passes;
     }
 
     @Override

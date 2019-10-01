@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.entities.OrderEntity;
 
 public interface PassService extends Service<Pass> {
 
@@ -11,7 +12,7 @@ public interface PassService extends Service<Pass> {
 
     Iterable<Pass> saveAll(Iterable<Pass> passes);
 
-    Iterable<Pass> order(Iterable<Pass> passes);
+    Iterable<Pass> order(OrderEntity order, Iterable<Pass> passes);
 
     Iterable<Pass> getPasses(Iterable<? extends OrderItem> orderItems);
 }

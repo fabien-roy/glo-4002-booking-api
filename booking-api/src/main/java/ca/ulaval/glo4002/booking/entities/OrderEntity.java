@@ -53,4 +53,12 @@ public class OrderEntity {
     public List<? extends OrderItemEntity> getOrderItems() {
         return orderItems;
     }
+
+    public void addOrderItems(List<? extends OrderItemEntity> orderItems) {
+        this.orderItems.addAll(orderItems);
+    }
+
+    public void clearOrderItems() {
+        this.orderItems.clear();
+    }
 }
