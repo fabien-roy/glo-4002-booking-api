@@ -1,7 +1,10 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 
-public interface ShuttleManifestService extends Service<Shuttle, Long>{
+import java.time.LocalDate;
 
+public interface ShuttleManifestService extends Service<ShuttleManifest>{
+
+    ShuttleManifest findByDate(LocalDate date);
 }

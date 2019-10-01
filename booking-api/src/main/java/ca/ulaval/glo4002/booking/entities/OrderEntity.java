@@ -11,11 +11,11 @@ public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-	public Long id;
-    public LocalDateTime orderDate;
-    public Long vendorId;
+	private Long id;
+    private LocalDateTime orderDate;
+    private Long vendorId;
     @OneToMany()
-    @JoinColumn(name="order_id", nullable = false)
+    @JoinColumn(name="orderId", nullable = false)
     public List<OrderItemEntity> orderItems = new ArrayList<>();
 
     public OrderEntity() {
@@ -31,5 +31,21 @@ public class OrderEntity {
         this.id = id;
         this.orderDate = orderDate;
         this.vendorId = vendorId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public Long getVendorId() {
+        return vendorId;
     }
 }

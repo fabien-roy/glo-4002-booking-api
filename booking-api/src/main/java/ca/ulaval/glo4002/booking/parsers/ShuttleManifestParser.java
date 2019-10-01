@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
 
 public class ShuttleManifestParser implements DtoParser<ShuttleManifest, ShuttleManifestDto> {
@@ -10,13 +10,13 @@ public class ShuttleManifestParser implements DtoParser<ShuttleManifest, Shuttle
 
 	@Override
 	public ShuttleManifest parseDto(ShuttleManifestDto dto) {
-		// TODO Auto-generated method stub
+	    // TODO
 		return null;
 	}
 
 	@Override
 	public ShuttleManifestDto toDto(ShuttleManifest shuttleManifest) {
-		// TODO Auto-generated method stub
+	    // TODO
 		return null;
 	}
 }

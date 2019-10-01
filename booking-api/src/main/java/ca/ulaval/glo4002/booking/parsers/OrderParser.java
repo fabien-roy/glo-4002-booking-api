@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
-import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
-import ca.ulaval.glo4002.booking.domainObjects.vendors.Vendor;
+import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.vendors.Vendor;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateTimeException;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateTimeException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
@@ -27,9 +27,9 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<
 
     @Override
     public Order parseEntity(OrderEntity entity) {
-        Vendor vendor = vendorBuilder.buildById(entity.vendorId);
+        Vendor vendor = vendorBuilder.buildById(entity.getVendorId());
 
-        return new Order(entity.id, entity.orderDate, vendor);
+        return new Order(entity.getId(), entity.getOrderDate(), vendor);
     }
 
     @Override

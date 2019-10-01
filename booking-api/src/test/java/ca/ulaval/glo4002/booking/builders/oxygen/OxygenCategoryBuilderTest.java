@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class OxygenCategoryBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class OxygenCategoryBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

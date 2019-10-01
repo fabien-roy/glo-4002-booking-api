@@ -2,11 +2,11 @@ package ca.ulaval.glo4002.booking.builders.passes;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.categories.NebulaPassCategory;
-import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
-import ca.ulaval.glo4002.booking.domainObjects.passes.categories.SupergiantPassCategory;
-import ca.ulaval.glo4002.booking.domainObjects.passes.categories.SupernovaPassCategory;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.NebulaPassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.SupergiantPassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.SupernovaPassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
 
 import java.util.HashMap;
@@ -29,14 +29,15 @@ public class PassCategoryBuilder implements Builder<PassCategory> {
     }
 
     public PassCategory buildByName(String name) {
-        if (name.equals(PassConstants.Categories.SUPERNOVA_NAME)) {
-            return buildSupernovaPassCategory();
-        } else if (name.equals(PassConstants.Categories.SUPERGIANT_NAME)) {
-            return buildSupergiantPassCategory();
-        } else if (name.equals(PassConstants.Categories.NEBULA_NAME)) {
-            return buildNebulaPassCategory();
-        } else {
-            throw new PassCategoryNotFoundException();
+        switch (name) {
+            case PassConstants.Categories.SUPERNOVA_NAME:
+                return buildSupernovaPassCategory();
+            case PassConstants.Categories.SUPERGIANT_NAME:
+                return buildSupergiantPassCategory();
+            case PassConstants.Categories.NEBULA_NAME:
+                return buildNebulaPassCategory();
+            default:
+                throw new PassCategoryNotFoundException();
         }
     }
 

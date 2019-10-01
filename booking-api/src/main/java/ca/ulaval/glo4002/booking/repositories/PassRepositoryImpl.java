@@ -41,7 +41,7 @@ public class PassRepositoryImpl implements PassRepository {
     @Override
     public <S extends PassEntity> Iterable<S> saveAll(Iterable<S> passes) {
         passes.forEach(pass -> {
-            if (pass.id == null) {
+            if (pass.getId() == null) {
                 entityManager.persist(pass);
             } else {
                 throw new PassAlreadyCreatedException();

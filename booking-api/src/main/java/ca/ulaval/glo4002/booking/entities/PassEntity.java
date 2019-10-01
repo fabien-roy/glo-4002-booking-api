@@ -7,9 +7,14 @@ import java.util.Optional;
 @Entity(name = "Passes")
 public class PassEntity extends OrderItemEntity {
 
-    public Long categoryId;
-    public Long optionId;
-    public LocalDate eventDate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+    private Long categoryId;
+    private Long optionId;
+    private LocalDate eventDate;
+    // @OneToOne(mappedBy = "pass")
+    // public OrderItemEntity orderItem;
 
     public PassEntity() {
     }
@@ -36,5 +41,25 @@ public class PassEntity extends OrderItemEntity {
         this.categoryId = categoryId;
         this.optionId = optionId;
         this.eventDate = eventDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public Long getOptionId() {
+        return optionId;
+    }
+
+    public LocalDate getEventDate() {
+        return eventDate;
     }
 }

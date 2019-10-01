@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.unitTypes.OxygenTankOxygenUnitType;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.unitTypes.OxygenUnitType;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.unitTypes.SparkPlugsOxygenUnitType;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.unitTypes.WaterLitersOxygenUnitType;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.unittypes.OxygenTankOxygenUnitType;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.unittypes.OxygenUnitType;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.unittypes.SparkPlugsOxygenUnitType;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.unittypes.WaterLitersOxygenUnitType;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenUnitTypeNotFoundException;
 
 public class OxygenUnitTypeBuilder implements Builder<OxygenUnitType> {
@@ -23,14 +23,15 @@ public class OxygenUnitTypeBuilder implements Builder<OxygenUnitType> {
     }
 
     public OxygenUnitType buildByName(String name) {
-        if (name.equals(OxygenConstants.UnitTypes.OXYGEN_TANKS_NAME)) {
-            return buildOxygenTanksOxygenUnitType();
-        } else if (name.equals(OxygenConstants.UnitTypes.WATER_LITERS_NAME)) {
-            return buildWaterLitersOxygenUnitType();
-        } else if (name.equals(OxygenConstants.UnitTypes.SPARK_PLUGS_NAME)) {
-            return buildSparkPlugsOxygenUnitType();
-        } else {
-            throw new OxygenUnitTypeNotFoundException();
+        switch (name) {
+            case OxygenConstants.UnitTypes.OXYGEN_TANKS_NAME:
+                return buildOxygenTanksOxygenUnitType();
+            case OxygenConstants.UnitTypes.WATER_LITERS_NAME:
+                return buildWaterLitersOxygenUnitType();
+            case OxygenConstants.UnitTypes.SPARK_PLUGS_NAME:
+                return buildSparkPlugsOxygenUnitType();
+            default:
+                throw new OxygenUnitTypeNotFoundException();
         }
     }
 

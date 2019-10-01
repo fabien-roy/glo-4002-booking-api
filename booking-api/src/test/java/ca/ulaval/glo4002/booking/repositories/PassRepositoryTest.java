@@ -33,7 +33,7 @@ public class PassRepositoryTest {
                 () -> subject.findById(PassRepositoryContext.A_NON_EXISTANT_PASS_ID)
         );
 
-        assertEquals(ExceptionConstants.PASS_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class PassRepositoryTest {
                 () -> subject.saveAll(passes)
         );
 
-        assertEquals(ExceptionConstants.PASS_ALREADY_CREATED_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.ALREADY_CREATED_MESSAGE, thrown.getMessage());
     }
 
     @Test

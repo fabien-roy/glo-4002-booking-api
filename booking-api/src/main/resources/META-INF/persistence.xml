@@ -9,6 +9,8 @@
 
         <class>ca.ulaval.glo4002.booking.entities.OrderEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.OrderItemEntity</class>
+        <class>ca.ulaval.glo4002.booking.entities.PassEntity</class>
+        <class>ca.ulaval.glo4002.booking.entities.TripEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

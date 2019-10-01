@@ -1,18 +1,15 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
+import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
-import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.OrderServiceImpl;
-import ca.ulaval.glo4002.booking.services.PassService;
-import ca.ulaval.glo4002.booking.services.PassServiceImpl;
+import ca.ulaval.glo4002.booking.services.*;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.*;
@@ -25,19 +22,17 @@ import java.util.List;
 public class OrderController {
 
     private OrderService orderService;
-    private PassService passService;
     private final OrderParser orderParser = new OrderParser();
-    private final PassParser passParser = new PassParser();
 
     public OrderController() {
         // TODO : Inject this
-        this.orderService = new OrderServiceImpl(new OrderRepositoryImpl());
-        this.passService = new PassServiceImpl(new PassRepositoryImpl());
+        PassService passService = new PassServiceImpl(new PassRepositoryImpl());
+        OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl());
+        this.orderService = new OrderServiceImpl(new OrderRepositoryImpl(), passService, oxygenTankService);
     }
 
-    public OrderController(OrderService orderService, PassService passService) {
+    public OrderController(OrderService orderService) {
         this.orderService = orderService;
-        this.passService = passService;
     }
 
     @GET
@@ -80,15 +75,14 @@ public class OrderController {
         Order order;
 
         try {
+            // TODO : Parse passes
             order = orderParser.parseDto(dto);
-            // List<Pass> passes = passParser.parseDto(dto.passes);
         } catch (OrderDtoInvalidException exception) {
             return ResponseEntity.badRequest().build();
         }
 
         try {
-            order = orderService.save(order);
-            // passService.saveAll(passes);
+            order = orderService.order(order);
         } catch (OrderAlreadyCreatedException exception) {
             return ResponseEntity.badRequest().build();
         }

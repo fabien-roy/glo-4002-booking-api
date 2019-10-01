@@ -2,9 +2,9 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 
 public class PassServiceContext {
 
-    private final static LocalDate A_PASS_EVENT_DATE = FestivalConstants.Dates.START_DATE;
+    private final static LocalDate A_PASS_EVENT_DATE = DateConstants.START_DATE;
     private final static PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
     private final static PassOptionBuilder optionBuilder = new PassOptionBuilder();
     private PassParser parser = new PassParser();

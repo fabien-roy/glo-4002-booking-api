@@ -7,5 +7,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class VendorNotFoundException extends FestivalException{
 
-    public VendorNotFoundException(){ super(ExceptionConstants.VENDOR_NOT_FOUND_MESSAGE); }
+    public VendorNotFoundException(){ super(ExceptionConstants.Vendor.NOT_FOUND_MESSAGE); }
 }

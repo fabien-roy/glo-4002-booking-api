@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.builders.shuttles;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.ShuttleCategory;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class ShuttleCategoryBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.SHUTTLE_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class ShuttleCategoryBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.SHUTTLE_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

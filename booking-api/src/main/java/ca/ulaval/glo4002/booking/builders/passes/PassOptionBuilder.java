@@ -2,9 +2,9 @@ package ca.ulaval.glo4002.booking.builders.passes;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.PackagePassOption;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.SinglePassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.PackagePassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.SinglePassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
 
 public class PassOptionBuilder implements Builder<PassOption> {
@@ -20,12 +20,13 @@ public class PassOptionBuilder implements Builder<PassOption> {
     }
 
     public PassOption buildByName(String name) {
-        if (name.equals(PassConstants.Options.PACKAGE_NAME)) {
-            return buildPackagePassOption();
-        } else if (name.equals(PassConstants.Options.SINGLE_NAME)) {
-            return buildSinglePassOption();
-        } else {
-            throw new PassOptionNotFoundException();
+        switch (name) {
+            case PassConstants.Options.PACKAGE_NAME:
+                return buildPackagePassOption();
+            case PassConstants.Options.SINGLE_NAME:
+                return buildSinglePassOption();
+            default:
+                throw new PassOptionNotFoundException();
         }
     }
 

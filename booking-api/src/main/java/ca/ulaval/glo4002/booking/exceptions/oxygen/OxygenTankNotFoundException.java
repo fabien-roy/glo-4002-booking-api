@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OxygenTankNotFoundException extends FestivalException {
 
     public OxygenTankNotFoundException() {
-        super(ExceptionConstants.OXYGEN_TANK_NOT_FOUND_MESSAGE);
+        super(ExceptionConstants.Oxygen.TANK_NOT_FOUND_MESSAGE);
     }
 }

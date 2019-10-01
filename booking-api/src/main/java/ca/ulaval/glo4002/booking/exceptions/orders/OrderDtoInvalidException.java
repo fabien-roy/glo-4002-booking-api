@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class OrderDtoInvalidException extends FestivalException {
 
-    public OrderDtoInvalidException(){ super(ExceptionConstants.ORDER_DTO_INVALID_MESSAGE); }
+    public OrderDtoInvalidException(){ super(ExceptionConstants.Order.DTO_INVALID_MESSAGE); }
 }

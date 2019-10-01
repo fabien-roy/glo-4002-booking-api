@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
@@ -11,10 +11,7 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
 import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
-import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.OrderServiceImpl;
-import ca.ulaval.glo4002.booking.services.PassService;
-import ca.ulaval.glo4002.booking.services.PassServiceImpl;
+import ca.ulaval.glo4002.booking.services.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,8 +20,8 @@ import java.time.LocalDateTime;
 
 public class OrderEndToEndContext {
 
-    private static final LocalDateTime AN_ORDER_DATE = FestivalConstants.Dates.ORDER_START_DATE_TIME;
-    private static final LocalDateTime ANOTHER_ORDER_DATE = FestivalConstants.Dates.ORDER_START_DATE_TIME.plusDays(1);
+    private static final LocalDateTime AN_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
+    private static final LocalDateTime ANOTHER_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME.plusDays(1);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     public static final Long AN_INVALID_ORDER_ID = -1L;
 
@@ -62,9 +59,12 @@ public class OrderEndToEndContext {
     public OrderEndToEndContext setUp() {
         OrderRepository orderRepository = new OrderRepositoryImpl(entityManager);
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
-        OrderService orderService = new OrderServiceImpl(orderRepository);
+
         PassService passService = new PassServiceImpl(passRepository);
-        orderController = new OrderController(orderService, passService);
+        OxygenTankService oxygenTankService = new OxygenTankServiceImpl();
+        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
+
+        orderController = new OrderController(orderService);
 
         return this;
     }
@@ -89,8 +89,8 @@ public class OrderEndToEndContext {
         entityManager.persist(orderEntity);
         entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OrderEntity.class).getResultList()
                 .forEach(currentOrderEntity -> {
-            if (currentOrderEntity.orderDate.equals(orderDate)) {
-                orderId[0] = currentOrderEntity.id;
+            if (currentOrderEntity.getOrderDate().equals(orderDate)) {
+                orderId[0] = currentOrderEntity.getId();
             }
         });
 
