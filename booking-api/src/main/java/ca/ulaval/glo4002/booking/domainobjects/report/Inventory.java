@@ -55,10 +55,10 @@ public class Inventory {
         Long numberOfTankNeeded = quantityStored - (quantityInUse + quantityRequested);
         if(numberOfTankNeeded < 0) {
             tankInUse.replace(categoryID, quantityStored);
-            return abs(numberOfTankNeeded);
+            return abs(numberOfTankNeeded); // TODO : à refaire voir plus haut ça correspond au nombre de tanks a créer et non au nombre de call au constructeur
         } else {
             tankInUse.replace(categoryID, quantityInUse + quantityRequested);
-            return 0L;
+            return 0L; // Cette partie la est bonne parcequ'on a assez de surplus pour avoir a faire aucun call
         }
     }
 
