@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.validators;
+package ca.ulaval.glo4002.booking.util;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
-import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;

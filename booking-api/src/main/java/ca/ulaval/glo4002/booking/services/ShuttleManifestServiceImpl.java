@@ -1,41 +1,47 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
+import ca.ulaval.glo4002.booking.domainObjects.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.domainObjects.trips.ArrivalTrip;
+import ca.ulaval.glo4002.booking.domainObjects.trips.DepartureTrip;
+import ca.ulaval.glo4002.booking.domainObjects.trips.Trip;
+import ca.ulaval.glo4002.booking.parsers.TripParser;
+import ca.ulaval.glo4002.booking.repositories.TripRepository;
+
+import javax.annotation.Resource;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShuttleManifestServiceImpl implements ShuttleManifestService {
-	
-	private final ShuttleRepository shuttleRepository;
-	
-	
-	public ShuttleManifestServiceImpl(ShuttleRepository shuttleRepository) {
-		this.shuttleRepository = shuttleRepository;
+
+	@Resource
+	private final TripRepository tripRepository;
+	private final TripParser tripParser;
+
+	public ShuttleManifestServiceImpl(TripRepository tripRepository) {
+		this.tripRepository = tripRepository;
+		this.tripParser = new TripParser();
 	}
 
 	@Override
-	public Shuttle findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ShuttleManifest findByDate(LocalDate date) {
+		List<DepartureTrip> departures = new ArrayList<>();
+		List<ArrivalTrip> arrivals = new ArrayList<>();
 
-	@Override
-	public Iterable<Shuttle> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		tripRepository.findAll().forEach(tripEntity -> {
+			Trip trip = tripParser.parseEntity(tripEntity);
 
-	@Override
-	public Shuttle save(Shuttle object) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+			if (trip.getDate().equals(date)) {
+				if (trip instanceof DepartureTrip) {
+					departures.add((DepartureTrip) trip);
+				} else if (trip instanceof ArrivalTrip) {
+					arrivals.add((ArrivalTrip) trip);
+				} else {
+					// TODO : Should we throw?
+				}
+			}
+		});
 
-	@Override
-	public Iterable<Shuttle> saveAll(Iterable<Shuttle> objects) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ShuttleManifest(date, departures, arrivals);
 	}
-	
-	
-
 }

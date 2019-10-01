@@ -25,11 +25,11 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 	@Override
 	public Optional<ShuttleEntity> findById(Long id) {
 		ShuttleEntity shuttleEntity = entityManager.find(ShuttleEntity.class, id);
-		
+
 		if(shuttleEntity == null) {
 			throw new ShuttleNotFoundException();
 		}
-		
+
 		return Optional.of(shuttleEntity);
 	}
 	
@@ -89,5 +89,4 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
     public void deleteAll() {
         throw new UnusedMethodException();
     }
-
 }

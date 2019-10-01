@@ -1,6 +1,6 @@
-package ca.ulaval.glo4002.booking.domainObjects.shuttles.types;
+package ca.ulaval.glo4002.booking.domainObjects.trips.types;
 
-public abstract class ShuttleType {
+public abstract class TripType {
     protected Long id;
     protected String name;
 
