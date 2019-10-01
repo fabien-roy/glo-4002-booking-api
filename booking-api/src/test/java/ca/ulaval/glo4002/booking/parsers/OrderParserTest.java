@@ -1,11 +1,16 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
+import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
+import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.VendorNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
@@ -13,22 +18,31 @@ import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderParserTest {
 
     private static final Long A_VALID_ID = 1L;
+    private final static Long A_PASS_NUMBER = 1L;
+    private final static String A_PASS_CATEGORY = PassConstants.Categories.SUPERNOVA_NAME;
+    private final static String A_PASS_OPTION = PassConstants.Options.SINGLE_NAME;
     private static final String A_DATE_BEFORE_ORDER_START_DATE_TIME = DateConstants.ORDER_START_DATE_TIME.minusDays(1).toString();
     private static final String A_DATE_AFTER_ORDER_START_END_TIME = DateConstants.ORDER_END_DATE_TIME.plusDays(1).toString();
-    private static final LocalDateTime A_VALID_DATE = DateConstants.ORDER_START_DATE_TIME;
     private static final String AN_INVALID_VENDOR_CODE = "An invalid vendor code";
     private static final String A_VALID_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
+    private static final LocalDateTime A_VALID_DATE = DateConstants.ORDER_START_DATE_TIME;
+    private final static LocalDate SOME_EVENT_DATE = DateConstants.START_DATE;
     private OrderParser subject;
     private OrderDto orderDto = new OrderDto();
     private Order order;
     private VendorBuilder vendorBuilder = new VendorBuilder();
+    private PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
+    private PassOptionBuilder optionBuilder = new PassOptionBuilder();
 
     @BeforeEach
     void setUp() {
@@ -36,10 +50,23 @@ class OrderParserTest {
         orderDto.orderDate = FestivalDateUtil.toZonedDateTimeString(A_VALID_DATE);
         orderDto.vendorCode = A_VALID_VENDOR_CODE;
 
+        PassesDto passesDto = new PassesDto();
+        passesDto.passNumber = A_PASS_NUMBER;
+        passesDto.passCategory = A_PASS_CATEGORY;
+        passesDto.passOption = A_PASS_OPTION;
+        passesDto.eventDates = new ArrayList<>(Collections.singletonList(SOME_EVENT_DATE.toString()));
+        orderDto.passes = passesDto;
+
         order = new Order(
                 A_VALID_ID,
                 A_VALID_DATE,
-                vendorBuilder.buildByCode(A_VALID_VENDOR_CODE)
+                vendorBuilder.buildByCode(A_VALID_VENDOR_CODE),
+                new ArrayList<>(Collections.singletonList(new Pass(
+                        A_PASS_NUMBER,
+                        categoryBuilder.buildByName(A_PASS_CATEGORY),
+                        optionBuilder.buildByName(A_PASS_OPTION),
+                        SOME_EVENT_DATE
+                )))
         );
     }
 
@@ -107,6 +134,9 @@ class OrderParserTest {
         assertEquals(entity.getId(), parsedOrder.getId());
         assertEquals(entity.getVendorId(), parsedOrder.getVendor().getId());
         assertEquals(entity.getOrderDate(), parsedOrder.getOrderDate());
+        entity.getOrderItems().forEach(orderItemEntity -> {
+            assertTrue(parsedOrder.getOrderItems().stream().anyMatch(orderItem -> orderItemEntity.getId().equals(orderItem.getId())));
+        });
     }
 
     @Test
@@ -116,6 +146,10 @@ class OrderParserTest {
         assertEquals(order.getId(), entity.getId());
         assertEquals(order.getVendor().getId(), entity.getVendorId());
         assertEquals(order.getOrderDate(), entity.getOrderDate());
+        order.getOrderItems().forEach(orderItem -> {
+            assertTrue(entity.getOrderItems().stream().anyMatch(orderItemEntity -> orderItem.getId().equals(orderItemEntity.getId())
+            ));
+        });
     }
 
     @Test
@@ -125,5 +159,10 @@ class OrderParserTest {
         assertEquals(order.getId(), dto.orderNumber);
         assertEquals(order.getVendor().getCode(), dto.vendorCode);
         assertEquals(order.getOrderDate().toString(), A_VALID_DATE.toString());
+        order.getOrderItems().forEach(orderItem -> {
+            if (orderItem instanceof Pass) {
+                assertTrue(order.getOrderItems().stream().anyMatch(pass -> ((Pass) pass).getEventDate().toString().equals(dto.passes.eventDates.get(0))));
+            }
+        });
     }
 }

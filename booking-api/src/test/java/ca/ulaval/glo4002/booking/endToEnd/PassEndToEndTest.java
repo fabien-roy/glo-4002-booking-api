@@ -3,8 +3,6 @@ package ca.ulaval.glo4002.booking.endToEnd;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class PassEndToEndTest {
 
     private PassEndToEndContext context;
@@ -15,9 +13,44 @@ public class PassEndToEndTest {
     }
 
     @Test
-    void SkeletonTest(){
-        int un = 1;
-        assertEquals(1, un);
+    public void getOrderController_shouldReturnCorrectPassesDto_whenOrderNumberIsExistent() {
+        context.setUp().withAnOrder();
+
+        // TODO
     }
 
+    @Test
+    public void getOrderController_shouldReturnCorrectPassesDto_whenManyOrderNumberAreExistent() {
+        context.setUp().withAnOrder().withAnotherOrder();
+
+        // TODO
+    }
+
+    @Test
+    public void postOrderController_shouldReturnHttpErrorBadRequest_whenEventDateIsInvalid() {
+        context.setUp();
+
+        // TODO
+    }
+
+    @Test
+    public void postOrderController_shouldCreatePass() {
+        context.setUp();
+
+        // TODO
+    }
+
+    @Test
+    public void postOrderController_shouldCreateMutiplePass_whenManyEventDatesAreSent() {
+        context.setUp();
+
+        // TODO
+    }
+
+    @Test
+    public void postOrderController_shouldReturnUniquePasseNumbers() {
+        context.setUp();
+
+        // TODO
+    }
 }

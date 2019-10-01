@@ -10,12 +10,13 @@ public class Order {
 	protected Long id;
     private LocalDateTime orderDate;
     private Vendor vendor;
-    private List<OrderItem> orderItems;
+    private List<? extends OrderItem> orderItems;
 
-    public Order(Long id, LocalDateTime orderDate, Vendor vendor) {
+    public Order(Long id, LocalDateTime orderDate, Vendor vendor, List<? extends OrderItem> orderItems) {
         this.id = id;
         this.orderDate = orderDate;
         this.vendor = vendor;
+        this.orderItems = orderItems;
     }
 
     public Long getId() {
@@ -30,7 +31,7 @@ public class Order {
         return this.vendor;
     }
 
-    public List<OrderItem> getOrderItems() {
+    public List<? extends OrderItem> getOrderItems() {
         return orderItems;
     }
 

@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity(name = "Shuttles")
-public class ShuttleEntity {
+public class ShuttleEntity extends OrderItemEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

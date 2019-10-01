@@ -15,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path("/orders")
 public class OrderController {
@@ -33,22 +31,6 @@ public class OrderController {
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public ResponseEntity<List<OrderDto>> getOrders() {
-        List<Order> orders = new ArrayList<>();
-
-        orderService.findAll().forEach(orders::add);
-
-        // TODO : Get passes (passService.findAll)
-        // passService.findAll();
-
-        List<OrderDto> orderDtos = new ArrayList<>();
-        orders.forEach(order -> orderDtos.add(orderParser.toDto(order)));
-
-        return ResponseEntity.ok().body(orderDtos);
     }
 
     @GET
@@ -75,7 +57,6 @@ public class OrderController {
         Order order;
 
         try {
-            // TODO : Parse passes
             order = orderParser.parseDto(dto);
         } catch (OrderDtoInvalidException exception) {
             return ResponseEntity.badRequest().build();

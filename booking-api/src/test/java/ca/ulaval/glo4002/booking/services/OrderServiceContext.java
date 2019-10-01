@@ -14,6 +14,7 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
@@ -56,19 +57,22 @@ public class OrderServiceContext {
         aOrder = new Order(
                 A_ORDER_ID,
                 A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID)
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                new ArrayList<>()
         );
 
         anotherOrder = new Order(
                 ANOTHER_ORDER_ID,
                 A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID)
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                new ArrayList<>()
         );
 
         aNonExistentOrder = new Order(
                 A_NON_EXISTANT_ORDER_ID,
                 A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID)
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                new ArrayList<>()
         );
 
         aPass = new Pass(

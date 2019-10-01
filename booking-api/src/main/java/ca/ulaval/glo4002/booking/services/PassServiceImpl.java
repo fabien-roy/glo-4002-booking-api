@@ -57,7 +57,7 @@ public class PassServiceImpl implements PassService {
     }
 
     @Override
-    public Iterable<Pass> getPasses(Iterable<OrderItem> orderItems) {
+    public Iterable<Pass> getPasses(Iterable<? extends OrderItem> orderItems) {
         List<Pass> passes = new ArrayList<>();
 
         orderItems.forEach(orderItem -> {

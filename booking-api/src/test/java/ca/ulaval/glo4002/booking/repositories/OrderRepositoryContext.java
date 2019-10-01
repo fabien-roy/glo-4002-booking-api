@@ -8,6 +8,7 @@ import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.mock;
@@ -34,19 +35,22 @@ public class OrderRepositoryContext {
         aOrder = new OrderEntity(
                 A_ORDER_ID,
                 A_ORDER_DATE_TIME,
-                A_VENDOR_ID
+                A_VENDOR_ID,
+                new ArrayList<>()
         );
 
         anotherOrder = new OrderEntity(
                 ANOTHER_ORDER_ID,
                 A_ORDER_DATE_TIME,
-                A_VENDOR_ID
+                A_VENDOR_ID,
+                new ArrayList<>()
         );
 
         aNonExistentOrder = new OrderEntity(
                 A_NON_EXISTANT_ORDER_ID,
                 A_ORDER_DATE_TIME,
-                A_VENDOR_ID
+                A_VENDOR_ID,
+                new ArrayList<>()
         );
     }
 

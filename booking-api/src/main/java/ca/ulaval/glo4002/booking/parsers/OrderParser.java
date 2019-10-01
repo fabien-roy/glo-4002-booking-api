@@ -2,18 +2,26 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.vendors.Vendor;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
+import ca.ulaval.glo4002.booking.entities.OrderItemEntity;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateTimeException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<Order, OrderDto> {
 
     private VendorBuilder vendorBuilder = new VendorBuilder();
+    private OrderItemParser orderItemParser = new OrderItemParser();
+    private PassParser passParser = new PassParser();
 
     @Override
     public Order parseDto(OrderDto dto) {
@@ -22,14 +30,17 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<
         LocalDateTime orderDate = parseOrderDate(dto.orderDate);
         validateOrderDate(orderDate);
 
-        return new Order(dto.orderNumber, orderDate, vendor);
+        List<Pass> passes = passParser.parseDto(dto.passes);
+
+        return new Order(dto.orderNumber, orderDate, vendor, passes);
     }
 
     @Override
     public Order parseEntity(OrderEntity entity) {
         Vendor vendor = vendorBuilder.buildById(entity.getVendorId());
+        List<OrderItem> orderItems = orderItemParser.parseEntity(entity.getOrderItems());
 
-        return new Order(entity.getId(), entity.getOrderDate(), vendor);
+        return new Order(entity.getId(), entity.getOrderDate(), vendor, orderItems);
     }
 
     @Override
@@ -38,17 +49,36 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<
         dto.orderNumber = order.getId();
         dto.orderDate = FestivalDateUtil.toZonedDateTimeString(order.getOrderDate());
         dto.vendorCode = order.getVendor().getCode();
-        // TODO : dto.passes
+
+        List<Pass> passes = new ArrayList<>();
+        order.getOrderItems().forEach(orderItem -> {
+            if (orderItem instanceof Pass) {
+                passes.add((Pass) orderItem);
+            }
+        });
+
+        PassesDto passesDto = new PassesDto();
+        passesDto.passNumber = passes.get(0).getId();
+        passesDto.passCategory = passes.get(0).getCategory().getName();
+        passesDto.passOption = passes.get(0).getOption().getName();
+
+        passesDto.eventDates = new ArrayList<>();
+        passes.forEach(pass -> passesDto.eventDates.add(pass.getEventDate().toString()));
+
+        dto.passes = passesDto;
 
         return dto;
     }
 
     @Override
     public OrderEntity toEntity(Order order) {
+        List<OrderItemEntity> orderItems = orderItemParser.toEntity(order.getOrderItems());
+
         return new OrderEntity(
                 order.getId(),
                 order.getOrderDate(),
-                order.getVendor().getId()
+                order.getVendor().getId(),
+                orderItems
         );
     }
 

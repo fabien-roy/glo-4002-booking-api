@@ -13,5 +13,5 @@ public interface PassService extends Service<Pass> {
 
     Iterable<Pass> order(Iterable<Pass> passes);
 
-    Iterable<Pass> getPasses(Iterable<OrderItem> orderItems);
+    Iterable<Pass> getPasses(Iterable<? extends OrderItem> orderItems);
 }

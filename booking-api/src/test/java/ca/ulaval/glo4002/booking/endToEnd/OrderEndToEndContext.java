@@ -6,7 +6,6 @@ import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
@@ -26,7 +25,6 @@ public class OrderEndToEndContext {
     public static final Long AN_INVALID_ORDER_ID = -1L;
 
     private EntityManager entityManager;
-    private PassParser passParser = new PassParser();
     public OrderEntity anOrder;
     public OrderEntity anotherOrder;
     public OrderParser orderParser = new OrderParser();

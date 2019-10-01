@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -62,39 +61,6 @@ public class OrderEndToEndTest {
     }
 
     @Test
-    public void getAllOrderController_shouldReturnAnEmptyList_whenThereIsNoOrder() {
-        context.setUp();
-
-        ResponseEntity<List<OrderDto>> response = context.orderController.getOrders();
-
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertTrue(response.getBody().isEmpty());
-    }
-
-    @Test
-    public void getAllOrderController_shouldReturnCorrectOrderDto_whenOrderIsExistent() {
-        context.setUp().withAnOrder();
-
-        ResponseEntity<List<OrderDto>> response = context.orderController.getOrders();
-
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertEquals(context.anOrderId, response.getBody().get(0).orderNumber);
-        assertEquals(1, response.getBody().size());
-    }
-
-    @Test
-    public void getAllOrderController_shouldReturnCorrectOrderDtos_whenManyOrdersAreExistent() {
-        context.setUp().withAnOrder().withAnotherOrder();
-
-        ResponseEntity<List<OrderDto>> response = context.orderController.getOrders();
-
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertTrue(response.getBody().stream().anyMatch(orderDto -> orderDto.orderNumber.equals(context.anOrderId)));
-        assertTrue(response.getBody().stream().anyMatch(orderDto -> orderDto.orderNumber.equals(context.anotherOrderId)));
-        assertEquals(2, response.getBody().size());
-    }
-
-    @Test
     public void postOrderController_shouldReturnHttpBadRequest_whenOrderIsInvalid() {
         OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
         orderDto.orderNumber = OrderEndToEndContext.AN_INVALID_ORDER_ID;
@@ -143,7 +109,7 @@ public class OrderEndToEndTest {
     }
 
     @Test
-    public void postOrderController_shouldReturnUniqueIds() {
+    public void postOrderController_shouldReturnUniqueOrderNumbers() {
         OrderDto anOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
         OrderDto anotherOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anotherOrder));
         context.setUp();
