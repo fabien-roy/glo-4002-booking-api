@@ -10,7 +10,8 @@ public class HistoryParser implements DtoParser<History, List<HistoryItemDto>>{
 
     @Override
     public History parseDto(List<HistoryItemDto> dto) {
-        // TODO
+
+
         return null;
     }
 
