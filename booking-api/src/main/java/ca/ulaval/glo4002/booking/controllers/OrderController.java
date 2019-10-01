@@ -7,8 +7,12 @@ import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
+import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
+import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
 import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.OrderServiceImpl;
 import ca.ulaval.glo4002.booking.services.PassService;
+import ca.ulaval.glo4002.booking.services.PassServiceImpl;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.*;
@@ -20,16 +24,20 @@ import java.util.List;
 @Path("/orders")
 public class OrderController {
 
-    private final OrderService orderService;
-    private final PassService passService;
-    private final OrderParser orderParser;
-    private final PassParser passParser;
+    private OrderService orderService;
+    private PassService passService;
+    private final OrderParser orderParser = new OrderParser();
+    private final PassParser passParser = new PassParser();
 
-    public OrderController(OrderService orderService, PassService passService, OrderParser orderParser, PassParser passParser) {
+    public OrderController() {
+        // TODO : Inject this
+        this.orderService = new OrderServiceImpl(new OrderRepositoryImpl());
+        this.passService = new PassServiceImpl(new PassRepositoryImpl());
+    }
+
+    public OrderController(OrderService orderService, PassService passService) {
         this.orderService = orderService;
         this.passService = passService;
-        this.orderParser = orderParser;
-        this.passParser = passParser;
     }
 
     @GET
@@ -79,7 +87,7 @@ public class OrderController {
         }
 
         try {
-            orderService.save(order);
+            order = orderService.save(order);
             // passService.saveAll(passes);
         } catch (OrderAlreadyCreatedException exception) {
             return ResponseEntity.badRequest().build();

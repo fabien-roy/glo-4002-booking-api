@@ -4,12 +4,11 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.domainObjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainObjects.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.domainObjects.shuttles.types.ShuttleType;
+
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
 
 public class Shuttle extends OrderItem {
-
 	protected Long id;
-
 	private Double price;
 	private ShuttleCategory category;
     private ShuttleType type;
