@@ -32,8 +32,10 @@ public class ShuttleManifestController {
 
 		if (!FestivalDateUtil.isOutsideFestivalDates(manifestDate)) {
 		    shuttleManifest = shuttleManifestService.findByDate(manifestDate);
+        } else if(date == null) {
+        	shuttleManifest = shuttleManifestService.findAll();
         } else {
-            return ResponseEntity.badRequest().build();
+        	return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.ok().body(shuttleManifestParser.toDto(shuttleManifest));
