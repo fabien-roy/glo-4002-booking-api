@@ -21,7 +21,9 @@ class OxygenTankParserTest {
 		oxygenTankDto.requestDate = A_VALID_DATE.toString();
 	}
 
-	// TODO : Holy fuck. This file checks logic that has absolutely nothing to do with OxygenTankParser
+	// TODO : Actual parser tests
+
+	// TODO : Most logic here must be moved to OxygenTankServiceTest
 
     /*
 	@Test
