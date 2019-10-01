@@ -1,23 +1,28 @@
 package ca.ulaval.glo4002.booking.domainObjects.shuttles;
 
+import ca.ulaval.glo4002.booking.domainObjects.trips.ArrivalTrip;
+import ca.ulaval.glo4002.booking.domainObjects.trips.DepartureTrip;
+
 import java.time.LocalDate;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.domainObjects.trips.Arrival;
-import ca.ulaval.glo4002.booking.domainObjects.trips.Departure;
-
 public class ShuttleManifest {
 	
-	private LocalDate date;
-	private List<Arrival> arrivals;
-	private List<Departure> departures;
-	
-	
-	public ShuttleManifest(LocalDate date, List<Arrival> arrivals, List<Departure> departures) {
-		this.date = date;
-		this.arrivals = arrivals;
+	private LocalDate tripDate;
+	private List<DepartureTrip> departures;
+	private List<ArrivalTrip> arrivals;
+
+	public ShuttleManifest(LocalDate date, List<DepartureTrip> departures, List<ArrivalTrip> arrivals) {
 		this.departures = departures;
+		this.arrivals = arrivals;
+		this.tripDate = date;
 	}
 
-	
+	public List<DepartureTrip> getDepartures() {
+		return departures;
+	}
+
+	public List<ArrivalTrip> getArrivals() {
+		return arrivals;
+	}
 }

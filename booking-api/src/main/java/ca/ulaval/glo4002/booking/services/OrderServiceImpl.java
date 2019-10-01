@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
-import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
@@ -43,10 +42,5 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order save(Order order) {
         return orderParser.parseEntity(orderRepository.save(orderParser.toEntity(order)));
-    }
-
-    @Override
-    public Iterable<Order> saveAll(Iterable<Order> objects) {
-        throw new UnusedMethodException();
     }
 }

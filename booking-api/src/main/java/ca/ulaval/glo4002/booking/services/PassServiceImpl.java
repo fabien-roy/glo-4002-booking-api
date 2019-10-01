@@ -2,14 +2,14 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PassServiceImpl implements PassService {
@@ -48,10 +48,5 @@ public class PassServiceImpl implements PassService {
         passRepository.saveAll(passEntities);
 
         return passes;
-    }
-
-    @Override
-    public Pass save(Pass object) {
-        throw new UnusedMethodException();
     }
 }
