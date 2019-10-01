@@ -12,8 +12,6 @@ public class OxygenTank extends OrderItem {
 	private LocalDate requestDate;
 	private LocalDate readyDate;
 
-	// TODO : A lot of logic here should be in a OxygenTankService class
-
 	public OxygenTank(OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
         this.category = category;
 		this.requestDate = requestDate;

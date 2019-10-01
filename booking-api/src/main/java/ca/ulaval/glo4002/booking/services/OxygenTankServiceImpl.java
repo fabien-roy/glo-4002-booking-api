@@ -15,30 +15,30 @@ import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class OxygenTankServiceImpl implements OxygenTankService {
 
-	private OxygenTankRepository repository;
-	private OxygenTankParser parser;
-	private OxygenCategoryBuilder categoryBuilder;
+	private final OxygenTankRepository repository;
+	private final InventoryService inventoryService;
+	private final OxygenTankParser parser;
+	private final OxygenCategoryBuilder categoryBuilder;
 
-	public OxygenTankServiceImpl(OxygenTankRepository repository) {
+	public OxygenTankServiceImpl(OxygenTankRepository repository, InventoryService inventoryService) {
 		this.repository = repository;
+		this.inventoryService = inventoryService;
 		this.parser = new OxygenTankParser();
 		this.categoryBuilder = new OxygenCategoryBuilder();
 	}
 
-	public OxygenTankServiceImpl() {
-		// TODO Remove an correct in DomainObjects/oxygen/OxygenTank.java
-	}
-
 	@Override
-	public OxygenTank save(OxygenTank oxygenTank) {
-		this.repository.save(parser.toEntity(oxygenTank));
+	public Iterable<OxygenTank> saveAll(Iterable<OxygenTank> oxygenTanks) {
+	    List<OxygenTankEntity> entities = new ArrayList<>();
+	    oxygenTanks.forEach(oxygenTank -> entities.add(parser.toEntity(oxygenTank)));
 
-		return oxygenTank;
+	    repository.saveAll(entities);
+
+		return oxygenTanks;
 	}
 
 	@Override
@@ -70,7 +70,10 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 
 		OxygenTank oxygenTank = new OxygenTank(category, orderDate, readyDate);
 
-		return new ArrayList<>(Collections.singletonList(oxygenTank));
+		List<OxygenTank> oxygenTanks = new ArrayList<>();
+		inventoryService.requestOxygenTanks(oxygenTank).forEach(oxygenTanks::add);
+
+		return oxygenTanks;
 	}
 
 	private LocalDate getReadyDate(OxygenCategory category, LocalDate orderDate) {

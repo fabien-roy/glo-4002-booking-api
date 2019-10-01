@@ -1,14 +1,11 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants.Categories;
-
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
-import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InventoryTest {
 
@@ -22,70 +19,17 @@ public class InventoryTest {
 
     @Test
     void whenInventoryIsCreated_thenItIsEmpty() {
-        assertTrue(subject.getInventoryByCategoryID(Categories.E_ID) == 0L);
-        assertTrue(subject.getInventoryByCategoryID(Categories.B_ID) == 0L);
-        assertTrue(subject.getInventoryByCategoryID(Categories.A_ID) == 0L);
+        assertEquals(0L, (long) subject.getStoredTanksByCategoryId(Categories.E_ID));
+        assertEquals(0L, (long) subject.getStoredTanksByCategoryId(Categories.B_ID));
+        assertEquals(0L, (long) subject.getStoredTanksByCategoryId(Categories.A_ID));
     }
 
     @Test
     void whenOxygenTankIsAdded_thenInventoryIsUpdated() {
-        subject.addTankInInventory(Categories.E_ID, 2L);
+        subject.replaceStoredTanks(Categories.E_ID, 2L);
 
-        assertTrue(subject.getInventoryByCategoryID(Categories.E_ID) == 2L);
+        Long storedTanksQuantity = subject.getStoredTanksByCategoryId(Categories.E_ID);
+
+        assertEquals(2L, (long) storedTanksQuantity);
     }
-
-    @Test
-    void whenOxygenTankIsRequestedAndInventoryIsInSurplus_thenTankInUseIsUpdated() {
-        subject.addTankInInventory(Categories.E_ID, 20L);
-        subject.requestOxygenTank(Categories.E_ID, 5L);
-
-        assertTrue(subject.getTankInUseByCategoryID(Categories.E_ID) == 5L);
-    }
-
-    @Test
-    void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenShouldReturnTheNumberThatRemainsToBeCovered_andTankInUseIsUpdated() {
-        subject.addTankInInventory(Categories.E_ID, 3L);
-        Long numberStillNeeded = subject.requestOxygenTank(Categories.E_ID, 5L);
-
-        assertTrue(numberStillNeeded == (5-3));
-        assertTrue(subject.getTankInUseByCategoryID(Categories.E_ID) == 3);
-    }
-
-    @Test
-    void whenOxygenTankIsRequestedAndThereIsNoSurplus_thenShouldReturnTheQuantityRequested() {
-        Long numberStillNeeded = subject.requestOxygenTank(Categories.E_ID, 10L);
-
-        assertTrue(numberStillNeeded == 10L);
-    }
-
-    @Test
-    void whenOxygenTankIsAddedWithWithInvalidCategory_thenShouldThrowOxygenCategoryNotFoundException() {
-        OxygenCategoryNotFoundException thrown = assertThrows(
-                OxygenCategoryNotFoundException.class,
-                () -> subject.addTankInInventory(AN_INVALID_CATEGORY, 20L)
-        );
-
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
-    }
-
-    @Test
-    void whenGetInventoryByCategoryIsIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
-        OxygenCategoryNotFoundException thrown = assertThrows(
-                OxygenCategoryNotFoundException.class,
-                () -> subject.getInventoryByCategoryID(AN_INVALID_CATEGORY)
-        );
-
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
-    }
-
-    @Test
-    void whenGetTankInUseByCategoryIsIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
-        OxygenCategoryNotFoundException thrown = assertThrows(
-                OxygenCategoryNotFoundException.class,
-                () -> subject.getTankInUseByCategoryID(AN_INVALID_CATEGORY)
-        );
-
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
-    }
-
 }

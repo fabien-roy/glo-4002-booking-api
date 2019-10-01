@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
+import ca.ulaval.glo4002.booking.repositories.InventoryRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
@@ -27,7 +28,9 @@ public class OrderController {
     public OrderController() {
         // TODO : Inject this
         PassService passService = new PassServiceImpl(new PassRepositoryImpl());
-        OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl());
+        InventoryService inventoryService = new InventoryServiceImpl(new InventoryRepositoryImpl());
+        OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl(), inventoryService);
+
         this.orderService = new OrderServiceImpl(new OrderRepositoryImpl(), passService, oxygenTankService);
     }
 

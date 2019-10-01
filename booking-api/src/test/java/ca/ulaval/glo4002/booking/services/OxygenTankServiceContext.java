@@ -16,6 +16,8 @@ import static org.mockito.Mockito.when;
 
 class OxygenTankServiceContext {
 
+	public OxygenTankService subject;
+
 	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
 
@@ -35,8 +37,9 @@ class OxygenTankServiceContext {
 	private OxygenTankParser parser = new OxygenTankParser();
 
 	OxygenTankServiceContext() {
-		this.setUpOxygenTanks();
-		this.setUpRepository();
+		setUpOxygenTanks();
+		setUpRepository();
+		setUpSubject();
 	}
 
 	private void setUpOxygenTanks() {
@@ -81,6 +84,12 @@ class OxygenTankServiceContext {
 		when(repository.findById(oxygenTankAId)).thenReturn(Optional.of(oxygenTankAEntity));
 		when(repository.findById(oxygenTankBId)).thenReturn(Optional.of(oxygenTankBEntity));
 		when(repository.findById(oxygenTankEId)).thenReturn(Optional.of(oxygenTankEEntity));
+	}
+
+	private void setUpSubject() {
+		InventoryService inventoryService = mock(InventoryService.class);
+
+		subject = new OxygenTankServiceImpl(repository, inventoryService);
 	}
 
 	void setUpRepositoryForSave() {

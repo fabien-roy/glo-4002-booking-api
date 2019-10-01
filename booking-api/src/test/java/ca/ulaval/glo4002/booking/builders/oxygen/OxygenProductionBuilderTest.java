@@ -138,7 +138,7 @@ public class OxygenProductionBuilderTest {
         );
     }
 
-    private void validateOxygenProduction(OxygenProduction oxygenProduction, Long id, String name, Double pricePerUnit, Integer producedUnits, Integer producedTanks, Duration productionTime, Long unitTypeId) {
+    private void validateOxygenProduction(OxygenProduction oxygenProduction, Long id, String name, Double pricePerUnit, Long producedUnits, Long producedTanks, Duration productionTime, Long unitTypeId) {
         assertNotNull(oxygenProduction);
         assertEquals(oxygenProduction.getId(), id);
         assertEquals(oxygenProduction.getName(), name);
