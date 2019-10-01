@@ -63,7 +63,11 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<
         passesDto.passOption = passes.get(0).getOption().getName();
 
         passesDto.eventDates = new ArrayList<>();
-        passes.forEach(pass -> passesDto.eventDates.add(pass.getEventDate().toString()));
+        passes.forEach(pass -> {
+            if (pass.getEventDate() != null) {
+                passesDto.eventDates.add(pass.getEventDate().toString());
+            }
+        });
 
         dto.passes = passesDto;
 
@@ -74,12 +78,16 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<
     public OrderEntity toEntity(Order order) {
         List<OrderItemEntity> orderItems = orderItemParser.toEntity(order.getOrderItems());
 
-        return new OrderEntity(
+        OrderEntity orderEntity = new OrderEntity(
                 order.getId(),
                 order.getOrderDate(),
                 order.getVendor().getId(),
                 orderItems
         );
+
+        orderItems.forEach(orderItem -> orderItem.setOrder(orderEntity));
+
+        return orderEntity;
     }
 
     private LocalDateTime parseOrderDate(String orderDate) {

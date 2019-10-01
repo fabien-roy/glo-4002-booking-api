@@ -1,8 +1,10 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Entity(name = "Passes")
 public class PassEntity extends OrderItemEntity {
@@ -13,8 +15,6 @@ public class PassEntity extends OrderItemEntity {
     private Long categoryId;
     private Long optionId;
     private LocalDate eventDate;
-    // @OneToOne(mappedBy = "pass")
-    // public OrderItemEntity orderItem;
 
     public PassEntity() {
     }

@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,8 +14,7 @@ public class OrderEntity {
 	private Long id;
     private LocalDateTime orderDate;
     private Long vendorId;
-    @OneToMany()
-    @JoinColumn(name="orderId", nullable = false)
+    @OneToMany(mappedBy = "order")
     private List<OrderItemEntity> orderItems = new ArrayList<>();
 
     public OrderEntity() {

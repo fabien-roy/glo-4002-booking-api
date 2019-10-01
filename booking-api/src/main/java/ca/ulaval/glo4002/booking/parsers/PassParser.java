@@ -23,10 +23,6 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
 
     @Override
     public List<Pass> parseDto(PassesDto dto) {
-        if (dto.passNumber < 1L) {
-            throw new PassDtoInvalidException();
-        }
-
         // TODO : Test if category or option is invalid
         PassCategory category = categoryBuilder.buildByName(dto.passCategory);
         PassOption option = optionBuilder.buildByName(dto.passOption);

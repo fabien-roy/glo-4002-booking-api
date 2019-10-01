@@ -9,21 +9,19 @@ public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-    // @ManyToOne
-    // OrderEntity order;
-    // @OneToOne(mappedBy = "orderItem")
-    // public PassEntity pass; // TODO : This should also work for Shuttle and OxygenTank
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="orderId", nullable = false)
+    private OrderEntity order;
 
     public OrderItemEntity() {
 
     }
 
-    public OrderItemEntity(Long id, PassEntity pass) {
-        this.id = id;
-        // this.pass = pass;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setOrder(OrderEntity order) {
+        this.order = order;
     }
 }

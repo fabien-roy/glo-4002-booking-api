@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
+import ca.ulaval.glo4002.booking.exceptions.AlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.DtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
@@ -58,13 +58,13 @@ public class OrderController {
 
         try {
             order = orderParser.parseDto(dto);
-        } catch (OrderDtoInvalidException exception) {
+        } catch (DtoInvalidException exception) {
             return ResponseEntity.badRequest().build();
         }
 
         try {
             order = orderService.order(order);
-        } catch (OrderAlreadyCreatedException exception) {
+        } catch (AlreadyCreatedException exception) {
             return ResponseEntity.badRequest().build();
         }
 

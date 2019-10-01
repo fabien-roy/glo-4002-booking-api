@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.Mockito.mock;
+
 public class PassEndToEndContext {
 
     // Copied from old file
@@ -111,7 +113,7 @@ public class PassEndToEndContext {
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
 
         PassService passService = new PassServiceImpl(passRepository);
-        OxygenTankService oxygenTankService = new OxygenTankServiceImpl();
+        OxygenTankService oxygenTankService = mock(OxygenTankService.class);
         OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
 
         orderController = new OrderController(orderService);
@@ -120,6 +122,7 @@ public class PassEndToEndContext {
     }
 
     public PassEndToEndContext withASinglePassOrder() {
+        aSinglePass.setOrder(aSinglePassOrder);
         aSinglePassId = addPass(aSinglePass);
         aSinglePass.setId(aSinglePassId);
         aSinglePassOrder.addToOrderItems(aSinglePass);
@@ -129,6 +132,7 @@ public class PassEndToEndContext {
     }
 
     public PassEndToEndContext withAnotherSinglePassOrder() {
+        anotherSinglePass.setOrder(anotherSinglePassOrder);
         anotherSinglePassId = addPass(anotherSinglePass);
         anotherSinglePass.setId(anotherSinglePassId);
         anotherSinglePassOrder.addToOrderItems(anotherSinglePass);
@@ -138,8 +142,10 @@ public class PassEndToEndContext {
     }
 
     public PassEndToEndContext withMultipleSinglePassOrder() {
+        aSinglePass.setOrder(aSinglePassOrder);
         aSinglePassId = addPass(aSinglePass);
         aSinglePass.setId(aSinglePassId);
+        anotherSinglePass.setOrder(anotherSinglePassOrder);
         anotherSinglePassId = addPass(anotherSinglePass);
         anotherSinglePass.setId(anotherSinglePassId);
         aSinglePassOrder.addToOrderItems(aSinglePass);
@@ -150,6 +156,7 @@ public class PassEndToEndContext {
     }
 
     public PassEndToEndContext withAPackagePassOrder() {
+        aPackagePass.setOrder(aPackagePassOrder);
         aPackagePassId = addPass(aPackagePass);
         aPackagePass.setId(aPackagePassId);
         aPackagePassOrder.addToOrderItems(aPackagePass);
