@@ -29,63 +29,57 @@ public class OxygenTankTest {
 
     @Test
     void orderCategory_shouldBeNebula_whenCreatingOxygenTankWithCategoryA() {
-        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
-                .buildById(OxygenConstants.Categories.A_ID), VALID_DATE);
+        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), VALID_DATE, VALID_DATE);
 
         assertEquals(OxygenConstants.Categories.A_ID, tank.getOxygenTankCategory().getId());
     }
 
     @Test
     void orderCategory_shouldBeSupergiant_whenCreatingOxygenTankWithCategoryB() {
-        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
-                .buildById(OxygenConstants.Categories.B_ID), VALID_DATE);
+        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.B_ID), VALID_DATE, VALID_DATE);
 
         assertEquals(OxygenConstants.Categories.B_ID, tank.getOxygenTankCategory().getId());
     }
 
     @Test
     void orderCategory_shouldBeSupernova_whenCreatingOxygenTankWithCategoryE() {
-        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
-                .buildById(OxygenConstants.Categories.E_ID), VALID_DATE);
+        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.E_ID), VALID_DATE, VALID_DATE);
 
         assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
     }
 
     @Test
     void oxygenCategory_shouldBeCategoryB_whenOrderIsNebula_butInLessThan20DaysAndMoreThan10OfFestivalStart() {
-        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
-                .buildById(OxygenConstants.Categories.A_ID), VALID_DATE_15DAYS_BEFORE_START);
+        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), VALID_DATE_15DAYS_BEFORE_START, VALID_DATE_15DAYS_BEFORE_START);
 
         assertEquals(OxygenConstants.Categories.B_ID, tank.getOxygenTankCategory().getId());
-        assertTrue(tank.getTimeProduced().isBefore(DateConstants.START_DATE));
+        assertTrue(tank.getReadyDate().isBefore(DateConstants.START_DATE));
     }
 
     @Test
     void oxygenCategory_shouldBeCategoryE_whenOrderIsNebula_butInLessThan10DayOfFestivalStart() {
         OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
-                .buildById(OxygenConstants.Categories.A_ID), VALID_DATE_5DAYS_BEFORE_START);
+                .buildById(OxygenConstants.Categories.A_ID), VALID_DATE_5DAYS_BEFORE_START, VALID_DATE_5DAYS_BEFORE_START);
 
         assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
-        assertTrue(tank.getTimeProduced().isBefore(DateConstants.START_DATE));
+        assertTrue(tank.getReadyDate().isBefore(DateConstants.START_DATE));
     }
 
     @Test
     void oxygenCategory_shouldBeCategoryE_whenOrderIsOnTheStartingDateOfFestival() {
-        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder
-                .buildById(OxygenConstants.Categories.A_ID), DateConstants.START_DATE);
+        OxygenTank tank = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), DateConstants.START_DATE, VALID_DATE);
 
         assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
-        assertTrue(tank.getTimeProduced().isEqual(DateConstants.START_DATE));
+        assertTrue(tank.getReadyDate().isEqual(DateConstants.START_DATE));
     }
 
     @Test
     void createOxygenTank_afterTheStartingDateOfFestival_shouldThrowInvalidEventDateException() {
         InvalidDateException thrown = assertThrows(
                 InvalidDateException.class,
-                () -> new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), INVALID_DATE)
+                () -> new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), INVALID_DATE, VALID_DATE)
         );
 
         assertEquals(ExceptionConstants.INVALID_DATE_MESSAGE, thrown.getMessage());
     }
-
 }

@@ -4,6 +4,7 @@ import ca.ulaval.glo4002.booking.domainobjects.Qualifiable;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 
 public abstract class ShuttleCategory implements Qualifiable {
+
     protected Long id;
     protected String name;
     protected Integer maxCapacity;

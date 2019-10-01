@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domainobjects.oxygen.productions;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.unitTypes.OxygenUnitType;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.unittypes.OxygenUnitType;
 
 public class ImmediateOxygenProduction extends OxygenProduction {
 

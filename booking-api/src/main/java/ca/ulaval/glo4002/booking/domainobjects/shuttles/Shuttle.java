@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking.domainobjects.shuttles;
-import java.util.List;
-
 import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
+
+import java.util.List;
 
 public class Shuttle extends OrderItem {
 
@@ -14,7 +14,10 @@ public class Shuttle extends OrderItem {
     // TODO : private <?> date;
 
     public Shuttle(Long id, Double price, ShuttleCategory category, List<Trip> trips) {
-
+        this.id = id;
+        this.price = price;
+        this.category = category;
+        this.trips = trips;
     }
 
     @Override

@@ -24,7 +24,6 @@ public class ShuttleManifestController {
         this.shuttleManifestParser = shuttleManifestParser;
 	}
 
-
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getShuttleManifestsWithDate(@QueryParam("date") String date) {

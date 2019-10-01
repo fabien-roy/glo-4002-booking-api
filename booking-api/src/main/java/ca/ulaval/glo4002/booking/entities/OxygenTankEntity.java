@@ -14,20 +14,23 @@ public class OxygenTankEntity {
 	private Long id;
 	private Long categoryId;
 	private LocalDate requestDate;
+	private LocalDate readyDate;
 
 	public OxygenTankEntity() {
 
 	}
 
-	public OxygenTankEntity(Long categoryId, LocalDate requestDate) {
+	public OxygenTankEntity(Long categoryId, LocalDate requestDate, LocalDate readyDate) {
 		this.categoryId = categoryId;
 		this.requestDate = requestDate;
+		this.readyDate = readyDate;
 	}
 
-	public OxygenTankEntity(Long id, Long categoryId, LocalDate requestDate) {
+	public OxygenTankEntity(Long id, Long categoryId, LocalDate requestDate, LocalDate readyDate) {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.requestDate = requestDate;
+		this.readyDate = readyDate;
 	}
 
 	public Long getId() {
@@ -44,5 +47,9 @@ public class OxygenTankEntity {
 
 	public LocalDate getRequestDate() {
 		return requestDate;
+	}
+
+	public LocalDate getReadyDate() {
+		return readyDate;
 	}
 }

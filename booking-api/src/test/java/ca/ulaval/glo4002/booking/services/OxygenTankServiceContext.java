@@ -16,6 +16,9 @@ import static org.mockito.Mockito.when;
 
 class OxygenTankServiceContext {
 
+	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
+	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
+
 	OxygenTankRepository repository;
 	OxygenTank oxygenTankA;
 	OxygenTank oxygenTankB;
@@ -29,7 +32,6 @@ class OxygenTankServiceContext {
 	private Long oxygenTankBId;
 	private Long oxygenTankEId;
 	public Long nonExistentOxygenTankId = 0L;
-	private LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private OxygenTankParser parser = new OxygenTankParser();
 
 	OxygenTankServiceContext() {
@@ -42,20 +44,25 @@ class OxygenTankServiceContext {
 
 		oxygenTankA = new OxygenTank(
 				categoryBuilder.buildById(OxygenConstants.Categories.A_ID),
-				A_VALID_DATE
+				A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE
 		);
 
 		oxygenTankB = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.B_ID),
-				A_VALID_DATE);
+				A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE
+		);
 
 		oxygenTankE = new OxygenTank(
 				categoryBuilder.buildById(OxygenConstants.Categories.E_ID),
-				A_VALID_DATE
+				A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE
 		);
 
 		nonExistentOxygenTank = new OxygenTank(
 				categoryBuilder.buildById(OxygenConstants.Categories.A_ID),
-				A_VALID_DATE
+				A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE
 		);
 
 		oxygenTankAEntity = parser.toEntity(oxygenTankA);

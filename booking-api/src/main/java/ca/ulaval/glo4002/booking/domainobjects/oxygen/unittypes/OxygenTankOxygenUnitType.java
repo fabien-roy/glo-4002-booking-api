@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domainobjects.oxygen.unitTypes;
+package ca.ulaval.glo4002.booking.domainobjects.oxygen.unittypes;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 

@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
@@ -46,6 +47,24 @@ public class PassServiceImpl implements PassService {
         passes.forEach(pass -> passEntities.add(passParser.toEntity(pass)));
 
         passRepository.saveAll(passEntities);
+
+        return passes;
+    }
+
+    @Override
+    public Iterable<Pass> order(Iterable<Pass> passes) {
+        return saveAll(passes);
+    }
+
+    @Override
+    public Iterable<Pass> getPasses(Iterable<OrderItem> orderItems) {
+        List<Pass> passes = new ArrayList<>();
+
+        orderItems.forEach(orderItem -> {
+            if (orderItem instanceof Pass) {
+                passes.add((Pass) orderItem);
+            }
+        });
 
         return passes;
     }

@@ -11,10 +11,7 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
 import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
-import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.OrderServiceImpl;
-import ca.ulaval.glo4002.booking.services.PassService;
-import ca.ulaval.glo4002.booking.services.PassServiceImpl;
+import ca.ulaval.glo4002.booking.services.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -62,9 +59,12 @@ public class OrderEndToEndContext {
     public OrderEndToEndContext setUp() {
         OrderRepository orderRepository = new OrderRepositoryImpl(entityManager);
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
-        OrderService orderService = new OrderServiceImpl(orderRepository);
+
         PassService passService = new PassServiceImpl(passRepository);
-        orderController = new OrderController(orderService, passService);
+        OxygenTankService oxygenTankService = new OxygenTankServiceImpl();
+        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
+
+        orderController = new OrderController(orderService);
 
         return this;
     }

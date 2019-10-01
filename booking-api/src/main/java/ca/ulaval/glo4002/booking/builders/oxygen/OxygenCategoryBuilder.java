@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.constants.QualityConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.AOxygenCategory;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.BOxygenCategory;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.EOxygenCategory;
@@ -34,6 +35,18 @@ public class OxygenCategoryBuilder implements Builder<OxygenCategory> {
                 return buildAOxygenCategory();
             default:
                 throw new OxygenCategoryNotFoundException();
+        }
+    }
+
+    public OxygenCategory buildByQualityId(Long qualityId) {
+        if (qualityId.equals(QualityConstants.SUPERNOVA_ID)) {
+            return buildEOxygenCategory();
+        } else if (qualityId.equals(QualityConstants.SUPERGIANT_ID)) {
+            return buildBOxygenCategory();
+        } else if (qualityId.equals(QualityConstants.NEBULA_ID)) {
+            return buildAOxygenCategory();
+        } else {
+            throw new OxygenCategoryNotFoundException();
         }
     }
 

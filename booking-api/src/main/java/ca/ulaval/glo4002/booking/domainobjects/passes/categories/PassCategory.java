@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import java.util.Map;
 
 public abstract class PassCategory implements Qualifiable {
+
 	protected Long id;
 	protected String name;
 	protected Quality quality;

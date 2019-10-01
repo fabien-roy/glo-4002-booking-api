@@ -8,5 +8,5 @@ public interface OrderService extends Service<Order> {
 
     Iterable<Order> findAll();
 
-    Order save(Order order);
+    Order order(Order order);
 }

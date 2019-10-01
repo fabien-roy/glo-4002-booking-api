@@ -13,20 +13,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderServiceTest {
 
-    private OrderServiceImpl subject;
     private OrderServiceContext context;
 
     @BeforeEach
     public void setUp() {
         context = new OrderServiceContext();
-        subject = new OrderServiceImpl(context.repository);
     }
 
     @Test
     public void findById_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
         OrderNotFoundException thrown = assertThrows(
                 OrderNotFoundException.class,
-                () -> subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID)
+                () -> context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID)
         );
 
         assertEquals(ExceptionConstants.Order.NOT_FOUND_MESSAGE, thrown.getMessage());
@@ -34,7 +32,7 @@ public class OrderServiceTest {
 
     @Test
     public void findById_shouldReturnCorrectOrder() {
-        Order order = subject.findById(OrderServiceContext.A_ORDER_ID);
+        Order order = context.subject.findById(OrderServiceContext.A_ORDER_ID);
 
         assertEquals(context.aOrder.getId(), order.getId());
     }
@@ -43,7 +41,7 @@ public class OrderServiceTest {
     public void findAll_shouldReturnCorrectOrders() {
         List<Long> ids = new ArrayList<>();
 
-        subject.findAll().forEach(order -> ids.add(order.getId()));
+        context.subject.findAll().forEach(order -> ids.add(order.getId()));
 
         assertEquals(2, ids.size());
         assertTrue(ids.contains(context.aOrder.getId()));
@@ -54,8 +52,8 @@ public class OrderServiceTest {
     public void save_shouldSaveOrder() {
         context.setUpRepositoryForSave();
 
-        subject.save(context.aNonExistentOrder);
-        Order order = subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID);
+        context.subject.order(context.aNonExistentOrder);
+        Order order = context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID);
 
         assertEquals(context.aNonExistentOrder.getId(), order.getId());
     }

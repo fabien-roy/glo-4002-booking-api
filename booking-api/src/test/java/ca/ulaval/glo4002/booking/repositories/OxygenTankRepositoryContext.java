@@ -25,6 +25,7 @@ public class OxygenTankRepositoryContext {
 	public final static Long E_OXYGEN_ID = 3L;
 	public final static Long NON_EXISTENT_OXYGEN_ID = 0L;
 	private final static LocalDate A_DATE_BEFORE_FESTIVAL = DateConstants.START_DATE.minusDays(30);
+	private final static LocalDate A_DATE_AFTER_THE_OTHER_ONE = DateConstants.START_DATE;
 
 	public OxygenTankRepositoryContext() {
 		this.setUpOxygenTanks();
@@ -35,25 +36,29 @@ public class OxygenTankRepositoryContext {
 		oxygenTankA = new OxygenTankEntity(
 				A_OXYGEN_ID,
 				OxygenConstants.Categories.A_ID,
-				A_DATE_BEFORE_FESTIVAL
+				A_DATE_BEFORE_FESTIVAL,
+				A_DATE_AFTER_THE_OTHER_ONE
 		);
 
 		oxygenTankB = new OxygenTankEntity(
 				B_OXYGEN_ID,
 				OxygenConstants.Categories.B_ID,
-				A_DATE_BEFORE_FESTIVAL
+				A_DATE_BEFORE_FESTIVAL,
+				A_DATE_AFTER_THE_OTHER_ONE
 		);
 
 		oxygenTankE = new OxygenTankEntity(
 				E_OXYGEN_ID,
 				OxygenConstants.Categories.E_ID,
-				A_DATE_BEFORE_FESTIVAL
+				A_DATE_BEFORE_FESTIVAL,
+				A_DATE_AFTER_THE_OTHER_ONE
 		);
 
 		nonExistentOxygenTank = new OxygenTankEntity(
 				NON_EXISTENT_OXYGEN_ID,
 				OxygenConstants.Categories.A_ID,
-				A_DATE_BEFORE_FESTIVAL
+				A_DATE_BEFORE_FESTIVAL,
+				A_DATE_AFTER_THE_OTHER_ONE
 		);
 	}
 

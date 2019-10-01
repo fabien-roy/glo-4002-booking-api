@@ -1,33 +1,23 @@
 package ca.ulaval.glo4002.booking.domainobjects.oxygen;
 
-import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
-import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
-import ca.ulaval.glo4002.booking.services.OxygenTankServiceImpl;
 
 import java.time.LocalDate;
 
-public class OxygenTank {
+public class OxygenTank extends OrderItem {
 
 	protected Long id;
 	private OxygenCategory category;
-	private LocalDate timeProduced;
-	private LocalDate timeRequested;
+	private LocalDate requestDate;
+	private LocalDate readyDate;
 
 	// TODO : A lot of logic here should be in a OxygenTankService class
-	public OxygenTank(OxygenCategory category, LocalDate timeRequested) {
-		if (timeRequested.isAfter(DateConstants.START_DATE)) {
-			throw new InvalidDateException();
-		}
 
-		// TODO : Refactor, when calling constructor the services should already have
-		// been called by the requester
-		// TODO : and the correct category should by passed.
-		OxygenTankServiceImpl oxygenTankService = new OxygenTankServiceImpl();
-
-		this.category = oxygenTankService.getOxygenCategoryForTimeTable(category, timeRequested);
-		this.timeRequested = timeRequested;
-		this.timeProduced = timeRequested.plusDays(this.category.getProduction().getProductionTime().toDays());
+	public OxygenTank(OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
+        this.category = category;
+		this.requestDate = requestDate;
+		this.readyDate = readyDate;
 	}
 
 	public Double getPrice() {
@@ -42,12 +32,12 @@ public class OxygenTank {
 		return category;
 	}
 
-	public LocalDate getTimeRequested() {
-		return timeRequested;
+	public LocalDate getRequestDate() {
+		return requestDate;
 	}
 
-	public LocalDate getTimeProduced() {
-		return timeProduced;
+	public LocalDate getReadyDate() {
+		return readyDate;
 	}
 
 }

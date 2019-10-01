@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.domainobjects.oxygen.productions.OxygenProducti
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 
 public abstract class OxygenCategory implements Qualifiable {
+
     protected Long id;
     protected String name;
     protected Quality quality;

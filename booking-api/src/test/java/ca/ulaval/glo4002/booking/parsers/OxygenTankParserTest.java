@@ -32,8 +32,8 @@ class OxygenTankParserTest {
 
 		assertNotNull(tank.getOxygenTankCategory().getId());
 		assertEquals(OxygenConstants.Categories.A_ID, tank.getOxygenTankCategory().getId());
-		assertNotNull(tank.getTimeRequested());
-		assertEquals(A_VALID_DATE, tank.getTimeRequested());
+		assertNotNull(tank.getRequestDate());
+		assertEquals(A_VALID_DATE, tank.getRequestDate());
 	}
 
 	@Test

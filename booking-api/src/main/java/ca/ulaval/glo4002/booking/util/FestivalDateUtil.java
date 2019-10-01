@@ -44,4 +44,8 @@ public final class FestivalDateUtil {
 		return date.isBefore(DateConstants.ORDER_START_DATE_TIME)
 				|| date.isAfter(DateConstants.ORDER_END_DATE_TIME);
 	}
+
+	public static boolean isAfterFestivalStart(LocalDate date) {
+		return date.isAfter(DateConstants.START_DATE);
+	}
 }

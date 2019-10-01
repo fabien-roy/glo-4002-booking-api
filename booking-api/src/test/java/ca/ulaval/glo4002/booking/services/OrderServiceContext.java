@@ -18,6 +18,8 @@ import static org.mockito.Mockito.when;
 
 public class OrderServiceContext {
 
+    public OrderService subject;
+
     private final static LocalDateTime A_ORDER_EVENT_DATE = DateConstants.ORDER_START_DATE_TIME;
     private final static VendorBuilder vendorBuilder = new VendorBuilder();
     private OrderParser parser = new OrderParser();
@@ -35,6 +37,7 @@ public class OrderServiceContext {
     public OrderServiceContext() {
         setUpOrders();
         setUpRepository();
+        setUpSubject();
     }
 
     private void setUpOrders() {
@@ -69,6 +72,13 @@ public class OrderServiceContext {
         when(repository.findById(ANOTHER_ORDER_ID)).thenReturn(Optional.of(anotherOrderEntity));
         when(repository.findById(A_NON_EXISTANT_ORDER_ID)).thenReturn(Optional.empty());
         when(repository.save(any(OrderEntity.class))).thenReturn(aOrderEntity);
+    }
+
+    private void setUpSubject() {
+        PassService passService = mock(PassService.class);
+        OxygenTankService oxygenTankService = mock(OxygenTankService.class);
+
+        subject = new OrderServiceImpl(repository, passService, oxygenTankService);
     }
 
     public void setUpRepositoryForSave() {

@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryParser implements DtoParser<Inventory, List<InventoryItemDto>>{
@@ -16,6 +17,6 @@ public class InventoryParser implements DtoParser<Inventory, List<InventoryItemD
     @Override
     public List<InventoryItemDto> toDto(Inventory object) {
         // TODO
-        return null;
+        return new ArrayList<>();
     }
 }

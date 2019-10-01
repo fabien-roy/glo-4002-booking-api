@@ -6,6 +6,7 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class CatchallExceptionMapper implements ExceptionMapper<Exception> {
+
     @Override
     public Response toResponse(Exception exception) {
         return Response.status(400).build();

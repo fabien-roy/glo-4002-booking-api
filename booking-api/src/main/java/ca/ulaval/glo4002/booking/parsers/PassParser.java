@@ -26,6 +26,7 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
             throw new PassDtoInvalidException();
         }
 
+        // TODO : Test if category or option is invalid
         PassCategory category = categoryBuilder.buildByName(dto.passCategory);
         PassOption option = optionBuilder.buildByName(dto.passOption);
 

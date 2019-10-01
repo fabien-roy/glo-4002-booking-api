@@ -1,10 +1,11 @@
 package ca.ulaval.glo4002.booking.domainobjects.oxygen.productions;
 
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.unitTypes.OxygenUnitType;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.unittypes.OxygenUnitType;
 
 import java.time.Duration;
 
 public abstract class OxygenProduction {
+
     protected Long id;
     protected String name;
     protected Double pricePerUnit;
