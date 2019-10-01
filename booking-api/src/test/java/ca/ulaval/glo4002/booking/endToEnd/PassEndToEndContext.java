@@ -28,12 +28,10 @@ import static org.mockito.Mockito.mock;
 
 public class PassEndToEndContext {
 
-    // Copied from old file
     private static final LocalDate A_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(1L);
     private static final LocalDate ANOTHER_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(2L);
     private static final LocalDate A_INVALID_EVENT_DATE = DateConstants.START_DATE.minusDays(1L);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
-    private static final LocalDateTime A_VALID_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
 
     private static final LocalDateTime AN_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
     private static final LocalDateTime ANOTHER_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME.plusDays(1);
@@ -51,11 +49,13 @@ public class PassEndToEndContext {
     public PassEntity aPackagePass;
     public OrderEntity aSinglePassOrder;
     public OrderEntity anotherSinglePassOrder;
+    public OrderEntity aMultipleSinglePassOrder;
     public OrderEntity aPackagePassOrder;
     public OrderParser orderParser = new OrderParser();
     public Long aSinglePassOrderId = 1L;
     public Long anotherSinglePassOrderId = 2L;
-    public Long aPackagePassOrderId = 3L;
+    public Long aMultipleSinglePassOrderId = 3L;
+    public Long aPackagePassOrderId = 4L;
     public Long aSinglePassId = 1L;
     public Long anotherSinglePassId = 2L;
     public Long aPackagePassId = 3L;
@@ -94,6 +94,12 @@ public class PassEndToEndContext {
                 ANOTHER_ORDER_DATE,
                 A_VENDOR_ID,
                 new ArrayList<>(Collections.singletonList(anotherSinglePass))
+        );
+
+        aMultipleSinglePassOrder = new OrderEntity(
+                AN_ORDER_DATE,
+                A_VENDOR_ID,
+                new ArrayList<>(Arrays.asList(aSinglePass, anotherSinglePass))
         );
 
         aPackagePassOrder = new OrderEntity(
@@ -142,12 +148,12 @@ public class PassEndToEndContext {
     }
 
     public PassEndToEndContext withMultipleSinglePassOrder() {
-        aSinglePassOrderId = addOrder(aSinglePassOrder);
+        aMultipleSinglePassOrderId = addOrder(aMultipleSinglePassOrder);
 
-        aSinglePass.setOrder(aSinglePassOrder);
+        aSinglePass.setOrder(aMultipleSinglePassOrder);
         aSinglePassId = addPass(aSinglePass);
         aSinglePass.setId(aSinglePassId);
-        anotherSinglePass.setOrder(aSinglePassOrder);
+        anotherSinglePass.setOrder(aMultipleSinglePassOrder);
         anotherSinglePassId = addPass(anotherSinglePass);
         anotherSinglePass.setId(anotherSinglePassId);
 

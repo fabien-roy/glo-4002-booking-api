@@ -1,10 +1,12 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
 import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
+import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
@@ -15,40 +17,61 @@ import ca.ulaval.glo4002.booking.services.*;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import static org.mockito.Mockito.mock;
 
 public class OrderEndToEndContext {
 
     private static final LocalDateTime AN_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
     private static final LocalDateTime ANOTHER_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME.plusDays(1);
+    private static final LocalDate A_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(1L);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     public static final Long AN_INVALID_ORDER_ID = -1L;
 
     private EntityManager entityManager;
     public OrderEntity anOrder;
     public OrderEntity anotherOrder;
+    public PassEntity aPass;
+    public PassEntity anotherPass;
     public OrderParser orderParser = new OrderParser();
     public Long anOrderId = 1L;
     public Long anotherOrderId = 2L;
+    public Long aPassId = 1L;
+    public Long anotherPassId = 2L;
     public OrderController orderController;
 
     public OrderEndToEndContext() {
-        setUpOrders();
+        setUpObjects();
         setUpEntityManager();
     }
 
-    private void setUpOrders() {
+    private void setUpObjects() {
+        aPass = new PassEntity(
+                PassConstants.Categories.SUPERNOVA_ID,
+                PassConstants.Options.SINGLE_ID,
+                A_VALID_EVENT_DATE
+        );
+
+        anotherPass = new PassEntity(
+                PassConstants.Categories.SUPERGIANT_ID,
+                PassConstants.Options.SINGLE_ID,
+                A_VALID_EVENT_DATE
+        );
+
         anOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>()
+                new ArrayList<>(Collections.singletonList(aPass))
         );
 
         anotherOrder = new OrderEntity(
                 ANOTHER_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>()
+                new ArrayList<>(Collections.singletonList(anotherPass))
         );
     }
 
@@ -62,7 +85,9 @@ public class OrderEndToEndContext {
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
 
         PassService passService = new PassServiceImpl(passRepository);
-        OxygenTankService oxygenTankService = new OxygenTankServiceImpl();
+        // TODO : When OxygenTankService is ready, unmock
+        // OxygenTankService oxygenTankService = new OxygenTankServiceImpl();
+        OxygenTankService oxygenTankService = mock(OxygenTankService.class);
         OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
 
         orderController = new OrderController(orderService);
@@ -73,11 +98,19 @@ public class OrderEndToEndContext {
     public OrderEndToEndContext withAnOrder() {
         anOrderId = addOrder(anOrder);
 
+        aPass.setOrder(anOrder);
+        aPassId = addPass(aPass);
+        aPass.setId(aPassId);
+
         return this;
     }
 
     public OrderEndToEndContext withAnotherOrder() {
         anotherOrderId = addOrder(anotherOrder);
+
+        anotherPass.setOrder(anotherOrder);
+        anotherPassId = addPass(anotherPass);
+        anotherPass.setId(anotherPassId);
 
         return this;
     }
@@ -98,4 +131,23 @@ public class OrderEndToEndContext {
         entityManager.getTransaction().commit();
 
         return orderId[0];
-    }}
+    }
+
+    public Long addPass(PassEntity passEntity) {
+        final Long[] passId = new Long[1];
+
+        entityManager.getTransaction().begin();
+
+        entityManager.persist(passEntity);
+        entityManager.createQuery(RepositoryConstants.PASS_FIND_ALL_QUERY, PassEntity.class).getResultList()
+                .forEach(currentPassEntity -> {
+                    if (currentPassEntity.getEventDate().equals(passEntity.getEventDate())) {
+                        passId[0] = currentPassEntity.getId();
+                    }
+                });
+
+        entityManager.getTransaction().commit();
+
+        return passId[0];
+    }
+}
