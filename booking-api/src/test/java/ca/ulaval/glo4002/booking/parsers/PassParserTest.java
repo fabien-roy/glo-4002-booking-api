@@ -2,10 +2,11 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
@@ -20,7 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PassParserTest {
 
@@ -188,11 +190,12 @@ class PassParserTest {
 
     @Test
     void whenParsingToDto_dtoShouldBeValid() {
-        PassesDto dto = subject.toDto(new ArrayList<>(Collections.singletonList(pass)));
+        List<PassDto> dtos = subject.toDto(new ArrayList<>(Collections.singletonList(pass)));
+        PassDto dto = dtos.get(0);
 
         assertEquals(pass.getId(), dto.passNumber);
         assertEquals(pass.getCategory().getName(), dto.passCategory);
         assertEquals(pass.getOption().getName(), dto.passOption);
-        // assertEquals(pass.getEventDate().toString(), dto.eventDates.get(0));
+        assertEquals(pass.getEventDate().toString(), dto.eventDate);
     }
 }

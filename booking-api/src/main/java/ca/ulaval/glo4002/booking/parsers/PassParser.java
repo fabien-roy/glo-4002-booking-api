@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<List<Pass>, PassesDto> {
+public class PassParser implements EntityParser<Pass, PassEntity>, ParseDtoParser<List<Pass>, PassesDto>, ToDtoParser<List<Pass>, List<PassDto>> {
 
     private PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
     private PassOptionBuilder optionBuilder = new PassOptionBuilder();
@@ -53,24 +54,12 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
     }
 
     @Override
-    public PassesDto toDto(List<Pass> passes) {
-        Pass pass = passes.get(0);
+    public List<PassDto> toDto(List<Pass> passes) {
+        List<PassDto> dtos = new ArrayList<>();
 
-        PassesDto dto = new PassesDto();
-        dto.passNumber = pass.getId();
-        dto.passCategory = pass.getCategory().getName();
-        dto.passOption = pass.getOption().getName();
+        passes.forEach(pass -> dtos.add(toSingle(pass)));
 
-        if (pass.getOption().getId().equals(PassConstants.Options.SINGLE_ID)) {
-            dto.eventDates = new ArrayList<>();
-            passes.forEach(currentPass -> {
-                if (currentPass.getEventDate() != null) {
-                    dto.eventDates.add(currentPass.getEventDate().toString());
-                }
-            });
-        }
-
-        return dto;
+        return dtos;
     }
 
     @Override
@@ -96,6 +85,19 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
         validateEventDate(eventDate);
 
         return new Pass(id, category, option, eventDate);
+    }
+
+    private PassDto toSingle(Pass pass) {
+        PassDto dto = new PassDto();
+        dto.passNumber = pass.getId();
+        dto.passCategory = pass.getCategory().getName();
+        dto.passOption = pass.getOption().getName();
+
+        if (pass.getOption().getId().equals(PassConstants.Options.SINGLE_ID)) {
+            dto.eventDate = pass.getEventDate().toString();
+        }
+
+        return dto;
     }
 
     private LocalDate parseEventDate(String eventDate) {

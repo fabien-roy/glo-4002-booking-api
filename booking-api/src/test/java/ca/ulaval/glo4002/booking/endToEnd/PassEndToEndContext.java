@@ -5,6 +5,8 @@ import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
@@ -13,6 +15,7 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
 import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
 import ca.ulaval.glo4002.booking.services.*;
+import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,6 +35,7 @@ public class PassEndToEndContext {
     private static final LocalDate ANOTHER_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(2L);
     private static final LocalDate A_INVALID_EVENT_DATE = DateConstants.START_DATE.minusDays(1L);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
+    private static final String A_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
 
     private static final LocalDateTime AN_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
     private static final LocalDateTime ANOTHER_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME.plusDays(1);
@@ -51,6 +55,14 @@ public class PassEndToEndContext {
     public OrderEntity anotherSinglePassOrder;
     public OrderEntity aMultipleSinglePassOrder;
     public OrderEntity aPackagePassOrder;
+    public PassesDto aSinglePassDto = new PassesDto();
+    public PassesDto anotherSinglePassDto = new PassesDto();
+    public PassesDto aMultipleSinglePassDto = new PassesDto();
+    public PassesDto aPackagePassDto = new PassesDto();
+    public OrderWithPassesAsEventDatesDto aSinglePassOrderDto = new OrderWithPassesAsEventDatesDto();
+    public OrderWithPassesAsEventDatesDto anotherSinglePassOrderDto = new OrderWithPassesAsEventDatesDto();
+    public OrderWithPassesAsEventDatesDto aMultipleSinglePassOrderDto = new OrderWithPassesAsEventDatesDto();
+    public OrderWithPassesAsEventDatesDto aPackagePassOrderDto = new OrderWithPassesAsEventDatesDto();
     public OrderParser orderParser = new OrderParser();
     public Long aSinglePassOrderId = 1L;
     public Long anotherSinglePassOrderId = 2L;
@@ -58,15 +70,16 @@ public class PassEndToEndContext {
     public Long aPackagePassOrderId = 4L;
     public Long aSinglePassId = 1L;
     public Long anotherSinglePassId = 2L;
-    public Long aPackagePassId = 3L;
+    public Long aMultipleSinglePassId = 3L;
+    public Long aPackagePassId = 4L;
     public OrderController orderController;
 
     public PassEndToEndContext() {
-        Objects();
+        setUpObjects();
         setUpEntityManager();
     }
 
-    private void Objects() {
+    private void setUpObjects() {
         aSinglePass = new PassEntity(
                 PassConstants.Categories.SUPERNOVA_ID,
                 PassConstants.Options.SINGLE_ID,
@@ -74,7 +87,7 @@ public class PassEndToEndContext {
         );
 
         anotherSinglePass = new PassEntity(
-                PassConstants.Categories.SUPERGIANT_ID,
+                PassConstants.Categories.SUPERNOVA_ID,
                 PassConstants.Options.SINGLE_ID,
                 ANOTHER_VALID_EVENT_DATE
         );
@@ -107,6 +120,40 @@ public class PassEndToEndContext {
                 A_VENDOR_ID,
                 new ArrayList<>(Collections.singletonList(aPackagePass))
         );
+
+        aSinglePassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;
+        aSinglePassDto.passOption = PassConstants.Options.SINGLE_NAME;
+        aSinglePassDto.eventDates = new ArrayList<>(Collections.singletonList(A_VALID_EVENT_DATE.toString()));
+
+        anotherSinglePassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;
+        anotherSinglePassDto.passOption = PassConstants.Options.SINGLE_NAME;
+        anotherSinglePassDto.eventDates = new ArrayList<>(Collections.singletonList(ANOTHER_VALID_EVENT_DATE.toString()));
+
+        aMultipleSinglePassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;
+        aMultipleSinglePassDto.passOption = PassConstants.Options.SINGLE_NAME;
+        aMultipleSinglePassDto.eventDates = new ArrayList<>(Arrays.asList(
+                A_VALID_EVENT_DATE.toString(),
+                ANOTHER_VALID_EVENT_DATE.toString()
+        ));
+
+        aPackagePassDto.passCategory = PassConstants.Categories.SUPERGIANT_NAME;
+        aPackagePassDto.passOption = PassConstants.Options.PACKAGE_NAME;
+
+        aSinglePassOrderDto.orderDate = FestivalDateUtil.toZonedDateTimeString(AN_ORDER_DATE);
+        aSinglePassOrderDto.vendorCode = A_VENDOR_CODE;
+        aSinglePassOrderDto.passes = aSinglePassDto;
+
+        anotherSinglePassOrderDto.orderDate = FestivalDateUtil.toZonedDateTimeString(ANOTHER_ORDER_DATE);
+        anotherSinglePassOrderDto.vendorCode = A_VENDOR_CODE;
+        anotherSinglePassOrderDto.passes = anotherSinglePassDto;
+
+        aMultipleSinglePassOrderDto.orderDate = FestivalDateUtil.toZonedDateTimeString(AN_ORDER_DATE);
+        aMultipleSinglePassOrderDto.vendorCode = A_VENDOR_CODE;
+        aMultipleSinglePassOrderDto.passes = aMultipleSinglePassDto;
+
+        aPackagePassOrderDto.orderDate = FestivalDateUtil.toZonedDateTimeString(AN_ORDER_DATE);
+        aPackagePassOrderDto.vendorCode = A_VENDOR_CODE;
+        aPackagePassOrderDto.passes = aPackagePassDto;
     }
 
     private void setUpEntityManager() {

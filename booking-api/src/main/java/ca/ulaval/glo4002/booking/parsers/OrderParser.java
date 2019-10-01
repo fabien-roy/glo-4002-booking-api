@@ -5,7 +5,8 @@ import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.vendors.Vendor;
-import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.OrderItemEntity;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateTimeException;
@@ -16,14 +17,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<Order, OrderDto> {
+public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoParser<Order, OrderWithPassesAsEventDatesDto>, ToDtoParser<Order, OrderWithPassesAsPassesDto> {
 
     private VendorBuilder vendorBuilder = new VendorBuilder();
     private OrderItemParser orderItemParser = new OrderItemParser();
     private PassParser passParser = new PassParser();
 
     @Override
-    public Order parseDto(OrderDto dto) {
+    public Order parseDto(OrderWithPassesAsEventDatesDto dto) {
         Vendor vendor = vendorBuilder.buildByCode(dto.vendorCode);
 
         LocalDateTime orderDate = parseOrderDate(dto.orderDate);
@@ -43,16 +44,12 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<
     }
 
     @Override
-    public OrderDto toDto(Order order) {
-        OrderDto dto = new OrderDto();
+    public OrderWithPassesAsPassesDto toDto(Order order) {
+        OrderWithPassesAsPassesDto dto = new OrderWithPassesAsPassesDto();
         dto.orderNumber = order.getId();
         dto.orderDate = FestivalDateUtil.toZonedDateTimeString(order.getOrderDate());
         dto.vendorCode = order.getVendor().getCode();
-
-        List<Pass> passes = getPasses(order.getOrderItems());
-        if (!passes.isEmpty()) {
-            dto.passes = passParser.toDto(passes);
-        }
+        dto.passes = passParser.toDto(getPasses(order.getOrderItems()));
 
         return dto;
     }

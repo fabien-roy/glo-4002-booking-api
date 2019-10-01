@@ -31,6 +31,10 @@ public final class FestivalDateUtil {
         }
 	}
 
+	public static String toZonedDateTimeString(LocalDate orderDate) {
+		return toZonedDateTimeString(orderDate.atStartOfDay());
+	}
+
     public static String toZonedDateTimeString(LocalDateTime orderDate) {
         return ZonedDateTime.of(orderDate, ZoneId.of("UTC")).toString();
     }

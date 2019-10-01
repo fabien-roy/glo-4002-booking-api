@@ -9,7 +9,8 @@ import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
-import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.VendorNotFoundException;
@@ -42,7 +43,7 @@ class OrderParserTest {
     private final static LocalDate SOME_EVENT_DATE = DateConstants.START_DATE;
     private final static LocalDate SOME_OTHER_EVENT_DATE = DateConstants.START_DATE.plusDays(1);
     private OrderParser subject;
-    private OrderDto orderDto = new OrderDto();
+    private OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto();
     private Order order;
     private VendorBuilder vendorBuilder = new VendorBuilder();
     private PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
@@ -158,17 +159,12 @@ class OrderParserTest {
 
     @Test
     void whenParsingToDto_dtoShouldBeValid() {
-        OrderDto dto = subject.toDto(order);
+        OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
         assertEquals(order.getId(), dto.orderNumber);
         assertEquals(order.getVendor().getCode(), dto.vendorCode);
         assertEquals(order.getOrderDate().toString(), A_VALID_DATE.toString());
-        assertEquals(1, dto.passes.eventDates.size());
-        order.getOrderItems().forEach(orderItem -> {
-            if (orderItem instanceof Pass) {
-                assertTrue(order.getOrderItems().stream().anyMatch(pass -> ((Pass) pass).getEventDate().toString().equals(dto.passes.eventDates.get(0))));
-            }
-        });
+        assertEquals(1, order.getOrderItems().size());
     }
 
     @Test
@@ -188,14 +184,9 @@ class OrderParserTest {
                 )
         )));
 
-        OrderDto dto = subject.toDto(order);
+        OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
-        assertEquals(2, dto.passes.eventDates.size());
-        order.getOrderItems().forEach(orderItem -> {
-            if (orderItem instanceof Pass) {
-                assertTrue(order.getOrderItems().stream().anyMatch(pass -> ((Pass) pass).getEventDate().toString().equals(dto.passes.eventDates.get(0))));
-            }
-        });
+        assertEquals(2, dto.passes.size());
     }
 
     @Test
@@ -207,8 +198,8 @@ class OrderParserTest {
                 )
         )));
 
-        OrderDto dto = subject.toDto(order);
+        OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
-        assertNull(dto.passes.eventDates);
+        assertNull(dto.passes.get(0).eventDate);
     }
 }

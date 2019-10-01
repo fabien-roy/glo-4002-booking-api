@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
-import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +42,7 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnCorrectOrderDto_whenOrderNumberIsExistent() {
         context.setUp().withAnOrder();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.anOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anOrderId);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertEquals(context.anOrderId, response.getBody().orderNumber);
@@ -51,8 +52,8 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnCorrectOrderDto_whenManyOrderNumberAreExistent() {
         context.setUp().withAnOrder().withAnotherOrder();
 
-        ResponseEntity<OrderDto> aResponse = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.anOrderId);
-        ResponseEntity<OrderDto> anotherResponse = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.anotherOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anotherOrderId);
 
         assertEquals(Response.Status.OK.getStatusCode(), aResponse.getStatusCodeValue());
         assertEquals(Response.Status.OK.getStatusCode(), anotherResponse.getStatusCodeValue());
@@ -62,32 +63,32 @@ public class OrderEndToEndTest {
 
     @Test
     public void postOrderController_shouldReturnHttpBadRequest_whenOrderIsInvalid() {
-        OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
+        OrderWithPassesAsEventDatesDto orderDto = context.anOrderDto;
         orderDto.orderNumber = OrderEndToEndContext.AN_INVALID_ORDER_ID;
         context.setUp();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.addOrder(orderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatusCodeValue());
     }
 
     @Test
     public void postOrderController_shouldReturnHttpBadRequest_whenOrderAlreadyExists() {
-        OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
+        OrderWithPassesAsEventDatesDto orderDto = context.anOrderDto;
         context.setUp().withAnOrder();
         orderDto.orderNumber = context.anOrderId;
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.addOrder(orderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatusCodeValue());
     }
 
     @Test
     public void postOrderController_shouldReturnHttpCreated_whenOrderIsValid() {
-        OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
+        OrderWithPassesAsEventDatesDto orderDto = context.anOrderDto;
         context.setUp();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.addOrder(orderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatusCodeValue());
         assertNotNull(response.getBody());
@@ -95,12 +96,12 @@ public class OrderEndToEndTest {
 
     @Test
     public void postOrderController_shouldReturnCreated_whenManyOrdersAreValid() {
-        OrderDto anOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
-        OrderDto anotherOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anotherOrder));
+        OrderWithPassesAsEventDatesDto anOrderDto = context.anOrderDto;
+        OrderWithPassesAsEventDatesDto anotherOrderDto = context.anotherOrderDto;
         context.setUp();
 
-        ResponseEntity<OrderDto> aResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anOrderDto);
-        ResponseEntity<OrderDto> anotherResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anotherOrderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(anOrderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(anotherOrderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), aResponse.getStatusCodeValue());
         assertEquals(Response.Status.CREATED.getStatusCode(), anotherResponse.getStatusCodeValue());
@@ -110,12 +111,12 @@ public class OrderEndToEndTest {
 
     @Test
     public void postOrderController_shouldReturnUniqueOrderNumbers() {
-        OrderDto anOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
-        OrderDto anotherOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anotherOrder));
+        OrderWithPassesAsEventDatesDto anOrderDto = context.anOrderDto;
+        OrderWithPassesAsEventDatesDto anotherOrderDto = context.anotherOrderDto;
         context.setUp();
 
-        ResponseEntity<OrderDto> aResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anOrderDto);
-        ResponseEntity<OrderDto> anotherResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anotherOrderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(anOrderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(anotherOrderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), aResponse.getStatusCodeValue());
         assertEquals(Response.Status.CREATED.getStatusCode(), anotherResponse.getStatusCodeValue());

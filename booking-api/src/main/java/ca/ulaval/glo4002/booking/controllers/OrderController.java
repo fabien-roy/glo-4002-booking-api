@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
-import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.exceptions.AlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.DtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
@@ -50,7 +50,7 @@ public class OrderController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> addOrder(OrderDto dto) {
+    public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto dto) {
         Order order;
 
         try {

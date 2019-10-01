@@ -1,7 +1,9 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.dto.OrderDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -24,82 +26,82 @@ public class PassEndToEndTest {
     public void getOrderController_shouldReturnCorrectPassesDto_whenOrderNumberIsExistent() {
         context.setUp().withASinglePassOrder();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertEquals(1, response.getBody().passes.eventDates.size());
-        assertEquals(context.aSinglePass.getId(), response.getBody().passes.passNumber);
-        assertTrue(response.getBody().passes.eventDates.stream().anyMatch(eventDate -> eventDate.equals(context.aSinglePass.getEventDate().toString())));
-        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.passOption);
+        assertEquals(1, response.getBody().passes.size());
+        assertEquals(context.aSinglePass.getId(), response.getBody().passes.get(0).passNumber);
+        assertEquals(context.aSinglePass.getEventDate().toString(), response.getBody().passes.get(0).eventDate);
+        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.get(0).passOption);
     }
 
     @Test
     public void getOrderController_shouldReturnCorrectPassesDto_whenOrderNumberIsExistent_andOrderHasMultipleSinglePasses() {
         context.setUp().withMultipleSinglePassOrder();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertEquals(2, response.getBody().passes.eventDates.size());
-        assertTrue(response.getBody().passes.eventDates.stream().anyMatch(eventDate -> eventDate.equals(context.aSinglePass.getEventDate().toString())));
-        assertTrue(response.getBody().passes.eventDates.stream().anyMatch(eventDate -> eventDate.equals(context.anotherSinglePass.getEventDate().toString())));
-        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.passOption);
+        assertEquals(2, response.getBody().passes.size());
+        assertTrue(response.getBody().passes.stream().anyMatch(pass -> pass.eventDate.equals(context.aSinglePass.getEventDate().toString())));
+        assertTrue(response.getBody().passes.stream().anyMatch(pass -> pass.eventDate.equals(context.anotherSinglePass.getEventDate().toString())));
+        assertTrue(response.getBody().passes.stream().allMatch(pass -> pass.passOption.equals(PassConstants.Options.SINGLE_NAME)));
     }
 
     @Test
     public void getOrderController_shouldReturnCorrectPassesDto_whenOrderNumberIsExistent_andOrderHasAPackagePass() {
         context.setUp().withAPackagePassOrder();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertNull(response.getBody().passes.eventDates);
-        assertEquals(PassConstants.Options.PACKAGE_NAME, response.getBody().passes.passOption);
+        assertNull(response.getBody().passes.get(0).eventDate);
+        assertEquals(PassConstants.Options.PACKAGE_NAME, response.getBody().passes.get(0).passOption);
     }
 
     @Test
     public void getOrderController_shouldReturnCorrectPassesDto_whenManyOrderNumberAreExistent() {
         context.setUp().withASinglePassOrder().withAnotherSinglePassOrder();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertEquals(1, response.getBody().passes.eventDates.size());
-        assertEquals(context.aSinglePass.getId(), response.getBody().passes.passNumber);
-        assertTrue(response.getBody().passes.eventDates.stream().anyMatch(eventDate -> eventDate.equals(context.aSinglePass.getEventDate().toString())));
-        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.passOption);
+        assertEquals(1, response.getBody().passes.size());
+        assertEquals(context.aSinglePass.getId(), response.getBody().passes.get(0).passNumber);
+        assertTrue(response.getBody().passes.stream().anyMatch(pass -> pass.eventDate.equals(context.aSinglePass.getEventDate().toString())));
+        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.get(0).passOption);
     }
 
     @Test
     public void postOrderController_shouldReturnHttpErrorBadRequest_whenEventDateIsInvalid() {
-        OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.aSinglePassOrder));
+        OrderWithPassesAsEventDatesDto orderDto = context.aSinglePassOrderDto;
         context.setUp();
         orderDto.passes.eventDates = PassEndToEndContext.SOME_INVALID_EVENT_DATES;
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.addOrder(orderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatusCodeValue());
     }
 
     @Test
     public void postOrderController_shouldReturnHttpErrorBadRequest_whenEventDateIsNotNull_andOptionIsPackage() {
-        OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.aPackagePassOrder));
         context.setUp();
+        OrderWithPassesAsEventDatesDto orderDto = context.aPackagePassOrderDto;
         orderDto.passes.passOption = PassConstants.Options.PACKAGE_NAME;
         orderDto.passes.eventDates = PassEndToEndContext.MULTIPLE_VALID_EVENT_DATES;
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.addOrder(orderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatusCodeValue());
     }
 
     @Test
     public void postOrderController_shouldCreatePass() {
-        OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.aSinglePassOrder));
+        OrderWithPassesAsEventDatesDto orderDto = context.aSinglePassOrderDto;
         context.setUp();
         orderDto.passes.eventDates = PassEndToEndContext.MULTIPLE_VALID_EVENT_DATES;
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.addOrder(orderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatusCodeValue());
         assertNotNull(response.getBody().passes);
@@ -107,10 +109,10 @@ public class PassEndToEndTest {
 
     @Test
     public void postOrderController_shouldCreateMutiplePass_whenManyEventDatesAreSent() {
-        OrderDto orderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.aSinglePassOrder));
+        OrderWithPassesAsEventDatesDto orderDto = context.aMultipleSinglePassOrderDto;
         context.setUp();
 
-        ResponseEntity<OrderDto> response = (ResponseEntity<OrderDto>) context.orderController.addOrder(orderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatusCodeValue());
         assertNotNull(response.getBody().passes);
@@ -118,17 +120,19 @@ public class PassEndToEndTest {
 
     @Test
     public void postOrderController_shouldReturnUniquePasseNumbers() {
-        OrderDto anOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.aSinglePassOrder));
-        OrderDto anotherOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anotherSinglePassOrder));
+        OrderWithPassesAsEventDatesDto anOrderDto = context.aSinglePassOrderDto;
+        OrderWithPassesAsEventDatesDto anotherOrderDto = context.anotherSinglePassOrderDto;
         context.setUp();
 
-        ResponseEntity<OrderDto> aResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anOrderDto);
-        ResponseEntity<OrderDto> anotherResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anotherOrderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(anOrderDto);
+        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(anotherOrderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), aResponse.getStatusCodeValue());
         assertEquals(Response.Status.CREATED.getStatusCode(), anotherResponse.getStatusCodeValue());
-        assertNotNull(aResponse.getBody().passes.passNumber);
-        assertNotNull(anotherResponse.getBody().passes.passNumber);
-        assertNotEquals(aResponse.getBody().passes.passNumber, anotherResponse.getBody().passes.passNumber);
+        assertNotNull(aResponse.getBody().passes);
+        assertNotNull(anotherResponse.getBody().passes);
+        for (PassDto pass : aResponse.getBody().passes) {
+            assertFalse(anotherResponse.getBody().passes.stream().anyMatch(anotherPass -> anotherPass.passNumber.equals(pass.passNumber)));
+        }
     }
 }

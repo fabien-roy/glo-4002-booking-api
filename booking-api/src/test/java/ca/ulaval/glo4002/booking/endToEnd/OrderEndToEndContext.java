@@ -5,6 +5,8 @@ import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
@@ -13,6 +15,7 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
 import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
 import ca.ulaval.glo4002.booking.services.*;
+import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,6 +33,7 @@ public class OrderEndToEndContext {
     private static final LocalDateTime ANOTHER_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME.plusDays(1);
     private static final LocalDate A_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(1L);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
+    private static final String A_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
     public static final Long AN_INVALID_ORDER_ID = -1L;
 
     private EntityManager entityManager;
@@ -37,6 +41,10 @@ public class OrderEndToEndContext {
     public OrderEntity anotherOrder;
     public PassEntity aPass;
     public PassEntity anotherPass;
+    public OrderWithPassesAsEventDatesDto anOrderDto = new OrderWithPassesAsEventDatesDto();
+    public OrderWithPassesAsEventDatesDto anotherOrderDto = new OrderWithPassesAsEventDatesDto();
+    public PassesDto aPassDto = new PassesDto();
+    public PassesDto anotherPassDto = new PassesDto();
     public OrderParser orderParser = new OrderParser();
     public Long anOrderId = 1L;
     public Long anotherOrderId = 2L;
@@ -73,6 +81,22 @@ public class OrderEndToEndContext {
                 A_VENDOR_ID,
                 new ArrayList<>(Collections.singletonList(anotherPass))
         );
+
+        aPassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;
+        aPassDto.passOption = PassConstants.Options.SINGLE_NAME;
+        aPassDto.eventDates = new ArrayList<>(Collections.singletonList(A_VALID_EVENT_DATE.toString()));
+
+        anotherPassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;
+        anotherPassDto.passOption = PassConstants.Options.SINGLE_NAME;
+        anotherPassDto.eventDates = new ArrayList<>(Collections.singletonList(A_VALID_EVENT_DATE.toString()));
+
+        anOrderDto.orderDate = FestivalDateUtil.toZonedDateTimeString(AN_ORDER_DATE);
+        anOrderDto.vendorCode = A_VENDOR_CODE;
+        anOrderDto.passes = aPassDto;
+
+        anotherOrderDto.orderDate = FestivalDateUtil.toZonedDateTimeString(ANOTHER_ORDER_DATE);
+        anotherOrderDto.vendorCode = A_VENDOR_CODE;
+        anotherOrderDto.passes = anotherPassDto;
     }
 
     private void setUpEntityManager() {
