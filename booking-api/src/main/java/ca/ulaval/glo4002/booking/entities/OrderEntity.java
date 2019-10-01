@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.booking.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Orders")
 public class OrderEntity {
@@ -12,8 +14,9 @@ public class OrderEntity {
 	public Long id;
     public LocalDateTime orderDate;
     public Long vendorId;
-    // @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    // List<OrderItemEntity> orderItems = new ArrayList<>();
+    @OneToMany()
+    @JoinColumn(name="order_id", nullable = false)
+    public List<OrderItemEntity> orderItems = new ArrayList<>();
 
     public OrderEntity() {
 

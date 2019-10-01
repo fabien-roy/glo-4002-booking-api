@@ -5,16 +5,11 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Entity(name = "Passes")
-public class PassEntity {
+public class PassEntity extends OrderItemEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
     public Long categoryId;
     public Long optionId;
     public LocalDate eventDate;
-    // @OneToOne(mappedBy = "pass")
-    // public OrderItemEntity orderItem;
 
     public PassEntity() {
     }
