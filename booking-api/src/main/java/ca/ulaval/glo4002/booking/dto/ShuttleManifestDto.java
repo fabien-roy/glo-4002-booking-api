@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ShuttleManifestDto {
 	
-	private String date;
-	private List<TripDto> arrivals;
-	private List<TripDto> departures;
+	public String date;
+	public List<TripDto> arrivals;
+	public List<TripDto> departures;
 }
