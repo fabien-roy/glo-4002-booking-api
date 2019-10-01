@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class OrderEndToEndContext {
 
@@ -40,12 +41,14 @@ public class OrderEndToEndContext {
     private void setUpOrders() {
         anOrder = new OrderEntity(
                 AN_ORDER_DATE,
-                A_VENDOR_ID
+                A_VENDOR_ID,
+                new ArrayList<>()
         );
 
         anotherOrder = new OrderEntity(
                 ANOTHER_ORDER_DATE,
-                A_VENDOR_ID
+                A_VENDOR_ID,
+                new ArrayList<>()
         );
     }
 
@@ -68,18 +71,18 @@ public class OrderEndToEndContext {
     }
 
     public OrderEndToEndContext withAnOrder() {
-        anOrderId = addOrder(anOrder, AN_ORDER_DATE);
+        anOrderId = addOrder(anOrder);
 
         return this;
     }
 
     public OrderEndToEndContext withAnotherOrder() {
-        anotherOrderId = addOrder(anotherOrder, ANOTHER_ORDER_DATE);
+        anotherOrderId = addOrder(anotherOrder);
 
         return this;
     }
 
-    public Long addOrder(OrderEntity orderEntity, LocalDateTime orderDate) {
+    public Long addOrder(OrderEntity orderEntity) {
         final Long[] orderId = new Long[1];
 
         entityManager.getTransaction().begin();
@@ -87,7 +90,7 @@ public class OrderEndToEndContext {
         entityManager.persist(orderEntity);
         entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OrderEntity.class).getResultList()
                 .forEach(currentOrderEntity -> {
-            if (currentOrderEntity.getOrderDate().equals(orderDate)) {
+            if (currentOrderEntity.getOrderDate().equals(orderEntity.getOrderDate())) {
                 orderId[0] = currentOrderEntity.getId();
             }
         });

@@ -24,9 +24,10 @@ public class OrderEntity {
 
     }
 
-    public OrderEntity(LocalDateTime orderDate, Long vendorId) {
+    public OrderEntity(LocalDateTime orderDate, Long vendorId, List<OrderItemEntity> orderItems) {
         this.orderDate = orderDate;
         this.vendorId = vendorId;
+        this.orderItems = orderItems;
     }
 
     public OrderEntity(Long id, LocalDateTime orderDate, Long vendorId, List<OrderItemEntity> orderItems) {
@@ -54,5 +55,9 @@ public class OrderEntity {
 
     public List<? extends OrderItemEntity> getOrderItems() {
         return orderItems;
+    }
+
+    public void addToOrderItems(OrderItemEntity orderItem) {
+        orderItems.add(orderItem);
     }
 }

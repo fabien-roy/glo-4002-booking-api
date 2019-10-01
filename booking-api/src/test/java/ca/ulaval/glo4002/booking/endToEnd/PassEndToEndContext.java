@@ -19,44 +19,85 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class PassEndToEndContext {
 
     // Copied from old file
-    private static final LocalDate A_VALID_PASS_DATE = DateConstants.START_DATE.plusDays(1L);
-    private static final LocalDate ANOTHER_VALID_PASS_DATE = DateConstants.START_DATE.plusDays(2L);
+    private static final LocalDate A_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(1L);
+    private static final LocalDate ANOTHER_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(2L);
+    private static final LocalDate A_INVALID_EVENT_DATE = DateConstants.START_DATE.minusDays(1L);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     private static final LocalDateTime A_VALID_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
-    PassEntity aSinglePass = new PassEntity(PassConstants.Categories.SUPERNOVA_ID, PassConstants.Options.SINGLE_ID, A_VALID_PASS_DATE);
-    PassEntity anotherSinglePass = new PassEntity(PassConstants.Categories.SUPERGIANT_ID, PassConstants.Options.SINGLE_ID, ANOTHER_VALID_PASS_DATE);
-    OrderEntity anOrderEntity = new OrderEntity(A_VALID_ORDER_DATE, A_VENDOR_ID);
 
     private static final LocalDateTime AN_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
     private static final LocalDateTime ANOTHER_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME.plusDays(1);
-    public static final Long AN_INVALID_ORDER_ID = -1L;
+    public static final List<String> MULTIPLE_VALID_EVENT_DATES = new ArrayList<>(Arrays.asList(
+            A_VALID_EVENT_DATE.toString(),
+            ANOTHER_VALID_EVENT_DATE.toString()
+    ));
+    public static final List<String> SOME_INVALID_EVENT_DATES = new ArrayList<>(Collections.singletonList(
+            A_INVALID_EVENT_DATE.toString()
+    ));
 
     private EntityManager entityManager;
-    public OrderEntity anOrder;
-    public OrderEntity anotherOrder;
+    public PassEntity aSinglePass;
+    public PassEntity anotherSinglePass;
+    public PassEntity aPackagePass;
+    public OrderEntity aSinglePassOrder;
+    public OrderEntity anotherSinglePassOrder;
+    public OrderEntity aPackagePassOrder;
     public OrderParser orderParser = new OrderParser();
-    public Long anOrderId = 1L;
-    public Long anotherOrderId = 2L;
+    public Long aSinglePassOrderId = 1L;
+    public Long anotherSinglePassOrderId = 2L;
+    public Long aPackagePassOrderId = 3L;
+    public Long aSinglePassId = 1L;
+    public Long anotherSinglePassId = 2L;
+    public Long aPackagePassId = 3L;
     public OrderController orderController;
 
     public PassEndToEndContext() {
-        setUpOrders();
+        Objects();
         setUpEntityManager();
     }
 
-    private void setUpOrders() {
-        anOrder = new OrderEntity(
-                AN_ORDER_DATE,
-                A_VENDOR_ID
+    private void Objects() {
+        aSinglePass = new PassEntity(
+                PassConstants.Categories.SUPERNOVA_ID,
+                PassConstants.Options.SINGLE_ID,
+                A_VALID_EVENT_DATE
         );
 
-        anotherOrder = new OrderEntity(
+        anotherSinglePass = new PassEntity(
+                PassConstants.Categories.SUPERGIANT_ID,
+                PassConstants.Options.SINGLE_ID,
+                ANOTHER_VALID_EVENT_DATE
+        );
+
+        aPackagePass = new PassEntity(
+                PassConstants.Categories.SUPERGIANT_ID,
+                PassConstants.Options.PACKAGE_ID
+        );
+
+        aSinglePassOrder = new OrderEntity(
+                AN_ORDER_DATE,
+                A_VENDOR_ID,
+                new ArrayList<>(Collections.singletonList(aSinglePass))
+        );
+
+        anotherSinglePassOrder = new OrderEntity(
                 ANOTHER_ORDER_DATE,
-                A_VENDOR_ID
+                A_VENDOR_ID,
+                new ArrayList<>(Collections.singletonList(anotherSinglePass))
+        );
+
+        aPackagePassOrder = new OrderEntity(
+                AN_ORDER_DATE,
+                A_VENDOR_ID,
+                new ArrayList<>(Collections.singletonList(aPackagePass))
         );
     }
 
@@ -78,19 +119,46 @@ public class PassEndToEndContext {
         return this;
     }
 
-    public PassEndToEndContext withAnOrder() {
-        anOrderId = addOrder(anOrder, AN_ORDER_DATE);
+    public PassEndToEndContext withASinglePassOrder() {
+        aSinglePassId = addPass(aSinglePass);
+        aSinglePass.setId(aSinglePassId);
+        aSinglePassOrder.addToOrderItems(aSinglePass);
+        aSinglePassOrderId = addOrder(aSinglePassOrder);
 
         return this;
     }
 
-    public PassEndToEndContext withAnotherOrder() {
-        anotherOrderId = addOrder(anotherOrder, ANOTHER_ORDER_DATE);
+    public PassEndToEndContext withAnotherSinglePassOrder() {
+        anotherSinglePassId = addPass(anotherSinglePass);
+        anotherSinglePass.setId(anotherSinglePassId);
+        anotherSinglePassOrder.addToOrderItems(anotherSinglePass);
+        anotherSinglePassOrderId = addOrder(anotherSinglePassOrder);
 
         return this;
     }
 
-    public Long addOrder(OrderEntity orderEntity, LocalDateTime orderDate) {
+    public PassEndToEndContext withMultipleSinglePassOrder() {
+        aSinglePassId = addPass(aSinglePass);
+        aSinglePass.setId(aSinglePassId);
+        anotherSinglePassId = addPass(anotherSinglePass);
+        anotherSinglePass.setId(anotherSinglePassId);
+        aSinglePassOrder.addToOrderItems(aSinglePass);
+        anotherSinglePassOrder.addToOrderItems(anotherSinglePass);
+        aSinglePassOrderId = addOrder(aSinglePassOrder);
+
+        return this;
+    }
+
+    public PassEndToEndContext withAPackagePassOrder() {
+        aPackagePassId = addPass(aPackagePass);
+        aPackagePass.setId(aPackagePassId);
+        aPackagePassOrder.addToOrderItems(aPackagePass);
+        aPackagePassOrderId = addOrder(aPackagePassOrder);
+
+        return this;
+    }
+
+    public Long addOrder(OrderEntity orderEntity) {
         final Long[] orderId = new Long[1];
 
         entityManager.getTransaction().begin();
@@ -98,7 +166,7 @@ public class PassEndToEndContext {
         entityManager.persist(orderEntity);
         entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OrderEntity.class).getResultList()
                 .forEach(currentOrderEntity -> {
-            if (currentOrderEntity.getOrderDate().equals(orderDate)) {
+            if (currentOrderEntity.getOrderDate().equals(orderEntity.getOrderDate())) {
                 orderId[0] = currentOrderEntity.getId();
             }
         });
@@ -106,4 +174,23 @@ public class PassEndToEndContext {
         entityManager.getTransaction().commit();
 
         return orderId[0];
-    }}
+    }
+
+    public Long addPass(PassEntity passEntity) {
+        final Long[] passId = new Long[1];
+
+        entityManager.getTransaction().begin();
+
+        entityManager.persist(passEntity);
+        entityManager.createQuery(RepositoryConstants.PASS_FIND_ALL_QUERY, PassEntity.class).getResultList()
+                .forEach(currentPassEntity -> {
+                    if (currentPassEntity.getEventDate().equals(passEntity.getEventDate())) {
+                        passId[0] = currentPassEntity.getId();
+                    }
+                });
+
+        entityManager.getTransaction().commit();
+
+        return passId[0];
+    }
+}
