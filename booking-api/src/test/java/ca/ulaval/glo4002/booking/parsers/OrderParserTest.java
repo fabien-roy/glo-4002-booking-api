@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.builders.VendorBuilder;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
-import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.VendorNotFoundException;
@@ -104,18 +104,18 @@ class OrderParserTest {
 
         Order parsedOrder = subject.parseEntity(entity);
 
-        assertEquals(entity.id, parsedOrder.getId());
-        assertEquals(entity.vendorId, parsedOrder.getVendor().getId());
-        assertEquals(entity.orderDate, parsedOrder.getOrderDate());
+        assertEquals(entity.getId(), parsedOrder.getId());
+        assertEquals(entity.getVendorId(), parsedOrder.getVendor().getId());
+        assertEquals(entity.getOrderDate(), parsedOrder.getOrderDate());
     }
 
     @Test
     void whenParsingToEntity_entityShouldBeValid() {
         OrderEntity entity = subject.toEntity(order);
 
-        assertEquals(order.getId(), entity.id);
-        assertEquals(order.getVendor().getId(), entity.vendorId);
-        assertEquals(order.getOrderDate(), entity.orderDate);
+        assertEquals(order.getId(), entity.getId());
+        assertEquals(order.getVendor().getId(), entity.getVendorId());
+        assertEquals(order.getOrderDate(), entity.getOrderDate());
     }
 
     @Test

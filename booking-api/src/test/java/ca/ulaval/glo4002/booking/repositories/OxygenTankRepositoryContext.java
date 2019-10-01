@@ -70,7 +70,7 @@ public class OxygenTankRepositoryContext {
 	}
 
 	public void setUpEntityManagerForSave() {
-		nonExistentOxygenTank.id = null;
+		nonExistentOxygenTank.setId(null);
 		when(entityManager.find(OxygenTankEntity.class, NON_EXISTENT_OXYGEN_ID)).thenReturn(nonExistentOxygenTank);
 	}
 }

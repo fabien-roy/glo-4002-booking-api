@@ -62,7 +62,7 @@ public class OrderRepositoryContext {
     }
 
     public void setUpEntityManagerForSave() {
-        aNonExistentOrder.id = null;
+        aNonExistentOrder.setId(null);
         when(entityManager.find(OrderEntity.class, A_NON_EXISTANT_ORDER_ID)).thenReturn(aNonExistentOrder);
     }
 }

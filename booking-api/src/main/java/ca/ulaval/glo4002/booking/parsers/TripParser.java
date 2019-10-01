@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.constants.TripConstants;
-import ca.ulaval.glo4002.booking.domainObjects.trips.ArrivalTrip;
-import ca.ulaval.glo4002.booking.domainObjects.trips.DepartureTrip;
-import ca.ulaval.glo4002.booking.domainObjects.trips.Trip;
+import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
+import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
+import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 import ca.ulaval.glo4002.booking.entities.TripEntity;
 
 import java.util.ArrayList;

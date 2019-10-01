@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domainObjects.report.Inventory;
+import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
 
 import java.util.List;

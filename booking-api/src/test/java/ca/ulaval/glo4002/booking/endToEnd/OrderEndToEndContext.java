@@ -89,8 +89,8 @@ public class OrderEndToEndContext {
         entityManager.persist(orderEntity);
         entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OrderEntity.class).getResultList()
                 .forEach(currentOrderEntity -> {
-            if (currentOrderEntity.orderDate.equals(orderDate)) {
-                orderId[0] = currentOrderEntity.id;
+            if (currentOrderEntity.getOrderDate().equals(orderDate)) {
+                orderId[0] = currentOrderEntity.getId();
             }
         });
 

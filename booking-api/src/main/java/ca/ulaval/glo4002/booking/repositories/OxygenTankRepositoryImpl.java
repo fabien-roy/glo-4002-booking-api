@@ -29,7 +29,7 @@ public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 
 	@Override
 	public <S extends OxygenTankEntity> S save(S oxygenTank) {
-		if (oxygenTank.id == null) {
+		if (oxygenTank.getId() == null) {
 			entityManager.persist(oxygenTank);
 		} else {
 			throw new OrderAlreadyCreatedException();

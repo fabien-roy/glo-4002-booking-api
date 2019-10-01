@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domainObjects.report.History;
+import ca.ulaval.glo4002.booking.domainobjects.report.History;
 import ca.ulaval.glo4002.booking.dto.HistoryItemDto;
 
 import java.util.List;

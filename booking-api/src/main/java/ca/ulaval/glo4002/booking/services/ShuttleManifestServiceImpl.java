@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.ShuttleManifest;
-import ca.ulaval.glo4002.booking.domainObjects.trips.ArrivalTrip;
-import ca.ulaval.glo4002.booking.domainObjects.trips.DepartureTrip;
-import ca.ulaval.glo4002.booking.domainObjects.trips.Trip;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
+import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
+import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 import ca.ulaval.glo4002.booking.parsers.TripParser;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 

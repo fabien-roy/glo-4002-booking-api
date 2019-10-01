@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 import ca.ulaval.glo4002.booking.parsers.ShuttleManifestParser;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

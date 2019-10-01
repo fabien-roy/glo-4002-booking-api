@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 
 public class OxygenTankParser implements EntityParser<OxygenTank, OxygenTankEntity> {
@@ -11,9 +11,9 @@ public class OxygenTankParser implements EntityParser<OxygenTank, OxygenTankEnti
 
 	@Override
 	public OxygenTank parseEntity(OxygenTankEntity entity) {
-		OxygenCategory category = oxygenCategoryBuilder.buildById(entity.categoryId);
+		OxygenCategory category = oxygenCategoryBuilder.buildById(entity.getCategoryId());
 
-		return new OxygenTank(category, entity.requestDate);
+		return new OxygenTank(category, entity.getRequestDate());
 	}
 
 	@Override

@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.AOxygenCategory;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.BOxygenCategory;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.EOxygenCategory;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.AOxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.BOxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.EOxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 
 public class OxygenCategoryBuilder implements Builder<OxygenCategory> {
@@ -25,14 +25,15 @@ public class OxygenCategoryBuilder implements Builder<OxygenCategory> {
     }
 
     public OxygenCategory buildByName(String name) {
-        if (name.equals(OxygenConstants.Categories.E_NAME)) {
-            return buildEOxygenCategory();
-        } else if (name.equals(OxygenConstants.Categories.B_NAME)) {
-            return buildBOxygenCategory();
-        } else if (name.equals(OxygenConstants.Categories.A_NAME)) {
-            return buildAOxygenCategory();
-        } else {
-            throw new OxygenCategoryNotFoundException();
+        switch (name) {
+            case OxygenConstants.Categories.E_NAME:
+                return buildEOxygenCategory();
+            case OxygenConstants.Categories.B_NAME:
+                return buildBOxygenCategory();
+            case OxygenConstants.Categories.A_NAME:
+                return buildAOxygenCategory();
+            default:
+                throw new OxygenCategoryNotFoundException();
         }
     }
 

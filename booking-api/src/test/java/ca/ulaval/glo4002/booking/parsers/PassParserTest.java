@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
@@ -171,20 +171,20 @@ class PassParserTest {
 
         Pass parsedPass = subject.parseEntity(entity);
 
-        assertEquals(entity.id, parsedPass.getId());
-        assertEquals(entity.categoryId, parsedPass.getCategory().getId());
-        assertEquals(entity.optionId, parsedPass.getOption().getId());
-        assertEquals(entity.eventDate, parsedPass.getEventDate());
+        assertEquals(entity.getId(), parsedPass.getId());
+        assertEquals(entity.getCategoryId(), parsedPass.getCategory().getId());
+        assertEquals(entity.getOptionId(), parsedPass.getOption().getId());
+        assertEquals(entity.getEventDate(), parsedPass.getEventDate());
     }
 
     @Test
     void whenParsingToEntity_entityShouldBeValid() {
         PassEntity entity = subject.toEntity(pass);
 
-        assertEquals(pass.getId(), entity.id);
-        assertEquals(pass.getCategory().getId(), entity.categoryId);
-        assertEquals(pass.getOption().getId(), entity.optionId);
-        assertEquals(pass.getEventDate(), entity.eventDate);
+        assertEquals(pass.getId(), entity.getId());
+        assertEquals(pass.getCategory().getId(), entity.getCategoryId());
+        assertEquals(pass.getOption().getId(), entity.getOptionId());
+        assertEquals(pass.getEventDate(), entity.getEventDate());
     }
 
     @Test

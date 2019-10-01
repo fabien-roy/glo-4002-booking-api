@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.PassParser;

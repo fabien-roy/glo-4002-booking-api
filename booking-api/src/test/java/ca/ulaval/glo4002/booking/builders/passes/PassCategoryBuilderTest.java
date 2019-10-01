@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.builders.passes;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

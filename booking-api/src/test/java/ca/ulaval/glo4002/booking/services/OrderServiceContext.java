@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
-import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;

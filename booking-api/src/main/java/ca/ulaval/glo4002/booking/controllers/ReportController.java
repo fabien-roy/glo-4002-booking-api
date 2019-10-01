@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainObjects.report.Report;
+import ca.ulaval.glo4002.booking.domainobjects.report.Report;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
 import ca.ulaval.glo4002.booking.services.ReportServiceImpl;

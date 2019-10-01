@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 
 import java.time.LocalDate;
 

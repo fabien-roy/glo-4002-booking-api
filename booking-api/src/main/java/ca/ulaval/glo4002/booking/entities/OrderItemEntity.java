@@ -7,7 +7,7 @@ public class OrderItemEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long id;
+	private Long id;
     // @ManyToOne
     // OrderEntity order;
     // @OneToOne(mappedBy = "orderItem")
@@ -20,5 +20,9 @@ public class OrderItemEntity {
     public OrderItemEntity(Long id, PassEntity pass) {
         this.id = id;
         // this.pass = pass;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

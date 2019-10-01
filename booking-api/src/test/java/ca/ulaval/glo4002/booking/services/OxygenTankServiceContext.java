@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.parsers.OxygenTankParser;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
@@ -59,11 +59,11 @@ class OxygenTankServiceContext {
 		);
 
 		oxygenTankAEntity = parser.toEntity(oxygenTankA);
-		oxygenTankAId = oxygenTankAEntity.id;
+		oxygenTankAId = oxygenTankAEntity.getId();
 		oxygenTankBEntity = parser.toEntity(oxygenTankB);
-		oxygenTankBId = oxygenTankBEntity.id;
+		oxygenTankBId = oxygenTankBEntity.getId();
 		oxygenTankEEntity = parser.toEntity(oxygenTankE);
-		oxygenTankEId = oxygenTankEEntity.id;
+		oxygenTankEId = oxygenTankEEntity.getId();
 		oxygenTankNonExistentEntity = parser.toEntity(nonExistentOxygenTank);
 	}
 

@@ -11,9 +11,9 @@ public class OxygenTankEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long id;
-	public Long categoryId;
-	public LocalDate requestDate;
+	private Long id;
+	private Long categoryId;
+	private LocalDate requestDate;
 
 	public OxygenTankEntity() {
 
@@ -28,5 +28,21 @@ public class OxygenTankEntity {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.requestDate = requestDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public LocalDate getRequestDate() {
+		return requestDate;
 	}
 }

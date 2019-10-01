@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 
 import java.time.LocalDate;
 

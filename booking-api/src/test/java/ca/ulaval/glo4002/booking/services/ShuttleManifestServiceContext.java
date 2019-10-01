@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
-import ca.ulaval.glo4002.booking.domainObjects.shuttles.Passenger;
-import ca.ulaval.glo4002.booking.domainObjects.trips.ArrivalTrip;
-import ca.ulaval.glo4002.booking.domainObjects.trips.DepartureTrip;
-import ca.ulaval.glo4002.booking.domainObjects.trips.Trip;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
+import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
+import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 import ca.ulaval.glo4002.booking.entities.TripEntity;
 import ca.ulaval.glo4002.booking.parsers.TripParser;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;

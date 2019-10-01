@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainObjects.orders.Order;
+import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainObjects.report.Inventory;
+import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 
 public class InventoryServiceImpl implements InventoryService {
 

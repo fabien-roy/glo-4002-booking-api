@@ -45,7 +45,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public <S extends OrderEntity> S save(S order) {
-        if (order.id == null) {
+        if (order.getId() == null) {
             entityManager.persist(order);
         } else {
             throw new OrderAlreadyCreatedException();

@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.parsers.PassParser;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;

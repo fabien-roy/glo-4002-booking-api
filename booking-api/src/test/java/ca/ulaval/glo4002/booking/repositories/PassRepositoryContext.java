@@ -64,7 +64,7 @@ public class PassRepositoryContext {
     }
 
     public void setUpEntityManagerForSaveAll() {
-        aNonExistentPass.id = null;
+        aNonExistentPass.setId(null);
         when(entityManager.find(PassEntity.class, A_NON_EXISTANT_PASS_ID)).thenReturn(aNonExistentPass);
     }
 }

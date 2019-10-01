@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
