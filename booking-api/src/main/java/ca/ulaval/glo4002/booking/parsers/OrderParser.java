@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
@@ -62,12 +63,14 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, DtoParser<
         passesDto.passCategory = passes.get(0).getCategory().getName();
         passesDto.passOption = passes.get(0).getOption().getName();
 
-        passesDto.eventDates = new ArrayList<>();
-        passes.forEach(pass -> {
-            if (pass.getEventDate() != null) {
-                passesDto.eventDates.add(pass.getEventDate().toString());
-            }
-        });
+        if (passes.get(0).getOption().getId().equals(PassConstants.Options.SINGLE_ID)) {
+            passesDto.eventDates = new ArrayList<>();
+            passes.forEach(pass -> {
+                if (pass.getEventDate() != null) {
+                    passesDto.eventDates.add(pass.getEventDate().toString());
+                }
+            });
+        }
 
         dto.passes = passesDto;
 

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,14 +30,17 @@ class OrderParserTest {
 
     private static final Long A_VALID_ID = 1L;
     private final static Long A_PASS_NUMBER = 1L;
+    private final static Long ANOTHER_PASS_NUMBER = 2L;
     private final static String A_PASS_CATEGORY = PassConstants.Categories.SUPERNOVA_NAME;
-    private final static String A_PASS_OPTION = PassConstants.Options.SINGLE_NAME;
+    private final static String SINGLE_PASS_OPTION = PassConstants.Options.SINGLE_NAME;
+    private final static String PACKAGE_PASS_OPTION = PassConstants.Options.PACKAGE_NAME;
     private static final String A_DATE_BEFORE_ORDER_START_DATE_TIME = DateConstants.ORDER_START_DATE_TIME.minusDays(1).toString();
     private static final String A_DATE_AFTER_ORDER_START_END_TIME = DateConstants.ORDER_END_DATE_TIME.plusDays(1).toString();
     private static final String AN_INVALID_VENDOR_CODE = "An invalid vendor code";
     private static final String A_VALID_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
     private static final LocalDateTime A_VALID_DATE = DateConstants.ORDER_START_DATE_TIME;
     private final static LocalDate SOME_EVENT_DATE = DateConstants.START_DATE;
+    private final static LocalDate SOME_OTHER_EVENT_DATE = DateConstants.START_DATE.plusDays(1);
     private OrderParser subject;
     private OrderDto orderDto = new OrderDto();
     private Order order;
@@ -53,7 +57,7 @@ class OrderParserTest {
         PassesDto passesDto = new PassesDto();
         passesDto.passNumber = A_PASS_NUMBER;
         passesDto.passCategory = A_PASS_CATEGORY;
-        passesDto.passOption = A_PASS_OPTION;
+        passesDto.passOption = SINGLE_PASS_OPTION;
         passesDto.eventDates = new ArrayList<>(Collections.singletonList(SOME_EVENT_DATE.toString()));
         orderDto.passes = passesDto;
 
@@ -64,7 +68,7 @@ class OrderParserTest {
                 new ArrayList<>(Collections.singletonList(new Pass(
                         A_PASS_NUMBER,
                         categoryBuilder.buildByName(A_PASS_CATEGORY),
-                        optionBuilder.buildByName(A_PASS_OPTION),
+                        optionBuilder.buildByName(SINGLE_PASS_OPTION),
                         SOME_EVENT_DATE
                 )))
         );
@@ -159,10 +163,52 @@ class OrderParserTest {
         assertEquals(order.getId(), dto.orderNumber);
         assertEquals(order.getVendor().getCode(), dto.vendorCode);
         assertEquals(order.getOrderDate().toString(), A_VALID_DATE.toString());
+        assertEquals(1, dto.passes.eventDates.size());
         order.getOrderItems().forEach(orderItem -> {
             if (orderItem instanceof Pass) {
                 assertTrue(order.getOrderItems().stream().anyMatch(pass -> ((Pass) pass).getEventDate().toString().equals(dto.passes.eventDates.get(0))));
             }
         });
+    }
+
+    @Test
+    void parseToDto_passEventDateShouldBeMultiple_whenOrderHasMultiplePasses() {
+        order.setOrderItems(new ArrayList<>(Arrays.asList(
+                new Pass(
+                        A_PASS_NUMBER,
+                        categoryBuilder.buildByName(A_PASS_CATEGORY),
+                        optionBuilder.buildByName(SINGLE_PASS_OPTION),
+                        SOME_EVENT_DATE
+                ),
+                new Pass(
+                        ANOTHER_PASS_NUMBER,
+                        categoryBuilder.buildByName(A_PASS_CATEGORY),
+                        optionBuilder.buildByName(SINGLE_PASS_OPTION),
+                        SOME_OTHER_EVENT_DATE
+                )
+        )));
+
+        OrderDto dto = subject.toDto(order);
+
+        assertEquals(2, dto.passes.eventDates.size());
+        order.getOrderItems().forEach(orderItem -> {
+            if (orderItem instanceof Pass) {
+                assertTrue(order.getOrderItems().stream().anyMatch(pass -> ((Pass) pass).getEventDate().toString().equals(dto.passes.eventDates.get(0))));
+            }
+        });
+    }
+
+    @Test
+    void parseToDto_passEventDateShouldBeNull_whenOrderHasPackagePass() {
+        order.setOrderItems(new ArrayList<>(Collections.singletonList(new Pass(
+                        A_PASS_NUMBER,
+                        categoryBuilder.buildByName(A_PASS_CATEGORY),
+                        optionBuilder.buildByName(PACKAGE_PASS_OPTION)
+                )
+        )));
+
+        OrderDto dto = subject.toDto(order);
+
+        assertNull(dto.passes.eventDates);
     }
 }

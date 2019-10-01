@@ -43,7 +43,7 @@ public class PassEndToEndTest {
         assertEquals(2, response.getBody().passes.eventDates.size());
         assertTrue(response.getBody().passes.eventDates.stream().anyMatch(eventDate -> eventDate.equals(context.aSinglePass.getEventDate().toString())));
         assertTrue(response.getBody().passes.eventDates.stream().anyMatch(eventDate -> eventDate.equals(context.anotherSinglePass.getEventDate().toString())));
-        assertEquals(PassConstants.Options.PACKAGE_NAME, response.getBody().passes.passOption);
+        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.passOption);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class PassEndToEndTest {
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertNull(response.getBody().passes.eventDates);
-        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.passOption);
+        assertEquals(PassConstants.Options.PACKAGE_NAME, response.getBody().passes.passOption);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class PassEndToEndTest {
         assertEquals(1, response.getBody().passes.eventDates.size());
         assertEquals(context.aSinglePass.getId(), response.getBody().passes.passNumber);
         assertTrue(response.getBody().passes.eventDates.stream().anyMatch(eventDate -> eventDate.equals(context.aSinglePass.getEventDate().toString())));
-        assertEquals(PassConstants.Options.PACKAGE_NAME, response.getBody().passes.passOption);
+        assertEquals(PassConstants.Options.SINGLE_NAME, response.getBody().passes.passOption);
     }
 
     @Test
