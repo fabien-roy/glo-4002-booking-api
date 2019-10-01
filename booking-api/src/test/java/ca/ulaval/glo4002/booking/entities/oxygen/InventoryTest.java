@@ -3,21 +3,21 @@ package ca.ulaval.glo4002.booking.entities.oxygen;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants.Categories;
 
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domainObjects.report.Inventory;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OxygenTankInventoryTest {
+public class InventoryTest {
 
-    private OxygenTankInventory subject;
+    private Inventory subject;
     private final static Long AN_INVALID_CATEGORY = -1L;
 
     @BeforeEach
     void setup() {
-        subject = new OxygenTankInventory();
+        subject = new Inventory();
     }
 
     @Test

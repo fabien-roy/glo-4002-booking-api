@@ -10,13 +10,13 @@ public class ShuttleManifestParser implements DtoParser<ShuttleManifest, Shuttle
 
 	@Override
 	public ShuttleManifest parseDto(ShuttleManifestDto dto) {
-		// TODO Auto-generated method stub
+	    // TODO
 		return null;
 	}
 
 	@Override
 	public ShuttleManifestDto toDto(ShuttleManifest shuttleManifest) {
-		// TODO Auto-generated method stub
+	    // TODO
 		return null;
 	}
 }

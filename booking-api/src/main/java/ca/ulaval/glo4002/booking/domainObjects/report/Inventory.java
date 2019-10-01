@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domainObjects.oxygen;
+package ca.ulaval.glo4002.booking.domainObjects.report;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
@@ -9,11 +9,12 @@ import java.util.Map;
 import static java.lang.Math.abs;
 import static java.util.Optional.ofNullable;
 
-public class OxygenTankInventory {
+public class Inventory {
+
     private Map<Long, Long> inventory = new HashMap<>();
     private Map<Long, Long> tankInUse = new HashMap<>();
 
-    public OxygenTankInventory() {
+    public Inventory() {
         inventory.put(OxygenConstants.Categories.E_ID, 0L);
         tankInUse.put(OxygenConstants.Categories.E_ID, 0L);
         inventory.put(OxygenConstants.Categories.B_ID, 0L);

@@ -3,12 +3,10 @@ package ca.ulaval.glo4002.booking.domainObjects.passes;
 import ca.ulaval.glo4002.booking.domainObjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.parsers.ParsableEntity;
 
 import java.time.LocalDate;
 
-public class Pass extends OrderItem implements ParsableEntity<PassEntity> {
+public class Pass extends OrderItem {
 
 	private Long id;
     private PassCategory category;

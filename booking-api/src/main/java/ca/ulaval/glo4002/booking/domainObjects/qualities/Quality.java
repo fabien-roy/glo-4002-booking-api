@@ -4,6 +4,7 @@ public abstract class Quality {
 
     protected Long id;
     protected String name;
+    protected Long oxygenTanksNeededPerDay;
 
     public Long getId() {
         return id;

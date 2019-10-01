@@ -1,12 +1,11 @@
 package ca.ulaval.glo4002.booking.domainObjects.orders;
 
 import ca.ulaval.glo4002.booking.domainObjects.vendors.Vendor;
-import ca.ulaval.glo4002.booking.parsers.ParsableEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Order implements ParsableEntity {
+public class Order {
 	
 	protected Long id;
     private LocalDateTime orderDate;

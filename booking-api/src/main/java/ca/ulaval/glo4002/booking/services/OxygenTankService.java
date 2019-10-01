@@ -1,27 +1,17 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.categories.OxygenCategory;
 
 import java.time.LocalDate;
 
-import static java.time.temporal.ChronoUnit.DAYS;
+public interface OxygenTankService extends Service<OxygenTank> {
 
-public class OxygenTankService {
+    OxygenCategory getOxygenCategoryForTimeTable(OxygenCategory category, LocalDate timeRequested);
 
-    public OxygenCategory getOxygenCategoryForTimeTable(OxygenCategory category, LocalDate timeRequested) {
-        Long timeToProduce = category.getProduction().getProductionTime().toDays();
-        LocalDate timeReady = timeRequested.plusDays(timeToProduce);
-        OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
+    OxygenTank save(OxygenTank oxygenTank);
 
-        if (timeReady.isBefore(FestivalConstants.Dates.START_DATE)) {
-            return category;
-        } else if(timeRequested.plus(10, DAYS).isBefore(FestivalConstants.Dates.START_DATE)){
-            return categoryBuilder.buildById(OxygenConstants.Categories.B_ID);
-        } else {
-        	return categoryBuilder.buildById(OxygenConstants.Categories.E_ID);
-        }
-    }
+    Iterable<OxygenTank> findAll();
+
+    OxygenTank findById(Long id);
 }
