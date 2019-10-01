@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.vendors.Vendor;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateTimeException;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateTimeException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 

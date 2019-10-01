@@ -22,7 +22,7 @@ public class ExceptionConstants {
 		public static final String CATEGORY_NOT_FOUND_MESSAGE = "Oxygen category not found";
 		public static final String PRODUCTION_NOT_FOUND_MESSAGE = "Oxygen production not found";
 		public static final String UNIT_TYPE_NOT_FOUND_MESSAGE = "Oxygen unit type not found";
-		public static final String DTO_INVALID_MESSAGE = "Invalid oxygen DTO";
+		public static final String TANK_DTO_INVALID_MESSAGE = "Invalid oxygen DTO";
 	}
 
 	public static class Order {

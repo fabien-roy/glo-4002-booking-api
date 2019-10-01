@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.util;
 
 import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateTimeException;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateTimeException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

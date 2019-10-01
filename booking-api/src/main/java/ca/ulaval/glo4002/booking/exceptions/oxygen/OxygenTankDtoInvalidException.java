@@ -7,8 +7,9 @@ import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class OxygenTankDtoInvalidExeption extends FestivalException {
-	public OxygenTankDtoInvalidExeption() {
-		super(ExceptionConstants.Oxygen.DTO_INVALID_MESSAGE);
+public class OxygenTankDtoInvalidException extends FestivalException {
+
+	public OxygenTankDtoInvalidException() {
+		super(ExceptionConstants.Oxygen.TANK_DTO_INVALID_MESSAGE);
 	}
 }

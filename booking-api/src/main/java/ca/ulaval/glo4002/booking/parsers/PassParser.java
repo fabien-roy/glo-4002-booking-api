@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.booking.domainobjects.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 

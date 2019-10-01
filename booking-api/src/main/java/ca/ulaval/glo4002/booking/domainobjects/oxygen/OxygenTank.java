@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.domainobjects.oxygen;
 
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
 import ca.ulaval.glo4002.booking.services.OxygenTankServiceImpl;
 
 import java.time.LocalDate;
