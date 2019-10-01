@@ -116,7 +116,6 @@ public class PassEndToEndTest {
         assertNotNull(response.getBody().passes);
     }
 
-    // TODO : ACP COS 2 : Unique pass numbers
     @Test
     public void postOrderController_shouldReturnUniquePasseNumbers() {
         OrderDto anOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.aSinglePassOrder));

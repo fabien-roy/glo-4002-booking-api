@@ -60,7 +60,15 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
         dto.passNumber = pass.getId();
         dto.passCategory = pass.getCategory().getName();
         dto.passOption = pass.getOption().getName();
-        dto.eventDates = new ArrayList<>(Collections.singletonList(pass.getEventDate().toString()));
+
+        if (pass.getOption().getId().equals(PassConstants.Options.SINGLE_ID)) {
+            dto.eventDates = new ArrayList<>();
+            passes.forEach(currentPass -> {
+                if (currentPass.getEventDate() != null) {
+                    dto.eventDates.add(currentPass.getEventDate().toString());
+                }
+            });
+        }
 
         return dto;
     }
