@@ -23,14 +23,15 @@ public class OxygenUnitTypeBuilder implements Builder<OxygenUnitType> {
     }
 
     public OxygenUnitType buildByName(String name) {
-        if (name.equals(OxygenConstants.UnitTypes.OXYGEN_TANKS_NAME)) {
-            return buildOxygenTanksOxygenUnitType();
-        } else if (name.equals(OxygenConstants.UnitTypes.WATER_LITERS_NAME)) {
-            return buildWaterLitersOxygenUnitType();
-        } else if (name.equals(OxygenConstants.UnitTypes.SPARK_PLUGS_NAME)) {
-            return buildSparkPlugsOxygenUnitType();
-        } else {
-            throw new OxygenUnitTypeNotFoundException();
+        switch (name) {
+            case OxygenConstants.UnitTypes.OXYGEN_TANKS_NAME:
+                return buildOxygenTanksOxygenUnitType();
+            case OxygenConstants.UnitTypes.WATER_LITERS_NAME:
+                return buildWaterLitersOxygenUnitType();
+            case OxygenConstants.UnitTypes.SPARK_PLUGS_NAME:
+                return buildSparkPlugsOxygenUnitType();
+            default:
+                throw new OxygenUnitTypeNotFoundException();
         }
     }
 

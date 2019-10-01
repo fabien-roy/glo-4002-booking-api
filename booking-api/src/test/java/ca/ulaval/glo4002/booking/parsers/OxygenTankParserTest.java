@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.dto.OxygenTankDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 class OxygenTankParserTest {
 
-	private static final LocalDate A_VALID_DATE = FestivalConstants.Dates.START_DATE.minusDays(20);
+	private static final LocalDate A_VALID_DATE = DateConstants.START_DATE.minusDays(20);
 
 	private OxygenTankParser subject;
 	private OxygenTankDto oxygenTankDto = new OxygenTankDto();

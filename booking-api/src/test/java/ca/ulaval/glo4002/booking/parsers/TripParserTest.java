@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
@@ -17,7 +17,7 @@ class TripParserTest {
 
     private final static Long A_TRIP_ID = 1L;
     private final static Long ANOTHER_TRIP_ID = 2L;
-    private final static LocalDate A_TRIP_DATE = FestivalConstants.Dates.START_DATE;
+    private final static LocalDate A_TRIP_DATE = DateConstants.START_DATE;
     private TripParser subject = new TripParser();
     private Trip aDepartureTrip;
     private Trip anArrivalTrip;

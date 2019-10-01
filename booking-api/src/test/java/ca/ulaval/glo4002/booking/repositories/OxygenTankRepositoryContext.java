@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
@@ -24,7 +24,7 @@ public class OxygenTankRepositoryContext {
 	public final static Long B_OXYGEN_ID = 2L;
 	public final static Long E_OXYGEN_ID = 3L;
 	public final static Long NON_EXISTENT_OXYGEN_ID = 0L;
-	private final static LocalDate A_DATE_BEFORE_FESTIVAL = FestivalConstants.Dates.START_DATE.minusDays(30);
+	private final static LocalDate A_DATE_BEFORE_FESTIVAL = DateConstants.START_DATE.minusDays(30);
 
 	public OxygenTankRepositoryContext() {
 		this.setUpOxygenTanks();

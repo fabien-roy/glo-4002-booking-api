@@ -29,7 +29,7 @@ class OxygenTankRepositoryTest {
 				() -> subject.findById(OxygenTankRepositoryContext.NON_EXISTENT_OXYGEN_ID)
 		);
 
-		assertEquals(ExceptionConstants.OXYGEN_TANK_NOT_FOUND_MESSAGE, thrown.getMessage());
+		assertEquals(ExceptionConstants.Oxygen.TANK_NOT_FOUND_MESSAGE, thrown.getMessage());
 	}
 
 	@Test

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
@@ -31,8 +31,8 @@ public class ShuttleManifestServiceContext {
             new Passenger(YET_ANOTHER_PASSENGER_ID),
             new Passenger(AND_ANOTHER_PASSENGER_ID)
     ));
-    public final static LocalDate A_DATE = FestivalConstants.Dates.START_DATE;
-    public final static LocalDate ANOTHER_DATE = FestivalConstants.Dates.START_DATE.plusDays(1);
+    public final static LocalDate A_DATE = DateConstants.START_DATE;
+    public final static LocalDate ANOTHER_DATE = DateConstants.START_DATE.plusDays(1);
     public TripRepository repository;
     public TripParser parser = new TripParser();
     public Trip aDepartureTrip;

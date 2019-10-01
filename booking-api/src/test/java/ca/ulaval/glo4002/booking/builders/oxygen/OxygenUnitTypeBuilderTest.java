@@ -27,7 +27,7 @@ public class OxygenUnitTypeBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.OXYGEN_UNIT_TYPE_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class OxygenUnitTypeBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.OXYGEN_UNIT_TYPE_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class PassAlreadyCreatedException extends FestivalException {
 
     public PassAlreadyCreatedException() {
-        super(ExceptionConstants.PASS_ALREADY_CREATED_MESSAGE);
+        super(ExceptionConstants.Pass.ALREADY_CREATED_MESSAGE);
     }
 }

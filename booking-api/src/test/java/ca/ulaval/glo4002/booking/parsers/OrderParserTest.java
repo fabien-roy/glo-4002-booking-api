@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderDto;
@@ -20,9 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderParserTest {
 
     private static final Long A_VALID_ID = 1L;
-    private static final String A_DATE_BEFORE_ORDER_START_DATE_TIME = FestivalConstants.Dates.ORDER_START_DATE_TIME.minusDays(1).toString();
-    private static final String A_DATE_AFTER_ORDER_START_END_TIME = FestivalConstants.Dates.ORDER_END_DATE_TIME.plusDays(1).toString();
-    private static final LocalDateTime A_VALID_DATE = FestivalConstants.Dates.ORDER_START_DATE_TIME;
+    private static final String A_DATE_BEFORE_ORDER_START_DATE_TIME = DateConstants.ORDER_START_DATE_TIME.minusDays(1).toString();
+    private static final String A_DATE_AFTER_ORDER_START_END_TIME = DateConstants.ORDER_END_DATE_TIME.plusDays(1).toString();
+    private static final LocalDateTime A_VALID_DATE = DateConstants.ORDER_START_DATE_TIME;
     private static final String AN_INVALID_VENDOR_CODE = "An invalid vendor code";
     private static final String A_VALID_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
     private OrderParser subject;
@@ -52,7 +52,7 @@ class OrderParserTest {
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.ORDER_DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.DTO_INVALID_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -64,7 +64,7 @@ class OrderParserTest {
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.ORDER_DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.DTO_INVALID_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -85,7 +85,7 @@ class OrderParserTest {
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.VENDOR_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Vendor.NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

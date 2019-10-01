@@ -1,7 +1,9 @@
 package ca.ulaval.glo4002.booking.constants;
 
 public class ShuttleConstants {
+
     public static class Categories {
+
         public static final Long ET_SPACESHIP_ID = 0L;
         public static final Long MILLENNIUM_FALCON_ID = 1L;
         public static final Long SPACE_X_ID = 2L;

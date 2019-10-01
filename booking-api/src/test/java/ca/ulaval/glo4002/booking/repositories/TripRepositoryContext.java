@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.TripConstants;
 import ca.ulaval.glo4002.booking.entities.TripEntity;
@@ -17,8 +17,8 @@ public class TripRepositoryContext {
 
     private final static Long A_ID = 1L;
     private final static Long ANOTHER_ID = 2L;
-    private final static LocalDate A_DATE = FestivalConstants.Dates.START_DATE;
-    private final static LocalDate ANOTHER_DATE = FestivalConstants.Dates.START_DATE.plusDays(1);
+    private final static LocalDate A_DATE = DateConstants.START_DATE;
+    private final static LocalDate ANOTHER_DATE = DateConstants.START_DATE.plusDays(1);
     private final static Long A_TYPE_ID = TripConstants.Types.DEPARTURE_ID;
     private final static Long ANOTHER_TYPE_ID = TripConstants.Types.ARRIVAL_ID;
 

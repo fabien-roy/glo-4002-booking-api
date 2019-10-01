@@ -29,7 +29,7 @@ public class OxygenCategoryBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class OxygenCategoryBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

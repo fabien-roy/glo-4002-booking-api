@@ -29,14 +29,15 @@ public class PassCategoryBuilder implements Builder<PassCategory> {
     }
 
     public PassCategory buildByName(String name) {
-        if (name.equals(PassConstants.Categories.SUPERNOVA_NAME)) {
-            return buildSupernovaPassCategory();
-        } else if (name.equals(PassConstants.Categories.SUPERGIANT_NAME)) {
-            return buildSupergiantPassCategory();
-        } else if (name.equals(PassConstants.Categories.NEBULA_NAME)) {
-            return buildNebulaPassCategory();
-        } else {
-            throw new PassCategoryNotFoundException();
+        switch (name) {
+            case PassConstants.Categories.SUPERNOVA_NAME:
+                return buildSupernovaPassCategory();
+            case PassConstants.Categories.SUPERGIANT_NAME:
+                return buildSupergiantPassCategory();
+            case PassConstants.Categories.NEBULA_NAME:
+                return buildNebulaPassCategory();
+            default:
+                throw new PassCategoryNotFoundException();
         }
     }
 

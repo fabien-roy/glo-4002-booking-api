@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 public class OrderServiceContext {
 
-    private final static LocalDateTime A_ORDER_EVENT_DATE = FestivalConstants.Dates.ORDER_START_DATE_TIME;
+    private final static LocalDateTime A_ORDER_EVENT_DATE = DateConstants.ORDER_START_DATE_TIME;
     private final static VendorBuilder vendorBuilder = new VendorBuilder();
     private OrderParser parser = new OrderParser();
     private OrderEntity aOrderEntity;

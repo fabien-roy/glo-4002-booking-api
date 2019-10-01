@@ -9,6 +9,6 @@ import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class OxygenTankDtoInvalidExeption extends FestivalException {
 	public OxygenTankDtoInvalidExeption() {
-		super(ExceptionConstants.OXYGEN_DTO_INVALID_MESSAGE);
+		super(ExceptionConstants.Oxygen.DTO_INVALID_MESSAGE);
 	}
 }

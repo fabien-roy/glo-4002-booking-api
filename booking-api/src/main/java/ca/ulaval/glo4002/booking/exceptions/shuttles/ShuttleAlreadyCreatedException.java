@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 public class ShuttleAlreadyCreatedException extends FestivalException {
 	
 	public ShuttleAlreadyCreatedException() {
-		super(ExceptionConstants.SHUTTLE_ALREADY_CREATED_MESSAGE);
+		super(ExceptionConstants.Shuttle.ALREADY_CREATED_MESSAGE);
 	}
 
 }

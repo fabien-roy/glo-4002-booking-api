@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
@@ -28,14 +28,14 @@ class PassParserTest {
     private final static String A_PASS_CATEGORY = PassConstants.Categories.SUPERNOVA_NAME;
     private final static String A_PASS_OPTION = PassConstants.Options.SINGLE_NAME;
     private final static List<LocalDate> SOME_EVENT_DATES = new ArrayList<>(Arrays.asList(
-            FestivalConstants.Dates.START_DATE,
-            FestivalConstants.Dates.START_DATE.plusDays(1)
+            DateConstants.START_DATE,
+            DateConstants.START_DATE.plusDays(1)
     ));
     private final static Long AN_INVALID_PASS_NUMBER = -1L;
     private final static String AN_INVALID_PASS_CATEGORY = "anInvalidPassCategory";
     private final static String AN_INVALID_PASS_OPTION = "anInvalidPassOption";
     private final static List<LocalDate> SOME_EVENT_DATES_NOT_IN_FESTIVAL = new ArrayList<>(Collections.singletonList(
-            FestivalConstants.Dates.END_DATE.plusDays(1)
+            DateConstants.END_DATE.plusDays(1)
     ));
     private PassParser subject = new PassParser();
     private PassesDto dto = new PassesDto();
@@ -70,7 +70,7 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.PASS_DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -82,7 +82,7 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.PASS_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -94,7 +94,7 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.PASS_OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -106,7 +106,7 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.PASS_DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
     }
 
     @Test

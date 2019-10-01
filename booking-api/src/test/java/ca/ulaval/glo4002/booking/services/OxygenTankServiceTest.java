@@ -41,7 +41,7 @@ class OxygenTankServiceTest {
 				() -> subject.findById(context.nonExistentOxygenTankId)
 		);
 
-		assertEquals(ExceptionConstants.OXYGEN_TANK_NOT_FOUND_MESSAGE, thrown.getMessage());
+		assertEquals(ExceptionConstants.Oxygen.TANK_NOT_FOUND_MESSAGE, thrown.getMessage());
 	}
 
 	@Test

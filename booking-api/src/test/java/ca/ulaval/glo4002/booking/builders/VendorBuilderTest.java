@@ -27,7 +27,7 @@ public class VendorBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.VENDOR_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Vendor.NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class VendorBuilderTest {
                 () -> subject.buildByCode(AN_INVALID_CODE)
         );
 
-        assertEquals(ExceptionConstants.VENDOR_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Vendor.NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

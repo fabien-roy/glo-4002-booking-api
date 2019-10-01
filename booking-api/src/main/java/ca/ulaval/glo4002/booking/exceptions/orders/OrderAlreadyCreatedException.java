@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OrderAlreadyCreatedException extends FestivalException {
 
     public OrderAlreadyCreatedException() {
-        super(ExceptionConstants.ORDER_ALREADY_CREATED_MESSAGE);
+        super(ExceptionConstants.Order.ALREADY_CREATED_MESSAGE);
     }
 }

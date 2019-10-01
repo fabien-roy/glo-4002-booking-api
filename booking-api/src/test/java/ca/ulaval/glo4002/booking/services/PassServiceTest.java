@@ -30,7 +30,7 @@ public class PassServiceTest {
                 () -> subject.findById(PassServiceContext.A_NON_EXISTANT_PASS_ID)
         );
 
-        assertEquals(ExceptionConstants.PASS_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

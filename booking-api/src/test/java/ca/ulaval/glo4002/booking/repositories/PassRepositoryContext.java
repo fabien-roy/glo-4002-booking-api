@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class PassRepositoryContext {
 
-    private final static LocalDate A_PASS_EVENT_DATE = FestivalConstants.Dates.START_DATE;
+    private final static LocalDate A_PASS_EVENT_DATE = DateConstants.START_DATE;
     public EntityManager entityManager;
     public PassEntity aPass;
     public PassEntity anotherPass;

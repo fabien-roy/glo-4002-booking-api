@@ -20,12 +20,13 @@ public class PassOptionBuilder implements Builder<PassOption> {
     }
 
     public PassOption buildByName(String name) {
-        if (name.equals(PassConstants.Options.PACKAGE_NAME)) {
-            return buildPackagePassOption();
-        } else if (name.equals(PassConstants.Options.SINGLE_NAME)) {
-            return buildSinglePassOption();
-        } else {
-            throw new PassOptionNotFoundException();
+        switch (name) {
+            case PassConstants.Options.PACKAGE_NAME:
+                return buildPackagePassOption();
+            case PassConstants.Options.SINGLE_NAME:
+                return buildSinglePassOption();
+            default:
+                throw new PassOptionNotFoundException();
         }
     }
 

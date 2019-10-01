@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 public class ShuttleFullException extends FestivalException {
 	
 	public ShuttleFullException() {
-		super(ExceptionConstants.SHUTTLE_FULL_MESSAGE);
+		super(ExceptionConstants.Shuttle.FULL_MESSAGE);
 	}
 
 }

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domainobjects.oxygen;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
 import ca.ulaval.glo4002.booking.services.OxygenTankServiceImpl;
@@ -16,7 +16,7 @@ public class OxygenTank {
 
 	// TODO : A lot of logic here should be in a OxygenTankService class
 	public OxygenTank(OxygenCategory category, LocalDate timeRequested) {
-		if (timeRequested.isAfter(FestivalConstants.Dates.START_DATE)) {
+		if (timeRequested.isAfter(DateConstants.START_DATE)) {
 			throw new InvalidDateException();
 		}
 

@@ -9,17 +9,17 @@ import java.time.LocalDate;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 
 public class FestivalDateUtilTest {
 	
-	public final LocalDate DATE_BEFORE_FESTIVAL = FestivalConstants.Dates.
+	public final LocalDate DATE_BEFORE_FESTIVAL = DateConstants.
 			START_DATE.minus(1, DAYS);
 	
-	public final LocalDate DATE_AFTER_FESTIVAL = FestivalConstants.Dates.
+	public final LocalDate DATE_AFTER_FESTIVAL = DateConstants.
 			END_DATE.plus(1, DAYS);
 	
-	public final LocalDate DATE_DURING_FESTIVAL = FestivalConstants.Dates.
+	public final LocalDate DATE_DURING_FESTIVAL = DateConstants.
 			START_DATE;
 	
 	@Test

@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class OrderNotFoundException extends FestivalException {
 
-    public OrderNotFoundException() { super(ExceptionConstants.ORDER_NOT_FOUND_MESSAGE);}
+    public OrderNotFoundException() { super(ExceptionConstants.Order.NOT_FOUND_MESSAGE);}
 }

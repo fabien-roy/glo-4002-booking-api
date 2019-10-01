@@ -11,6 +11,6 @@ public class ShuttleNotFoundException extends FestivalException {
 	private static final long serialVersionUID = 2019_09_23_0947L;
 
 	public ShuttleNotFoundException() {
-		super(ExceptionConstants.SHUTTLE_NOT_FOUND_MESSAGE);
+		super(ExceptionConstants.Shuttle.NOT_FOUND_MESSAGE);
 	}
 }

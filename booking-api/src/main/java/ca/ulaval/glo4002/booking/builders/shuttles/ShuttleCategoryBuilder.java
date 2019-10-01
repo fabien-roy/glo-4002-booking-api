@@ -23,14 +23,15 @@ public class ShuttleCategoryBuilder implements Builder<ShuttleCategory> {
     }
 
     public ShuttleCategory buildByName(String name) {
-        if (name.equals(ShuttleConstants.Categories.ET_SPACESHIP_NAME)) {
-            return buildEtSpaceshipShuttleCategory();
-        } else if (name.equals(ShuttleConstants.Categories.MILLENNIUM_FALCON_NAME)) {
-            return buildMillenniumFalconShuttleCategory();
-        } else if (name.equals(ShuttleConstants.Categories.SPACE_X_NAME)) {
-            return buildSpaceXShuttleCategory();
-        } else {
-            throw new ShuttleCategoryNotFoundException();
+        switch (name) {
+            case ShuttleConstants.Categories.ET_SPACESHIP_NAME:
+                return buildEtSpaceshipShuttleCategory();
+            case ShuttleConstants.Categories.MILLENNIUM_FALCON_NAME:
+                return buildMillenniumFalconShuttleCategory();
+            case ShuttleConstants.Categories.SPACE_X_NAME:
+                return buildSpaceXShuttleCategory();
+            default:
+                throw new ShuttleCategoryNotFoundException();
         }
     }
 

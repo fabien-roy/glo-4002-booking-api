@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 public class OrderRepositoryContext {
 
-    private final static LocalDateTime A_ORDER_DATE_TIME = FestivalConstants.Dates.ORDER_START_DATE_TIME;
+    private final static LocalDateTime A_ORDER_DATE_TIME = DateConstants.ORDER_START_DATE_TIME;
     private final static Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     public EntityManager entityManager;
     public OrderEntity aOrder;

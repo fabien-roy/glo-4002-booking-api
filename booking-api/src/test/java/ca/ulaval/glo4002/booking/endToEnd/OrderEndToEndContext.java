@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
-import ca.ulaval.glo4002.booking.constants.FestivalConstants;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
@@ -23,8 +23,8 @@ import java.time.LocalDateTime;
 
 public class OrderEndToEndContext {
 
-    private static final LocalDateTime AN_ORDER_DATE = FestivalConstants.Dates.ORDER_START_DATE_TIME;
-    private static final LocalDateTime ANOTHER_ORDER_DATE = FestivalConstants.Dates.ORDER_START_DATE_TIME.plusDays(1);
+    private static final LocalDateTime AN_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME;
+    private static final LocalDateTime ANOTHER_ORDER_DATE = DateConstants.ORDER_START_DATE_TIME.plusDays(1);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     public static final Long AN_INVALID_ORDER_ID = -1L;
 

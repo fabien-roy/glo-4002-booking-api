@@ -29,7 +29,7 @@ public class OrderServiceTest {
                 () -> subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID)
         );
 
-        assertEquals(ExceptionConstants.ORDER_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.constants;
 
 public class QualityConstants {
+
     public static final Long SUPERNOVA_ID = 0L;
     public static final Long SUPERGIANT_ID = 1L;
     public static final Long NEBULA_ID = 2L;
