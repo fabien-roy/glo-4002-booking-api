@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderEndToEndTest {
 
@@ -143,5 +141,22 @@ public class OrderEndToEndTest {
         assertNotNull(anotherResponse.getBody());
     }
 
-    // TODO : ACP-COS 1 : Id should not be null
+    // TODO : ACP COS 1 : Unique IDs for Orders
+    /*
+    @Test
+    public void postOrderController_shouldReturnUniqueIds() {
+        OrderDto anOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anOrder));
+        OrderDto anotherOrderDto = context.orderParser.toDto(context.orderParser.parseEntity(context.anotherOrder));
+        context.setUp();
+
+        ResponseEntity<OrderDto> aResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anOrderDto);
+        ResponseEntity<OrderDto> anotherResponse = (ResponseEntity<OrderDto>) context.orderController.addOrder(anotherOrderDto);
+
+        assertEquals(Response.Status.CREATED.getStatusCode(), aResponse.getStatusCodeValue());
+        assertEquals(Response.Status.CREATED.getStatusCode(), anotherResponse.getStatusCodeValue());
+        assertNotNull(aResponse.getBody().orderNumber);
+        assertNotNull(anotherResponse.getBody().orderNumber);
+        assertNotEquals(aResponse.getBody().orderNumber, anotherResponse.getBody().orderNumber);
+    }
+    */
 }

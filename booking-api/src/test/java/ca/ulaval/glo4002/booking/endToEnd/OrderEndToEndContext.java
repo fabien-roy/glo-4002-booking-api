@@ -64,7 +64,7 @@ public class OrderEndToEndContext {
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
         OrderService orderService = new OrderServiceImpl(orderRepository);
         PassService passService = new PassServiceImpl(passRepository);
-        orderController = new OrderController(orderService, passService, orderParser, passParser);
+        orderController = new OrderController(orderService, passService);
 
         return this;
     }

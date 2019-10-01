@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -67,6 +68,7 @@ public class OrderServiceContext {
         when(repository.findById(A_ORDER_ID)).thenReturn(Optional.of(aOrderEntity));
         when(repository.findById(ANOTHER_ORDER_ID)).thenReturn(Optional.of(anotherOrderEntity));
         when(repository.findById(A_NON_EXISTANT_ORDER_ID)).thenReturn(Optional.empty());
+        when(repository.save(any(OrderEntity.class))).thenReturn(aOrderEntity);
     }
 
     public void setUpRepositoryForSave() {

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.validators;
+package ca.ulaval.glo4002.booking.util;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 
-public class FestivalDateValidatorTest {
+public class FestivalDateUtilTest {
 	
 	public final LocalDate DATE_BEFORE_FESTIVAL = FestivalConstants.Dates.
 			START_DATE.minus(1, DAYS);
@@ -23,19 +23,19 @@ public class FestivalDateValidatorTest {
 	
 	@Test
 	public void dateIsBeforeFestival() {
-		assertTrue(FestivalDateValidator
+		assertTrue(FestivalDateUtil
 				.isOutsideFestivalDates(DATE_BEFORE_FESTIVAL));
 	}
 	
 	@Test
 	public void dateIsAfterFestival() {
-		assertTrue(FestivalDateValidator
+		assertTrue(FestivalDateUtil
 				.isOutsideFestivalDates(DATE_AFTER_FESTIVAL));
 	}
 	
 	@Test
 	public void dateIsDuringFestival() {
-		assertFalse(FestivalDateValidator
+		assertFalse(FestivalDateUtil
 				.isOutsideFestivalDates(DATE_DURING_FESTIVAL));
 	}
 }

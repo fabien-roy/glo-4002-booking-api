@@ -1,15 +1,14 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-
-import ca.ulaval.glo4002.booking.EntityManagerFactoryUtil;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
+import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
+
+import javax.persistence.EntityManager;
+import java.util.Optional;
 
 public class ShuttleRepositoryImpl implements ShuttleRepository {
 	
@@ -26,11 +25,11 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 	@Override
 	public Optional<ShuttleEntity> findById(Long id) {
 		ShuttleEntity shuttleEntity = entityManager.find(ShuttleEntity.class, id);
-		
+
 		if(shuttleEntity == null) {
 			throw new ShuttleNotFoundException();
 		}
-		
+
 		return Optional.of(shuttleEntity);
 	}
 	
@@ -90,5 +89,4 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
     public void deleteAll() {
         throw new UnusedMethodException();
     }
-
 }

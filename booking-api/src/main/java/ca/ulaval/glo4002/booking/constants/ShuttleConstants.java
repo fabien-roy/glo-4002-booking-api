@@ -23,18 +23,6 @@ public class ShuttleConstants {
         }
     }
 
-    public static class Types {
-        public static final Long DEPARTURE_ID = 0L;
-        public static final Long ARRIVAL_ID = 1L;
-
-        public static final String DEPARTURE_NAME = "Departure";
-        public static final String ARRIVAL_NAME = "Arrival";
-
-        private Types(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
-        }
-    }
-
     private ShuttleConstants(){
         throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
     }

@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.FestivalConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -80,12 +80,12 @@ public class OxygenTankTest {
 
     @Test
     void createOxygenTank_afterTheStartingDateOfFestival_shouldThrowInvalidEventDateException() {
-        InvalidEventDateException thrown = assertThrows(
-                InvalidEventDateException.class,
+        InvalidDateException thrown = assertThrows(
+                InvalidDateException.class,
                 () -> new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), INVALID_DATE)
         );
 
-        assertEquals(ExceptionConstants.INVALID_EVENT_DATE_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.INVALID_DATE_MESSAGE, thrown.getMessage());
     }
 
 }
