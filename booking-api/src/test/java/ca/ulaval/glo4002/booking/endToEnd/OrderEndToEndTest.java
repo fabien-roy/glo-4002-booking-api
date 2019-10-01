@@ -48,7 +48,7 @@ public class OrderEndToEndTest {
     }
 
     @Test
-    public void getOrderController_shouldReturnCorrectOrderDot_whenManyOrderNumberAreExistent() {
+    public void getOrderController_shouldReturnCorrectOrderDto_whenManyOrderNumberAreExistent() {
         context.setUp().withAnOrder().withAnotherOrder();
 
         ResponseEntity<OrderDto> aResponse = (ResponseEntity<OrderDto>) context.orderController.getOrderById(context.anOrderId);
@@ -78,7 +78,7 @@ public class OrderEndToEndTest {
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertEquals(context.anOrderId, response.getBody().get(0).orderNumber);
-        assertEquals(response.getBody().size(), 1);
+        assertEquals(1, response.getBody().size());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class OrderEndToEndTest {
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertTrue(response.getBody().stream().anyMatch(orderDto -> orderDto.orderNumber.equals(context.anOrderId)));
         assertTrue(response.getBody().stream().anyMatch(orderDto -> orderDto.orderNumber.equals(context.anotherOrderId)));
-        assertEquals(response.getBody().size(), 2);
+        assertEquals(2, response.getBody().size());
     }
 
     @Test

@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
@@ -61,12 +62,21 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
 
     @Override
     public PassEntity toEntity(Pass pass) {
-        return new PassEntity(
-                pass.getId(),
-                pass.getCategory().getId(),
-                pass.getOption().getId(),
-                pass.getEventDate()
-        );
+        PassEntity newPassEntity;
+        if(pass.getOption().getId().equals(PassConstants.Options.PACKAGE_ID)){
+            newPassEntity = new PassEntity(pass.getId(),
+                    pass.getCategory().getId(),
+                    pass.getOption().getId()
+            );
+        }
+        else{
+            newPassEntity = new PassEntity(pass.getId(),
+                    pass.getCategory().getId(),
+                    pass.getOption().getId(),
+                    pass.getEventDate()
+            );
+        }
+        return newPassEntity;
     }
 
     private Pass parseSingle(Long id, PassCategory category, PassOption option, LocalDate eventDate) {

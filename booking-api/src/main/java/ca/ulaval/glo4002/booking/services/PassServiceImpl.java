@@ -51,7 +51,5 @@ public class PassServiceImpl implements PassService {
     }
 
     @Override
-    public Pass save(Pass object) {
-        throw new UnusedMethodException();
-    }
+    public Pass save(Pass object) {throw new UnusedMethodException();}
 }

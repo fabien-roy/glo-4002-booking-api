@@ -2,12 +2,13 @@ package ca.ulaval.glo4002.booking.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Entity(name = "Passes")
 public class PassEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	public Long id;
     public Long categoryId;
     public Long optionId;
@@ -16,6 +17,23 @@ public class PassEntity {
     // public OrderItemEntity orderItem;
 
     public PassEntity() {
+    }
+
+    public PassEntity(Long categoryId, Long optionId){
+        this.categoryId = categoryId;
+        this.optionId = optionId;
+    }
+
+    public PassEntity(Long id, Long categoryId, Long optionId) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.optionId = optionId;
+    }
+
+    public PassEntity(Long categoryId, Long optionId, LocalDate eventDate){
+        this.categoryId = categoryId;
+        this.optionId = optionId;
+        this.eventDate = eventDate;
     }
 
     public PassEntity(Long id, Long categoryId, Long optionId, LocalDate eventDate) {
