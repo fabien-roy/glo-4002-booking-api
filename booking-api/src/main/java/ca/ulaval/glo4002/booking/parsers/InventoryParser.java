@@ -1,5 +1,8 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
 import ca.ulaval.glo4002.booking.entities.InventoryEntity;
@@ -13,24 +16,32 @@ import java.util.Map;
 
 public class InventoryParser implements DtoParser<Inventory, List<InventoryItemDto>>, EntityParser<Inventory, InventoryEntity>  {
 
-    // TODO : Test
     @Override
     public Inventory parseDto(List<InventoryItemDto> dto) {
         throw new UnusedMethodException();
     }
 
     @Override
-    public List<InventoryItemDto> toDto(Inventory object) {
-        // TODO
-
+    public List<InventoryItemDto> toDto(Inventory inventory) {
+        // TODO : Refactoring, try to not use OxygenCategoryBuilder
         List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
 
-        //object.getStoredTanks().forEach(item -> item.);
+        inventory.getStoredTanks().forEach((categoryId, storedTank) -> {
+            if(storedTank > 0) {
+                OxygenCategoryBuilder builder = new OxygenCategoryBuilder();
+                OxygenCategory category = builder.buildById(categoryId);
+                InventoryItemDto inventoryItemDto = new InventoryItemDto();
 
-        return null;
+                inventoryItemDto.gradeTankOxygen = category.getName();
+                inventoryItemDto.quantity = storedTank;
+
+                inventoryItemDtos.add(inventoryItemDto);
+            }
+        });
+
+        return inventoryItemDtos;
     }
 
-    // TODO : Test
     @Override
     public Inventory parseEntity(InventoryEntity entity) {
         Map<Long, Long> storedTanks = new HashMap<>();
@@ -44,7 +55,6 @@ public class InventoryParser implements DtoParser<Inventory, List<InventoryItemD
         return new Inventory(storedTanks, inUseTanks);
     }
 
-    // TODO : Test
     @Override
     public InventoryEntity toEntity(Inventory inventory) {
         List<InventoryItemEntity> inventoryItems = new ArrayList<>();

@@ -17,6 +17,7 @@ public class InventoryServiceImpl implements InventoryService {
 	public InventoryServiceImpl(InventoryRepository repository) {
 		this.repository = repository;
 		this.parser = new InventoryParser();
+
 	}
 
 	// TODO : Test

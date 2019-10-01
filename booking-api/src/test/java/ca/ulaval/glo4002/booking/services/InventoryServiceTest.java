@@ -47,6 +47,18 @@ public class InventoryServiceTest {
         assertEquals(3, (long) context.anInventory.getInUseTanksByCategoryId(OxygenConstants.Categories.E_ID));
     }
 
+    @Test
+    void whenOxygenTankIsAdded_thenInventoryOfStoredTankIsUpdated() {
+        context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(),
+                5L);
+    }
+
+    @Test
+    void whenGetIsCalled_thenShouldReturnAnTheInventory() {
+        context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 5L);
+
+    }
+
     // TODO : Solve this test
     /*
     @Test

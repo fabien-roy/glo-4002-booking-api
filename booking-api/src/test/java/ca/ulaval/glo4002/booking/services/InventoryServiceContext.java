@@ -19,7 +19,7 @@ public class InventoryServiceContext {
 
     public InventoryService subject;
 
-    private InventoryParser parser = new InventoryParser();
+    public InventoryParser parser = new InventoryParser();
     private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
     private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
 

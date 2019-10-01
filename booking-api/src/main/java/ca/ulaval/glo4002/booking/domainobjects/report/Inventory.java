@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domainobjects.report;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 
 import java.util.HashMap;
@@ -47,4 +48,5 @@ public class Inventory {
     public Map<Long, Long> getInUseTanks() {
         return inUseTanks;
     }
+
 }
