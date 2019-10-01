@@ -24,6 +24,10 @@ public class Shuttle extends OrderItem {
     public Double getPrice() {
         return price;
     }
+    
+    public ShuttleCategory getShuttleCategory() {
+    	return category;
+    }
 
     /*
     public void reservePlace(Passenger passenger) {
