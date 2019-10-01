@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class PassNotFoundException extends FestivalException {
     
     public PassNotFoundException() {
-        super(ExceptionConstants.PASS_NOT_FOUND_MESSAGE);
+        super(ExceptionConstants.Pass.NOT_FOUND_MESSAGE);
     }
 }

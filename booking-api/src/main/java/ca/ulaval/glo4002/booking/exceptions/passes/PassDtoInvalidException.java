@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class PassDtoInvalidException extends FestivalException {
 
     public PassDtoInvalidException(){
-        super(ExceptionConstants.PASS_DTO_INVALID_MESSAGE);
+        super(ExceptionConstants.Pass.DTO_INVALID_MESSAGE);
     }
 }

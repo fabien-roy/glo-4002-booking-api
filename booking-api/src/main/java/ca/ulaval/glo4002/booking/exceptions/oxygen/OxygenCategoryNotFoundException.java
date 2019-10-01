@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OxygenCategoryNotFoundException extends FestivalException {
 
     public OxygenCategoryNotFoundException() {
-        super(ExceptionConstants.OXYGEN_CATEGORY_NOT_FOUND_MESSAGE);
+        super(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE);
     }
 }

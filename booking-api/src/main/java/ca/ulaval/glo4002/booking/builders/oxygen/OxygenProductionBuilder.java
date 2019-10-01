@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.builders.oxygen;
 
 import ca.ulaval.glo4002.booking.builders.Builder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.ElectrolytesOxygenProduction;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.ImmediateOxygenProduction;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.OxygenProduction;
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.productions.SparkPlugsOxygenProduction;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.productions.ElectrolytesOxygenProduction;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.productions.ImmediateOxygenProduction;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.productions.OxygenProduction;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.productions.SparkPlugsOxygenProduction;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenProductionNotFoundException;
 
 public class OxygenProductionBuilder implements Builder<OxygenProduction> {
@@ -25,14 +25,15 @@ public class OxygenProductionBuilder implements Builder<OxygenProduction> {
     }
 
     public OxygenProduction buildByName(String name) {
-        if (name.equals(OxygenConstants.Productions.IMMEDIATE_NAME)) {
-            return buildImmediateOxygenProduction();
-        } else if (name.equals(OxygenConstants.Productions.ELECTROLYTES_NAME)) {
-            return buildElectrolytesOxygenProduction();
-        } else if (name.equals(OxygenConstants.Productions.SPARK_PLUGS_NAME)) {
-            return buildSparkPlugsOxygenProduction();
-        } else {
-            throw new OxygenProductionNotFoundException();
+        switch (name) {
+            case OxygenConstants.Productions.IMMEDIATE_NAME:
+                return buildImmediateOxygenProduction();
+            case OxygenConstants.Productions.ELECTROLYTES_NAME:
+                return buildElectrolytesOxygenProduction();
+            case OxygenConstants.Productions.SPARK_PLUGS_NAME:
+                return buildSparkPlugsOxygenProduction();
+            default:
+                throw new OxygenProductionNotFoundException();
         }
     }
 

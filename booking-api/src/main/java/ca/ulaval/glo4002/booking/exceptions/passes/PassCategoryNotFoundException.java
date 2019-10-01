@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class PassCategoryNotFoundException extends FestivalException {
 
     public PassCategoryNotFoundException() {
-        super(ExceptionConstants.PASS_CATEGORY_NOT_FOUND_MESSAGE);
+        super(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE);
     }
 }

@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.builders.passes;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class PassOptionBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.PASS_OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PassOptionBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.PASS_OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

@@ -1,39 +1,36 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainObjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.repositories.OxygenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import ca.ulaval.glo4002.booking.domainobjects.report.Report;
+import ca.ulaval.glo4002.booking.dto.ReportDto;
+import ca.ulaval.glo4002.booking.parsers.ReportParser;
+import ca.ulaval.glo4002.booking.services.ReportServiceImpl;
+import org.springframework.http.ResponseEntity;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
-@Path("report")
+@Path("/report")
 public class ReportController {
 
-    @Autowired
-    private OxygenRepository oxygenRepository;
+	private final ReportServiceImpl reportService;
+	private final ReportParser reportParser;
 
-    public ReportController(OxygenRepository oxygenRepository) { this.oxygenRepository = oxygenRepository; }
+	public ReportController(ReportServiceImpl reportService, ReportParser reportParser) {
+		this.reportService = reportService;
+		this.reportParser = reportParser;
+	}
 
-    @GET
-    @Path("/o2")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<OxygenTank> getOxygenTanks() {
-        List<OxygenTank> oxygenTanks = new ArrayList<>();
-        oxygenRepository.findAll().forEach(oxygenTanks::add);
-        Collections.sort(oxygenTanks, Comparator.comparing(OxygenTank::getTimeRequested));
-        return oxygenTanks;
-    }
+	@GET
+	@Path("/o2")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ResponseEntity<ReportDto> getOxygenTanks() {
+		Report report = reportService.getReport();
+		ReportDto dto;
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addOxygenTank(OxygenTank tank){
-        oxygenRepository.save(tank);
-        return Response.status(Response.Status.CREATED.getStatusCode()).build();
-    }
+        dto = reportParser.toDto(report);
+
+		return ResponseEntity.ok().body(dto);
+	}
 }

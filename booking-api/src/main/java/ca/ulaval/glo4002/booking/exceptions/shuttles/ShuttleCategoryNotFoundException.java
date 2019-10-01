@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ShuttleCategoryNotFoundException extends FestivalException {
 
 	public ShuttleCategoryNotFoundException() {
-		super(ExceptionConstants.SHUTTLE_CATEGORY_NOT_FOUND_MESSAGE);
+		super(ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_MESSAGE);
 	}
 }

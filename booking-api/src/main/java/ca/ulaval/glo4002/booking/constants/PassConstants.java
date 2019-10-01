@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.constants;
 public class PassConstants {
 
     public static class Categories {
+
         public static final Long SUPERNOVA_ID = 0L;
         public static final Long SUPERGIANT_ID = 1L;
         public static final Long NEBULA_ID = 2L;
@@ -33,6 +34,7 @@ public class PassConstants {
     }
 
     public static class Options {
+
         public static final Long PACKAGE_ID = 0L;
         public static final Long SINGLE_ID = 1L;
 

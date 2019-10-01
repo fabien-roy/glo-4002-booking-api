@@ -2,12 +2,12 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
-import ca.ulaval.glo4002.booking.domainObjects.passes.Pass;
-import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.exceptions.InvalidDateException;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
@@ -26,6 +26,7 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
             throw new PassDtoInvalidException();
         }
 
+        // TODO : Test if category or option is invalid
         PassCategory category = categoryBuilder.buildByName(dto.passCategory);
         PassOption option = optionBuilder.buildByName(dto.passOption);
 
@@ -40,10 +41,10 @@ public class PassParser implements EntityParser<Pass, PassEntity>, DtoParser<Lis
 
     @Override
     public Pass parseEntity(PassEntity entity) {
-        PassCategory category = categoryBuilder.buildById(entity.categoryId);
-        PassOption option = optionBuilder.buildById(entity.optionId);
+        PassCategory category = categoryBuilder.buildById(entity.getCategoryId());
+        PassOption option = optionBuilder.buildById(entity.getOptionId());
 
-        return new Pass(entity.id, category, option, entity.eventDate);
+        return new Pass(entity.getId(), category, option, entity.getEventDate());
     }
 
     @Override

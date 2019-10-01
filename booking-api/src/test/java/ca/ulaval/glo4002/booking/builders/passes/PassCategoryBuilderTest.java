@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.builders.passes;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.domainObjects.passes.categories.PassCategory;
-import ca.ulaval.glo4002.booking.domainObjects.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.PassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class PassCategoryBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.PASS_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PassCategoryBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.PASS_CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
     }
 
     @Test

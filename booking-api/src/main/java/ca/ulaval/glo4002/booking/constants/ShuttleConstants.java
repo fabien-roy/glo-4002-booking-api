@@ -1,7 +1,9 @@
 package ca.ulaval.glo4002.booking.constants;
 
 public class ShuttleConstants {
+
     public static class Categories {
+
         public static final Long ET_SPACESHIP_ID = 0L;
         public static final Long MILLENNIUM_FALCON_ID = 1L;
         public static final Long SPACE_X_ID = 2L;
@@ -19,18 +21,6 @@ public class ShuttleConstants {
         public static final Double SPACE_X_PRICE = 30000.0;
 
         private Categories(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
-        }
-    }
-
-    public static class Types {
-        public static final Long DEPARTURE_ID = 0L;
-        public static final Long ARRIVAL_ID = 1L;
-
-        public static final String DEPARTURE_NAME = "Departure";
-        public static final String ARRIVAL_NAME = "Arrival";
-
-        private Types(){
             throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
         }
     }

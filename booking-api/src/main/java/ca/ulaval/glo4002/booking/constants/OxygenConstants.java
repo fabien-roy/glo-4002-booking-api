@@ -5,6 +5,7 @@ import java.time.Duration;
 public class OxygenConstants {
 
     public static class Categories {
+
         public static final Long E_ID = 0L;
         public static final Long B_ID = 1L;
         public static final Long A_ID = 2L;
@@ -23,6 +24,7 @@ public class OxygenConstants {
     }
 
     public static class Productions {
+
         public static final Long IMMEDIATE_ID = 0L;
         public static final Long ELECTROLYTES_ID = 1L;
         public static final Long SPARK_PLUGS_ID = 2L;
@@ -57,6 +59,7 @@ public class OxygenConstants {
     }
 
     public static class UnitTypes {
+
         public static final Long OXYGEN_TANKS_ID = 0L;
         public static final Long WATER_LITERS_ID = 1L;
         public static final Long SPARK_PLUGS_ID = 2L;
