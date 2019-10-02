@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.ControllerException;
@@ -15,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path("/orders")
 public class OrderController {
@@ -36,6 +33,7 @@ public class OrderController {
     }
 
     // TODO : ACP : Remove, for tests only
+    /*
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getOrders() {
@@ -54,6 +52,7 @@ public class OrderController {
 
         return ResponseEntity.ok().body(orderDtos);
     }
+    */
 
     @GET
     @Path("/{id}")
@@ -62,7 +61,6 @@ public class OrderController {
         OrderWithPassesAsPassesDto order;
 
         try {
-            // TODO : ACP : Is this correct for passes?
             order = orderParser.toDto(orderService.findById(entityId));
         } catch (ControllerException exception) {
             return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());

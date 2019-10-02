@@ -1,9 +1,8 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Shuttles")
 public class ShuttleEntity extends OrderItemEntity {
@@ -12,19 +11,16 @@ public class ShuttleEntity extends OrderItemEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Long shuttleCategoryId;
-	private Long tripId;
-
-	//@ManyToOne(cascade = CascadeType.ALL)
-	//private List<Passenger> passengers;
+	@OneToMany(mappedBy = "shuttle")
+	private List<TripEntity> trips = new ArrayList<>();
 
 	public ShuttleEntity() {
 		
 	}
 
-	public ShuttleEntity(Long id, Long shuttleCategoryId, Long tripId) {
+	public ShuttleEntity(Long id, Long shuttleCategoryId) {
 		this.id = id;
 		this.shuttleCategoryId = shuttleCategoryId;
-		this.tripId = tripId;
 	}
 	
 	public Long getId() {
@@ -33,9 +29,5 @@ public class ShuttleEntity extends OrderItemEntity {
 	
 	public Long getShuttleCategoryId() {
 		return shuttleCategoryId;
-	}
-	
-	public Long getShuttleTypeId() {
-		return tripId;
 	}
 }
