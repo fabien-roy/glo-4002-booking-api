@@ -28,17 +28,7 @@ class OxygenTankServiceTest {
 	}
 
 	@Test
-	public void whenOxygenTankIsAddedWithWithInvalidCategory_thenShouldThrowOxygenCategoryNotFoundException() {
-		// TODO Do this test
-	}
-
-	@Test
-	public void whenGetTankInUseByCategoryIsIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
-		// TODO Do this test
-	}
-
-	@Test
-	public void findAll_shouldReturnCorrectOxygens() {
+	public void findAll_shouldReturnCorrectOxygenTanks() {
 		List<Long> tankIds = new ArrayList<>();
 		context.subject.findAll().forEach(oxygenTank -> tankIds.add(oxygenTank.getId()));
 
@@ -50,8 +40,10 @@ class OxygenTankServiceTest {
 
 	@Test
 	public void findById_shouldThrowOxygenTankNotFoundException_whenOxygenTankDoesNotExist() {
-		OxygenTankNotFoundException thrown = assertThrows(OxygenTankNotFoundException.class,
-				() -> context.subject.findById(context.nonExistentOxygenTankId));
+		OxygenTankNotFoundException thrown = assertThrows(
+				OxygenTankNotFoundException.class,
+				() -> context.subject.findById(context.nonExistentOxygenTankId)
+		);
 
 		assertEquals(ExceptionConstants.Oxygen.TANK_NOT_FOUND_ERROR, thrown.getMessage());
 	}
