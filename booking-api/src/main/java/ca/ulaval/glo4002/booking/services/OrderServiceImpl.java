@@ -42,7 +42,6 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
-    // TODO : Check if nothing was saved to db if there is an error
     @Override
     public Order order(Order order) {
         OrderEntity savedOrder = orderRepository.save(orderParser.toEntity(order));

@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,6 @@ public class OrderServiceTest {
         assertTrue(ids.contains(context.anotherOrder.getId()));
     }
 
-    // TODO : Solve test
     @Test
     public void save_shouldSaveOrder() {
         context.setUpForSave();
@@ -58,4 +58,5 @@ public class OrderServiceTest {
 
         assertEquals(context.aNonExistentOrder.getId(), order.getId());
     }
+
 }
