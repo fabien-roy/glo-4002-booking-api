@@ -33,8 +33,10 @@ public class ShuttleManifestController {
 		// TODO : TRANS : Use same logic as other controllers to throw with an ErrorDto
 		if (!FestivalDateUtil.isOutsideFestivalDates(manifestDate)) {
 		    shuttleManifest = shuttleManifestService.findByDate(manifestDate);
+        } else if(date == null) {
+        	shuttleManifest = shuttleManifestService.findAll();
         } else {
-            return ResponseEntity.badRequest().build();
+        	return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.ok().body(shuttleManifestParser.toDto(shuttleManifest));

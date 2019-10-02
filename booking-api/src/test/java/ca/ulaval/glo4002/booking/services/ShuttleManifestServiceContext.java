@@ -1,7 +1,18 @@
 package ca.ulaval.glo4002.booking.services;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
@@ -9,16 +20,9 @@ import ca.ulaval.glo4002.booking.entities.TripEntity;
 import ca.ulaval.glo4002.booking.parsers.TripParser;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class ShuttleManifestServiceContext {
 
+	private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
     private final static Long A_PASSENGER_ID = 1L;
     private final static Long ANOTHER_PASSENGER_ID = 2L;
     private final static Long YET_ANOTHER_PASSENGER_ID = 3L;
@@ -43,6 +47,10 @@ public class ShuttleManifestServiceContext {
     public TripEntity anotherDepartureTripEntity;
     public TripEntity anArrivalTripEntity;
     public TripEntity anotherArrivalTripEntity;
+    public Shuttle shuttle = new Shuttle(ShuttleConstants.Categories.ET_SPACESHIP_ID,
+    		ShuttleConstants.Categories.ET_SPACESHIP_PRICE,
+    		shuttleCategoryBuilder.buildByName(ShuttleConstants.Categories.ET_SPACESHIP_NAME),
+    		new ArrayList<>());
 
     public ShuttleManifestServiceContext() {
         setUpTrips();
@@ -52,22 +60,26 @@ public class ShuttleManifestServiceContext {
     private void setUpTrips() {
         aDepartureTrip = new DepartureTrip(
                 A_DATE,
-                SOME_PASSENGERS
+                SOME_PASSENGERS,
+                shuttle
         );
 
         anotherDepartureTrip = new DepartureTrip(
                 A_DATE,
-                SOME_OTHER_PASSENGERS
+                SOME_OTHER_PASSENGERS,
+                shuttle
         );
 
         anArrivalTrip = new ArrivalTrip(
                 A_DATE,
-                SOME_OTHER_PASSENGERS
+                SOME_OTHER_PASSENGERS,
+                shuttle
         );
 
         anotherArrivalTrip = new ArrivalTrip(
                 ANOTHER_DATE,
-                SOME_PASSENGERS
+                SOME_PASSENGERS,
+                shuttle
         );
 
         aDepartureTripEntity = parser.toEntity(aDepartureTrip);
