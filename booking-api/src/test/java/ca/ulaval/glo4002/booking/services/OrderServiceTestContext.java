@@ -14,13 +14,16 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class OrderServiceContextRepositoryTests {
+public class OrderServiceTestContext {
 
     public OrderService subject;
 
@@ -37,6 +40,10 @@ public class OrderServiceContextRepositoryTests {
     private OrderRepository repository;
     private PassService passService;
     private Pass aPass;
+
+    Pass aNebulaSinglePass;
+    Pass aSupergiantSinglePass;
+    Pass aSupernovaPackagePass;
     Order aOrder;
     Order anotherOrder;
     Order aNonExistentOrder;
@@ -45,7 +52,7 @@ public class OrderServiceContextRepositoryTests {
     private final static Long ANOTHER_ORDER_ID = 2L;
     final static Long A_NON_EXISTANT_ORDER_ID = 0L;
 
-    public OrderServiceContextRepositoryTests() {
+    public OrderServiceTestContext() {
         setUpObjects();
         setUpRepository();
         setUpSubject();
@@ -76,6 +83,26 @@ public class OrderServiceContextRepositoryTests {
         aPass = new Pass(
                 A_PASS_ID,
                 categoryBuilder.buildById(PassConstants.Categories.SUPERNOVA_ID),
+                optionBuilder.buildById(PassConstants.Options.SINGLE_ID),
+                A_PASS_EVENT_DATE
+        );
+
+        aSupernovaPackagePass = new Pass(
+                A_PASS_ID,
+                categoryBuilder.buildById(PassConstants.Categories.SUPERNOVA_ID),
+                optionBuilder.buildById(PassConstants.Options.PACKAGE_ID)
+        );
+
+        aSupergiantSinglePass = new Pass(
+                A_PASS_ID,
+                categoryBuilder.buildById(PassConstants.Categories.SUPERGIANT_ID),
+                optionBuilder.buildById(PassConstants.Options.SINGLE_ID),
+                A_PASS_EVENT_DATE
+        );
+
+        aNebulaSinglePass = new Pass(
+                A_PASS_ID,
+                categoryBuilder.buildById(PassConstants.Categories.NEBULA_ID),
                 optionBuilder.buildById(PassConstants.Options.SINGLE_ID),
                 A_PASS_EVENT_DATE
         );

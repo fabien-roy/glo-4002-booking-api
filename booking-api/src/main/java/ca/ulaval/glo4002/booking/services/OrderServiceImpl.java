@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.SupergiantPassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
@@ -64,15 +65,20 @@ public class OrderServiceImpl implements OrderService {
 
     public Double getOrderPrice(Order order){
 
-        Double rebate;
+        Double rebate = 1d;
         Double price = 0d;
-        ArrayList<Pass> passes = (ArrayList<Pass>) passService.getPasses(order.getOrderItems());
+
+        //if(order.getPasses().get(0).getOption().get)
+        if(order.getPasses().size() >= PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_TRESHOLD &&
+        order.getPasses().get(0).getCategory() instanceof SupergiantPassCategory){
+            rebate = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
+        }
 
         for (Pass p:
-                passes) {
+                order.getPasses()) {
             price += p.getPrice();
         }
 
-        return price;
+        return price * rebate;
     }
 }
