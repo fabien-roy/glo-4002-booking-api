@@ -18,9 +18,7 @@ public class OxygenTank extends OrderItem {
 		this.readyDate = readyDate;
 	}
 
-	// TODO Test this
 	public Double getPrice() {
-		// TODO Look if there is a more optimized way to do this
 		Double pricePerUnit = 0.0;
 		Long producedUnit = 0L;
 		Long producedTank = 0L;
