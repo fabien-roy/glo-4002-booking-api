@@ -14,7 +14,7 @@ public class TripEntity {
 	private Long id;
     private LocalDate date;
 	private Long typeId;
-	// private ShuttleEntity shuttle; // TODO : One to many
+	private ShuttleEntity shuttle; // TODO : One to many
 
     // TODO : Passengers
 	//@ManyToOne(cascade = CascadeType.ALL)
@@ -40,5 +40,9 @@ public class TripEntity {
 
     public Long getTypeId() {
         return typeId;
+    }
+    
+    public ShuttleEntity getShuttle() {
+    	return shuttle;
     }
 }

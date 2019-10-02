@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TripDto {
 	
-	String date;
-	String shuttleName;
-	List<PassengerDto> passengers;
+	public String date;
+	public String shuttleName;
+	public List<PassengerDto> passengers;
 }
