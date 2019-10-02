@@ -6,11 +6,15 @@ import ca.ulaval.glo4002.booking.services.OxygenTankService;
 
 public class HistoryServiceImpl implements HistoryService {
 
+	private OxygenTankService oxygenTankService;
+	
+	public HistoryServiceImpl(OxygenTankService oxygenTankService) {
+		this.oxygenTankService = oxygenTankService;
+	}
+	
 	@Override
 	public History get() {
-		History history;
-		
-		
+		return new History(oxygenTankService.findAll());
 	}
 
 }
