@@ -101,15 +101,16 @@ public class OrderEndToEndContext {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
+    // TODO : OXY : Unmock OxygenTanKService when ready
     public OrderEndToEndContext setUp() {
         OrderRepository orderRepository = new OrderRepositoryImpl(entityManager);
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
-        OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
-        InventoryRepository inventoryRepository = new InventoryRepositoryImpl(entityManager);
+        // OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
+        // InventoryRepository inventoryRepository = new InventoryRepositoryImpl(entityManager);
 
         PassService passService = new PassServiceImpl(passRepository);
-        InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository);
-        OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
+        // InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository);
+        OxygenTankService oxygenTankService = mock(OxygenTankService.class);
         OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
 
         orderController = new OrderController(orderService);

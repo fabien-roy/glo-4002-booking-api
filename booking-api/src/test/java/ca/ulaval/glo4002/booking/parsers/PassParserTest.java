@@ -139,9 +139,7 @@ class PassParserTest {
     @Test
     void parseDto_shouldReturnPassWithPackagePassOption_whenPassOptionIsPackage() {
         dto.passOption = PassConstants.Options.PACKAGE_NAME;
-        
-        // TODO : Read eventDates = null when checking for package and single pass
-        // dto.eventDates = null;
+        dto.eventDates = null;
 
         Pass pass = subject.parseDto(dto).get(0);
 
