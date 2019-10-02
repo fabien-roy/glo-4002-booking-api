@@ -118,7 +118,7 @@ public class InventoryParserTest {
                 () -> subject.parseDto(dtos)
         );
 
-        assertEquals(ExceptionConstants.UNUSED_METHOD_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.UNUSED_METHOD_ERROR, thrown.getMessage());
     }
 
 

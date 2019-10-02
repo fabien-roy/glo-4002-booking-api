@@ -41,6 +41,8 @@ public class ExceptionConstants {
 		public static final String PRODUCTION_NOT_FOUND_ERROR = "OXYGEN_PRODUCTION_NOT_FOUND";
 		public static final String UNIT_TYPE_NOT_FOUND_DESCRIPTION = "Oxygen unit type not found";
 		public static final String UNIT_TYPE_NOT_FOUND_ERROR = "OXYGEN_UNIT_TYPE_NOT_FOUND";
+		public static final String INVALID_DATE__ERROR = "INVALID_OXYGENTANK_RROR";
+		public static final String INVALID_DATE_DESCRIPTION = "Oxygen date should be between {startDate} and {endDate}";
 	}
 
 	public static class Shuttle {

@@ -127,6 +127,6 @@ class OxygenTankServiceTest {
 				() -> context.subject.order(nebulaQuality, INVALID_DATE)
 		);
 
-		assertEquals(ExceptionConstants.INVALID_DATE_MESSAGE, thrown.getMessage());
+		assertEquals(ExceptionConstants.INVALID_DATE_ERROR, thrown.getMessage());
 	}
 }
