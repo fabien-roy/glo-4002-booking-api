@@ -1,5 +1,16 @@
 package ca.ulaval.glo4002.booking.services;
 
+import static java.time.temporal.ChronoUnit.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
@@ -9,16 +20,6 @@ import ca.ulaval.glo4002.booking.domainobjects.qualities.SupergiantQuality;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.SupernovaQuality;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-import static org.junit.jupiter.api.Assertions.*;
 
 class OxygenTankServiceTest {
 
@@ -39,7 +40,6 @@ class OxygenTankServiceTest {
 	@Test
 	public void findAll_shouldReturnCorrectOxygens() {
 		List<Long> tankIds = new ArrayList<>();
-
 		context.subject.findAll().forEach(oxygenTank -> tankIds.add(oxygenTank.getId()));
 
 		assertEquals(3, tankIds.size());
@@ -50,10 +50,8 @@ class OxygenTankServiceTest {
 
 	@Test
 	public void findById_shouldThrowOxygenTankNotFoundException_whenOxygenTankDoesNotExist() {
-		OxygenTankNotFoundException thrown = assertThrows(
-				OxygenTankNotFoundException.class,
-				() -> context.subject.findById(context.nonExistentOxygenTankId)
-		);
+		OxygenTankNotFoundException thrown = assertThrows(OxygenTankNotFoundException.class,
+				() -> context.subject.findById(context.nonExistentOxygenTankId));
 
 		assertEquals(ExceptionConstants.Oxygen.TANK_NOT_FOUND_MESSAGE, thrown.getMessage());
 	}
@@ -122,10 +120,8 @@ class OxygenTankServiceTest {
 
 	@Test
 	void createOxygenTank_afterTheStartingDateOfFestival_shouldThrowInvalidEventDateException() {
-		InvalidDateException thrown = assertThrows(
-				InvalidDateException.class,
-				() -> context.subject.order(nebulaQuality, INVALID_DATE)
-		);
+		InvalidDateException thrown = assertThrows(InvalidDateException.class,
+				() -> context.subject.order(nebulaQuality, INVALID_DATE));
 
 		assertEquals(ExceptionConstants.INVALID_DATE_MESSAGE, thrown.getMessage());
 	}

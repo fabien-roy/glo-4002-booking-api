@@ -1,5 +1,9 @@
 package ca.ulaval.glo4002.booking.services;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
@@ -12,10 +16,6 @@ import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OxygenTankParser;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OxygenTankServiceImpl implements OxygenTankService {
 
@@ -33,10 +33,10 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 
 	@Override
 	public Iterable<OxygenTank> saveAll(Iterable<OxygenTank> oxygenTanks) {
-	    List<OxygenTankEntity> entities = new ArrayList<>();
-	    oxygenTanks.forEach(oxygenTank -> entities.add(parser.toEntity(oxygenTank)));
+		List<OxygenTankEntity> entities = new ArrayList<>();
+		oxygenTanks.forEach(oxygenTank -> entities.add(parser.toEntity(oxygenTank)));
 
-	    repository.saveAll(entities);
+		repository.saveAll(entities);
 
 		return oxygenTanks;
 	}
@@ -44,7 +44,6 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 	@Override
 	public Iterable<OxygenTank> findAll() {
 		List<OxygenTank> oxygenTanks = new ArrayList<>();
-
 		repository.findAll().forEach(oxygenTankEntity -> oxygenTanks.add(parser.parseEntity(oxygenTankEntity)));
 
 		return oxygenTanks;
@@ -80,7 +79,8 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 		return orderDate.plusDays(category.getProduction().getProductionTime().toDays());
 	}
 
-	private OxygenCategory getCategoryForTimeToProduce(OxygenCategory requestedCategory, LocalDate requestDate, LocalDate readyDate) {
+	private OxygenCategory getCategoryForTimeToProduce(OxygenCategory requestedCategory, LocalDate requestDate,
+			LocalDate readyDate) {
 		if (readyDate.isBefore(DateConstants.START_DATE)) {
 			return requestedCategory;
 		} else if (requestDate.plusDays(OxygenConstants.Productions.ELECTROLYTES_PRODUCTION_TIME.toDays())
