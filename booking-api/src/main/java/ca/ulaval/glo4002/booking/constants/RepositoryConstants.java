@@ -8,7 +8,7 @@ public class RepositoryConstants {
     public static final String ORDER_FIND_ALL_QUERY = "SELECT Id FROM Orders Id";
     public static final String SHUTTLE_FIND_ALL_QUERY = "Select Id FROM Shuttles Id";
     public static final String TRIP_FIND_ALL_QUERY = "Select Id FROM Trips Id";
-    public static final String PASSENGER_FIND_ALL_QUERY = "Select Id From Passengers Id";
+    public static final String PASSENGER_FIND_ALL_QUERY = "Select Id FROM Passengers Id";
     
 
     private RepositoryConstants(){

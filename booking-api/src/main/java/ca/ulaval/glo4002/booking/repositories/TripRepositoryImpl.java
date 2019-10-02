@@ -22,7 +22,9 @@ public class TripRepositoryImpl implements TripRepository {
 
 	@Override
 	public Iterable<TripEntity> findAll() {
-        return entityManager.createQuery(RepositoryConstants.TRIP_FIND_ALL_QUERY, TripEntity.class).getResultList();
+        return entityManager
+        		.createQuery(RepositoryConstants.TRIP_FIND_ALL_QUERY, TripEntity.class)
+        		.getResultList();
 	}
 
 	@Override
