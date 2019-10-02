@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Shuttles")
-public class ShuttleEntity extends OrderItemEntity {
+public class ShuttleEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
