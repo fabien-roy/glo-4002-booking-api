@@ -1,5 +1,11 @@
 package ca.ulaval.glo4002.booking.services;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import java.time.LocalDate;
+import java.util.Collections;
+
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
@@ -8,77 +14,48 @@ import ca.ulaval.glo4002.booking.entities.InventoryEntity;
 import ca.ulaval.glo4002.booking.parsers.InventoryParser;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 
-import java.time.LocalDate;
-import java.util.Collections;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class InventoryServiceContext {
 
-    public InventoryService subject;
+	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
+	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
 
-    public InventoryParser parser = new InventoryParser();
-    private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
-    private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
+	private InventoryEntity anInventoryEntity;
+	public InventoryService subject;
+	public InventoryParser parser = new InventoryParser();
+	public InventoryRepository repository;
+	public Inventory anInventory;
+	public OxygenTank anOxygenTank;
 
-    public InventoryRepository repository;
-    public Inventory anInventory;
-    public OxygenTank anOxygenTank;
-    private InventoryEntity anInventoryEntity;
+	public InventoryServiceContext() {
+		setUpObjects();
+		setUpRepository();
+		setUpSubject();
+	}
 
-    /*
-    private final static LocalDateTime A_ORDER_EVENT_DATE = DateConstants.ORDER_START_DATE_TIME;
-    private final static VendorBuilder vendorBuilder = new VendorBuilder();
-    private OrderEntity anotherOrderEntity;
-    private OrderEntity aNonExistentOrderEntity;
-    public Order anotherOrder;
-    public Order aNonExistentOrder;
-    public final static Long A_ORDER_ID = 1L;
-    public final static Long ANOTHER_ORDER_ID = 2L;
-    public final static Long A_NON_EXISTANT_ORDER_ID = 0L;
-    */
+	private void setUpObjects() {
+		OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
 
-    public InventoryServiceContext() {
-        setUpObjects();
-        setUpRepository();
-        setUpSubject();
-    }
+		anInventory = new Inventory();
 
-    private void setUpObjects() {
-        OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
+		anOxygenTank = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.E_ID), A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE);
 
-        anInventory = new Inventory();
+		anInventoryEntity = parser.toEntity(anInventory);
+	}
 
-        anOxygenTank = new OxygenTank(
-                categoryBuilder.buildById(OxygenConstants.Categories.E_ID),
-                A_VALID_DATE,
-                A_DATE_AFTER_THE_OTHER_ONE
-        );
+	private void setUpRepository() {
+		repository = mock(InventoryRepository.class);
 
-        anInventoryEntity = parser.toEntity(anInventory);
-    }
+		when(repository.findAll()).thenReturn(Collections.singletonList(anInventoryEntity));
+		when(repository.save(any(InventoryEntity.class))).thenReturn(anInventoryEntity);
+	}
 
-    private void setUpRepository() {
-        repository = mock(InventoryRepository.class);
+	private void setUpSubject() {
+		subject = new InventoryServiceImpl(repository);
+	}
 
-        when(repository.findAll()).thenReturn(Collections.singletonList(anInventoryEntity));
-        when(repository.save(any(InventoryEntity.class))).thenReturn(anInventoryEntity);
-        /*
-        when(repository.findById(A_ORDER_ID)).thenReturn(Optional.of(aOrderEntity));
-        when(repository.findById(ANOTHER_ORDER_ID)).thenReturn(Optional.of(anotherOrderEntity));
-        when(repository.findById(A_NON_EXISTANT_ORDER_ID)).thenReturn(Optional.empty());
-        when(repository.save(any(OrderEntity.class))).thenReturn(aOrderEntity);
-        */
-    }
+	// TODO : Setup for save
+	public void setUpForSave() {
 
-    private void setUpSubject() {
-        subject = new InventoryServiceImpl(repository);
-    }
-
-    // TODO : Setup for save
-    public void setUpForSave() {
-        //when(repository.findAll()).thenReturn()
-    }
+	}
 }

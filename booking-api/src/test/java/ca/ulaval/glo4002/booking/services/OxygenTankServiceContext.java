@@ -15,26 +15,26 @@ import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
 
 class OxygenTankServiceContext {
 
-	public OxygenTankService subject;
-
 	public static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
 
-	OxygenTankRepository repository;
-	OxygenTank oxygenTankA;
-	OxygenTank oxygenTankB;
-	OxygenTank oxygenTankE;
-	public OxygenTank nonExistentOxygenTank;
+	private OxygenTankRepository repository;
 	private OxygenTankEntity oxygenTankAEntity;
 	private OxygenTankEntity oxygenTankBEntity;
 	private OxygenTankEntity oxygenTankEEntity;
 	private OxygenTankEntity oxygenTankNonExistentEntity;
-	Long oxygenTankAId;
-	private Long oxygenTankBId;
-	private Long oxygenTankEId;
-	public Long nonExistentOxygenTankId = 0L;
 	private OxygenTankParser parser = new OxygenTankParser();
 	private OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
+
+	public OxygenTankService subject;
+	public OxygenTank oxygenTankA;
+	public OxygenTank oxygenTankB;
+	public OxygenTank oxygenTankE;
+	public OxygenTank nonExistentOxygenTank;
+	public Long oxygenTankAId;
+	public Long oxygenTankBId;
+	public Long oxygenTankEId;
+	public Long nonExistentOxygenTankId = 0L;
 
 	OxygenTankServiceContext() {
 		setUpOxygenTanks();
