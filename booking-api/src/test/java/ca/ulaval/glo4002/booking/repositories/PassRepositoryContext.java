@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -64,6 +65,9 @@ public class PassRepositoryContext {
     }
 
     public void setUpEntityManagerForSaveAll() {
+        EntityTransaction transaction = mock(EntityTransaction.class);
+        when(entityManager.getTransaction()).thenReturn(transaction);
+
         aNonExistentPass.setId(null);
         when(entityManager.find(PassEntity.class, A_NON_EXISTANT_PASS_ID)).thenReturn(aNonExistentPass);
     }

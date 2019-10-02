@@ -42,7 +42,13 @@ public class PassRepositoryImpl implements PassRepository {
     public <S extends PassEntity> Iterable<S> saveAll(Iterable<S> passes) {
         passes.forEach(pass -> {
             if (pass.getId() == null) {
-                entityManager.persist(pass);
+                entityManager.getTransaction().begin();
+
+                if (!entityManager.contains(pass)) {
+                    entityManager.persist(pass);
+                }
+
+                entityManager.getTransaction().commit();
             } else {
                 throw new PassAlreadyCreatedException(pass.getId().toString());
             }

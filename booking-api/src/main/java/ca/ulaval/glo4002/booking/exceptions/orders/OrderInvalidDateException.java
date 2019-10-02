@@ -15,8 +15,8 @@ public class OrderInvalidDateException extends ControllerException {
 
         error = ExceptionConstants.Order.NOT_FOUND_ERROR;
         description = ExceptionConstants.Order.INVALID_DATE_DESCRIPTION
-                .replace("{startDate}", DateConstants.ORDER_START_DATE_TIME.toString())
-                .replace("{endDate}", DateConstants.ORDER_END_DATE_TIME.toString());
+                .replace("{startDate}", DateConstants.ORDER_START_DATE_TIME.format(DateConstants.MESSAGE_DATE_TIME_FORMATTER))
+                .replace("{endDate}", DateConstants.ORDER_END_DATE_TIME.format(DateConstants.MESSAGE_DATE_TIME_FORMATTER));
         httpStatus = HttpStatus.NOT_FOUND;
     }
 }

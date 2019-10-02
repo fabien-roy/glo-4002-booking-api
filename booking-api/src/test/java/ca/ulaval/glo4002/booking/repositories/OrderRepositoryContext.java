@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -66,6 +67,9 @@ public class OrderRepositoryContext {
     }
 
     public void setUpEntityManagerForSave() {
+        EntityTransaction transaction = mock(EntityTransaction.class);
+        when(entityManager.getTransaction()).thenReturn(transaction);
+
         aNonExistentOrder.setId(null);
         when(entityManager.find(OrderEntity.class, A_NON_EXISTANT_ORDER_ID)).thenReturn(aNonExistentOrder);
     }
