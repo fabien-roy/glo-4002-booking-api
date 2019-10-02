@@ -28,7 +28,8 @@ public class PassConstants {
         public static final Long SUPERGIANT_OXYGEN_CATEGORY_ID = OxygenConstants.Categories.B_ID;
         public static final Long NEBULA_OXYGEN_CATEGORY_ID = OxygenConstants.Categories.A_ID;
 
-        public static final int SUPERGIANT_SINGLE_PASS_REBATE_TRESHOLD = 5;
+        public static final int SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD = 5;
+        public static final int NEBULA_SINGLE_PASS_REBATE_THRESHOLD = 4;
 
         public static final Double SUPERGIANT_SINGLE_PASS_REBATE = 0.9;
         public static final Double NEBULA_SINGLE_PASS_REBATE = 0.9;

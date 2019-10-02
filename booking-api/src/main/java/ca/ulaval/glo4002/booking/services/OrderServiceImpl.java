@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.NebulaPassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.passes.categories.SupergiantPassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
@@ -68,10 +69,12 @@ public class OrderServiceImpl implements OrderService {
         Double rebate = 1d;
         Double price = 0d;
 
-        //if(order.getPasses().get(0).getOption().get)
-        if(order.getPasses().size() >= PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_TRESHOLD &&
-        order.getPasses().get(0).getCategory() instanceof SupergiantPassCategory){
-            rebate = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
+        if(order.getPasses().get(0).getCategory() instanceof SupergiantPassCategory) {
+            rebate = verifyIfSupergiantRebateApplies(order, rebate);
+        }
+
+        if(order.getPasses().get(0).getCategory() instanceof NebulaPassCategory) {
+            rebate = verifyIfNebulaRebateApply(order, rebate);
         }
 
         for (Pass p:
@@ -80,5 +83,19 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return price * rebate;
+    }
+
+    private Double verifyIfSupergiantRebateApplies(Order order, Double rebate) {
+        if (order.getPasses().size() >= PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD) {
+            rebate = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
+        }
+        return rebate;
+    }
+
+    private Double verifyIfNebulaRebateApply(Order order, Double rebate) {
+        if(order.getPasses().size() >= PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD){
+            rebate = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE;
+        }
+        return rebate;
     }
 }

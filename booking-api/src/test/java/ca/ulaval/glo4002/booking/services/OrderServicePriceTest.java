@@ -10,8 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OrderServicePriceTest {
 
-    private static final int AMOUNT_OF_SUPERGIANT_PASSES = 5;
-    private static final int AMOUNT_OF_NEBULA_PASSES = 4;
+    private static final int AMOUNT_OF_SUPERGIANT_PASSES_MORE_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD;
+    private static final int AMOUNT_OF_SUPERGIANT_PASSES_LESS_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD - 1;
+    private static final int AMOUNT_OF_NEBULA_PASSES_MORE_THAN_THRESHOLD = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD;
+    private static final int AMOUNT_OF_NEBULA_PASSES_LESS_THAN_THRESHOLD = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD - 1;
     private static final double DELTA = 0.01;
     private OrderServiceTestContext context;
 
@@ -38,23 +40,45 @@ public class OrderServicePriceTest {
     }
 
     @Test
-    void whenPassesHasFiveOrMoreSupergiantSinglePass_thenTenPercentRebateIsApplied(){
-        context.aOrder.setPasses(Collections.nCopies(AMOUNT_OF_SUPERGIANT_PASSES, context.aSupergiantSinglePass));
+    void whenTheresLessSupergiantPassesThanThreshold_thenRebateIsNotApplied(){
+        context.aOrder.setPasses(Collections.nCopies(AMOUNT_OF_SUPERGIANT_PASSES_LESS_THAN_THRESHOLD, context.aSupergiantSinglePass));
+        double expectedPrice = AMOUNT_OF_SUPERGIANT_PASSES_LESS_THAN_THRESHOLD *
+                PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE;
 
         Double price = context.subject.getOrderPrice(context.aOrder);
-        double expectedPrice = AMOUNT_OF_SUPERGIANT_PASSES *
+
+        assertEquals(expectedPrice,price,DELTA);
+    }
+
+    @Test
+    void whenTheresMoreSupergiantPassesThanThreshold_thenRebateIsApplied(){
+        context.aOrder.setPasses(Collections.nCopies(AMOUNT_OF_SUPERGIANT_PASSES_MORE_THAN_THRESHOLD, context.aSupergiantSinglePass));
+        double expectedPrice = AMOUNT_OF_SUPERGIANT_PASSES_MORE_THAN_THRESHOLD *
                 PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE *
                 PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
+
+        Double price = context.subject.getOrderPrice(context.aOrder);
 
         assertEquals(expectedPrice, price, DELTA);
     }
 
     @Test
-    void whenPassesHasMoreThanThreeNebulaSinglePass_thenTenPercentRebateIsApplied(){
-        context.aOrder.setPasses(Collections.nCopies(AMOUNT_OF_NEBULA_PASSES, context.aNebulaSinglePass));
+    void whenTheresLessNebulaPassesThanThreshold_thenRebateIsApplied(){
+        context.aOrder.setPasses(Collections.nCopies(AMOUNT_OF_NEBULA_PASSES_LESS_THAN_THRESHOLD, context.aNebulaSinglePass));
+        double expectedPrice = AMOUNT_OF_NEBULA_PASSES_LESS_THAN_THRESHOLD *
+                PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE;
 
         Double price = context.subject.getOrderPrice(context.aOrder);
-        double expectedPrice = AMOUNT_OF_NEBULA_PASSES *
+
+        assertEquals(expectedPrice, price, DELTA);
+    }
+
+    @Test
+    void whenTheresMoreNebulaPassesThanThreshold_thenTenPercentRebateIsApplied(){
+        context.aOrder.setPasses(Collections.nCopies(AMOUNT_OF_NEBULA_PASSES_MORE_THAN_THRESHOLD, context.aNebulaSinglePass));
+
+        Double price = context.subject.getOrderPrice(context.aOrder);
+        double expectedPrice = AMOUNT_OF_NEBULA_PASSES_MORE_THAN_THRESHOLD *
                 PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE *
                 PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE;
 
