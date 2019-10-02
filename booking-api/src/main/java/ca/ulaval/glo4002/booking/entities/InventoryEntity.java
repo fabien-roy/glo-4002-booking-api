@@ -31,6 +31,10 @@ public class InventoryEntity {
         this.inventoryItems = inventoryItems;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public List<InventoryItemEntity> getInventoryItems() {
         return inventoryItems;
     }

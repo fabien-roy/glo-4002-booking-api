@@ -1,18 +1,17 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.OxygenTankDto;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OxygenTankParserTest {
 
@@ -23,7 +22,6 @@ class OxygenTankParserTest {
 	private OxygenTankDto oxygenTankDto = new OxygenTankDto();
 	private OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
 	private OxygenTank oxygenTank;
-	private OxygenTank oxygenTankNotValid;
 
 	@BeforeEach
 	void setUp() {
@@ -31,14 +29,11 @@ class OxygenTankParserTest {
 		oxygenTankDto.oxygenCategory = OxygenConstants.Categories.A_ID;
 		oxygenTankDto.requestDate = A_VALID_DATE.toString();
 
-		oxygenTank = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.B_ID), A_VALID_DATE,
-				A_VALID_DATE);
-		oxygenTankNotValid = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.B_ID), A_INVALID_DATE,
-				A_INVALID_DATE);
+		oxygenTank = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.B_ID), A_VALID_DATE, A_VALID_DATE);
 	}
 
 	@Test
-	void whenParsingEntity_orderShouldBeValid() {
+	void parsingEntity_shouldReturnValidObject() {
 		OxygenTankEntity entity = subject.toEntity(oxygenTank);
 
 		OxygenTank parsedOxygenTank = subject.parseEntity(entity);
@@ -49,7 +44,7 @@ class OxygenTankParserTest {
 	}
 
 	@Test
-	void whenParsingToEntity_entityShouldBeValid() {
+	void toEntity_shouldReturnValidEntity() {
 		OxygenTankEntity entity = subject.toEntity(oxygenTank);
 
 		assertEquals(oxygenTank.getId(), entity.getId());

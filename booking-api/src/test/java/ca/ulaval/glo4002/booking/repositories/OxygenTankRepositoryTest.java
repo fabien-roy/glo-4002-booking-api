@@ -40,7 +40,7 @@ class OxygenTankRepositoryTest {
 	}
 
 	@Test
-	public void findAll_shouldReturnCorrectOxygens() {
+	public void findAll_shouldReturnCorrectOxygenTanks() {
 		List<OxygenTankEntity> oxygenTank = new ArrayList<>();
 
 		subject.findAll().forEach(oxygenTank::add);
@@ -52,7 +52,7 @@ class OxygenTankRepositoryTest {
 	}
 
 	@Test
-	public void save_shouldSaveOxygen() {
+	public void save_shouldSaveOxygenTank() {
 		context.setUpEntityManagerForSave();
 		subject.save(context.nonExistentOxygenTank);
 

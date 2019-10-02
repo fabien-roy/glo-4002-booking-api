@@ -1,15 +1,14 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
+
+import javax.persistence.EntityManager;
+import java.util.Optional;
 
 public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 
@@ -25,8 +24,7 @@ public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 
 	@Override
 	public Iterable<OxygenTankEntity> findAll() {
-		return entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OxygenTankEntity.class)
-				.getResultList();
+		return entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OxygenTankEntity.class).getResultList();
 	}
 
 	@Override
