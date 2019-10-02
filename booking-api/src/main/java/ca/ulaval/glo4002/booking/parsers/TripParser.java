@@ -17,6 +17,7 @@ public class TripParser implements EntityParser<Trip, TripEntity>, DtoParser<Tri
 	
 	ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
 	ShuttleParser shuttleParser = new ShuttleParser();
+	PassengerParser passengerParser = new PassengerParser();
 
     // TODO : Add passengers
 	@Override
@@ -25,14 +26,14 @@ public class TripParser implements EntityParser<Trip, TripEntity>, DtoParser<Tri
 	        return new DepartureTrip(
 	                entity.getId(),
                     entity.getDate(),
-                    new ArrayList<>(),
+                    passengerParser.parseEntity(entity.getPassengers()),
                     shuttleParser.parseEntity(entity.getShuttle())
             );
         } else if (entity.getTypeId().equals(TripConstants.Types.ARRIVAL_ID)) {
             return new ArrivalTrip(
                     entity.getId(),
                     entity.getDate(),
-                    new ArrayList<>(),
+                    passengerParser.parseEntity(entity.getPassengers()),
                     shuttleParser.parseEntity(entity.getShuttle())
             );
         } else {
@@ -47,7 +48,8 @@ public class TripParser implements EntityParser<Trip, TripEntity>, DtoParser<Tri
 		return new TripEntity(
 		        trip.getId(),
                 trip.getDate(),
-                trip.getType().getId()
+                trip.getType().getId(),
+                passengerParser.toEntity(trip.getPassengers())
         );
 	}
 
@@ -61,13 +63,13 @@ public class TripParser implements EntityParser<Trip, TripEntity>, DtoParser<Tri
 		TripDto dto = new TripDto();
 		String shuttleName = object.getShuttle().getShuttleCategory().getName();
 		String date = object.getDate().toString();
-		List<PassengerDto> passengerDtos = new ArrayList<>();
+		List<PassengerDto> passengers = new ArrayList<>();
 		
-		//TODO : passengerParser;
+		passengers.addAll(passengerParser.toDto(object.getPassengers()));
 		
 		dto.date = date;
 		dto.shuttleName = shuttleName;
-		dto.passengers = passengerDtos;
+		dto.passengers = passengers;
 		return dto;
 	}
 	

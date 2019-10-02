@@ -8,6 +8,7 @@ import ca.ulaval.glo4002.booking.entities.TripEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.mockito.Mockito.mock;
@@ -35,13 +36,15 @@ public class TripRepositoryContext {
         aTrip = new TripEntity(
                 A_ID,
                 A_DATE,
-                A_TYPE_ID
+                A_TYPE_ID,
+                new ArrayList<>()
         );
 
         anotherTrip = new TripEntity(
                 ANOTHER_ID,
                 ANOTHER_DATE,
-                ANOTHER_TYPE_ID
+                ANOTHER_TYPE_ID,
+                new ArrayList<>()
         );
     }
 
