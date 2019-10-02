@@ -79,9 +79,10 @@ public class InventoryServiceTest {
 	}
 
 	@Test
-	void whenGetIsCalled_thenShouldReturnAnTheInventory() {
+	void whenGetIsCalled_thenShouldReturnTheInventory() {
 		context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 5L);
 		// TODO Do this test
+		// context.subject.get()
 	}
 
 	@Test
