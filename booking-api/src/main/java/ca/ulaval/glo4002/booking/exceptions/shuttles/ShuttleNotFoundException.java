@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ShuttleNotFoundException extends FestivalException {
 	
 	public ShuttleNotFoundException() {
-		super(ExceptionConstants.Shuttle.NOT_FOUND_MESSAGE);
+		super(ExceptionConstants.Shuttle.NOT_FOUND_DESCRIPTION);
+
+		error = ExceptionConstants.Shuttle.NOT_FOUND_ERROR;
+		description = ExceptionConstants.Shuttle.NOT_FOUND_DESCRIPTION;
+		httpStatus = HttpStatus.NOT_FOUND;
 	}
 }

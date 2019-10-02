@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OxygenUnitTypeNotFoundException extends FestivalException {
 
     public OxygenUnitTypeNotFoundException() {
-        super(ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_MESSAGE);
+        super(ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_ERROR);
+
+        error = ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_ERROR;
+        description = ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_DESCRIPTION;
+        httpStatus = HttpStatus.NOT_FOUND;
     }
 }

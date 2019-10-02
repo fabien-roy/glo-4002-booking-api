@@ -2,9 +2,8 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.exceptions.AlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.DtoInvalidException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.ControllerException;
+import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
@@ -23,7 +22,7 @@ public class OrderController {
     private final OrderParser orderParser = new OrderParser();
 
     public OrderController() {
-        // TODO : Inject this
+        // TODO : ACP : Inject this
         PassService passService = new PassServiceImpl(new PassRepositoryImpl());
         OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl());
         this.orderService = new OrderServiceImpl(new OrderRepositoryImpl(), passService, oxygenTankService);
@@ -40,8 +39,11 @@ public class OrderController {
         Order order;
 
         try {
+            // TODO : ACP : Is this correct for passes?
             order = orderService.findById(entityId);
-        } catch (OrderNotFoundException exception) {
+        } catch (ControllerException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
             return ResponseEntity.notFound().build();
         }
 
@@ -54,14 +56,10 @@ public class OrderController {
         Order order;
 
         try {
-            order = orderParser.parseDto(dto);
-        } catch (DtoInvalidException exception) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        try {
-            order = orderService.order(order);
-        } catch (AlreadyCreatedException exception) {
+            order = orderService.order(orderParser.parseDto(dto));
+        } catch (ControllerException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
             return ResponseEntity.badRequest().build();
         }
 

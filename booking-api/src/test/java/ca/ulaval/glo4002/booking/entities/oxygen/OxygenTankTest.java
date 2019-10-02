@@ -81,7 +81,7 @@ public class OxygenTankTest {
                 () -> new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), INVALID_DATE, VALID_DATE)
         );
 
-        assertEquals(ExceptionConstants.INVALID_DATE_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.INVALID_DATE_DESCRIPTION, thrown.getMessage());
     }
     */
 }

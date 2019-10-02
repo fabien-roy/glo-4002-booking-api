@@ -15,7 +15,7 @@ public class PassOptionBuilder implements Builder<PassOption> {
         } else if (id.equals(PassConstants.Options.SINGLE_ID)) {
             return buildSinglePassOption();
         } else {
-            throw new PassOptionNotFoundException();
+            throw new PassOptionNotFoundException(id.toString());
         }
     }
 
@@ -26,7 +26,7 @@ public class PassOptionBuilder implements Builder<PassOption> {
             case PassConstants.Options.SINGLE_NAME:
                 return buildSinglePassOption();
             default:
-                throw new PassOptionNotFoundException();
+                throw new PassOptionNotFoundException(name);
         }
     }
 

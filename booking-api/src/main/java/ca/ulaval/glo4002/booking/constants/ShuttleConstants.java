@@ -21,11 +21,11 @@ public class ShuttleConstants {
         public static final Double SPACE_X_PRICE = 30000.0;
 
         private Categories(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
         }
     }
 
     private ShuttleConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
     }
 }

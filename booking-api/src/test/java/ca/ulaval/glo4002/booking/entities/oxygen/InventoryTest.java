@@ -65,7 +65,7 @@ public class InventoryTest {
                 () -> subject.addTankInInventory(AN_INVALID_CATEGORY, 20L)
         );
 
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class InventoryTest {
                 () -> subject.getInventoryByCategoryID(AN_INVALID_CATEGORY)
         );
 
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class InventoryTest {
                 () -> subject.getTankInUseByCategoryID(AN_INVALID_CATEGORY)
         );
 
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
 }

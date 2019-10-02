@@ -6,13 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class OrderAlreadyCreatedException extends ControllerException {
+public class OrderInvalidFormatException extends ControllerException {
 
-    public OrderAlreadyCreatedException(String orderNumber) {
-        super(ExceptionConstants.Order.ALREADY_CREATED_ERROR);
+    public OrderInvalidFormatException(){
+        super(ExceptionConstants.Order.INVALID_FORMAT_ERROR);
 
-        error = ExceptionConstants.Order.ALREADY_CREATED_ERROR;
-        description = ExceptionConstants.Order.ALREADY_CREATED_DESCRIPTION.replace("{orderNumber}", orderNumber);
+        error = ExceptionConstants.Order.INVALID_FORMAT_ERROR;
+        description = ExceptionConstants.Order.INVALID_FORMAT_DESCRIPTION;
         httpStatus = HttpStatus.BAD_REQUEST;
     }
 }
