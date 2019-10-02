@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassInvalidFormatException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDate;
@@ -30,7 +30,7 @@ public class PassParser implements EntityParser<Pass, PassEntity>, ParseDtoParse
 
         if (option.getId().equals(PassConstants.Options.PACKAGE_ID)) {
             if (dto.eventDates != null) {
-                throw new PassDtoInvalidException();
+                throw new PassInvalidFormatException();
             }
 
             return new ArrayList<>(Collections.singletonList(new Pass(dto.passNumber, category, option)));
@@ -104,13 +104,13 @@ public class PassParser implements EntityParser<Pass, PassEntity>, ParseDtoParse
         try {
             return FestivalDateUtil.toLocalDate(eventDate);
         } catch(InvalidDateException exception) {
-            throw new PassDtoInvalidException();
+            throw new PassInvalidFormatException();
         }
     }
 
     private void validateEventDate(LocalDate eventDate) {
         if (FestivalDateUtil.isOutsideFestivalDates(eventDate)) {
-            throw new PassDtoInvalidException();
+            throw new PassInvalidFormatException();
         }
     }
 }

@@ -29,7 +29,7 @@ public class OxygenProductionBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_DESCRIPTION, thrown.getMessage());
     }
 
     @Test
@@ -87,7 +87,7 @@ public class OxygenProductionBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_DESCRIPTION, thrown.getMessage());
     }
 
     @Test

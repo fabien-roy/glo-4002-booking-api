@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class PassAlreadyCreatedException extends AlreadyCreatedException {
 
-    public PassAlreadyCreatedException() {
-        super(ExceptionConstants.Pass.ALREADY_CREATED_MESSAGE);
+    public PassAlreadyCreatedException(String passNumber) {
+        super(ExceptionConstants.Pass.ALREADY_CREATED_ERROR);
+
+        error = ExceptionConstants.Pass.ALREADY_CREATED_ERROR;
+        description = ExceptionConstants.Pass.ALREADY_CREATED_DESCRIPTION.replace("{passNumber}", passNumber);
     }
 }

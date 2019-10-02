@@ -6,9 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class PassDtoInvalidException extends DtoInvalidException {
+public class PassInvalidFormatException extends DtoInvalidException {
 
-    public PassDtoInvalidException(){
-        super(ExceptionConstants.Pass.DTO_INVALID_MESSAGE);
+    public PassInvalidFormatException(){
+        super(ExceptionConstants.Pass.INVALID_FORMAT_DESCRIPTION);
+
+        error = ExceptionConstants.Pass.INVALID_FORMAT_ERROR;
+        description = ExceptionConstants.Pass.INVALID_FORMAT_DESCRIPTION;
     }
 }

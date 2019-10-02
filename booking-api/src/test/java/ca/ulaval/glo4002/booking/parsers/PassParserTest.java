@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassInvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +71,7 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_DESCRIPTION, thrown.getMessage());
     }
 
     @Test
@@ -83,19 +83,19 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_DESCRIPTION, thrown.getMessage());
     }
 
     @Test
     void parseDto_shouldThrowInvalidPassDtoException_whenEventDatesAreNotInFestivalDates() {
         SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
 
-        PassDtoInvalidException thrown = assertThrows(
-                PassDtoInvalidException.class,
+        PassInvalidFormatException thrown = assertThrows(
+                PassInvalidFormatException.class,
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
     }
 
     @Test
@@ -103,12 +103,12 @@ class PassParserTest {
         SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
         dto.passOption = PassConstants.Options.PACKAGE_NAME;
 
-        PassDtoInvalidException thrown = assertThrows(
-                PassDtoInvalidException.class,
+        PassInvalidFormatException thrown = assertThrows(
+                PassInvalidFormatException.class,
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
     }
 
     @Test

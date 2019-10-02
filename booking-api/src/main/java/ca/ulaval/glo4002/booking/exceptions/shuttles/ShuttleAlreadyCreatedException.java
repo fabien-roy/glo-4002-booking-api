@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ShuttleAlreadyCreatedException extends AlreadyCreatedException {
 	
 	public ShuttleAlreadyCreatedException() {
-		super(ExceptionConstants.Shuttle.ALREADY_CREATED_MESSAGE);
+		super(ExceptionConstants.Shuttle.ALREADY_CREATED_ERROR);
+
+		error = ExceptionConstants.Shuttle.ALREADY_CREATED_ERROR;
+		description = ExceptionConstants.Shuttle.ALREADY_CREATED_DESCRIPTION;
 	}
 
 }

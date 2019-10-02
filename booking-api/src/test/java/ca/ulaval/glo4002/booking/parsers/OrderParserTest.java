@@ -14,7 +14,7 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.VendorNotFoundException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderInvalidFormatException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -79,24 +79,24 @@ class OrderParserTest {
     void whenOrderDateIsBeforeOrderStart_thenOrderDtoInvalidExceptionIsThrown() {
         orderDto.orderDate = A_DATE_BEFORE_ORDER_START_DATE_TIME;
 
-        OrderDtoInvalidException thrown = assertThrows(
-                OrderDtoInvalidException.class,
+        OrderInvalidFormatException thrown = assertThrows(
+                OrderInvalidFormatException.class,
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.Order.DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
     }
 
     @Test
     void whenOrderDateIsAfterOrderStart_thenOrderDtoInvalidExceptionIsThrown() {
         orderDto.orderDate = A_DATE_AFTER_ORDER_START_END_TIME;
 
-        OrderDtoInvalidException thrown = assertThrows(
-                OrderDtoInvalidException.class,
+        OrderInvalidFormatException thrown = assertThrows(
+                OrderInvalidFormatException.class,
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.Order.DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
     }
 
     @Test
@@ -117,7 +117,7 @@ class OrderParserTest {
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.Vendor.NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Vendor.NOT_FOUND_DESCRIPTION, thrown.getMessage());
     }
 
     @Test

@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ShuttleFullException extends FestivalException {
 	
 	public ShuttleFullException() {
-		super(ExceptionConstants.Shuttle.FULL_MESSAGE);
+		super(ExceptionConstants.Shuttle.FULL_ERROR);
+
+		error = ExceptionConstants.Shuttle.FULL_ERROR;
+		description = ExceptionConstants.Shuttle.FULL_DESCRIPTION;
 	}
 
 }

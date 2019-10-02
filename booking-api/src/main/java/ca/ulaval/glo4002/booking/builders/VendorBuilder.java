@@ -26,7 +26,7 @@ public class VendorBuilder implements Builder<Vendor> {
 
     @Override
     public Vendor buildByName(String name) {
-        throw new IllegalStateException(ExceptionConstants.UNUSED_METHOD_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UNUSED_METHOD_DESCRIPTION);
     }
 
     private Vendor buildTeamVendor() {

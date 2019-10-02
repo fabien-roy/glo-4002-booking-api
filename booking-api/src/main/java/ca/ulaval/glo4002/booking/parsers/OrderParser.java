@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.OrderItemEntity;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateTimeException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderInvalidFormatException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDateTime;
@@ -78,13 +78,13 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
         try {
             return FestivalDateUtil.toLocalDateTime(orderDate);
         } catch(InvalidDateTimeException exception) {
-            throw new OrderDtoInvalidException();
+            throw new OrderInvalidFormatException();
         }
     }
 
     private void validateOrderDate(LocalDateTime orderDate){
         if (FestivalDateUtil.isOutsideOrderDates(orderDate)){
-            throw new OrderDtoInvalidException();
+            throw new OrderInvalidFormatException();
         }
     }
 }

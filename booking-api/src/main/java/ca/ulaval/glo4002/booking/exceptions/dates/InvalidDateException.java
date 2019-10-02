@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class InvalidDateException extends FestivalException {
 
     public InvalidDateException() {
-        super(ExceptionConstants.INVALID_DATE_MESSAGE);
+        super(ExceptionConstants.INVALID_DATE_ERROR);
+
+        error = ExceptionConstants.INVALID_DATE_ERROR;
+        description = ExceptionConstants.INVALID_DATE_DESCRIPTION;
     }
 }

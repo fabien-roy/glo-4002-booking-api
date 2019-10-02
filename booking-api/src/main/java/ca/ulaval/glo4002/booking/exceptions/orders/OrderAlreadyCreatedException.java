@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class OrderAlreadyCreatedException extends AlreadyCreatedException {
 
-    public OrderAlreadyCreatedException() {
-        super(ExceptionConstants.Order.ALREADY_CREATED_MESSAGE);
+    public OrderAlreadyCreatedException(String orderNumber) {
+        super(ExceptionConstants.Order.ALREADY_CREATED_ERROR);
+
+        error = ExceptionConstants.Order.ALREADY_CREATED_ERROR;
+        description = ExceptionConstants.Order.ALREADY_CREATED_DESCRIPTION.replace("{orderNumber}", orderNumber);
     }
 }
