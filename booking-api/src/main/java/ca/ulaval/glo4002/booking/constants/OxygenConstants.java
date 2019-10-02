@@ -19,7 +19,7 @@ public class OxygenConstants {
         public static final Long A_PRODUCTION_ID = Productions.SPARK_PLUGS_ID;
 
         private Categories(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
         }
     }
 
@@ -54,7 +54,7 @@ public class OxygenConstants {
         public static final Long SPARK_PLUGS_UNIT_TYPE_ID = UnitTypes.SPARK_PLUGS_ID;
 
         private Productions(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
         }
     }
 
@@ -69,11 +69,11 @@ public class OxygenConstants {
         public static final String SPARK_PLUGS_NAME = "Spark plug";
 
         private UnitTypes(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
         }
     }
 
     private OxygenConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
     }
 }

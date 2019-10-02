@@ -1,22 +1,30 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
+import java.util.List;
+
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
+import ca.ulaval.glo4002.booking.dto.TripDto;
+import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 
 public class ShuttleManifestParser implements DtoParser<ShuttleManifest, ShuttleManifestDto> {
-	
-	private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
+
+	private TripParser tripParser = new TripParser();
 
 	@Override
 	public ShuttleManifest parseDto(ShuttleManifestDto dto) {
-	    // TODO
-		return null;
+	    throw new UnusedMethodException();
 	}
 
 	@Override
 	public ShuttleManifestDto toDto(ShuttleManifest shuttleManifest) {
-	    // TODO
-		return null;
+		List<TripDto> arrivalDtos = tripParser.toDtos(shuttleManifest.getArrivals());
+		List<TripDto> departureDtos = tripParser.toDtos(shuttleManifest.getDepartures());	
+		
+	    ShuttleManifestDto shuttleManifestDto = new ShuttleManifestDto();
+	    shuttleManifestDto.arrivals = arrivalDtos;
+	    shuttleManifestDto.departures = departureDtos;
+	    
+	    return shuttleManifestDto;
 	}
 }

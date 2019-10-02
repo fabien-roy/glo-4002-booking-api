@@ -53,7 +53,7 @@ class OxygenTankServiceTest {
 		OxygenTankNotFoundException thrown = assertThrows(OxygenTankNotFoundException.class,
 				() -> context.subject.findById(context.nonExistentOxygenTankId));
 
-		assertEquals(ExceptionConstants.Oxygen.TANK_NOT_FOUND_MESSAGE, thrown.getMessage());
+		assertEquals(ExceptionConstants.Oxygen.TANK_NOT_FOUND_ERROR, thrown.getMessage());
 	}
 
 	@Test
@@ -123,6 +123,6 @@ class OxygenTankServiceTest {
 		InvalidDateException thrown = assertThrows(InvalidDateException.class,
 				() -> context.subject.order(nebulaQuality, INVALID_DATE));
 
-		assertEquals(ExceptionConstants.INVALID_DATE_MESSAGE, thrown.getMessage());
+		assertEquals(ExceptionConstants.INVALID_DATE_ERROR, thrown.getMessage());
 	}
 }

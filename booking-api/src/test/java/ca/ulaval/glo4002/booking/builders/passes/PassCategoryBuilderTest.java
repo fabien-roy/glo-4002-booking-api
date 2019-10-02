@@ -33,7 +33,7 @@ public class PassCategoryBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PassCategoryBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -140,7 +140,6 @@ public class PassCategoryBuilderTest {
         assertNotNull(passCategory);
         assertEquals(passCategory.getId(), id);
         assertEquals(passCategory.getName(), name);
-        // TODO : Find a correct way to assert what is in pricePerOption
-        // assertTrue(Maps.difference(passCategory.getPricePerOption(), pricePerOption).areEqual());
+        assertEquals(passCategory.getPricePerOption(), pricePerOption);
     }
 }

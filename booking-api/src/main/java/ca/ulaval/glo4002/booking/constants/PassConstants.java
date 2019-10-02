@@ -29,7 +29,7 @@ public class PassConstants {
         public static final Long NEBULA_OXYGEN_CATEGORY_ID = OxygenConstants.Categories.A_ID;
 
         private Categories(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
         }
     }
 
@@ -42,11 +42,11 @@ public class PassConstants {
         public static final String SINGLE_NAME = "singlePass";
 
         private Options(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
         }
     }
 
     private PassConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
     }
 }

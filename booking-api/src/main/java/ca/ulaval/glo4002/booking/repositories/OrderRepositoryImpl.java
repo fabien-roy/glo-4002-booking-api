@@ -31,7 +31,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         OrderEntity orderEntity = entityManager.find(OrderEntity.class, id);
 
         if (orderEntity == null) {
-            throw new OrderNotFoundException();
+            throw new OrderNotFoundException(id.toString());
         }
 
         return Optional.of(orderEntity);
@@ -46,10 +46,23 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Transactional(propagation = Propagation.REQUIRED)
     public <S extends OrderEntity> S save(S order) {
         if (order.getId() == null) {
-            entityManager.persist(order);
+            entityManager.getTransaction().begin();
+
+            if (!entityManager.contains(order)) {
+                entityManager.persist(order);
+            }
+
+            entityManager.getTransaction().commit();
         } else {
-            throw new OrderAlreadyCreatedException();
+            throw new OrderAlreadyCreatedException(order.getId().toString());
         }
+
+        return order;
+    }
+
+    @Override
+    public <S extends OrderEntity> S update(S order) {
+        entityManager.persist(order);
 
         return order;
     }

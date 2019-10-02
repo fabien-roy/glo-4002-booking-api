@@ -1,15 +1,17 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants.Categories;
+import ca.ulaval.glo4002.booking.constants.QualityConstants;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InventoryTest {
 
     private Inventory subject;
+    private final static Long A_NUMBER_OF_TANK = 5L;
     private final static Long AN_INVALID_CATEGORY = -1L;
 
     @BeforeEach
@@ -25,11 +27,134 @@ public class InventoryTest {
     }
 
     @Test
-    void whenOxygenTankIsAdded_thenInventoryIsUpdated() {
+    void whenOxygenTankIsAddedToStoredTank_thenInventoryIsUpdated() {
         subject.replaceStoredTanks(Categories.E_ID, 2L);
 
         Long storedTanksQuantity = subject.getStoredTanksByCategoryId(Categories.E_ID);
 
         assertEquals(2L, (long) storedTanksQuantity);
     }
+
+    @Test
+    void whenOxygenTankIsAddedToInUseTank_thenInventoryIsUpdated() {
+        subject.replaceInUseTanks(Categories.E_ID, 2L);
+
+        Long storedTanksQuantity = subject.getInUseTanksByCategoryId(Categories.E_ID);
+
+        assertEquals(2L, (long) storedTanksQuantity);
+    }
+
+    @Test
+    void getStoredTanksByCategoryId_shouldReturnTheCorrectNumberOfStoredTankForACategory() {
+        fillInventory();
+
+        assertEquals(10L, (long) subject.getStoredTanksByCategoryId(Categories.A_ID));
+        assertEquals(20L, (long) subject.getStoredTanksByCategoryId(Categories.B_ID));
+        assertEquals(30L, (long) subject.getStoredTanksByCategoryId(Categories.E_ID));
+    }
+
+    @Test
+    void getInUseTanksByCategoryId_shouldReturnTheCorrectNumberOfInUseTankForACategory() {
+        fillInventory();
+
+        assertEquals(1L, (long) subject.getInUseTanksByCategoryId(Categories.A_ID));
+        assertEquals(2L, (long) subject.getInUseTanksByCategoryId(Categories.B_ID));
+        assertEquals(3L, (long) subject.getInUseTanksByCategoryId(Categories.E_ID));
+    }
+
+    @Test
+    void StoredTank_shouldContainAllTheCategory() {
+        assertTrue(subject.getStoredTanks().entrySet().stream().anyMatch(tank ->
+                tank.getKey() == QualityConstants.NEBULA_ID));
+        assertTrue(subject.getStoredTanks().entrySet().stream().anyMatch(tank ->
+                tank.getKey() == QualityConstants.SUPERGIANT_ID));
+        assertTrue(subject.getStoredTanks().entrySet().stream().anyMatch(tank ->
+                tank.getKey() == QualityConstants.SUPERNOVA_ID));
+    }
+
+    @Test
+    void getStoredTanks_shouldReturnAllTheStoredTank() {
+        fillInventory();
+
+        assertTrue(subject.getStoredTanks().entrySet().stream().anyMatch(tank ->
+                tank.getValue() == 10L));
+        assertTrue(subject.getStoredTanks().entrySet().stream().anyMatch(tank ->
+                tank.getValue() == 20L));
+        assertTrue(subject.getStoredTanks().entrySet().stream().anyMatch(tank ->
+                tank.getValue() == 30L));
+    }
+
+    @Test
+    void getInUseTanks_shouldReturnAllTheStoredTank() {
+        fillInventory();
+
+        assertTrue(subject.getInUseTanks().entrySet().stream().anyMatch(tank ->
+                tank.getValue() == 1L));
+        assertTrue(subject.getInUseTanks().entrySet().stream().anyMatch(tank ->
+                tank.getValue() == 2L));
+        assertTrue(subject.getInUseTanks().entrySet().stream().anyMatch(tank ->
+                tank.getValue() == 3L));
+    }
+
+
+    private void fillInventory() {
+        subject.replaceStoredTanks(Categories.A_ID, 10L);
+        subject.replaceStoredTanks(Categories.B_ID, 20L);
+        subject.replaceStoredTanks(Categories.E_ID, 30L);
+        subject.replaceInUseTanks(Categories.A_ID, 1L);
+        subject.replaceInUseTanks(Categories.B_ID, 2L);
+        subject.replaceInUseTanks(Categories.E_ID, 3L);
+    }
+
+    // TODO : Should we test for invalid ID in the Inventory ???
+
+
+    
+    // TODO : Move to InventoryServiceTest
+    /*
+    @Test
+    void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenShouldReturnTheNumberThatRemainsToBeCovered_andTankInUseIsUpdated() {
+        subject.addTankInInventory(Categories.E_ID, 3L);
+        Long numberStillNeeded = subject.requestOxygenTank(Categories.E_ID, 5L);
+
+        assertTrue(numberStillNeeded == (5-3));
+        assertTrue(subject.getTankInUseByCategoryID(Categories.E_ID) == 3);
+    }
+
+    @Test
+    void whenOxygenTankIsRequestedAndThereIsNoSurplus_thenShouldReturnTheQuantityRequested() {
+        Long numberStillNeeded = subject.requestOxygenTank(Categories.E_ID, 10L);
+
+        assertTrue(numberStillNeeded == 10L);
+    }
+
+    @Test
+    void whenOxygenTankIsAddedWithWithInvalidCategory_thenShouldThrowOxygenCategoryNotFoundException() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.addTankInInventory(AN_INVALID_CATEGORY, 20L)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void whenGetInventoryByCategoryIsIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getInventoryByCategoryID(AN_INVALID_CATEGORY)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void whenGetTankInUseByCategoryIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getTankInUseByCategoryID(AN_INVALID_CATEGORY)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+    }*/
 }

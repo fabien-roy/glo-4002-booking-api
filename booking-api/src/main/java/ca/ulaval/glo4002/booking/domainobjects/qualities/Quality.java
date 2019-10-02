@@ -13,4 +13,6 @@ public abstract class Quality {
     public String getName() {
         return name;
     }
+
+    public Long getOxygenTanksNeededPerDay(){ return oxygenTanksNeededPerDay; }
 }

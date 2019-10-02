@@ -101,7 +101,7 @@ public class InventoryParserTest {
 
 	@Test
 	void whenParsingToDto_andOneCategoryInTheInventoryIsEmpty_thenItShouldNotBeAddedToTheDto() {
-//TODO do this test
+		// TODO do this test
 	}
 
 	@Test
@@ -110,11 +110,11 @@ public class InventoryParserTest {
 
 		UnusedMethodException thrown = assertThrows(UnusedMethodException.class, () -> subject.parseDto(dtos));
 
-		assertEquals(ExceptionConstants.UNUSED_METHOD_MESSAGE, thrown.getMessage());
+		assertEquals(ExceptionConstants.UNUSED_METHOD_ERROR, thrown.getMessage());
 	}
 
-	// TODO : Those tests are copied from InventoryTest (which was a bad place to
-	// be)
+// TODO : Those tests are copied from InventoryTest (which was a bad place to be) Should be in OxygenTankService ?????
+	// not sure they need to be here.
 	/*
 	 * @Test void
 	 * whenOxygenTankIsAddedWithWithInvalidCategory_thenShouldThrowOxygenCategoryNotFoundException

@@ -1,12 +1,13 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 
 public class ShuttleManifestServiceTest {
 
@@ -30,4 +31,12 @@ public class ShuttleManifestServiceTest {
         assertFalse(shuttleManifest.getDepartures().stream().anyMatch(departureTrip -> departureTrip.getDate().equals(ShuttleManifestServiceContext.ANOTHER_DATE)));
         assertFalse(shuttleManifest.getArrivals().stream().anyMatch(arrivalTrip -> arrivalTrip.getDate().equals(ShuttleManifestServiceContext.ANOTHER_DATE)));
     }
+    
+    @Test
+    public void findAll_shouldReturnAllTripsInManifest() {
+    	ShuttleManifest shuttleManifest = subject.findAll();	
+    	
+    	assertEquals(2, shuttleManifest.getDepartures().size());
+    	assertEquals(2, shuttleManifest.getArrivals().size());
+    	}
 }

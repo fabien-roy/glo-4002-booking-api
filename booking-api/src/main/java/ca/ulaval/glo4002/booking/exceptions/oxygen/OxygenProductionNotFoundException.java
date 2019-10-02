@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class OxygenProductionNotFoundException extends FestivalException {
 
     public OxygenProductionNotFoundException() {
-        super(ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_MESSAGE);
+        super(ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_ERROR);
+
+        error = ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_ERROR;
+        description = ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_DESCRIPTION;
+        httpStatus = HttpStatus.NOT_FOUND;
     }
 }

@@ -29,7 +29,7 @@ public class OxygenCategoryBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class OxygenCategoryBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -123,7 +123,7 @@ public class OxygenCategoryBuilderTest {
 
     @Test
     public void createOxygenTankCategoryA_whenOrderIsForNebula(){
-        // TODO : Do this test
+        // TODO : déplacer le test CategoryBuilder devrait pas avoir a gérer des build de tank ?
         Order mockedOrder = mock(Order.class);
     }
 }

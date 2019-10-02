@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Shuttle extends OrderItem {
 
-	protected Long id;
 	private Double price;
 	private ShuttleCategory category;
 	private List<Trip> trips;
@@ -23,6 +22,10 @@ public class Shuttle extends OrderItem {
     @Override
     public Double getPrice() {
         return price;
+    }
+    
+    public ShuttleCategory getShuttleCategory() {
+    	return category;
     }
 
     /*

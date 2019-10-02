@@ -10,6 +10,8 @@ public class InventoryServiceTest {
 
     private InventoryServiceContext context;
 
+    // TODO : Mock Inventory ? start below :
+
     @BeforeEach
     public void setUp() {
         context = new InventoryServiceContext();
@@ -56,6 +58,16 @@ public class InventoryServiceTest {
     @Test
     void whenGetIsCalled_thenShouldReturnAnTheInventory() {
         context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 5L);
+
+    }
+
+    @Test
+    void get_shouldReturnTheInventory() {
+        context.subject.get();
+    }
+
+    @Test
+    void save_shouldSaveTheInventory() {
 
     }
 

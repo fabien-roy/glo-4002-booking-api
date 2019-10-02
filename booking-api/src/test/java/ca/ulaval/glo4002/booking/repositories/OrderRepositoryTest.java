@@ -30,7 +30,7 @@ public class OrderRepositoryTest {
                 () -> subject.findById(OrderRepositoryContext.A_NON_EXISTANT_ORDER_ID)
         );
 
-        assertEquals(ExceptionConstants.Order.NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class OrderRepositoryTest {
                 () -> subject.save(context.aOrder)
         );
 
-        assertEquals(ExceptionConstants.Order.ALREADY_CREATED_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.ALREADY_CREATED_ERROR, thrown.getMessage());
     }
 
     @Test

@@ -46,6 +46,7 @@ class OxygenTankParserTest {
 		assertEquals(entity.getReadyDate(), parsedOxygenTank.getReadyDate());
 	}
 
+	@Test
 	void whenParsingToEntity_entityShouldBeValid() {
 		OxygenTankEntity entity = subject.toEntity(oxygenTank);
 
@@ -53,4 +54,36 @@ class OxygenTankParserTest {
 		assertEquals(oxygenTank.getRequestDate(), entity.getRequestDate());
 		assertEquals(oxygenTank.getReadyDate(), entity.getReadyDate());
 	}
+
+	// TODO : Most logic here must be moved to OxygenTankServiceTest
+
+	/*
+	 * @Test void whenParseEntityToOxygenTank_ThenOxygenTankIsCreate() {
+	 * OxygenTankEntity entity = new
+	 * OxygenTankEntity(OxygenConstants.Categories.A_ID, A_VALID_DATE);
+	 * 
+	 * OxygenTank tank = subject.parseEntity(entity);
+	 * 
+	 * assertNotNull(tank.getOxygenTankCategory().getId());
+	 * assertEquals(OxygenConstants.Categories.A_ID,
+	 * tank.getOxygenTankCategory().getId()); assertNotNull(tank.getRequestDate());
+	 * assertEquals(A_VALID_DATE, tank.getRequestDate()); }
+	 * 
+	 * @Test void whenParseOxygenTankToEntity_ThenEntityIsCreate() { OxygenTank tank
+	 * = this.createOxygenTank();
+	 * 
+	 * OxygenTankEntity entity = subject.toEntity(tank);
+	 * 
+	 * assertNotNull(entity.categoryId);
+	 * assertEquals(OxygenConstants.Categories.A_ID, entity.categoryId);
+	 * assertNotNull(entity.requestDate); // assertEquals(A_VALID_DATE,
+	 * entity.requestDate); }
+	 * 
+	 * private OxygenTank createOxygenTank() { OxygenCategoryBuilder categoryBuilder
+	 * = new OxygenCategoryBuilder();
+	 * 
+	 * return new
+	 * OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.A_ID),
+	 * A_VALID_DATE); }
+	 */
 }
