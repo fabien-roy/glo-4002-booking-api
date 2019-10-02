@@ -21,6 +21,7 @@ public class InventoryParserTest {
 
 	private InventoryParser subject;
 	private Inventory inventory;
+	private Inventory inventoryOneEmptyCategory;
 	private Inventory anEmptyInventory;
 	private static final Long A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED = 1L;
 	private static final Long A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED = 2L;
@@ -28,11 +29,14 @@ public class InventoryParserTest {
 	private static final Long A_VALID_NUMBER_OF_TANK_CATEGORY_A_INUSE = 4L;
 	private static final Long A_VALID_NUMBER_OF_TANK_CATEGORY_B_INUSE = 5L;
 	private static final Long A_VALID_NUMBER_OF_TANK_CATEGORY_E_INUSE = 6L;
+	private static final Long A_EMPTYNUMBER = 0L;
 
 	@BeforeEach
 	void setup() {
 		Map<Long, Long> storedTank = new HashMap<>();
+		Map<Long, Long> storedTankOneEmptyCategory = new HashMap<>();
 		Map<Long, Long> inUseTank = new HashMap<>();
+		Map<Long, Long> inUseTankOneEmptyCategory = new HashMap<>();
 
 		storedTank.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
 		storedTank.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
@@ -40,9 +44,16 @@ public class InventoryParserTest {
 		inUseTank.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_INUSE);
 		inUseTank.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_INUSE);
 		inUseTank.put(OxygenConstants.Categories.E_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_E_INUSE);
+		storedTankOneEmptyCategory.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
+		storedTankOneEmptyCategory.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
+		storedTankOneEmptyCategory.put(OxygenConstants.Categories.E_ID, A_EMPTYNUMBER);
+		inUseTankOneEmptyCategory.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_INUSE);
+		inUseTankOneEmptyCategory.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_INUSE);
+		inUseTankOneEmptyCategory.put(OxygenConstants.Categories.E_ID, A_EMPTYNUMBER);
 
 		anEmptyInventory = new Inventory();
 		inventory = new Inventory(storedTank, inUseTank);
+		inventoryOneEmptyCategory = new Inventory(storedTankOneEmptyCategory, inUseTankOneEmptyCategory);
 		subject = new InventoryParser();
 	}
 
@@ -101,7 +112,9 @@ public class InventoryParserTest {
 
 	@Test
 	void whenParsingToDto_andOneCategoryInTheInventoryIsEmpty_thenItShouldNotBeAddedToTheDto() {
-		// TODO do this test
+		List<InventoryItemDto> dtos = subject.toDto(inventoryOneEmptyCategory);
+
+		assertEquals(2, dtos.size());
 	}
 
 	@Test
