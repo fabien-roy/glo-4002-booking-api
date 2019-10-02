@@ -62,11 +62,4 @@ class ShuttleManifestParserTest {
     	assertTrue(shuttleManifestDto.departures.get(0) instanceof TripDto);
     }
     
-    @Test
-    public void dtoToManifest_shouldThrowUnusedMethodException() {
-    	assertThrows(UnusedMethodException.class, () -> {
-    		subject.parseDto(shuttleManifestDto);
-    	});
-    }
-    
 }
