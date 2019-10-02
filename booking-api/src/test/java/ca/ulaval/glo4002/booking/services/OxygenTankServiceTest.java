@@ -23,14 +23,15 @@ import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
 
 class OxygenTankServiceTest {
 
-	OxygenTankServiceContext context;
-	private NebulaQuality nebulaQuality = new NebulaQuality();
-	private SupergiantQuality supergiantQuality = new SupergiantQuality();
-	private SupernovaQuality supernovaQuality = new SupernovaQuality();
 	private final LocalDate VALID_DATE = DateConstants.START_DATE.minus(30, DAYS);
 	private final LocalDate VALID_DATE_15DAYS_BEFORE_START = DateConstants.START_DATE.minus(15, DAYS);
 	private final LocalDate VALID_DATE_5DAYS_BEFORE_START = DateConstants.START_DATE.minus(5, DAYS);
 	private final LocalDate INVALID_DATE = DateConstants.START_DATE.plus(1, DAYS);
+
+	private OxygenTankServiceContext context;
+	private NebulaQuality nebulaQuality = new NebulaQuality();
+	private SupergiantQuality supergiantQuality = new SupergiantQuality();
+	private SupernovaQuality supernovaQuality = new SupernovaQuality();
 
 	@BeforeEach
 	public void setUp() {
