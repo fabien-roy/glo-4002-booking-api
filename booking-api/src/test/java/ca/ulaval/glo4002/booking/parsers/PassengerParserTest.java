@@ -33,7 +33,7 @@ public class PassengerParserTest {
 	}
 	
 	@Test
-	public void passengerToDto_shouldReturnValidPassengerDto() {
+	public void whenConvertingPassengersToDto_dtosShouldBeValid() {
 		List<Passenger> passengers = new ArrayList<>(Arrays.asList(aPassenger, anotherPassenger));
 		List<PassengerDto> passengerDtos = subject.toDto(passengers);
 		assertTrue(passengerDtos.get(0) instanceof PassengerDto);
@@ -42,7 +42,7 @@ public class PassengerParserTest {
 	}
 	
 	@Test
-	public void passengerToEntity_shouldReturnValidPassengerEntities() {
+	public void whenConvertingPassengersToEntities_entitiesShouldBeValid() {
 		List<Passenger> passengers = new ArrayList<>(Arrays.asList(aPassenger, anotherPassenger));
 		List<PassengerEntity> passengerEntities = subject.toEntity(passengers);
 		assertTrue(passengerEntities.get(0) instanceof PassengerEntity);
@@ -50,7 +50,7 @@ public class PassengerParserTest {
 	}
 	
 	@Test
-	public void passengerEntityParseEntity_shouldReturnValidPassengers() {
+	public void whenParsingPassengerEntities_passengersShouldBeValid() {
 		List<PassengerEntity> passengerEntities = new ArrayList<>
 		(Arrays.asList(aPassengerEntity, anotherPassengerEntity));
 		List<Passenger> passengers = subject.parseEntity(passengerEntities);
