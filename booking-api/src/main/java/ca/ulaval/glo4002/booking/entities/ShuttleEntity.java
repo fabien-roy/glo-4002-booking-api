@@ -11,8 +11,9 @@ public class ShuttleEntity extends OrderItemEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Long shuttleCategoryId;
+	private Double price;
 	@OneToMany(mappedBy = "shuttle")
-	private List<TripEntity> trips = new ArrayList<>();
+	private List<TripEntity> trips;
 
 	public ShuttleEntity() {
 		
@@ -23,6 +24,7 @@ public class ShuttleEntity extends OrderItemEntity {
 		this.shuttleCategoryId = shuttleCategoryId;
 	}
 	
+	@Override
 	public Long getId() {
 		return id;
 	}

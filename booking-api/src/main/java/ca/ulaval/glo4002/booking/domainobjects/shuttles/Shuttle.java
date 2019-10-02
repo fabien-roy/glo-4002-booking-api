@@ -10,7 +10,6 @@ public class Shuttle extends OrderItem {
 	private Double price;
 	private ShuttleCategory category;
 	private List<Trip> trips;
-    // TODO : private <?> date;
 
     public Shuttle(Long id, Double price, ShuttleCategory category, List<Trip> trips) {
         this.id = id;
