@@ -19,7 +19,6 @@ public class TripParser implements EntityParser<Trip, TripEntity>, DtoParser<Tri
 	ShuttleParser shuttleParser = new ShuttleParser();
 	PassengerParser passengerParser = new PassengerParser();
 
-    // TODO : Add passengers
 	@Override
 	public Trip parseEntity(TripEntity entity) {
 	    if (entity.getTypeId().equals(TripConstants.Types.DEPARTURE_ID)) {
