@@ -2,10 +2,11 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
@@ -20,7 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PassParserTest {
 
@@ -31,7 +33,6 @@ class PassParserTest {
             DateConstants.START_DATE,
             DateConstants.START_DATE.plusDays(1)
     ));
-    private final static Long AN_INVALID_PASS_NUMBER = -1L;
     private final static String AN_INVALID_PASS_CATEGORY = "anInvalidPassCategory";
     private final static String AN_INVALID_PASS_OPTION = "anInvalidPassOption";
     private final static List<LocalDate> SOME_EVENT_DATES_NOT_IN_FESTIVAL = new ArrayList<>(Collections.singletonList(
@@ -59,18 +60,6 @@ class PassParserTest {
                 optionBuilder.buildByName(A_PASS_OPTION),
                 SOME_EVENT_DATES.get(0)
         );
-    }
-
-    @Test
-    void parseDto_shouldThrowInvalidPassDtoException_whenPassNumberIsInvalid() {
-        dto.passNumber = AN_INVALID_PASS_NUMBER;
-
-        PassDtoInvalidException thrown = assertThrows(
-                PassDtoInvalidException.class,
-                () -> subject.parseDto(dto)
-        );
-
-        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
     }
 
     @Test
@@ -110,6 +99,19 @@ class PassParserTest {
     }
 
     @Test
+    void parseDto_shouldThrowInvalidPassDtoException_whenEventDatesIsNotNull_andOptionIsPackage() {
+        SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
+        dto.passOption = PassConstants.Options.PACKAGE_NAME;
+
+        PassDtoInvalidException thrown = assertThrows(
+                PassDtoInvalidException.class,
+                () -> subject.parseDto(dto)
+        );
+
+        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
+    }
+
+    @Test
     void parseDto_shouldReturnPassWithSupernovaPassCategory_whenPassCategoryIsSupernova() {
         dto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;
 
@@ -139,8 +141,7 @@ class PassParserTest {
     @Test
     void parseDto_shouldReturnPassWithPackagePassOption_whenPassOptionIsPackage() {
         dto.passOption = PassConstants.Options.PACKAGE_NAME;
-        // TODO : Readd eventDates = null when checking for package and single pass
-        // dto.eventDates = null;
+        dto.eventDates = null;
 
         Pass pass = subject.parseDto(dto).get(0);
 
@@ -189,11 +190,12 @@ class PassParserTest {
 
     @Test
     void whenParsingToDto_dtoShouldBeValid() {
-        PassesDto dto = subject.toDto(new ArrayList<>(Collections.singletonList(pass)));
+        List<PassDto> dtos = subject.toDto(new ArrayList<>(Collections.singletonList(pass)));
+        PassDto dto = dtos.get(0);
 
         assertEquals(pass.getId(), dto.passNumber);
         assertEquals(pass.getCategory().getName(), dto.passCategory);
         assertEquals(pass.getOption().getName(), dto.passOption);
-        // assertEquals(pass.getEventDate().toString(), dto.eventDates.get(0));
+        assertEquals(pass.getEventDate().toString(), dto.eventDate);
     }
 }

@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 public class OxygenTank extends OrderItem {
 
-	protected Long id;
 	private OxygenCategory category;
 	private LocalDate requestDate;
 	private LocalDate readyDate;
@@ -22,10 +21,6 @@ public class OxygenTank extends OrderItem {
 
 	public Double getPrice() {
 		return 0.0; // TODO : Oxygen tank price calculation
-	}
-
-	public Long getId() {
-		return this.id;
 	}
 
 	public OxygenCategory getOxygenTankCategory() {

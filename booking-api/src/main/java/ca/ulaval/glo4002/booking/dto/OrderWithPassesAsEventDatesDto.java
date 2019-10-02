@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.dto;
 
-public class OrderDto implements Dto {
+public class OrderWithPassesAsEventDatesDto implements Dto {
 
     public Long orderNumber;
     public String orderDate;

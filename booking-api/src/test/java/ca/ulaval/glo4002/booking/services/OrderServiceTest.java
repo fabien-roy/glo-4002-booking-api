@@ -51,7 +51,7 @@ public class OrderServiceTest {
     // TODO : Solve test
     @Test
     public void save_shouldSaveOrder() {
-        context.setUpRepositoryForSave();
+        context.setUpForSave();
 
         context.subject.order(context.aNonExistentOrder);
         Order order = context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID);
