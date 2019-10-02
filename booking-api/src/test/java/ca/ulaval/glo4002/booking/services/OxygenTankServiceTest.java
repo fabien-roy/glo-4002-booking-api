@@ -83,6 +83,7 @@ class OxygenTankServiceTest {
 		assertEquals(context.nonExistentOxygenTank.getId(), oxygenTank.getId());
 	}
 
+	// TODO : Solve this test
 	@Test
 	void orderCategory_shouldBeNebula_whenCreatingOxygenTankWithCategoryA() {
 		OxygenTank tank = context.subject.order(nebulaQuality, VALID_DATE).iterator().next();
@@ -90,6 +91,7 @@ class OxygenTankServiceTest {
 		assertEquals(OxygenConstants.Categories.A_ID, tank.getOxygenTankCategory().getId());
 	}
 
+	// TODO : Solve this test
 	@Test
 	void orderCategory_shouldBeSupergiant_whenCreatingOxygenTankWithCategoryB() {
 		OxygenTank tank = context.subject.order(supergiantQuality, VALID_DATE).iterator().next();
@@ -97,6 +99,7 @@ class OxygenTankServiceTest {
 		assertEquals(OxygenConstants.Categories.B_ID, tank.getOxygenTankCategory().getId());
 	}
 
+	// TODO : Solve this test
 	@Test
 	void orderCategory_shouldBeSupernova_whenCreatingOxygenTankWithCategoryE() {
 		OxygenTank tank = context.subject.order(supernovaQuality, VALID_DATE).iterator().next();
@@ -104,6 +107,7 @@ class OxygenTankServiceTest {
 		assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
 	}
 
+	// TODO : Solve this test
 	@Test
 	void oxygenCategory_shouldBeCategoryB_whenOrderIsNebula_butInLessThan20DaysAndMoreThan10OfFestivalStart() {
 		OxygenTank tank = context.subject.order(nebulaQuality, VALID_DATE_15DAYS_BEFORE_START).iterator().next();
@@ -112,6 +116,7 @@ class OxygenTankServiceTest {
 		assertTrue(tank.getReadyDate().isBefore(DateConstants.START_DATE));
 	}
 
+	// TODO : Solve this test
 	@Test
 	void oxygenCategory_shouldBeCategoryE_whenOrderIsNebula_butInLessThan10DayOfFestivalStart() {
 		OxygenTank tank = context.subject.order(nebulaQuality, VALID_DATE_5DAYS_BEFORE_START).iterator().next();
@@ -120,6 +125,7 @@ class OxygenTankServiceTest {
 		assertTrue(tank.getReadyDate().isBefore(DateConstants.START_DATE));
 	}
 
+	// TODO : Solve this test
 	@Test
 	void oxygenCategory_shouldBeCategoryE_whenOrderIsOnTheStartingDateOfFestival() {
 		OxygenTank tank = context.subject.order(nebulaQuality, DateConstants.START_DATE).iterator().next();

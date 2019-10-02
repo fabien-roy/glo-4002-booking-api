@@ -51,22 +51,24 @@ public class InventoryServiceTest {
 	@Test
 	void whenOxygenTankIsAdded_thenInventoryOfStoredTankIsUpdated() {
 		context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 5L);
+		// TODO Do this test
 	}
 
 	@Test
 	void whenGetIsCalled_thenShouldReturnAnTheInventory() {
 		context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 5L);
-
+		// TODO Do this test
 	}
 
 	@Test
 	void get_shouldReturnTheInventory() {
 		context.subject.get();
+		// TODO Do this test
 	}
 
 	@Test
 	void save_shouldSaveTheInventory() {
-
+		// TODO Do this test
 	}
 
 	@Test
@@ -75,11 +77,10 @@ public class InventoryServiceTest {
 	}
 
 	// TODO : Solve this test
-	/*
-	 * @Test void
-	 * whenOxygenTankIsRequestedAndThereIsNoSurplus_thenShouldReturnTheQuantityRequested
-	 * () { context.subject.requestOxygenTanks(context.anOxygenTank);
-	 * 
-	 * assertEquals(10, (long) context.anInventory.?); }
-	 */
+//	 @Test void
+//	 whenOxygenTankIsRequestedAndThereIsNoSurplus_thenShouldReturnTheQuantityRequested
+//	 () { context.subject.requestOxygenTanks(context.anOxygenTank);
+//	 
+//	 assertEquals(10, (long) context.anInventory.?); }
+
 }
