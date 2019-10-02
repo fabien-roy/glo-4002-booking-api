@@ -32,4 +32,51 @@ public class InventoryTest {
 
         assertEquals(2L, (long) storedTanksQuantity);
     }
+
+    /*
+    @Test
+    void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenShouldReturnTheNumberThatRemainsToBeCovered_andTankInUseIsUpdated() {
+        subject.addTankInInventory(Categories.E_ID, 3L);
+        Long numberStillNeeded = subject.requestOxygenTank(Categories.E_ID, 5L);
+
+        assertTrue(numberStillNeeded == (5-3));
+        assertTrue(subject.getTankInUseByCategoryID(Categories.E_ID) == 3);
+    }
+
+    @Test
+    void whenOxygenTankIsRequestedAndThereIsNoSurplus_thenShouldReturnTheQuantityRequested() {
+        Long numberStillNeeded = subject.requestOxygenTank(Categories.E_ID, 10L);
+
+        assertTrue(numberStillNeeded == 10L);
+    }
+
+    @Test
+    void whenOxygenTankIsAddedWithWithInvalidCategory_thenShouldThrowOxygenCategoryNotFoundException() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.addTankInInventory(AN_INVALID_CATEGORY, 20L)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void whenGetInventoryByCategoryIsIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getInventoryByCategoryID(AN_INVALID_CATEGORY)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void whenGetTankInUseByCategoryIsIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getTankInUseByCategoryID(AN_INVALID_CATEGORY)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+    }*/
 }

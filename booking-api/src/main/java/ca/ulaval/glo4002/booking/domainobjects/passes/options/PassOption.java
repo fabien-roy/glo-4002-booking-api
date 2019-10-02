@@ -12,4 +12,19 @@ public abstract class PassOption {
 	public String getName() {
 		return name;
 	}
+
+	@Override
+	public boolean equals (Object obj)
+	{
+		if (this==obj) return true;
+		if (this.getClass() != obj.getClass()) return false;
+		// Class name is Employ & have lastname
+		PassOption passOption = (PassOption) obj ;
+		return this.id.equals(passOption.id);
+	}
+
+	@Override
+	public int hashCode(){
+		return this.id.intValue();
+	}
 }

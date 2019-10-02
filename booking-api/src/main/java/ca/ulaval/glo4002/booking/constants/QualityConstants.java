@@ -15,6 +15,6 @@ public class QualityConstants {
     public static final Long NEBULA_OXYGENTANK_NEEDED_PER_DAY = 3L;
 
     private QualityConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
     }
 }

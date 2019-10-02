@@ -2,32 +2,36 @@ package ca.ulaval.glo4002.booking.entities;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Orders")
 public class OrderEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
 	private Long id;
     private LocalDateTime orderDate;
     private Long vendorId;
-    // @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    // List<OrderItemEntity> orderItems = new ArrayList<>();
+    @OneToMany(mappedBy = "order")
+    private List<OrderItemEntity> orderItems = new ArrayList<>();
 
     public OrderEntity() {
 
     }
 
-    public OrderEntity(LocalDateTime orderDate, Long vendorId) {
+    public OrderEntity(LocalDateTime orderDate, Long vendorId, List<OrderItemEntity> orderItems) {
         this.orderDate = orderDate;
         this.vendorId = vendorId;
+        this.orderItems = orderItems;
     }
 
-    public OrderEntity(Long id, LocalDateTime orderDate, Long vendorId) {
+    public OrderEntity(Long id, LocalDateTime orderDate, Long vendorId, List<OrderItemEntity> orderItems) {
         this.id = id;
         this.orderDate = orderDate;
         this.vendorId = vendorId;
+        this.orderItems = orderItems;
     }
 
     public Long getId() {
@@ -44,5 +48,17 @@ public class OrderEntity {
 
     public Long getVendorId() {
         return vendorId;
+    }
+
+    public List<? extends OrderItemEntity> getOrderItems() {
+        return orderItems;
+    }
+
+    public void addOrderItems(List<? extends OrderItemEntity> orderItems) {
+        this.orderItems.addAll(orderItems);
+    }
+
+    public void clearOrderItems() {
+        this.orderItems.clear();
     }
 }

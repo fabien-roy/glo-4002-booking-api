@@ -7,10 +7,10 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity(name = "OxygenTanks")
-public class OxygenTankEntity {
+public class OxygenTankEntity extends OrderItemEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private Long categoryId;
 	private LocalDate requestDate;

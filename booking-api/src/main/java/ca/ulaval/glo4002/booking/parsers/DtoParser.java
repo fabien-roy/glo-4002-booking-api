@@ -1,8 +1,5 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-public interface DtoParser<T, U> {
+public interface DtoParser<T, U> extends ParseDtoParser<T, U>, ToDtoParser<T, U> {
 
-    T parseDto(U dto);
-
-    U toDto(T object);
 }

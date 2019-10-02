@@ -1,11 +1,8 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
-import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
@@ -30,7 +27,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(Long id) {
-        OrderEntity orderEntity = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+        OrderEntity orderEntity = orderRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException(id.toString()));
 
         return orderParser.parseEntity(orderEntity);
     }
@@ -44,25 +42,22 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
-    // TODO : Check it nothing was saved to db if there is an error
     @Override
     public Order order(Order order) {
+        OrderEntity savedOrder = orderRepository.save(orderParser.toEntity(order));
+
         List<Pass> passes = new ArrayList<>();
-        passService.order(passService.getPasses(order.getOrderItems())).forEach(passes::add);
+        passService.order(savedOrder, passService.getPasses(order.getOrderItems())).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
-        List<OxygenTank> oxygenTanks = new ArrayList<>();
-        oxygenTankService.order(quality, order.getOrderDate().toLocalDate()).forEach(oxygenTanks::add);
+        // TODO : Send savedOrder (OrderEntity) to service
+        oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
 
         // TODO : Order Shuttle
-        List<Shuttle> shuttles = new ArrayList<>();
+        // List<Shuttle> shuttles = new ArrayList<>();
 
-        List<OrderItem> orderItems = new ArrayList<>();
-        orderItems.addAll(passes);
-        orderItems.addAll(oxygenTanks);
-        orderItems.addAll(shuttles);
-        order.setOrderItems(orderItems);
+        savedOrder = orderRepository.update(savedOrder);
 
-        return orderParser.parseEntity(orderRepository.save(orderParser.toEntity(order)));
+        return orderParser.parseEntity(savedOrder);
     }
 }

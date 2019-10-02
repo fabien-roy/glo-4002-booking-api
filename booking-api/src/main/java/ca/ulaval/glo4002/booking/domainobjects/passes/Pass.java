@@ -8,7 +8,6 @@ import java.time.LocalDate;
 
 public class Pass extends OrderItem {
 
-	private Long id;
     private PassCategory category;
     private PassOption option;
     private LocalDate eventDate;
@@ -24,10 +23,6 @@ public class Pass extends OrderItem {
         this.category = category;
         this.option = option;
         this.eventDate = eventDate;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public PassCategory getCategory() {

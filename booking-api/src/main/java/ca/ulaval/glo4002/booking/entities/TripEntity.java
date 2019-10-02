@@ -1,20 +1,19 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "Trips")
 public class TripEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
     private LocalDate date;
 	private Long typeId;
-	// private ShuttleEntity shuttle; // TODO : One to many
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="shuttleId", nullable = false)
+	private ShuttleEntity shuttle;
 
     // TODO : Passengers
 	//@ManyToOne(cascade = CascadeType.ALL)
@@ -40,5 +39,9 @@ public class TripEntity {
 
     public Long getTypeId() {
         return typeId;
+    }
+    
+    public ShuttleEntity getShuttle() {
+    	return shuttle;
     }
 }

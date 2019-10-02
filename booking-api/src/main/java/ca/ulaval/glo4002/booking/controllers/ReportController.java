@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.report.Report;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
+import ca.ulaval.glo4002.booking.exceptions.ControllerException;
+import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
 import ca.ulaval.glo4002.booking.services.ReportServiceImpl;
 import org.springframework.http.ResponseEntity;
@@ -25,11 +27,17 @@ public class ReportController {
 	@GET
 	@Path("/o2")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ResponseEntity<ReportDto> getOxygenTanks() {
+	public ResponseEntity<?> getOxygenTanks() {
 		Report report = reportService.getReport();
 		ReportDto dto;
 
-        dto = reportParser.toDto(report);
+		try {
+			dto = reportParser.toDto(report);
+        } catch (ControllerException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
+            return ResponseEntity.notFound().build();
+        }
 
 		return ResponseEntity.ok().body(dto);
 	}

@@ -1,10 +1,11 @@
 package ca.ulaval.glo4002.booking.domainobjects.trips;
 
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
-import ca.ulaval.glo4002.booking.domainobjects.trips.types.TripType;
-
 import java.time.LocalDate;
 import java.util.List;
+
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.domainobjects.trips.types.TripType;
 
 public abstract class Trip {
 
@@ -12,6 +13,7 @@ public abstract class Trip {
 	protected LocalDate date;
 	protected List<Passenger> passengers;
 	protected TripType type;
+	protected Shuttle shuttle;
 
 	public Long getId() {
 		return id;
@@ -23,5 +25,9 @@ public abstract class Trip {
 
 	public TripType getType() {
 		return type;
+	}
+	
+	public Shuttle getShuttle() {
+		return shuttle;
 	}
 }

@@ -11,11 +11,11 @@ public class TripConstants {
         public static final String ARRIVAL_NAME = "ArrivalTrip";
 
         private Types(){
-            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+            throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
         }
     }
 
     private TripConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
     }
 }

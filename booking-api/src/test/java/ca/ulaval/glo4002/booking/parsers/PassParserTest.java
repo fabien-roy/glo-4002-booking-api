@@ -2,15 +2,14 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassDtoInvalidException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.passes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PassParserTest {
 
@@ -31,7 +31,6 @@ class PassParserTest {
             DateConstants.START_DATE,
             DateConstants.START_DATE.plusDays(1)
     ));
-    private final static Long AN_INVALID_PASS_NUMBER = -1L;
     private final static String AN_INVALID_PASS_CATEGORY = "anInvalidPassCategory";
     private final static String AN_INVALID_PASS_OPTION = "anInvalidPassOption";
     private final static List<LocalDate> SOME_EVENT_DATES_NOT_IN_FESTIVAL = new ArrayList<>(Collections.singletonList(
@@ -62,18 +61,6 @@ class PassParserTest {
     }
 
     @Test
-    void parseDto_shouldThrowInvalidPassDtoException_whenPassNumberIsInvalid() {
-        dto.passNumber = AN_INVALID_PASS_NUMBER;
-
-        PassDtoInvalidException thrown = assertThrows(
-                PassDtoInvalidException.class,
-                () -> subject.parseDto(dto)
-        );
-
-        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
-    }
-
-    @Test
     void parseDto_shouldThrowPassCategoryNotFoundException_whenPassCategoryIsInvalid() {
         dto.passCategory = AN_INVALID_PASS_CATEGORY;
 
@@ -82,7 +69,7 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -94,19 +81,32 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
-    void parseDto_shouldThrowInvalidPassDtoException_whenEventDatesAreNotInFestivalDates() {
+    void parseDto_shouldThrowPassDateInvalidException_whenEventDatesAreNotInFestivalDates() {
         SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
 
-        PassDtoInvalidException thrown = assertThrows(
-                PassDtoInvalidException.class,
+        PassInvalidDateException thrown = assertThrows(
+                PassInvalidDateException.class,
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.DTO_INVALID_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.INVALID_DATE_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void parseDto_shouldThrowPassOptionPackageWithEventDateException_whenEventDatesIsNotNull_andOptionIsPackage() {
+        SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
+        dto.passOption = PassConstants.Options.PACKAGE_NAME;
+
+        PassOptionPackageWithEventDateException thrown = assertThrows(
+                PassOptionPackageWithEventDateException.class,
+                () -> subject.parseDto(dto)
+        );
+
+        assertEquals(ExceptionConstants.Pass.OPTION_PACKAGE_WITH_EVENT_DATE_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -139,6 +139,7 @@ class PassParserTest {
     @Test
     void parseDto_shouldReturnPassWithPackagePassOption_whenPassOptionIsPackage() {
         dto.passOption = PassConstants.Options.PACKAGE_NAME;
+        
         // TODO : Read eventDates = null when checking for package and single pass
         // dto.eventDates = null;
 
@@ -189,11 +190,12 @@ class PassParserTest {
 
     @Test
     void whenParsingToDto_dtoShouldBeValid() {
-        PassesDto dto = subject.toDto(new ArrayList<>(Collections.singletonList(pass)));
+        List<PassDto> dtos = subject.toDto(new ArrayList<>(Collections.singletonList(pass)));
+        PassDto dto = dtos.get(0);
 
         assertEquals(pass.getId(), dto.passNumber);
         assertEquals(pass.getCategory().getName(), dto.passCategory);
         assertEquals(pass.getOption().getName(), dto.passOption);
-        // assertEquals(pass.getEventDate().toString(), dto.eventDates.get(0));
+        assertEquals(pass.getEventDate().toString(), dto.eventDate);
     }
 }

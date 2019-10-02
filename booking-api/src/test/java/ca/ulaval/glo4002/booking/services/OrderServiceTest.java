@@ -27,7 +27,7 @@ public class OrderServiceTest {
                 () -> context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID)
         );
 
-        assertEquals(ExceptionConstants.Order.NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -48,14 +48,14 @@ public class OrderServiceTest {
         assertTrue(ids.contains(context.anotherOrder.getId()));
     }
 
-    // TODO : Solve test
     @Test
     public void save_shouldSaveOrder() {
-        context.setUpRepositoryForSave();
+        context.setUpForSave();
 
         context.subject.order(context.aNonExistentOrder);
         Order order = context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID);
 
         assertEquals(context.aNonExistentOrder.getId(), order.getId());
     }
+
 }

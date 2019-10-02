@@ -1,14 +1,22 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.TripConstants;
 import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
+import ca.ulaval.glo4002.booking.dto.PassengerDto;
+import ca.ulaval.glo4002.booking.dto.TripDto;
 import ca.ulaval.glo4002.booking.entities.TripEntity;
+import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 
-import java.util.ArrayList;
-
-public class TripParser implements EntityParser<Trip, TripEntity> {
+public class TripParser implements EntityParser<Trip, TripEntity>, DtoParser<Trip, TripDto> {
+	
+	ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
+	ShuttleParser shuttleParser = new ShuttleParser();
 
     // TODO : Add passengers
 	@Override
@@ -17,13 +25,15 @@ public class TripParser implements EntityParser<Trip, TripEntity> {
 	        return new DepartureTrip(
 	                entity.getId(),
                     entity.getDate(),
-                    new ArrayList<>()
+                    new ArrayList<>(),
+                    shuttleParser.parseEntity(entity.getShuttle())
             );
         } else if (entity.getTypeId().equals(TripConstants.Types.ARRIVAL_ID)) {
             return new ArrivalTrip(
                     entity.getId(),
                     entity.getDate(),
-                    new ArrayList<>()
+                    new ArrayList<>(),
+                    shuttleParser.parseEntity(entity.getShuttle())
             );
         } else {
             // TODO : Should we throw?
@@ -40,4 +50,39 @@ public class TripParser implements EntityParser<Trip, TripEntity> {
                 trip.getType().getId()
         );
 	}
+
+	@Override
+	public Trip parseDto(TripDto dto) {
+		throw new UnusedMethodException();
+	}
+
+	@Override
+	public TripDto toDto(Trip object) {
+		TripDto dto = new TripDto();
+		String shuttleName = object.getShuttle().getShuttleCategory().getName();
+		String date = object.getDate().toString();
+		List<PassengerDto> passengerDtos = new ArrayList<>();
+		
+		//TODO : passengerParser;
+		
+		dto.date = date;
+		dto.shuttleName = shuttleName;
+		dto.passengers = passengerDtos;
+		return dto;
+	}
+	
+	public List<TripDto> toDtos(List<? extends Trip> trips) {
+		List<TripDto> tripDtos = new ArrayList<>();
+		
+		for(Trip trip: trips) {
+			TripDto dto = toDto(trip);
+			tripDtos.add(dto);
+			
+		}
+		
+		return tripDtos;
+		
+	}
+	
+	
 }

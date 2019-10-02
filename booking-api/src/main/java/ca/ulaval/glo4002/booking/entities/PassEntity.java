@@ -1,21 +1,39 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity(name = "Passes")
-public class PassEntity {
+public class PassEntity extends OrderItemEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
     private Long categoryId;
     private Long optionId;
     private LocalDate eventDate;
-    // @OneToOne(mappedBy = "pass")
-    // public OrderItemEntity orderItem;
 
     public PassEntity() {
+    }
+
+    public PassEntity(Long categoryId, Long optionId){
+        this.categoryId = categoryId;
+        this.optionId = optionId;
+    }
+
+    public PassEntity(Long id, Long categoryId, Long optionId) {
+        this.id = id;
+        this.categoryId = categoryId;
+        this.optionId = optionId;
+    }
+
+    public PassEntity(Long categoryId, Long optionId, LocalDate eventDate){
+        this.categoryId = categoryId;
+        this.optionId = optionId;
+        this.eventDate = eventDate;
     }
 
     public PassEntity(Long id, Long categoryId, Long optionId, LocalDate eventDate) {
