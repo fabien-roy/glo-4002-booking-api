@@ -41,7 +41,6 @@ public class PassServiceImpl implements PassService {
         return passes;
     }
 
-    // TODO : Only used by tests, could be deleted
     @Override
     public Iterable<Pass> saveAll(Iterable<Pass> passes) {
         List<PassEntity> passEntities = new ArrayList<>();
@@ -53,7 +52,6 @@ public class PassServiceImpl implements PassService {
         return passes;
     }
 
-    // TODO : Test
     @Override
     public Iterable<Pass> order(OrderEntity order, Iterable<Pass> passes) {
         List<PassEntity> passEntities = new ArrayList<>();

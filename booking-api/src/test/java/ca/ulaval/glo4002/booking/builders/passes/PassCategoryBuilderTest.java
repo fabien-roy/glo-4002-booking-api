@@ -140,7 +140,6 @@ public class PassCategoryBuilderTest {
         assertNotNull(passCategory);
         assertEquals(passCategory.getId(), id);
         assertEquals(passCategory.getName(), name);
-        // TODO : Find a correct way to assert what is in pricePerOption
-        // assertTrue(Maps.difference(passCategory.getPricePerOption(), pricePerOption).areEqual());
+        assertEquals(passCategory.getPricePerOption(), pricePerOption);
     }
 }

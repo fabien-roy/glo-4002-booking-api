@@ -13,8 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// TODO : Solve persistence problem
-
 public class PassRepositoryTest {
 
     private PassRepository subject;
