@@ -12,23 +12,12 @@ import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domainobjects.qualities.NebulaQuality;
-import ca.ulaval.glo4002.booking.domainobjects.qualities.SupergiantQuality;
-import ca.ulaval.glo4002.booking.domainobjects.qualities.SupernovaQuality;
-import ca.ulaval.glo4002.booking.services.OxygenTankService;
 
 public class OxygenTankTest {
 
+	private final LocalDate VALID_DATE = DateConstants.START_DATE.minus(30, DAYS);
 	private OxygenTank subject;
 	private OxygenCategoryBuilder oxygenCategoryBuilder;
-	private OxygenTankService oxygenTankService;
-	private NebulaQuality nebulaQuality;
-	private SupergiantQuality supergiantQuality;
-	private SupernovaQuality supernovaQuality;
-	private final LocalDate VALID_DATE = DateConstants.START_DATE.minus(30, DAYS);
-	private final LocalDate VALID_DATE_15DAYS_BEFORE_START = DateConstants.START_DATE.minus(15, DAYS);
-	private final LocalDate VALID_DATE_5DAYS_BEFORE_START = DateConstants.START_DATE.minus(5, DAYS);
-	private final LocalDate INVALID_DATE = DateConstants.START_DATE.plus(1, DAYS);
 
 	@BeforeEach
 	void setup() {
