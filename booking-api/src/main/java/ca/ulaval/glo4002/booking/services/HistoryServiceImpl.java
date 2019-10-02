@@ -24,31 +24,15 @@ public class HistoryServiceImpl implements HistoryService {
 
 		oxygenTankService.findAll().forEach(oxygenTanks::add);
 
-		List<LocalDate> readyDates = new ArrayList<>();
-		List<LocalDate> requestDates = new ArrayList<>();
 		Map<LocalDate, List<OxygenTank>> producedOxygenTanks = new HashMap<>();
 		Map<LocalDate, List<OxygenTank>> requestedOxygenTanks = new HashMap<>();
 
 		oxygenTanks.forEach(oxygenTank -> {
-			if (!readyDates.contains(oxygenTank.getReadyDate())) {
-				readyDates.add(oxygenTank.getReadyDate());
-				producedOxygenTanks.putIfAbsent(oxygenTank.getReadyDate(), new ArrayList<>());
-			}
+			producedOxygenTanks.putIfAbsent(oxygenTank.getReadyDate(), new ArrayList<>());
+			producedOxygenTanks.get(oxygenTank.getReadyDate()).add(oxygenTank);
 
-			if (!requestDates.contains(oxygenTank.getRequestDate())) {
-				requestDates.add(oxygenTank.getRequestDate());
-				requestedOxygenTanks.putIfAbsent(oxygenTank.getRequestDate(), new ArrayList<>());
-			}
-		});
-
-		oxygenTanks.forEach(oxygenTank -> {
-			if (readyDates.contains(oxygenTank.getReadyDate())) {
-			    producedOxygenTanks.get(oxygenTank.getReadyDate()).add(oxygenTank);
-			}
-
-			if (requestDates.contains(oxygenTank.getRequestDate())) {
-				requestedOxygenTanks.get(oxygenTank.getReadyDate()).add(oxygenTank);
-			}
+			requestedOxygenTanks.putIfAbsent(oxygenTank.getRequestDate(), new ArrayList<>());
+			requestedOxygenTanks.get(oxygenTank.getReadyDate()).add(oxygenTank);
 		});
 
 		return new History(producedOxygenTanks, requestedOxygenTanks);
