@@ -1,5 +1,13 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
+import static java.time.temporal.ChronoUnit.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
@@ -9,46 +17,38 @@ import ca.ulaval.glo4002.booking.domainobjects.qualities.SupergiantQuality;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.SupernovaQuality;
 import ca.ulaval.glo4002.booking.services.OxygenTankService;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
-import static java.time.temporal.ChronoUnit.DAYS;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 public class OxygenTankTest {
 
-    private OxygenTank subject;
-    private OxygenCategoryBuilder oxygenCategoryBuilder;
-    private OxygenTankService oxygenTankService;
-    private NebulaQuality nebulaQuality;
-    private SupergiantQuality supergiantQuality;
-    private SupernovaQuality supernovaQuality;
-    private final LocalDate VALID_DATE = DateConstants.START_DATE.minus(30, DAYS);
-    private final LocalDate VALID_DATE_15DAYS_BEFORE_START = DateConstants.START_DATE.minus(15, DAYS);
-    private final LocalDate VALID_DATE_5DAYS_BEFORE_START = DateConstants.START_DATE.minus(5, DAYS);
-    private final LocalDate INVALID_DATE = DateConstants.START_DATE.plus(1, DAYS);
+	private OxygenTank subject;
+	private OxygenCategoryBuilder oxygenCategoryBuilder;
+	private OxygenTankService oxygenTankService;
+	private NebulaQuality nebulaQuality;
+	private SupergiantQuality supergiantQuality;
+	private SupernovaQuality supernovaQuality;
+	private final LocalDate VALID_DATE = DateConstants.START_DATE.minus(30, DAYS);
+	private final LocalDate VALID_DATE_15DAYS_BEFORE_START = DateConstants.START_DATE.minus(15, DAYS);
+	private final LocalDate VALID_DATE_5DAYS_BEFORE_START = DateConstants.START_DATE.minus(5, DAYS);
+	private final LocalDate INVALID_DATE = DateConstants.START_DATE.plus(1, DAYS);
 
-    @BeforeEach
-    void setup() {
-        oxygenCategoryBuilder = new OxygenCategoryBuilder();
-        subject = new OxygenTank(oxygenCategoryBuilder
-                .buildById(OxygenConstants.Categories.A_ID), VALID_DATE, VALID_DATE);
-    }
+	@BeforeEach
+	void setup() {
+		oxygenCategoryBuilder = new OxygenCategoryBuilder();
+		subject = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.A_ID), VALID_DATE,
+				VALID_DATE);
+	}
 
-    @Test
-    void whenOxygenTankIsCreated_thenCategoryIsAssigned() {
-        assertNotNull(subject.getOxygenTankCategory());
-    }
+	@Test
+	void whenOxygenTankIsCreated_thenCategoryIsAssigned() {
+		assertNotNull(subject.getOxygenTankCategory());
+	}
 
-    @Test
-    void whenOxygenTankIsCreated_thenRequestDateIsAssigned() {
-        assertNotNull(subject.getRequestDate());
-    }
+	@Test
+	void whenOxygenTankIsCreated_thenRequestDateIsAssigned() {
+		assertNotNull(subject.getRequestDate());
+	}
 
-    @Test
-    void whenOxygenTankIsCreated_thenReadyDateIsAssigned() {
-        assertNotNull(subject.getReadyDate());
-    }
+	@Test
+	void whenOxygenTankIsCreated_thenReadyDateIsAssigned() {
+		assertNotNull(subject.getReadyDate());
+	}
 }
