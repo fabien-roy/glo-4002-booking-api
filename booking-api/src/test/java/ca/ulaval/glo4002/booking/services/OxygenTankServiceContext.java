@@ -1,5 +1,11 @@
 package ca.ulaval.glo4002.booking.services;
 
+import static org.mockito.Mockito.*;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Optional;
+
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
@@ -7,18 +13,11 @@ import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.parsers.OxygenTankParser;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 class OxygenTankServiceContext {
 
 	public OxygenTankService subject;
 
-	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
+	public static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
 
 	OxygenTankRepository repository;
@@ -35,6 +34,7 @@ class OxygenTankServiceContext {
 	private Long oxygenTankEId;
 	public Long nonExistentOxygenTankId = 0L;
 	private OxygenTankParser parser = new OxygenTankParser();
+	private OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
 
 	OxygenTankServiceContext() {
 		setUpOxygenTanks();
@@ -43,30 +43,17 @@ class OxygenTankServiceContext {
 	}
 
 	private void setUpOxygenTanks() {
-		OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
+		oxygenTankA = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.A_ID), A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE);
 
-		oxygenTankA = new OxygenTank(
-				categoryBuilder.buildById(OxygenConstants.Categories.A_ID),
-				A_VALID_DATE,
-				A_DATE_AFTER_THE_OTHER_ONE
-		);
+		oxygenTankB = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.B_ID), A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE);
 
-		oxygenTankB = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.B_ID),
-				A_VALID_DATE,
-				A_DATE_AFTER_THE_OTHER_ONE
-		);
+		oxygenTankE = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.E_ID), A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE);
 
-		oxygenTankE = new OxygenTank(
-				categoryBuilder.buildById(OxygenConstants.Categories.E_ID),
-				A_VALID_DATE,
-				A_DATE_AFTER_THE_OTHER_ONE
-		);
-
-		nonExistentOxygenTank = new OxygenTank(
-				categoryBuilder.buildById(OxygenConstants.Categories.A_ID),
-				A_VALID_DATE,
-				A_DATE_AFTER_THE_OTHER_ONE
-		);
+		nonExistentOxygenTank = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.A_ID), A_VALID_DATE,
+				A_DATE_AFTER_THE_OTHER_ONE);
 
 		oxygenTankAEntity = parser.toEntity(oxygenTankA);
 		oxygenTankAId = oxygenTankAEntity.getId();
