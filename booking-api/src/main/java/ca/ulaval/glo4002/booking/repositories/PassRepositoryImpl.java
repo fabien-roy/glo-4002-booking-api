@@ -27,7 +27,7 @@ public class PassRepositoryImpl implements PassRepository {
         PassEntity passEntity = entityManager.find(PassEntity.class, id);
 
         if (passEntity == null) {
-            throw new PassNotFoundException();
+            throw new PassNotFoundException(id.toString());
         }
 
         return Optional.of(passEntity);
@@ -44,7 +44,7 @@ public class PassRepositoryImpl implements PassRepository {
             if (pass.getId() == null) {
                 entityManager.persist(pass);
             } else {
-                throw new PassAlreadyCreatedException();
+                throw new PassAlreadyCreatedException(pass.getId().toString());
             }
         });
 

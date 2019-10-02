@@ -7,4 +7,6 @@ import java.time.LocalDate;
 public interface ShuttleManifestService extends Service<ShuttleManifest>{
 
     ShuttleManifest findByDate(LocalDate date);
+    
+    ShuttleManifest findAll();
 }

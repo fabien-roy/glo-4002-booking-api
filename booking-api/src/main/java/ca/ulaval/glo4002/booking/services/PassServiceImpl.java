@@ -27,7 +27,8 @@ public class PassServiceImpl implements PassService {
 
     @Override
     public Pass findById(Long id) {
-        PassEntity passEntity = passRepository.findById(id).orElseThrow(PassNotFoundException::new);
+        PassEntity passEntity = passRepository.findById(id)
+                .orElseThrow(() -> new PassNotFoundException(id.toString()));
 
         return passParser.parseEntity(passEntity);
     }
@@ -40,7 +41,7 @@ public class PassServiceImpl implements PassService {
 
         return passes;
     }
-
+  
     @Override
     public Iterable<Pass> saveAll(Iterable<Pass> passes) {
         List<PassEntity> passEntities = new ArrayList<>();
@@ -51,7 +52,7 @@ public class PassServiceImpl implements PassService {
 
         return passes;
     }
-
+  
     @Override
     public Iterable<Pass> order(OrderEntity order, Iterable<Pass> passes) {
         List<PassEntity> passEntities = new ArrayList<>();
