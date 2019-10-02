@@ -46,7 +46,13 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Transactional(propagation = Propagation.REQUIRED)
     public <S extends OrderEntity> S save(S order) {
         if (order.getId() == null) {
-            entityManager.persist(order);
+            entityManager.getTransaction().begin();
+
+            if (!entityManager.contains(order)) {
+                entityManager.persist(order);
+            }
+
+            entityManager.getTransaction().commit();
         } else {
             throw new OrderAlreadyCreatedException(order.getId().toString());
         }

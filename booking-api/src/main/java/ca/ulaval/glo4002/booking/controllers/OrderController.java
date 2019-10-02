@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.ControllerException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/orders")
 public class OrderController {
@@ -32,37 +35,57 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    // TODO : ACP : Remove, for tests only
     @GET
-    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getOrderById(@PathParam("id") Long entityId){
-        Order order;
+    public ResponseEntity<?> getOrders() {
+        List<OrderWithPassesAsPassesDto> orderDtos = new ArrayList<>();
 
         try {
-            // TODO : ACP : Is this correct for passes?
-            order = orderService.findById(entityId);
+            List<Order> orders = new ArrayList<>();
+
+            orderService.findAll().forEach(orders::add);
+            orders.forEach(order -> orderDtos.add(orderParser.toDto(order)));
         } catch (ControllerException exception) {
             return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
         } catch (FestivalException exception) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().body(orderParser.toDto(order));
+        return ResponseEntity.ok().body(orderDtos);
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResponseEntity<?> getOrderById(@PathParam("id") Long entityId){
+        OrderWithPassesAsPassesDto order;
+
+        try {
+            // TODO : ACP : Is this correct for passes?
+            order = orderParser.toDto(orderService.findById(entityId));
+        } catch (ControllerException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(order);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto dto) {
-        Order order;
+        OrderWithPassesAsPassesDto order;
 
         try {
-            order = orderService.order(orderParser.parseDto(dto));
+            order = orderParser.toDto(orderService.order(orderParser.parseDto(dto)));
         } catch (ControllerException exception) {
             return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
         } catch (FestivalException exception) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).body(orderParser.toDto(order));
+        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).body(order);
     }
 }

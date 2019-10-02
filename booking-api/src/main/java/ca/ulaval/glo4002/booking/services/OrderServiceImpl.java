@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
         passService.order(savedOrder, passService.getPasses(order.getOrderItems())).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
-        // TODO : Send orderEntity to service
+        // TODO : Send savedOrder (OrderEntity) to service
         oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
 
         // TODO : Order Shuttle
