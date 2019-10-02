@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domainobjects.report.History;
 
-import ca.ulaval.glo4002.booking.services.OxygenTankService;
-
 public class HistoryServiceImpl implements HistoryService {
 
 	private OxygenTankService oxygenTankService;
@@ -14,7 +12,7 @@ public class HistoryServiceImpl implements HistoryService {
 	
 	@Override
 	public History get() {
-		return new History(oxygenTankService.findAll());
+		return new History();
+		// return new History(oxygenTankService.findAll());
 	}
-
 }

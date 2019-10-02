@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.entities;
 
 import javax.persistence.*;
 
+// TODO : OXY : Pretty sure this is useless
 @Entity(name = "InventoryItems")
 public class InventoryItemEntity {
 

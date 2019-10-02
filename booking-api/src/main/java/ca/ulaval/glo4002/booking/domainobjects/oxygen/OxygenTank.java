@@ -1,16 +1,22 @@
 package ca.ulaval.glo4002.booking.domainobjects.oxygen;
 
-import java.time.LocalDate;
-
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 
-public class OxygenTank extends OrderItem {
+import java.time.LocalDate;
 
+public class OxygenTank {
+
+    private Long id;
 	private OxygenCategory category;
 	private LocalDate requestDate;
 	private LocalDate readyDate;
+
+	public OxygenTank(Long id, OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
+	    this.id = id;
+        this.category = category;
+		this.requestDate = requestDate;
+		this.readyDate = readyDate;
+	}
 
 	public OxygenTank(OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
 		this.category = category;
@@ -18,25 +24,17 @@ public class OxygenTank extends OrderItem {
 		this.readyDate = readyDate;
 	}
 
+	// TODO : OXY : Move this logic to a service
 	public Double getPrice() {
-		Double pricePerUnit = 0.0;
-		Long producedUnit = 0L;
-		Long producedTank = 0L;
+		Double pricePerUnit = category.getProduction().getPricePerUnit();
+		Long producedUnit = category.getProduction().getProducedUnits();
+		Long producedTank = category.getProduction().getProducedTanks();
 
-		if (this.category.getName() == "A") {
-			pricePerUnit = OxygenConstants.Productions.SPARK_PLUGS_PRICE_PER_UNIT;
-			producedUnit = OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_UNITS;
-			producedTank = OxygenConstants.Productions.SPARK_PLUGS_PRODUCED_TANKS;
-		} else if (this.category.getName() == "B") {
-			pricePerUnit = OxygenConstants.Productions.ELECTROLYTES_PRICE_PER_UNIT;
-			producedUnit = OxygenConstants.Productions.ELECTROLYTES_PRODUCED_UNITS;
-			producedTank = OxygenConstants.Productions.ELECTROLYTES_PRODUCED_TANKS;
-		} else if (this.category.getName() == "E") {
-			pricePerUnit = OxygenConstants.Productions.IMMEDIATE_PRICE_PER_UNIT;
-			producedUnit = OxygenConstants.Productions.IMMEDIATE_PRODUCED_UNITS;
-			producedTank = OxygenConstants.Productions.IMMEDIATE_PRODUCED_TANKS;
-		}
 		return (pricePerUnit * producedUnit) / producedTank;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public OxygenCategory getOxygenTankCategory() {
@@ -50,5 +48,4 @@ public class OxygenTank extends OrderItem {
 	public LocalDate getReadyDate() {
 		return readyDate;
 	}
-
 }

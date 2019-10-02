@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO : OXY : Pretty sure this is useless
 @Entity(name = "Inventories")
 public class InventoryEntity {
 

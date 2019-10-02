@@ -139,8 +139,8 @@ class OrderParserTest {
         assertEquals(entity.getId(), parsedOrder.getId());
         assertEquals(entity.getVendorId(), parsedOrder.getVendor().getId());
         assertEquals(entity.getOrderDate(), parsedOrder.getOrderDate());
-        entity.getOrderItems().forEach(orderItemEntity -> {
-            assertTrue(parsedOrder.getOrderItems().stream().anyMatch(orderItem -> orderItemEntity.getId().equals(orderItem.getId())));
+        entity.getPasses().forEach(orderItemEntity -> {
+            assertTrue(parsedOrder.getPasses().stream().anyMatch(orderItem -> orderItemEntity.getId().equals(orderItem.getId())));
         });
     }
 
@@ -151,8 +151,8 @@ class OrderParserTest {
         assertEquals(order.getId(), entity.getId());
         assertEquals(order.getVendor().getId(), entity.getVendorId());
         assertEquals(order.getOrderDate(), entity.getOrderDate());
-        order.getOrderItems().forEach(orderItem -> {
-            assertTrue(entity.getOrderItems().stream().anyMatch(orderItemEntity -> orderItem.getId().equals(orderItemEntity.getId())
+        order.getPasses().forEach(orderItem -> {
+            assertTrue(entity.getPasses().stream().anyMatch(orderItemEntity -> orderItem.getId().equals(orderItemEntity.getId())
             ));
         });
     }
@@ -164,12 +164,12 @@ class OrderParserTest {
         assertEquals(order.getId(), dto.orderNumber);
         assertEquals(order.getVendor().getCode(), dto.vendorCode);
         assertEquals(order.getOrderDate().toString(), A_VALID_DATE.toString());
-        assertEquals(1, order.getOrderItems().size());
+        assertEquals(1, order.getPasses().size());
     }
 
     @Test
     void parseToDto_passEventDateShouldBeMultiple_whenOrderHasMultiplePasses() {
-        order.setOrderItems(new ArrayList<>(Arrays.asList(
+        order.setPasses(new ArrayList<>(Arrays.asList(
                 new Pass(
                         A_PASS_NUMBER,
                         categoryBuilder.buildByName(A_PASS_CATEGORY),
@@ -191,7 +191,7 @@ class OrderParserTest {
 
     @Test
     void parseToDto_passEventDateShouldBeNull_whenOrderHasPackagePass() {
-        order.setOrderItems(new ArrayList<>(Collections.singletonList(new Pass(
+        order.setPasses(new ArrayList<>(Collections.singletonList(new Pass(
                         A_PASS_NUMBER,
                         categoryBuilder.buildByName(A_PASS_CATEGORY),
                         optionBuilder.buildByName(PACKAGE_PASS_OPTION)

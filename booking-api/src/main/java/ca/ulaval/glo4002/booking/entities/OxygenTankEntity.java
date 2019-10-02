@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity(name = "OxygenTanks")
-public class OxygenTankEntity extends OrderItemEntity {
+public class OxygenTankEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
