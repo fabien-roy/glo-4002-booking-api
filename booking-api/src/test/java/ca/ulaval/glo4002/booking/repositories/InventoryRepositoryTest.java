@@ -21,6 +21,7 @@ class InventoryRepositoryTest {
 		subject = new InventoryRepositoryImpl(context.entityManager);
 	}
 
+	// TODO Solve this test
 	@Test
 	public void findAll_shouldReturnCorrectInventory() {
 		List<InventoryEntity> inventory = new ArrayList<>();
@@ -31,6 +32,7 @@ class InventoryRepositoryTest {
 		assertTrue(inventory.contains(context.AN_OTHER_INVENTORY));
 	}
 
+	// TODO Solve this test
 	@Test
 	public void save_shouldSaveInventory() {
 		context.setUpEntityManagerForSave();
