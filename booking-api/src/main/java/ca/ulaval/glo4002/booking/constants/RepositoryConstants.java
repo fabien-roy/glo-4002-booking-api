@@ -9,6 +9,7 @@ public class RepositoryConstants {
     public static final String SHUTTLE_FIND_ALL_QUERY = "Select Id FROM Shuttles Id";
     public static final String TRIP_FIND_ALL_QUERY = "Select Id FROM Trips Id";
     public static final String PASSENGER_FIND_ALL_QUERY = "Select Id From Passengers Id";
+    
 
     private RepositoryConstants(){
         throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);

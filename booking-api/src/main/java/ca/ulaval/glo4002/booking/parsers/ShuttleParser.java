@@ -7,10 +7,11 @@ import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 public class ShuttleParser implements EntityParser<Shuttle, ShuttleEntity> {
 	
 	private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
+	
 
 	@Override
 	public Shuttle parseEntity(ShuttleEntity entity) {
-	    // TODO
+		//TODO
 		return null;
 	}
 

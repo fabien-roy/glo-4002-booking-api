@@ -1,14 +1,18 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
-import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
+import ca.ulaval.glo4002.booking.repositories.PassengerRepository;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 
 public class ShuttleServiceImpl implements ShuttleService {
 
+	private final ShuttleRepository shuttleRepository;
+	private final PassengerRepository passengerRepository;
 	
+	public ShuttleServiceImpl(ShuttleRepository shuttleRepository, PassengerRepository passengerRepository) {
+		this.shuttleRepository = shuttleRepository;
+		this.passengerRepository = passengerRepository;
+	}
 	
 	@Override
 	public Shuttle findById(Long id) {

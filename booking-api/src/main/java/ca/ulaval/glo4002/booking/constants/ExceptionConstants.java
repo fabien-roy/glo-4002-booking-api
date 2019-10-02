@@ -67,6 +67,13 @@ public class ExceptionConstants {
 		public static final String ALREADY_CREATED_DESCRIPTION = "Passenger created exists";
 		public static final String ALREADY_CREATED_ERROR = "PASSENGER_CREATED_EXISTS";
 	}
+	
+	public static class Trip {
+		public static final String NOT_FOUND_DESCRIPTION = "Trip not found";
+		public static final String NOT_FOUND_ERROR = "TRIP_NOT_FOUND";
+		public static final String ALREADY_CREATED_DESCRIPTION = "Trip created exists";
+		public static final String ALREADY_CREATED_ERROR = "TRIP_CREATED_EXISTS";
+	}
 
     public static final String UTILITY_CLASS_ERROR = "UTILITY_CLASS";
     public static final String UNUSED_METHOD_DESCRIPTION = "Unused method";
