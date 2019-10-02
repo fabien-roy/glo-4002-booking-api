@@ -28,7 +28,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(Long id) {
-        OrderEntity orderEntity = orderRepository.findById(id).orElseThrow(OrderNotFoundException::new);
+        OrderEntity orderEntity = orderRepository.findById(id)
+                .orElseThrow(() -> new OrderNotFoundException(id.toString()));
 
         return orderParser.parseEntity(orderEntity);
     }
@@ -47,10 +48,10 @@ public class OrderServiceImpl implements OrderService {
         OrderEntity savedOrder = orderRepository.save(orderParser.toEntity(order));
 
         List<Pass> passes = new ArrayList<>();
-        passService.order(savedOrder, passService.getPasses(order.getOrderItems())).forEach(passes::add);
+        passService.order(savedOrder, order.getPasses()).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
-        // TODO : Send orderEntity to service
+        // TODO : Send savedOrder (OrderEntity) to service
         oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
 
         // TODO : Order Shuttle

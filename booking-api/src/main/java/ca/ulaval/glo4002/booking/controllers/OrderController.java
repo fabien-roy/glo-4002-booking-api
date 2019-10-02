@@ -1,10 +1,9 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.exceptions.AlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.DtoInvalidException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.exceptions.ControllerException;
+import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
@@ -23,7 +22,7 @@ public class OrderController {
     private final OrderParser orderParser = new OrderParser();
 
     public OrderController() {
-        // TODO : Inject this
+        // TODO : ACP : Inject this
         PassService passService = new PassServiceImpl(new PassRepositoryImpl());
         OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl());
         this.orderService = new OrderServiceImpl(new OrderRepositoryImpl(), passService, oxygenTankService);
@@ -33,38 +32,58 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    // TODO : ACP : Remove, for tests only
+    /*
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public ResponseEntity<?> getOrders() {
+        List<OrderWithPassesAsPassesDto> orderDtos = new ArrayList<>();
+
+        try {
+            List<Order> orders = new ArrayList<>();
+
+            orderService.findAll().forEach(orders::add);
+            orders.forEach(order -> orderDtos.add(orderParser.toDto(order)));
+        } catch (ControllerException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok().body(orderDtos);
+    }
+    */
+
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getOrderById(@PathParam("id") Long entityId){
-        Order order;
+        OrderWithPassesAsPassesDto order;
 
         try {
-            order = orderService.findById(entityId);
-        } catch (OrderNotFoundException exception) {
+            order = orderParser.toDto(orderService.findById(entityId));
+        } catch (ControllerException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().body(orderParser.toDto(order));
+        return ResponseEntity.ok().body(order);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto dto) {
-        Order order;
+        OrderWithPassesAsPassesDto order;
 
         try {
-            order = orderParser.parseDto(dto);
-        } catch (DtoInvalidException exception) {
+            order = orderParser.toDto(orderService.order(orderParser.parseDto(dto)));
+        } catch (ControllerException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
             return ResponseEntity.badRequest().build();
         }
 
-        try {
-            order = orderService.order(order);
-        } catch (AlreadyCreatedException exception) {
-            return ResponseEntity.badRequest().build();
-        }
-
-        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).body(orderParser.toDto(order));
+        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).body(order);
     }
 }

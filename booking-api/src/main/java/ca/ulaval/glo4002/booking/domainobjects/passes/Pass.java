@@ -1,13 +1,13 @@
 package ca.ulaval.glo4002.booking.domainobjects.passes;
 
-import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.passes.categories.PassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.passes.options.PassOption;
 
 import java.time.LocalDate;
 
-public class Pass extends OrderItem {
+public class Pass {
 
+    private Long id;
     private PassCategory category;
     private PassOption option;
     private LocalDate eventDate;
@@ -25,6 +25,10 @@ public class Pass extends OrderItem {
         this.eventDate = eventDate;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public PassCategory getCategory() {
         return category;
     }
@@ -37,7 +41,6 @@ public class Pass extends OrderItem {
         return eventDate;
     }
 
-	@Override
 	public Double getPrice() {
 		return this.category.getPricePerOption().get(option);
 	}

@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domainobjects.orders;
 
+import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.vendors.Vendor;
 
 import java.time.LocalDateTime;
@@ -10,13 +11,13 @@ public class Order {
 	protected Long id;
     private LocalDateTime orderDate;
     private Vendor vendor;
-    private List<? extends OrderItem> orderItems;
+    private List<Pass> passes;
 
-    public Order(Long id, LocalDateTime orderDate, Vendor vendor, List<? extends OrderItem> orderItems) {
+    public Order(Long id, LocalDateTime orderDate, Vendor vendor, List<Pass> passes) {
         this.id = id;
         this.orderDate = orderDate;
         this.vendor = vendor;
-        this.orderItems = orderItems;
+        this.passes = passes;
     }
 
     public Long getId() {
@@ -31,11 +32,11 @@ public class Order {
         return this.vendor;
     }
 
-    public List<? extends OrderItem> getOrderItems() {
-        return orderItems;
+    public List<Pass> getPasses() {
+        return passes;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setPasses(List<Pass> passes) {
+        this.passes = passes;
     }
 }

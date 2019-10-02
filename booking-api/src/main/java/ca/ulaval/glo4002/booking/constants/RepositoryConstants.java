@@ -10,6 +10,6 @@ public class RepositoryConstants {
     public static final String TRIP_FIND_ALL_QUERY = "Select Id FROM Trips Id";
 
     private RepositoryConstants(){
-        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_MESSAGE);
+        throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);
     }
 }

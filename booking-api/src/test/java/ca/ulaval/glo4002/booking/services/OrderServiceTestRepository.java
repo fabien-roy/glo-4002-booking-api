@@ -27,7 +27,7 @@ class OrderServiceTestRepository {
                 () -> context.subject.findById(OrderServiceContextRepositoryTests.A_NON_EXISTANT_ORDER_ID)
         );
 
-        assertEquals(ExceptionConstants.Order.NOT_FOUND_MESSAGE, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test

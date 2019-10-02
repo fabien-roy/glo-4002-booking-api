@@ -1,26 +1,31 @@
 package ca.ulaval.glo4002.booking.domainobjects.oxygen;
 
-import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 
 import java.time.LocalDate;
 
-public class OxygenTank extends OrderItem {
+public class OxygenTank {
 
+    private Long id;
 	private OxygenCategory category;
 	private LocalDate requestDate;
 	private LocalDate readyDate;
 
-	// TODO : A lot of logic here should be in a OxygenTankService class
-
-	public OxygenTank(OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
+	public OxygenTank(Long id, OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
+	    this.id = id;
         this.category = category;
 		this.requestDate = requestDate;
 		this.readyDate = readyDate;
 	}
 
-	public Double getPrice() {
-		return 0.0; // TODO : Oxygen tank price calculation
+	public OxygenTank(OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
+		this.category = category;
+		this.requestDate = requestDate;
+		this.readyDate = readyDate;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public OxygenCategory getOxygenTankCategory() {

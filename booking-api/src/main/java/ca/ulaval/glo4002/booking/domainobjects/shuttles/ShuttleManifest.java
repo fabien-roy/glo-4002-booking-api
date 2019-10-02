@@ -17,6 +17,11 @@ public class ShuttleManifest {
 		this.arrivals = arrivals;
 		this.tripDate = date;
 	}
+	
+	public ShuttleManifest(List<DepartureTrip> departures, List<ArrivalTrip> arrivals) {
+		this.departures = departures;
+		this.arrivals = arrivals;
+	}
 
 	public List<DepartureTrip> getDepartures() {
 		return departures;
@@ -24,5 +29,9 @@ public class ShuttleManifest {
 
 	public List<ArrivalTrip> getArrivals() {
 		return arrivals;
+	}
+	
+	public LocalDate getDate() {
+		return tripDate;
 	}
 }
