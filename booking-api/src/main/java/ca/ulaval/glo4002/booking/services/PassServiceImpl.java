@@ -27,7 +27,8 @@ public class PassServiceImpl implements PassService {
 
     @Override
     public Pass findById(Long id) {
-        PassEntity passEntity = passRepository.findById(id).orElseThrow(PassNotFoundException::new);
+        PassEntity passEntity = passRepository.findById(id)
+                .orElseThrow(() -> new PassNotFoundException(id.toString()));
 
         return passParser.parseEntity(passEntity);
     }

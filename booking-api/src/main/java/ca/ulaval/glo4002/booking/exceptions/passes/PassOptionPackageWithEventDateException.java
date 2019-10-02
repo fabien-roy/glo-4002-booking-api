@@ -6,13 +6,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class PassAlreadyCreatedException extends ControllerException {
+public class PassOptionPackageWithEventDateException extends ControllerException {
 
-    public PassAlreadyCreatedException(String passNumber) {
-        super(ExceptionConstants.Pass.ALREADY_CREATED_ERROR);
+    public PassOptionPackageWithEventDateException() {
+        super(ExceptionConstants.Pass.OPTION_PACKAGE_WITH_EVENT_DATE_ERROR);
 
-        error = ExceptionConstants.Pass.ALREADY_CREATED_ERROR;
-        description = ExceptionConstants.Pass.ALREADY_CREATED_DESCRIPTION.replace("{passNumber}", passNumber);
+        error = ExceptionConstants.Pass.OPTION_PACKAGE_WITH_EVENT_DATE_ERROR;
+        description = ExceptionConstants.Pass.OPTION_PACKAGE_WITH_EVENT_DATE_DESCRIPTION;
         httpStatus = HttpStatus.BAD_REQUEST;
     }
 }
