@@ -67,7 +67,8 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
                 order.getId(),
                 order.getOrderDate(),
                 order.getVendor().getId(),
-                passeEntities
+                passeEntities,
+                order.getPrice()
         );
 
         passeEntities.forEach(pass -> pass.setOrder(orderEntity));

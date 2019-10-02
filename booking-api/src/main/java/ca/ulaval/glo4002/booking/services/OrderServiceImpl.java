@@ -47,6 +47,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order order(Order order) {
+        order.setPrice(getOrderPrice(order));
+
         OrderEntity savedOrder = orderRepository.save(orderParser.toEntity(order));
 
         List<Pass> passes = new ArrayList<>();

@@ -16,22 +16,25 @@ public class OrderEntity {
     private Long vendorId;
     @OneToMany(mappedBy = "order")
     private List<PassEntity> passes = new ArrayList<>();
+    private Double price;
 
     public OrderEntity() {
 
     }
 
-    public OrderEntity(LocalDateTime orderDate, Long vendorId, List<PassEntity> passes) {
+    public OrderEntity(LocalDateTime orderDate, Long vendorId, List<PassEntity> passes, Double price) {
         this.orderDate = orderDate;
         this.vendorId = vendorId;
         this.passes = passes;
+        this.price = price;
     }
 
-    public OrderEntity(Long id, LocalDateTime orderDate, Long vendorId, List<PassEntity> passes) {
+    public OrderEntity(Long id, LocalDateTime orderDate, Long vendorId, List<PassEntity> passes, Double price) {
         this.id = id;
         this.orderDate = orderDate;
         this.vendorId = vendorId;
         this.passes = passes;
+        this.price = price;
     }
 
     public Long getId() {
@@ -52,6 +55,14 @@ public class OrderEntity {
 
     public List<PassEntity> getPasses() {
         return passes;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public void addOrderItems(List<PassEntity> orderItems) {

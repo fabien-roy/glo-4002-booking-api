@@ -8,7 +8,7 @@ import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OrderServicePriceTest {
+public class OrderServiceTestPrice {
 
     private static final int AMOUNT_OF_SUPERGIANT_PASSES_MORE_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD;
     private static final int AMOUNT_OF_SUPERGIANT_PASSES_LESS_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD - 1;

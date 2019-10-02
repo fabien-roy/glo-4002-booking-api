@@ -40,4 +40,12 @@ public class Order {
     public void setPasses(List<Pass> passes) {
         this.passes = passes;
     }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 }

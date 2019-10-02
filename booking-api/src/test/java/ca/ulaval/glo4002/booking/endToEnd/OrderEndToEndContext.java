@@ -34,23 +34,25 @@ public class OrderEndToEndContext {
     private static final LocalDate A_VALID_EVENT_DATE = DateConstants.START_DATE.plusDays(1L);
     private static final Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
     private static final String A_VENDOR_CODE = VendorConstants.TEAM_VENDOR_CODE;
-    public static final Long AN_INVALID_ORDER_ID = -1L;
+    private static final Double ANOTHER_ORDER_PRICE = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE;
+    private static final Double A_ORDER_PRICE = PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE;
+    static final Long AN_INVALID_ORDER_ID = -1L;
 
-    private EntityManager entityManager;
-    public OrderEntity anOrder;
-    public OrderEntity anotherOrder;
-    public PassEntity aPass;
-    public PassEntity anotherPass;
-    public OrderWithPassesAsEventDatesDto anOrderDto = new OrderWithPassesAsEventDatesDto();
-    public OrderWithPassesAsEventDatesDto anotherOrderDto = new OrderWithPassesAsEventDatesDto();
-    public PassesDto aPassDto = new PassesDto();
-    public PassesDto anotherPassDto = new PassesDto();
     public OrderParser orderParser = new OrderParser();
-    public Long anOrderId = 1L;
-    public Long anotherOrderId = 2L;
-    public Long aPassId = 1L;
-    public Long anotherPassId = 2L;
-    public OrderController orderController;
+    private EntityManager entityManager;
+    private OrderEntity anOrder;
+    private OrderEntity anotherOrder;
+    private PassEntity aPass;
+    private PassEntity anotherPass;
+    private Long aPassId = 1L;
+    private Long anotherPassId = 2L;
+    private PassesDto aPassDto = new PassesDto();
+    private PassesDto anotherPassDto = new PassesDto();
+    OrderWithPassesAsEventDatesDto anOrderDto = new OrderWithPassesAsEventDatesDto();
+    OrderWithPassesAsEventDatesDto anotherOrderDto = new OrderWithPassesAsEventDatesDto();
+    Long anOrderId = 1L;
+    Long anotherOrderId = 2L;
+    OrderController orderController;
 
     public OrderEndToEndContext() {
         setUpObjects();
@@ -73,13 +75,15 @@ public class OrderEndToEndContext {
         anOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(aPass))
+                new ArrayList<>(Collections.singletonList(aPass)),
+                A_ORDER_PRICE
         );
 
         anotherOrder = new OrderEntity(
                 ANOTHER_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(anotherPass))
+                new ArrayList<>(Collections.singletonList(anotherPass)),
+                ANOTHER_ORDER_PRICE
         );
 
         aPassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;

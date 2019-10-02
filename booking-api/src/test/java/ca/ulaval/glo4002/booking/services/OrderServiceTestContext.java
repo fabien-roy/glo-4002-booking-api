@@ -14,7 +14,6 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
@@ -59,27 +58,6 @@ public class OrderServiceTestContext {
     }
 
     private void setUpObjects() {
-        aOrder = new Order(
-                A_ORDER_ID,
-                A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
-                new ArrayList<>()
-        );
-
-        anotherOrder = new Order(
-                ANOTHER_ORDER_ID,
-                A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
-                new ArrayList<>()
-        );
-
-        aNonExistentOrder = new Order(
-                A_NON_EXISTANT_ORDER_ID,
-                A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
-                new ArrayList<>()
-        );
-
         aPass = new Pass(
                 A_PASS_ID,
                 categoryBuilder.buildById(PassConstants.Categories.SUPERNOVA_ID),
@@ -106,6 +84,28 @@ public class OrderServiceTestContext {
                 optionBuilder.buildById(PassConstants.Options.SINGLE_ID),
                 A_PASS_EVENT_DATE
         );
+
+        aOrder = new Order(
+                A_ORDER_ID,
+                A_ORDER_EVENT_DATE,
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                Collections.singletonList(aPass)
+        );
+
+        anotherOrder = new Order(
+                ANOTHER_ORDER_ID,
+                A_ORDER_EVENT_DATE,
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                Collections.singletonList(aPass)
+        );
+
+        aNonExistentOrder = new Order(
+                A_NON_EXISTANT_ORDER_ID,
+                A_ORDER_EVENT_DATE,
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                Collections.singletonList(aPass)
+        );
+
 
         aOrderEntity = parser.toEntity(aOrder);
         anotherOrderEntity = parser.toEntity(anotherOrder);
