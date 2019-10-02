@@ -24,9 +24,8 @@ class InventoryRepositoryTest {
 	@Test
 	public void findAll_shouldReturnCorrectInventory() {
 		List<InventoryEntity> inventory = new ArrayList<>();
-		System.out.println(inventory.size());
 		subject.findAll().forEach(inventory::add);
-		System.out.println(inventory.size());
+
 		assertEquals(2, inventory.size());
 		assertTrue(inventory.contains(context.AN_INVENTORY));
 		assertTrue(inventory.contains(context.AN_OTHER_INVENTORY));
