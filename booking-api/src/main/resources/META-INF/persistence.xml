@@ -8,7 +8,6 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>ca.ulaval.glo4002.booking.entities.OrderEntity</class>
-        <class>ca.ulaval.glo4002.booking.entities.OrderItemEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.PassEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.ShuttleEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.TripEntity</class>

@@ -47,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         OrderEntity savedOrder = orderRepository.save(orderParser.toEntity(order));
 
         List<Pass> passes = new ArrayList<>();
-        passService.order(savedOrder, passService.getPasses(order.getOrderItems())).forEach(passes::add);
+        passService.order(savedOrder, order.getPasses()).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
         // TODO : Send savedOrder (OrderEntity) to service
