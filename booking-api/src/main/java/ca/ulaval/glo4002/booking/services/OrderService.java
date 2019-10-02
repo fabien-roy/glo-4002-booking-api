@@ -9,4 +9,6 @@ public interface OrderService extends Service<Order> {
     Iterable<Order> findAll();
 
     Order order(Order order);
+
+    Double getOrderPrice(Order order);
 }

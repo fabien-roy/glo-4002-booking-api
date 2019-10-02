@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
@@ -58,5 +59,19 @@ public class OrderServiceImpl implements OrderService {
         savedOrder = orderRepository.update(savedOrder);
 
         return orderParser.parseEntity(savedOrder);
+    }
+
+    public Double getOrderPrice(Order order){
+
+        Double rebate;
+        Double price = 0d;
+        ArrayList<Pass> passes = (ArrayList<Pass>) passService.getPasses(order.getOrderItems());
+
+        for (Pass p:
+                passes) {
+            price += p.getPrice();
+        }
+
+        return price;
     }
 }

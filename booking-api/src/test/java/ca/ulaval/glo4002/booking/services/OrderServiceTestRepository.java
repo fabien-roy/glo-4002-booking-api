@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderDtoInvalidException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,20 +11,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OrderServiceTest {
+class OrderServiceTestRepository {
 
-    private OrderServiceContext context;
+    private OrderServiceContextRepositoryTests context;
 
     @BeforeEach
     public void setUp() {
-        context = new OrderServiceContext();
+        context = new OrderServiceContextRepositoryTests();
     }
 
     @Test
     public void findById_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
         OrderNotFoundException thrown = assertThrows(
                 OrderNotFoundException.class,
-                () -> context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID)
+                () -> context.subject.findById(OrderServiceContextRepositoryTests.A_NON_EXISTANT_ORDER_ID)
         );
 
         assertEquals(ExceptionConstants.Order.NOT_FOUND_MESSAGE, thrown.getMessage());
@@ -33,7 +32,7 @@ public class OrderServiceTest {
 
     @Test
     public void findById_shouldReturnCorrectOrder() {
-        Order order = context.subject.findById(OrderServiceContext.A_ORDER_ID);
+        Order order = context.subject.findById(OrderServiceContextRepositoryTests.A_ORDER_ID);
 
         assertEquals(context.aOrder.getId(), order.getId());
     }
@@ -54,7 +53,7 @@ public class OrderServiceTest {
         context.setUpForSave();
 
         context.subject.order(context.aNonExistentOrder);
-        Order order = context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID);
+        Order order = context.subject.findById(OrderServiceContextRepositoryTests.A_NON_EXISTANT_ORDER_ID);
 
         assertEquals(context.aNonExistentOrder.getId(), order.getId());
     }

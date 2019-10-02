@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class OrderServiceContext {
+public class OrderServiceContextRepositoryTests {
 
     public OrderService subject;
 
@@ -34,17 +34,18 @@ public class OrderServiceContext {
     private OrderEntity aOrderEntity;
     private OrderEntity anotherOrderEntity;
     private OrderEntity aNonExistentOrderEntity;
-    public OrderRepository repository;
-    public PassService passService;
-    public Order aOrder;
-    public Order anotherOrder;
-    public Order aNonExistentOrder;
-    public Pass aPass;
-    public final static Long A_ORDER_ID = 1L;
-    public final static Long ANOTHER_ORDER_ID = 2L;
-    public final static Long A_NON_EXISTANT_ORDER_ID = 0L;
+    private OrderRepository repository;
+    private PassService passService;
+    private Pass aPass;
+    Order aOrder;
+    Order anotherOrder;
+    Order aNonExistentOrder;
 
-    public OrderServiceContext() {
+    final static Long A_ORDER_ID = 1L;
+    private final static Long ANOTHER_ORDER_ID = 2L;
+    final static Long A_NON_EXISTANT_ORDER_ID = 0L;
+
+    public OrderServiceContextRepositoryTests() {
         setUpObjects();
         setUpRepository();
         setUpSubject();
