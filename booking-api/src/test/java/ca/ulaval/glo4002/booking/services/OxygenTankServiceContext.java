@@ -1,22 +1,27 @@
 package ca.ulaval.glo4002.booking.services;
 
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Optional;
-
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.parsers.OxygenTankParser;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Optional;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 class OxygenTankServiceContext {
 
-	public static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
-	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
+	public static final LocalDate A_VALID_DATE = DateConstants.START_DATE.minusDays(30);
+	public static final LocalDate A_VALID_DATE_15DAYS_BEFORE_START = DateConstants.START_DATE.minusDays(15);
+	public static final LocalDate A_VALID_DATE_5DAYS_BEFORE_START = DateConstants.START_DATE.minusDays(5);
+	public static final LocalDate AN_INVALID_DATE = DateConstants.START_DATE.plusDays(1);
+	public static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
 
 	private OxygenTankRepository repository;
 	private OxygenTankEntity oxygenTankAEntity;

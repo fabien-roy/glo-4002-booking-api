@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
+import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.NebulaQuality;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.SupergiantQuality;
@@ -11,25 +12,15 @@ import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OxygenTankServiceTest {
 
-	private final LocalDate VALID_DATE = DateConstants.START_DATE.minus(30, DAYS);
-	private final LocalDate VALID_DATE_15DAYS_BEFORE_START = DateConstants.START_DATE.minus(15, DAYS);
-	private final LocalDate VALID_DATE_5DAYS_BEFORE_START = DateConstants.START_DATE.minus(5, DAYS);
-	private final LocalDate INVALID_DATE = DateConstants.START_DATE.plus(1, DAYS);
-
 	private OxygenTankServiceContext context;
-	private NebulaQuality nebulaQuality = new NebulaQuality();
-	private SupergiantQuality supergiantQuality = new SupergiantQuality();
-	private SupernovaQuality supernovaQuality = new SupernovaQuality();
 
 	@BeforeEach
 	public void setUp() {
@@ -86,57 +77,66 @@ class OxygenTankServiceTest {
 	void createOxygenTank_afterTheStartingDateOfFestival_shouldThrowInvalidEventDateException() {
 		InvalidDateException thrown = assertThrows(
 				InvalidDateException.class,
-				() -> context.subject.order(nebulaQuality, INVALID_DATE)
+				() -> context.subject.order(new NebulaQuality(), OxygenTankServiceContext.AN_INVALID_DATE)
 		);
 
 		assertEquals(ExceptionConstants.INVALID_DATE_ERROR, thrown.getMessage());
 	}
 
-	// TODO : OXY : Solve the following tests
-	/*
 	@Test
 	void orderCategory_shouldBeNebula_whenCreatingOxygenTankWithCategoryA() {
-		OxygenTank tank = context.subject.order(nebulaQuality, VALID_DATE).iterator().next();
+		List<OxygenTank> oxygenTanks = new ArrayList<>();
 
-		assertEquals(OxygenConstants.Categories.A_ID, tank.getOxygenTankCategory().getId());
+		context.subject.order(new NebulaQuality(), OxygenTankServiceContext.A_VALID_DATE).forEach(oxygenTanks::add);
+
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.A_ID)));
 	}
 
 	@Test
 	void orderCategory_shouldBeSupergiant_whenCreatingOxygenTankWithCategoryB() {
-		OxygenTank tank = context.subject.order(supergiantQuality, VALID_DATE).iterator().next();
+		List<OxygenTank> oxygenTanks = new ArrayList<>();
 
-		assertEquals(OxygenConstants.Categories.B_ID, tank.getOxygenTankCategory().getId());
+		context.subject.order(new SupergiantQuality(), OxygenTankServiceContext.A_VALID_DATE).forEach(oxygenTanks::add);
+
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.B_ID)));
 	}
 
 	@Test
 	void orderCategory_shouldBeSupernova_whenCreatingOxygenTankWithCategoryE() {
-		OxygenTank tank = context.subject.order(supernovaQuality, VALID_DATE).iterator().next();
+		List<OxygenTank> oxygenTanks = new ArrayList<>();
 
-		assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
+		context.subject.order(new SupernovaQuality(), OxygenTankServiceContext.A_VALID_DATE).forEach(oxygenTanks::add);
+
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.E_ID)));
 	}
 
 	@Test
 	void oxygenCategory_shouldBeCategoryB_whenOrderIsNebula_butInLessThan20DaysAndMoreThan10OfFestivalStart() {
-		OxygenTank tank = context.subject.order(nebulaQuality, VALID_DATE_15DAYS_BEFORE_START).iterator().next();
+		List<OxygenTank> oxygenTanks = new ArrayList<>();
 
-		assertEquals(OxygenConstants.Categories.B_ID, tank.getOxygenTankCategory().getId());
-		assertTrue(tank.getReadyDate().isBefore(DateConstants.START_DATE));
+		context.subject.order(new NebulaQuality(), OxygenTankServiceContext.A_VALID_DATE_15DAYS_BEFORE_START).forEach(oxygenTanks::add);
+
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.B_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getReadyDate().equals(DateConstants.START_DATE)));
 	}
 
 	@Test
 	void oxygenCategory_shouldBeCategoryE_whenOrderIsNebula_butInLessThan10DayOfFestivalStart() {
-		OxygenTank tank = context.subject.order(nebulaQuality, VALID_DATE_5DAYS_BEFORE_START).iterator().next();
+		List<OxygenTank> oxygenTanks = new ArrayList<>();
 
-		assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
-		assertTrue(tank.getReadyDate().isBefore(DateConstants.START_DATE));
+		context.subject.order(new NebulaQuality(), OxygenTankServiceContext.A_VALID_DATE_5DAYS_BEFORE_START).forEach(oxygenTanks::add);
+
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.E_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getReadyDate().equals(DateConstants.START_DATE)));
 	}
 
 	@Test
 	void oxygenCategory_shouldBeCategoryE_whenOrderIsOnTheStartingDateOfFestival() {
-		OxygenTank tank = context.subject.order(nebulaQuality, DateConstants.START_DATE).iterator().next();
+		List<OxygenTank> oxygenTanks = new ArrayList<>();
 
-		assertEquals(OxygenConstants.Categories.E_ID, tank.getOxygenTankCategory().getId());
-		assertTrue(tank.getReadyDate().isEqual(DateConstants.START_DATE));
+		context.subject.order(new NebulaQuality(), DateConstants.START_DATE).forEach(oxygenTanks::add);
+
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.E_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getReadyDate().equals(DateConstants.START_DATE)));
 	}
-	*/
 }
