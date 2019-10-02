@@ -46,6 +46,7 @@ class OxygenTankParserTest {
 		assertEquals(entity.getReadyDate(), parsedOxygenTank.getReadyDate());
 	}
 
+	@Test
 	void whenParsingToEntity_entityShouldBeValid() {
 		OxygenTankEntity entity = subject.toEntity(oxygenTank);
 
@@ -53,6 +54,7 @@ class OxygenTankParserTest {
 		assertEquals(oxygenTank.getRequestDate(), entity.getRequestDate());
 		assertEquals(oxygenTank.getReadyDate(), entity.getReadyDate());
 	}
+
 
 	// TODO : Most logic here must be moved to OxygenTankServiceTest
 

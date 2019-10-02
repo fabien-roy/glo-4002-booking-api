@@ -122,7 +122,8 @@ public class InventoryParserTest {
     }
 
 
-    // TODO : Those tests are copied from InventoryTest (which was a bad place to be)
+    // TODO : Those tests are copied from InventoryTest (which was a bad place to be) Should be in OxygenTankService ?????
+    // not sure they need to be here.
     /*
     @Test
     void whenOxygenTankIsAddedWithWithInvalidCategory_thenShouldThrowOxygenCategoryNotFoundException() {

@@ -76,4 +76,9 @@ public class InventoryServiceContext {
     private void setUpSubject() {
         subject = new InventoryServiceImpl(repository);
     }
+
+    // TODO : Setup for save
+    public void setUpForSave() {
+        //when(repository.findAll()).thenReturn()
+    }
 }
