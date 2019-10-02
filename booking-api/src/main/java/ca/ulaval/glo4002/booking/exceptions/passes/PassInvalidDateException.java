@@ -15,8 +15,8 @@ public class PassInvalidDateException extends ControllerException {
 
         error = ExceptionConstants.Pass.INVALID_DATE_ERROR;
         description = ExceptionConstants.Pass.INVALID_DATE_DESCRIPTION
-                .replace("{startDate}", DateConstants.START_DATE.toString())
-                .replace("{endDate}", DateConstants.END_DATE.toString());
+                .replace("{startDate}", DateConstants.START_DATE.format(DateConstants.MESSAGE_DATE_TIME_FORMATTER))
+                .replace("{endDate}", DateConstants.END_DATE.format(DateConstants.MESSAGE_DATE_TIME_FORMATTER));
         httpStatus = HttpStatus.BAD_REQUEST;
     }
 }
