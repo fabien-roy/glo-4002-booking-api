@@ -7,12 +7,12 @@ import ca.ulaval.glo4002.booking.domainobjects.report.Report;
 
 public class ReportServiceImpl implements ReportService {
 
-    private OxygenTankService oxygenTankService;
     private InventoryService inventoryService;
     private HistoryService historyService; 
     
-    public ReportServiceImpl(OxygenTankService oxygenTankService) {
-        this.oxygenTankService = oxygenTankService;
+    public ReportServiceImpl(InventoryService inventoryService, HistoryService historyService) {
+        this.inventoryService = inventoryService;
+        this.historyService = historyService;
     }
 
     @Override
