@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
@@ -23,9 +25,15 @@ class TripParserTest {
     private final static Long A_TRIP_ID = 1L;
     private final static Long ANOTHER_TRIP_ID = 2L;
     private final static LocalDate A_TRIP_DATE = DateConstants.START_DATE;
+    private final static Long A_PASSENGER_ID = 1L;
+    private final static Long ANOTHER_PASSENGER_ID = 2L;
+    private final static Long A_THIRD_PASSENGER_ID = 3L;
     private TripParser subject = new TripParser();
     private Trip aDepartureTrip;
     private Trip anArrivalTrip;
+    private Passenger aPassenger = new Passenger(A_PASSENGER_ID);
+    private Passenger anotherPassenger = new Passenger(ANOTHER_PASSENGER_ID);
+    private Passenger aThirdPassenger = new Passenger(A_THIRD_PASSENGER_ID);
     private Shuttle shuttle = new Shuttle(ShuttleConstants.Categories.ET_SPACESHIP_ID,
     		ShuttleConstants.Categories.ET_SPACESHIP_PRICE,
     		shuttleCategoryBuilder.buildByName(ShuttleConstants.Categories.ET_SPACESHIP_NAME),
@@ -38,14 +46,14 @@ class TripParserTest {
         aDepartureTrip = new DepartureTrip(
                 A_TRIP_ID,
                 A_TRIP_DATE,
-                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(aPassenger, anotherPassenger, aThirdPassenger)),
                 shuttle
         );
 
         anArrivalTrip = new ArrivalTrip(
                 ANOTHER_TRIP_ID,
                 A_TRIP_DATE,
-                new ArrayList<>(),
+                new ArrayList<>(Arrays.asList(aPassenger, anotherPassenger, aThirdPassenger)),
                 shuttle
         );
     }
@@ -59,6 +67,7 @@ class TripParserTest {
         assertEquals(entity.getId(), trip.getId());
         assertEquals(entity.getDate(), trip.getDate());
         assertEquals(entity.getTypeId(), trip.getType().getId());
+        assertEquals(3, trip.getPassengers().size());
     }
 
     @Test
@@ -68,6 +77,7 @@ class TripParserTest {
         assertEquals(aDepartureTrip.getId(), entity.getId());
         assertEquals(aDepartureTrip.getDate(), entity.getDate());
         assertEquals(aDepartureTrip.getType().getId(), entity.getTypeId());
+        assertEquals(3, entity.getPassengers().size());
     }
 
     @Test
@@ -77,5 +87,6 @@ class TripParserTest {
         assertEquals(anArrivalTrip.getId(), entity.getId());
         assertEquals(anArrivalTrip.getDate(), entity.getDate());
         assertEquals(anArrivalTrip.getType().getId(), entity.getTypeId());
+        assertEquals(3, entity.getPassengers().size());
     }
 }

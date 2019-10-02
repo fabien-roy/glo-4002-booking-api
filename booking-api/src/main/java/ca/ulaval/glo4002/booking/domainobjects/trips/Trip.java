@@ -30,4 +30,8 @@ public abstract class Trip {
 	public Shuttle getShuttle() {
 		return shuttle;
 	}
+	
+	public List<Passenger> getPassengers() {
+		return passengers;
+	}
 }
