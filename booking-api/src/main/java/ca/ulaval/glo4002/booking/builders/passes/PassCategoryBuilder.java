@@ -24,7 +24,7 @@ public class PassCategoryBuilder implements Builder<PassCategory> {
         } else if (id.equals(PassConstants.Categories.NEBULA_ID)) {
             return buildNebulaPassCategory();
         } else {
-            throw new PassCategoryNotFoundException();
+            throw new PassCategoryNotFoundException(id.toString());
         }
     }
 
@@ -37,7 +37,7 @@ public class PassCategoryBuilder implements Builder<PassCategory> {
             case PassConstants.Categories.NEBULA_NAME:
                 return buildNebulaPassCategory();
             default:
-                throw new PassCategoryNotFoundException();
+                throw new PassCategoryNotFoundException(name);
         }
     }
 

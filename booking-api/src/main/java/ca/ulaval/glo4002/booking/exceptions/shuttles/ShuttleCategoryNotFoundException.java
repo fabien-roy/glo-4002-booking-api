@@ -13,5 +13,6 @@ public class ShuttleCategoryNotFoundException extends FestivalException {
 
 		error = ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_ERROR;
 		description = ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_DESCRIPTION;
+		httpStatus = HttpStatus.NOT_FOUND;
 	}
 }

@@ -13,6 +13,7 @@ public class ShuttleFullException extends FestivalException {
 
 		error = ExceptionConstants.Shuttle.FULL_ERROR;
 		description = ExceptionConstants.Shuttle.FULL_DESCRIPTION;
+		httpStatus = HttpStatus.BAD_REQUEST;
 	}
 
 }

@@ -13,5 +13,6 @@ public class OxygenTankNotFoundException extends FestivalException {
 
         error = ExceptionConstants.Oxygen.TANK_NOT_FOUND_ERROR;
         description = ExceptionConstants.Oxygen.TANK_NOT_FOUND_DESCRIPTION;
+        httpStatus = HttpStatus.NOT_FOUND;
     }
 }

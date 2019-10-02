@@ -10,7 +10,9 @@ import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassInvalidDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PassInvalidFormatException;
+import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionPackageWithEventDateException;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import java.time.LocalDate;
@@ -30,16 +32,20 @@ public class PassParser implements EntityParser<Pass, PassEntity>, ParseDtoParse
 
         if (option.getId().equals(PassConstants.Options.PACKAGE_ID)) {
             if (dto.eventDates != null) {
-                throw new PassInvalidFormatException();
+                throw new PassOptionPackageWithEventDateException();
             }
 
-            return new ArrayList<>(Collections.singletonList(new Pass(dto.passNumber, category, option)));
+            try {
+                return new ArrayList<>(Collections.singletonList(new Pass(dto.passNumber, category, option)));
+            } catch (Exception exception) {
+                throw new PassInvalidFormatException();
+            }
         }
 
         List<Pass> passes = new ArrayList<>();
 
         for (String eventDate : dto.eventDates) {
-            passes.add(parseSingle(dto.passNumber, category, option, parseEventDate(eventDate)));
+            passes.add(parseSingleDto(dto.passNumber, category, option, parseEventDate(eventDate)));
         }
 
         return passes;
@@ -81,10 +87,14 @@ public class PassParser implements EntityParser<Pass, PassEntity>, ParseDtoParse
         return newPassEntity;
     }
 
-    private Pass parseSingle(Long id, PassCategory category, PassOption option, LocalDate eventDate) {
+    private Pass parseSingleDto(Long id, PassCategory category, PassOption option, LocalDate eventDate) {
         validateEventDate(eventDate);
 
-        return new Pass(id, category, option, eventDate);
+        try {
+            return new Pass(id, category, option, eventDate);
+        } catch (Exception exception) {
+            throw new PassInvalidFormatException();
+        }
     }
 
     private PassDto toSingle(Pass pass) {
@@ -110,7 +120,7 @@ public class PassParser implements EntityParser<Pass, PassEntity>, ParseDtoParse
 
     private void validateEventDate(LocalDate eventDate) {
         if (FestivalDateUtil.isOutsideFestivalDates(eventDate)) {
-            throw new PassInvalidFormatException();
+            throw new PassInvalidDateException();
         }
     }
 }

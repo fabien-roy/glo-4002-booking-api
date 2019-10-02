@@ -13,5 +13,6 @@ public class OxygenUnitTypeNotFoundException extends FestivalException {
 
         error = ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_ERROR;
         description = ExceptionConstants.Oxygen.UNIT_TYPE_NOT_FOUND_DESCRIPTION;
+        httpStatus = HttpStatus.NOT_FOUND;
     }
 }

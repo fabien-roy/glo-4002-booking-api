@@ -13,5 +13,6 @@ public class InvalidDateTimeException extends FestivalException {
 
         error = ExceptionConstants.INVALID_DATE_TIME_ERROR;
         description = ExceptionConstants.INVALID_DATE_TIME_DESCRIPTION;
+        httpStatus = HttpStatus.BAD_REQUEST;
     }
 }

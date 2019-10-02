@@ -13,5 +13,6 @@ public class OxygenProductionNotFoundException extends FestivalException {
 
         error = ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_ERROR;
         description = ExceptionConstants.Oxygen.PRODUCTION_NOT_FOUND_DESCRIPTION;
+        httpStatus = HttpStatus.NOT_FOUND;
     }
 }

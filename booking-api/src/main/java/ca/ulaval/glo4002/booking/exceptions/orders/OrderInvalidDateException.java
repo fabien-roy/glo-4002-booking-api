@@ -1,19 +1,22 @@
 package ca.ulaval.glo4002.booking.exceptions.orders;
 
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.exceptions.FestivalException;
+import ca.ulaval.glo4002.booking.exceptions.ControllerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class OrderInvalidDateException extends FestivalException {
+public class OrderInvalidDateException extends ControllerException {
 
-    public OrderInvalidDateException(String startDate, String endDate) {
+    // TODO : ACP : Check date format
+    public OrderInvalidDateException() {
         super(ExceptionConstants.Order.INVALID_DATE_ERROR);
 
         error = ExceptionConstants.Order.NOT_FOUND_ERROR;
         description = ExceptionConstants.Order.INVALID_DATE_DESCRIPTION
-                .replace("{startDate}", startDate)
-                .replace("{endDate}", endDate);
+                .replace("{startDate}", DateConstants.ORDER_START_DATE_TIME.toString())
+                .replace("{endDate}", DateConstants.ORDER_END_DATE_TIME.toString());
+        httpStatus = HttpStatus.NOT_FOUND;
     }
 }

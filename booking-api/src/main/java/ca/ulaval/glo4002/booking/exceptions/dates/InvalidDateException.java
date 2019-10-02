@@ -13,5 +13,6 @@ public class InvalidDateException extends FestivalException {
 
         error = ExceptionConstants.INVALID_DATE_ERROR;
         description = ExceptionConstants.INVALID_DATE_DESCRIPTION;
+        httpStatus = HttpStatus.BAD_REQUEST;
     }
 }

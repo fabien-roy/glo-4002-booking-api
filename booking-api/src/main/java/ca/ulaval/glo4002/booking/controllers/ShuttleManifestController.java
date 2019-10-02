@@ -30,6 +30,7 @@ public class ShuttleManifestController {
         ShuttleManifest shuttleManifest;
 		LocalDate manifestDate = LocalDate.parse(date);
 
+		// TODO : TRANS : Use same logic as other controllers to throw with an ErrorDto
 		if (!FestivalDateUtil.isOutsideFestivalDates(manifestDate)) {
 		    shuttleManifest = shuttleManifestService.findByDate(manifestDate);
         } else {

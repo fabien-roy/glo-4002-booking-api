@@ -1,12 +1,14 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
 import ca.ulaval.glo4002.booking.dto.ErrorDto;
+import org.springframework.http.HttpStatus;
 
 public abstract class FestivalException extends RuntimeException {
 
     private ErrorDto errorDto;
     protected String error;
     protected String description;
+    protected HttpStatus httpStatus;
 
     public FestivalException(){
         super();
@@ -33,6 +35,10 @@ public abstract class FestivalException extends RuntimeException {
 
         this.error = error;
         this.description = description;
+    }
+
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
     }
 
     public ErrorDto toErrorDto() {

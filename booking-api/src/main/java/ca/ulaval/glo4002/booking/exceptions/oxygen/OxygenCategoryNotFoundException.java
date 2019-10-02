@@ -13,5 +13,6 @@ public class OxygenCategoryNotFoundException extends FestivalException {
 
         error = ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR;
         description = ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_DESCRIPTION;
+        httpStatus = HttpStatus.NOT_FOUND;
     }
 }

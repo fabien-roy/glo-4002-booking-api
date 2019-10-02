@@ -12,7 +12,7 @@ public class VendorBuilder implements Builder<Vendor> {
         if(id.equals(VendorConstants.TEAM_VENDOR_ID)){
             return buildTeamVendor();
         } else {
-            throw new VendorNotFoundException();
+            throw new VendorNotFoundException(id.toString());
         }
     }
 
@@ -20,7 +20,7 @@ public class VendorBuilder implements Builder<Vendor> {
         if(vendorCode.equals(VendorConstants.TEAM_VENDOR_CODE)) {
             return buildTeamVendor();
         } else {
-            throw new VendorNotFoundException();
+            throw new VendorNotFoundException(vendorCode);
         }
     }
 

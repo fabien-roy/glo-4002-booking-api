@@ -13,5 +13,6 @@ public class ShuttleNotFoundException extends FestivalException {
 
 		error = ExceptionConstants.Shuttle.NOT_FOUND_ERROR;
 		description = ExceptionConstants.Shuttle.NOT_FOUND_DESCRIPTION;
+		httpStatus = HttpStatus.NOT_FOUND;
 	}
 }

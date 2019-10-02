@@ -31,7 +31,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         OrderEntity orderEntity = entityManager.find(OrderEntity.class, id);
 
         if (orderEntity == null) {
-            throw new OrderNotFoundException();
+            throw new OrderNotFoundException(id.toString());
         }
 
         return Optional.of(orderEntity);
@@ -48,7 +48,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         if (order.getId() == null) {
             entityManager.persist(order);
         } else {
-            throw new OrderAlreadyCreatedException();
+            throw new OrderAlreadyCreatedException(order.getId().toString());
         }
 
         return order;
