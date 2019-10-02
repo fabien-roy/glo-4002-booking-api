@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
@@ -25,15 +23,13 @@ class TripParserTest {
     private final static Long A_TRIP_ID = 1L;
     private final static Long ANOTHER_TRIP_ID = 2L;
     private final static LocalDate A_TRIP_DATE = DateConstants.START_DATE;
-    private final static Long A_SHUTTLE_ID = ShuttleConstants.Categories.ET_SPACESHIP_ID;
-    private final static Double A_SHUTTLE_PRICE = ShuttleConstants.Categories.ET_SPACESHIP_PRICE;
-    private List<Trip> trips = new ArrayList<>();
-    private ShuttleCategory shuttleCategory = shuttleCategoryBuilder.
-    		buildByName(ShuttleConstants.Categories.ET_SPACESHIP_NAME);
     private TripParser subject = new TripParser();
     private Trip aDepartureTrip;
     private Trip anArrivalTrip;
-    private Shuttle shuttle = new Shuttle(A_SHUTTLE_ID, A_SHUTTLE_PRICE, shuttleCategory, trips);
+    private Shuttle shuttle = new Shuttle(ShuttleConstants.Categories.ET_SPACESHIP_ID,
+    		ShuttleConstants.Categories.ET_SPACESHIP_PRICE,
+    		shuttleCategoryBuilder.buildByName(ShuttleConstants.Categories.ET_SPACESHIP_NAME),
+    		new ArrayList<>());
 
     @BeforeEach
     void setUp() {
