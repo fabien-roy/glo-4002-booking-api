@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.dto.ReportDto;
 import ca.ulaval.glo4002.booking.exceptions.ControllerException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
+import ca.ulaval.glo4002.booking.services.ReportService;
 import ca.ulaval.glo4002.booking.services.ReportServiceImpl;
 import org.springframework.http.ResponseEntity;
 
@@ -16,10 +17,10 @@ import javax.ws.rs.core.MediaType;
 @Path("/report")
 public class ReportController {
 
-	private final ReportServiceImpl reportService;
+	private final ReportService reportService;
 	private final ReportParser reportParser;
 
-	public ReportController(ReportServiceImpl reportService, ReportParser reportParser) {
+	public ReportController(ReportService reportService, ReportParser reportParser) {
 		this.reportService = reportService;
 		this.reportParser = reportParser;
 	}

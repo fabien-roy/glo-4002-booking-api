@@ -26,5 +26,4 @@ class HistoryParserTest {
 	void whenParsingToDto_shouldReturnUnusedMethodException() {
 		fail("Not yet implemented");
 	}
-
 }

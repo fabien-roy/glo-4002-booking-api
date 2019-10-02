@@ -17,7 +17,8 @@ public class HistoryParser implements DtoParser<History, List<HistoryItemDto>>{
 
     @Override
     public List<HistoryItemDto> toDto(History object) {
-        // TODO
-        return new ArrayList<>();
+        
+    	
+        return null;
     }
 }

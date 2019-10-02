@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.domainobjects.report;
 
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 
 import java.util.HashMap;
