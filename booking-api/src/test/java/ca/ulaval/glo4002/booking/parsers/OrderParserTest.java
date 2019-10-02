@@ -84,7 +84,7 @@ class OrderParserTest {
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -96,7 +96,7 @@ class OrderParserTest {
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -117,7 +117,7 @@ class OrderParserTest {
                 ()->subject.parseDto(orderDto)
         );
 
-        assertEquals(ExceptionConstants.Vendor.NOT_FOUND_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Vendor.NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test

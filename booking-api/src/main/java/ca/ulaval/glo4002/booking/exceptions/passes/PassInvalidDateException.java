@@ -6,17 +6,17 @@ import ca.ulaval.glo4002.booking.exceptions.ControllerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class PassInvalidDateException extends ControllerException {
 
     // TODO : ACP : Check date format
     public PassInvalidDateException() {
         super(ExceptionConstants.Pass.INVALID_DATE_ERROR);
 
-        error = ExceptionConstants.Pass.NOT_FOUND_ERROR;
+        error = ExceptionConstants.Pass.INVALID_DATE_ERROR;
         description = ExceptionConstants.Pass.INVALID_DATE_DESCRIPTION
                 .replace("{startDate}", DateConstants.START_DATE.toString())
                 .replace("{endDate}", DateConstants.END_DATE.toString());
-        httpStatus = HttpStatus.NOT_FOUND;
+        httpStatus = HttpStatus.BAD_REQUEST;
     }
 }

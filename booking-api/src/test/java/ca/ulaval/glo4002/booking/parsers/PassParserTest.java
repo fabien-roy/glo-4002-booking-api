@@ -9,9 +9,7 @@ import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassCategoryNotFoundException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassInvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PassOptionNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.passes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -71,7 +69,7 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -83,32 +81,32 @@ class PassParserTest {
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
-    void parseDto_shouldThrowInvalidPassDtoException_whenEventDatesAreNotInFestivalDates() {
+    void parseDto_shouldThrowPassDateInvalidException_whenEventDatesAreNotInFestivalDates() {
         SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
 
-        PassInvalidFormatException thrown = assertThrows(
-                PassInvalidFormatException.class,
+        PassInvalidDateException thrown = assertThrows(
+                PassInvalidDateException.class,
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.INVALID_DATE_ERROR, thrown.getMessage());
     }
 
     @Test
-    void parseDto_shouldThrowInvalidPassDtoException_whenEventDatesIsNotNull_andOptionIsPackage() {
+    void parseDto_shouldThrowPassOptionPackageWithEventDateException_whenEventDatesIsNotNull_andOptionIsPackage() {
         SOME_EVENT_DATES_NOT_IN_FESTIVAL.forEach(eventDate -> dto.eventDates.add(eventDate.toString()));
         dto.passOption = PassConstants.Options.PACKAGE_NAME;
 
-        PassInvalidFormatException thrown = assertThrows(
-                PassInvalidFormatException.class,
+        PassOptionPackageWithEventDateException thrown = assertThrows(
+                PassOptionPackageWithEventDateException.class,
                 () -> subject.parseDto(dto)
         );
 
-        assertEquals(ExceptionConstants.Pass.INVALID_FORMAT_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_PACKAGE_WITH_EVENT_DATE_ERROR, thrown.getMessage());
     }
 
     @Test

@@ -27,7 +27,7 @@ public class ShuttleCategoryBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class ShuttleCategoryBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Shuttle.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test

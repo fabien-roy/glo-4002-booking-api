@@ -27,7 +27,7 @@ public class PassOptionBuilderTest {
                 () -> subject.buildById(AN_INVALID_ID)
         );
 
-        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class PassOptionBuilderTest {
                 () -> subject.buildByName(AN_INVALID_NAME)
         );
 
-        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_DESCRIPTION, thrown.getMessage());
+        assertEquals(ExceptionConstants.Pass.OPTION_NOT_FOUND_ERROR, thrown.getMessage());
     }
 
     @Test
