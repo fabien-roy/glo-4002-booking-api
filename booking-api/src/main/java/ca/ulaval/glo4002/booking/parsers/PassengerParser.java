@@ -50,9 +50,5 @@ public class PassengerParser implements ToDtoParser<List<Passenger>, List<Passen
 		}
 		return entities;
 	}
-
-	
-	
-
 	
 }
