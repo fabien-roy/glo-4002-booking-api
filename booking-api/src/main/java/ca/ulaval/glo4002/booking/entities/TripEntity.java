@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.booking.entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Trips")
 public class TripEntity {
@@ -14,10 +16,8 @@ public class TripEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="shuttleId", nullable = false)
 	private ShuttleEntity shuttle;
-
-    // TODO : Passengers
-	//@ManyToOne(cascade = CascadeType.ALL)
-	// private List<PassengerEntity> passengerIds;
+	@OneToMany(mappedBy = "trip")
+	private List<PassengerEntity> passengers = new ArrayList<>();
 
 	public TripEntity() {
 
