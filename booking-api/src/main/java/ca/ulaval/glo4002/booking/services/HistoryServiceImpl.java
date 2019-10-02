@@ -17,7 +17,6 @@ public class HistoryServiceImpl implements HistoryService {
 		this.oxygenTankService = oxygenTankService;
 	}
 
-	// TODO : OXY : Test
 	@Override
 	public History get() {
 		List<OxygenTank> oxygenTanks = new ArrayList<>();
@@ -32,7 +31,7 @@ public class HistoryServiceImpl implements HistoryService {
 			producedOxygenTanks.get(oxygenTank.getReadyDate()).add(oxygenTank);
 
 			requestedOxygenTanks.putIfAbsent(oxygenTank.getRequestDate(), new ArrayList<>());
-			requestedOxygenTanks.get(oxygenTank.getReadyDate()).add(oxygenTank);
+			requestedOxygenTanks.get(oxygenTank.getRequestDate()).add(oxygenTank);
 		});
 
 		return new History(producedOxygenTanks, requestedOxygenTanks);
