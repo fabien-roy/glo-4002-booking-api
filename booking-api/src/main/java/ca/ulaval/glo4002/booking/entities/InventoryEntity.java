@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : OXY : Pretty sure this is useless
 @Entity(name = "Inventories")
 public class InventoryEntity {
 
@@ -12,8 +11,13 @@ public class InventoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false, nullable = false)
 	private Long id;
+    // TODO : OXY : Remove InventoryItemEntity
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private List<InventoryItemEntity> inventoryItems = new ArrayList<>();
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    private List<OxygenTankEntity> inUseOxygenTanks = new ArrayList<>();
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    private List<OxygenTankEntity> storedOxygenTanks = new ArrayList<>();
 
     public InventoryEntity() {
 
@@ -29,5 +33,13 @@ public class InventoryEntity {
 
     public List<InventoryItemEntity> getInventoryItems() {
         return inventoryItems;
+    }
+
+    public List<OxygenTankEntity> getInUseOxygenTanks() {
+        return inUseOxygenTanks;
+    }
+
+    public List<OxygenTankEntity> getStoredOxygenTanks() {
+        return storedOxygenTanks;
     }
 }
