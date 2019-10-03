@@ -84,9 +84,7 @@ public class OrderServiceImpl implements OrderService {
             price += p.getPrice();
         }
 
-        //https://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
         return price * rebate;
-        //return actualPrice;
     }
 
     private double verifyIfSupergiantRebateApplies(Order order, double rebate) {
