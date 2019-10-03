@@ -139,6 +139,7 @@ class OrderParserTest {
         assertEquals(entity.getId(), parsedOrder.getId());
         assertEquals(entity.getVendorId(), parsedOrder.getVendor().getId());
         assertEquals(entity.getOrderDate(), parsedOrder.getOrderDate());
+        assertEquals(entity.getPrice(), parsedOrder.getPrice());
         entity.getPasses().forEach(orderItemEntity -> {
             assertTrue(parsedOrder.getPasses().stream().anyMatch(orderItem -> orderItemEntity.getId().equals(orderItem.getId())));
         });
@@ -151,6 +152,7 @@ class OrderParserTest {
         assertEquals(order.getId(), entity.getId());
         assertEquals(order.getVendor().getId(), entity.getVendorId());
         assertEquals(order.getOrderDate(), entity.getOrderDate());
+        assertEquals(order.getPrice(), entity.getPrice());
         order.getPasses().forEach(orderItem -> {
             assertTrue(entity.getPasses().stream().anyMatch(orderItemEntity -> orderItem.getId().equals(orderItemEntity.getId())
             ));
@@ -163,7 +165,7 @@ class OrderParserTest {
 
         assertEquals(order.getId(), dto.orderNumber);
         assertEquals(order.getVendor().getCode(), dto.vendorCode);
-        assertEquals(order.getOrderDate().toString(), A_VALID_DATE.toString());
+        assertEquals(order.getOrderDate().toString().concat("Z"), dto.orderDate);
         assertEquals(1, order.getPasses().size());
     }
 

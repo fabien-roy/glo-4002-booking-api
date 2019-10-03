@@ -46,6 +46,7 @@ public class PassEndToEndContext {
     public static final List<String> SOME_INVALID_EVENT_DATES = new ArrayList<>(Collections.singletonList(
             A_INVALID_EVENT_DATE.toString()
     ));
+    private static final Double A_ORDER_PRICE = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE;
 
     private EntityManager entityManager;
     public PassEntity aSinglePass;
@@ -100,25 +101,29 @@ public class PassEndToEndContext {
         aSinglePassOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(aSinglePass))
+                new ArrayList<>(Collections.singletonList(aSinglePass)),
+                A_ORDER_PRICE
         );
 
         anotherSinglePassOrder = new OrderEntity(
                 ANOTHER_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(anotherSinglePass))
+                new ArrayList<>(Collections.singletonList(anotherSinglePass)),
+                A_ORDER_PRICE
         );
 
         aMultipleSinglePassOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Arrays.asList(aSinglePass, anotherSinglePass))
+                new ArrayList<>(Arrays.asList(aSinglePass, anotherSinglePass)),
+                A_ORDER_PRICE
         );
 
         aPackagePassOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(aPackagePass))
+                new ArrayList<>(Collections.singletonList(aPackagePass)),
+                A_ORDER_PRICE
         );
 
         aSinglePassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;

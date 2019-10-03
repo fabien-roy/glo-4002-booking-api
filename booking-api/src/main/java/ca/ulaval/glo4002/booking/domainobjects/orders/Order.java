@@ -12,12 +12,21 @@ public class Order {
     private LocalDateTime orderDate;
     private Vendor vendor;
     private List<Pass> passes;
+    private double price;
 
     public Order(Long id, LocalDateTime orderDate, Vendor vendor, List<Pass> passes) {
         this.id = id;
         this.orderDate = orderDate;
         this.vendor = vendor;
         this.passes = passes;
+    }
+
+    public Order(Long id, LocalDateTime orderDate, Vendor vendor, List<Pass> passes, double price) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.vendor = vendor;
+        this.passes = passes;
+        this.price = price;
     }
 
     public Long getId() {
@@ -38,5 +47,13 @@ public class Order {
 
     public void setPasses(List<Pass> passes) {
         this.passes = passes;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

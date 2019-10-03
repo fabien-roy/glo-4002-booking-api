@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
@@ -19,6 +20,7 @@ public class OrderRepositoryContext {
 
     private final static LocalDateTime A_ORDER_DATE_TIME = DateConstants.ORDER_START_DATE_TIME;
     private final static Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
+    private static final Double A_ORDER_PRICE = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE;
     public EntityManager entityManager;
     public OrderEntity aOrder;
     public OrderEntity anotherOrder;
@@ -37,21 +39,24 @@ public class OrderRepositoryContext {
                 A_ORDER_ID,
                 A_ORDER_DATE_TIME,
                 A_VENDOR_ID,
-                new ArrayList<>()
+                new ArrayList<>(),
+                A_ORDER_PRICE
         );
 
         anotherOrder = new OrderEntity(
                 ANOTHER_ORDER_ID,
                 A_ORDER_DATE_TIME,
                 A_VENDOR_ID,
-                new ArrayList<>()
+                new ArrayList<>(),
+                A_ORDER_PRICE
         );
 
         aNonExistentOrder = new OrderEntity(
                 A_NON_EXISTANT_ORDER_ID,
                 A_ORDER_DATE_TIME,
                 A_VENDOR_ID,
-                new ArrayList<>()
+                new ArrayList<>(),
+                A_ORDER_PRICE
         );
     }
 

@@ -44,7 +44,7 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
         List<Pass> passes = new ArrayList<>();
         order.getPasses().forEach(pass -> passes.add(passParser.parseEntity(pass)));
 
-        return new Order(order.getId(), order.getOrderDate(), vendor, passes);
+        return new Order(order.getId(), order.getOrderDate(), vendor, passes, order.getPrice());
     }
 
     @Override
@@ -53,6 +53,7 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
         dto.orderNumber = order.getId();
         dto.orderDate = FestivalDateUtil.toZonedDateTimeString(order.getOrderDate());
         dto.vendorCode = order.getVendor().getCode();
+        dto.orderPrice = order.getPrice();
         dto.passes = passParser.toDto(order.getPasses());
 
         return dto;
@@ -67,7 +68,8 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
                 order.getId(),
                 order.getOrderDate(),
                 order.getVendor().getId(),
-                passeEntities
+                passeEntities,
+                order.getPrice()
         );
 
         passeEntities.forEach(pass -> pass.setOrder(orderEntity));
