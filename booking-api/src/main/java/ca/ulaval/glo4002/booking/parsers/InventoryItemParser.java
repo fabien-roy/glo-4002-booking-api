@@ -29,24 +29,34 @@ public class InventoryItemParser implements ToDtoParser<Inventory, List<Inventor
 
     @Override
     public Inventory parseEntity(InventoryEntity entity) {
-        Map<Long, Long> storedTanks = new HashMap<>();
+        Map<Long, Long> inUseTanks = new HashMap<>();
+        Map<Long, Long> notInUseTanks = new HashMap<>();
 
-        entity.getInUseTanks().forEach(inventoryItemEntity -> storedTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
+        entity.getInUseTanks().forEach(inventoryItemEntity -> inUseTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
+        entity.getNotInUseTanks().forEach(inventoryItemEntity -> notInUseTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
 
-        return new Inventory(storedTanks);
+        return new Inventory(inUseTanks, notInUseTanks);
     }
 
     @Override
     public InventoryEntity toEntity(Inventory inventory) {
-        List<InventoryItemEntity> inventoryItems = new ArrayList<>();
+        List<InventoryItemEntity> inUseTanks = new ArrayList<>();
+        List<InventoryItemEntity> noInUseTanks = new ArrayList<>();
 
-        inventory.getOxygenTanks().forEach((categoryId, quantity) -> {
-            inventoryItems.add(new InventoryItemEntity(
+        inventory.getInUseTanks().forEach((categoryId, quantity) -> {
+            inUseTanks.add(new InventoryItemEntity(
                     categoryId,
-                    inventory.getOxygenTanks().get(categoryId)
+                    inventory.getInUseTanks().get(categoryId)
             ));
         });
 
-        return new InventoryEntity(inventoryItems);
+        inventory.getNotInUseTanks().forEach((categoryId, quantity) -> {
+            noInUseTanks.add(new InventoryItemEntity(
+                    categoryId,
+                    inventory.getNotInUseTanks().get(categoryId)
+            ));
+        });
+
+        return new InventoryEntity(inUseTanks, noInUseTanks);
     }
 }
