@@ -30,10 +30,11 @@ public class TripEntity {
 
 	}
 
-	public TripEntity(Long id, LocalDate date, Long typeId, List<PassengerEntity> passengers) {
+	public TripEntity(Long id, LocalDate date, Long typeId, ShuttleEntity shuttleEntity, List<PassengerEntity> passengers) {
 		this.id = id;
         this.date = date;
         this.typeId = typeId;
+        this.shuttle = shuttleEntity;
         this.passengers = passengers;
 	}
 	

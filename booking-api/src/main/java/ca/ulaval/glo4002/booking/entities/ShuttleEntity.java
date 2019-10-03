@@ -23,9 +23,10 @@ public class ShuttleEntity extends OrderItemEntity {
 		
 	}
 
-	public ShuttleEntity(Long id, Long shuttleCategoryId) {
+	public ShuttleEntity(Long id, Long shuttleCategoryId, Double price) {
 		this.id = id;
 		this.shuttleCategoryId = shuttleCategoryId;
+		this.price = price;
 	}
 	
 	@Override

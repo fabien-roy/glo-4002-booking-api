@@ -48,6 +48,7 @@ public class TripParser implements EntityParser<Trip, TripEntity>, DtoParser<Tri
 		        trip.getId(),
                 trip.getDate(),
                 trip.getType().getId(),
+                shuttleParser.toEntity(trip.getShuttle()),
                 passengerParser.toEntity(trip.getPassengers())
         );
 	}
