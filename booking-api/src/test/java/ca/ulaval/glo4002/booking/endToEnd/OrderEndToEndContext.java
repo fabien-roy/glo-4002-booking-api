@@ -10,10 +10,7 @@ import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.repositories.OrderRepository;
-import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
-import ca.ulaval.glo4002.booking.repositories.PassRepository;
-import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
+import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
@@ -104,13 +101,15 @@ public class OrderEndToEndContext {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
+    // TODO : OXY : Unmock OxygenTanKService when ready
     public OrderEndToEndContext setUp() {
         OrderRepository orderRepository = new OrderRepositoryImpl(entityManager);
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
+        // OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
+        // InventoryRepository inventoryRepository = new InventoryRepositoryImpl(entityManager);
 
         PassService passService = new PassServiceImpl(passRepository);
-        // TODO : When OxygenTankService is ready, unmock
-        // OxygenTankService oxygenTankService = new OxygenTankServiceImpl();
+        // InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository);
         OxygenTankService oxygenTankService = mock(OxygenTankService.class);
         OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
 

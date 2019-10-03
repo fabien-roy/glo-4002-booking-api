@@ -8,11 +8,15 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <class>ca.ulaval.glo4002.booking.entities.OrderEntity</class>
-        <class>ca.ulaval.glo4002.booking.entities.OrderItemEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.PassEntity</class>
+
         <class>ca.ulaval.glo4002.booking.entities.ShuttleEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.TripEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.PassengerEntity</class>
+
+        <class>ca.ulaval.glo4002.booking.entities.OxygenTankEntity</class>
+        <class>ca.ulaval.glo4002.booking.entities.InventoryEntity</class>
+        <class>ca.ulaval.glo4002.booking.entities.InventoryItemEntity</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />

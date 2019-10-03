@@ -1,13 +1,10 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "OxygenTanks")
-public class OxygenTankEntity extends OrderItemEntity {
+public class OxygenTankEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +12,8 @@ public class OxygenTankEntity extends OrderItemEntity {
 	private Long categoryId;
 	private LocalDate requestDate;
 	private LocalDate readyDate;
+	@ManyToOne
+	InventoryEntity inventory;
 
 	public OxygenTankEntity() {
 

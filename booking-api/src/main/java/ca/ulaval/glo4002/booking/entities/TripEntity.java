@@ -1,9 +1,16 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name = "Trips")
 public class TripEntity {
@@ -17,16 +24,17 @@ public class TripEntity {
 	@JoinColumn(name="shuttleId", nullable = false)
 	private ShuttleEntity shuttle;
 	@OneToMany(mappedBy = "trip")
-	private List<PassengerEntity> passengers = new ArrayList<>();
+	private List<PassengerEntity> passengers;
 
 	public TripEntity() {
 
 	}
 
-	public TripEntity(Long id, LocalDate date, Long typeId) {
+	public TripEntity(Long id, LocalDate date, Long typeId, List<PassengerEntity> passengers) {
 		this.id = id;
         this.date = date;
         this.typeId = typeId;
+        this.passengers = passengers;
 	}
 	
 	public Long getId() {
@@ -43,5 +51,9 @@ public class TripEntity {
     
     public ShuttleEntity getShuttle() {
     	return shuttle;
+    }
+    
+    public List<PassengerEntity> getPassengers() {
+    	return passengers;
     }
 }

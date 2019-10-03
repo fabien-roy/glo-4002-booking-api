@@ -1,13 +1,12 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "Passes")
-public class PassEntity extends OrderItemEntity {
+public class PassEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +14,9 @@ public class PassEntity extends OrderItemEntity {
     private Long categoryId;
     private Long optionId;
     private LocalDate eventDate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="orderId", nullable = false)
+    private OrderEntity order;
 
     public PassEntity() {
     }
@@ -61,5 +63,9 @@ public class PassEntity extends OrderItemEntity {
 
     public LocalDate getEventDate() {
         return eventDate;
+    }
+
+    public void setOrder(OrderEntity order) {
+        this.order = order;
     }
 }

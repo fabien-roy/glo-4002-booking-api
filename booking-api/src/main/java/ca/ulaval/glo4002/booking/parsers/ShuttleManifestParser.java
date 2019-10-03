@@ -5,16 +5,10 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
 import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.dto.TripDto;
-import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 
-public class ShuttleManifestParser implements DtoParser<ShuttleManifest, ShuttleManifestDto> {
+public class ShuttleManifestParser implements ToDtoParser<ShuttleManifest, ShuttleManifestDto> {
 
 	private TripParser tripParser = new TripParser();
-
-	@Override
-	public ShuttleManifest parseDto(ShuttleManifestDto dto) {
-	    throw new UnusedMethodException();
-	}
 
 	@Override
 	public ShuttleManifestDto toDto(ShuttleManifest shuttleManifest) {
