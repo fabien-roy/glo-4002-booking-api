@@ -24,11 +24,20 @@ public class OxygenTank {
 		this.readyDate = readyDate;
 	}
 
+	// TODO : OXY : Move this logic to a service
+	public Double getPrice() {
+		Double pricePerUnit = category.getProduction().getPricePerUnit();
+		Long producedUnit = category.getProduction().getProducedUnits();
+		Long producedTank = category.getProduction().getProducedTanks();
+
+		return (pricePerUnit * producedUnit) / producedTank;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
-	public OxygenCategory getOxygenTankCategory() {
+	public OxygenCategory getCategory() {
 		return category;
 	}
 
@@ -39,5 +48,4 @@ public class OxygenTank {
 	public LocalDate getReadyDate() {
 		return readyDate;
 	}
-
 }

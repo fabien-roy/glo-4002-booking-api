@@ -27,7 +27,7 @@ public class OrderRepositoryTest {
     public void findById_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
         OrderNotFoundException thrown = assertThrows(
                 OrderNotFoundException.class,
-                () -> subject.findById(OrderRepositoryContext.A_NON_EXISTANT_ORDER_ID)
+                () -> subject.findById(OrderRepositoryContext.A_NON_EXISTENT_ORDER_ID)
         );
 
         assertEquals(ExceptionConstants.Order.NOT_FOUND_ERROR, thrown.getMessage());
@@ -66,7 +66,7 @@ public class OrderRepositoryTest {
         context.setUpEntityManagerForSave();
 
         subject.save(context.aNonExistentOrder);
-        OrderEntity order = subject.findById(OrderRepositoryContext.A_NON_EXISTANT_ORDER_ID).get();
+        OrderEntity order = subject.findById(OrderRepositoryContext.A_NON_EXISTENT_ORDER_ID).get();
 
         assertEquals(context.aNonExistentOrder, order);
     }

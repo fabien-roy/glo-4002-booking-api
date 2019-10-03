@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public interface OxygenTankService extends Service<OxygenTank> {
 
-    OxygenTank save(OxygenTank oxygenTank);
+    Iterable<OxygenTank> saveAll(Iterable<OxygenTank> oxygenTanks);
 
     Iterable<OxygenTank> findAll();
 

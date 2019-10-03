@@ -37,13 +37,13 @@ public class OxygenConstants {
         public static final Double ELECTROLYTES_PRICE_PER_UNIT = 600.0;
         public static final Double SPARK_PLUGS_PRICE_PER_UNIT = 650.0;
 
-        public static final Integer IMMEDIATE_PRODUCED_UNITS = 1;
-        public static final Integer ELECTROLYTES_PRODUCED_UNITS = 8;
-        public static final Integer SPARK_PLUGS_PRODUCED_UNITS = 15;
+        public static final Long IMMEDIATE_PRODUCED_UNITS = 1L;
+        public static final Long ELECTROLYTES_PRODUCED_UNITS = 8L;
+        public static final Long SPARK_PLUGS_PRODUCED_UNITS = 15L;
 
-        public static final Integer IMMEDIATE_PRODUCED_TANKS = 1;
-        public static final Integer ELECTROLYTES_PRODUCED_TANKS = 3;
-        public static final Integer SPARK_PLUGS_PRODUCED_TANKS = 5;
+        public static final Long IMMEDIATE_PRODUCED_TANKS = 1L;
+        public static final Long ELECTROLYTES_PRODUCED_TANKS = 3L;
+        public static final Long SPARK_PLUGS_PRODUCED_TANKS = 5L;
 
         public static final Duration IMMEDIATE_PRODUCTION_TIME = Duration.ofDays(0);
         public static final Duration ELECTROLYTES_PRODUCTION_TIME = Duration.ofDays(10);

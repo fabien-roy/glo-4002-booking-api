@@ -24,18 +24,26 @@ public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 
 	@Override
 	public Iterable<OxygenTankEntity> findAll() {
-		return entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OxygenTankEntity.class).getResultList();
+		return entityManager.createQuery(RepositoryConstants.OXYGEN_TANK_FIND_ALL_QUERY, OxygenTankEntity.class).getResultList();
 	}
 
 	@Override
-	public <S extends OxygenTankEntity> S save(S oxygenTank) {
-		if (oxygenTank.getId() == null) {
-			entityManager.persist(oxygenTank);
-		} else {
-			throw new OxygenTankAlreadyCreatedException();
-		}
+	public <S extends OxygenTankEntity> Iterable<S> saveAll(Iterable<S> oxygenTanks) {
+		oxygenTanks.forEach(oxygenTank -> {
+			if (oxygenTank.getId() == null) {
+				entityManager.getTransaction().begin();
 
-		return oxygenTank;
+				if (!entityManager.contains(oxygenTank)) {
+					entityManager.persist(oxygenTank);
+				}
+
+				entityManager.getTransaction().commit();
+			} else {
+				throw new OxygenTankAlreadyCreatedException();
+			}
+		});
+
+		return oxygenTanks;
 	}
 
 	@Override
@@ -50,8 +58,8 @@ public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 	}
 
 	@Override
-	public <S extends OxygenTankEntity> Iterable<S> saveAll(Iterable<S> entities) {
-	    throw new UnusedMethodException();
+	public <S extends OxygenTankEntity> S save(S oxygenTank) {
+		throw new UnusedMethodException();
 	}
 
 	@Override
