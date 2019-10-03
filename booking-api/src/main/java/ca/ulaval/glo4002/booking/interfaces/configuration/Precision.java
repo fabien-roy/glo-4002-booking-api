@@ -1,3 +1,5 @@
+//Taken from : https://stackoverflow.com/questions/44110624/need-jackson-serializer-for-double-and-need-to-specify-precision-at-runtime
+
 package ca.ulaval.glo4002.booking.interfaces.configuration;
 
 import java.lang.annotation.ElementType;
