@@ -18,4 +18,4 @@ When parsing a date to UTC format, unwanted substring "\[UTC]" is added at the e
 
 ### OxygenTankRepository
 
-We store each oxygentTank as an entry instead of batching them in orders, with columns of requestDate, readyDate, quantity and category. We also give an id to each of them for no reason.
+We store each oxygenTank as an entry instead of batching them in orders, with columns of requestDate, readyDate, quantity and category. We also give an id to each of them for no reason.
