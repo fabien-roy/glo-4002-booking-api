@@ -39,18 +39,18 @@ public class InventoryTest {
 	void getNotInUseTanksByCategoryId_shouldReturnTheCorrectNumberOfStoredTankForACategory() {
 		fillInventory();
 
-		assertEquals(10L, (long) subject.getNotInUseTanksByCategoryId(Categories.A_ID));
-		assertEquals(20L, (long) subject.getNotInUseTanksByCategoryId(Categories.B_ID));
-		assertEquals(30L, (long) subject.getNotInUseTanksByCategoryId(Categories.E_ID));
+		assertEquals(Long.valueOf(10L), subject.getNotInUseTanksByCategoryId(Categories.A_ID));
+		assertEquals(Long.valueOf(20L), subject.getNotInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(30L), subject.getNotInUseTanksByCategoryId(Categories.E_ID));
 	}
 
 	@Test
 	void getInUseTanksByCategoryId_shouldReturnTheCorrectNumberOfInUseTankForACategory() {
 		fillInventory();
 
-		assertEquals(1L, (long) subject.getInUseTanksByCategoryId(Categories.A_ID));
-		assertEquals(2L, (long) subject.getInUseTanksByCategoryId(Categories.B_ID));
-		assertEquals(3L, (long) subject.getInUseTanksByCategoryId(Categories.E_ID));
+		assertEquals(Long.valueOf(1L), subject.getInUseTanksByCategoryId(Categories.A_ID));
+		assertEquals(Long.valueOf(2L), subject.getInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(3L), subject.getInUseTanksByCategoryId(Categories.E_ID));
 	}
 
 	private void fillInventory() {
