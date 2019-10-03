@@ -19,7 +19,7 @@ public class InventoryParser implements ToDtoParser<Inventory, List<InventoryIte
     public List<InventoryItemDto> toDto(Inventory inventory) {
         List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
 
-        inventory.getOxygenTanks().forEach((categoryId, quantity) -> {
+        inventory.getInUseTanks().forEach((categoryId, quantity) -> {
             InventoryItemDto inventoryItemDto = new InventoryItemDto();
             inventoryItemDto.gradeTankOxygen = oxygenCategoryBuilder.buildById(categoryId).getName();
             inventoryItemDto.quantity = quantity;
@@ -30,24 +30,34 @@ public class InventoryParser implements ToDtoParser<Inventory, List<InventoryIte
 
     @Override
     public Inventory parseEntity(InventoryEntity entity) {
-        Map<Long, Long> storedTanks = new HashMap<>();
+        Map<Long, Long> inUseTanks = new HashMap<>();
+        Map<Long, Long> notInUseTanks = new HashMap<>();
 
-        entity.getInUseTanks().forEach(inventoryItemEntity -> storedTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
+        entity.getInUseTanks().forEach(inventoryItemEntity -> inUseTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
+        entity.getInUseTanks().forEach(inventoryItemEntity -> notInUseTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
 
-        return new Inventory(storedTanks);
+        return new Inventory(inUseTanks, notInUseTanks);
     }
 
     @Override
     public InventoryEntity toEntity(Inventory inventory) {
-        List<InventoryItemEntity> inventoryItems = new ArrayList<>();
+        List<InventoryItemEntity> inUseTanks = new ArrayList<>();
+        List<InventoryItemEntity> notInUseTanks = new ArrayList<>();
 
-        inventory.getOxygenTanks().forEach((categoryId, quantity) -> {
-            inventoryItems.add(new InventoryItemEntity(
+        inventory.getInUseTanks().forEach((categoryId, quantity) -> {
+            inUseTanks.add(new InventoryItemEntity(
                     categoryId,
-                    inventory.getOxygenTanks().get(categoryId)
+                    inventory.getInUseTanks().get(categoryId)
             ));
         });
 
-        return new InventoryEntity(inventoryItems);
+        inventory.getNotInUseTanks().forEach((categoryId, quantity) -> {
+            notInUseTanks.add(new InventoryItemEntity(
+                    categoryId,
+                    inventory.getNotInUseTanks().get(categoryId)
+            ));
+        });
+
+        return new InventoryEntity(inUseTanks, notInUseTanks);
     }
 }

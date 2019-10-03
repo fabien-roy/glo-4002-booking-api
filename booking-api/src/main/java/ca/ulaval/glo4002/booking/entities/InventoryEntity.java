@@ -46,11 +46,11 @@ public class InventoryEntity {
         notInUseTanks.clear();
     }
 
-    public void addInUseTanks(List<InventoryItemEntity> inventoryItems) {
-        this.inUseTanks.addAll(inventoryItems);
+    public void updateInUseTanks(List<InventoryItemEntity> inventoryItemEntities) {
+        this.inUseTanks = inventoryItemEntities;
     }
 
-    public void addNotInUseTanks(List<InventoryItemEntity> inventoryItems) {
-        this.notInUseTanks.addAll(inventoryItems);
+    public void updateNotInUseTanks(List<InventoryItemEntity> inventoryItemEntities) {
+        this.notInUseTanks = inventoryItemEntities;
     }
 }

@@ -35,12 +35,16 @@ public class InventoryItemRepositoryImpl implements InventoryItemRepository {
 	}
 
 	@Override
-	public <S extends InventoryItemEntity> S save(S s) {
-		throw new UnusedMethodException();
+	public Optional<InventoryItemEntity> findById(Long id) {
+		InventoryItemEntity inventoryItemEntity = entityManager.find(InventoryItemEntity.class, id);
+
+		// TODO : (OXY) implement if null
+
+		return Optional.of(inventoryItemEntity);
 	}
 
 	@Override
-	public Optional<InventoryItemEntity> findById(Long id) {
+	public <S extends InventoryItemEntity> S save(S s) {
 		throw new UnusedMethodException();
 	}
 

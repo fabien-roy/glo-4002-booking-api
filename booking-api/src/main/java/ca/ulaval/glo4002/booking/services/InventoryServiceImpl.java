@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.entities.InventoryEntity;
-import ca.ulaval.glo4002.booking.entities.InventoryItemEntity;
 import ca.ulaval.glo4002.booking.parsers.InventoryParser;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 
@@ -12,35 +11,35 @@ import java.util.List;
 
 public class InventoryServiceImpl implements InventoryService {
 
-	private final InventoryParser parser;
-	private InventoryRepository repository;
+	private final InventoryParser inventoryParser;
+	private InventoryRepository inventoryRepository;
 	private InventoryItemService inventoryItemService;
 
-	public InventoryServiceImpl(InventoryRepository repository, InventoryItemService inventoryItemService) {
-		this.repository = repository;
+	public InventoryServiceImpl(InventoryRepository inventoryRepository, InventoryItemService inventoryItemService) {
+		this.inventoryRepository = inventoryRepository;
 		this.inventoryItemService = inventoryItemService;
-		this.parser = new InventoryParser();
+		this.inventoryParser = new InventoryParser();
 	}
 
 	@Override
 	public Inventory get() {
 		List<InventoryEntity> inventories = new ArrayList<>();
-		repository.findAll().forEach(inventories::add);
+		inventoryRepository.findAll().forEach(inventories::add);
 
 		if (inventories.isEmpty()) {
 			return new Inventory();
 		}
 
-		return parser.parseEntity(inventories.get(0));
+		return inventoryParser.parseEntity(inventories.get(0));
 	}
 
 	@Override
 	public Inventory save(Inventory inventory) {
-		InventoryEntity inventoryEntity = parser.toEntity(inventory);
+		InventoryEntity inventoryEntity = inventoryParser.toEntity(inventory);
 
 		inventoryItemService.save(inventoryEntity, inventory.getInUseTanks());
 
-		return parser.parseEntity(repository.save(inventoryEntity));
+		return inventoryParser.parseEntity(inventoryRepository.save(inventoryEntity));
 	}
 
 	@Override

@@ -35,4 +35,8 @@ public class InventoryItemEntity {
     public Long getQuantity() {
         return quantity;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

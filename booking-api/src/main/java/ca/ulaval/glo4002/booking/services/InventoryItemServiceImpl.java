@@ -16,17 +16,9 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 		this.repository = repository;
 	}
 
+
 	@Override
 	public Map<Long, Long> save(InventoryEntity inventory, Map<Long, Long> oxygenTanks) {
-		List<InventoryItemEntity> inventoryItemEntities = new ArrayList<>();
-
-		oxygenTanks.forEach((categoryId, quantity) -> inventoryItemEntities.add(new InventoryItemEntity(categoryId, quantity)));
-
-		repository.saveAll(inventoryItemEntities);
-
-		inventory.clearInventoryItems();
-		inventory.addInventoryItems(inventoryItemEntities);
-
-		return oxygenTanks;
+		return null;
 	}
 }
