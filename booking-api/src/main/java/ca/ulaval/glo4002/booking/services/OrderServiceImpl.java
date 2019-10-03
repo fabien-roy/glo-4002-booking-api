@@ -66,10 +66,10 @@ public class OrderServiceImpl implements OrderService {
         return orderParser.parseEntity(savedOrder);
     }
 
-    public Double getOrderPrice(Order order){
+    public double getOrderPrice(Order order){
 
-        Double rebate = 1d;
-        Double price = 0d;
+        double rebate = 1.00d;
+        double price = 0.00d;
 
         if(order.getPasses().get(0).getCategory() instanceof SupergiantPassCategory) {
             rebate = verifyIfSupergiantRebateApplies(order, rebate);
@@ -84,17 +84,19 @@ public class OrderServiceImpl implements OrderService {
             price += p.getPrice();
         }
 
+        //https://stackoverflow.com/questions/2808535/round-a-double-to-2-decimal-places
         return price * rebate;
+        //return actualPrice;
     }
 
-    private Double verifyIfSupergiantRebateApplies(Order order, Double rebate) {
+    private double verifyIfSupergiantRebateApplies(Order order, double rebate) {
         if (order.getPasses().size() >= PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD) {
             rebate = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
         }
         return rebate;
     }
 
-    private Double verifyIfNebulaRebateApply(Order order, Double rebate) {
+    private double verifyIfNebulaRebateApply(Order order, double rebate) {
         if(order.getPasses().size() >= PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD){
             rebate = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE;
         }

@@ -12,13 +12,13 @@ public class PassConstants {
         public static final String SUPERGIANT_NAME = "supergiant";
         public static final String NEBULA_NAME = "nebula";
 
-        public static final Double SUPERNOVA_PACKAGE_PRICE = 700000.0;
-        public static final Double SUPERGIANT_PACKAGE_PRICE = 500000.0;
-        public static final Double NEBULA_PACKAGE_PRICE = 250000.0;
+        public static final double SUPERNOVA_PACKAGE_PRICE = 700000.00d;
+        public static final double SUPERGIANT_PACKAGE_PRICE = 500000.00d;
+        public static final double NEBULA_PACKAGE_PRICE = 250000.00d;
 
-        public static final Double SUPERNOVA_SINGLE_PASS_PRICE = 150000.0;
-        public static final Double SUPERGIANT_SINGLE_PASS_PRICE = 100000.0;
-        public static final Double NEBULA_SINGLE_PASS_PRICE = 50000.0;
+        public static final double SUPERNOVA_SINGLE_PASS_PRICE = 150000.00d;
+        public static final double SUPERGIANT_SINGLE_PASS_PRICE = 100000.00d;
+        public static final double NEBULA_SINGLE_PASS_PRICE = 50000.00d;
 
         public static final Long SUPERNOVA_SHUTTLE_CATEGORY_ID = ShuttleConstants.Categories.ET_SPACESHIP_ID;
         public static final Long SUPERGIANT_SHUTTLE_CATEGORY_ID = ShuttleConstants.Categories.MILLENNIUM_FALCON_ID;
@@ -31,8 +31,8 @@ public class PassConstants {
         public static final int SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD = 5;
         public static final int NEBULA_SINGLE_PASS_REBATE_THRESHOLD = 4;
 
-        public static final Double SUPERGIANT_SINGLE_PASS_REBATE = 0.9;
-        public static final Double NEBULA_SINGLE_PASS_REBATE = 0.9;
+        public static final double SUPERGIANT_SINGLE_PASS_REBATE = 0.9d;
+        public static final double NEBULA_SINGLE_PASS_REBATE = 0.9d;
 
         private Categories(){
             throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);

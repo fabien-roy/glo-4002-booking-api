@@ -36,7 +36,7 @@ public final class FestivalDateUtil {
 	}
 
     public static String toZonedDateTimeString(LocalDateTime orderDate) {
-        return ZonedDateTime.of(orderDate, ZoneId.of("UTC")).toString();
+        return ZonedDateTime.of(orderDate, ZoneId.of("UTC")).toString().replaceAll("\\[UTC\\]", ""); //TODO: This is a ugly hack
     }
 
 	public static boolean isOutsideFestivalDates(LocalDate date) {

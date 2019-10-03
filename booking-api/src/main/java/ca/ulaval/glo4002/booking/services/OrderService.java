@@ -10,5 +10,5 @@ public interface OrderService extends Service<Order> {
 
     Order order(Order order);
 
-    Double getOrderPrice(Order order);
+    double getOrderPrice(Order order);
 }
