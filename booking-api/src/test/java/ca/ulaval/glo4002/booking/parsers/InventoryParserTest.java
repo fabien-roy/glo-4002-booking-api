@@ -25,16 +25,25 @@ public class InventoryParserTest {
 
 	@BeforeEach
 	void setup() {
-		Map<Long, Long> storedTank = new HashMap<>();
+		Map<Long, Long> inUseTanks = new HashMap<>();
+		Map<Long, Long> noInUseTanks = new HashMap<>();
 		Map<Long, Long> storedTankOneEmptyCategory = new HashMap<>();
 
-		storedTank.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
-		storedTank.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
-		storedTank.put(OxygenConstants.Categories.E_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_E_STORED);
+		inUseTanks.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
+		inUseTanks.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
+		inUseTanks.put(OxygenConstants.Categories.E_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_E_STORED);
+
+		noInUseTanks.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
+		noInUseTanks.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
+		noInUseTanks.put(OxygenConstants.Categories.E_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_E_STORED);
+
+		storedTankOneEmptyCategory.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
+		storedTankOneEmptyCategory.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
+
 
 		anEmptyInventory = new Inventory();
-		inventory = new Inventory(storedTank);
-		inventoryOneEmptyCategory = new Inventory(storedTankOneEmptyCategory);
+		inventory = new Inventory(inUseTanks, noInUseTanks);
+		inventoryOneEmptyCategory = new Inventory(storedTankOneEmptyCategory, new HashMap<Long, Long>());
 		subject = new InventoryParser();
 	}
 
@@ -44,9 +53,13 @@ public class InventoryParserTest {
 
 		Inventory parsedInventory = subject.parseEntity(entity);
 
-		assertEquals(entity.getInUseTanks().get(0).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.E_ID));
-		assertEquals(entity.getInUseTanks().get(1).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.B_ID));
-		assertEquals(entity.getInUseTanks().get(2).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.A_ID));
+		assertEquals(entity.getInUseTanks().get(0).getQuantity(), parsedInventory.getInUseTanks().get(OxygenConstants.Categories.E_ID));
+		assertEquals(entity.getInUseTanks().get(1).getQuantity(), parsedInventory.getInUseTanks().get(OxygenConstants.Categories.B_ID));
+		assertEquals(entity.getInUseTanks().get(2).getQuantity(), parsedInventory.getInUseTanks().get(OxygenConstants.Categories.A_ID));
+
+		assertEquals(entity.getNotInUseTanks().get(0).getQuantity(), parsedInventory.getNotInUseTanks().get(OxygenConstants.Categories.E_ID));
+		assertEquals(entity.getInUseTanks().get(1).getQuantity(), parsedInventory.getNotInUseTanks().get(OxygenConstants.Categories.B_ID));
+		assertEquals(entity.getInUseTanks().get(2).getQuantity(), parsedInventory.getNotInUseTanks().get(OxygenConstants.Categories.A_ID));
 	}
 
 	@Test
@@ -63,11 +76,11 @@ public class InventoryParserTest {
 		List<InventoryItemDto> dtos = subject.toDto(inventory);
 
 		assertEquals("E", dtos.get(0).gradeTankOxygen);
-		assertEquals(inventory.getOxygenTanks().get(OxygenConstants.Categories.E_ID), dtos.get(0).quantity);
+		assertEquals(inventory.getInUseTanks().get(OxygenConstants.Categories.E_ID), dtos.get(0).quantity);
 		assertEquals("B", dtos.get(1).gradeTankOxygen);
-		assertEquals(inventory.getOxygenTanks().get(OxygenConstants.Categories.B_ID), dtos.get(1).quantity);
+		assertEquals(inventory.getInUseTanks().get(OxygenConstants.Categories.B_ID), dtos.get(1).quantity);
 		assertEquals("A", dtos.get(2).gradeTankOxygen);
-		assertEquals(inventory.getOxygenTanks().get(OxygenConstants.Categories.A_ID), dtos.get(2).quantity);
+		assertEquals(inventory.getInUseTanks().get(OxygenConstants.Categories.A_ID), dtos.get(2).quantity);
 	}
 
 	@Test
