@@ -1,17 +1,18 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.time.LocalDate;
+import java.util.Arrays;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class OxygenTankRepositoryContext {
 	private final static LocalDate A_DATE_BEFORE_FESTIVAL = DateConstants.START_DATE.minusDays(30);
@@ -52,7 +53,7 @@ public class OxygenTankRepositoryContext {
 
 		when(createQuery.getResultList())
 				.thenReturn(Arrays.asList(this.oxygenTankA, this.oxygenTankB, this.oxygenTankE));
-		when(entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OxygenTankEntity.class))
+		when(entityManager.createQuery(RepositoryConstants.OXYGEN_TANK_FIND_ALL_QUERY, OxygenTankEntity.class))
 				.thenReturn(createQuery);
 		when(entityManager.find(OxygenTankEntity.class, A_OXYGEN_ID)).thenReturn(this.oxygenTankA);
 		when(entityManager.find(OxygenTankEntity.class, B_OXYGEN_ID)).thenReturn(this.oxygenTankB);
@@ -61,6 +62,9 @@ public class OxygenTankRepositoryContext {
 	}
 
 	public void setUpEntityManagerForSave() {
+		EntityTransaction transaction = mock(EntityTransaction.class);
+		when(entityManager.getTransaction()).thenReturn(transaction);
+
 		nonExistentOxygenTank.setId(null);
 		when(entityManager.find(OxygenTankEntity.class, NON_EXISTENT_OXYGEN_ID)).thenReturn(nonExistentOxygenTank);
 	}

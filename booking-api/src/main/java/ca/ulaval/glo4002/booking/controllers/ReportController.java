@@ -21,36 +21,32 @@ import javax.ws.rs.core.MediaType;
 public class ReportController {
 
 	private final ReportService reportService;
-	private final ReportParser reportParser;
+	private final ReportParser reportParser = new ReportParser();
 
 	private final InventoryRepository inventoryRepository;
 	private final OxygenTankRepository oxygenTankRepository;
 	private final InventoryService inventoryService;
 	private final HistoryService historyService;
-	private final OxygenTankService oxygenTankService;
 
 	public ReportController() {
 	    // TODO : OXY : Inject this
 		this.inventoryRepository = new InventoryRepositoryImpl();
 		this.oxygenTankRepository = new OxygenTankRepositoryImpl();
 		this.inventoryService = new InventoryServiceImpl(inventoryRepository);
-		this.oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
+		OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
 		this.historyService = new HistoryServiceImpl(oxygenTankService);
 
 		this.reportService = new ReportServiceImpl(inventoryService, historyService);
-		this.reportParser = new ReportParser();
 	}
 
-	public ReportController(ReportService reportService, ReportParser reportParser, OxygenTankRepository oxygenTankRepository, InventoryRepository inventoryRepository, InventoryService inventoryService, HistoryService historyService, OxygenTankService oxygenTankService) {
+	public ReportController(ReportService reportService, OxygenTankRepository oxygenTankRepository, InventoryRepository inventoryRepository, InventoryService inventoryService, HistoryService historyService) {
 	    // TODO : OXY : Only report service and parser should be injected
 		this.reportService = reportService;
-		this.reportParser = reportParser;
 
 		this.oxygenTankRepository = oxygenTankRepository;
 		this.inventoryRepository = inventoryRepository;
 		this.inventoryService = inventoryService;
 		this.historyService = historyService;
-		this.oxygenTankService = oxygenTankService;
 	}
 
 	@GET

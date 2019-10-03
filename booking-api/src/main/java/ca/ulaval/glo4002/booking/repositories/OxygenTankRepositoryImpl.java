@@ -24,13 +24,19 @@ public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 
 	@Override
 	public Iterable<OxygenTankEntity> findAll() {
-		return entityManager.createQuery(RepositoryConstants.ORDER_FIND_ALL_QUERY, OxygenTankEntity.class).getResultList();
+		return entityManager.createQuery(RepositoryConstants.OXYGEN_TANK_FIND_ALL_QUERY, OxygenTankEntity.class).getResultList();
 	}
 
 	@Override
 	public <S extends OxygenTankEntity> S save(S oxygenTank) {
 		if (oxygenTank.getId() == null) {
-			entityManager.persist(oxygenTank);
+			entityManager.getTransaction().begin();
+
+			if (!entityManager.contains(oxygenTank)) {
+				entityManager.persist(oxygenTank);
+			}
+
+			entityManager.getTransaction().commit();
 		} else {
 			throw new OxygenTankAlreadyCreatedException();
 		}

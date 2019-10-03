@@ -9,7 +9,6 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
@@ -63,14 +62,12 @@ public class PassEndToEndContext {
     public OrderWithPassesAsEventDatesDto anotherSinglePassOrderDto = new OrderWithPassesAsEventDatesDto();
     public OrderWithPassesAsEventDatesDto aMultipleSinglePassOrderDto = new OrderWithPassesAsEventDatesDto();
     public OrderWithPassesAsEventDatesDto aPackagePassOrderDto = new OrderWithPassesAsEventDatesDto();
-    public OrderParser orderParser = new OrderParser();
     public Long aSinglePassOrderId = 1L;
     public Long anotherSinglePassOrderId = 2L;
     public Long aMultipleSinglePassOrderId = 3L;
     public Long aPackagePassOrderId = 4L;
     public Long aSinglePassId = 1L;
     public Long anotherSinglePassId = 2L;
-    public Long aMultipleSinglePassId = 3L;
     public Long aPackagePassId = 4L;
     public OrderController orderController;
 
