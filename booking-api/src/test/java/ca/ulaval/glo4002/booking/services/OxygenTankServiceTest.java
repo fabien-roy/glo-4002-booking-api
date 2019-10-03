@@ -81,7 +81,7 @@ class OxygenTankServiceTest {
 
 		context.subject.order(new NebulaQuality(), OxygenTankServiceContext.A_VALID_DATE).forEach(oxygenTanks::add);
 
-		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.A_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getCategory().getId().equals(OxygenConstants.Categories.A_ID)));
 	}
 
 	@Test
@@ -90,7 +90,7 @@ class OxygenTankServiceTest {
 
 		context.subject.order(new SupergiantQuality(), OxygenTankServiceContext.A_VALID_DATE).forEach(oxygenTanks::add);
 
-		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.B_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getCategory().getId().equals(OxygenConstants.Categories.B_ID)));
 	}
 
 	@Test
@@ -99,7 +99,7 @@ class OxygenTankServiceTest {
 
 		context.subject.order(new SupernovaQuality(), OxygenTankServiceContext.A_VALID_DATE).forEach(oxygenTanks::add);
 
-		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.E_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getCategory().getId().equals(OxygenConstants.Categories.E_ID)));
 	}
 
 	@Test
@@ -108,7 +108,7 @@ class OxygenTankServiceTest {
 
 		context.subject.order(new NebulaQuality(), OxygenTankServiceContext.A_VALID_DATE_15DAYS_BEFORE_START).forEach(oxygenTanks::add);
 
-		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.B_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getCategory().getId().equals(OxygenConstants.Categories.B_ID)));
 		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getReadyDate().equals(DateConstants.START_DATE)));
 	}
 
@@ -118,7 +118,7 @@ class OxygenTankServiceTest {
 
 		context.subject.order(new NebulaQuality(), OxygenTankServiceContext.A_VALID_DATE_5DAYS_BEFORE_START).forEach(oxygenTanks::add);
 
-		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.E_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getCategory().getId().equals(OxygenConstants.Categories.E_ID)));
 		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getReadyDate().equals(DateConstants.START_DATE)));
 	}
 
@@ -128,7 +128,7 @@ class OxygenTankServiceTest {
 
 		context.subject.order(new NebulaQuality(), DateConstants.START_DATE).forEach(oxygenTanks::add);
 
-		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getOxygenTankCategory().getId().equals(OxygenConstants.Categories.E_ID)));
+		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getCategory().getId().equals(OxygenConstants.Categories.E_ID)));
 		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getReadyDate().equals(DateConstants.START_DATE)));
 	}
 }

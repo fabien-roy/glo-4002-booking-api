@@ -37,7 +37,7 @@ public class OxygenTank {
 		return id;
 	}
 
-	public OxygenCategory getOxygenTankCategory() {
+	public OxygenCategory getCategory() {
 		return category;
 	}
 

@@ -28,7 +28,7 @@ public class OxygenTankTest {
 
 	@Test
 	void whenOxygenTankIsCreated_thenCategoryIsAssigned() {
-		assertNotNull(subject.getOxygenTankCategory());
+		assertNotNull(subject.getCategory());
 	}
 
 	@Test

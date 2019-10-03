@@ -18,12 +18,12 @@ public class InventoryServiceTest {
 	/*
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryIsInSurplus_thenTankInUseIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 20L);
+		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 20L);
 
 		context.subject.requestOxygenTanks(context.anOxygenTank);
 		Long inUseTanks = context.anInventory
-				.getInUseTanksByCategoryId(context.anOxygenTank.getOxygenTankCategory().getId());
-		Long expectedInUseTanks = context.anOxygenTank.getOxygenTankCategory().getProduction().getProducedTanks();
+				.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
+		Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 
 		assertEquals(expectedInUseTanks, inUseTanks);
 	}
@@ -33,11 +33,11 @@ public class InventoryServiceTest {
 	/*
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenTankInUseIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 3L);
+		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 3L);
 
 		context.subject.requestOxygenTanks(context.anOxygenTank);
-		Long inUseTanks = context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getOxygenTankCategory().getId());
-        Long expectedInUseTanks = context.anOxygenTank.getOxygenTankCategory().getProduction().getProducedTanks();
+		Long inUseTanks = context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
+        Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 
 		assertEquals(3, (long) context.anInventory.getInUseTanksByCategoryId(OxygenConstants.Categories.E_ID));
 	}
@@ -69,13 +69,13 @@ public class InventoryServiceTest {
 
 	@Test
 	void whenOxygenTankIsAdded_thenInventoryOfStoredTankIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 5L);
+		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 5L);
 		// TODO Do this test
 	}
 
 	@Test
 	void whenGetIsCalled_thenShouldReturnTheInventory() {
-		context.subject.addTank(context.anOxygenTank.getOxygenTankCategory().getId(), 5L);
+		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 5L);
 		// TODO Do this test
 		// context.subject.get()
 	}

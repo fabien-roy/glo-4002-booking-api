@@ -34,6 +34,6 @@ public class HistoryServiceImpl implements HistoryService {
 			requestedOxygenTanks.get(oxygenTank.getRequestDate()).add(oxygenTank);
 		});
 
-		return new History(producedOxygenTanks, requestedOxygenTanks);
+		return new History(requestedOxygenTanks, producedOxygenTanks);
 	}
 }

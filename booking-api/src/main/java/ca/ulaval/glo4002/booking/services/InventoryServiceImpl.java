@@ -34,8 +34,8 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public Iterable<OxygenTank> requestOxygenTanks(OxygenTank oxygenTank) {
-		Long numberOfTanksNeeded = oxygenTank.getOxygenTankCategory().getProduction().getProducedTanks();
-		updateInUseTanks(oxygenTank.getOxygenTankCategory().getId(), numberOfTanksNeeded);
+		Long numberOfTanksNeeded = oxygenTank.getCategory().getProduction().getProducedTanks();
+		updateInUseTanks(oxygenTank.getCategory().getId(), numberOfTanksNeeded);
 
 		List<OxygenTank> oxygenTanks = new ArrayList<>();
 		for (int i = 0; i < numberOfTanksNeeded; i++) {

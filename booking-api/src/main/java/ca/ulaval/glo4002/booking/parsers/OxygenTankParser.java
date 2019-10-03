@@ -18,6 +18,6 @@ public class OxygenTankParser implements EntityParser<OxygenTank, OxygenTankEnti
 
 	@Override
 	public OxygenTankEntity toEntity(OxygenTank tank) {
-		return new OxygenTankEntity(tank.getId(), tank.getOxygenTankCategory().getId(), tank.getRequestDate(), tank.getReadyDate());
+		return new OxygenTankEntity(tank.getId(), tank.getCategory().getId(), tank.getRequestDate(), tank.getReadyDate());
 	}
 }
