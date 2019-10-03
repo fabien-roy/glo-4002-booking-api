@@ -2,12 +2,12 @@ package ca.ulaval.glo4002.booking.exceptions.orders;
 
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.exceptions.ControllerException;
+import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class OrderInvalidDateException extends ControllerException {
+public class OrderInvalidDateException extends HumanReadableException {
 
     // TODO : ACP : Check date format
     public OrderInvalidDateException() {

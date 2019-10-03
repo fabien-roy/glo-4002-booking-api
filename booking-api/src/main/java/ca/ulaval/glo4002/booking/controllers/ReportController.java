@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.report.Report;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
-import ca.ulaval.glo4002.booking.exceptions.ControllerException;
+import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
@@ -29,7 +29,6 @@ public class ReportController {
 	private final HistoryService historyService;
 
 	public ReportController() {
-	    // TODO : OXY : Inject this
 		this.inventoryRepository = new InventoryRepositoryImpl();
 		this.oxygenTankRepository = new OxygenTankRepositoryImpl();
 		this.inventoryService = new InventoryServiceImpl(inventoryRepository);
@@ -40,7 +39,6 @@ public class ReportController {
 	}
 
 	public ReportController(ReportService reportService, OxygenTankRepository oxygenTankRepository, InventoryRepository inventoryRepository, InventoryService inventoryService, HistoryService historyService) {
-	    // TODO : OXY : Only report service and parser should be injected
 		this.reportService = reportService;
 
 		this.oxygenTankRepository = oxygenTankRepository;
@@ -58,7 +56,7 @@ public class ReportController {
 		try {
 			Report report = reportService.getReport();
 			dto = reportParser.toDto(report);
-        } catch (ControllerException exception) {
+        } catch (HumanReadableException exception) {
             return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
         } catch (FestivalException exception) {
             return ResponseEntity.notFound().build();
