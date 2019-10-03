@@ -115,7 +115,8 @@ public class HistoryEndToEndContext {
         InventoryItemService inventoryItemService = mock(InventoryItemService.class);
         InventoryService inventoryService = mock(InventoryService.class);
         Inventory inventory = mock(Inventory.class);
-        when(inventory.getOxygenTanks()).thenReturn(new HashMap<>());
+        when(inventory.getInUseTanks()).thenReturn(new HashMap<>());
+        when(inventory.getNotInUseTanks()).thenReturn(new HashMap<>());
         when(inventoryService.get()).thenReturn(inventory);
 
         OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
