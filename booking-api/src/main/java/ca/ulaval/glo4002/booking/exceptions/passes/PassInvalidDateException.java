@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class PassInvalidDateException extends HumanReadableException {
 
-    // TODO : ACP : Check date format
     public PassInvalidDateException() {
         super(ExceptionConstants.Pass.INVALID_DATE_ERROR);
 
