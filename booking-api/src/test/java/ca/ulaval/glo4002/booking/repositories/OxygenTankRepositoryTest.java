@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,9 +53,9 @@ class OxygenTankRepositoryTest {
 	}
 
 	@Test
-	public void save_shouldSaveOxygenTank() {
+	public void saveAll_shouldSaveOxygenTanks() {
 		context.setUpEntityManagerForSave();
-		subject.save(context.nonExistentOxygenTank);
+		subject.saveAll(new ArrayList<>(Collections.singletonList(context.nonExistentOxygenTank)));
 
 		OxygenTankEntity tank = subject.findById(OxygenTankRepositoryContext.NON_EXISTENT_OXYGEN_ID).get();
 
