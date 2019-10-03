@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
@@ -47,10 +46,12 @@ public class InventoryParser implements DtoParser<Inventory, List<InventoryItemD
         Map<Long, Long> storedTanks = new HashMap<>();
         Map<Long, Long> inUseTanks = new HashMap<>();
 
-        entity.getInventoryItems().forEach(inventoryItemEntity -> {
-            storedTanks.put(inventoryItemEntity.getCategoryId(), inventoryItemEntity.getQuantityStored());
-            inUseTanks.put(inventoryItemEntity.getCategoryId(), inventoryItemEntity.getQuantityInUse());
-        });
+        if (!entity.getInventoryItems().isEmpty()) {
+            entity.getInventoryItems().forEach(inventoryItemEntity -> {
+                storedTanks.put(inventoryItemEntity.getCategoryId(), inventoryItemEntity.getQuantityStored());
+                inUseTanks.put(inventoryItemEntity.getCategoryId(), inventoryItemEntity.getQuantityInUse());
+            });
+        }
 
         return new Inventory(storedTanks, inUseTanks);
     }
@@ -59,13 +60,15 @@ public class InventoryParser implements DtoParser<Inventory, List<InventoryItemD
     public InventoryEntity toEntity(Inventory inventory) {
         List<InventoryItemEntity> inventoryItems = new ArrayList<>();
 
-        inventory.getInUseTanks().forEach((categoryId, inUseTanks) -> inventoryItems.add(
-                new InventoryItemEntity(
+        inventory.getInUseTanks().forEach((categoryId, inUseTanks) ->  {
+            InventoryItemEntity inventoryItem = new InventoryItemEntity(
                     categoryId,
                     inUseTanks,
                     inventory.getStoredTanksByCategoryId(categoryId)
-                )
-        ));
+            );
+
+            inventoryItems.add(inventoryItem);
+        });
 
         return new InventoryEntity(inventoryItems);
     }

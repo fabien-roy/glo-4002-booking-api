@@ -53,10 +53,10 @@ public class ReportController {
 	@Path("/o2")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getOxygenTanks() {
-		Report report = reportService.getReport();
 		ReportDto dto;
 
 		try {
+			Report report = reportService.getReport();
 			dto = reportParser.toDto(report);
         } catch (ControllerException exception) {
             return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());

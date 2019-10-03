@@ -72,6 +72,10 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 		List<OxygenTank> oxygenTanks = new ArrayList<>();
 		inventoryService.requestOxygenTanks(oxygenTank).forEach(oxygenTanks::add);
 
+		List<OxygenTankEntity> oxygenTankEntities = new ArrayList<>();
+		oxygenTanks.forEach(tank -> oxygenTankEntities.add(parser.toEntity(tank)));
+		repository.saveAll(oxygenTankEntities);
+
 		return oxygenTanks;
 	}
 

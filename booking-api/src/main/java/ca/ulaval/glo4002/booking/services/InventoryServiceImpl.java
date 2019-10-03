@@ -24,6 +24,10 @@ public class InventoryServiceImpl implements InventoryService {
 		List<InventoryEntity> inventories = new ArrayList<>();
 		repository.findAll().forEach(inventories::add);
 
+		if (inventories.isEmpty()) {
+			return new Inventory();
+		}
+
 		return parser.parseEntity(inventories.get(0));
 	}
 

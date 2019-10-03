@@ -47,5 +47,4 @@ public class Inventory {
     public Map<Long, Long> getInUseTanks() {
         return inUseTanks;
     }
-
 }

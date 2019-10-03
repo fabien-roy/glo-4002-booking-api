@@ -44,4 +44,8 @@ public class InventoryItemEntity {
     public Long getQuantityStored() {
         return quantityStored;
     }
+
+    public void setInventory(InventoryEntity inventory) {
+        this.inventory = inventory;
+    }
 }
