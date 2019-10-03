@@ -24,19 +24,29 @@ public class InventoryItemEntity {
         this.quantity = quantity;
     }
 
-    public Long getOxygenCategoryId() {
-        return oxygenCategoryId;
+    public InventoryItemEntity(Long id, Long oxygenCategoryId, Long quantity){
+        this.id = id;
+        this.oxygenCategoryId = oxygenCategoryId;
+        this.quantity = quantity;
     }
 
-    public void setOxygenCategoryId(Long oxygenCategoryId) {
-        this.oxygenCategoryId = oxygenCategoryId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getOxygenCategoryId() {
+        return oxygenCategoryId;
     }
 
     public Long getQuantity() {
         return quantity;
     }
 
-    public Long getId() {
-        return id;
+    public void setInventory(InventoryEntity inventory) {
+        this.inventory = inventory;
     }
 }
