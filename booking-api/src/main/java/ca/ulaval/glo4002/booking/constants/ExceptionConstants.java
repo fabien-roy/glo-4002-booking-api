@@ -41,7 +41,7 @@ public class ExceptionConstants {
 		public static final String PRODUCTION_NOT_FOUND_ERROR = "OXYGEN_PRODUCTION_NOT_FOUND";
 		public static final String UNIT_TYPE_NOT_FOUND_DESCRIPTION = "Oxygen unit type not found";
 		public static final String UNIT_TYPE_NOT_FOUND_ERROR = "OXYGEN_UNIT_TYPE_NOT_FOUND";
-		public static final String INVALID_DATE__ERROR = "INVALID_OXYGENTANK_RROR";
+		public static final String INVALID_DATE_ERROR = "INVALID_OXYGEN_TANK_DATE_ERROR";
 		public static final String INVALID_DATE_DESCRIPTION = "Oxygen date should be between {startDate} and {endDate}";
 	}
 
@@ -56,7 +56,9 @@ public class ExceptionConstants {
 		public static final String ALREADY_CREATED_ERROR = "SHUTTLE_CREATED_EXISTS";
 		public static final String FULL_DESCRIPTION = "Shuttle capacity is full";
 		public static final String FULL_ERROR = "SHUTTLE_CAPACITY_IS_FULL";
-	}
+		public static final String MANIFEST_INVALID_DATE_DESCRIPTION = "Shuttle manifest date should be between {startDate} and {endDate}";
+        public static final String MANIFEST_INVALID_DATE_ERROR = "SHUTTLE_MANIFEST_INVALID_DATE";
+    }
 
 	public static class Vendor {
 		public static final String NOT_FOUND_DESCRIPTION = "Vendor with code {vendorCode} not found";

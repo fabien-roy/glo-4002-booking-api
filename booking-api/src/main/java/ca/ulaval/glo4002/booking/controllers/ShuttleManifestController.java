@@ -1,9 +1,10 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
+import ca.ulaval.glo4002.booking.exceptions.FestivalException;
+import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.parsers.ShuttleManifestParser;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
-import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.GET;
@@ -27,18 +28,21 @@ public class ShuttleManifestController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getShuttleManifestsWithDate(@QueryParam("date") String date) {
-        ShuttleManifest shuttleManifest;
+	    if (date == null) {
+			return ResponseEntity.badRequest().build();
+		}
+
+		ShuttleManifestDto dto;
 		LocalDate manifestDate = LocalDate.parse(date);
 
-		// TODO : TRANS : Use same logic as other controllers to throw with an ErrorDto
-		if (!FestivalDateUtil.isOutsideFestivalDates(manifestDate)) {
-		    shuttleManifest = shuttleManifestService.findByDate(manifestDate);
-        } else if(date == null) {
-        	shuttleManifest = shuttleManifestService.findAll();
-        } else {
-        	return ResponseEntity.badRequest().build();
+        try {
+            dto = shuttleManifestParser.toDto(shuttleManifestService.findByDate(manifestDate));
+        } catch (HumanReadableException exception) {
+            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+        } catch (FestivalException exception) {
+            return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok().body(shuttleManifestParser.toDto(shuttleManifest));
+        return ResponseEntity.ok().body(dto);
 	}
 }

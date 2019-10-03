@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.report.Report;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
-import ca.ulaval.glo4002.booking.exceptions.ControllerException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
+import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
-import ca.ulaval.glo4002.booking.services.*;
+import ca.ulaval.glo4002.booking.services.ReportService;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.GET;
@@ -18,6 +18,7 @@ public class ReportController {
 
 	private final ReportService reportService;
 	private final ReportParser reportParser = new ReportParser();
+
 
 	public ReportController(ReportService reportService) {
 	    // TODO : OXY : Only report service and parser should be injected (not usefull for Parser)
@@ -33,7 +34,7 @@ public class ReportController {
 		try {
 			Report report = reportService.getReport();
 			dto = reportParser.toDto(report);
-        } catch (ControllerException exception) {
+        } catch (HumanReadableException exception) {
             return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
         } catch (FestivalException exception) {
             return ResponseEntity.notFound().build();
