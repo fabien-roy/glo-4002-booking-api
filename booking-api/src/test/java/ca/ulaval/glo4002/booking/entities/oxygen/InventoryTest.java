@@ -20,12 +20,12 @@ public class InventoryTest {
 
 	@Test
 	void whenInventoryIsCreated_thenItIsEmpty() {
-		assertEquals(0L, (long) subject.getNotInUseTanksByCategoryId(Categories.E_ID));
-		assertEquals(0L, (long) subject.getNotInUseTanksByCategoryId(Categories.B_ID));
-		assertEquals(0L, (long) subject.getNotInUseTanksByCategoryId(Categories.A_ID));
-		assertEquals(0L, (long) subject.getInUseTanksByCategoryId(Categories.E_ID));
-		assertEquals(0L, (long) subject.getInUseTanksByCategoryId(Categories.B_ID));
-		assertEquals(0L, (long) subject.getInUseTanksByCategoryId(Categories.A_ID));
+		assertEquals(Long.valueOf(0L), subject.getNotInUseTanksByCategoryId(Categories.E_ID));
+		assertEquals(Long.valueOf(0L), subject.getNotInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(0L), subject.getNotInUseTanksByCategoryId(Categories.A_ID));
+		assertEquals(Long.valueOf(0L), subject.getInUseTanksByCategoryId(Categories.E_ID));
+		assertEquals(Long.valueOf(0L), subject.getInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(0L), subject.getInUseTanksByCategoryId(Categories.A_ID));
 	}
 
 	@Test
