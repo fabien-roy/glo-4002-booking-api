@@ -108,7 +108,7 @@ public class InventoryEndToEndContext {
         OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
         ReportService reportService = new ReportServiceImpl(inventoryService, historyService);
 
-        reportController = new ReportController(reportService, oxygenTankRepository, inventoryItemRepository, inventoryRepository, inventoryItemService, inventoryService, historyService);
+        reportController = new ReportController(reportService);
 
         return this;
     }

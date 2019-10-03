@@ -84,7 +84,7 @@ public class InventoryParserTest {
 	}
 
 	@Test
-	void whenParsingToDto_andAllCategoryInInventoryIsEmpty_thenItShouldNotBeAddedToTheDto() {
+	void whenParsingToDto_andAllCategoryInInventoryIsEmpty_thenNothingShouldBeAddedToTheDto() {
 		List<InventoryItemDto> dtos = subject.toDto(anEmptyInventory);
 
 		assertEquals(0, dtos.size());

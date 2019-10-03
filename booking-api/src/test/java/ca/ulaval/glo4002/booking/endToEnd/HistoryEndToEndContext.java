@@ -124,7 +124,7 @@ public class HistoryEndToEndContext {
         HistoryService historyService = new HistoryServiceImpl(oxygenTankService);
         ReportService reportService = new ReportServiceImpl(inventoryService, historyService);
 
-        reportController = new ReportController(reportService, oxygenTankRepository, inventoryItemRepository, inventoryRepository, inventoryItemService, inventoryService, historyService);
+        reportController = new ReportController(reportService);
 
         return this;
     }
