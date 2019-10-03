@@ -38,7 +38,7 @@ public class InventoryServiceImpl implements InventoryService {
 	public Inventory save(Inventory inventory) {
 		InventoryEntity inventoryEntity = parser.toEntity(inventory);
 
-		inventoryItemService.save(inventoryEntity, inventory.getOxygenTanks());
+		inventoryItemService.save(inventoryEntity, inventory.getInUseTanks());
 
 		return parser.parseEntity(repository.save(inventoryEntity));
 	}
@@ -57,9 +57,21 @@ public class InventoryServiceImpl implements InventoryService {
 	}
 
 	@Override
-	public void updateInUseTanks(Long categoryId, Long numberOfTanksNeeded) {
+	public void updateInUseTanks(Long categoryId, Long numberOfTanksToAdds) {
 		Inventory inventory = get();
-		inventory.addOxygenTanks(categoryId, numberOfTanksNeeded);
+
+		Long currentNumberOfTanks = inventory.getInUseTanks().get(categoryId);
+		inventory.replaceInUseTanks(categoryId, numberOfTanksToAdds + currentNumberOfTanks);
+
+		save(inventory);
+	}
+
+	@Override
+	public void updateNotInUseTanks(Long categoryId, Long numberOfTanksToAdds) {
+		Inventory inventory = get();
+
+		Long currentNumberOfTanks = inventory.getNotInUseTanks().get(categoryId);
+		inventory.replaceInUseTanks(categoryId, numberOfTanksToAdds + currentNumberOfTanks);
 
 		save(inventory);
 	}
