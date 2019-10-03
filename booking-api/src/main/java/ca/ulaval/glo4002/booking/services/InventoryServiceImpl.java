@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.entities.InventoryEntity;
+import ca.ulaval.glo4002.booking.entities.InventoryItemEntity;
 import ca.ulaval.glo4002.booking.parsers.InventoryParser;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 
@@ -13,9 +14,11 @@ public class InventoryServiceImpl implements InventoryService {
 
 	private final InventoryParser parser;
 	private InventoryRepository repository;
+	private InventoryItemService inventoryItemService;
 
-	public InventoryServiceImpl(InventoryRepository repository) {
+	public InventoryServiceImpl(InventoryRepository repository, InventoryItemService inventoryItemService) {
 		this.repository = repository;
+		this.inventoryItemService = inventoryItemService;
 		this.parser = new InventoryParser();
 	}
 
@@ -33,7 +36,11 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public Inventory save(Inventory inventory) {
-		return parser.parseEntity(repository.save(parser.toEntity(inventory)));
+		InventoryEntity inventoryEntity = parser.toEntity(inventory);
+
+		inventoryItemService.save(inventoryEntity, inventory.getOxygenTanks());
+
+		return parser.parseEntity(repository.save(inventoryEntity));
 	}
 
 	@Override
@@ -49,33 +56,10 @@ public class InventoryServiceImpl implements InventoryService {
 		return oxygenTanks;
 	}
 
-	// TODO : OXY : Make sure this works
 	@Override
 	public void updateInUseTanks(Long categoryId, Long numberOfTanksNeeded) {
 		Inventory inventory = get();
-
-		Long quantityStored = inventory.getStoredTanksByCategoryId(categoryId);
-		Long quantityInUse = inventory.getInUseTanksByCategoryId(categoryId);
-
-		Long numberOfTanksToReplace = quantityStored - (quantityInUse + numberOfTanksNeeded);
-		if (numberOfTanksToReplace < 0) {
-			numberOfTanksToReplace = quantityStored;
-		} else {
-			numberOfTanksToReplace = quantityInUse + numberOfTanksToReplace;
-		}
-
-		inventory.replaceInUseTanks(categoryId, numberOfTanksToReplace);
-
-		save(inventory);
-	}
-
-	@Override
-	public void addTank(Long categoryId, Long numberOfTanksNeeded) {
-		Inventory inventory = get();
-
-		Long quantityStored = inventory.getStoredTanksByCategoryId(categoryId);
-
-		inventory.replaceStoredTanks(categoryId, quantityStored + numberOfTanksNeeded);
+		inventory.addOxygenTanks(categoryId, numberOfTanksNeeded);
 
 		save(inventory);
 	}

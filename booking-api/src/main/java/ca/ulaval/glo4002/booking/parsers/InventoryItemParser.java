@@ -11,17 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InventoryParser implements ToDtoParser<Inventory, List<InventoryItemDto>>, EntityParser<Inventory, InventoryEntity>  {
-
-    OxygenCategoryBuilder oxygenCategoryBuilder = new OxygenCategoryBuilder();
+public class InventoryItemParser implements ToDtoParser<Inventory, List<InventoryItemDto>>, EntityParser<Inventory, InventoryEntity>  {
 
     @Override
     public List<InventoryItemDto> toDto(Inventory inventory) {
         List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
+        OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
 
         inventory.getOxygenTanks().forEach((categoryId, quantity) -> {
             InventoryItemDto inventoryItemDto = new InventoryItemDto();
-            inventoryItemDto.gradeTankOxygen = oxygenCategoryBuilder.buildById(categoryId).getName();
+            inventoryItemDto.gradeTankOxygen = categoryBuilder.buildById(categoryId).getName();
             inventoryItemDto.quantity = quantity;
         });
 

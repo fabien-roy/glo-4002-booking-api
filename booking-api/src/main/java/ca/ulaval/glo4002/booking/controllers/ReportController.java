@@ -5,10 +5,7 @@ import ca.ulaval.glo4002.booking.dto.ReportDto;
 import ca.ulaval.glo4002.booking.exceptions.ControllerException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepositoryImpl;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
+import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
 import org.springframework.http.ResponseEntity;
 
@@ -23,28 +20,34 @@ public class ReportController {
 	private final ReportService reportService;
 	private final ReportParser reportParser = new ReportParser();
 
+	private final InventoryItemRepository inventoryItemRepository;
 	private final InventoryRepository inventoryRepository;
 	private final OxygenTankRepository oxygenTankRepository;
+	private final InventoryItemService inventoryItemService;
 	private final InventoryService inventoryService;
 	private final HistoryService historyService;
 
 	public ReportController() {
 	    // TODO : OXY : Inject this
+		this.inventoryItemRepository = new InventoryItemRepositoryImpl();
 		this.inventoryRepository = new InventoryRepositoryImpl();
 		this.oxygenTankRepository = new OxygenTankRepositoryImpl();
-		this.inventoryService = new InventoryServiceImpl(inventoryRepository);
+        this.inventoryItemService = new InventoryItemServiceImpl(inventoryItemRepository);
+		this.inventoryService = new InventoryServiceImpl(inventoryRepository, inventoryItemService);
 		OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
 		this.historyService = new HistoryServiceImpl(oxygenTankService);
 
 		this.reportService = new ReportServiceImpl(inventoryService, historyService);
 	}
 
-	public ReportController(ReportService reportService, OxygenTankRepository oxygenTankRepository, InventoryRepository inventoryRepository, InventoryService inventoryService, HistoryService historyService) {
+	public ReportController(ReportService reportService, OxygenTankRepository oxygenTankRepository, InventoryItemRepository inventoryItemRepository, InventoryRepository inventoryRepository, InventoryItemService inventoryItemService, InventoryService inventoryService, HistoryService historyService) {
 	    // TODO : OXY : Only report service and parser should be injected
 		this.reportService = reportService;
 
+		this.inventoryItemRepository = inventoryItemRepository;
 		this.oxygenTankRepository = oxygenTankRepository;
 		this.inventoryRepository = inventoryRepository;
+		this.inventoryItemService = inventoryItemService;
 		this.inventoryService = inventoryService;
 		this.historyService = historyService;
 	}

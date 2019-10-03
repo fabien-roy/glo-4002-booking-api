@@ -12,6 +12,4 @@ public interface InventoryService extends Service<Inventory> {
     Iterable<OxygenTank> requestOxygenTanks(OxygenTank oxygenTank);
 
     void updateInUseTanks(Long categoryId, Long numberOfTanksNeeded);
-
-    void addTank(Long categoryId, Long numberOfTanksNeeded);
 }

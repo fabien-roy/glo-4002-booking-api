@@ -68,19 +68,6 @@ public class InventoryServiceTest {
 	}
 
 	@Test
-	void whenOxygenTankIsAdded_thenInventoryOfStoredTankIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 5L);
-		// TODO Do this test
-	}
-
-	@Test
-	void whenGetIsCalled_thenShouldReturnTheInventory() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 5L);
-		// TODO Do this test
-		// context.subject.get()
-	}
-
-	@Test
 	void get_shouldReturnTheInventory() {
 		context.subject.get();
 		// TODO Do this test

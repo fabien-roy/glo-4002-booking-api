@@ -2,50 +2,37 @@ package ca.ulaval.glo4002.booking.entities;
 
 import javax.persistence.*;
 
-// TODO : OXY : Pretty sure this is useless
 @Entity(name = "InventoryItems")
 public class InventoryItemEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
-	private Long id;
-    private Long categoryId;
-    private Long quantityInUse;
-    private Long quantityStored;
-    @ManyToOne
-    InventoryEntity inventory;
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="inventoryItemId", nullable = false)
+    private InventoryEntity inventory;
+    private Long oxygenCategoryId;
+    private Long quantity;
 
     public InventoryItemEntity() {
 
     }
 
-    public InventoryItemEntity(Long categoryId, Long quantityInUse, Long quantityStored) {
-        this.categoryId = categoryId;
-        this.quantityInUse = quantityInUse;
-        this.quantityStored = quantityStored;
+    public InventoryItemEntity(Long oxygenCategoryId, Long quantity) {
+        this.oxygenCategoryId = oxygenCategoryId;
+        this.quantity = quantity;
     }
 
-    public InventoryItemEntity(Long id, Long categoryId, Long quantityInUse, Long quantityStored) {
-        this.id = id;
-        this.categoryId = categoryId;
-        this.quantityInUse = quantityInUse;
-        this.quantityStored = quantityStored;
+    public Long getOxygenCategoryId() {
+        return oxygenCategoryId;
     }
 
-    public Long getCategoryId() {
-        return categoryId;
+    public void setOxygenCategoryId(Long oxygenCategoryId) {
+        this.oxygenCategoryId = oxygenCategoryId;
     }
 
-    public Long getQuantityInUse() {
-        return quantityInUse;
-    }
-
-    public Long getQuantityStored() {
-        return quantityStored;
-    }
-
-    public void setInventory(InventoryEntity inventory) {
-        this.inventory = inventory;
+    public Long getQuantity() {
+        return quantity;
     }
 }

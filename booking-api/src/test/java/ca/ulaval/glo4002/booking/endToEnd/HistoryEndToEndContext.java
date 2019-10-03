@@ -11,6 +11,7 @@ import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.dto.HistoryItemDto;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
 import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
+import ca.ulaval.glo4002.booking.repositories.InventoryItemRepository;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
@@ -109,10 +110,12 @@ public class HistoryEndToEndContext {
     }
 
     public HistoryEndToEndContext setUp() {
+        InventoryItemRepository inventoryItemRepository = mock(InventoryItemRepository.class);
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
+        InventoryItemService inventoryItemService = mock(InventoryItemService.class);
         InventoryService inventoryService = mock(InventoryService.class);
         Inventory inventory = mock(Inventory.class);
-        when(inventory.getStoredTanks()).thenReturn(new HashMap<>());
+        when(inventory.getOxygenTanks()).thenReturn(new HashMap<>());
         when(inventoryService.get()).thenReturn(inventory);
 
         OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
@@ -120,7 +123,7 @@ public class HistoryEndToEndContext {
         HistoryService historyService = new HistoryServiceImpl(oxygenTankService);
         ReportService reportService = new ReportServiceImpl(inventoryService, historyService);
 
-        reportController = new ReportController(reportService, oxygenTankRepository, inventoryRepository, inventoryService, historyService);
+        reportController = new ReportController(reportService, oxygenTankRepository, inventoryItemRepository, inventoryRepository, inventoryItemService, inventoryService, historyService);
 
         return this;
     }

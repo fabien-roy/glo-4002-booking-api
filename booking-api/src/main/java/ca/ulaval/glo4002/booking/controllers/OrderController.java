@@ -5,10 +5,7 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.ControllerException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepositoryImpl;
-import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
-import ca.ulaval.glo4002.booking.repositories.PassRepositoryImpl;
+import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
 import org.springframework.http.ResponseEntity;
 
@@ -25,7 +22,7 @@ public class OrderController {
     public OrderController() {
         // TODO : ACP : Inject this
         PassService passService = new PassServiceImpl(new PassRepositoryImpl());
-        InventoryService inventoryService = new InventoryServiceImpl(new InventoryRepositoryImpl());
+        InventoryService inventoryService = new InventoryServiceImpl(new InventoryRepositoryImpl(), new InventoryItemServiceImpl(new InventoryItemRepositoryImpl()));
         OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl(), inventoryService);
 
         this.orderService = new OrderServiceImpl(new OrderRepositoryImpl(), passService, oxygenTankService);

@@ -8,16 +8,11 @@ import java.util.List;
 public class InventoryEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
 	private Long id;
-    // TODO : OXY : Remove InventoryItemEntity
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private List<InventoryItemEntity> inventoryItems = new ArrayList<>();
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-    private List<OxygenTankEntity> inUseOxygenTanks = new ArrayList<>();
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
-    private List<OxygenTankEntity> storedOxygenTanks = new ArrayList<>();
 
     public InventoryEntity() {
 
@@ -39,11 +34,11 @@ public class InventoryEntity {
         return inventoryItems;
     }
 
-    public List<OxygenTankEntity> getInUseOxygenTanks() {
-        return inUseOxygenTanks;
+    public void clearInventoryItems() {
+        inventoryItems.clear();
     }
 
-    public List<OxygenTankEntity> getStoredOxygenTanks() {
-        return storedOxygenTanks;
+    public void addInventoryItems(List<InventoryItemEntity> inventoryItems) {
+        this.inventoryItems.addAll(inventoryItems);
     }
 }
