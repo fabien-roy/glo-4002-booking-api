@@ -13,12 +13,9 @@ public class HistoryParser implements ToDtoParser<History, List<HistoryItemDto>>
 
     @Override
     public List<HistoryItemDto> toDto(History history) {
-        Set<LocalDate> requestedDates = history.getRequestedOxygenTanks().keySet();
-        Set<LocalDate> producedDates = history.getProducedOxygenTanks().keySet();
+        Map<LocalDate, HistoryItemDto> historyItemDtoMap = new TreeMap<>();
 
-        Map<LocalDate, HistoryItemDto> historyItemDtoMap = new HashMap<>();
-
-        requestedDates.forEach(date -> {
+        history.getRequestedOxygenTanks().keySet().forEach(date -> {
             if (historyItemDtoMap.containsKey(date)) {
                 historyItemDtoMap.put(date, buildRequestHistoryItemDto(historyItemDtoMap.get(date), history.getRequestedOxygenTanks().get(date)));
             } else {
@@ -26,7 +23,7 @@ public class HistoryParser implements ToDtoParser<History, List<HistoryItemDto>>
             }
         });
 
-        producedDates.forEach(date -> {
+        history.getProducedOxygenTanks().keySet().forEach(date -> {
             if (historyItemDtoMap.containsKey(date)) {
                 historyItemDtoMap.put(date, buildProducedHistoryItemDto(historyItemDtoMap.get(date), history.getProducedOxygenTanks().get(date)));
             } else {

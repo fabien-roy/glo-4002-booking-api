@@ -119,10 +119,10 @@ class HistoryParserTest {
 	void toDto_shouldReturnHistoryOrderedByDate() {
 		List<HistoryItemDto> historyItemDtos = subject.toDto(history);
 
-		assertEquals(historyItemDtos.get(0), FIRST_DATE.toString());
-		assertEquals(historyItemDtos.get(1), SECOND_DATE.toString());
-		assertEquals(historyItemDtos.get(2), THIRD_DATE.toString());
-		assertEquals(historyItemDtos.get(3), FOURTH_DATE.toString());
+		assertEquals(historyItemDtos.get(0).date, FIRST_DATE.toString());
+		assertEquals(historyItemDtos.get(1).date, SECOND_DATE.toString());
+		assertEquals(historyItemDtos.get(2).date, THIRD_DATE.toString());
+		assertEquals(historyItemDtos.get(3).date, FOURTH_DATE.toString());
     }
 
 	@Test
