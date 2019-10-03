@@ -44,18 +44,18 @@ public class InventoryParserTest {
 
 		Inventory parsedInventory = subject.parseEntity(entity);
 
-		assertEquals(entity.getInventoryItems().get(0).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.E_ID));
-		assertEquals(entity.getInventoryItems().get(1).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.B_ID));
-		assertEquals(entity.getInventoryItems().get(2).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.A_ID));
+		assertEquals(entity.getInUseTanks().get(0).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.E_ID));
+		assertEquals(entity.getInUseTanks().get(1).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.B_ID));
+		assertEquals(entity.getInUseTanks().get(2).getQuantity(), parsedInventory.getOxygenTanks().get(OxygenConstants.Categories.A_ID));
 	}
 
 	@Test
 	void whenParsingToEntity_entityShouldBeValid() {
 		InventoryEntity entity = subject.toEntity(inventory);
 
-		assertEquals(A_VALID_NUMBER_OF_TANK_CATEGORY_E_STORED, entity.getInventoryItems().get(0).getQuantity());
-		assertEquals(A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED, entity.getInventoryItems().get(1).getQuantity());
-		assertEquals(A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED, entity.getInventoryItems().get(2).getQuantity());
+		assertEquals(A_VALID_NUMBER_OF_TANK_CATEGORY_E_STORED, entity.getInUseTanks().get(0).getQuantity());
+		assertEquals(A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED, entity.getInUseTanks().get(1).getQuantity());
+		assertEquals(A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED, entity.getInUseTanks().get(2).getQuantity());
 	}
 
 	@Test

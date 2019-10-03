@@ -10,11 +10,6 @@ public class Inventory {
     private Map<Long, Long> notInUseTanks = new HashMap<>();
     private Map<Long, Long> inUseTanks = new HashMap<>();
 
-    public Inventory(Map<Long, Long> notInUseTanks, Map<Long, Long> inUseTanks) {
-        this.notInUseTanks = notInUseTanks;
-        this.inUseTanks = inUseTanks;
-    }
-
     public Inventory() {
         notInUseTanks.put(OxygenConstants.Categories.E_ID, 0L);
         notInUseTanks.put(OxygenConstants.Categories.B_ID, 0L);
@@ -22,6 +17,11 @@ public class Inventory {
         inUseTanks.put(OxygenConstants.Categories.E_ID, 0L);
         inUseTanks.put(OxygenConstants.Categories.B_ID, 0L);
         inUseTanks.put(OxygenConstants.Categories.A_ID, 0L);
+    }
+
+    public Inventory(Map<Long, Long> notInUseTanks, Map<Long, Long> inUseTanks) {
+        this.notInUseTanks = notInUseTanks;
+        this.inUseTanks = inUseTanks;
     }
 
     public void replaceInUseTanks(Long categoryId, Long numberOfTanksToReplace) {

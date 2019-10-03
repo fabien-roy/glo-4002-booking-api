@@ -18,7 +18,7 @@ public class InventoryItemParser implements ToDtoParser<Inventory, List<Inventor
         List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
         OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
 
-        inventory.getOxygenTanks().forEach((categoryId, quantity) -> {
+        inventory.getInUseTanks().forEach((categoryId, quantity) -> {
             InventoryItemDto inventoryItemDto = new InventoryItemDto();
             inventoryItemDto.gradeTankOxygen = categoryBuilder.buildById(categoryId).getName();
             inventoryItemDto.quantity = quantity;
@@ -31,7 +31,7 @@ public class InventoryItemParser implements ToDtoParser<Inventory, List<Inventor
     public Inventory parseEntity(InventoryEntity entity) {
         Map<Long, Long> storedTanks = new HashMap<>();
 
-        entity.getInventoryItems().forEach(inventoryItemEntity -> storedTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
+        entity.getInUseTanks().forEach(inventoryItemEntity -> storedTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
 
         return new Inventory(storedTanks);
     }
