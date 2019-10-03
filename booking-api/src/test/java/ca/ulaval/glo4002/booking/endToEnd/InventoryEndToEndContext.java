@@ -95,6 +95,7 @@ public class InventoryEndToEndContext {
     public InventoryEndToEndContext setup() {
         InventoryItemRepository inventoryItemRepository = mock(InventoryItemRepository.class);
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
+        InventoryItemService inventoryItemService = mock(InventoryItemService.class);
         HistoryService historyService = mock(HistoryService.class);
         History history = mock(History.class);
         Inventory inventory = mock(Inventory.class);
@@ -103,8 +104,8 @@ public class InventoryEndToEndContext {
         when(historyService.get()).thenReturn(history);
 
         OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
+        InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository, inventoryItemService);
         OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
-        InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository, );
         ReportService reportService = new ReportServiceImpl(inventoryService, historyService);
 
         reportController = new ReportController(reportService, oxygenTankRepository, inventoryItemRepository, inventoryRepository, inventoryItemService, inventoryService, historyService);
