@@ -4,7 +4,9 @@ import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
+import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.report.History;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
@@ -13,15 +15,14 @@ import ca.ulaval.glo4002.booking.repositories.InventoryItemRepository;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
-import ca.ulaval.glo4002.booking.services.InventoryItemService;
-import ca.ulaval.glo4002.booking.services.InventoryService;
-import ca.ulaval.glo4002.booking.services.OxygenTankService;
-import ca.ulaval.glo4002.booking.services.OxygenTankServiceImpl;
+import ca.ulaval.glo4002.booking.services.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,17 +39,17 @@ public class InventoryEndToEndContext {
     private EntityManager entityManager;
     public OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
     private ReportDto aReportDto = new ReportDto();
-
+    public ReportController reportController;
     public OxygenTankEntity aFirstAndEOxygenTank;
     public OxygenTankEntity aSecondAndBOxygenTank;
     public OxygenTankEntity aThirdAndAOxygenTank;
     public InventoryItemDto firstInventoryItemDto = new InventoryItemDto();
     public InventoryItemDto secondInventoryItemDto = new InventoryItemDto();
     public InventoryItemDto thirdInventoryItemDto = new InventoryItemDto();
-    public InventoryItemDto fourthInventoryItemDto = new InventoryItemDto();
 
     public InventoryEndToEndContext() {
-
+        setUpObjects();
+        settUpEntityManager();
     }
 
     private void setUpObjects() {
@@ -73,6 +74,17 @@ public class InventoryEndToEndContext {
                 SECOND_DATE,
                 FOURTH_DATE
         );
+
+        firstInventoryItemDto.quantity = 5L;
+        firstInventoryItemDto.gradeTankOxygen = oxygenCategoryA.getName();
+
+        secondInventoryItemDto.quantity = 3L;
+        secondInventoryItemDto.gradeTankOxygen = oxygenCategoryB.getName();
+
+        thirdInventoryItemDto.quantity = 10L;
+        thirdInventoryItemDto.gradeTankOxygen = oxygenCategoryE.getName();
+
+        aReportDto.inventory = new ArrayList<>(Arrays.asList(firstInventoryItemDto, secondInventoryItemDto, thirdInventoryItemDto));
     }
 
     private void settUpEntityManager() {
@@ -83,19 +95,27 @@ public class InventoryEndToEndContext {
     public InventoryEndToEndContext setup() {
         InventoryItemRepository inventoryItemRepository = mock(InventoryItemRepository.class);
         InventoryRepository inventoryRepository = mock(InventoryRepository.class);
-        InventoryItemService inventoryItemService = mock(InventoryItemService.class);
+        HistoryService historyService = mock(HistoryService.class);
+        History history = mock(History.class);
         Inventory inventory = mock(Inventory.class);
         when(inventory.getNotInUseTanks()).thenReturn(new HashMap<>());
+        when(inventory.getNotInUseTanks()).thenReturn(new HashMap<>());
+        when(historyService.get()).thenReturn(history);
 
         OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
         OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
+        InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository, );
+        ReportService reportService = new ReportServiceImpl(inventoryService, historyService);
 
-
+        reportController = new ReportController(reportService, oxygenTankRepository, inventoryItemRepository, inventoryRepository, inventoryItemService, inventoryService, historyService);
 
         return this;
     }
 
     public InventoryEndToEndContext withInventory() {
+        addOxygenTank(aFirstAndEOxygenTank);
+        addOxygenTank(aSecondAndBOxygenTank);
+        addOxygenTank(aThirdAndAOxygenTank);
 
         return this;
     }
@@ -106,7 +126,7 @@ public class InventoryEndToEndContext {
         entityManager.getTransaction().commit();
 
         entityManager.getTransaction().begin();
-        List<OxygenTankEntity> oxygenTanks = entityManager.createQuery(RepositoryConstants.OXYGEN_TANK_FIND_ALL_QUERY);
+        List<OxygenTankEntity> oxygenTanks = entityManager.createQuery(RepositoryConstants.OXYGEN_TANK_FIND_ALL_QUERY, OxygenTankEntity.class).getResultList();
         Long oxygenTankId = oxygenTanks.get(0).getId();
         entityManager.getTransaction().commit();
 

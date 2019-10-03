@@ -29,6 +29,7 @@ public class HistoryEndToEndTest {
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertEquals(4, response.getBody().history.size());
+
         assertEquals(dtos.get(0).date, context.firstHistoryItemDto.date);
         assertEquals(dtos.get(0).qtyOxygenTankBought, context.firstHistoryItemDto.qtyOxygenTankBought);
         assertEquals(dtos.get(0).qtyWaterUsed, context.firstHistoryItemDto.qtyWaterUsed);
