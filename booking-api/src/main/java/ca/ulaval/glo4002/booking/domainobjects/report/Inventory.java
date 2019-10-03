@@ -32,7 +32,7 @@ public class Inventory {
         notInUseTanks.replace(categoryId, numberOfTanksToReplace);
     }
 
-    public Long getStoredTanksByCategoryId(Long categoryId) {
+    public Long getNotInUseTanksByCategoryId(Long categoryId) {
         return notInUseTanks.get(categoryId);
     }
 

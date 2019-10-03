@@ -1,13 +1,11 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants.Categories;
-import ca.ulaval.glo4002.booking.constants.QualityConstants;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InventoryTest {
 
@@ -22,67 +20,45 @@ public class InventoryTest {
 
 	@Test
 	void whenInventoryIsCreated_thenItIsEmpty() {
-		assertEquals(3L, (long) subject.getOxygenTanks().size());
-		assertEquals(0L, (long) subject.getOxygenTanks().get(Categories.E_ID));
-		assertEquals(0L, (long) subject.getOxygenTanks().get(Categories.B_ID));
-		assertEquals(0L, (long) subject.getOxygenTanks().get(Categories.A_ID));
+		assertEquals(Long.valueOf(0L), subject.getNotInUseTanksByCategoryId(Categories.E_ID));
+		assertEquals(Long.valueOf(0L), subject.getNotInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(0L), subject.getNotInUseTanksByCategoryId(Categories.A_ID));
+		assertEquals(Long.valueOf(0L), subject.getInUseTanksByCategoryId(Categories.E_ID));
+		assertEquals(Long.valueOf(0L), subject.getInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(0L), subject.getInUseTanksByCategoryId(Categories.A_ID));
 	}
 
 	@Test
 	void whenOxygenTankIsAddedToStoredTank_thenInventoryIsUpdated() {
-		subject.addOxygenTanks(Categories.E_ID, 2L);
+		subject.replaceNotInUseTanks(Categories.E_ID, 2L);
 
-		Long quantity = subject.getOxygenTanks().get(Categories.E_ID);
-
-		assertEquals(2L, (long) quantity);
+		assertEquals(Long.valueOf(2L), subject.getNotInUseTanksByCategoryId(Categories.E_ID));
 	}
 
 	@Test
-	void getStoredTanksByCategoryId_shouldReturnTheCorrectNumberOfStoredTankForACategory() {
+	void getNotInUseTanksByCategoryId_shouldReturnTheCorrectNumberOfStoredTankForACategory() {
 		fillInventory();
 
-		assertEquals(10L, (long) subject.getOxygenTanks().get(Categories.A_ID));
-		assertEquals(20L, (long) subject.getOxygenTanks().get(Categories.B_ID));
-		assertEquals(30L, (long) subject.getOxygenTanks().get(Categories.E_ID));
+		assertEquals(Long.valueOf(10L), subject.getNotInUseTanksByCategoryId(Categories.A_ID));
+		assertEquals(Long.valueOf(20L), subject.getNotInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(30L), subject.getNotInUseTanksByCategoryId(Categories.E_ID));
 	}
 
 	@Test
 	void getInUseTanksByCategoryId_shouldReturnTheCorrectNumberOfInUseTankForACategory() {
 		fillInventory();
 
-		assertEquals(1L, (long) subject.getOxygenTanks().get(Categories.A_ID));
-		assertEquals(2L, (long) subject.getOxygenTanks().get(Categories.B_ID));
-		assertEquals(3L, (long) subject.getOxygenTanks().get(Categories.E_ID));
-	}
-
-	@Test
-	void StoredTank_shouldContainAllTheCategory() {
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getKey() == QualityConstants.NEBULA_ID));
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getKey() == QualityConstants.SUPERGIANT_ID));
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getKey() == QualityConstants.SUPERNOVA_ID));
-	}
-
-	@Test
-	void getStoredTanks_shouldReturnAllTheStoredTank() {
-		fillInventory();
-
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getValue() == 10L));
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getValue() == 20L));
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getValue() == 30L));
-	}
-
-	@Test
-	void getInUseTanks_shouldReturnAllTheStoredTank() {
-		fillInventory();
-
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getValue() == 1L));
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getValue() == 2L));
-		assertTrue(subject.getOxygenTanks().entrySet().stream().anyMatch(tank -> tank.getValue() == 3L));
+		assertEquals(Long.valueOf(1L), subject.getInUseTanksByCategoryId(Categories.A_ID));
+		assertEquals(Long.valueOf(2L), subject.getInUseTanksByCategoryId(Categories.B_ID));
+		assertEquals(Long.valueOf(3L), subject.getInUseTanksByCategoryId(Categories.E_ID));
 	}
 
 	private void fillInventory() {
-		subject.addOxygenTanks(Categories.A_ID, 10L);
-		subject.addOxygenTanks(Categories.B_ID, 20L);
-		subject.addOxygenTanks(Categories.E_ID, 30L);
+		subject.replaceNotInUseTanks(Categories.A_ID, 10L);
+		subject.replaceNotInUseTanks(Categories.B_ID, 20L);
+		subject.replaceNotInUseTanks(Categories.E_ID, 30L);
+		subject.replaceInUseTanks(Categories.A_ID, 1L);
+		subject.replaceInUseTanks(Categories.B_ID, 2L);
+		subject.replaceInUseTanks(Categories.E_ID, 3L);
 	}
 }
