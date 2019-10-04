@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleInventoryItem;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,11 +12,8 @@ public class ShuttleEntity {
 	private Long id;
 	private Long categoryId;
 	private LocalDate date;
-	private Double price; // TODO : TRANS : Probably useless
-	@OneToMany(mappedBy = "shuttle") // TODO : TRANS : Probably useless
-	private List<TripEntity> trips;
 	@OneToMany(mappedBy = "shuttle")
-	private List<PassEntity> passengers;
+	private List<PassengerEntity> passengers;
 	@ManyToOne
 	ShuttleInventoryEntity inventory;
 
@@ -26,10 +21,9 @@ public class ShuttleEntity {
 		
 	}
 
-	public ShuttleEntity(Long id, Long categoryId, Double price, List<PassengerEntity> passengers) {
+	public ShuttleEntity(Long id, Long categoryId, List<PassengerEntity> passengers) {
 		this.id = id;
 		this.categoryId = categoryId;
-		this.price = price;
 		this.passengers = passengers;
 	}
 
@@ -43,14 +37,6 @@ public class ShuttleEntity {
 
 	public LocalDate getDate() {
 		return date;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-	
-	public List<TripEntity> getTrips() {
-		return trips;
 	}
 
 	public List<PassengerEntity> getPassengers() {

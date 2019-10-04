@@ -27,6 +27,13 @@ public class ShuttleInventoryRepositoryImpl implements ShuttleInventoryRepositor
 	}
 
 	@Override
+	public ShuttleInventoryEntity update(ShuttleInventoryEntity inventory) {
+		entityManager.persist(inventory);
+
+		return inventory;
+	}
+
+	@Override
 	public <S extends ShuttleInventoryEntity> S save(S s) {
 		throw new UnusedMethodException();
 	}

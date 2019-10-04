@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleInventory;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +15,9 @@ public class ShuttleInventoryEntity {
     private List<ShuttleEntity> arrivalShuttles = new ArrayList<>();
     @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
     private List<ShuttleEntity> departureShuttles = new ArrayList<>();
+
+    public ShuttleInventoryEntity() {
+    }
 
     public ShuttleInventoryEntity(Long id, List<ShuttleEntity> arrivalShuttles, List<ShuttleEntity> departureShuttles) {
         this.id = id;

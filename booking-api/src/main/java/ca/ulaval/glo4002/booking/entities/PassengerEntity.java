@@ -15,9 +15,6 @@ public class PassengerEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="tripId", nullable = false)
-	private TripEntity trip;
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="shuttleId", nullable = false)
 	private ShuttleEntity shuttle;
 

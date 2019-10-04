@@ -1,21 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
-import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
-import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
-import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class ShuttleServiceContext {
+    /*
 
     private static final ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
     private static final ShuttleCategory A_SHUTTLE_CATEGORY = shuttleCategoryBuilder.buildById(ShuttleConstants.Categories.ET_SPACESHIP_ID);
@@ -85,4 +71,6 @@ public class ShuttleServiceContext {
         when(repository.findById(ANOTHER_SHUTTLE_ID)).thenReturn(Optional.of(anotherShuttleEntity));
         when(repository.findById(A_NON_EXISTENT_SHUTTLE_ID)).thenReturn(Optional.empty());
     }
+
+    */
 }

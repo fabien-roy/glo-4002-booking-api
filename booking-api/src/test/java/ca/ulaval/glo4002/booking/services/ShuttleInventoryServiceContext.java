@@ -1,27 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleInventory;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
-import ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity;
-import ca.ulaval.glo4002.booking.parsers.ShuttleInventoryParser;
-import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
-import ca.ulaval.glo4002.booking.repositories.ShuttleInventoryRepository;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class ShuttleInventoryServiceContext {
+    /*
 
     public static final LocalDate AN_ARRIVAL_DATE = DateConstants.START_DATE;
     public static final LocalDate A_DEPARTURE_DATE = DateConstants.END_DATE;
@@ -114,4 +94,5 @@ public class ShuttleInventoryServiceContext {
 
         return passengers;
     }
+    */
 }

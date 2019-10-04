@@ -1,16 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 public class ShuttleInventoryServiceTest {
+    /*
 
     private ShuttleInventoryServiceImpl subject;
     private ShuttleInventoryServiceContext context;
@@ -64,4 +55,5 @@ public class ShuttleInventoryServiceTest {
         assertEquals(1, shuttles.size());
         assertTrue(shuttles.stream().allMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.ANOTHER_QUALITY_SHUTTLE_ID)));
     }
+    */
 }

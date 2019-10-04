@@ -23,7 +23,9 @@ public class OrderController {
         PassService passService = new PassServiceImpl(new PassRepositoryImpl());
         InventoryService inventoryService = new InventoryServiceImpl(new InventoryRepositoryImpl());
         OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl(), inventoryService);
-        ShuttleInventoryService shuttleInventoryService = new ShuttleInventoryServiceImpl(new ShuttleInventoryRepositoryImpl());
+        PassengerService passengerService = new PassengerServiceImpl(new PassengerRepositoryImpl());
+        ShuttleService shuttleService = new ShuttleServiceImpl(new ShuttleRepositoryImpl(), passengerService);
+        ShuttleInventoryService shuttleInventoryService = new ShuttleInventoryServiceImpl(new ShuttleInventoryRepositoryImpl(), shuttleService);
 
         this.orderService = new OrderServiceImpl(new OrderRepositoryImpl(), passService, oxygenTankService, shuttleInventoryService);
     }

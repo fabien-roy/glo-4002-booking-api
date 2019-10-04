@@ -1,28 +1,18 @@
 package ca.ulaval.glo4002.booking.domainobjects.shuttles;
 
-import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-
-import java.time.LocalDate;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ShuttleInventory {
 
     private Long id;
-    private Map<Long, ShuttleInventoryItem> arrivalShuttles = new TreeMap<>();
-    private Map<Long, ShuttleInventoryItem> departureShuttles = new TreeMap<>();
+    private List<Shuttle> arrivalShuttles = new ArrayList<>();
+    private List<Shuttle> departureShuttles = new ArrayList<>();
 
-    // TODO : TRANS : Make sure this is created with empty categories
     public ShuttleInventory() {
-        arrivalShuttles.put(ShuttleConstants.Categories.ET_SPACESHIP_ID, new ShuttleInventoryItem());
-        arrivalShuttles.put(ShuttleConstants.Categories.MILLENNIUM_FALCON_ID, new ShuttleInventoryItem());
-        arrivalShuttles.put(ShuttleConstants.Categories.SPACE_X_ID, new ShuttleInventoryItem());
-        departureShuttles.put(ShuttleConstants.Categories.ET_SPACESHIP_ID, new ShuttleInventoryItem());
-        departureShuttles.put(ShuttleConstants.Categories.MILLENNIUM_FALCON_ID, new ShuttleInventoryItem());
-        departureShuttles.put(ShuttleConstants.Categories.SPACE_X_ID, new ShuttleInventoryItem());
     }
 
-    public ShuttleInventory(Long id, Map<Long, ShuttleInventoryItem> departureShuttles, Map<Long, ShuttleInventoryItem> arrivalShuttles) {
+    public ShuttleInventory(Long id, List<Shuttle> departureShuttles, List<Shuttle> arrivalShuttles) {
         this.id = id;
         this.departureShuttles = departureShuttles;
         this.arrivalShuttles = arrivalShuttles;
@@ -32,29 +22,19 @@ public class ShuttleInventory {
         return id;
     }
 
-    public Map<Long, ShuttleInventoryItem> getArrivalShuttles() {
+    public List<Shuttle> getArrivalShuttles() {
         return arrivalShuttles;
     }
 
-    public Map<Long, ShuttleInventoryItem> getDepartureShuttles() {
+    public List<Shuttle> getDepartureShuttles() {
         return departureShuttles;
     }
 
-    public void setArrivalShuttles(Long categoryId, ShuttleInventoryItem shuttleInventoryItems) {
-        arrivalShuttles.put(categoryId, shuttleInventoryItems);
+    public void addArrivalShuttle(Shuttle shuttle) {
+        arrivalShuttles.add(shuttle);
     }
 
-    public void setDepartureShuttles(Long categoryId, ShuttleInventoryItem shuttleInventoryItems) {
-        departureShuttles.put(categoryId, shuttleInventoryItems);
-    }
-
-    // TODO : TRANS
-    public void addArrivalShuttle(LocalDate date, Shuttle shuttle) {
-        // arrivalShuttles.get(shuttle.getShuttleCategory().getId()).get(date).add(shuttle);
-    }
-
-    // TODO : TRANS
-    public void addDepartureShuttle(LocalDate date, Shuttle shuttle) {
-        // departureShuttles.get(shuttle.getShuttleCategory().getId()).get(date).add(shuttle);
+    public void addDepartureShuttle(Shuttle shuttle) {
+        departureShuttles.add(shuttle);
     }
 }

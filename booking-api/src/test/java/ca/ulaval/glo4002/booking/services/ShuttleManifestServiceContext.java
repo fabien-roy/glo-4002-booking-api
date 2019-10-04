@@ -1,27 +1,8 @@
 package ca.ulaval.glo4002.booking.services;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
-import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
-import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
-import ca.ulaval.glo4002.booking.entities.TripEntity;
-import ca.ulaval.glo4002.booking.parsers.TripParser;
-import ca.ulaval.glo4002.booking.repositories.TripRepository;
-
 public class ShuttleManifestServiceContext {
 
+    /*
 	private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
     private final static Long A_PASSENGER_ID = 1L;
     private final static Long ANOTHER_PASSENGER_ID = 2L;
@@ -98,4 +79,5 @@ public class ShuttleManifestServiceContext {
                 anotherArrivalTripEntity
         )));
     }
+    */
 }

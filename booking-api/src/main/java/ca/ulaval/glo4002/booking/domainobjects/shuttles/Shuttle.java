@@ -10,23 +10,18 @@ import java.util.List;
 public class Shuttle {
 
 	private Long id;
-	private Double price; // TODO : TRANS : Remove? (in category)
     protected LocalDate date;
 	private ShuttleCategory category;
-	private List<Trip> trips; // TODO : TRANS : Remove?
     private List<Passenger> passengers;
 
-    public Shuttle(Long id, Double price, ShuttleCategory category, List<Trip> trips, List<Passenger> passengers) {
+    public Shuttle(Long id, ShuttleCategory category, List<Trip> trips, List<Passenger> passengers) {
         this.id = id;
-        this.price = price;
         this.category = category;
-        this.trips = trips;
         this.passengers = passengers;
     }
 
-    public Shuttle(Long id, Double price, ShuttleCategory category, List<Passenger> passengers) {
+    public Shuttle(Long id, ShuttleCategory category, List<Passenger> passengers) {
         this.id = id;
-        this.price = price;
         this.category = category;
         this.passengers = passengers;
     }
@@ -42,14 +37,6 @@ public class Shuttle {
 
     public ShuttleCategory getShuttleCategory() {
     	return category;
-    }
-
-    public List<Trip> getTrips() {
-    	return trips;
-    }
-
-    public Double getPrice() {
-        return this.price;
     }
 
     public LocalDate getDate() {
@@ -71,14 +58,4 @@ public class Shuttle {
     public boolean isFull() {
         return passengers.size() == category.getMaxCapacity();
     }
-
-    // TODO : TRANS : Check if Shuttle.reservePlace is used
-    /*
-    public void reservePlace(Passenger passenger) {
-    	if(passengers.size() < category.getMaxCapacity()) {
-    		passengers.add(passenger);
-    		
-    	} else throw new ShuttleFullException();
-    }
-    */
 }

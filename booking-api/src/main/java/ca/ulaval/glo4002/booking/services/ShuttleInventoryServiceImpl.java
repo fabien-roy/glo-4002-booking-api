@@ -8,22 +8,26 @@ import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleInventory;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity;
 import ca.ulaval.glo4002.booking.parsers.ShuttleInventoryParser;
+import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
 import ca.ulaval.glo4002.booking.repositories.ShuttleInventoryRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
 
     private final ShuttleInventoryRepository repository;
-    private final ShuttleInventoryItemService itemService;
+    private final ShuttleService shuttleService;
     private final ShuttleInventoryParser parser;
+    private final ShuttleParser shuttleParser;
 
-    public ShuttleInventoryServiceImpl(ShuttleInventoryRepository repository, ShuttleInventoryItemService itemService) {
+    public ShuttleInventoryServiceImpl(ShuttleInventoryRepository repository, ShuttleService shuttleService) {
         this.repository = repository;
-        this.itemService = itemService;
+        this.shuttleService = shuttleService;
         this.parser = new ShuttleInventoryParser();
+        this.shuttleParser = new ShuttleParser();
     }
 
     // TODO : TRANS : ShuttleInventoryService.order tests
@@ -34,17 +38,22 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
 
         ShuttleInventoryEntity savedInventory = repository.save(parser.toEntity(inventory));
 
-        inventory.getArrivalShuttles().get(quality.getId()).getArrivalShuttles().get(arrivalDate);
-        inventory.getArrivalShuttles().get(arrivalDate).stream().filter(shuttleInventoryItem -> shuttleInventoryItem.getArrivalShuttles().);
-        itemService.orderArrival(savedInventory, inventory.getArrivalShuttles().get(q), requestedCategory);
-        itemService.orderDeparture(savedInventory, inventory.getDepartureShuttles().get(quality.getId()), requestedCategory);
+        List<Shuttle> arrivalShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(arrivalDate)).collect(Collectors.toList());
+        List<Shuttle> departureShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(departureDate)).collect(Collectors.toList());
 
-        repository.update(savedInventory);
+        Shuttle arrivalShuttle = shuttleService.order(savedInventory, getNextShuttle(arrivalShuttles, requestedCategory));
+        Shuttle departureShuttle = shuttleService.order(savedInventory, getNextShuttle(departureShuttles, requestedCategory));
+
+        savedInventory.addArrivalShuttle(shuttleParser.toEntity(arrivalShuttle));
+        savedInventory.addDepartureShuttle(shuttleParser.toEntity(departureShuttle));
+
+        savedInventory = repository.update(savedInventory);
 
         return parser.parseEntity(savedInventory);
     }
 
-    private ShuttleInventory get() {
+    @Override
+    public ShuttleInventory get() {
         List<ShuttleInventoryEntity> inventories = new ArrayList<>();
         repository.findAll().forEach(inventories::add);
 
@@ -53,5 +62,19 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
         }
 
         return parser.parseEntity(inventories.get(0));
+    }
+
+    private Shuttle getNextShuttle(List<Shuttle> shuttles, ShuttleCategory category) {
+        Shuttle dateShuttle;
+
+        if (shuttles.isEmpty() || shuttles.get(shuttles.size() - 1).isFull()) {
+            dateShuttle = new Shuttle(category);
+            shuttles.add(dateShuttle);
+        } else {
+            dateShuttle = shuttles.get(shuttles.size() - 1);
+            dateShuttle.addPassenger(new Passenger());
+        }
+
+        return dateShuttle;
     }
 }

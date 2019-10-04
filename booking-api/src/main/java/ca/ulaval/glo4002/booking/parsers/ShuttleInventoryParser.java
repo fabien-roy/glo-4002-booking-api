@@ -16,8 +16,8 @@ public class ShuttleInventoryParser implements EntityParser<ShuttleInventory, Sh
     public ShuttleInventory parseEntity(ShuttleInventoryEntity entity) {
         ShuttleInventory inventory = new ShuttleInventory();
 
-        entity.getArrivalShuttles().forEach(shuttle -> inventory.addArrivalShuttle(shuttle.getDate(), shuttleParser.parseEntity(shuttle)));
-        entity.getDepartureShuttles().forEach(shuttle -> inventory.addDepartureShuttle(shuttle.getDate(), shuttleParser.parseEntity(shuttle)));
+        entity.getArrivalShuttles().forEach(shuttle -> inventory.addArrivalShuttle(shuttleParser.parseEntity(shuttle)));
+        entity.getDepartureShuttles().forEach(shuttle -> inventory.addDepartureShuttle(shuttleParser.parseEntity(shuttle)));
 
         return inventory;
     }
@@ -28,23 +28,8 @@ public class ShuttleInventoryParser implements EntityParser<ShuttleInventory, Sh
         List<ShuttleEntity> arrivalShuttleEntities = new ArrayList<>();
         List<ShuttleEntity> departureShuttleEntities = new ArrayList<>();
 
-        inventory.getArrivalShuttles().forEach((categoryId, shuttlesByDate) ->
-                shuttlesByDate.forEach((date, shuttles) ->
-                        shuttles.forEach(shuttle ->
-                                arrivalShuttleEntities.add(shuttleParser.toEntity(shuttle)
-                                )
-                        )
-                )
-        );
-
-        inventory.getDepartureShuttles().forEach((categoryId, shuttlesByDate) ->
-                shuttlesByDate.forEach((date, shuttles) ->
-                        shuttles.forEach(shuttle ->
-                                departureShuttleEntities.add(shuttleParser.toEntity(shuttle)
-                                )
-                        )
-                )
-        );
+        inventory.getArrivalShuttles().forEach(shuttle -> arrivalShuttleEntities.add(shuttleParser.toEntity(shuttle)));
+        inventory.getDepartureShuttles().forEach(shuttle -> departureShuttleEntities.add(shuttleParser.toEntity(shuttle)));
 
         return new ShuttleInventoryEntity(inventory.getId(), arrivalShuttleEntities, departureShuttleEntities);
     }
