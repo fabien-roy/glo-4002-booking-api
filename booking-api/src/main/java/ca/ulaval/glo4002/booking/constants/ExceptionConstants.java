@@ -11,6 +11,10 @@ public class ExceptionConstants {
 		public static final String INVALID_FORMAT_ERROR = "INVALID_ORDER_DTO";
 		public static final String INVALID_DATE_DESCRIPTION = "Order date should be between {startDate} and {endDate}";
 		public static final String INVALID_DATE_ERROR = "INVALID_ORDER_DATE";
+		
+		private Order() {
+			throw new IllegalStateException(UTILITY_CLASS_ERROR);
+		}
 	}
 
     public static class Pass {
@@ -28,6 +32,10 @@ public class ExceptionConstants {
 		public static final String INVALID_FORMAT_ERROR = "INVALID_PASS_FORMAT";
 		public static final String INVALID_DATE_DESCRIPTION = "Pass date should be between {startDate} and {endDate}";
 		public static final String INVALID_DATE_ERROR = "INVALID_PASS_DATE";
+		
+    	private Pass() {
+    		throw new IllegalStateException(UTILITY_CLASS_ERROR);
+    	}
 	}
 
 	public static class Oxygen {
@@ -43,6 +51,10 @@ public class ExceptionConstants {
 		public static final String UNIT_TYPE_NOT_FOUND_ERROR = "OXYGEN_UNIT_TYPE_NOT_FOUND";
 		public static final String INVALID_DATE_ERROR = "INVALID_OXYGEN_TANK_DATE_ERROR";
 		public static final String INVALID_DATE_DESCRIPTION = "Oxygen date should be between {startDate} and {endDate}";
+		
+		private Oxygen() {
+			throw new IllegalStateException(UTILITY_CLASS_ERROR);
+		}
 	}
 
 	public static class Shuttle {
@@ -58,11 +70,33 @@ public class ExceptionConstants {
 		public static final String FULL_ERROR = "SHUTTLE_CAPACITY_IS_FULL";
 		public static final String MANIFEST_INVALID_DATE_DESCRIPTION = "Shuttle manifest date should be between {startDate} and {endDate}";
         public static final String MANIFEST_INVALID_DATE_ERROR = "SHUTTLE_MANIFEST_INVALID_DATE";
+        
+		private Shuttle() {
+			throw new IllegalStateException(UTILITY_CLASS_ERROR);
+		}
     }
 
 	public static class Vendor {
 		public static final String NOT_FOUND_DESCRIPTION = "Vendor with code {vendorCode} not found";
 		public static final String NOT_FOUND_ERROR = "VENDOR_NOT_FOUND";
+		
+		private Vendor() {
+			throw new IllegalStateException(UTILITY_CLASS_ERROR);
+		}
+	}
+	
+	public static class Passenger {
+		public static final String NOT_FOUND_DESCRIPTION = "Passenger not found";
+		public static final String NOT_FOUND_ERROR = "PASSENGER_NOT_FOUND";
+		public static final String ALREADY_CREATED_DESCRIPTION = "Passenger created exists";
+		public static final String ALREADY_CREATED_ERROR = "PASSENGER_CREATED_EXISTS";
+	}
+	
+	public static class Trip {
+		public static final String NOT_FOUND_DESCRIPTION = "Trip not found";
+		public static final String NOT_FOUND_ERROR = "TRIP_NOT_FOUND";
+		public static final String ALREADY_CREATED_DESCRIPTION = "Trip created exists";
+		public static final String ALREADY_CREATED_ERROR = "TRIP_CREATED_EXISTS";
 	}
 
 	public static class InventoryItem {
@@ -86,8 +120,9 @@ public class ExceptionConstants {
 	public static final String INVALID_DATE_ERROR = "INVALID_DATE";
     public static final String INVALID_DATE_TIME_DESCRIPTION = "Invalid date time";
 	public static final String INVALID_DATE_TIME_ERROR = "INVALID_DATE_TIME";
-
+	
 	private ExceptionConstants() {
 		throw new IllegalStateException(UTILITY_CLASS_ERROR);
 	}
+
 }

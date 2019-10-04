@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class OrderInvalidDateException extends HumanReadableException {
 
-    // TODO : ACP : Check date format
     public OrderInvalidDateException() {
         super(ExceptionConstants.Order.INVALID_DATE_ERROR);
 

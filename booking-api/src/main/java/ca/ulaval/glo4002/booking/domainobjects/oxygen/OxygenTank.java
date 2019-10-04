@@ -24,7 +24,6 @@ public class OxygenTank {
 		this.readyDate = readyDate;
 	}
 
-	// TODO : OXY : Move this logic to a service
 	public Double getPrice() {
 		Double pricePerUnit = category.getProduction().getPricePerUnit();
 		Long producedUnit = category.getProduction().getProducedUnits();

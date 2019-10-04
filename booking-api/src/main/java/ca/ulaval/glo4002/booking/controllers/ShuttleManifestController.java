@@ -4,7 +4,8 @@ import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.parsers.ShuttleManifestParser;
-import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
+import ca.ulaval.glo4002.booking.repositories.*;
+import ca.ulaval.glo4002.booking.services.*;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.GET;
@@ -20,28 +21,44 @@ public class ShuttleManifestController {
 	private final ShuttleManifestService shuttleManifestService;
     private final ShuttleManifestParser shuttleManifestParser;
 
-	public ShuttleManifestController(ShuttleManifestService shuttleManifestService, ShuttleManifestParser shuttleManifestParser) {
+	public ShuttleManifestController() {
+		PassengerService passengerService = new PassengerServiceImpl(new PassengerRepositoryImpl());
+		ShuttleService shuttleService = new ShuttleServiceImpl(new ShuttleRepositoryImpl(), passengerService);
+		ShuttleInventoryService shuttleInventoryService = new ShuttleInventoryServiceImpl(new ShuttleInventoryRepositoryImpl(), shuttleService);
+
+		this.shuttleManifestService = new ShuttleManifestServiceImpl(shuttleInventoryService);
+		this.shuttleManifestParser = new ShuttleManifestParser();
+	}
+
+	public ShuttleManifestController(ShuttleManifestService shuttleManifestService) {
 		this.shuttleManifestService = shuttleManifestService;
-        this.shuttleManifestParser = shuttleManifestParser;
+        this.shuttleManifestParser = new ShuttleManifestParser();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getShuttleManifestsWithDate(@QueryParam("date") String date) {
-	    if (date == null) {
-			return ResponseEntity.badRequest().build();
-		}
-
 		ShuttleManifestDto dto;
-		LocalDate manifestDate = LocalDate.parse(date);
 
-        try {
-            dto = shuttleManifestParser.toDto(shuttleManifestService.findByDate(manifestDate));
-        } catch (HumanReadableException exception) {
-            return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
-        } catch (FestivalException exception) {
-            return ResponseEntity.notFound().build();
-        }
+	    if (date == null) {
+			try {
+				dto = shuttleManifestParser.toDto(shuttleManifestService.findAll());
+			} catch (HumanReadableException exception) {
+				return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+			} catch (FestivalException exception) {
+				return ResponseEntity.notFound().build();
+			}
+		} else {
+			LocalDate manifestDate = LocalDate.parse(date);
+
+			try {
+				dto = shuttleManifestParser.toDto(shuttleManifestService.findByDate(manifestDate));
+			} catch (HumanReadableException exception) {
+				return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
+			} catch (FestivalException exception) {
+				return ResponseEntity.notFound().build();
+			}
+		}
 
         return ResponseEntity.ok().body(dto);
 	}

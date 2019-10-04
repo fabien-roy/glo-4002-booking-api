@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
@@ -19,12 +20,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final PassService passService;
     private final OxygenTankService oxygenTankService;
+    private final ShuttleInventoryService shuttleInventoryService;
     private final OrderParser orderParser;
 
-    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankService oxygenTankService) {
+    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankService oxygenTankService, ShuttleInventoryService shuttleInventoryService) {
         this.orderRepository = orderRepository;
         this.passService = passService;
         this.oxygenTankService = oxygenTankService;
+        this.shuttleInventoryService = shuttleInventoryService;
         this.orderParser = new OrderParser();
     }
 
@@ -45,6 +48,7 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
+    // TODO : This should not save order if something goes wrong
     @Override
     public Order order(Order order) {
         order.setPrice(getOrderPrice(order));
@@ -57,8 +61,11 @@ public class OrderServiceImpl implements OrderService {
 
         oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
 
-        // TODO : TRANS : Order Shuttle
-        // List<Shuttle> shuttles = new ArrayList<>();
+        if (passes.get(0).getOption().getId().equals(PassConstants.Options.PACKAGE_ID)) {
+            shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE);
+        } else {
+            passes.forEach(pass -> shuttleInventoryService.order(quality, pass.getEventDate(), pass.getEventDate()));
+        }
 
         savedOrder = orderRepository.update(savedOrder);
 
@@ -66,7 +73,6 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public double getOrderPrice(Order order){
-
         double rebate = 1.00d;
         double price = 0.00d;
 
@@ -78,9 +84,8 @@ public class OrderServiceImpl implements OrderService {
             rebate = verifyIfNebulaRebateApply(order, rebate);
         }
 
-        for (Pass p:
-                order.getPasses()) {
-            price += p.getPrice();
+        for (Pass pass : order.getPasses()) {
+            price += pass.getPrice();
         }
 
         return price * rebate;
@@ -88,15 +93,17 @@ public class OrderServiceImpl implements OrderService {
 
     private double verifyIfSupergiantRebateApplies(Order order, double rebate) {
         if (order.getPasses().size() >= PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD) {
-            rebate = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
+            return PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
         }
+
         return rebate;
     }
 
     private double verifyIfNebulaRebateApply(Order order, double rebate) {
         if(order.getPasses().size() >= PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD){
-            rebate = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE;
+            return PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE;
         }
+
         return rebate;
     }
 }

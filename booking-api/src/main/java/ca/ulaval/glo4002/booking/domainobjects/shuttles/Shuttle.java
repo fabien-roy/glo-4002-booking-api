@@ -1,21 +1,29 @@
 package ca.ulaval.glo4002.booking.domainobjects.shuttles;
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shuttle {
 
-    private Long id;
-	private Double price;
+	private Long id;
+    protected LocalDate date;
 	private ShuttleCategory category;
-	private List<Trip> trips;
+    private List<Passenger> passengers;
 
-    public Shuttle(Long id, Double price, ShuttleCategory category, List<Trip> trips) {
+    public Shuttle(Long id, ShuttleCategory category, LocalDate date, List<Passenger> passengers) {
         this.id = id;
-        this.price = price;
         this.category = category;
-        this.trips = trips;
+        this.date = date;
+        this.passengers = passengers;
+    }
+
+    public Shuttle(ShuttleCategory category, LocalDate date) {
+        this.category = category;
+        this.date = date;
+        this.passengers = new ArrayList<>();
     }
 
     public Long getId() {
@@ -26,12 +34,23 @@ public class Shuttle {
     	return category;
     }
 
-    /*
-    public void reservePlace(Passenger passenger) {
-    	if(passengers.size() < category.getMaxCapacity()) {
-    		passengers.add(passenger);
-    		
-    	} else throw new ShuttleFullException();
+    public LocalDate getDate() {
+        return date;
     }
-    */
+
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(List<Passenger> passengers) {
+        this.passengers = passengers;
+    }
+
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
+    }
+
+    public boolean isFull() {
+        return passengers.size() == category.getMaxCapacity();
+    }
 }

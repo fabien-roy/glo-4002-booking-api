@@ -57,8 +57,6 @@ public class InventoryServiceContext {
 
 	private void setupInventoryItemService() {
 		inventoryItemService = mock(InventoryItemService.class);
-
-
 	}
 
 	// TODO : Setup for save

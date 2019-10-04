@@ -11,6 +11,9 @@ public class RepositoryConstants {
     public static final String INVENTORY_FIND_ALL_QUERY = "Select Id FROM Inventories Id";
     public static final String INVENTORYITEM_FIND_ALL_QUERY = "Select if FROM InventoryItems Id";
     public static final String OXYGEN_TANK_FIND_ALL_QUERY = "Select Id FROM OxygenTanks Id";
+    public static final String PASSENGER_FIND_ALL_QUERY = "Select Id FROM Passengers Id";
+    public static final String SHUTTLE_INVENTORY_FIND_ALL_QUERY = "Select Id FROM ShuttleInventories Id";
+
 
     private RepositoryConstants(){
         throw new IllegalStateException(ExceptionConstants.UTILITY_CLASS_ERROR);

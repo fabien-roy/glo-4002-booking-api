@@ -1,50 +1,42 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleInventory;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
-import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
-import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
-import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleManifestInvalidDateException;
-import ca.ulaval.glo4002.booking.parsers.TripParser;
-import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
 import javax.annotation.Resource;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ShuttleManifestServiceImpl implements ShuttleManifestService {
 
 	@Resource
-	private final TripRepository tripRepository;
-	private final TripParser tripParser;
+	private final ShuttleInventoryService shuttleInventoryService;
 
-	public ShuttleManifestServiceImpl(TripRepository tripRepository) {
-		this.tripRepository = tripRepository;
-		this.tripParser = new TripParser();
+	public ShuttleManifestServiceImpl(ShuttleInventoryService shuttleInventoryService) {
+		this.shuttleInventoryService = shuttleInventoryService;
+	}
+
+	@Override
+	public ShuttleManifest findAll() {
+		ShuttleInventory inventory = shuttleInventoryService.get();
+
+		return new ShuttleManifest(inventory.getDepartureShuttles(), inventory.getArrivalShuttles());
 	}
 
 	@Override
 	public ShuttleManifest findByDate(LocalDate date) {
 	    validateManifestDate(date);
 
-		List<DepartureTrip> departures = new ArrayList<>();
-		List<ArrivalTrip> arrivals = new ArrayList<>();
+		ShuttleInventory inventory = shuttleInventoryService.get();
 
-		tripRepository.findAll().forEach(tripEntity -> {
-			Trip trip = tripParser.parseEntity(tripEntity);
+		List<Shuttle> departureShuttles = inventory.getDepartureShuttles().stream().filter(shuttle -> shuttle.getDate().equals(date)).collect(Collectors.toList());
+		List<Shuttle> arrivalShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(date)).collect(Collectors.toList());
 
-			if (trip.getDate().equals(date)) {
-				if (trip instanceof DepartureTrip) {
-					departures.add((DepartureTrip) trip);
-				} else if (trip instanceof ArrivalTrip) {
-					arrivals.add((ArrivalTrip) trip);
-				}
-			}
-		});
-
-		return new ShuttleManifest(date, departures, arrivals);
+		return new ShuttleManifest(departureShuttles, arrivalShuttles);
 	}
 
 	private void validateManifestDate(LocalDate manifestDate){

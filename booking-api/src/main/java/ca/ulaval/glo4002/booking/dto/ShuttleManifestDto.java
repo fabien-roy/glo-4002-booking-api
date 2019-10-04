@@ -4,6 +4,6 @@ import java.util.List;
 
 public class ShuttleManifestDto {
 
-	public List<TripDto> arrivals;
-	public List<TripDto> departures;
+	public List<ShuttleDto> arrivals;
+	public List<ShuttleDto> departures;
 }

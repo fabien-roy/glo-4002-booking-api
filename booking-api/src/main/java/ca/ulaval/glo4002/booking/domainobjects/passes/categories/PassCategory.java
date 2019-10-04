@@ -11,7 +11,7 @@ public abstract class PassCategory implements Qualifiable {
 	protected Long id;
 	protected String name;
 	protected Quality quality;
-    protected Map<PassOption, Double> pricePerOption; // TODO : Conditions for rebate are not implemented yet
+    protected Map<PassOption, Double> pricePerOption;
 
     public Long getId() {
         return id;

@@ -106,6 +106,7 @@ public class OrderEndToEndContext {
     }
 
     // TODO : OXY : Unmock OxygenTanKService when ready
+    // TODO : TRANS : Unmock ShuttleService when ready
     public OrderEndToEndContext setUp() {
         OrderRepository orderRepository = new OrderRepositoryImpl(entityManager);
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
@@ -115,7 +116,8 @@ public class OrderEndToEndContext {
         PassService passService = new PassServiceImpl(passRepository);
         // InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository);
         OxygenTankService oxygenTankService = mock(OxygenTankService.class);
-        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
+        ShuttleInventoryService shuttleInventoryService = mock(ShuttleInventoryService.class);
+        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService, shuttleInventoryService);
 
         orderController = new OrderController(orderService);
 

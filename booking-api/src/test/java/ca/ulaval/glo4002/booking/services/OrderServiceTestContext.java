@@ -29,6 +29,12 @@ public class OrderServiceTestContext {
     private final static LocalDateTime A_ORDER_EVENT_DATE = DateConstants.ORDER_START_DATE_TIME;
     private final static LocalDate A_PASS_EVENT_DATE = DateConstants.START_DATE;
     private final static Long A_PASS_ID = 1L;
+    public static final int AMOUNT_OF_SUPERGIANT_PASSES_MORE_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD;
+    public static final int AMOUNT_OF_SUPERGIANT_PASSES_LESS_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD - 1;
+    public static final int AMOUNT_OF_NEBULA_PASSES_MORE_THAN_THRESHOLD = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD;
+    public static final int AMOUNT_OF_NEBULA_PASSES_LESS_THAN_THRESHOLD = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD - 1;
+    public static final double DELTA = 0.01;
+
     private final static VendorBuilder vendorBuilder = new VendorBuilder();
     private final static PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
     private final static PassOptionBuilder optionBuilder = new PassOptionBuilder();
@@ -38,8 +44,9 @@ public class OrderServiceTestContext {
     private OrderEntity aNonExistentOrderEntity;
     private OrderRepository repository;
     private PassService passService;
-    private Pass aPass;
 
+    ShuttleInventoryService shuttleInventoryService;
+    Pass aPass;
     Pass aNebulaSinglePass;
     Pass aSupergiantSinglePass;
     Pass aSupernovaPackagePass;
@@ -125,12 +132,27 @@ public class OrderServiceTestContext {
     private void setUpSubject() {
         passService = mock(PassService.class);
         OxygenTankService oxygenTankService = mock(OxygenTankService.class);
+        shuttleInventoryService = mock(ShuttleInventoryService.class);
 
-        subject = new OrderServiceImpl(repository, passService, oxygenTankService);
+        subject = new OrderServiceImpl(repository, passService, oxygenTankService, shuttleInventoryService);
     }
 
-    public void setUpForSave() {
+    public void setUpForSaveWithSinglePass() {
         when(passService.order(any(), any())).thenReturn(Collections.singletonList(aPass));
+        setUpRepositoryForSave();
+    }
+
+    public void setUpForSaveMultipleSinglePass() {
+        when(passService.order(any(), any())).thenReturn(Collections.nCopies(2, aPass));
+        setUpRepositoryForSave();
+    }
+
+    public void setUpForSaveWithPackagePass() {
+        when(passService.order(any(), any())).thenReturn(Collections.singletonList(aSupernovaPackagePass));
+        setUpRepositoryForSave();
+    }
+
+    private void setUpRepositoryForSave() {
         when(repository.findById(A_NON_EXISTANT_ORDER_ID)).thenReturn(Optional.of(aNonExistentOrderEntity));
         when(repository.save(aOrderEntity)).thenReturn(aOrderEntity);
         when(repository.update(aOrderEntity)).thenReturn(aOrderEntity);
