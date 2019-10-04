@@ -1,15 +1,25 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
+import ca.ulaval.glo4002.booking.exceptions.report.InventoryAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.report.InventoryItemAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.report.InventoryNotFoundException;
+import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.InventoryEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 public class InventoryRepositoryImpl implements InventoryRepository {
 
+	@PersistenceContext
 	private final EntityManager entityManager;
 
 	public InventoryRepositoryImpl() {
@@ -21,16 +31,14 @@ public class InventoryRepositoryImpl implements InventoryRepository {
 	}
 
 	@Override
-	public <S extends InventoryEntity> S save(S inventory) {
-		entityManager.getTransaction().begin();
+	public Optional<InventoryEntity> findById(Long id) {
+		InventoryEntity inventoryEntity = entityManager.find(InventoryEntity.class, id);
 
-		if (!entityManager.contains(inventory)) {
-			entityManager.persist(inventory);
+		if(inventoryEntity == null) {
+			throw new InventoryNotFoundException(id.toString());
 		}
 
-		entityManager.getTransaction().commit();
-
-		return inventory;
+		return Optional.of(inventoryEntity);
 	}
 
 	@Override
@@ -39,13 +47,37 @@ public class InventoryRepositoryImpl implements InventoryRepository {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public <S extends InventoryEntity> Iterable<S> saveAll(Iterable<S> inventories) {
-		throw new UnusedMethodException();
+		inventories.forEach(inventory -> {
+			entityManager.getTransaction().begin();
+
+			if(!entityManager.contains(inventory)) {
+				entityManager.persist(inventory);
+			}
+
+			entityManager.getTransaction().commit();
+		});
+
+		return inventories;
 	}
 
 	@Override
-	public Optional<InventoryEntity> findById(Long id) {
-		throw new UnusedMethodException();
+	@Transactional(propagation = Propagation.REQUIRED)
+	public <S extends InventoryEntity> S save(S inventory) {
+		if(inventory.getId() == null) {
+			entityManager.getTransaction().begin();
+
+			if(!entityManager.contains(inventory)){
+				entityManager.persist(inventory);
+			}
+
+			entityManager.getTransaction().commit();
+		} else {
+			throw new InventoryAlreadyCreatedException(inventory.getId().toString());
+		}
+
+		return inventory;
 	}
 
 	@Override

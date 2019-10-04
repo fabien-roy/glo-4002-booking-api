@@ -45,6 +45,7 @@ public class InventoryItemRepositoryImpl implements InventoryItemRepository {
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public <S extends InventoryItemEntity> Iterable<S> saveAll(Iterable<S> inventoryItems) {
 		inventoryItems.forEach(inventoryItem -> {
             entityManager.getTransaction().begin();

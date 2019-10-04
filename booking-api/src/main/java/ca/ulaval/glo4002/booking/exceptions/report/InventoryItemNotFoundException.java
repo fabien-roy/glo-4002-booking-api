@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class InventoryItemNotFoundException extends FestivalException {
 
     public InventoryItemNotFoundException() {
-        super(ExceptionConstants.InventoryItem.NOT_FOUND_DESCRIPTION);
+        super(ExceptionConstants.InventoryItem.NOT_FOUND_ERROR);
 
         error = ExceptionConstants.InventoryItem.NOT_FOUND_ERROR;
         description = ExceptionConstants.InventoryItem.NOT_FOUND_DESCRIPTION;
