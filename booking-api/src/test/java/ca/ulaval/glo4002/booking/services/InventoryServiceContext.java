@@ -32,7 +32,6 @@ public class InventoryServiceContext {
 	public InventoryServiceContext() {
 		setUpObjects();
 		setUpRepository();
-		setUpSubject();
 	}
 
 	private void setUpObjects() {

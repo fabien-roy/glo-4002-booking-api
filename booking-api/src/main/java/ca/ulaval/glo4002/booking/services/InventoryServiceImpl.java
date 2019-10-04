@@ -39,7 +39,13 @@ public class InventoryServiceImpl implements InventoryService {
 	public Inventory save(Inventory inventory) {
 		InventoryEntity inventoryEntity = inventoryParser.toEntity(inventory);
 
-		inventoryItemService.save(inventoryEntity, inventory.getInUseTanks());
+		inventory.getInUseTanks().forEach((categoryId, quantity) -> {
+			//inventoryItemService.save(categoryId, quantity);
+		});
+
+		inventory.getNotInUseTanks().forEach((categoryId, quantity) -> {
+			//inventoryItemService.save(categoryId, quantity);
+		});
 
 		return inventoryParser.parseEntity(inventoryRepository.save(inventoryEntity));
 	}

@@ -30,7 +30,7 @@ public class InventoryServiceTest {
 	// TODO : OXY : Solve this test
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryIsInSurplus_thenTankInUseIsUpdated() {
-		subjext.addTank(context.anOxygenTank.getCategory().getId(), 20L);
+		//subjext.addTank(context.anOxygenTank.getCategory().getId(), 20L);
 
 		subjext.requestOxygenTanks(context.anOxygenTank);
 		Long inUseTanks = context.anInventory
@@ -43,7 +43,7 @@ public class InventoryServiceTest {
 	// TODO : OXY : Solve test
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenTankInUseIsUpdated() {
-		subjext.addTank(context.anOxygenTank.getCategory().getId(), 3L);
+		//subjext.addTank(context.anOxygenTank.getCategory().getId(), 3L);
 
 		subjext.requestOxygenTanks(context.anOxygenTank);
 		Long inUseTanks = context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
