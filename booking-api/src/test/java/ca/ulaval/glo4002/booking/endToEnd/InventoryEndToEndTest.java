@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
-
 import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,7 @@ public class InventoryEndToEndTest {
     }
 
     @Test
-    public void getO2_shouldReturnCorrctInventoryDto() {
+    public void getO2_shouldReturnCorrectInventoryDto() {
         context.setup().withInventory();
 
         ResponseEntity<ReportDto> response = (ResponseEntity<ReportDto>) context.reportController.getOxygenTanks();
@@ -40,4 +39,5 @@ public class InventoryEndToEndTest {
         assertEquals(dtos.get(2).quantity, context.thirdInventoryItemDto.quantity);
         assertEquals(dtos.get(2).gradeTankOxygen, context.thirdInventoryItemDto.gradeTankOxygen);
     }
+
 }

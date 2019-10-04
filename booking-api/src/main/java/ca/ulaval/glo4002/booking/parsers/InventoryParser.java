@@ -19,10 +19,14 @@ public class InventoryParser implements ToDtoParser<Inventory, List<InventoryIte
     public List<InventoryItemDto> toDto(Inventory inventory) {
         List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
 
-        inventory.getInUseTanks().forEach((categoryId, quantity) -> {
-            InventoryItemDto inventoryItemDto = new InventoryItemDto();
-            inventoryItemDto.gradeTankOxygen = oxygenCategoryBuilder.buildById(categoryId).getName();
-            inventoryItemDto.quantity = quantity;
+        inventory.getNotInUseTanks().forEach((categoryId, quantity) -> {
+            Long totalTankCategory = quantity + inventory.getInUseTanksByCategoryId(categoryId);
+            if(totalTankCategory != 0) {
+                InventoryItemDto inventoryItemDto = new InventoryItemDto();
+                inventoryItemDto.gradeTankOxygen = oxygenCategoryBuilder.buildById(categoryId).getName();
+                inventoryItemDto.quantity = totalTankCategory;
+                inventoryItemDtos.add(inventoryItemDto);
+            }
         });
 
         return inventoryItemDtos;
