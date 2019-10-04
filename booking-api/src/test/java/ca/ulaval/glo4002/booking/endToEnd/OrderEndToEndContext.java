@@ -111,13 +111,13 @@ public class OrderEndToEndContext {
         OrderRepository orderRepository = new OrderRepositoryImpl(entityManager);
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
         // OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
-        // InventoryRepository inventoryRepository = new InventoryRepositoryImpl(entityManager);
+        // OxygenTankInventoryRepository inventoryRepository = new OxygenTankInventoryRepositoryImpl(entityManager);
 
         PassService passService = new PassServiceImpl(passRepository);
-        // InventoryService inventoryService = new InventoryServiceImpl(inventoryRepository);
-        OxygenTankService oxygenTankService = mock(OxygenTankService.class);
+        // OxygenTankInventoryService inventoryService = new OxygenTankInventoryServiceImpl(inventoryRepository);
+        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
         ShuttleInventoryService shuttleInventoryService = mock(ShuttleInventoryService.class);
-        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService, shuttleInventoryService);
+        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankInventoryService, shuttleInventoryService);
 
         orderController = new OrderController(orderService);
 

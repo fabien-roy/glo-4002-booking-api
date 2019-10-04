@@ -1,18 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
-import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class OxygenTankRepositoryTest {
+	/*
 
 	private OxygenTankRepositoryContext context;
 	private OxygenTankRepositoryImpl subject;
@@ -61,4 +50,5 @@ class OxygenTankRepositoryTest {
 
 		assertEquals(context.nonExistentOxygenTank, tank);
 	}
+	*/
 }

@@ -1,24 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domainobjects.qualities.NebulaQuality;
-import ca.ulaval.glo4002.booking.domainobjects.qualities.SupergiantQuality;
-import ca.ulaval.glo4002.booking.domainobjects.qualities.SupernovaQuality;
-import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
-import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenTankNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class OxygenTankServiceTest {
+	/*
 
 	private OxygenTankServiceContext context;
 
@@ -131,4 +114,5 @@ class OxygenTankServiceTest {
 		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getCategory().getId().equals(OxygenConstants.Categories.E_ID)));
 		assertTrue(oxygenTanks.stream().allMatch(oxygenTank -> oxygenTank.getReadyDate().equals(DateConstants.START_DATE)));
 	}
+	*/
 }

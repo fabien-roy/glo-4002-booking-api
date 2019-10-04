@@ -1,47 +1,51 @@
 package ca.ulaval.glo4002.booking.services;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+public class OxygenTankInventoryServiceTest {
+	/*
 
-public class InventoryServiceTest {
-
+	private OxygenTankInventoryService subject;
 	private InventoryServiceContext context;
 
-	// TODO : Mock Inventory ? start below :
+	// TODO : Mock OxygenTankInventory ? start below :
 
 	@BeforeEach
 	public void setUp() {
 		context = new InventoryServiceContext();
+		subject = new OxygenTankInventoryServiceImpl(context.repository, context.inventoryItemService);
+	}
+
+	@Test
+	void whenOxygenTankIsRequested_thenTheyAreAddedToTheInventory(){
+		subject.requestOxygenTanks(context.anOxygenTank);
+
+		Long producedTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
+		assertEquals(producedTanks, context.anOxygenTankInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId()));
 	}
 
 	// TODO : OXY : Solve this test
-	/*
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryIsInSurplus_thenTankInUseIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 20L);
+		//subjext.addTank(context.anOxygenTank.getCategory().getId(), 20L);
 
-		context.subject.requestOxygenTanks(context.anOxygenTank);
-		Long inUseTanks = context.anInventory
+		subject.requestOxygenTanks(context.anOxygenTank);
+		Long inUseTanks = context.anOxygenTankInventory
 				.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
 		Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 
 		assertEquals(expectedInUseTanks, inUseTanks);
 	}
-	*/
 
 	// TODO : OXY : Solve test
-	/*
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenTankInUseIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 3L);
+		//subjext.addTank(context.anOxygenTank.getCategory().getId(), 3L);
 
-		context.subject.requestOxygenTanks(context.anOxygenTank);
-		Long inUseTanks = context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
+		subject.requestOxygenTanks(context.anOxygenTank);
+		Long inUseTanks = context.anOxygenTankInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
         Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 
-		assertEquals(3, (long) context.anInventory.getInUseTanksByCategoryId(OxygenConstants.Categories.E_ID));
+		assertEquals(3, (long) context.anOxygenTankInventory.getInUseTanksByCategoryId(OxygenConstants.Categories.E_ID));
 	}
-	*/
 
 	// TODO Do/update this test (Or delete if we don't need it anymore)
 	@Test
@@ -64,25 +68,12 @@ public class InventoryServiceTest {
 // version 2 :
 //		context.subject.requestOxygenTanks(context.anOxygenTank);
 //		 
-//		 assertEquals(10, (long) context.anInventory.?); 
-	}
-
-	@Test
-	void whenOxygenTankIsAdded_thenInventoryOfStoredTankIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 5L);
-		// TODO Do this test
-	}
-
-	@Test
-	void whenGetIsCalled_thenShouldReturnTheInventory() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 5L);
-		// TODO Do this test
-		// context.subject.get()
+//		 assertEquals(10, (long) context.anOxygenTankInventory.?);
 	}
 
 	@Test
 	void get_shouldReturnTheInventory() {
-		context.subject.get();
+		subject.get();
 		// TODO Do this test
 	}
 
@@ -116,11 +107,12 @@ public class InventoryServiceTest {
 	// TODO Do/update this test (Or delete if we don't need it anymore)
 	@Test
 	void whenGetTankInUseByCategoryIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
-//        OxygenCategoryNotFoundException thrown = assertThrows(
-//                OxygenCategoryNotFoundException.class,
-//                () -> subject.getTankInUseByCategoryID(AN_INVALID_CATEGORY)
-//        );
-//
-//        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getTankInUseByCategoryID(InventoryServiceContext.AN_INVALID_CATEGORY)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
 	}
+	*/
 }

@@ -3,10 +3,6 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
-import ca.ulaval.glo4002.booking.entities.InventoryEntity;
-import ca.ulaval.glo4002.booking.parsers.InventoryParser;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -16,47 +12,47 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class InventoryServiceContext {
+    /*
 
+	public OxygenTankInventoryParser parser = new OxygenTankInventoryParser();
+	public OxygenTankInventoryRepository repository;
+	public OxygenTankInventory anOxygenTankInventory;
+	public OxygenTank anOxygenTank;
+	private OxygenTankInventoryEntity anOxygenTankInventoryEntity;
+
+	public static final Long A_OXYGEN_TANK_CATEGORY_ID = OxygenConstants.Categories.E_ID;
+	public static final Long AN_INVALID_CATEGORY = -1L;
 	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
-
-	private InventoryEntity anInventoryEntity;
-	public InventoryService subject;
-	public InventoryParser parser = new InventoryParser();
-	public InventoryRepository repository;
-	public Inventory anInventory;
-	public OxygenTank anOxygenTank;
 
 	public InventoryServiceContext() {
 		setUpObjects();
 		setUpRepository();
-		setUpSubject();
 	}
 
 	private void setUpObjects() {
 		OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
 
-		anInventory = new Inventory();
+		anOxygenTankInventory = new OxygenTankInventory(new HashMap<>(), new HashMap<>());
 
-		anOxygenTank = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.E_ID), A_VALID_DATE,
-				A_DATE_AFTER_THE_OTHER_ONE);
+		anOxygenTank = new OxygenTank(
+				categoryBuilder.buildById(A_OXYGEN_TANK_CATEGORY_ID),
+				A_VALID_DATE
+		);
 
-		anInventoryEntity = parser.toEntity(anInventory);
+		anOxygenTankInventoryEntity = parser.toEntity(anOxygenTankInventory);
 	}
 
 	private void setUpRepository() {
-		repository = mock(InventoryRepository.class);
+		repository = mock(OxygenTankInventoryRepository.class);
 
-		when(repository.findAll()).thenReturn(Collections.singletonList(anInventoryEntity));
-		when(repository.save(any(InventoryEntity.class))).thenReturn(anInventoryEntity);
-	}
-
-	private void setUpSubject() {
-		subject = new InventoryServiceImpl(repository);
+		when(repository.findAll()).thenReturn(Collections.singletonList(anOxygenTankInventoryEntity));
+		when(repository.save(any(OxygenTankInventoryEntity.class))).thenReturn(parser.toEntity(anOxygenTankInventory));
 	}
 
 	// TODO : Setup for save
 	public void setUpForSave() {
 
 	}
+	*/
 }

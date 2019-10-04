@@ -131,10 +131,10 @@ public class OrderServiceTestContext {
 
     private void setUpSubject() {
         passService = mock(PassService.class);
-        OxygenTankService oxygenTankService = mock(OxygenTankService.class);
+        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
         shuttleInventoryService = mock(ShuttleInventoryService.class);
 
-        subject = new OrderServiceImpl(repository, passService, oxygenTankService, shuttleInventoryService);
+        subject = new OrderServiceImpl(repository, passService, oxygenTankInventoryService, shuttleInventoryService);
     }
 
     public void setUpForSaveWithSinglePass() {
