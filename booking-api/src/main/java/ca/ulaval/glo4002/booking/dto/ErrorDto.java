@@ -2,22 +2,7 @@ package ca.ulaval.glo4002.booking.dto;
 
 public class ErrorDto implements Dto {
 
-    private String error;
-	private String description;
-    
-	public ErrorDto(String error, String description) {
-		this.error = error;
-		this.description = description;
-	}
-
-	public String getError() {
-		return error;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-	
-	
+    public String error;
+	public String description;
     
 }

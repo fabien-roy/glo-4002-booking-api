@@ -41,7 +41,10 @@ public abstract class FestivalException extends RuntimeException {
     }
 
     public ErrorDto toErrorDto() {
-        return new ErrorDto(error, description);
-
+    	ErrorDto errorDto = new ErrorDto();
+    	errorDto.error = error;
+    	errorDto.description = description;
+        
+    	return errorDto;
     }
 }
