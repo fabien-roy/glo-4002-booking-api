@@ -1,14 +1,5 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
@@ -18,17 +9,27 @@ import ca.ulaval.glo4002.booking.domainobjects.trips.ArrivalTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.DepartureTrip;
 import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 import ca.ulaval.glo4002.booking.entities.TripEntity;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TripParserTest {
 
-	private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
+    private TripParser subject;
+
     private final static Long A_TRIP_ID = 1L;
     private final static Long ANOTHER_TRIP_ID = 2L;
     private final static LocalDate A_TRIP_DATE = DateConstants.START_DATE;
     private final static Long A_PASSENGER_ID = 1L;
     private final static Long ANOTHER_PASSENGER_ID = 2L;
     private final static Long A_THIRD_PASSENGER_ID = 3L;
-    private TripParser subject = new TripParser();
+
+    private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
     private Trip aDepartureTrip;
     private Trip anArrivalTrip;
     private Passenger aPassenger = new Passenger(A_PASSENGER_ID);

@@ -15,23 +15,26 @@ public class OrderEntity {
     private LocalDateTime orderDate;
     private Long vendorId;
     @OneToMany(mappedBy = "order")
-    private List<OrderItemEntity> orderItems = new ArrayList<>();
+    private List<PassEntity> passes = new ArrayList<>();
+    private Double price;
 
     public OrderEntity() {
 
     }
 
-    public OrderEntity(LocalDateTime orderDate, Long vendorId, List<OrderItemEntity> orderItems) {
+    public OrderEntity(LocalDateTime orderDate, Long vendorId, List<PassEntity> passes, Double price) {
         this.orderDate = orderDate;
         this.vendorId = vendorId;
-        this.orderItems = orderItems;
+        this.passes = passes;
+        this.price = price;
     }
 
-    public OrderEntity(Long id, LocalDateTime orderDate, Long vendorId, List<OrderItemEntity> orderItems) {
+    public OrderEntity(Long id, LocalDateTime orderDate, Long vendorId, List<PassEntity> passes, Double price) {
         this.id = id;
         this.orderDate = orderDate;
         this.vendorId = vendorId;
-        this.orderItems = orderItems;
+        this.passes = passes;
+        this.price = price;
     }
 
     public Long getId() {
@@ -50,15 +53,23 @@ public class OrderEntity {
         return vendorId;
     }
 
-    public List<? extends OrderItemEntity> getOrderItems() {
-        return orderItems;
+    public List<PassEntity> getPasses() {
+        return passes;
     }
 
-    public void addOrderItems(List<? extends OrderItemEntity> orderItems) {
-        this.orderItems.addAll(orderItems);
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void addOrderItems(List<PassEntity> orderItems) {
+        this.passes.addAll(orderItems);
     }
 
     public void clearOrderItems() {
-        this.orderItems.clear();
+        this.passes.clear();
     }
 }

@@ -1,7 +1,10 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.NebulaPassCategory;
+import ca.ulaval.glo4002.booking.domainobjects.passes.categories.SupergiantPassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
@@ -44,20 +47,56 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order order(Order order) {
+        order.setPrice(getOrderPrice(order));
+
         OrderEntity savedOrder = orderRepository.save(orderParser.toEntity(order));
 
         List<Pass> passes = new ArrayList<>();
-        passService.order(savedOrder, passService.getPasses(order.getOrderItems())).forEach(passes::add);
+        passService.order(savedOrder, order.getPasses()).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
-        // TODO : Send savedOrder (OrderEntity) to service
         oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
 
-        // TODO : Order Shuttle
+        // TODO : TRANS : Order Shuttle
         // List<Shuttle> shuttles = new ArrayList<>();
 
         savedOrder = orderRepository.update(savedOrder);
 
         return orderParser.parseEntity(savedOrder);
+    }
+
+    public double getOrderPrice(Order order){
+
+        double rebate = 1.00d;
+        double price = 0.00d;
+
+        if(order.getPasses().get(0).getCategory() instanceof SupergiantPassCategory) {
+            rebate = verifyIfSupergiantRebateApplies(order, rebate);
+        }
+
+        if(order.getPasses().get(0).getCategory() instanceof NebulaPassCategory) {
+            rebate = verifyIfNebulaRebateApply(order, rebate);
+        }
+
+        for (Pass p:
+                order.getPasses()) {
+            price += p.getPrice();
+        }
+
+        return price * rebate;
+    }
+
+    private double verifyIfSupergiantRebateApplies(Order order, double rebate) {
+        if (order.getPasses().size() >= PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD) {
+            rebate = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE;
+        }
+        return rebate;
+    }
+
+    private double verifyIfNebulaRebateApply(Order order, double rebate) {
+        if(order.getPasses().size() >= PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD){
+            rebate = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE;
+        }
+        return rebate;
     }
 }

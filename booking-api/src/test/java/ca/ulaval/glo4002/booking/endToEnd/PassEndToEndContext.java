@@ -9,7 +9,6 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.entities.PassEntity;
-import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.PassRepository;
@@ -46,6 +45,7 @@ public class PassEndToEndContext {
     public static final List<String> SOME_INVALID_EVENT_DATES = new ArrayList<>(Collections.singletonList(
             A_INVALID_EVENT_DATE.toString()
     ));
+    private static final Double A_ORDER_PRICE = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE;
 
     private EntityManager entityManager;
     public PassEntity aSinglePass;
@@ -63,14 +63,12 @@ public class PassEndToEndContext {
     public OrderWithPassesAsEventDatesDto anotherSinglePassOrderDto = new OrderWithPassesAsEventDatesDto();
     public OrderWithPassesAsEventDatesDto aMultipleSinglePassOrderDto = new OrderWithPassesAsEventDatesDto();
     public OrderWithPassesAsEventDatesDto aPackagePassOrderDto = new OrderWithPassesAsEventDatesDto();
-    public OrderParser orderParser = new OrderParser();
     public Long aSinglePassOrderId = 1L;
     public Long anotherSinglePassOrderId = 2L;
     public Long aMultipleSinglePassOrderId = 3L;
     public Long aPackagePassOrderId = 4L;
     public Long aSinglePassId = 1L;
     public Long anotherSinglePassId = 2L;
-    public Long aMultipleSinglePassId = 3L;
     public Long aPackagePassId = 4L;
     public OrderController orderController;
 
@@ -100,25 +98,29 @@ public class PassEndToEndContext {
         aSinglePassOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(aSinglePass))
+                new ArrayList<>(Collections.singletonList(aSinglePass)),
+                A_ORDER_PRICE
         );
 
         anotherSinglePassOrder = new OrderEntity(
                 ANOTHER_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(anotherSinglePass))
+                new ArrayList<>(Collections.singletonList(anotherSinglePass)),
+                A_ORDER_PRICE
         );
 
         aMultipleSinglePassOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Arrays.asList(aSinglePass, anotherSinglePass))
+                new ArrayList<>(Arrays.asList(aSinglePass, anotherSinglePass)),
+                A_ORDER_PRICE
         );
 
         aPackagePassOrder = new OrderEntity(
                 AN_ORDER_DATE,
                 A_VENDOR_ID,
-                new ArrayList<>(Collections.singletonList(aPackagePass))
+                new ArrayList<>(Collections.singletonList(aPackagePass)),
+                A_ORDER_PRICE
         );
 
         aSinglePassDto.passCategory = PassConstants.Categories.SUPERNOVA_NAME;

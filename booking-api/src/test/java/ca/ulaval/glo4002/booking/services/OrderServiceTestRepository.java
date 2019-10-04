@@ -11,20 +11,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OrderServiceTest {
+class OrderServiceTestRepository {
 
-    private OrderServiceContext context;
+    private OrderServiceTestContext context;
 
     @BeforeEach
     public void setUp() {
-        context = new OrderServiceContext();
+        context = new OrderServiceTestContext();
     }
 
     @Test
     public void findById_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
         OrderNotFoundException thrown = assertThrows(
                 OrderNotFoundException.class,
-                () -> context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID)
+                () -> context.subject.findById(OrderServiceTestContext.A_NON_EXISTANT_ORDER_ID)
         );
 
         assertEquals(ExceptionConstants.Order.NOT_FOUND_ERROR, thrown.getMessage());
@@ -32,7 +32,7 @@ public class OrderServiceTest {
 
     @Test
     public void findById_shouldReturnCorrectOrder() {
-        Order order = context.subject.findById(OrderServiceContext.A_ORDER_ID);
+        Order order = context.subject.findById(OrderServiceTestContext.A_ORDER_ID);
 
         assertEquals(context.aOrder.getId(), order.getId());
     }
@@ -53,7 +53,7 @@ public class OrderServiceTest {
         context.setUpForSave();
 
         context.subject.order(context.aNonExistentOrder);
-        Order order = context.subject.findById(OrderServiceContext.A_NON_EXISTANT_ORDER_ID);
+        Order order = context.subject.findById(OrderServiceTestContext.A_NON_EXISTANT_ORDER_ID);
 
         assertEquals(context.aNonExistentOrder.getId(), order.getId());
     }

@@ -1,58 +1,50 @@
 package ca.ulaval.glo4002.booking.domainobjects.report;
 
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.lang.Math.abs;
-import static java.util.Optional.ofNullable;
-
 public class Inventory {
 
-    private Map<Long, Long> inventory = new HashMap<>();
-    private Map<Long, Long> tankInUse = new HashMap<>();
+    private Map<Long, Long> storedTanks = new HashMap<>();
+    private Map<Long, Long> inUseTanks = new HashMap<>();
 
     public Inventory() {
-        inventory.put(OxygenConstants.Categories.E_ID, 0L);
-        tankInUse.put(OxygenConstants.Categories.E_ID, 0L);
-        inventory.put(OxygenConstants.Categories.B_ID, 0L);
-        tankInUse.put(OxygenConstants.Categories.B_ID, 0L);
-        tankInUse.put(OxygenConstants.Categories.A_ID, 0L);
-        inventory.put(OxygenConstants.Categories.A_ID, 0L);
+        storedTanks.put(OxygenConstants.Categories.E_ID, 0L);
+        storedTanks.put(OxygenConstants.Categories.B_ID, 0L);
+        storedTanks.put(OxygenConstants.Categories.A_ID, 0L);
+        inUseTanks.put(OxygenConstants.Categories.E_ID, 0L);
+        inUseTanks.put(OxygenConstants.Categories.B_ID, 0L);
+        inUseTanks.put(OxygenConstants.Categories.A_ID, 0L);
     }
 
-    public void addTankInInventory(Long categoryID, Long quantityAdded) {
-        Long quantityStored = ofNullable(inventory.get(categoryID))
-                .orElseThrow(OxygenCategoryNotFoundException::new);
-
-        inventory.replace(categoryID, quantityStored + quantityAdded);
+    public Inventory(Map<Long, Long> storedTanks, Map<Long, Long> inUseTanks) {
+        this.storedTanks = storedTanks;
+        this.inUseTanks = inUseTanks;
     }
 
-    public Long requestOxygenTank(Long categoryID, Long quantityRequested) {
-        Long quantityStored = ofNullable(inventory.get(categoryID))
-                .orElseThrow(OxygenCategoryNotFoundException::new);
-        Long quantityInUse = ofNullable(tankInUse.get(categoryID))
-                .orElseThrow(OxygenCategoryNotFoundException::new);
-
-        Long numberOfTankNeeded = quantityStored - (quantityInUse + quantityRequested);
-        if(numberOfTankNeeded < 0) {
-            tankInUse.replace(categoryID, quantityStored);
-            return abs(numberOfTankNeeded);
-        } else {
-            tankInUse.replace(categoryID, quantityInUse + quantityRequested);
-            return 0L;
-        }
+    public void replaceStoredTanks(Long categoryId, Long numberOfTanksToReplace) {
+        storedTanks.replace(categoryId, numberOfTanksToReplace);
     }
 
-    public Long getInventoryByCategoryID(Long categoryID) {
-        return ofNullable(inventory.get(categoryID))
-                .orElseThrow(OxygenCategoryNotFoundException::new);
+    public void replaceInUseTanks(Long categoryId, Long numberOfTanksToReplace) {
+        inUseTanks.replace(categoryId, numberOfTanksToReplace);
     }
 
-    public long getTankInUseByCategoryID(Long categoryID) {
-        return ofNullable(tankInUse.get(categoryID))
-                .orElseThrow(OxygenCategoryNotFoundException::new);
+    public Long getStoredTanksByCategoryId(Long categoryId) {
+        return storedTanks.get(categoryId);
+    }
+
+    public Long getInUseTanksByCategoryId(Long categoryId) {
+        return inUseTanks.get(categoryId);
+    }
+
+    public Map<Long, Long> getStoredTanks() {
+        return storedTanks;
+    }
+
+    public Map<Long, Long> getInUseTanks() {
+        return inUseTanks;
     }
 }

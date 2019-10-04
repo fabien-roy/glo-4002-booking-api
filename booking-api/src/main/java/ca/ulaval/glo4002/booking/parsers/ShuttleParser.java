@@ -21,8 +21,7 @@ public class ShuttleParser implements EntityParser<Shuttle, ShuttleEntity> {
 	}
 
 	@Override
-	public ShuttleEntity toEntity(Shuttle object) {
-		return new ShuttleEntity(object.getId(), object.getShuttleCategory().getId()
-				, object.getPrice());
+	public ShuttleEntity toEntity(Shuttle shuttle) {
+		return new ShuttleEntity(shuttle.getId(), shuttle.getShuttleCategory().getId(), shuttle.getPrice());
 	}
 }

@@ -1,15 +1,10 @@
 package ca.ulaval.glo4002.booking.entities;
 
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
 @Entity(name = "Shuttles")
-public class ShuttleEntity extends OrderItemEntity {
+public class ShuttleEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +24,6 @@ public class ShuttleEntity extends OrderItemEntity {
 		this.price = price;
 	}
 	
-	@Override
 	public Long getId() {
 		return id;
 	}

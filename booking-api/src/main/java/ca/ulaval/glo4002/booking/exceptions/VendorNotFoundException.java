@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class VendorNotFoundException extends ControllerException {
+public class VendorNotFoundException extends HumanReadableException {
 
     public VendorNotFoundException(String vendorCode){
         super(ExceptionConstants.Vendor.NOT_FOUND_ERROR);

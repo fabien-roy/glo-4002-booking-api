@@ -1,11 +1,10 @@
 package ca.ulaval.glo4002.booking.domainobjects.shuttles;
-import ca.ulaval.glo4002.booking.domainobjects.orders.OrderItem;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
 import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 
 import java.util.List;
 
-public class Shuttle extends OrderItem {
+public class Shuttle {
 
 	private Long id;
 	private Double price;
@@ -20,22 +19,22 @@ public class Shuttle extends OrderItem {
     }
 
     public Long getId() {
-    	return id;
-    }
-    
-    @Override
-    public Double getPrice() {
-        return price;
+        return id;
     }
     
     public ShuttleCategory getShuttleCategory() {
     	return category;
     }
-    
+
     public List<Trip> getTrips() {
     	return trips;
     }
 
+    public Double getPrice() {
+        return this.price;
+    }
+
+    // TODO : TRANS : Check if Shuttle.reservePlace is used
     /*
     public void reservePlace(Passenger passenger) {
     	if(passengers.size() < category.getMaxCapacity()) {

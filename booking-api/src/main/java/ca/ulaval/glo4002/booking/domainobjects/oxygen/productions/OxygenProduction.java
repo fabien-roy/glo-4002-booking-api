@@ -9,8 +9,8 @@ public abstract class OxygenProduction {
     protected Long id;
     protected String name;
     protected Double pricePerUnit;
-    protected Integer producedUnits;
-    protected Integer producedTanks;
+    protected Long producedUnits;
+    protected Long producedTanks;
     protected Duration productionTime;
     protected OxygenUnitType unitType;
 
@@ -26,11 +26,11 @@ public abstract class OxygenProduction {
         return pricePerUnit;
     }
 
-    public Integer getProducedUnits() {
+    public Long getProducedUnits() {
         return producedUnits;
     }
 
-    public Integer getProducedTanks() {
+    public Long getProducedTanks() {
         return producedTanks;
     }
 

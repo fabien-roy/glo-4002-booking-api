@@ -14,13 +14,15 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class OrderServiceContext {
+public class OrderServiceTestContext {
 
     public OrderService subject;
 
@@ -34,50 +36,76 @@ public class OrderServiceContext {
     private OrderEntity aOrderEntity;
     private OrderEntity anotherOrderEntity;
     private OrderEntity aNonExistentOrderEntity;
-    public OrderRepository repository;
-    public PassService passService;
-    public Order aOrder;
-    public Order anotherOrder;
-    public Order aNonExistentOrder;
-    public Pass aPass;
-    public final static Long A_ORDER_ID = 1L;
-    public final static Long ANOTHER_ORDER_ID = 2L;
-    public final static Long A_NON_EXISTANT_ORDER_ID = 0L;
+    private OrderRepository repository;
+    private PassService passService;
+    private Pass aPass;
 
-    public OrderServiceContext() {
+    Pass aNebulaSinglePass;
+    Pass aSupergiantSinglePass;
+    Pass aSupernovaPackagePass;
+    Order aOrder;
+    Order anotherOrder;
+    Order aNonExistentOrder;
+
+    final static Long A_ORDER_ID = 1L;
+    private final static Long ANOTHER_ORDER_ID = 2L;
+    final static Long A_NON_EXISTANT_ORDER_ID = 0L;
+
+    public OrderServiceTestContext() {
         setUpObjects();
         setUpRepository();
         setUpSubject();
     }
 
     private void setUpObjects() {
-        aOrder = new Order(
-                A_ORDER_ID,
-                A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
-                new ArrayList<>()
-        );
-
-        anotherOrder = new Order(
-                ANOTHER_ORDER_ID,
-                A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
-                new ArrayList<>()
-        );
-
-        aNonExistentOrder = new Order(
-                A_NON_EXISTANT_ORDER_ID,
-                A_ORDER_EVENT_DATE,
-                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
-                new ArrayList<>()
-        );
-
         aPass = new Pass(
                 A_PASS_ID,
                 categoryBuilder.buildById(PassConstants.Categories.SUPERNOVA_ID),
                 optionBuilder.buildById(PassConstants.Options.SINGLE_ID),
                 A_PASS_EVENT_DATE
         );
+
+        aSupernovaPackagePass = new Pass(
+                A_PASS_ID,
+                categoryBuilder.buildById(PassConstants.Categories.SUPERNOVA_ID),
+                optionBuilder.buildById(PassConstants.Options.PACKAGE_ID)
+        );
+
+        aSupergiantSinglePass = new Pass(
+                A_PASS_ID,
+                categoryBuilder.buildById(PassConstants.Categories.SUPERGIANT_ID),
+                optionBuilder.buildById(PassConstants.Options.SINGLE_ID),
+                A_PASS_EVENT_DATE
+        );
+
+        aNebulaSinglePass = new Pass(
+                A_PASS_ID,
+                categoryBuilder.buildById(PassConstants.Categories.NEBULA_ID),
+                optionBuilder.buildById(PassConstants.Options.SINGLE_ID),
+                A_PASS_EVENT_DATE
+        );
+
+        aOrder = new Order(
+                A_ORDER_ID,
+                A_ORDER_EVENT_DATE,
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                Collections.singletonList(aPass)
+        );
+
+        anotherOrder = new Order(
+                ANOTHER_ORDER_ID,
+                A_ORDER_EVENT_DATE,
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                Collections.singletonList(aPass)
+        );
+
+        aNonExistentOrder = new Order(
+                A_NON_EXISTANT_ORDER_ID,
+                A_ORDER_EVENT_DATE,
+                vendorBuilder.buildById(VendorConstants.TEAM_VENDOR_ID),
+                Collections.singletonList(aPass)
+        );
+
 
         aOrderEntity = parser.toEntity(aOrder);
         anotherOrderEntity = parser.toEntity(anotherOrder);
