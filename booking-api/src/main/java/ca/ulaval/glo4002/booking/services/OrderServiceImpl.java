@@ -19,12 +19,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final PassService passService;
     private final OxygenTankService oxygenTankService;
+    private final ShuttleService shuttleService;
     private final OrderParser orderParser;
 
-    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankService oxygenTankService) {
+    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankService oxygenTankService, ShuttleService shuttleService) {
         this.orderRepository = orderRepository;
         this.passService = passService;
         this.oxygenTankService = oxygenTankService;
+        this.shuttleService = shuttleService;
         this.orderParser = new OrderParser();
     }
 
@@ -59,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
 
         // TODO : TRANS : Order Shuttle
         // List<Shuttle> shuttles = new ArrayList<>();
+        shuttleService.order(quality);
 
         savedOrder = orderRepository.update(savedOrder);
 

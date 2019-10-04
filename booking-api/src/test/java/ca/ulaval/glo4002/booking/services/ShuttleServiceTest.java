@@ -1,9 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +18,8 @@ public class ShuttleServiceTest {
 
     @BeforeEach
     public void setUp() {
-        this.context = new ShuttleServiceContext();
-        this.subject = new ShuttleServiceImpl(this.context.repository, this.context.passengerRepository);
+        context = new ShuttleServiceContext();
+        subject = new ShuttleServiceImpl(context.repository);
     }
 
     @Test
@@ -47,9 +45,52 @@ public class ShuttleServiceTest {
 
         subject.findAll().forEach(shuttle -> ids.add(shuttle.getId()));
 
-        assertEquals(2, ids.size());
+        assertEquals(3, ids.size());
         assertTrue(ids.contains(context.aShuttle.getId()));
         assertTrue(ids.contains(context.anotherShuttle.getId()));
     }
 
+    @Test
+    public void order_shouldReturnShuttle_whenShuttleIsNotFull(){
+        List<Shuttle> shuttles = new ArrayList<>();
+
+        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
+
+        assertEquals(1, shuttles.size());
+        assertTrue(shuttles.stream().allMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.A_SHUTTLE_ID)));
+    }
+
+    @Test
+    public void order_shouldReturnNewShuttle_whenLastShuttleIsFull(){
+        List<Shuttle> shuttles = new ArrayList<>();
+        context.setUpWithFullTrip();
+
+        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
+
+        assertEquals(1, shuttles.size());
+        assertTrue(shuttles.stream().allMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.ANOTHER_SHUTTLE_ID)));
+    }
+
+    @Test
+    public void order_shouldReturnBothShuttles_whenLastShuttleIsAlmostFull(){
+        List<Shuttle> shuttles = new ArrayList<>();
+        context.setUpWithAlmostFullTrip();
+
+        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
+        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
+
+        assertEquals(2, shuttles.size());
+        assertTrue(shuttles.stream().anyMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.A_SHUTTLE_ID)));
+        assertTrue(shuttles.stream().anyMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.ANOTHER_SHUTTLE_ID)));
+    }
+
+    @Test
+    public void order_shouldReturnCorrectQualityForShuttle(){
+        List<Shuttle> shuttles = new ArrayList<>();
+
+        subject.order(context.anotherQualityShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
+
+        assertEquals(1, shuttles.size());
+        assertTrue(shuttles.stream().allMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.ANOTHER_QUALITY_SHUTTLE_ID)));
+    }
 }

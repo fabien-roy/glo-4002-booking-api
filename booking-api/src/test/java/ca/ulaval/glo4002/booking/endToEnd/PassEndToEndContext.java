@@ -169,7 +169,8 @@ public class PassEndToEndContext {
 
         PassService passService = new PassServiceImpl(passRepository);
         OxygenTankService oxygenTankService = mock(OxygenTankService.class);
-        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService);
+        ShuttleService shuttleService = mock(ShuttleService.class);
+        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService, shuttleService);
 
         orderController = new OrderController(orderService);
 

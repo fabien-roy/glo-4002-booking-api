@@ -4,37 +4,42 @@ import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
+import ca.ulaval.glo4002.booking.entities.PassengerEntity;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
+import ca.ulaval.glo4002.booking.entities.TripEntity;
 import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
 import ca.ulaval.glo4002.booking.repositories.PassengerRepository;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ShuttleServiceContext {
 
+    private static final ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
+    private static final ShuttleCategory A_SHUTTLE_CATEGORY = shuttleCategoryBuilder.buildById(ShuttleConstants.Categories.ET_SPACESHIP_ID);
+    private static final ShuttleCategory ANOTHER_SHUTTLE_CATEGORY = shuttleCategoryBuilder.buildById(ShuttleConstants.Categories.MILLENNIUM_FALCON_ID);
+
     private ShuttleParser parser = new ShuttleParser();
     private ShuttleEntity aShuttleEntity;
     private ShuttleEntity anotherShuttleEntity;
+    private ShuttleEntity anotherQualityShuttleEntity;
     private ShuttleEntity aNonExistentShuttleEntity;
-    private final static ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
+
     public ShuttleRepository repository;
     public PassengerRepository passengerRepository;
     public Shuttle aShuttle;
     public Shuttle anotherShuttle;
+    public Shuttle anotherQualityShuttle;
     public Shuttle aNonExistentShuttle;
-    public ShuttleCategory A_SHUTTLE_CATEGORY = shuttleCategoryBuilder.buildById(ShuttleConstants.Categories.ET_SPACESHIP_ID);
-    public final static Long A_SHUTTLE_ID = 1L;
-    public final static Long ANOTHER_SHUTTLE_ID = 2L;
-    public final static Long A_NON_EXISTENT_SHUTTLE_ID = 0L;
-    public List<Trip> A_TRIP_LIST = new ArrayList<Trip>();
-    public List<Trip> ANOTHER_TRIP_LIST = new ArrayList<Trip>();
-
+    public static final Long A_SHUTTLE_ID = 0L;
+    public static final Long ANOTHER_SHUTTLE_ID = 1L;
+    public static final Long A_NON_EXISTENT_SHUTTLE_ID = 3L;
+    public static final Long ANOTHER_QUALITY_SHUTTLE_ID = 4L;
 
     public ShuttleServiceContext() {
         setUpObjects();
@@ -46,14 +51,14 @@ public class ShuttleServiceContext {
                 A_SHUTTLE_ID,
                 A_SHUTTLE_CATEGORY.getPrice(),
                 A_SHUTTLE_CATEGORY,
-                A_TRIP_LIST
+                new ArrayList<>()
                 );
 
         anotherShuttle = new Shuttle(
                 ANOTHER_SHUTTLE_ID,
                 A_SHUTTLE_CATEGORY.getPrice(),
                 A_SHUTTLE_CATEGORY,
-                ANOTHER_TRIP_LIST
+                new ArrayList<>()
         );
 
         aNonExistentShuttle = new Shuttle(
@@ -63,17 +68,45 @@ public class ShuttleServiceContext {
                 new ArrayList<>()
         );
 
+        anotherQualityShuttle = new Shuttle(
+                ANOTHER_QUALITY_SHUTTLE_ID,
+                A_SHUTTLE_CATEGORY.getPrice(),
+                ANOTHER_SHUTTLE_CATEGORY,
+                new ArrayList<>()
+        );
+
         aShuttleEntity = parser.toEntity(aShuttle);
         anotherShuttleEntity = parser.toEntity(anotherShuttle);
+        anotherQualityShuttleEntity = parser.toEntity(anotherQualityShuttle);
         aNonExistentShuttleEntity = parser.toEntity(aNonExistentShuttle);
     }
 
     private void setUpRepository() {
         repository = mock(ShuttleRepository.class);
 
-        when(repository.findAll()).thenReturn(Arrays.asList(aShuttleEntity, anotherShuttleEntity));
+        when(repository.findAll()).thenReturn(Arrays.asList(aShuttleEntity, anotherShuttleEntity, anotherQualityShuttleEntity));
         when(repository.findById(A_SHUTTLE_ID)).thenReturn(Optional.of(aShuttleEntity));
         when(repository.findById(ANOTHER_SHUTTLE_ID)).thenReturn(Optional.of(anotherShuttleEntity));
         when(repository.findById(A_NON_EXISTENT_SHUTTLE_ID)).thenReturn(Optional.empty());
+    }
+
+    public void setUpWithFullTrip() {
+        aShuttleEntity.getTrips().add(getTripWithPassengers(aShuttle.getShuttleCategory().getMaxCapacity()));
+        aShuttleEntity = parser.toEntity(aShuttle);
+    }
+
+    public void setUpWithAlmostFullTrip() {
+        aShuttleEntity.getTrips().add(getTripWithPassengers(aShuttle.getShuttleCategory().getMaxCapacity() - 1));
+        aShuttleEntity = parser.toEntity(aShuttle);
+    }
+
+    public TripEntity getTripWithPassengers(Integer quantity) {
+        TripEntity someTrips = new TripEntity();
+
+        for (int i = 0; i < quantity; i++) {
+            someTrips.getPassengers().add(new PassengerEntity());
+        }
+
+        return someTrips;
     }
 }

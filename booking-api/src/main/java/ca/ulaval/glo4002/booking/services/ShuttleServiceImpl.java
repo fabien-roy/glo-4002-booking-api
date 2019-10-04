@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
-import ca.ulaval.glo4002.booking.repositories.PassengerRepository;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 
 import java.util.ArrayList;
@@ -13,19 +13,17 @@ import java.util.List;
 public class ShuttleServiceImpl implements ShuttleService {
 
     private final ShuttleRepository shuttleRepository;
-    private final PassengerRepository passengerRepository;
     private final ShuttleParser shuttleParser;
 
-    public ShuttleServiceImpl(ShuttleRepository shuttleRepository, PassengerRepository passengerRepository) {
+    public ShuttleServiceImpl(ShuttleRepository shuttleRepository) {
         this.shuttleRepository = shuttleRepository;
-        this.passengerRepository = passengerRepository;
         this.shuttleParser = new ShuttleParser();
     }
 
+    // TODO : TRANS : Is ShuttleService.findById(Long) necessary?
     @Override
     public Shuttle findById(Long id) {
-        ShuttleEntity shuttleEntity = shuttleRepository.findById(id)
-                .orElseThrow(() -> new ShuttleNotFoundException());
+        ShuttleEntity shuttleEntity = shuttleRepository.findById(id).orElseThrow(ShuttleNotFoundException::new);
 
         return shuttleParser.parseEntity(shuttleEntity);
     }
@@ -37,6 +35,12 @@ public class ShuttleServiceImpl implements ShuttleService {
         shuttleRepository.findAll().forEach(shuttleEntity -> shuttles.add(shuttleParser.parseEntity(shuttleEntity)));
 
         return shuttles;
+    }
+
+    // TODO : TRANS : Test
+    @Override
+    public Iterable<Shuttle> order(Quality quality) {
+        return new ArrayList<>();
     }
 
 	/*
