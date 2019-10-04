@@ -17,4 +17,5 @@ public class ReportParser implements ToDtoParser<Report, ReportDto> {
 
         return dto;
     }
+
 }

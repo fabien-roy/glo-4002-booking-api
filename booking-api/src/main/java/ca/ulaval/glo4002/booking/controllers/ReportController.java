@@ -21,7 +21,6 @@ public class ReportController {
 
 
 	public ReportController(ReportService reportService) {
-	    // TODO : OXY : Only report service and parser should be injected (not usefull for Parser)
 		this.reportService = reportService;
 	}
 

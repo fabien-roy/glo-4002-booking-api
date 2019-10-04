@@ -104,4 +104,5 @@ public class InventoryParserTest {
 
 		assertEquals(2, dtos.size());
 	}
+
 }
