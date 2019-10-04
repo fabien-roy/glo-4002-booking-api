@@ -18,16 +18,17 @@ import static org.mockito.Mockito.when;
 
 public class InventoryServiceContext {
 
-	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
-	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
-	public static final Long A_OXYGEN_TANK_CATEGORY_ID = OxygenConstants.Categories.E_ID;
-
-	private InventoryEntity anInventoryEntity;
 	public InventoryParser parser = new InventoryParser();
 	public InventoryRepository repository;
 	public InventoryItemService inventoryItemService;
 	public Inventory anInventory;
 	public OxygenTank anOxygenTank;
+	private InventoryEntity anInventoryEntity;
+
+	public static final Long A_OXYGEN_TANK_CATEGORY_ID = OxygenConstants.Categories.E_ID;
+	public static final Long AN_INVALID_CATEGORY = -1L;
+	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
+	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
 
 	public InventoryServiceContext() {
 		setUpObjects();

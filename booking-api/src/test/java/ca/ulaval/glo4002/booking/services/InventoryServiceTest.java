@@ -1,27 +1,30 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class InventoryServiceTest {
 
-	private InventoryService subjext;
+	private InventoryService subject;
 	private InventoryServiceContext context;
 
 	// TODO : Mock Inventory ? start below :
 
 	@BeforeEach
 	public void setUp() {
-		subjext = new InventoryServiceImpl(context.repository, context.inventoryItemService);
 		context = new InventoryServiceContext();
+		subject = new InventoryServiceImpl(context.repository, context.inventoryItemService);
 	}
 
 	@Test
 	void whenOxygenTankIsRequested_thenTheyAreAddedToTheInventory(){
-		subjext.requestOxygenTanks(context.anOxygenTank);
+		subject.requestOxygenTanks(context.anOxygenTank);
 
 		Long producedTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 		assertEquals(producedTanks, context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId()));
@@ -32,7 +35,7 @@ public class InventoryServiceTest {
 	void whenOxygenTankIsRequestedAndInventoryIsInSurplus_thenTankInUseIsUpdated() {
 		//subjext.addTank(context.anOxygenTank.getCategory().getId(), 20L);
 
-		subjext.requestOxygenTanks(context.anOxygenTank);
+		subject.requestOxygenTanks(context.anOxygenTank);
 		Long inUseTanks = context.anInventory
 				.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
 		Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
@@ -45,7 +48,7 @@ public class InventoryServiceTest {
 	void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenTankInUseIsUpdated() {
 		//subjext.addTank(context.anOxygenTank.getCategory().getId(), 3L);
 
-		subjext.requestOxygenTanks(context.anOxygenTank);
+		subject.requestOxygenTanks(context.anOxygenTank);
 		Long inUseTanks = context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
         Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 
@@ -78,7 +81,7 @@ public class InventoryServiceTest {
 
 	@Test
 	void get_shouldReturnTheInventory() {
-		subjext.get();
+		subject.get();
 		// TODO Do this test
 	}
 
@@ -112,11 +115,11 @@ public class InventoryServiceTest {
 	// TODO Do/update this test (Or delete if we don't need it anymore)
 	@Test
 	void whenGetTankInUseByCategoryIsCalledWithAWrongCategoryID_thenShouldThrowOxygenCategoryNotFoundException() {
-//        OxygenCategoryNotFoundException thrown = assertThrows(
-//                OxygenCategoryNotFoundException.class,
-//                () -> subject.getTankInUseByCategoryID(AN_INVALID_CATEGORY)
-//        );
-//
-//        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
+        OxygenCategoryNotFoundException thrown = assertThrows(
+                OxygenCategoryNotFoundException.class,
+                () -> subject.getTankInUseByCategoryID(InventoryServiceContext.AN_INVALID_CATEGORY)
+        );
+
+        assertEquals(ExceptionConstants.Oxygen.CATEGORY_NOT_FOUND_ERROR, thrown.getMessage());
 	}
 }

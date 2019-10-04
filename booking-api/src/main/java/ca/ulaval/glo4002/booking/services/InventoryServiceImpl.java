@@ -3,18 +3,18 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.entities.InventoryEntity;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.InventoryParser;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class InventoryServiceImpl implements InventoryService {
 
-	private final InventoryParser inventoryParser;
+	private Inventory inventory;
 	private InventoryRepository inventoryRepository;
 	private InventoryItemService inventoryItemService;
+	private final InventoryParser inventoryParser;
 
 	public InventoryServiceImpl(InventoryRepository inventoryRepository, InventoryItemService inventoryItemService) {
 		this.inventoryRepository = inventoryRepository;
@@ -81,5 +81,16 @@ public class InventoryServiceImpl implements InventoryService {
 		inventory.replaceInUseTanks(categoryId, numberOfTanksToAdds + currentNumberOfTanks);
 
 		save(inventory);
+	}
+
+	// TODO : fix this method (get of a invalid key on a map should return null)
+	public Optional<Long> getTankInUseByCategoryID(Long categoryId) {
+		Long quantity = inventory.getInUseTanksByCategoryId(categoryId);
+
+		if(quantity == null){
+			throw new OxygenCategoryNotFoundException();
+		}
+
+		return Optional.of(quantity);
 	}
 }
