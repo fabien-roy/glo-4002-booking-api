@@ -24,17 +24,13 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 
 	@Override
 	public <S extends ShuttleEntity> S save (S shuttle) {
-		if (shuttle.getId() == null) {
-			entityManager.getTransaction().begin();
+        entityManager.getTransaction().begin();
 
-			if (!entityManager.contains(shuttle)) {
-				entityManager.persist(shuttle);
-			}
+        if (!entityManager.contains(shuttle)) {
+            entityManager.persist(shuttle);
+        }
 
-			entityManager.getTransaction().commit();
-		} else {
-			throw new ShuttleAlreadyCreatedException();
-		}
+        entityManager.getTransaction().commit();
 
 		return shuttle;
 	}
@@ -46,12 +42,11 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 		return shuttle;
 	}
 
-	// TODO : TRANS : Useless?
 	@Override
 	public Optional<ShuttleEntity> findById(Long id) {
 		ShuttleEntity shuttleEntity = entityManager.find(ShuttleEntity.class, id);
 
-		if(shuttleEntity == null) {
+		if (shuttleEntity == null) {
 			throw new ShuttleNotFoundException();
 		}
 

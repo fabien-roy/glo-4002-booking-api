@@ -61,11 +61,16 @@ public class ShuttleServiceImpl implements ShuttleService {
     }
 
     private ShuttleEntity order(ShuttleInventoryEntity inventory, Shuttle shuttle) {
-        ShuttleEntity savedShuttle = shuttleRepository.save(shuttleParser.toEntity(shuttle));
+        ShuttleEntity savedShuttle = shuttleParser.toEntity(shuttle);
+
+        if (shuttle.getId() == null) {
+            savedShuttle.setInventory(inventory);
+            savedShuttle = shuttleRepository.save(savedShuttle);
+        } else {
+            savedShuttle = shuttleRepository.findById(shuttle.getId()).get();
+        }
 
         passengerService.order(savedShuttle);
-
-        savedShuttle.setInventory(inventory);
 
         return savedShuttle;
     }
