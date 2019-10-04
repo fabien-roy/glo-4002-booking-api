@@ -103,11 +103,85 @@ Si la commande n’existe pas
 } 
 ```
 
-### /shuttle-manifests
+### GET /shuttle-manifests?date="date"
 
+(date est optionnel)
+	
+```
+{
+ "departures": [  
+                    {
+                       "date": "2050-07-19",
+                       "shuttleName": "ET Spaceship",
+                       "passengers": [123456789]
+                    }, 
+                    {
+                       "date": "2050-07-19",
+                       "shuttleName": "SpaceX",
+                       "passengers": [234567891]
+                    }
+                ],
+ "arrivals": [
+                   {
+                     "date": "2050-07-19",
+                     "shuttleName": "ET Spaceship",
+                     "passengers": [123456789]
+                   }, 
+                   {
+                     "date": "2050-07-19",
+                     "shuttleName": "SpaceX",
+                     "passengers": [234567891]
+                   }
+              ]
+}
+```
 
-### /report
+### GET /report/o2
 
+```
+{ 
+  "inventory": [
+                    {
+                        "gradeTankOxygen": "B",
+                        "quantity": 3
+                    }, 
+                    {
+                        "gradeTankOxygen": "A",
+                        "quantity": 5
+                    }
+               ],
+  "history" : [
+                 {
+                     "date": "2050-03-10",
+                     "qtyOxygenTankBought": 0,
+                     "qtyWaterUsed": 0,
+                     "qtyCandlesUsed": 15,
+                     "qtyOxygenTankMade": 0
+                 },
+                 {
+                     "date": "2050-03-30",
+                     "qtyOxygenTankBought": 0,
+                     "qtyWaterUsed": 0,
+                     "qtyCandlesUsed": 0,
+                     "qtyOxygenTankMade": 5
+                 },
+                 {
+                     "date": "2050-04-25",
+                     "qtyOxygenTankBought": 0,
+                     "qtyWaterUsed": 8,
+                     "qtyCandlesUsed": 0,
+                     "qtyOxygenTankMade": 0
+                 },
+                 {
+                     "date": "2050-05-05",
+                     "qtyOxygenTankBought": 0,
+                     "qtyWaterUsed": 0,
+                     "qtyCandlesUsed": 0,
+                     "qtyOxygenTankMade": 3
+                 },
+               ]
+} 
+```
 
 ## Équipe
 
