@@ -8,6 +8,7 @@ import ca.ulaval.glo4002.booking.entities.InventoryItemEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class InventoryRepositoryContext {
 	public InventoryEntity anInventory;
 	public InventoryEntity aNonExistentInventory;
 
-	private List<InventoryItemEntity> inUseTank;
-	private List<InventoryItemEntity> notInUseTank;
+	private List<InventoryItemEntity> inUseTank = new ArrayList<>();
+	private List<InventoryItemEntity> notInUseTank = new ArrayList<>();
 	private InventoryItemEntity aValidInventoryItemCategoryA;
 	private InventoryItemEntity aValidInventoryItemCategoryB;
 	private InventoryItemEntity aValidInventoryItemCategoryE;

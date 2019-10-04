@@ -27,8 +27,8 @@ public class InventoryParserTest {
 	void setup() {
 		Map<Long, Long> inUseTanks = new HashMap<>();
 		Map<Long, Long> notInUseTanks = new HashMap<>();
-		Map<Long, Long> notInUsekOneEmptyCategory = new HashMap<>();
-		Map<Long, Long> inUsekOneEmptyCategory = new HashMap<>();
+		Map<Long, Long> notInUseOneEmptyCategory = new HashMap<>();
+		Map<Long, Long> inUseOneEmptyCategory = new HashMap<>();
 
 		inUseTanks.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
 		inUseTanks.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
@@ -38,17 +38,17 @@ public class InventoryParserTest {
 		notInUseTanks.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
 		notInUseTanks.put(OxygenConstants.Categories.E_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_E_STORED);
 
-		notInUsekOneEmptyCategory.put(OxygenConstants.Categories.A_ID, 0L);
-		notInUsekOneEmptyCategory.put(OxygenConstants.Categories.B_ID, 0L);
-		notInUsekOneEmptyCategory.put(OxygenConstants.Categories.E_ID, 0L);
+		notInUseOneEmptyCategory.put(OxygenConstants.Categories.A_ID, 0L);
+		notInUseOneEmptyCategory.put(OxygenConstants.Categories.B_ID, 0L);
+		notInUseOneEmptyCategory.put(OxygenConstants.Categories.E_ID, 0L);
 
-        inUsekOneEmptyCategory.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
-        inUsekOneEmptyCategory.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
-        inUsekOneEmptyCategory.put(OxygenConstants.Categories.E_ID, 0L);
+        inUseOneEmptyCategory.put(OxygenConstants.Categories.A_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_A_STORED);
+        inUseOneEmptyCategory.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
+        inUseOneEmptyCategory.put(OxygenConstants.Categories.E_ID, 0L);
 
 		anEmptyInventory = new Inventory();
 		inventory = new Inventory(notInUseTanks, inUseTanks);
-		inventoryOneEmptyCategory = new Inventory(notInUsekOneEmptyCategory, inUsekOneEmptyCategory);
+		inventoryOneEmptyCategory = new Inventory(notInUseOneEmptyCategory, inUseOneEmptyCategory);
 		subject = new InventoryParser();
 	}
 
