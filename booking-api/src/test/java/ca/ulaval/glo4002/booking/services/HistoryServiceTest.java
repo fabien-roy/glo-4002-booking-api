@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HistoryServiceTest {
 
@@ -17,10 +18,8 @@ public class HistoryServiceTest {
         subject = new HistoryServiceImpl(context.oxygenTankService);
     }
 
-    // TODO : OXY : Repair test
     @Test
     public void get_shouldGetCorrectHistory() {
-        /*
         History history = subject.get();
 
         assertEquals(2, history.getProducedOxygenTanks().size());
@@ -29,7 +28,6 @@ public class HistoryServiceTest {
         assertTrue(history.getRequestedOxygenTanks().get(context.anotherOxygenTank.getRequestDate()).stream().anyMatch(oxygenTank -> oxygenTank.getId().equals(context.anotherOxygenTank.getId())));
         assertTrue(history.getProducedOxygenTanks().get(context.anOxygenTank.getReadyDate()).stream().anyMatch(oxygenTank -> oxygenTank.getId().equals(context.anOxygenTank.getId())));
         assertTrue(history.getProducedOxygenTanks().get(context.anotherOxygenTank.getReadyDate()).stream().anyMatch(oxygenTank -> oxygenTank.getId().equals(context.anotherOxygenTank.getId())));
-        */
     }
 
     @Test

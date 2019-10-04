@@ -8,11 +8,7 @@ import java.time.LocalDate;
 
 public interface OxygenTankService extends Service<OxygenTank> {
 
-    Iterable<OxygenTank> saveAll(Iterable<OxygenTank> oxygenTanks);
-
     Iterable<OxygenTank> findAll();
-
-    OxygenTank findById(Long id);
 
     OxygenTank order(OxygenTankInventoryEntity savedInventory, OxygenCategory availableCategory, LocalDate date);
 

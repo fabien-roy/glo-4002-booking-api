@@ -42,7 +42,6 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
         return parser.parseEntity(inventories.get(0));
     }
 
-    // TODO : TRANS : ShuttleInventoryService.order tests
     @Override
     public ShuttleInventory order(Quality quality, LocalDate arrivalDate, LocalDate departureDate) {
         ShuttleInventory inventory = get();

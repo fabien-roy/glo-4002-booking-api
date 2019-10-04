@@ -11,7 +11,6 @@ public class ShuttleInventoryParser implements EntityParser<ShuttleInventory, Sh
 
     ShuttleParser shuttleParser = new ShuttleParser();
 
-    // TODO : TRANS : ShuttleInventoryParser.parseEntity tests
     @Override
     public ShuttleInventory parseEntity(ShuttleInventoryEntity entity) {
         ShuttleInventory inventory = new ShuttleInventory();
@@ -22,7 +21,6 @@ public class ShuttleInventoryParser implements EntityParser<ShuttleInventory, Sh
         return inventory;
     }
 
-    // TODO : TRANS : ShuttleInventoryParser.toEntity tests
     @Override
     public ShuttleInventoryEntity toEntity(ShuttleInventory inventory) {
         List<ShuttleEntity> arrivalShuttleEntities = new ArrayList<>();

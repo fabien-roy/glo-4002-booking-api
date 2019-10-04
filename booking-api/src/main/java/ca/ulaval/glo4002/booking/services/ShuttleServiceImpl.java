@@ -22,15 +22,6 @@ public class ShuttleServiceImpl implements ShuttleService {
         this.shuttleParser = new ShuttleParser();
     }
 
-    // TODO : TRANS : Is ShuttleService.findById(Long) necessary?
-    @Override
-    public Shuttle findById(Long id) {
-        ShuttleEntity shuttleEntity = shuttleRepository.findById(id).orElseThrow(ShuttleNotFoundException::new);
-
-        return shuttleParser.parseEntity(shuttleEntity);
-    }
-
-    // TODO : TRANS : ShuttleService.findAll tests
     @Override
     public Iterable<Shuttle> findAll() {
         List<Shuttle> shuttles = new ArrayList<>();
@@ -40,7 +31,6 @@ public class ShuttleServiceImpl implements ShuttleService {
         return shuttles;
     }
 
-    // TODO : TRANS : ShuttleService.orderArrival tests
     @Override
     public Shuttle orderArrival(ShuttleInventoryEntity inventory, Shuttle shuttle) {
         ShuttleEntity savedShuttle = order(inventory, shuttle);
@@ -50,7 +40,6 @@ public class ShuttleServiceImpl implements ShuttleService {
         return shuttleParser.parseEntity(savedShuttle);
     }
 
-    // TODO : TRANS : ShuttleService.orderDeparture tests
     @Override
     public Shuttle orderDeparture(ShuttleInventoryEntity inventory, Shuttle shuttle) {
         ShuttleEntity savedShuttle = order(inventory, shuttle);

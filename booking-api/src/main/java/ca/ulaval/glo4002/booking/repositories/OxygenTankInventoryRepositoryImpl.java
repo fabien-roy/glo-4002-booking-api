@@ -5,8 +5,6 @@ import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.report.InventoryNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,27 +39,9 @@ public class OxygenTankInventoryRepositoryImpl implements OxygenTankInventoryRep
 		return entityManager.createQuery(RepositoryConstants.INVENTORY_FIND_ALL_QUERY, OxygenTankInventoryEntity.class).getResultList();
 	}
 
-	// TODO : OXY : Useless?
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
-	public <S extends OxygenTankInventoryEntity> Iterable<S> saveAll(Iterable<S> inventories) {
-		inventories.forEach(inventory -> {
-			entityManager.getTransaction().begin();
-
-			if(!entityManager.contains(inventory)) {
-				entityManager.persist(inventory);
-			}
-
-			entityManager.getTransaction().commit();
-		});
-
-		return inventories;
-	}
-
-	// TODO : OXY : Test
-	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
 	public <S extends OxygenTankInventoryEntity> S save(S inventory) {
+
 		entityManager.getTransaction().begin();
 
 		entityManager.persist(inventory);
@@ -69,6 +49,11 @@ public class OxygenTankInventoryRepositoryImpl implements OxygenTankInventoryRep
 		entityManager.getTransaction().commit();
 
 		return inventory;
+	}
+
+	@Override
+	public <S extends OxygenTankInventoryEntity> Iterable<S> saveAll(Iterable<S> inventories) {
+		throw new UnusedMethodException();
 	}
 
 	@Override

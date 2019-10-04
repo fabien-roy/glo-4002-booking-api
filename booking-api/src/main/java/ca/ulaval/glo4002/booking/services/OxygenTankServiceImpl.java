@@ -22,32 +22,12 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 		this.parser = new OxygenTankParser();
 	}
 
-	// TODO : OXY : Useless?
-	@Override
-	public Iterable<OxygenTank> saveAll(Iterable<OxygenTank> oxygenTanks) {
-		List<OxygenTankEntity> entities = new ArrayList<>();
-		oxygenTanks.forEach(oxygenTank -> entities.add(parser.toEntity(oxygenTank)));
-
-		repository.saveAll(entities);
-
-		return oxygenTanks;
-	}
-
-	// TODO : OXY : Useless?
 	@Override
 	public Iterable<OxygenTank> findAll() {
 		List<OxygenTank> oxygenTanks = new ArrayList<>();
 		repository.findAll().forEach(oxygenTankEntity -> oxygenTanks.add(parser.parseEntity(oxygenTankEntity)));
 
 		return oxygenTanks;
-	}
-
-	// TODO : OXY : Useless?
-	@Override
-	public OxygenTank findById(Long id) {
-		OxygenTankEntity oxygenTankEntity = repository.findById(id).orElseThrow(OxygenTankNotFoundException::new);
-
-		return this.parser.parseEntity(oxygenTankEntity);
 	}
 
 	@Override

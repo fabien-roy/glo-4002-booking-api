@@ -4,7 +4,6 @@ public abstract class Quality {
 
     protected Long id;
     protected String name;
-    protected Long oxygenTanksNeededPerDay; // TODO : OXY : Useless?
 
     public Long getId() {
         return id;
@@ -13,6 +12,4 @@ public abstract class Quality {
     public String getName() {
         return name;
     }
-
-    public Long getOxygenTanksNeededPerDay(){ return oxygenTanksNeededPerDay; }
 }

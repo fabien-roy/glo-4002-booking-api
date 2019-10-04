@@ -35,7 +35,6 @@ public class OxygenTankInventoryServiceImpl implements OxygenTankInventoryServic
 		this.categoryBuilder = new OxygenCategoryBuilder();
 	}
 
-	// TODO : OXY : Test
 	@Override
 	public OxygenTankInventory order(Quality requestedQuality, LocalDate orderDate) {
 		if (FestivalDateUtil.isAfterFestivalStart(orderDate)) {

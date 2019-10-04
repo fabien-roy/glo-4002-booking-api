@@ -48,7 +48,6 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
-    // TODO : This should not save order if something goes wrong
     @Override
     public Order order(Order order) {
         order.setPrice(getOrderPrice(order));

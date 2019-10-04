@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MilleniumFalconShuttleCategoryTest {
+public class MillenniumFalconShuttleCategoryTest {
 
     @Test
     public void construction_shouldSetQualityToSupergiant() {

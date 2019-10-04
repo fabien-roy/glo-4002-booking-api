@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassengerEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 
 import javax.persistence.EntityManager;
@@ -39,39 +38,26 @@ public class PassengerRepositoryImpl implements PassengerRepository {
 		return passenger;
 	}
 
-	// TODO : TRANS : Useless?
-	@Override
-	public <S extends PassengerEntity> Iterable<S> saveAll(Iterable<S> passengers) {
-		passengers.forEach(passenger -> {
-			if (passenger.getId() == null) {
-				entityManager.persist(passenger);
-			} else throw new PassengerAlreadyCreatedException();
-		});
-		return passengers;
-	}
-
-	// TODO : TRANS : Useless?
-	@Override
-	public Optional<PassengerEntity> findById(Long id) {
-		PassengerEntity passengerEntity = entityManager.find(PassengerEntity.class, id);
-		
-		if (passengerEntity == null) {
-			throw new PassengerNotFoundException();
-		}
-		
-		return Optional.of(passengerEntity);
-	}
-
-	@Override
-	public boolean existsById(Long id) {
-		throw new UnusedMethodException();
-	}
-
 	@Override
 	public Iterable<PassengerEntity> findAll() {
 		return entityManager
 				.createQuery(RepositoryConstants.PASSENGER_FIND_ALL_QUERY, PassengerEntity.class)
 				.getResultList();
+	}
+
+	@Override
+	public <S extends PassengerEntity> Iterable<S> saveAll(Iterable<S> passengers) {
+		throw new UnusedMethodException();
+	}
+
+	@Override
+	public Optional<PassengerEntity> findById(Long id) {
+		throw new UnusedMethodException();
+	}
+
+	@Override
+	public boolean existsById(Long id) {
+		throw new UnusedMethodException();
 	}
 
 	@Override

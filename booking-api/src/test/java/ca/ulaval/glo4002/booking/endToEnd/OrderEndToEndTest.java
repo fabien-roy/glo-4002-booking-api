@@ -10,7 +10,6 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// TODO : Solve test class (Pass, Shuttle and OxygenTank will need to be completed)
 public class OrderEndToEndTest {
 
     private OrderEndToEndContext context;

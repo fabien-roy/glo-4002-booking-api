@@ -15,7 +15,6 @@ public class OxygenTankInventoryParser implements EntityParser<OxygenTankInvento
 
     private OxygenTankParser oxygenTankParser = new OxygenTankParser();
 
-    // TODO : OXY : Test
     @Override
     public OxygenTankInventory parseEntity(OxygenTankInventoryEntity entity) {
         List<OxygenTank> inUseTanks = new ArrayList<>();
@@ -27,7 +26,6 @@ public class OxygenTankInventoryParser implements EntityParser<OxygenTankInvento
         return new OxygenTankInventory(entity.getId(), inUseTanks, notInUseTanks);
     }
 
-    // TODO : OXY : Test
     @Override
     public OxygenTankInventoryEntity toEntity(OxygenTankInventory inventory) {
         List<OxygenTankEntity> inUseTanks = new ArrayList<>();
@@ -39,8 +37,6 @@ public class OxygenTankInventoryParser implements EntityParser<OxygenTankInvento
         return new OxygenTankInventoryEntity(inventory.getId(), inUseTanks, notInUseTanks);
     }
 
-    // TODO : OXY : Test
-    // TODO : OXY : This should not know oxygen qualities
     @Override
     public List<InventoryItemDto> toDto(OxygenTankInventory inventory) {
         InventoryItemDto eGradeDto = new InventoryItemDto();

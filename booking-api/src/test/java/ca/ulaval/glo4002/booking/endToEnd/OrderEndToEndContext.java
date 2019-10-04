@@ -105,18 +105,18 @@ public class OrderEndToEndContext {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
-    // TODO : OXY : Unmock OxygenTanKService when ready
-    // TODO : TRANS : Unmock ShuttleService when ready
     public OrderEndToEndContext setUp() {
         OrderRepository orderRepository = new OrderRepositoryImpl(entityManager);
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
-        // OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
-        // OxygenTankInventoryRepository inventoryRepository = new OxygenTankInventoryRepositoryImpl(entityManager);
+        ShuttleRepository shuttleRepository = new ShuttleRepositoryImpl(entityManager);
+        PassengerRepository passengerRepository = new PassengerRepositoryImpl(entityManager);
+        ShuttleInventoryRepository shuttleInventoryRepository = new ShuttleInventoryRepositoryImpl(entityManager);
 
         PassService passService = new PassServiceImpl(passRepository);
-        // OxygenTankInventoryService inventoryService = new OxygenTankInventoryServiceImpl(inventoryRepository);
-        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
-        ShuttleInventoryService shuttleInventoryService = mock(ShuttleInventoryService.class);
+        PassengerService passengerService =new PassengerServiceImpl(passengerRepository);
+        ShuttleService shuttleService = new ShuttleServiceImpl(shuttleRepository, passengerService);
+        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class); // Unmock when ready
+        ShuttleInventoryService shuttleInventoryService = new ShuttleInventoryServiceImpl(shuttleInventoryRepository, shuttleService);
         OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankInventoryService, shuttleInventoryService);
 
         orderController = new OrderController(orderService);
