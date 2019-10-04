@@ -5,7 +5,9 @@ import ca.ulaval.glo4002.booking.dto.ReportDto;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
 import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
-import ca.ulaval.glo4002.booking.services.ReportService;
+import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepositoryImpl;
+import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
+import ca.ulaval.glo4002.booking.services.*;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.GET;
@@ -19,6 +21,13 @@ public class ReportController {
 	private final ReportService reportService;
 	private final ReportParser reportParser = new ReportParser();
 
+	public ReportController() {
+		OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl());
+		OxygenTankInventoryService oxygenTankInventoryService = new OxygenTankInventoryServiceImpl(new OxygenTankInventoryRepositoryImpl(), oxygenTankService);
+		HistoryService historyService = new HistoryServiceImpl(oxygenTankService);
+
+		this.reportService = new ReportServiceImpl(oxygenTankInventoryService, historyService);
+	}
 
 	public ReportController(ReportService reportService) {
 		this.reportService = reportService;

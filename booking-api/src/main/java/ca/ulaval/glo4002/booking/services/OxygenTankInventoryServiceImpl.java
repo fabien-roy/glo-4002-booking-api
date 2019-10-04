@@ -111,7 +111,6 @@ public class OxygenTankInventoryServiceImpl implements OxygenTankInventoryServic
 		}
 
 		return parser.parseEntity(inventories.get(0));
-
 	}
 
 	private LocalDate getReadyDate(OxygenCategory category, LocalDate orderDate) {

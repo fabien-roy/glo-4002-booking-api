@@ -42,6 +42,6 @@ public class OxygenTank {
 	}
 
     public LocalDate getReadyDate() {
-	    return requestDate.plus(category.getProduction().getProductionTime());
+	    return requestDate.plusDays(category.getProduction().getProductionTime().toDays());
     }
 }
