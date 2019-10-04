@@ -3,6 +3,8 @@ package ca.ulaval.glo4002.booking.services;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class InventoryServiceTest {
 
 	private InventoryServiceContext context;
@@ -12,6 +14,14 @@ public class InventoryServiceTest {
 	@BeforeEach
 	public void setUp() {
 		context = new InventoryServiceContext();
+	}
+
+	@Test
+	void whenOxygenTankIsRequested_thenTheyAreAddedToTheInventory(){
+		context.subject.requestOxygenTanks(context.anOxygenTank);
+
+		Long producedTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
+		assertEquals(producedTanks, context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId()));
 	}
 
 	// TODO : OXY : Solve this test
