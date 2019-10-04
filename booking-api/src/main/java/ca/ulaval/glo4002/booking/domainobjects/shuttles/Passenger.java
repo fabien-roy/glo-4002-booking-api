@@ -4,9 +4,6 @@ public class Passenger {
 	
 	private Long id;
 
-	public Passenger() {
-	}
-
 	public Passenger(Long id) {
 		this.id = id;
 	}

@@ -65,9 +65,9 @@ public class OrderServiceImpl implements OrderService {
         }
 
         if (passes.get(0).getOption().getId().equals(PassConstants.Options.PACKAGE_ID)) {
-            shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE);
+            shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE, savedOrder.getPasses().get(0).getId());
         } else {
-            passes.forEach(pass -> shuttleInventoryService.order(quality, pass.getEventDate(), pass.getEventDate()));
+            savedOrder.getPasses().forEach(pass -> shuttleInventoryService.order(quality, pass.getEventDate(), pass.getEventDate(), pass.getId()));
         }
 
         savedOrder = orderRepository.update(savedOrder);

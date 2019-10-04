@@ -53,4 +53,14 @@ public class Shuttle {
     public boolean isFull() {
         return passengers.size() == category.getMaxCapacity();
     }
+
+    @Override
+    public boolean equals(Object object2) {
+        return object2 instanceof Shuttle && this.id.equals(((Shuttle) object2).id);
+    }
+
+    @Override
+    public int hashCode(){
+        return id.intValue();
+    }
 }

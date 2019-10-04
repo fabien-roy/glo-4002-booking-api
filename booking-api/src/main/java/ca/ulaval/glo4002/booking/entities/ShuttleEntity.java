@@ -51,4 +51,14 @@ public class ShuttleEntity {
 	public void setInventory(ShuttleInventoryEntity inventory) {
 		this.inventory = inventory;
 	}
+
+	@Override
+	public boolean equals(Object object2) {
+		return object2 instanceof ShuttleEntity && this.id.equals(((ShuttleEntity) object2).id);
+	}
+
+	@Override
+	public int hashCode(){
+		return id.intValue();
+	}
 }

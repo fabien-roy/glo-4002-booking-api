@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.repositories;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassengerEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
-import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 
 import javax.persistence.EntityManager;
@@ -23,16 +23,14 @@ public class PassengerRepositoryImpl implements PassengerRepository {
 	
 	@Override
 	public <S extends PassengerEntity> S save(S passenger) {
-		if (passenger.getId() == null) {
-			entityManager.getTransaction().begin();
-
-			if (!entityManager.contains(passenger)) {
+		if (passenger.getId() != null) {
+			if (entityManager.find(PassengerEntity.class, passenger.getId()) == null) {
+				entityManager.getTransaction().begin();
 				entityManager.persist(passenger);
+				entityManager.getTransaction().commit();
 			}
-
-			entityManager.getTransaction().commit();
 		} else {
-			throw new PassengerAlreadyCreatedException();
+			throw new PassengerNotFoundException();
 		}
 
 		return passenger;

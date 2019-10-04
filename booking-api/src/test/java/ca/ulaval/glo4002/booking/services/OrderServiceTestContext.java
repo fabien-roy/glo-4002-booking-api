@@ -142,11 +142,6 @@ public class OrderServiceTestContext {
         setUpRepositoryForSave();
     }
 
-    public void setUpForSaveMultipleSinglePass() {
-        when(passService.order(any(), any())).thenReturn(Collections.nCopies(2, aPass));
-        setUpRepositoryForSave();
-    }
-
     public void setUpForSaveWithPackagePass() {
         when(passService.order(any(), any())).thenReturn(Collections.singletonList(aSupernovaPackagePass));
         setUpRepositoryForSave();
