@@ -25,13 +25,11 @@ public class PassengerRepositoryImpl implements PassengerRepository {
 	@Override
 	public <S extends PassengerEntity> S save(S passenger) {
 		if (passenger.getId() != null) {
-			entityManager.getTransaction().begin();
-
 			if (entityManager.find(PassengerEntity.class, passenger.getId()) == null) {
+				entityManager.getTransaction().begin();
 				entityManager.persist(passenger);
+				entityManager.getTransaction().commit();
 			}
-
-			entityManager.getTransaction().commit();
 		} else {
 			throw new PassengerNotFoundException();
 		}
