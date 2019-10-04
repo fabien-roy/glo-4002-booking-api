@@ -14,8 +14,8 @@ public class HistoryServiceTest {
 
     @BeforeEach
     public void setUp() {
-        context = new HistoryServiceContext();
         subject = new HistoryServiceImpl(context.oxygenTankService);
+        context = new HistoryServiceContext();
     }
 
     @Test

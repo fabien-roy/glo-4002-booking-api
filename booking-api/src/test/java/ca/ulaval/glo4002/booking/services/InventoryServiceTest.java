@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -7,51 +8,49 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InventoryServiceTest {
 
+	private InventoryService subjext;
 	private InventoryServiceContext context;
 
 	// TODO : Mock Inventory ? start below :
 
 	@BeforeEach
 	public void setUp() {
+		subjext = new InventoryServiceImpl(context.repository, context.inventoryItemService);
 		context = new InventoryServiceContext();
 	}
 
 	@Test
 	void whenOxygenTankIsRequested_thenTheyAreAddedToTheInventory(){
-		context.subject.requestOxygenTanks(context.anOxygenTank);
+		subjext.requestOxygenTanks(context.anOxygenTank);
 
 		Long producedTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 		assertEquals(producedTanks, context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId()));
 	}
 
 	// TODO : OXY : Solve this test
-	/*
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryIsInSurplus_thenTankInUseIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 20L);
+		subjext.addTank(context.anOxygenTank.getCategory().getId(), 20L);
 
-		context.subject.requestOxygenTanks(context.anOxygenTank);
+		subjext.requestOxygenTanks(context.anOxygenTank);
 		Long inUseTanks = context.anInventory
 				.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
 		Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 
 		assertEquals(expectedInUseTanks, inUseTanks);
 	}
-	*/
 
 	// TODO : OXY : Solve test
-	/*
 	@Test
 	void whenOxygenTankIsRequestedAndInventoryHaveAPortionInSurplus_thenTankInUseIsUpdated() {
-		context.subject.addTank(context.anOxygenTank.getCategory().getId(), 3L);
+		subjext.addTank(context.anOxygenTank.getCategory().getId(), 3L);
 
-		context.subject.requestOxygenTanks(context.anOxygenTank);
+		subjext.requestOxygenTanks(context.anOxygenTank);
 		Long inUseTanks = context.anInventory.getInUseTanksByCategoryId(context.anOxygenTank.getCategory().getId());
         Long expectedInUseTanks = context.anOxygenTank.getCategory().getProduction().getProducedTanks();
 
 		assertEquals(3, (long) context.anInventory.getInUseTanksByCategoryId(OxygenConstants.Categories.E_ID));
 	}
-	*/
 
 	// TODO Do/update this test (Or delete if we don't need it anymore)
 	@Test
@@ -79,7 +78,7 @@ public class InventoryServiceTest {
 
 	@Test
 	void get_shouldReturnTheInventory() {
-		context.subject.get();
+		subjext.get();
 		// TODO Do this test
 	}
 

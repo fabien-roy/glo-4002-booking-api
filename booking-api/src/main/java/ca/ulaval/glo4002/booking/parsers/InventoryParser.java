@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class InventoryParser implements ToDtoParser<Inventory, List<InventoryItemDto>>, EntityParser<Inventory, InventoryEntity>  {
 
-    private OxygenCategoryBuilder oxygenCategoryBuilder = new OxygenCategoryBuilder();
+    private final OxygenCategoryBuilder oxygenCategoryBuilder = new OxygenCategoryBuilder();
 
     @Override
     public List<InventoryItemDto> toDto(Inventory inventory) {

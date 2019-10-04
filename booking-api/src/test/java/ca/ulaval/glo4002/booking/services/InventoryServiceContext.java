@@ -23,7 +23,6 @@ public class InventoryServiceContext {
 	public static final Long A_OXYGEN_TANK_CATEGORY_ID = OxygenConstants.Categories.E_ID;
 
 	private InventoryEntity anInventoryEntity;
-	public InventoryService subject;
 	public InventoryParser parser = new InventoryParser();
 	public InventoryRepository repository;
 	public InventoryItemService inventoryItemService;
@@ -51,15 +50,15 @@ public class InventoryServiceContext {
 
 	private void setUpRepository() {
 		repository = mock(InventoryRepository.class);
-		inventoryItemService = mock(InventoryItemService.class);
 
 		when(repository.findAll()).thenReturn(Collections.singletonList(anInventoryEntity));
 		when(repository.save(any(InventoryEntity.class))).thenReturn(parser.toEntity(anInventory));
 	}
 
+	private void setupInventoryItemService() {
+		inventoryItemService = mock(InventoryItemService.class);
 
-	private void setUpSubject() {
-		subject = new InventoryServiceImpl(repository, inventoryItemService);
+
 	}
 
 	// TODO : Setup for save
