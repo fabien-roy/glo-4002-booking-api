@@ -6,7 +6,6 @@ import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.passes.categories.NebulaPassCategory;
 import ca.ulaval.glo4002.booking.domainobjects.passes.categories.SupergiantPassCategory;
-import ca.ulaval.glo4002.booking.domainobjects.passes.options.PackagePassOption;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import ca.ulaval.glo4002.booking.entities.OrderEntity;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
@@ -62,11 +61,10 @@ public class OrderServiceImpl implements OrderService {
 
         oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
 
-        // TODO : TRANS : Test this
-        if (passes.get(0).getOption() instanceof PackagePassOption) {
+        if (passes.get(0).getOption().getId().equals(PassConstants.Options.PACKAGE_ID)) {
             shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE);
         } else {
-            shuttleInventoryService.order(quality, order.getOrderDate().toLocalDate(), order.getOrderDate().toLocalDate());
+            passes.forEach(pass -> shuttleInventoryService.order(quality, pass.getEventDate(), pass.getEventDate()));
         }
 
         savedOrder = orderRepository.update(savedOrder);

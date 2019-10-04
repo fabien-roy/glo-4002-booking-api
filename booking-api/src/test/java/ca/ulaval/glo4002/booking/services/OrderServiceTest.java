@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
 import ca.ulaval.glo4002.booking.constants.PassConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
@@ -12,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class OrderServiceTest {
 
@@ -52,7 +55,7 @@ class OrderServiceTest {
 
     @Test
     public void save_shouldSaveOrder() {
-        context.setUpForSave();
+        context.setUpForSaveWithSinglePass();
 
         context.subject.order(context.aNonExistentOrder);
         Order order = context.subject.findById(OrderServiceTestContext.A_NON_EXISTANT_ORDER_ID);
@@ -109,12 +112,41 @@ class OrderServiceTest {
     }
 
     @Test
-    void whenTheresMoreNebulaPassesThanThreshold_thenTenPercentRebateIsApplied(){
+    void whenThereIsMoreNebulaPassesThanThreshold_thenTenPercentRebateIsApplied(){
         context.aOrder.setPasses(Collections.nCopies(OrderServiceTestContext.AMOUNT_OF_NEBULA_PASSES_MORE_THAN_THRESHOLD, context.aNebulaSinglePass));
         double expectedPrice = OrderServiceTestContext.AMOUNT_OF_NEBULA_PASSES_MORE_THAN_THRESHOLD * PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE * PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE;
 
         double price = context.subject.getOrderPrice(context.aOrder);
 
         assertEquals(expectedPrice, price, OrderServiceTestContext.DELTA);
+    }
+
+    @Test
+    public void order_shouldCallShuttleInventoryOrderWithFestivalStartAndEndDate_whenPassIsPackage() {
+        context.setUpForSaveWithPackagePass();
+        context.aNonExistentOrder.setPasses(Collections.singletonList(context.aSupernovaPackagePass));
+
+        context.subject.order(context.aNonExistentOrder);
+
+        verify(context.shuttleInventoryService).order(context.aSupernovaPackagePass.getCategory().getQuality(), DateConstants.START_DATE, DateConstants.END_DATE);
+    }
+
+    @Test
+    public void order_shouldCallShuttleInventoryOrderWithPassEventDate_whenPassIsSinglePass() {
+        context.setUpForSaveWithSinglePass();
+
+        context.subject.order(context.aOrder);
+
+        verify(context.shuttleInventoryService).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate());
+    }
+
+    @Test
+    public void order_shouldCallShuttleInventoryOrderMultipleTimesWithPassesEventDates_whenPassAreMultipleSinglePasses() {
+        context.setUpForSaveMultipleSinglePass();
+        context.aOrder.setPasses(Collections.nCopies(2, context.aPass));
+
+        context.subject.order(context.aOrder);
+
+        verify(context.shuttleInventoryService, times(2)).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate());
     }
 }

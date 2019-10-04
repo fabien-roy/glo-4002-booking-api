@@ -44,8 +44,9 @@ public class OrderServiceTestContext {
     private OrderEntity aNonExistentOrderEntity;
     private OrderRepository repository;
     private PassService passService;
-    private Pass aPass;
 
+    ShuttleInventoryService shuttleInventoryService;
+    Pass aPass;
     Pass aNebulaSinglePass;
     Pass aSupergiantSinglePass;
     Pass aSupernovaPackagePass;
@@ -131,13 +132,27 @@ public class OrderServiceTestContext {
     private void setUpSubject() {
         passService = mock(PassService.class);
         OxygenTankService oxygenTankService = mock(OxygenTankService.class);
-        ShuttleInventoryService shuttleInventoryService = mock(ShuttleInventoryService.class);
+        shuttleInventoryService = mock(ShuttleInventoryService.class);
 
         subject = new OrderServiceImpl(repository, passService, oxygenTankService, shuttleInventoryService);
     }
 
-    public void setUpForSave() {
+    public void setUpForSaveWithSinglePass() {
         when(passService.order(any(), any())).thenReturn(Collections.singletonList(aPass));
+        setUpRepositoryForSave();
+    }
+
+    public void setUpForSaveMultipleSinglePass() {
+        when(passService.order(any(), any())).thenReturn(Collections.nCopies(2, aPass));
+        setUpRepositoryForSave();
+    }
+
+    public void setUpForSaveWithPackagePass() {
+        when(passService.order(any(), any())).thenReturn(Collections.singletonList(aSupernovaPackagePass));
+        setUpRepositoryForSave();
+    }
+
+    private void setUpRepositoryForSave() {
         when(repository.findById(A_NON_EXISTANT_ORDER_ID)).thenReturn(Optional.of(aNonExistentOrderEntity));
         when(repository.save(aOrderEntity)).thenReturn(aOrderEntity);
         when(repository.update(aOrderEntity)).thenReturn(aOrderEntity);
