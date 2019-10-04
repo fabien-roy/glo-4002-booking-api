@@ -1,50 +1,46 @@
-package ca.ulaval.glo4002.booking.domainobjects.report;
+package ca.ulaval.glo4002.booking.domainobjects.oxygen;
 
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class Inventory {
+public class OxygenTankInventory {
 
-    private List<OxygenTank> notInUseTanks;
-    private List<OxygenTank> inUseTanks;
+    private Long id;
+    private List<OxygenTank> notInUseTanks = new ArrayList<>();
+    private List<OxygenTank> inUseTanks = new ArrayList<>();
 
-    public Inventory(List<OxygenTank> notInUseTanks, List<OxygenTank> inUseTanks) {
+    public OxygenTankInventory() {
+
+    }
+
+    public OxygenTankInventory(Long id, List<OxygenTank> inUseTanks, List<OxygenTank> notInUseTanks) {
+        this.id = id;
         this.notInUseTanks = notInUseTanks;
         this.inUseTanks = inUseTanks;
     }
 
-    public void replaceInUseTanks(Long categoryId, Long numberOfTanksToReplace) {
-        inUseTanks.replace(categoryId, numberOfTanksToReplace);
+    public OxygenTankInventory(List<OxygenTank> notInUseTanks, List<OxygenTank> inUseTanks) {
+        this.notInUseTanks = notInUseTanks;
+        this.inUseTanks = inUseTanks;
     }
 
-    public void replaceNotInUseTanks(Long categoryId, Long numberOfTanksToReplace) {
-        notInUseTanks.replace(categoryId, numberOfTanksToReplace);
+    public Long getId() {
+        return id;
     }
 
-    public Map<Long, Long> getNotInUseTanks() {
+    public List<OxygenTank> getNotInUseTanks() {
         return notInUseTanks;
     }
 
-    public Map<Long, Long> getInUseTanks() {
-        return inUseTanks;
-    }
-
-    public Long getNotInUseTanksByCategoryId(Long categoryId) {
-        return notInUseTanks.get(categoryId);
-    }
-
-    public void setNotInUseTanks(Map<Long, Long> notInUseTanks) {
+    public void setNotInUseTanks(List<OxygenTank> notInUseTanks) {
         this.notInUseTanks = notInUseTanks;
     }
 
-    public Long getInUseTanksByCategoryId(Long categoryId) {
-        return inUseTanks.get(categoryId);
+    public List<OxygenTank> getInUseTanks() {
+        return inUseTanks;
     }
 
-    public void setInUseTanks(Map<Long, Long> inUseTanks) {
+    public void setInUseTanks(List<OxygenTank> inUseTanks) {
         this.inUseTanks = inUseTanks;
     }
 }

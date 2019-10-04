@@ -27,6 +27,7 @@ public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 		return entityManager.createQuery(RepositoryConstants.OXYGEN_TANK_FIND_ALL_QUERY, OxygenTankEntity.class).getResultList();
 	}
 
+	// TODO : OXY : Useless?
 	@Override
 	public <S extends OxygenTankEntity> Iterable<S> saveAll(Iterable<S> oxygenTanks) {
 		oxygenTanks.forEach(oxygenTank -> {
@@ -59,7 +60,15 @@ public class OxygenTankRepositoryImpl implements OxygenTankRepository {
 
 	@Override
 	public <S extends OxygenTankEntity> S save(S oxygenTank) {
-		throw new UnusedMethodException();
+        entityManager.getTransaction().begin();
+
+        if (!entityManager.contains(oxygenTank)) {
+            entityManager.persist(oxygenTank);
+        }
+
+        entityManager.getTransaction().commit();
+
+        return oxygenTank;
 	}
 
 	@Override

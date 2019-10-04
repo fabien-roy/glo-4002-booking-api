@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.dto.ShuttleDto;
+import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import ca.ulaval.glo4002.booking.domainobjects.shuttles.ShuttleManifest;
-import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
-import ca.ulaval.glo4002.booking.dto.ShuttleDto;
 
 public class ShuttleManifestParser implements ToDtoParser<ShuttleManifest, ShuttleManifestDto> {
 

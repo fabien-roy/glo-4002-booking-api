@@ -168,9 +168,9 @@ public class PassEndToEndContext {
         PassRepository passRepository = new PassRepositoryImpl(entityManager);
 
         PassService passService = new PassServiceImpl(passRepository);
-        OxygenTankService oxygenTankService = mock(OxygenTankService.class);
+        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
         ShuttleInventoryService shuttleInventoryService = mock(ShuttleInventoryService.class);
-        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankService, shuttleInventoryService);
+        OrderService orderService = new OrderServiceImpl(orderRepository, passService, oxygenTankInventoryService, shuttleInventoryService);
 
         orderController = new OrderController(orderService);
 

@@ -1,16 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-class OxygenTankOxygenTankInventoryRepositoryTest {
+class OxygenTankInventoryRepositoryTest {
+	/*
 
 	private InventoryRepositoryContext context;
 	private OxygenTankInventoryRepository subject;
@@ -41,4 +32,5 @@ class OxygenTankOxygenTankInventoryRepositoryTest {
 
 		assertTrue(inventory.contains(context.aNonExistentInventory));
 	}
+	*/
 }

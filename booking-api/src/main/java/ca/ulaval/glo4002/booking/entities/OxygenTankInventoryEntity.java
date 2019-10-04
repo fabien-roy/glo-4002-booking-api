@@ -5,28 +5,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Inventories")
-public class InventoryEntity {
+public class OxygenTankInventoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
 	private Long id;
-    @OneToMany(mappedBy = "inventory")
-    private List<InventoryItemEntity> inUseTanks = new ArrayList<>();
-    @OneToMany(mappedBy = "inventory")
-    private List<InventoryItemEntity> notInUseTanks = new ArrayList<>();
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.MERGE)
+    private List<OxygenTankEntity> notInUseTanks = new ArrayList<>();
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.MERGE)
+    private List<OxygenTankEntity> inUseTanks = new ArrayList<>();
 
-    public InventoryEntity() {
+    public OxygenTankInventoryEntity() {
 
     }
 
-    public InventoryEntity(List<InventoryItemEntity> inUseTanks, List<InventoryItemEntity> notInUseTanks) {
+    public OxygenTankInventoryEntity(Long id, List<OxygenTankEntity> inUseTanks, List<OxygenTankEntity> notInUseTanks) {
+        this.id = id;
         this.inUseTanks = inUseTanks;
         this.notInUseTanks = notInUseTanks;
     }
 
-    public InventoryEntity(Long id, List<InventoryItemEntity> inUseTanks, List<InventoryItemEntity> notInUseTanks) {
-        this.id = id;
+    public OxygenTankInventoryEntity(List<OxygenTankEntity> inUseTanks, List<OxygenTankEntity> notInUseTanks) {
         this.inUseTanks = inUseTanks;
         this.notInUseTanks = notInUseTanks;
     }
@@ -39,32 +39,23 @@ public class InventoryEntity {
         this.id = id;
     }
 
-    public List<InventoryItemEntity> getInUseTanks() {
+    public List<OxygenTankEntity> getInUseTanks() {
         return inUseTanks;
     }
 
-    public List<InventoryItemEntity> getNotInUseTanks() {
+    public List<OxygenTankEntity> getNotInUseTanks() {
         return notInUseTanks;
     }
 
-    public void clearInventoryItems() {
-        inUseTanks.clear();
-        notInUseTanks.clear();
-    }
-
-    public void addInUseTank(List<InventoryItemEntity> inUseTanks) {
+    public void setInUseTanks(List<OxygenTankEntity> inUseTanks) {
         this.inUseTanks = inUseTanks;
     }
 
-    public void addNotInUseTank(List<InventoryItemEntity> notInUseTanks) {
+    public void setNotInUseTanks(List<OxygenTankEntity> notInUseTanks) {
         this.notInUseTanks = notInUseTanks;
     }
 
-    public void updateInUseTanks(List<InventoryItemEntity> inventoryItemEntities) {
-        this.inUseTanks = inventoryItemEntities;
-    }
-
-    public void updateNotInUseTanks(List<InventoryItemEntity> inventoryItemEntities) {
-        this.notInUseTanks = inventoryItemEntities;
+    public void addInUseTank(OxygenTankEntity oxygenTank) {
+        inUseTanks.add(oxygenTank);
     }
 }

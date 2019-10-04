@@ -1,21 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.entities.InventoryItemEntity;
-import ca.ulaval.glo4002.booking.exceptions.report.InventoryItemNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.core.ConstantException;
-
-import java.net.ConnectException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-public class InventoryItemRepositoryTest {
+public class OxygenTankInventoryItemRepositoryTest {
+    /*
 
     private InventoryItemRepository subject;
     private InventoryItemRepositoryContext context;
@@ -65,4 +51,5 @@ public class InventoryItemRepositoryTest {
         assertEquals(context.aNonExistentInventoryItem, inventoryItem);
     }
 
+    */
 }

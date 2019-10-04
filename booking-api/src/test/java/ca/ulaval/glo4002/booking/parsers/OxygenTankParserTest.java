@@ -1,19 +1,7 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.dto.OxygenTankDto;
-import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class OxygenTankParserTest {
+	/*
 
 	private static final LocalDate A_VALID_DATE = DateConstants.START_DATE.minusDays(20);
 	private static final LocalDate A_INVALID_DATE = DateConstants.START_DATE.plusDays(2);
@@ -51,4 +39,5 @@ class OxygenTankParserTest {
 		assertEquals(oxygenTank.getRequestDate(), entity.getRequestDate());
 		assertEquals(oxygenTank.getReadyDate(), entity.getReadyDate());
 	}
+	*/
 }

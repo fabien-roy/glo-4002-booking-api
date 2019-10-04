@@ -1,35 +1,7 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
-import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
-import ca.ulaval.glo4002.booking.builders.oxygen.OxygenProductionBuilder;
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
-import ca.ulaval.glo4002.booking.controllers.ReportController;
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
-import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
-import ca.ulaval.glo4002.booking.dto.HistoryItemDto;
-import ca.ulaval.glo4002.booking.dto.ReportDto;
-import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
-import ca.ulaval.glo4002.booking.repositories.InventoryItemRepository;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
-import ca.ulaval.glo4002.booking.services.*;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class HistoryEndToEndContext {
+    /*
 
     private static final LocalDate FIRST_DATE = DateConstants.START_DATE.minusDays(15);
     private static final LocalDate SECOND_DATE = DateConstants.START_DATE.minusDays(10);
@@ -111,18 +83,18 @@ public class HistoryEndToEndContext {
 
     public HistoryEndToEndContext setUp() {
         InventoryItemRepository inventoryItemRepository = mock(InventoryItemRepository.class);
-        InventoryRepository inventoryRepository = mock(InventoryRepository.class);
+        OxygenTankInventoryRepository oxygenTankInventoryRepository = mock(OxygenTankInventoryRepository.class);
         InventoryItemService inventoryItemService = mock(InventoryItemService.class);
-        InventoryService inventoryService = mock(InventoryService.class);
-        Inventory inventory = mock(Inventory.class);
-        when(inventory.getInUseTanks()).thenReturn(new HashMap<>());
-        when(inventory.getNotInUseTanks()).thenReturn(new HashMap<>());
-        when(inventoryService.get()).thenReturn(inventory);
+        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
+        OxygenTankInventory oxygenTankInventory = mock(OxygenTankInventory.class);
+        when(oxygenTankInventory.getInUseTanks()).thenReturn(new HashMap<>());
+        when(oxygenTankInventory.getNotInUseTanks()).thenReturn(new HashMap<>());
+        when(oxygenTankInventoryService.get()).thenReturn(oxygenTankInventory);
 
         OxygenTankRepository oxygenTankRepository = new OxygenTankRepositoryImpl(entityManager);
-        OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
+        OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, oxygenTankInventoryService);
         HistoryService historyService = new HistoryServiceImpl(oxygenTankService);
-        ReportService reportService = new ReportServiceImpl(inventoryService, historyService);
+        ReportService reportService = new ReportServiceImpl(oxygenTankInventoryService, historyService);
 
         reportController = new ReportController(reportService);
 
@@ -150,4 +122,5 @@ public class HistoryEndToEndContext {
 
         return oxygenTankId;
     }
+    */
 }

@@ -1,66 +1,75 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.OxygenConstants;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTankInventory;
 import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
+import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
-public class InventoryParser implements ToDtoParser<OxygenTankInventory, List<InventoryItemDto>>, EntityParser<OxygenTankInventory, OxygenTankInventoryEntity>  {
+public class OxygenTankInventoryParser implements EntityParser<OxygenTankInventory, OxygenTankInventoryEntity>, ToDtoParser<OxygenTankInventory, List<InventoryItemDto>> {
 
-    private final OxygenCategoryBuilder oxygenCategoryBuilder = new OxygenCategoryBuilder();
+    private OxygenTankParser oxygenTankParser = new OxygenTankParser();
 
-    @Override
-    public List<InventoryItemDto> toDto(OxygenTankInventory oxygenTankInventory) {
-        List<InventoryItemDto> inventoryItemDtos = new ArrayList<>();
-
-        oxygenTankInventory.getNotInUseTanks().forEach((categoryId, quantity) -> {
-            Long totalTankCategory = quantity + oxygenTankInventory.getInUseTanksByCategoryId(categoryId);
-            if(totalTankCategory != 0) {
-                InventoryItemDto inventoryItemDto = new InventoryItemDto();
-                inventoryItemDto.gradeTankOxygen = oxygenCategoryBuilder.buildById(categoryId).getName();
-                inventoryItemDto.quantity = totalTankCategory;
-                inventoryItemDtos.add(inventoryItemDto);
-            }
-        });
-
-        return inventoryItemDtos;
-    }
-
+    // TODO : OXY : Test
     @Override
     public OxygenTankInventory parseEntity(OxygenTankInventoryEntity entity) {
-        Map<Long, Long> inUseTanks = new HashMap<>();
-        Map<Long, Long> notInUseTanks = new HashMap<>();
+        List<OxygenTank> inUseTanks = new ArrayList<>();
+        List<OxygenTank> notInUseTanks = new ArrayList<>();
 
-        entity.getInUseTanks().forEach(inventoryItemEntity -> inUseTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
-        entity.getInUseTanks().forEach(inventoryItemEntity -> notInUseTanks.put(inventoryItemEntity.getOxygenCategoryId(), inventoryItemEntity.getQuantity()));
+        entity.getInUseTanks().forEach(tank -> inUseTanks.add(oxygenTankParser.parseEntity(tank)));
+        entity.getNotInUseTanks().forEach(tank -> notInUseTanks.add(oxygenTankParser.parseEntity(tank)));
 
-        return new OxygenTankInventory(inUseTanks, notInUseTanks);
+        return new OxygenTankInventory(entity.getId(), inUseTanks, notInUseTanks);
     }
 
+    // TODO : OXY : Test
     @Override
-    public OxygenTankInventoryEntity toEntity(OxygenTankInventory oxygenTankInventory) {
-        List<InventoryItemEntity> inUseTanks = new ArrayList<>();
-        List<InventoryItemEntity> notInUseTanks = new ArrayList<>();
+    public OxygenTankInventoryEntity toEntity(OxygenTankInventory inventory) {
+        List<OxygenTankEntity> inUseTanks = new ArrayList<>();
+        List<OxygenTankEntity> notInUseTanks = new ArrayList<>();
 
-        oxygenTankInventory.getInUseTanks().forEach((categoryId, quantity) -> {
-            inUseTanks.add(new InventoryItemEntity(
-                    categoryId,
-                    oxygenTankInventory.getInUseTanks().get(categoryId)
-            ));
-        });
+        inventory.getInUseTanks().forEach(tank -> inUseTanks.add(oxygenTankParser.toEntity(tank)));
+        inventory.getNotInUseTanks().forEach(tank -> notInUseTanks.add(oxygenTankParser.toEntity(tank)));
 
-        oxygenTankInventory.getNotInUseTanks().forEach((categoryId, quantity) -> {
-            notInUseTanks.add(new InventoryItemEntity(
-                    categoryId,
-                    oxygenTankInventory.getNotInUseTanks().get(categoryId)
-            ));
-        });
+        return new OxygenTankInventoryEntity(inventory.getId(), inUseTanks, notInUseTanks);
+    }
 
-        return new OxygenTankInventoryEntity(inUseTanks, notInUseTanks);
+    // TODO : OXY : Test
+    // TODO : OXY : This should not know oxygen qualities
+    @Override
+    public List<InventoryItemDto> toDto(OxygenTankInventory inventory) {
+        InventoryItemDto eGradeDto = new InventoryItemDto();
+        InventoryItemDto bGradeDto = new InventoryItemDto();
+        InventoryItemDto aGradeDto = new InventoryItemDto();
+        eGradeDto.gradeTankOxygen = OxygenConstants.Categories.E_NAME;
+        bGradeDto.gradeTankOxygen = OxygenConstants.Categories.B_NAME;
+        aGradeDto.gradeTankOxygen = OxygenConstants.Categories.A_NAME;
+        eGradeDto.quantity = 0L;
+        bGradeDto.quantity = 0L;
+        aGradeDto.quantity = 0L;
+
+        inventory.getNotInUseTanks().forEach(tank -> addQuantityToCategory(eGradeDto, bGradeDto, aGradeDto, tank));
+        inventory.getInUseTanks().forEach(tank -> addQuantityToCategory(eGradeDto, bGradeDto, aGradeDto, tank));
+
+        return new ArrayList<>(Arrays.asList(eGradeDto, bGradeDto, aGradeDto));
+    }
+
+    private void addQuantityToCategory(InventoryItemDto eGradeDto, InventoryItemDto bGradeDto, InventoryItemDto aGradeDto, OxygenTank tank) {
+        switch (tank.getCategory().getQuality().getName()) {
+            case OxygenConstants.Categories.E_NAME:
+                eGradeDto.quantity++;
+                break;
+            case OxygenConstants.Categories.B_NAME:
+                bGradeDto.quantity++;
+                break;
+            case OxygenConstants.Categories.A_NAME:
+                aGradeDto.quantity++;
+                break;
+        }
     }
 }

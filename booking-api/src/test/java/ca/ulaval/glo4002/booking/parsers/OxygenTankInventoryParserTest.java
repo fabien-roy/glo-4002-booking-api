@@ -1,19 +1,7 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTankInventory;
-import ca.ulaval.glo4002.booking.dto.InventoryItemDto;
-import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class OxygenTankOxygenTankInventoryParserTest {
+public class OxygenTankInventoryParserTest {
+	/*
 
 	private OxygenTankInventoryParser subject;
 	private OxygenTankInventory oxygenTankInventory;
@@ -104,5 +92,5 @@ public class OxygenTankOxygenTankInventoryParserTest {
 
 		assertEquals(2, dtos.size());
 	}
-
+    */
 }

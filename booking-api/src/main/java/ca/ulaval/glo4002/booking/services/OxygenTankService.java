@@ -1,7 +1,8 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
 
 import java.time.LocalDate;
 
@@ -13,5 +14,5 @@ public interface OxygenTankService extends Service<OxygenTank> {
 
     OxygenTank findById(Long id);
 
-    Iterable<OxygenTank> order(Quality quality, LocalDate orderDate);
+    OxygenTank order(OxygenTankInventoryEntity savedInventory, OxygenCategory availableCategory, LocalDate date);
 }

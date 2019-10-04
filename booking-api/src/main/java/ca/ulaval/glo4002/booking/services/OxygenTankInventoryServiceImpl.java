@@ -1,94 +1,130 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
+import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
+import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
-import ca.ulaval.glo4002.booking.exceptions.oxygen.OxygenCategoryNotFoundException;
-import ca.ulaval.glo4002.booking.parsers.InventoryParser;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
+import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
+import ca.ulaval.glo4002.booking.parsers.OxygenTankInventoryParser;
+import ca.ulaval.glo4002.booking.parsers.OxygenTankParser;
+import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
+import ca.ulaval.glo4002.booking.util.FestivalDateUtil;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public class InventoryServiceImpl implements InventoryService {
+public class OxygenTankInventoryServiceImpl implements OxygenTankInventoryService {
 
-	private OxygenTankInventory oxygenTankInventory;
-	private InventoryRepository inventoryRepository;
-	private final InventoryParser inventoryParser;
+	private OxygenTankInventoryRepository repository;
+	private OxygenTankService oxygenTankService;
+	private final OxygenTankInventoryParser parser;
+	private final OxygenTankParser oxygenTankParser;
+	private final OxygenCategoryBuilder categoryBuilder;
 
-	public InventoryServiceImpl(InventoryRepository inventoryRepository) {
-		this.inventoryRepository = inventoryRepository;
-		this.inventoryParser = new InventoryParser();
+	public OxygenTankInventoryServiceImpl(OxygenTankInventoryRepository repository, OxygenTankService oxygenTankService) {
+		this.repository = repository;
+		this.oxygenTankService = oxygenTankService;
+		this.parser = new OxygenTankInventoryParser();
+		this.oxygenTankParser = new OxygenTankParser();
+		this.categoryBuilder = new OxygenCategoryBuilder();
+	}
+
+	// TODO : OXY : Test
+	@Override
+	public OxygenTankInventory order(Quality requestedQuality, LocalDate orderDate) {
+		if (FestivalDateUtil.isAfterFestivalStart(orderDate)) {
+			throw new InvalidDateException();
+		}
+
+		OxygenTankInventory inventory = get();
+		OxygenCategory requestedCategory = categoryBuilder.buildByQualityId(requestedQuality.getId());
+
+		List<OxygenTank> requestedCategoryNotInUseTanks = inventory.getNotInUseTanks().stream().filter(oxygenTank -> oxygenTank.getCategory().getQuality().getId().equals(requestedCategory.getId())).collect(Collectors.toList());
+
+		OxygenTankInventoryEntity savedInventory = repository.save(parser.toEntity(inventory));
+
+		List<OxygenTank> notInUseTanks;
+		List<OxygenTank> inUseTanks;
+		List<OxygenTank> orderedTanks = new ArrayList<>();
+
+		if (requestedCategoryNotInUseTanks.size() >= requestedCategory.getProduction().getProducedTanks()) {
+			notInUseTanks = inventory.getNotInUseTanks().stream().filter(oxygenTank -> oxygenTank.getCategory().getQuality().getId().equals(requestedCategory.getId())).collect(Collectors.toList());
+			inUseTanks = inventory.getInUseTanks().stream().filter(oxygenTank -> oxygenTank.getCategory().getQuality().getId().equals(requestedCategory.getId())).collect(Collectors.toList());
+
+			for (int i = 0; i < requestedCategory.getProduction().getProducedTanks(); i++) {
+				orderedTanks.add(notInUseTanks.remove(notInUseTanks.size() - 1));
+				inUseTanks.add(orderedTanks.get(orderedTanks.size() - 1));
+			}
+		} else {
+			LocalDate readyDate = getReadyDate(requestedCategory, orderDate);
+			OxygenCategory availableCategory = getCategoryForTimeToProduce(requestedCategory, orderDate, readyDate);
+
+			notInUseTanks = inventory.getNotInUseTanks().stream().filter(oxygenTank -> oxygenTank.getCategory().getQuality().getId().equals(availableCategory.getId())).collect(Collectors.toList());
+			inUseTanks = inventory.getInUseTanks().stream().filter(oxygenTank -> oxygenTank.getCategory().getQuality().getId().equals(availableCategory.getId())).collect(Collectors.toList());
+
+			if (notInUseTanks.size() >= availableCategory.getProduction().getProducedTanks()) {
+				for (int i = 0; i < availableCategory.getProduction().getProducedTanks(); i++) {
+					orderedTanks.add(notInUseTanks.remove(notInUseTanks.size() - 1));
+					inUseTanks.add(orderedTanks.get(orderedTanks.size() - 1));
+				}
+			} else {
+				for (int i = 0; i < notInUseTanks.size(); i++) {
+					orderedTanks.add(notInUseTanks.remove(notInUseTanks.size() - 1));
+					inUseTanks.add(orderedTanks.get(orderedTanks.size() - 1));
+				}
+
+				for (int i = 0; i < availableCategory.getProduction().getProducedTanks() - orderedTanks.size(); i++) {
+					orderedTanks.add(oxygenTankService.order(savedInventory, availableCategory, orderDate));
+					inUseTanks.add(orderedTanks.get(orderedTanks.size() - 1));
+				}
+			}
+		}
+
+		List<OxygenTankEntity> inUseTankEntities = new ArrayList<>();
+		List<OxygenTankEntity> notInUseTankEntities = new ArrayList<>();
+
+		inUseTanks.forEach(tank -> inUseTankEntities.add(oxygenTankParser.toEntity(tank)));
+		notInUseTanks.forEach(tank -> notInUseTankEntities.add(oxygenTankParser.toEntity(tank)));
+
+		savedInventory.setInUseTanks(inUseTankEntities);
+		savedInventory.setNotInUseTanks(notInUseTankEntities);
+
+		savedInventory = repository.save(savedInventory);
+
+		return parser.parseEntity(savedInventory);
 	}
 
 	@Override
 	public OxygenTankInventory get() {
 		List<OxygenTankInventoryEntity> inventories = new ArrayList<>();
-		inventoryRepository.findAll().forEach(inventories::add);
+		repository.findAll().forEach(inventories::add);
 
 		if (inventories.isEmpty()) {
-			return new OxygenTankInventory(new HashMap<>(), new HashMap<>());
+			return new OxygenTankInventory();
 		}
 
-		return inventoryParser.parseEntity(inventories.get(0));
+		return parser.parseEntity(inventories.get(0));
 
 	}
 
-	@Override
-	public OxygenTankInventory save(OxygenTankInventory oxygenTankInventory) {
-		OxygenTankInventoryEntity oxygenTankInventoryEntity = inventoryParser.toEntity(oxygenTankInventory);
-
-		oxygenTankInventory.getInUseTanks().forEach((categoryId, quantity) -> {
-			//inventoryItemService.save(categoryId, quantity);
-		});
-
-		oxygenTankInventory.getNotInUseTanks().forEach((categoryId, quantity) -> {
-			//inventoryItemService.save(categoryId, quantity);
-		});
-
-		return inventoryParser.parseEntity(inventoryRepository.save(oxygenTankInventoryEntity));
+	private LocalDate getReadyDate(OxygenCategory category, LocalDate orderDate) {
+		return orderDate.plusDays(category.getProduction().getProductionTime().toDays());
 	}
 
-	@Override
-	public Iterable<OxygenTank> requestOxygenTanks(OxygenTank oxygenTank) {
-		Long numberOfTanksNeeded = oxygenTank.getCategory().getProduction().getProducedTanks();
-
-		// TODO : OXY : This was commented because it is not ready
-		updateInUseTanks(oxygenTank.getCategory().getId(), numberOfTanksNeeded);
-
-		List<OxygenTank> oxygenTanks = new ArrayList<>();
-		for (int i = 0; i < numberOfTanksNeeded; i++) {
-			oxygenTanks.add(oxygenTank);
+	private OxygenCategory getCategoryForTimeToProduce(OxygenCategory requestedCategory, LocalDate requestDate, LocalDate readyDate) {
+		if (readyDate.isBefore(DateConstants.START_DATE)) {
+			return requestedCategory;
+		} else if (requestDate.plusDays(OxygenConstants.Productions.ELECTROLYTES_PRODUCTION_TIME.toDays()).isBefore(DateConstants.START_DATE)) {
+			return categoryBuilder.buildById(OxygenConstants.Categories.B_ID);
+		} else {
+			return categoryBuilder.buildById(OxygenConstants.Categories.E_ID);
 		}
-
-		return oxygenTanks;
-	}
-
-	@Override
-	public void updateInUseTanks(Long categoryId, Long numberOfTanksToAdds) {
-		OxygenTankInventory oxygenTankInventory = get();
-		oxygenTankInventory.replaceInUseTanks(categoryId, numberOfTanksToAdds);
-
-		save(oxygenTankInventory);
-	}
-
-	@Override
-	public void updateNotInUseTanks(Long categoryId, Long numberOfTanksToAdds) {
-		OxygenTankInventory oxygenTankInventory = get();
-
-		Long currentNumberOfTanks = oxygenTankInventory.getNotInUseTanks().get(categoryId);
-		oxygenTankInventory.replaceInUseTanks(categoryId, numberOfTanksToAdds + currentNumberOfTanks);
-
-		save(oxygenTankInventory);
-	}
-
-	// TODO : fix this method (get of a invalid key on a map should return null)
-	public Optional<Long> getTankInUseByCategoryID(Long categoryId) {
-		Long quantity = oxygenTankInventory.getInUseTanksByCategoryId(categoryId);
-
-		if(quantity == null){
-			throw new OxygenCategoryNotFoundException();
-		}
-
-		return Optional.of(quantity);
 	}
 }

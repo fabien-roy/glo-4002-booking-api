@@ -19,14 +19,14 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final PassService passService;
-    private final OxygenTankService oxygenTankService;
+    private final OxygenTankInventoryService oxygenTankInventoryService;
     private final ShuttleInventoryService shuttleInventoryService;
     private final OrderParser orderParser;
 
-    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankService oxygenTankService, ShuttleInventoryService shuttleInventoryService) {
+    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankInventoryService oxygenTankInventoryService, ShuttleInventoryService shuttleInventoryService) {
         this.orderRepository = orderRepository;
         this.passService = passService;
-        this.oxygenTankService = oxygenTankService;
+        this.oxygenTankInventoryService = oxygenTankInventoryService;
         this.shuttleInventoryService = shuttleInventoryService;
         this.orderParser = new OrderParser();
     }
@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         passService.order(savedOrder, order.getPasses()).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
-        oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
+        oxygenTankInventoryService.order(quality, order.getOrderDate().toLocalDate());
 
         if (passes.get(0).getOption().getId().equals(PassConstants.Options.PACKAGE_ID)) {
             shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE);

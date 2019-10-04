@@ -1,12 +1,10 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.exceptions.report.InventoryAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.report.InventoryNotFoundException;
-import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
-
+import ca.ulaval.glo4002.booking.exceptions.report.InventoryNotFoundException;
+import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,16 +12,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
-public class InventoryRepositoryImpl implements InventoryRepository {
+public class OxygenTankInventoryRepositoryImpl implements OxygenTankInventoryRepository {
 
 	@PersistenceContext
 	private final EntityManager entityManager;
 
-	public InventoryRepositoryImpl() {
+	public OxygenTankInventoryRepositoryImpl() {
 		this.entityManager = EntityManagerFactoryUtil.getEntityManagerFactory().createEntityManager();
 	}
 
-	public InventoryRepositoryImpl(EntityManager entityManager) {
+	public OxygenTankInventoryRepositoryImpl(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 
@@ -43,6 +41,7 @@ public class InventoryRepositoryImpl implements InventoryRepository {
 		return entityManager.createQuery(RepositoryConstants.INVENTORY_FIND_ALL_QUERY, OxygenTankInventoryEntity.class).getResultList();
 	}
 
+	// TODO : OXY : Useless?
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public <S extends OxygenTankInventoryEntity> Iterable<S> saveAll(Iterable<S> inventories) {
@@ -59,20 +58,15 @@ public class InventoryRepositoryImpl implements InventoryRepository {
 		return inventories;
 	}
 
+	// TODO : OXY : Test
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public <S extends OxygenTankInventoryEntity> S save(S inventory) {
-		if(inventory.getId() == null) {
-			entityManager.getTransaction().begin();
+		entityManager.getTransaction().begin();
 
-			if(!entityManager.contains(inventory)){
-				entityManager.persist(inventory);
-			}
+		entityManager.persist(inventory);
 
-			entityManager.getTransaction().commit();
-		} else {
-			throw new InventoryAlreadyCreatedException(inventory.getId().toString());
-		}
+		entityManager.getTransaction().commit();
 
 		return inventory;
 	}

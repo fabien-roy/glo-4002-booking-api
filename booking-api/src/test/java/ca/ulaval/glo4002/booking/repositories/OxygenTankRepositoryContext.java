@@ -1,20 +1,8 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.OxygenConstants;
-import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
-import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-import java.time.LocalDate;
-import java.util.Arrays;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 public class OxygenTankRepositoryContext {
+
+    /*
 	private final static LocalDate A_DATE_BEFORE_FESTIVAL = DateConstants.START_DATE.minusDays(30);
 	private final static LocalDate A_DATE_AFTER_THE_OTHER_ONE = DateConstants.START_DATE;
 	public final static Long A_OXYGEN_ID = 1L;
@@ -68,4 +56,5 @@ public class OxygenTankRepositoryContext {
 		nonExistentOxygenTank.setId(null);
 		when(entityManager.find(OxygenTankEntity.class, NON_EXISTENT_OXYGEN_ID)).thenReturn(nonExistentOxygenTank);
 	}
+	*/
 }

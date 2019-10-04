@@ -100,14 +100,14 @@ public class ExceptionConstants {
 	}
 
 	public static class InventoryItem {
-		public static final String NOT_FOUND_DESCRIPTION = "Inventory item not found";
+		public static final String NOT_FOUND_DESCRIPTION = "OxygenTankInventory item not found";
 		public static final String NOT_FOUND_ERROR = "INVENTORYITEM_NOT_FOUND";
 		public static final String ALREADY_CREATED_DESCRIPTION = "inventory item created exists";
 		public static final String ALREADY_CREATED_ERROR = "INVENTORYITEM_CREATED_EXISTS";
 	}
 
 	public static class Inventory {
-		public static final String NOT_FOUND_DESCRIPTION = "Inventory not found";
+		public static final String NOT_FOUND_DESCRIPTION = "OxygenTankInventory not found";
 		public static final String NOT_FOUND_ERROR = "INVENTORY_NOT_FOUND";
 		public static final String ALREADY_CREATED_DESCRIPTION = "inventory created exists";
 		public static final String ALREADY_CREATED_ERROR = "INVENTORY_CREATED_EXISTS";

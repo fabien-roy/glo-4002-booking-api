@@ -1,23 +1,15 @@
 package ca.ulaval.glo4002.booking.entities.oxygen;
 
-import ca.ulaval.glo4002.booking.constants.OxygenConstants.Categories;
-import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+public class OxygenTankInventoryTest {
+	/*
 
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class InventoryTest {
-
-	private Inventory subject;
+	private OxygenTankInventory subject;
 	private final static Long A_NUMBER_OF_TANK = 5L;
 	private final static Long AN_INVALID_CATEGORY = -1L;
 
 	@BeforeEach
 	void setup() {
-		subject = new Inventory(new HashMap<>(), new HashMap<>());
+		subject = new OxygenTankInventory(new HashMap<>(), new HashMap<>());
 	}
 
 	@Test
@@ -63,4 +55,5 @@ public class InventoryTest {
 		subject.replaceInUseTanks(Categories.B_ID, 2L);
 		subject.replaceInUseTanks(Categories.E_ID, 3L);
 	}
+	*/
 }
