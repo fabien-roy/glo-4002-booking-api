@@ -46,7 +46,7 @@ public class InventoryParserTest {
         inUseOneEmptyCategory.put(OxygenConstants.Categories.B_ID, A_VALID_NUMBER_OF_TANK_CATEGORY_B_STORED);
         inUseOneEmptyCategory.put(OxygenConstants.Categories.E_ID, 0L);
 
-		anEmptyInventory = new Inventory();
+		anEmptyInventory = new Inventory(new HashMap<>(), new HashMap<>());
 		inventory = new Inventory(notInUseTanks, inUseTanks);
 		inventoryOneEmptyCategory = new Inventory(notInUseOneEmptyCategory, inUseOneEmptyCategory);
 		subject = new InventoryParser();

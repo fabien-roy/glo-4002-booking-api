@@ -10,6 +10,7 @@ import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.HashMap;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -19,6 +20,7 @@ public class InventoryServiceContext {
 
 	private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 6, 20);
 	private static final LocalDate A_DATE_AFTER_THE_OTHER_ONE = A_VALID_DATE.plusDays(20);
+	public static final Long A_OXYGEN_TANK_CATEGORY_ID = OxygenConstants.Categories.E_ID;
 
 	private InventoryEntity anInventoryEntity;
 	public InventoryService subject;
@@ -37,9 +39,11 @@ public class InventoryServiceContext {
 	private void setUpObjects() {
 		OxygenCategoryBuilder categoryBuilder = new OxygenCategoryBuilder();
 
-		anInventory = new Inventory();
+		anInventory = new Inventory(new HashMap<>(), new HashMap<>());
 
-		anOxygenTank = new OxygenTank(categoryBuilder.buildById(OxygenConstants.Categories.E_ID), A_VALID_DATE,
+		anOxygenTank = new OxygenTank(
+				categoryBuilder.buildById(A_OXYGEN_TANK_CATEGORY_ID),
+				A_VALID_DATE,
 				A_DATE_AFTER_THE_OTHER_ONE);
 
 		anInventoryEntity = parser.toEntity(anInventory);
@@ -50,8 +54,9 @@ public class InventoryServiceContext {
 		inventoryItemService = mock(InventoryItemService.class);
 
 		when(repository.findAll()).thenReturn(Collections.singletonList(anInventoryEntity));
-		when(repository.save(any(InventoryEntity.class))).thenReturn(anInventoryEntity);
+		when(repository.save(any(InventoryEntity.class))).thenReturn(parser.toEntity(anInventory));
 	}
+
 
 	private void setUpSubject() {
 		subject = new InventoryServiceImpl(repository, inventoryItemService);

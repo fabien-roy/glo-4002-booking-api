@@ -5,6 +5,8 @@ import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class InventoryTest {
@@ -15,7 +17,7 @@ public class InventoryTest {
 
 	@BeforeEach
 	void setup() {
-		subject = new Inventory();
+		subject = new Inventory(new HashMap<>(), new HashMap<>());
 	}
 
 	@Test

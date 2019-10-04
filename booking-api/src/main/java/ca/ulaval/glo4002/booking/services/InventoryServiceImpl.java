@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.parsers.InventoryParser;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class InventoryServiceImpl implements InventoryService {
@@ -27,10 +28,11 @@ public class InventoryServiceImpl implements InventoryService {
 		inventoryRepository.findAll().forEach(inventories::add);
 
 		if (inventories.isEmpty()) {
-			return new Inventory();
+			return new Inventory(new HashMap<>(), new HashMap<>());
 		}
 
 		return inventoryParser.parseEntity(inventories.get(0));
+
 	}
 
 	@Override
@@ -47,7 +49,7 @@ public class InventoryServiceImpl implements InventoryService {
 		Long numberOfTanksNeeded = oxygenTank.getCategory().getProduction().getProducedTanks();
 
 		// TODO : OXY : This was commented because it is not ready
-		// updateInUseTanks(oxygenTank.getCategory().getId(), numberOfTanksNeeded);
+		updateInUseTanks(oxygenTank.getCategory().getId(), numberOfTanksNeeded);
 
 		List<OxygenTank> oxygenTanks = new ArrayList<>();
 		for (int i = 0; i < numberOfTanksNeeded; i++) {
@@ -60,9 +62,7 @@ public class InventoryServiceImpl implements InventoryService {
 	@Override
 	public void updateInUseTanks(Long categoryId, Long numberOfTanksToAdds) {
 		Inventory inventory = get();
-
-		Long currentNumberOfTanks = inventory.getInUseTanks().get(categoryId);
-		inventory.replaceInUseTanks(categoryId, numberOfTanksToAdds + currentNumberOfTanks);
+		inventory.replaceInUseTanks(categoryId, numberOfTanksToAdds);
 
 		save(inventory);
 	}
