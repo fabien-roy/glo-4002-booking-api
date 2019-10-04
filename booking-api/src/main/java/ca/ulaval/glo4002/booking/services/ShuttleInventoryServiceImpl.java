@@ -41,11 +41,8 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
         List<Shuttle> arrivalShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(arrivalDate)).collect(Collectors.toList());
         List<Shuttle> departureShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(departureDate)).collect(Collectors.toList());
 
-        Shuttle arrivalShuttle = shuttleService.order(savedInventory, getNextShuttle(arrivalShuttles, requestedCategory));
-        Shuttle departureShuttle = shuttleService.order(savedInventory, getNextShuttle(departureShuttles, requestedCategory));
-
-        savedInventory.addArrivalShuttle(shuttleParser.toEntity(arrivalShuttle));
-        savedInventory.addDepartureShuttle(shuttleParser.toEntity(departureShuttle));
+        shuttleService.orderArrival(savedInventory, getNextShuttle(arrivalShuttles, requestedCategory, arrivalDate));
+        shuttleService.orderDeparture(savedInventory, getNextShuttle(departureShuttles, requestedCategory, departureDate));
 
         savedInventory = repository.update(savedInventory);
 
@@ -64,11 +61,11 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
         return parser.parseEntity(inventories.get(0));
     }
 
-    private Shuttle getNextShuttle(List<Shuttle> shuttles, ShuttleCategory category) {
+    private Shuttle getNextShuttle(List<Shuttle> shuttles, ShuttleCategory category, LocalDate date) {
         Shuttle dateShuttle;
 
         if (shuttles.isEmpty() || shuttles.get(shuttles.size() - 1).isFull()) {
-            dateShuttle = new Shuttle(category);
+            dateShuttle = new Shuttle(category, date);
             shuttles.add(dateShuttle);
         } else {
             dateShuttle = shuttles.get(shuttles.size() - 1);

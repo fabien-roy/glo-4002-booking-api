@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-/*
 class ShuttleManifestParserTest {
 
+/*
 	private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
     private static final LocalDate A_DATE = DateConstants.START_DATE;
     private static final LocalDate ANOTHER_DATE = DateConstants.END_DATE;
@@ -42,6 +42,5 @@ class ShuttleManifestParserTest {
     	assertTrue(shuttleManifestDto.arrivals.get(0) instanceof ShuttleDto);
     	assertTrue(shuttleManifestDto.departures.get(0) instanceof ShuttleDto);
     }
-    
+    */
 }
-*/

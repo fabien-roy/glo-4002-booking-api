@@ -23,6 +23,7 @@ public class ShuttleParser implements EntityParser<Shuttle, ShuttleEntity>, ToDt
 		return new Shuttle(
 				shuttle.getId(),
 				shuttleCategoryBuilder.buildById(shuttle.getCategoryId()),
+				shuttle.getDate(),
 				passengers
 		);
 	}
@@ -36,6 +37,7 @@ public class ShuttleParser implements EntityParser<Shuttle, ShuttleEntity>, ToDt
 		return new ShuttleEntity(
 				shuttle.getId(),
 				shuttle.getShuttleCategory().getId(),
+				shuttle.getDate(),
 				passengers
 		);
 	}

@@ -12,7 +12,7 @@ public class ShuttleEntity {
 	private Long id;
 	private Long categoryId;
 	private LocalDate date;
-	@OneToMany(mappedBy = "shuttle")
+	@OneToMany(mappedBy = "shuttle", cascade = CascadeType.MERGE)
 	private List<PassengerEntity> passengers;
 	@ManyToOne
 	ShuttleInventoryEntity inventory;
@@ -21,9 +21,10 @@ public class ShuttleEntity {
 		
 	}
 
-	public ShuttleEntity(Long id, Long categoryId, List<PassengerEntity> passengers) {
+	public ShuttleEntity(Long id, Long categoryId, LocalDate date, List<PassengerEntity> passengers) {
 		this.id = id;
 		this.categoryId = categoryId;
+		this.date = date;
 		this.passengers = passengers;
 	}
 
@@ -41,6 +42,10 @@ public class ShuttleEntity {
 
 	public List<PassengerEntity> getPassengers() {
 		return passengers;
+	}
+
+	public void addPassenger(PassengerEntity passenger) {
+		passengers.add(passenger);
 	}
 
 	public void setInventory(ShuttleInventoryEntity inventory) {

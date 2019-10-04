@@ -11,9 +11,9 @@ public class ShuttleInventoryEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(updatable = false, nullable = false)
     private Long id;
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.MERGE)
     private List<ShuttleEntity> arrivalShuttles = new ArrayList<>();
-    @OneToMany(mappedBy = "inventory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "inventory", cascade = CascadeType.MERGE)
     private List<ShuttleEntity> departureShuttles = new ArrayList<>();
 
     public ShuttleInventoryEntity() {

@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.domainobjects.shuttles;
 
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.domainobjects.trips.Trip;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,20 +13,16 @@ public class Shuttle {
 	private ShuttleCategory category;
     private List<Passenger> passengers;
 
-    public Shuttle(Long id, ShuttleCategory category, List<Trip> trips, List<Passenger> passengers) {
+    public Shuttle(Long id, ShuttleCategory category, LocalDate date, List<Passenger> passengers) {
         this.id = id;
         this.category = category;
+        this.date = date;
         this.passengers = passengers;
     }
 
-    public Shuttle(Long id, ShuttleCategory category, List<Passenger> passengers) {
-        this.id = id;
+    public Shuttle(ShuttleCategory category, LocalDate date) {
         this.category = category;
-        this.passengers = passengers;
-    }
-
-    public Shuttle(ShuttleCategory category) {
-        this.category = category;
+        this.date = date;
         this.passengers = new ArrayList<>();
     }
 

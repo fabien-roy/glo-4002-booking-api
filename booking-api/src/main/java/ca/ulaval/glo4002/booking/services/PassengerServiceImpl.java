@@ -18,6 +18,7 @@ public class PassengerServiceImpl implements PassengerService {
         PassengerEntity savedPassenger = new PassengerEntity();
 
         savedPassenger.setShuttle(shuttle);
+        shuttle.addPassenger(savedPassenger);
 
         return new Passenger(repository.save(savedPassenger).getId());
     }

@@ -30,6 +30,7 @@ public class ShuttleServiceImpl implements ShuttleService {
         return shuttleParser.parseEntity(shuttleEntity);
     }
 
+    // TODO : TRANS : ShuttleService.findAll tests
     @Override
     public Iterable<Shuttle> findAll() {
         List<Shuttle> shuttles = new ArrayList<>();
@@ -39,15 +40,34 @@ public class ShuttleServiceImpl implements ShuttleService {
         return shuttles;
     }
 
+    // TODO : TRANS : ShuttleService.orderArrival tests
     @Override
-    public Shuttle order(ShuttleInventoryEntity inventory, Shuttle shuttle) {
+    public Shuttle orderArrival(ShuttleInventoryEntity inventory, Shuttle shuttle) {
+        ShuttleEntity savedShuttle = order(inventory, shuttle);
+
+        inventory.addArrivalShuttle(savedShuttle);
+
+        return shuttleParser.parseEntity(savedShuttle);
+    }
+
+    // TODO : TRANS : ShuttleService.orderDeparture tests
+    @Override
+    public Shuttle orderDeparture(ShuttleInventoryEntity inventory, Shuttle shuttle) {
+        ShuttleEntity savedShuttle = order(inventory, shuttle);
+
+        inventory.addDepartureShuttle(savedShuttle);
+
+        return shuttleParser.parseEntity(savedShuttle);
+    }
+
+    private ShuttleEntity order(ShuttleInventoryEntity inventory, Shuttle shuttle) {
         ShuttleEntity savedShuttle = shuttleRepository.save(shuttleParser.toEntity(shuttle));
 
         passengerService.order(savedShuttle);
 
         savedShuttle.setInventory(inventory);
-        savedShuttle = shuttleRepository.update(savedShuttle);
 
-        return shuttleParser.parseEntity(savedShuttle);
+        return savedShuttle;
+        // return shuttleRepository.update(savedShuttle);
     }
 }

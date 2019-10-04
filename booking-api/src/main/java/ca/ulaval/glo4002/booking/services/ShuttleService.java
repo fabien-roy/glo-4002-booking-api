@@ -9,5 +9,7 @@ public interface ShuttleService {
 
     Iterable<Shuttle> findAll();
 
-    Shuttle order(ShuttleInventoryEntity inventory, Shuttle shuttle);
+    Shuttle orderArrival(ShuttleInventoryEntity savedInventory, Shuttle nextShuttle);
+
+    Shuttle orderDeparture(ShuttleInventoryEntity savedInventory, Shuttle nextShuttle);
 }

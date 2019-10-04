@@ -26,6 +26,7 @@ public class ShuttleInventoryRepositoryImpl implements ShuttleInventoryRepositor
 		return entityManager.createQuery(RepositoryConstants.SHUTTLE_INVENTORY_FIND_ALL_QUERY, ShuttleInventoryEntity.class).getResultList();
 	}
 
+	// TODO : TRANS : ShuttleInventoryRepository.update tests
 	@Override
 	public ShuttleInventoryEntity update(ShuttleInventoryEntity inventory) {
 		entityManager.persist(inventory);
@@ -33,9 +34,18 @@ public class ShuttleInventoryRepositoryImpl implements ShuttleInventoryRepositor
 		return inventory;
 	}
 
+	// TODO : TRANS : ShuttleInventoryRepository.save tests
 	@Override
-	public <S extends ShuttleInventoryEntity> S save(S s) {
-		throw new UnusedMethodException();
+	public <S extends ShuttleInventoryEntity> S save(S inventory) {
+        entityManager.getTransaction().begin();
+
+        if (!entityManager.contains(inventory)) {
+            entityManager.persist(inventory);
+        }
+
+        entityManager.getTransaction().commit();
+
+		return inventory;
 	}
 
 	@Override
