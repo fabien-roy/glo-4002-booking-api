@@ -33,23 +33,4 @@ public class OxygenTankTest {
 	void whenOxygenTankIsCreated_thenRequestDateIsAssigned() {
 		assertNotNull(subject.getRequestDate());
 	}
-
-	@Test
-	void whenOxygenATankIsCreated_thenPriceForCategoryIsValid() {
-		assertTrue(subject.getPrice() == 1950.0);
-	}
-
-	@Test
-	void whenOxygenBTankIsCreated_thenPriceForCategoryIsValid() {
-		OxygenTank tank = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.B_ID), VALID_DATE);
-
-		assertEquals(1600.0, tank.getPrice(), 0.0);
-	}
-
-	@Test
-	void whenOxygenETankIsCreated_thenPriceForCategoryIsValid() {
-		OxygenTank tank = new OxygenTank(oxygenCategoryBuilder.buildById(OxygenConstants.Categories.E_ID), VALID_DATE);
-
-		assertEquals(5000.0, tank.getPrice(), 0.0);
-	}
 }

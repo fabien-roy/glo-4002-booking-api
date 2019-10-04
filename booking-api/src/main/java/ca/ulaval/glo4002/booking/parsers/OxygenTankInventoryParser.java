@@ -60,7 +60,7 @@ public class OxygenTankInventoryParser implements EntityParser<OxygenTankInvento
     }
 
     private void addQuantityToCategory(InventoryItemDto eGradeDto, InventoryItemDto bGradeDto, InventoryItemDto aGradeDto, OxygenTank tank) {
-        switch (tank.getCategory().getQuality().getName()) {
+        switch (tank.getCategory().getName()) {
             case OxygenConstants.Categories.E_NAME:
                 eGradeDto.quantity++;
                 break;
