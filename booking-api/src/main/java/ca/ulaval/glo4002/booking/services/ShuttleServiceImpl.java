@@ -68,6 +68,5 @@ public class ShuttleServiceImpl implements ShuttleService {
         savedShuttle.setInventory(inventory);
 
         return savedShuttle;
-        // return shuttleRepository.update(savedShuttle);
     }
 }

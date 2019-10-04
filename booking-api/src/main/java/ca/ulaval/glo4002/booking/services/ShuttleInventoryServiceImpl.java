@@ -30,25 +30,6 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
         this.shuttleParser = new ShuttleParser();
     }
 
-    // TODO : TRANS : ShuttleInventoryService.order tests
-    @Override
-    public ShuttleInventory order(Quality quality, LocalDate arrivalDate, LocalDate departureDate) {
-        ShuttleInventory inventory = get();
-        ShuttleCategory requestedCategory = new ShuttleCategoryBuilder().buildById(quality.getId());
-
-        ShuttleInventoryEntity savedInventory = repository.save(parser.toEntity(inventory));
-
-        List<Shuttle> arrivalShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(arrivalDate)).collect(Collectors.toList());
-        List<Shuttle> departureShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(departureDate)).collect(Collectors.toList());
-
-        shuttleService.orderArrival(savedInventory, getNextShuttle(arrivalShuttles, requestedCategory, arrivalDate));
-        shuttleService.orderDeparture(savedInventory, getNextShuttle(departureShuttles, requestedCategory, departureDate));
-
-        savedInventory = repository.update(savedInventory);
-
-        return parser.parseEntity(savedInventory);
-    }
-
     @Override
     public ShuttleInventory get() {
         List<ShuttleInventoryEntity> inventories = new ArrayList<>();
@@ -59,6 +40,25 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
         }
 
         return parser.parseEntity(inventories.get(0));
+    }
+
+    // TODO : TRANS : ShuttleInventoryService.order tests
+    @Override
+    public ShuttleInventory order(Quality quality, LocalDate arrivalDate, LocalDate departureDate) {
+        ShuttleInventory inventory = get();
+        ShuttleCategory requestedCategory = new ShuttleCategoryBuilder().buildById(quality.getId());
+
+        ShuttleInventoryEntity savedInventory = repository.save(parser.toEntity(inventory));
+
+        List<Shuttle> arrivalShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(arrivalDate)).collect(Collectors.toList());
+        List<Shuttle> departureShuttles = inventory.getDepartureShuttles().stream().filter(shuttle -> shuttle.getDate().equals(departureDate)).collect(Collectors.toList());
+
+        shuttleService.orderArrival(savedInventory, getNextShuttle(arrivalShuttles, requestedCategory, arrivalDate));
+        shuttleService.orderDeparture(savedInventory, getNextShuttle(departureShuttles, requestedCategory, departureDate));
+
+        savedInventory = repository.save(savedInventory);
+
+        return parser.parseEntity(savedInventory);
     }
 
     private Shuttle getNextShuttle(List<Shuttle> shuttles, ShuttleCategory category, LocalDate date) {
