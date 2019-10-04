@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 
 public abstract class FestivalException extends RuntimeException {
 
-    private ErrorDto errorDto;
     protected String error;
     protected String description;
     protected HttpStatus httpStatus;
@@ -42,10 +41,10 @@ public abstract class FestivalException extends RuntimeException {
     }
 
     public ErrorDto toErrorDto() {
-        errorDto = new ErrorDto();
-        errorDto.error = error;
-        errorDto.description = description;
-
-        return errorDto;
+    	ErrorDto errorDto = new ErrorDto();
+    	errorDto.error = error;
+    	errorDto.description = description;
+        
+    	return errorDto;
     }
 }

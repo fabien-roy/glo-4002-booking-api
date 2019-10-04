@@ -1,9 +1,14 @@
 package ca.ulaval.glo4002.booking.entities;
 
-import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
-
-import javax.persistence.*;
 import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name = "Passes")
 public class PassEntity {
