@@ -19,14 +19,14 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final PassService passService;
-    private final OxygenTankService oxygenTankService;
+    private final OxygenTankInventoryService oxygenTankInventoryService;
     private final ShuttleInventoryService shuttleInventoryService;
     private final OrderParser orderParser;
 
-    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankService oxygenTankService, ShuttleInventoryService shuttleInventoryService) {
+    public OrderServiceImpl(OrderRepository orderRepository, PassService passService, OxygenTankInventoryService oxygenTankInventoryService, ShuttleInventoryService shuttleInventoryService) {
         this.orderRepository = orderRepository;
         this.passService = passService;
-        this.oxygenTankService = oxygenTankService;
+        this.oxygenTankInventoryService = oxygenTankInventoryService;
         this.shuttleInventoryService = shuttleInventoryService;
         this.orderParser = new OrderParser();
     }
@@ -48,7 +48,6 @@ public class OrderServiceImpl implements OrderService {
         return orders;
     }
 
-    // TODO : This should not save order if something goes wrong
     @Override
     public Order order(Order order) {
         order.setPrice(getOrderPrice(order));
@@ -59,12 +58,16 @@ public class OrderServiceImpl implements OrderService {
         passService.order(savedOrder, order.getPasses()).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
-        oxygenTankService.order(quality, order.getOrderDate().toLocalDate());
+        try {
+            oxygenTankInventoryService.order(quality, order.getOrderDate().toLocalDate());
+        } catch (Exception exception) {
+            // Empty try-catch, since OXY is not done
+        }
 
         if (passes.get(0).getOption().getId().equals(PassConstants.Options.PACKAGE_ID)) {
-            shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE);
+            shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE, savedOrder.getPasses().get(0).getId());
         } else {
-            passes.forEach(pass -> shuttleInventoryService.order(quality, pass.getEventDate(), pass.getEventDate()));
+            savedOrder.getPasses().forEach(pass -> shuttleInventoryService.order(quality, pass.getEventDate(), pass.getEventDate(), pass.getId()));
         }
 
         savedOrder = orderRepository.update(savedOrder);

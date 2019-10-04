@@ -5,11 +5,9 @@ import ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity;
 
 public interface ShuttleService {
 
-    Shuttle findById(Long id);
-
     Iterable<Shuttle> findAll();
 
-    Shuttle orderArrival(ShuttleInventoryEntity savedInventory, Shuttle nextShuttle);
+    Shuttle orderArrival(ShuttleInventoryEntity savedInventory, Shuttle nextShuttle, Long passId);
 
-    Shuttle orderDeparture(ShuttleInventoryEntity savedInventory, Shuttle nextShuttle);
+    Shuttle orderDeparture(ShuttleInventoryEntity savedInventory, Shuttle nextShuttle, Long passId);
 }

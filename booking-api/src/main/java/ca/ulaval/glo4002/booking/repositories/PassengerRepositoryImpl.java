@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.repositories;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassengerEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
-import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 
@@ -24,47 +23,17 @@ public class PassengerRepositoryImpl implements PassengerRepository {
 	
 	@Override
 	public <S extends PassengerEntity> S save(S passenger) {
-		if (passenger.getId() == null) {
-			entityManager.getTransaction().begin();
-
-			if (!entityManager.contains(passenger)) {
+		if (passenger.getId() != null) {
+			if (entityManager.find(PassengerEntity.class, passenger.getId()) == null) {
+				entityManager.getTransaction().begin();
 				entityManager.persist(passenger);
+				entityManager.getTransaction().commit();
 			}
-
-			entityManager.getTransaction().commit();
 		} else {
-			throw new PassengerAlreadyCreatedException();
+			throw new PassengerNotFoundException();
 		}
 
 		return passenger;
-	}
-
-	// TODO : TRANS : Useless?
-	@Override
-	public <S extends PassengerEntity> Iterable<S> saveAll(Iterable<S> passengers) {
-		passengers.forEach(passenger -> {
-			if (passenger.getId() == null) {
-				entityManager.persist(passenger);
-			} else throw new PassengerAlreadyCreatedException();
-		});
-		return passengers;
-	}
-
-	// TODO : TRANS : Useless?
-	@Override
-	public Optional<PassengerEntity> findById(Long id) {
-		PassengerEntity passengerEntity = entityManager.find(PassengerEntity.class, id);
-		
-		if (passengerEntity == null) {
-			throw new PassengerNotFoundException();
-		}
-		
-		return Optional.of(passengerEntity);
-	}
-
-	@Override
-	public boolean existsById(Long id) {
-		throw new UnusedMethodException();
 	}
 
 	@Override
@@ -72,6 +41,21 @@ public class PassengerRepositoryImpl implements PassengerRepository {
 		return entityManager
 				.createQuery(RepositoryConstants.PASSENGER_FIND_ALL_QUERY, PassengerEntity.class)
 				.getResultList();
+	}
+
+	@Override
+	public <S extends PassengerEntity> Iterable<S> saveAll(Iterable<S> passengers) {
+		throw new UnusedMethodException();
+	}
+
+	@Override
+	public Optional<PassengerEntity> findById(Long id) {
+		throw new UnusedMethodException();
+	}
+
+	@Override
+	public boolean existsById(Long id) {
+		throw new UnusedMethodException();
 	}
 
 	@Override

@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 class OrderServiceTest {
@@ -128,7 +127,7 @@ class OrderServiceTest {
 
         context.subject.order(context.aNonExistentOrder);
 
-        verify(context.shuttleInventoryService).order(context.aSupernovaPackagePass.getCategory().getQuality(), DateConstants.START_DATE, DateConstants.END_DATE);
+        verify(context.shuttleInventoryService).order(context.aSupernovaPackagePass.getCategory().getQuality(), DateConstants.START_DATE, DateConstants.END_DATE, context.aSupernovaPackagePass.getId());
     }
 
     @Test
@@ -137,16 +136,6 @@ class OrderServiceTest {
 
         context.subject.order(context.aOrder);
 
-        verify(context.shuttleInventoryService).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate());
-    }
-
-    @Test
-    public void order_shouldCallShuttleInventoryOrderMultipleTimesWithPassesEventDates_whenPassAreMultipleSinglePasses() {
-        context.setUpForSaveMultipleSinglePass();
-        context.aOrder.setPasses(Collections.nCopies(2, context.aPass));
-
-        context.subject.order(context.aOrder);
-
-        verify(context.shuttleInventoryService, times(2)).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate());
+        verify(context.shuttleInventoryService).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate(), context.aPass.getId());
     }
 }

@@ -14,7 +14,6 @@ public class ShuttleParser implements EntityParser<Shuttle, ShuttleEntity>, ToDt
 	
 	private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
 
-	// TODO : TRANS : ShuttleParser.parseEntity tests
 	@Override
 	public Shuttle parseEntity(ShuttleEntity shuttle) {
 		List<Passenger> passengers = new ArrayList<>();
@@ -28,7 +27,6 @@ public class ShuttleParser implements EntityParser<Shuttle, ShuttleEntity>, ToDt
 		);
 	}
 
-	// TODO : TRANS : ShuttleParser.toEntity tests
 	@Override
 	public ShuttleEntity toEntity(Shuttle shuttle) {
 		List<PassengerEntity> passengers = new ArrayList<>();
@@ -42,7 +40,6 @@ public class ShuttleParser implements EntityParser<Shuttle, ShuttleEntity>, ToDt
 		);
 	}
 
-	// TODO : TRANS : Test this
 	@Override
 	public ShuttleDto toDto(Shuttle shuttle) {
 		List<Long> passengers = new ArrayList<>();

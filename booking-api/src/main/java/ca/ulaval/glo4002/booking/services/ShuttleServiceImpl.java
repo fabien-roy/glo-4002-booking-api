@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 import ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity;
-import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 
@@ -22,15 +21,6 @@ public class ShuttleServiceImpl implements ShuttleService {
         this.shuttleParser = new ShuttleParser();
     }
 
-    // TODO : TRANS : Is ShuttleService.findById(Long) necessary?
-    @Override
-    public Shuttle findById(Long id) {
-        ShuttleEntity shuttleEntity = shuttleRepository.findById(id).orElseThrow(ShuttleNotFoundException::new);
-
-        return shuttleParser.parseEntity(shuttleEntity);
-    }
-
-    // TODO : TRANS : ShuttleService.findAll tests
     @Override
     public Iterable<Shuttle> findAll() {
         List<Shuttle> shuttles = new ArrayList<>();
@@ -40,27 +30,25 @@ public class ShuttleServiceImpl implements ShuttleService {
         return shuttles;
     }
 
-    // TODO : TRANS : ShuttleService.orderArrival tests
     @Override
-    public Shuttle orderArrival(ShuttleInventoryEntity inventory, Shuttle shuttle) {
-        ShuttleEntity savedShuttle = order(inventory, shuttle);
+    public Shuttle orderArrival(ShuttleInventoryEntity inventory, Shuttle shuttle, Long passId) {
+        ShuttleEntity savedShuttle = order(inventory, shuttle, passId);
 
         inventory.addArrivalShuttle(savedShuttle);
 
         return shuttleParser.parseEntity(savedShuttle);
     }
 
-    // TODO : TRANS : ShuttleService.orderDeparture tests
     @Override
-    public Shuttle orderDeparture(ShuttleInventoryEntity inventory, Shuttle shuttle) {
-        ShuttleEntity savedShuttle = order(inventory, shuttle);
+    public Shuttle orderDeparture(ShuttleInventoryEntity inventory, Shuttle shuttle, Long passId) {
+        ShuttleEntity savedShuttle = order(inventory, shuttle, passId);
 
         inventory.addDepartureShuttle(savedShuttle);
 
         return shuttleParser.parseEntity(savedShuttle);
     }
 
-    private ShuttleEntity order(ShuttleInventoryEntity inventory, Shuttle shuttle) {
+    private ShuttleEntity order(ShuttleInventoryEntity inventory, Shuttle shuttle, Long passId) {
         ShuttleEntity savedShuttle = shuttleParser.toEntity(shuttle);
 
         if (shuttle.getId() == null) {
@@ -70,7 +58,7 @@ public class ShuttleServiceImpl implements ShuttleService {
             savedShuttle = shuttleRepository.findById(shuttle.getId()).get();
         }
 
-        passengerService.order(savedShuttle);
+        passengerService.order(savedShuttle, passId);
 
         return savedShuttle;
     }

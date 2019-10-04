@@ -11,25 +11,22 @@ public class OxygenTankEntity {
 	private Long id;
 	private Long categoryId;
 	private LocalDate requestDate;
-	private LocalDate readyDate;
 	@ManyToOne
-	InventoryEntity inventory;
+	OxygenTankInventoryEntity inventory;
 
 	public OxygenTankEntity() {
 
 	}
 
-	public OxygenTankEntity(Long categoryId, LocalDate requestDate, LocalDate readyDate) {
+	public OxygenTankEntity(Long categoryId, LocalDate requestDate) {
 		this.categoryId = categoryId;
 		this.requestDate = requestDate;
-		this.readyDate = readyDate;
 	}
 
-	public OxygenTankEntity(Long id, Long categoryId, LocalDate requestDate, LocalDate readyDate) {
+	public OxygenTankEntity(Long id, Long categoryId, LocalDate requestDate) {
 		this.id = id;
 		this.categoryId = categoryId;
 		this.requestDate = requestDate;
-		this.readyDate = readyDate;
 	}
 
 	public Long getId() {
@@ -48,7 +45,7 @@ public class OxygenTankEntity {
 		return requestDate;
 	}
 
-	public LocalDate getReadyDate() {
-		return readyDate;
+	public void setInventory(OxygenTankInventoryEntity inventory) {
+		this.inventory = inventory;
 	}
 }

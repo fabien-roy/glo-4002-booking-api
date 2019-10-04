@@ -1,20 +1,22 @@
 package ca.ulaval.glo4002.booking.domainobjects.report;
 
+import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTankInventory;
+
 public class Report {
 
     private History history;
-    private Inventory inventory;
+    private OxygenTankInventory oxygenTankInventory;
 
-    public Report(History history, Inventory inventory) {
+    public Report(History history, OxygenTankInventory oxygenTankInventory) {
         this.history = history;
-        this.inventory = inventory;
+        this.oxygenTankInventory = oxygenTankInventory;
     }
 
     public History getHistory() {
         return history;
     }
 
-    public Inventory getInventory() {
-        return inventory;
+    public OxygenTankInventory getOxygenTankInventory() {
+        return oxygenTankInventory;
     }
 }

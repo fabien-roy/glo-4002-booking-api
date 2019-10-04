@@ -9,19 +9,16 @@ public class OxygenTank {
     private Long id;
 	private OxygenCategory category;
 	private LocalDate requestDate;
-	private LocalDate readyDate;
 
-	public OxygenTank(Long id, OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
+	public OxygenTank(Long id, OxygenCategory category, LocalDate requestDate) {
 	    this.id = id;
         this.category = category;
 		this.requestDate = requestDate;
-		this.readyDate = readyDate;
 	}
 
-	public OxygenTank(OxygenCategory category, LocalDate requestDate, LocalDate readyDate) {
+	public OxygenTank(OxygenCategory category, LocalDate requestDate) {
 		this.category = category;
 		this.requestDate = requestDate;
-		this.readyDate = readyDate;
 	}
 
 	public Double getPrice() {
@@ -44,7 +41,7 @@ public class OxygenTank {
 		return requestDate;
 	}
 
-	public LocalDate getReadyDate() {
-		return readyDate;
-	}
+    public LocalDate getReadyDate() {
+	    return requestDate.plusDays(category.getProduction().getProductionTime().toDays());
+    }
 }

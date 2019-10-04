@@ -1,76 +1,105 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
+import ca.ulaval.glo4002.booking.constants.DateConstants;
+import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
+import ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity;
+import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
+import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
+import ca.ulaval.glo4002.booking.repositories.ShuttleRepositoryImpl;
+import org.mockito.Mockito;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+
 public class ShuttleServiceContext {
-    /*
+    private static final Long A_SHUTTLE_ID = 0L;
+    private static final Long ANOTHER_SHUTTLE_ID = 1L;
+    private static final Long A_SHUTTLE_CATEGORY_ID = 0L;
+    private static final Long ANOTHER_SHUTTLE_CATEGORY_ID = 1L;
+    private static final LocalDate A_SHUTTLE_DATE = DateConstants.START_DATE;
+    private static final Long A_SHUTTLE_INVENTORY_ID = 1L;
+    private ShuttleRepository shuttleRepository;
+    private ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
+    private ShuttleParser shuttleParser = new ShuttleParser();
 
-    private static final ShuttleCategoryBuilder shuttleCategoryBuilder = new ShuttleCategoryBuilder();
-    private static final ShuttleCategory A_SHUTTLE_CATEGORY = shuttleCategoryBuilder.buildById(ShuttleConstants.Categories.ET_SPACESHIP_ID);
-    private static final ShuttleCategory ANOTHER_SHUTTLE_CATEGORY = shuttleCategoryBuilder.buildById(ShuttleConstants.Categories.MILLENNIUM_FALCON_ID);
+    PassengerService passengerService;
+    Shuttle aShuttle;
+    Shuttle anotherShuttle;
+    Shuttle aShuttleWithoutID;
+    ShuttleEntity aShuttleEntity;
+    ShuttleInventoryEntity aShuttleInventoryEntity;
+    ShuttleServiceImpl subject;
+    List<Shuttle> arrivalShuttles = new ArrayList<>();
+    List<Shuttle> departureShuttles = new ArrayList<>();
+    List<Shuttle> allShuttles = new ArrayList<>();
+    List<ShuttleEntity> allShuttlesEntities = new ArrayList<>();
 
-    private ShuttleParser parser = new ShuttleParser();
-    private ShuttleEntity aShuttleEntity;
-    private ShuttleEntity anotherShuttleEntity;
-    private ShuttleEntity anotherQualityShuttleEntity;
-    private ShuttleEntity aNonExistentShuttleEntity;
-
-    public ShuttleRepository repository;
-    public Shuttle aShuttle;
-    public Shuttle anotherShuttle;
-    public Shuttle anotherQualityShuttle;
-    public Shuttle aNonExistentShuttle;
-    public static final Long A_SHUTTLE_ID = 0L;
-    public static final Long ANOTHER_SHUTTLE_ID = 1L;
-    public static final Long A_NON_EXISTENT_SHUTTLE_ID = 3L;
-    public static final Long ANOTHER_QUALITY_SHUTTLE_ID = 4L;
-
-    public ShuttleServiceContext() {
+    ShuttleServiceContext(){
         setUpObjects();
         setUpRepository();
+        setUpPassengerService();
+        this.subject = new ShuttleServiceImpl(shuttleRepository, passengerService);
+    }
+
+    void setUpForFindAll(){
+        arrivalShuttles.add(aShuttle);
+        departureShuttles.add(anotherShuttle);
+
+        allShuttles.addAll(arrivalShuttles);
+        allShuttles.addAll(departureShuttles);
+
+        arrivalShuttles.forEach(shuttle -> allShuttlesEntities.add(shuttleParser.toEntity(shuttle)));
+        departureShuttles.forEach(shuttle -> allShuttlesEntities.add(shuttleParser.toEntity(shuttle)));
+    }
+
+    void setUpForOrder() {
+
+    }
+
+    private void setUpRepository(){
+        shuttleRepository = mock(ShuttleRepositoryImpl.class);
+        Mockito.doReturn(allShuttlesEntities).when(shuttleRepository).findAll();
+        Mockito.doReturn(shuttleParser.toEntity(aShuttle)).when(shuttleRepository).save(any());
+    }
+
+    private void setUpPassengerService(){
+        passengerService = mock(PassengerServiceImpl.class);
     }
 
     private void setUpObjects() {
         aShuttle = new Shuttle(
                 A_SHUTTLE_ID,
-                A_SHUTTLE_CATEGORY.getPrice(),
-                A_SHUTTLE_CATEGORY,
+                shuttleCategoryBuilder.buildById(A_SHUTTLE_CATEGORY_ID),
+                A_SHUTTLE_DATE,
                 new ArrayList<>()
-                );
+        );
 
         anotherShuttle = new Shuttle(
                 ANOTHER_SHUTTLE_ID,
-                A_SHUTTLE_CATEGORY.getPrice(),
-                A_SHUTTLE_CATEGORY,
+                shuttleCategoryBuilder.buildById(ANOTHER_SHUTTLE_CATEGORY_ID),
+                A_SHUTTLE_DATE,
                 new ArrayList<>()
         );
 
-        aNonExistentShuttle = new Shuttle(
-                A_NON_EXISTENT_SHUTTLE_ID,
-                A_SHUTTLE_CATEGORY.getPrice(),
-                A_SHUTTLE_CATEGORY,
+        aShuttleWithoutID = new Shuttle(
+                null,
+                shuttleCategoryBuilder.buildById(A_SHUTTLE_CATEGORY_ID),
+                A_SHUTTLE_DATE,
                 new ArrayList<>()
         );
 
-        anotherQualityShuttle = new Shuttle(
-                ANOTHER_QUALITY_SHUTTLE_ID,
-                A_SHUTTLE_CATEGORY.getPrice(),
-                ANOTHER_SHUTTLE_CATEGORY,
+        aShuttleInventoryEntity = new ShuttleInventoryEntity(
+                A_SHUTTLE_INVENTORY_ID,
+                new ArrayList<>(),
                 new ArrayList<>()
         );
 
-        aShuttleEntity = parser.toEntity(aShuttle);
-        anotherShuttleEntity = parser.toEntity(anotherShuttle);
-        anotherQualityShuttleEntity = parser.toEntity(anotherQualityShuttle);
-        aNonExistentShuttleEntity = parser.toEntity(aNonExistentShuttle);
+        aShuttleEntity = shuttleParser.toEntity(aShuttle);
     }
-
-    private void setUpRepository() {
-        repository = mock(ShuttleRepository.class);
-
-        when(repository.findAll()).thenReturn(Arrays.asList(aShuttleEntity, anotherShuttleEntity, anotherQualityShuttleEntity));
-        when(repository.findById(A_SHUTTLE_ID)).thenReturn(Optional.of(aShuttleEntity));
-        when(repository.findById(ANOTHER_SHUTTLE_ID)).thenReturn(Optional.of(anotherShuttleEntity));
-        when(repository.findById(A_NON_EXISTENT_SHUTTLE_ID)).thenReturn(Optional.empty());
-    }
-
-    */
 }

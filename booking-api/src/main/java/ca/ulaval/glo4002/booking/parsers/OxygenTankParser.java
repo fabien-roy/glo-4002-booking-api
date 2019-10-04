@@ -13,11 +13,11 @@ public class OxygenTankParser implements EntityParser<OxygenTank, OxygenTankEnti
 	public OxygenTank parseEntity(OxygenTankEntity entity) {
 		OxygenCategory category = oxygenCategoryBuilder.buildById(entity.getCategoryId());
 
-		return new OxygenTank(category, entity.getRequestDate(), entity.getReadyDate());
+		return new OxygenTank(entity.getId(), category, entity.getRequestDate());
 	}
 
 	@Override
 	public OxygenTankEntity toEntity(OxygenTank tank) {
-		return new OxygenTankEntity(tank.getId(), tank.getCategory().getId(), tank.getRequestDate(), tank.getReadyDate());
+		return new OxygenTankEntity(tank.getId(), tank.getCategory().getId(), tank.getRequestDate());
 	}
 }

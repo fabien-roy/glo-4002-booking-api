@@ -36,15 +36,13 @@ public class HistoryServiceContext {
         anOxygenTank = new OxygenTank(
                 A_OXYGEN_TANK_ID,
                 oxygenCategoryBuilder.buildById(OxygenConstants.Categories.E_ID),
-                A_REQUEST_DATE,
-                A_READY_DATE
+                A_REQUEST_DATE
         );
 
         anotherOxygenTank = new OxygenTank(
                 ANOTHER_OXYGEN_TANK_ID,
                 oxygenCategoryBuilder.buildById(OxygenConstants.Categories.B_ID),
-                ANOTHER_REQUEST_DATE,
-                ANOTHER_READY_DATE
+                ANOTHER_REQUEST_DATE
         );
     }
 

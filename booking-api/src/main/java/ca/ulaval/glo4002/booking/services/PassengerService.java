@@ -5,5 +5,5 @@ import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 
 public interface PassengerService {
 
-    Passenger order(ShuttleEntity shuttle);
+    Passenger order(ShuttleEntity shuttle, Long passId);
 }

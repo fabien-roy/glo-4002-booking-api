@@ -2,12 +2,10 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domainobjects.report.Report;
 import ca.ulaval.glo4002.booking.dto.ReportDto;
-import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
+import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.parsers.ReportParser;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
-import ca.ulaval.glo4002.booking.repositories.InventoryRepositoryImpl;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankRepository;
+import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepositoryImpl;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankRepositoryImpl;
 import ca.ulaval.glo4002.booking.services.*;
 import org.springframework.http.ResponseEntity;
@@ -23,28 +21,16 @@ public class ReportController {
 	private final ReportService reportService;
 	private final ReportParser reportParser = new ReportParser();
 
-	private final InventoryRepository inventoryRepository;
-	private final OxygenTankRepository oxygenTankRepository;
-	private final InventoryService inventoryService;
-	private final HistoryService historyService;
-
 	public ReportController() {
-		this.inventoryRepository = new InventoryRepositoryImpl();
-		this.oxygenTankRepository = new OxygenTankRepositoryImpl();
-		this.inventoryService = new InventoryServiceImpl(inventoryRepository);
-		OxygenTankService oxygenTankService = new OxygenTankServiceImpl(oxygenTankRepository, inventoryService);
-		this.historyService = new HistoryServiceImpl(oxygenTankService);
+		OxygenTankService oxygenTankService = new OxygenTankServiceImpl(new OxygenTankRepositoryImpl());
+		OxygenTankInventoryService oxygenTankInventoryService = new OxygenTankInventoryServiceImpl(new OxygenTankInventoryRepositoryImpl(), oxygenTankService);
+		HistoryService historyService = new HistoryServiceImpl(oxygenTankService);
 
-		this.reportService = new ReportServiceImpl(inventoryService, historyService);
+		this.reportService = new ReportServiceImpl(oxygenTankInventoryService, historyService);
 	}
 
-	public ReportController(ReportService reportService, OxygenTankRepository oxygenTankRepository, InventoryRepository inventoryRepository, InventoryService inventoryService, HistoryService historyService) {
+	public ReportController(ReportService reportService) {
 		this.reportService = reportService;
-
-		this.oxygenTankRepository = oxygenTankRepository;
-		this.inventoryRepository = inventoryRepository;
-		this.inventoryService = inventoryService;
-		this.historyService = historyService;
 	}
 
 	@GET

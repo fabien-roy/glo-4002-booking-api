@@ -20,14 +20,12 @@ public class ShuttleInventoryRepositoryImpl implements ShuttleInventoryRepositor
 		this.entityManager = entityManager;
 	}
 
-	// TODO : TRANS : ShuttleInventoryRepository.findAll tests
 	@Override
 	public Iterable<ShuttleInventoryEntity> findAll() {
 		return entityManager.createQuery(RepositoryConstants.SHUTTLE_INVENTORY_FIND_ALL_QUERY, ShuttleInventoryEntity.class).getResultList();
 	}
 
 
-	// TODO : TRANS : ShuttleInventoryRepository.save tests
 	@Override
 	public <S extends ShuttleInventoryEntity> S save(S inventory) {
         entityManager.getTransaction().begin();

@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
-import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
+import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.parsers.ShuttleManifestParser;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;

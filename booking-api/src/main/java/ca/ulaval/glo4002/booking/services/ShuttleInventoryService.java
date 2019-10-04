@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public interface ShuttleInventoryService {
 
-    ShuttleInventory order(Quality quality, LocalDate arrivalDate, LocalDate departureDate);
+    ShuttleInventory order(Quality quality, LocalDate arrivalDate, LocalDate departureDate, Long passId);
 
     ShuttleInventory get();
 }

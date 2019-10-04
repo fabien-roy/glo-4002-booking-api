@@ -99,6 +99,13 @@ public class ExceptionConstants {
 		public static final String ALREADY_CREATED_ERROR = "TRIP_CREATED_EXISTS";
 	}
 
+	public static class Inventory {
+		public static final String NOT_FOUND_DESCRIPTION = "OxygenTankInventory not found";
+		public static final String NOT_FOUND_ERROR = "INVENTORY_NOT_FOUND";
+		public static final String ALREADY_CREATED_DESCRIPTION = "inventory created exists";
+		public static final String ALREADY_CREATED_ERROR = "INVENTORY_CREATED_EXISTS";
+	}
+
     public static final String UTILITY_CLASS_ERROR = "UTILITY_CLASS";
     public static final String UNUSED_METHOD_DESCRIPTION = "Unused method";
 	public static final String UNUSED_METHOD_ERROR = "UNUSED_METHOD";

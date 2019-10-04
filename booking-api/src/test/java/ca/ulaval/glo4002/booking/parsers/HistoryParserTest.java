@@ -40,22 +40,19 @@ class HistoryParserTest {
 		aFirstAndEOxygenTank = new OxygenTank(
 				AN_ORDER_TANK_ID,
 				categoryBuilder.buildById(OxygenConstants.Categories.E_ID),
-				FIRST_DATE,
-				SECOND_DATE
+				FIRST_DATE
 		);
 
 		aSecondAndBOxygenTank = new OxygenTank(
 				ANOTHER_ORDER_TANK_ID,
 				categoryBuilder.buildById(OxygenConstants.Categories.B_ID),
-				FIRST_DATE,
-				THIRD_DATE
+				FIRST_DATE
 		);
 
 		aThirdAndAOxygenTank = new OxygenTank(
 				ANOTHER_ORDER_TANK_ID,
 				categoryBuilder.buildById(OxygenConstants.Categories.A_ID),
-				SECOND_DATE,
-				FOURTH_DATE
+				SECOND_DATE
 		);
 
 		history = mock(History.class);

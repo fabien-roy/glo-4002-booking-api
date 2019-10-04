@@ -1,9 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
-import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 
@@ -53,23 +51,14 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 		return Optional.of(shuttleEntity);
 	}
 
-	// TODO : TRANS : Useless?
 	@Override
 	public Iterable<ShuttleEntity> findAll() {
-		return entityManager
-				.createQuery(RepositoryConstants.SHUTTLE_FIND_ALL_QUERY, ShuttleEntity.class)
-				.getResultList();
+		throw new UnusedMethodException();
 	}
 
-	// TODO : TRANS : Useless?
 	@Override
 	public <S extends ShuttleEntity> Iterable<S> saveAll(Iterable<S> shuttles) {
-		shuttles.forEach(shuttle -> {
-			if (shuttle.getId() == null) {
-				entityManager.persist(shuttle);
-			} else throw new ShuttleAlreadyCreatedException();
-		});
-		return shuttles;
+		throw new UnusedMethodException();
 	}
 
     @Override

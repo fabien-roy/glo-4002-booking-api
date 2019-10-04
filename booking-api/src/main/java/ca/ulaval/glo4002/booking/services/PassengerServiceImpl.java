@@ -14,8 +14,8 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public Passenger order(ShuttleEntity shuttle) {
-        PassengerEntity savedPassenger = new PassengerEntity();
+    public Passenger order(ShuttleEntity shuttle, Long passId) {
+        PassengerEntity savedPassenger = new PassengerEntity(passId);
 
         savedPassenger.setShuttle(shuttle);
         shuttle.addPassenger(savedPassenger);
