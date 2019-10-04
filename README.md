@@ -78,17 +78,36 @@ Pour les autres erreurs (ex. passCategory qui est invalide, si le champ eventDat
 ```
 #### GET /orders/{order-id}
 
-Permet de recevoir les informations sur une commande déjà passé. {order-id} est le numéro de la commande.
+Réponses
+```
+{
+    "orderPrice": 0.00::float,
+    "passes": [
+                  {
+                    "passNumber": 0::long,
+                    "passCategory": "supernova" || "supergiant" || "nebula" ::string,
+                    "passOption": "package" || "singlePass" ::string,
+                    "eventDate": "2017-07-01" ::string
+                  }, ...
+              ]
+}
+```
 
-Retourne une réponse HTTP-404 si le numéro de commande n'existe pas.
+HTTP 404 Not found
+
+Si la commande n’existe pas
+```
+{
+  "error": "ORDER_NOT_FOUND"::string,
+  "description": "order with number XX not found"::string
+} 
+```
 
 ### /shuttle-manifests
 
 
 ### /report
 
-  
-  TODO : /manque l'inventaire
 
 ## Équipe
 
