@@ -49,48 +49,4 @@ public class ShuttleServiceTest {
         assertTrue(ids.contains(context.aShuttle.getId()));
         assertTrue(ids.contains(context.anotherShuttle.getId()));
     }
-
-    @Test
-    public void order_shouldReturnShuttle_whenShuttleIsNotFull(){
-        List<Shuttle> shuttles = new ArrayList<>();
-
-        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
-
-        assertEquals(1, shuttles.size());
-        assertTrue(shuttles.stream().allMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.A_SHUTTLE_ID)));
-    }
-
-    @Test
-    public void order_shouldReturnNewShuttle_whenLastShuttleIsFull(){
-        List<Shuttle> shuttles = new ArrayList<>();
-        context.setUpWithFullTrip();
-
-        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
-
-        assertEquals(1, shuttles.size());
-        assertTrue(shuttles.stream().allMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.ANOTHER_SHUTTLE_ID)));
-    }
-
-    @Test
-    public void order_shouldReturnBothShuttles_whenLastShuttleIsAlmostFull(){
-        List<Shuttle> shuttles = new ArrayList<>();
-        context.setUpWithAlmostFullTrip();
-
-        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
-        subject.order(context.aShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
-
-        assertEquals(2, shuttles.size());
-        assertTrue(shuttles.stream().anyMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.A_SHUTTLE_ID)));
-        assertTrue(shuttles.stream().anyMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.ANOTHER_SHUTTLE_ID)));
-    }
-
-    @Test
-    public void order_shouldReturnCorrectQualityForShuttle(){
-        List<Shuttle> shuttles = new ArrayList<>();
-
-        subject.order(context.anotherQualityShuttle.getShuttleCategory().getQuality()).forEach(shuttles::add);
-
-        assertEquals(1, shuttles.size());
-        assertTrue(shuttles.stream().allMatch(shuttle -> shuttle.getId().equals(ShuttleServiceContext.ANOTHER_QUALITY_SHUTTLE_ID)));
-    }
 }

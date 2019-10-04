@@ -1,21 +1,20 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
 import ca.ulaval.glo4002.booking.constants.DateConstants;
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
 import ca.ulaval.glo4002.booking.constants.TripConstants;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 import ca.ulaval.glo4002.booking.entities.TripEntity;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class TripRepositoryContext {
 
@@ -30,8 +29,6 @@ public class TripRepositoryContext {
     private static final Long ANOTHER_SHUTTLE_ID = 2L;
     private static final Long A_SHUTTLE_CATEGORY_ID = ShuttleConstants.Categories.ET_SPACESHIP_ID;
     private static final Double A_SHUTTLE_PRICE = ShuttleConstants.Categories.ET_SPACESHIP_PRICE;
-    
-    
 
     public EntityManager entityManager;
     public TripEntity aTrip;
@@ -48,7 +45,7 @@ public class TripRepositoryContext {
                 A_ID,
                 A_DATE,
                 A_TYPE_ID,
-                new ShuttleEntity(A_SHUTTLE_ID, A_SHUTTLE_CATEGORY_ID, A_SHUTTLE_PRICE),
+                new ShuttleEntity(A_SHUTTLE_ID, A_SHUTTLE_CATEGORY_ID, A_SHUTTLE_PRICE, new ArrayList<>()),
                 new ArrayList<>()
         );
 
@@ -56,7 +53,7 @@ public class TripRepositoryContext {
                 ANOTHER_ID,
                 ANOTHER_DATE,
                 ANOTHER_TYPE_ID,
-                new ShuttleEntity(ANOTHER_SHUTTLE_ID, A_SHUTTLE_CATEGORY_ID, A_SHUTTLE_PRICE),
+                new ShuttleEntity(ANOTHER_SHUTTLE_ID, A_SHUTTLE_CATEGORY_ID, A_SHUTTLE_PRICE, new ArrayList<>()),
                 new ArrayList<>()
         );
     }

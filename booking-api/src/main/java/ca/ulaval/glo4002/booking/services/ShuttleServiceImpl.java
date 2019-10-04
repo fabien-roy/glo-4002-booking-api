@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
+import ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity;
 import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
@@ -13,10 +13,12 @@ import java.util.List;
 public class ShuttleServiceImpl implements ShuttleService {
 
     private final ShuttleRepository shuttleRepository;
+    private final PassengerService passengerService;
     private final ShuttleParser shuttleParser;
 
-    public ShuttleServiceImpl(ShuttleRepository shuttleRepository) {
+    public ShuttleServiceImpl(ShuttleRepository shuttleRepository, PassengerService passengerService) {
         this.shuttleRepository = shuttleRepository;
+        this.passengerService = passengerService;
         this.shuttleParser = new ShuttleParser();
     }
 
@@ -37,19 +39,15 @@ public class ShuttleServiceImpl implements ShuttleService {
         return shuttles;
     }
 
-    // TODO : TRANS : Test
     @Override
-    public Iterable<Shuttle> order(Quality quality) {
-        return new ArrayList<>();
-    }
+    public Shuttle order(ShuttleInventoryEntity inventory, Shuttle shuttle) {
+        ShuttleEntity savedShuttle = shuttleRepository.save(shuttleParser.toEntity(shuttle));
 
-	/*
-	@Override
-	public void reservePlace(Trip trip, Passenger passenger) {
-    	if(trip.getPassengers().size() < trip.getShuttle().getShuttleCategory().getMaxCapacity()) {
-    		trip.getPassengers().add(passenger);
-    	
-    	} else throw new ShuttleFullException();
+        passengerService.order(savedShuttle);
+
+        savedShuttle.setInventory(inventory);
+        savedShuttle = shuttleRepository.update(savedShuttle);
+
+        return shuttleParser.parseEntity(savedShuttle);
     }
-*/
 }

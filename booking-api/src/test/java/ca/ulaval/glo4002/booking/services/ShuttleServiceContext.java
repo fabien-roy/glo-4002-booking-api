@@ -4,11 +4,8 @@ import ca.ulaval.glo4002.booking.builders.shuttles.ShuttleCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.ShuttleConstants;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.categories.ShuttleCategory;
-import ca.ulaval.glo4002.booking.entities.PassengerEntity;
 import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
-import ca.ulaval.glo4002.booking.entities.TripEntity;
 import ca.ulaval.glo4002.booking.parsers.ShuttleParser;
-import ca.ulaval.glo4002.booking.repositories.PassengerRepository;
 import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 
 import java.util.ArrayList;
@@ -31,7 +28,6 @@ public class ShuttleServiceContext {
     private ShuttleEntity aNonExistentShuttleEntity;
 
     public ShuttleRepository repository;
-    public PassengerRepository passengerRepository;
     public Shuttle aShuttle;
     public Shuttle anotherShuttle;
     public Shuttle anotherQualityShuttle;
@@ -88,25 +84,5 @@ public class ShuttleServiceContext {
         when(repository.findById(A_SHUTTLE_ID)).thenReturn(Optional.of(aShuttleEntity));
         when(repository.findById(ANOTHER_SHUTTLE_ID)).thenReturn(Optional.of(anotherShuttleEntity));
         when(repository.findById(A_NON_EXISTENT_SHUTTLE_ID)).thenReturn(Optional.empty());
-    }
-
-    public void setUpWithFullTrip() {
-        aShuttleEntity.getTrips().add(getTripWithPassengers(aShuttle.getShuttleCategory().getMaxCapacity()));
-        aShuttleEntity = parser.toEntity(aShuttle);
-    }
-
-    public void setUpWithAlmostFullTrip() {
-        aShuttleEntity.getTrips().add(getTripWithPassengers(aShuttle.getShuttleCategory().getMaxCapacity() - 1));
-        aShuttleEntity = parser.toEntity(aShuttle);
-    }
-
-    public TripEntity getTripWithPassengers(Integer quantity) {
-        TripEntity someTrips = new TripEntity();
-
-        for (int i = 0; i < quantity; i++) {
-            someTrips.getPassengers().add(new PassengerEntity());
-        }
-
-        return someTrips;
     }
 }

@@ -6,4 +6,5 @@ import ca.ulaval.glo4002.booking.entities.ShuttleEntity;
 
 public interface ShuttleRepository extends CrudRepository<ShuttleEntity, Long> {
 
+    ShuttleEntity update(ShuttleEntity savedShuttle);
 }

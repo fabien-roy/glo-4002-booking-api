@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity;
 
 public interface ShuttleService {
 
@@ -9,5 +9,5 @@ public interface ShuttleService {
 
     Iterable<Shuttle> findAll();
 
-    Iterable<Shuttle> order(Quality quality);
+    Shuttle order(ShuttleInventoryEntity inventory, Shuttle shuttle);
 }

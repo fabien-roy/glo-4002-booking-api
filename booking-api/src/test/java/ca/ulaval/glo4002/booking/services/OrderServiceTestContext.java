@@ -125,9 +125,9 @@ public class OrderServiceTestContext {
     private void setUpSubject() {
         passService = mock(PassService.class);
         OxygenTankService oxygenTankService = mock(OxygenTankService.class);
-        ShuttleService shuttleService = mock(ShuttleService.class);
+        ShuttleInventoryService shuttleInventoryService = mock(ShuttleInventoryService.class);
 
-        subject = new OrderServiceImpl(repository, passService, oxygenTankService, shuttleService);
+        subject = new OrderServiceImpl(repository, passService, oxygenTankService, shuttleInventoryService);
     }
 
     public void setUpForSave() {

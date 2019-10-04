@@ -21,7 +21,32 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 	public ShuttleRepositoryImpl(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
-	
+
+	@Override
+	public <S extends ShuttleEntity> S save (S shuttle) {
+		if (shuttle.getId() == null) {
+			entityManager.getTransaction().begin();
+
+			if (!entityManager.contains(shuttle)) {
+				entityManager.persist(shuttle);
+			}
+
+			entityManager.getTransaction().commit();
+		} else {
+			throw new ShuttleAlreadyCreatedException();
+		}
+
+		return shuttle;
+	}
+
+	@Override
+	public ShuttleEntity update(ShuttleEntity shuttle) {
+		entityManager.persist(shuttle);
+
+		return shuttle;
+	}
+
+	// TODO : TRANS : Useless?
 	@Override
 	public Optional<ShuttleEntity> findById(Long id) {
 		ShuttleEntity shuttleEntity = entityManager.find(ShuttleEntity.class, id);
@@ -32,14 +57,16 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 
 		return Optional.of(shuttleEntity);
 	}
-	
+
+	// TODO : TRANS : Useless?
 	@Override
 	public Iterable<ShuttleEntity> findAll() {
 		return entityManager
 				.createQuery(RepositoryConstants.SHUTTLE_FIND_ALL_QUERY, ShuttleEntity.class)
 				.getResultList();
 	}
-	
+
+	// TODO : TRANS : Useless?
 	@Override
 	public <S extends ShuttleEntity> Iterable<S> saveAll(Iterable<S> shuttles) {
 		shuttles.forEach(shuttle -> {
@@ -49,12 +76,7 @@ public class ShuttleRepositoryImpl implements ShuttleRepository {
 		});
 		return shuttles;
 	}
-	
-	@Override
-	public <S extends ShuttleEntity> S save (S shuttle) {
-		throw new UnusedMethodException();
-	}
-	
+
     @Override
     public boolean existsById(Long id) {
         throw new UnusedMethodException();

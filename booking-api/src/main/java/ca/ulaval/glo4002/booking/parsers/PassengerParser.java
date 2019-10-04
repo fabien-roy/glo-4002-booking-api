@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import ca.ulaval.glo4002.booking.domainobjects.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.dto.PassengerDto;
 import ca.ulaval.glo4002.booking.entities.PassengerEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class PassengerParser implements ToDtoParser<List<Passenger>, List<PassengerDto>>, EntityParser<List<Passenger>, List<PassengerEntity>>{
 
@@ -16,8 +16,7 @@ public class PassengerParser implements ToDtoParser<List<Passenger>, List<Passen
 		List<Long> passengerIds = new ArrayList<>();
 	
 		
-		passengerIds.addAll(passengers.stream().map(Passenger::getId)
-				.collect(Collectors.toList()));
+		passengerIds.addAll(passengers.stream().map(Passenger::getId).collect(Collectors.toList()));
 		
 		for (Long passengerId : passengerIds) {
 			PassengerDto passengerDto = new PassengerDto();

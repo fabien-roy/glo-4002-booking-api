@@ -1,15 +1,14 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import java.util.Optional;
-
-import javax.persistence.EntityManager;
-
 import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.PassengerEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
 import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.passengers.PassengerNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
+
+import javax.persistence.EntityManager;
+import java.util.Optional;
 
 public class PassengerRepositoryImpl implements PassengerRepository {
 
@@ -24,10 +23,23 @@ public class PassengerRepositoryImpl implements PassengerRepository {
 	}
 	
 	@Override
-	public <S extends PassengerEntity> S save(S entity) {
-		throw new UnusedMethodException();
+	public <S extends PassengerEntity> S save(S passenger) {
+		if (passenger.getId() == null) {
+			entityManager.getTransaction().begin();
+
+			if (!entityManager.contains(passenger)) {
+				entityManager.persist(passenger);
+			}
+
+			entityManager.getTransaction().commit();
+		} else {
+			throw new PassengerAlreadyCreatedException();
+		}
+
+		return passenger;
 	}
 
+	// TODO : TRANS : Useless?
 	@Override
 	public <S extends PassengerEntity> Iterable<S> saveAll(Iterable<S> passengers) {
 		passengers.forEach(passenger -> {
@@ -38,6 +50,7 @@ public class PassengerRepositoryImpl implements PassengerRepository {
 		return passengers;
 	}
 
+	// TODO : TRANS : Useless?
 	@Override
 	public Optional<PassengerEntity> findById(Long id) {
 		PassengerEntity passengerEntity = entityManager.find(PassengerEntity.class, id);

@@ -17,6 +17,9 @@ public class PassengerEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="tripId", nullable = false)
 	private TripEntity trip;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="shuttleId", nullable = false)
+	private ShuttleEntity shuttle;
 
 	public PassengerEntity() {
 
@@ -33,4 +36,8 @@ public class PassengerEntity {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+    public void setShuttle(ShuttleEntity shuttle) {
+		this.shuttle = shuttle;
+    }
 }

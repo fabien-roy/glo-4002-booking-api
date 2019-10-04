@@ -11,6 +11,7 @@
         <class>ca.ulaval.glo4002.booking.entities.PassEntity</class>
 
         <class>ca.ulaval.glo4002.booking.entities.ShuttleEntity</class>
+        <class>ca.ulaval.glo4002.booking.entities.ShuttleInventoryEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.TripEntity</class>
         <class>ca.ulaval.glo4002.booking.entities.PassengerEntity</class>
 
