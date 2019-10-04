@@ -1,11 +1,5 @@
 package ca.ulaval.glo4002.booking.services;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
-import java.util.Collections;
-
 import ca.ulaval.glo4002.booking.builders.oxygen.OxygenCategoryBuilder;
 import ca.ulaval.glo4002.booking.constants.OxygenConstants;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
@@ -13,6 +7,13 @@ import ca.ulaval.glo4002.booking.domainobjects.report.Inventory;
 import ca.ulaval.glo4002.booking.entities.InventoryEntity;
 import ca.ulaval.glo4002.booking.parsers.InventoryParser;
 import ca.ulaval.glo4002.booking.repositories.InventoryRepository;
+
+import java.time.LocalDate;
+import java.util.Collections;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class InventoryServiceContext {
 

@@ -29,6 +29,12 @@ public class OrderServiceTestContext {
     private final static LocalDateTime A_ORDER_EVENT_DATE = DateConstants.ORDER_START_DATE_TIME;
     private final static LocalDate A_PASS_EVENT_DATE = DateConstants.START_DATE;
     private final static Long A_PASS_ID = 1L;
+    public static final int AMOUNT_OF_SUPERGIANT_PASSES_MORE_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD;
+    public static final int AMOUNT_OF_SUPERGIANT_PASSES_LESS_THAN_THRESHOLD = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_REBATE_THRESHOLD - 1;
+    public static final int AMOUNT_OF_NEBULA_PASSES_MORE_THAN_THRESHOLD = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD;
+    public static final int AMOUNT_OF_NEBULA_PASSES_LESS_THAN_THRESHOLD = PassConstants.Categories.NEBULA_SINGLE_PASS_REBATE_THRESHOLD - 1;
+    public static final double DELTA = 0.01;
+
     private final static VendorBuilder vendorBuilder = new VendorBuilder();
     private final static PassCategoryBuilder categoryBuilder = new PassCategoryBuilder();
     private final static PassOptionBuilder optionBuilder = new PassOptionBuilder();
