@@ -13,7 +13,7 @@ public class OxygenTankParser implements EntityParser<OxygenTank, OxygenTankEnti
 	public OxygenTank parseEntity(OxygenTankEntity entity) {
 		OxygenCategory category = oxygenCategoryBuilder.buildById(entity.getCategoryId());
 
-		return new OxygenTank(category, entity.getRequestDate());
+		return new OxygenTank(entity.getId(), category, entity.getRequestDate());
 	}
 
 	@Override

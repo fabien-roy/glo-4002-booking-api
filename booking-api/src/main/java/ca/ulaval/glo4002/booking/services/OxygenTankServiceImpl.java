@@ -54,9 +54,20 @@ public class OxygenTankServiceImpl implements OxygenTankService {
 	public OxygenTank order(OxygenTankInventoryEntity inventory, OxygenCategory availableCategory, LocalDate date) {
 		OxygenTankEntity oxygenTank = parser.toEntity(new OxygenTank(availableCategory, date));
 
-        oxygenTank.setInventory(inventory);
-        inventory.addInUseTank(oxygenTank);
+		oxygenTank.setInventory(inventory);
+		inventory.addInUseTank(oxygenTank);
 
-        return parser.parseEntity(repository.save(oxygenTank));
+		return parser.parseEntity(repository.save(oxygenTank));
+	}
+
+	@Override
+	public OxygenTank setToInUse(OxygenTankInventoryEntity inventory, OxygenTank oxygenTank) {
+		OxygenTankEntity oxygenTankEntity = repository.findById(oxygenTank.getId()).get();
+
+		oxygenTankEntity.setInventory(inventory);
+		inventory.addInUseTank(oxygenTankEntity);
+		inventory.removeNotInUseTank(oxygenTankEntity);
+
+		return parser.parseEntity(repository.save(oxygenTankEntity));
 	}
 }

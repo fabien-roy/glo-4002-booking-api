@@ -59,7 +59,11 @@ public class OrderServiceImpl implements OrderService {
         passService.order(savedOrder, order.getPasses()).forEach(passes::add);
         Quality quality = passes.get(0).getCategory().getQuality();
 
-        oxygenTankInventoryService.order(quality, order.getOrderDate().toLocalDate());
+        try {
+            oxygenTankInventoryService.order(quality, order.getOrderDate().toLocalDate());
+        } catch (Exception exception) {
+            // Empty try-catch, since OXY is not done
+        }
 
         if (passes.get(0).getOption().getId().equals(PassConstants.Options.PACKAGE_ID)) {
             shuttleInventoryService.order(quality, DateConstants.START_DATE, DateConstants.END_DATE);

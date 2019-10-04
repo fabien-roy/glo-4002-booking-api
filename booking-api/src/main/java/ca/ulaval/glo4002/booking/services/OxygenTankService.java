@@ -15,4 +15,6 @@ public interface OxygenTankService extends Service<OxygenTank> {
     OxygenTank findById(Long id);
 
     OxygenTank order(OxygenTankInventoryEntity savedInventory, OxygenCategory availableCategory, LocalDate date);
+
+    OxygenTank setToInUse(OxygenTankInventoryEntity savedInventory, OxygenTank oxygenTank);
 }

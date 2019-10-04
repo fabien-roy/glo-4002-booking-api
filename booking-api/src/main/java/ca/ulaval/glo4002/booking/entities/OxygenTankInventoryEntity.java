@@ -58,4 +58,8 @@ public class OxygenTankInventoryEntity {
     public void addInUseTank(OxygenTankEntity oxygenTank) {
         inUseTanks.add(oxygenTank);
     }
+
+    public void removeNotInUseTank(OxygenTankEntity oxygenTank) {
+        notInUseTanks.remove(oxygenTank);
+    }
 }

@@ -7,7 +7,6 @@ import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.OxygenTankInventory;
 import ca.ulaval.glo4002.booking.domainobjects.oxygen.categories.OxygenCategory;
 import ca.ulaval.glo4002.booking.domainobjects.qualities.Quality;
-import ca.ulaval.glo4002.booking.entities.OxygenTankEntity;
 import ca.ulaval.glo4002.booking.entities.OxygenTankInventoryEntity;
 import ca.ulaval.glo4002.booking.exceptions.dates.InvalidDateException;
 import ca.ulaval.glo4002.booking.parsers.OxygenTankInventoryParser;
@@ -87,14 +86,9 @@ public class OxygenTankInventoryServiceImpl implements OxygenTankInventoryServic
 			}
 		}
 
-		List<OxygenTankEntity> inUseTankEntities = new ArrayList<>();
-		List<OxygenTankEntity> notInUseTankEntities = new ArrayList<>();
-
-		inUseTanks.forEach(tank -> inUseTankEntities.add(oxygenTankParser.toEntity(tank)));
-		notInUseTanks.forEach(tank -> notInUseTankEntities.add(oxygenTankParser.toEntity(tank)));
-
-		savedInventory.setInUseTanks(inUseTankEntities);
-		savedInventory.setNotInUseTanks(notInUseTankEntities);
+		for (int i = 0; i < inUseTanks.size(); i++) {
+			oxygenTankService.setToInUse(savedInventory, inUseTanks.get(i));
+		}
 
 		savedInventory = repository.save(savedInventory);
 
