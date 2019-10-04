@@ -18,13 +18,13 @@ public class OrderRepositoryTest {
     private OrderRepositoryContext context;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         context = new OrderRepositoryContext();
         subject = new OrderRepositoryImpl(context.entityManager);
     }
 
     @Test
-    public void findById_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
+    void findById_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
         OrderNotFoundException thrown = assertThrows(
                 OrderNotFoundException.class,
                 () -> subject.findById(OrderRepositoryContext.A_NON_EXISTENT_ORDER_ID)
@@ -34,14 +34,14 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void findById_shouldReturnCorrectOrder() {
+    void findById_shouldReturnCorrectOrder() {
         OrderEntity order = subject.findById(OrderRepositoryContext.A_ORDER_ID).get();
 
         assertEquals(context.aOrder, order);
     }
 
     @Test
-    public void findAll_shouldReturnCorrectOrders() {
+    void findAll_shouldReturnCorrectOrders() {
         List<OrderEntity> orders = new ArrayList<>();
 
         subject.findAll().forEach(orders::add);
@@ -52,7 +52,7 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void save_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
+    void save_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
         OrderAlreadyCreatedException thrown = assertThrows(
                 OrderAlreadyCreatedException.class,
                 () -> subject.save(context.aOrder)
@@ -62,7 +62,7 @@ public class OrderRepositoryTest {
     }
 
     @Test
-    public void save_shouldSaveOrder() {
+    void save_shouldSaveOrder() {
         context.setUpEntityManagerForSave();
 
         subject.save(context.aNonExistentOrder);

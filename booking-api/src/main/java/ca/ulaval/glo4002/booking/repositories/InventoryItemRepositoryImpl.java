@@ -1,14 +1,22 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
 import ca.ulaval.glo4002.booking.entities.InventoryItemEntity;
 import ca.ulaval.glo4002.booking.exceptions.UnusedMethodException;
+import ca.ulaval.glo4002.booking.exceptions.report.InventoryItemAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.report.InventoryItemNotFoundException;
 import ca.ulaval.glo4002.booking.util.EntityManagerFactoryUtil;
 
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 public class InventoryItemRepositoryImpl implements InventoryItemRepository {
 
+	@PersistenceContext
 	private final EntityManager entityManager;
 
 	public InventoryItemRepositoryImpl() {
@@ -17,6 +25,23 @@ public class InventoryItemRepositoryImpl implements InventoryItemRepository {
 
 	public InventoryItemRepositoryImpl(EntityManager entityManager) {
 		this.entityManager = entityManager;
+	}
+
+	// TODO : (OXY) implement if null
+	@Override
+	public Optional<InventoryItemEntity> findById(Long id) {
+		InventoryItemEntity inventoryItemEntity = entityManager.find(InventoryItemEntity.class, id);
+
+		if(inventoryItemEntity == null){
+			throw  new InventoryItemNotFoundException();
+		}
+
+		return Optional.of(inventoryItemEntity);
+	}
+
+	@Override
+	public Iterable<InventoryItemEntity> findAll() {
+		return entityManager.createQuery((RepositoryConstants.INVENTORYITEM_FIND_ALL_QUERY), InventoryItemEntity.class).getResultList();
 	}
 
 	@Override
@@ -35,26 +60,32 @@ public class InventoryItemRepositoryImpl implements InventoryItemRepository {
 	}
 
 	@Override
-	public Optional<InventoryItemEntity> findById(Long id) {
-		InventoryItemEntity inventoryItemEntity = entityManager.find(InventoryItemEntity.class, id);
+	@Transactional(propagation = Propagation.REQUIRED)
+	public <S extends InventoryItemEntity> S save(S inventoryItem) {
+		if(inventoryItem.getId() == null) {
+			entityManager.getTransaction().begin();
 
-		// TODO : (OXY) implement if null
+			if(!entityManager.contains(inventoryItem)) {
+				entityManager.persist(inventoryItem);
+			}
 
-		return Optional.of(inventoryItemEntity);
+			entityManager.getTransaction().commit();
+		} else {
+			throw new InventoryItemAlreadyCreatedException();
+		}
+
+		return inventoryItem;
 	}
 
 	@Override
-	public <S extends InventoryItemEntity> S save(S s) {
-		throw new UnusedMethodException();
+	public <S extends InventoryItemEntity> S update(S inventoryItem) {
+		entityManager.persist(inventoryItem);
+
+		return inventoryItem;
 	}
 
 	@Override
 	public boolean existsById(Long aLong) {
-		throw new UnusedMethodException();
-	}
-
-	@Override
-	public Iterable<InventoryItemEntity> findAll() {
 		throw new UnusedMethodException();
 	}
 

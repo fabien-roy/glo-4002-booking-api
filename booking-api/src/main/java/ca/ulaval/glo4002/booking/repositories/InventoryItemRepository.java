@@ -5,4 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface InventoryItemRepository extends CrudRepository<InventoryItemEntity, Long> {
 
+    <S extends InventoryItemEntity> S update(S inventoryItem);
 }

@@ -65,6 +65,13 @@ public class ExceptionConstants {
 		public static final String NOT_FOUND_ERROR = "VENDOR_NOT_FOUND";
 	}
 
+	public static class InventoryItem {
+		public static final String NOT_FOUND_DESCRIPTION = "Inventory item not found";
+		public static final String NOT_FOUND_ERROR = "INVENTORYITEM_NOT_FOUND";
+		public static final String ALREADY_CREATED_DESCRIPTION = "inventory item created exists";
+		public static final String ALREADY_CREATED_ERROR = "INVENTORYITEM_CREATED_EXISTS";
+	}
+
     public static final String UTILITY_CLASS_ERROR = "UTILITY_CLASS";
     public static final String UNUSED_METHOD_DESCRIPTION = "Unused method";
 	public static final String UNUSED_METHOD_ERROR = "UNUSED_METHOD";

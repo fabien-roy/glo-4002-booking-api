@@ -18,9 +18,6 @@ import static org.mockito.Mockito.when;
 
 public class OrderRepositoryContext {
 
-    private final static LocalDateTime A_ORDER_DATE_TIME = DateConstants.ORDER_START_DATE_TIME;
-    private final static Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
-    private static final Double A_ORDER_PRICE = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE;
     public final static Long A_ORDER_ID = 1L;
     public final static Long ANOTHER_ORDER_ID = 2L;
     public final static Long A_NON_EXISTENT_ORDER_ID = 0L;
@@ -29,6 +26,10 @@ public class OrderRepositoryContext {
     public OrderEntity aOrder;
     public OrderEntity anotherOrder;
     public OrderEntity aNonExistentOrder;
+
+    private final static LocalDateTime A_ORDER_DATE_TIME = DateConstants.ORDER_START_DATE_TIME;
+    private final static Long A_VENDOR_ID = VendorConstants.TEAM_VENDOR_ID;
+    private static final Double A_ORDER_PRICE = PassConstants.Categories.SUPERGIANT_SINGLE_PASS_PRICE;
 
     public OrderRepositoryContext() {
         setUpOrders();
