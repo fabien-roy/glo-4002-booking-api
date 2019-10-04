@@ -98,7 +98,7 @@ HTTP 404 Not found
 Si la commande n’existe pas
 ```
 {
-  "error": "ORDER_NOT_FOUND"::string,
+  "error": "ORDER NOT FOUND"::string,
   "description": "order with number XX not found"::string
 } 
 ```
