@@ -76,9 +76,9 @@ Pour les autres erreurs (ex. passCategory qui est invalide, si le champ eventDat
   "description": "invalid format"::string
 } 
 ```
-#### GET /orders/{order-id}
+### GET /orders/{order-id}
 
-Réponses
+#### Réponses
 ```
 {
     "orderPrice": 0.00::float,
