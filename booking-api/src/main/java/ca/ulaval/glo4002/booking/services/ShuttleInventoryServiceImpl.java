@@ -44,7 +44,7 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
 
     // TODO : TRANS : ShuttleInventoryService.order tests
     @Override
-    public ShuttleInventory order(Quality quality, LocalDate arrivalDate, LocalDate departureDate) {
+    public ShuttleInventory order(Quality quality, LocalDate arrivalDate, LocalDate departureDate, Long passId) {
         ShuttleInventory inventory = get();
         ShuttleCategory requestedCategory = new ShuttleCategoryBuilder().buildById(quality.getId());
 
@@ -53,15 +53,15 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
         List<Shuttle> arrivalShuttles = inventory.getArrivalShuttles().stream().filter(shuttle -> shuttle.getDate().equals(arrivalDate)).collect(Collectors.toList());
         List<Shuttle> departureShuttles = inventory.getDepartureShuttles().stream().filter(shuttle -> shuttle.getDate().equals(departureDate)).collect(Collectors.toList());
 
-        shuttleService.orderArrival(savedInventory, getNextShuttle(arrivalShuttles, requestedCategory, arrivalDate));
-        shuttleService.orderDeparture(savedInventory, getNextShuttle(departureShuttles, requestedCategory, departureDate));
+        shuttleService.orderArrival(savedInventory, getNextShuttle(arrivalShuttles, requestedCategory, arrivalDate, passId), passId);
+        shuttleService.orderDeparture(savedInventory, getNextShuttle(departureShuttles, requestedCategory, departureDate, passId), passId);
 
         savedInventory = repository.save(savedInventory);
 
         return parser.parseEntity(savedInventory);
     }
 
-    private Shuttle getNextShuttle(List<Shuttle> shuttles, ShuttleCategory category, LocalDate date) {
+    private Shuttle getNextShuttle(List<Shuttle> shuttles, ShuttleCategory category, LocalDate date, Long passId) {
         Shuttle dateShuttle;
 
         if (shuttles.isEmpty() || shuttles.get(shuttles.size() - 1).isFull()) {
@@ -69,7 +69,7 @@ public class ShuttleInventoryServiceImpl implements ShuttleInventoryService {
             shuttles.add(dateShuttle);
         } else {
             dateShuttle = shuttles.get(shuttles.size() - 1);
-            dateShuttle.addPassenger(new Passenger());
+            dateShuttle.addPassenger(new Passenger(passId));
         }
 
         return dateShuttle;

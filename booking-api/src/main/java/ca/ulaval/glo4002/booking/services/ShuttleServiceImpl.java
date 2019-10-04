@@ -42,8 +42,8 @@ public class ShuttleServiceImpl implements ShuttleService {
 
     // TODO : TRANS : ShuttleService.orderArrival tests
     @Override
-    public Shuttle orderArrival(ShuttleInventoryEntity inventory, Shuttle shuttle) {
-        ShuttleEntity savedShuttle = order(inventory, shuttle);
+    public Shuttle orderArrival(ShuttleInventoryEntity inventory, Shuttle shuttle, Long passId) {
+        ShuttleEntity savedShuttle = order(inventory, shuttle, passId);
 
         inventory.addArrivalShuttle(savedShuttle);
 
@@ -52,15 +52,15 @@ public class ShuttleServiceImpl implements ShuttleService {
 
     // TODO : TRANS : ShuttleService.orderDeparture tests
     @Override
-    public Shuttle orderDeparture(ShuttleInventoryEntity inventory, Shuttle shuttle) {
-        ShuttleEntity savedShuttle = order(inventory, shuttle);
+    public Shuttle orderDeparture(ShuttleInventoryEntity inventory, Shuttle shuttle, Long passId) {
+        ShuttleEntity savedShuttle = order(inventory, shuttle, passId);
 
         inventory.addDepartureShuttle(savedShuttle);
 
         return shuttleParser.parseEntity(savedShuttle);
     }
 
-    private ShuttleEntity order(ShuttleInventoryEntity inventory, Shuttle shuttle) {
+    private ShuttleEntity order(ShuttleInventoryEntity inventory, Shuttle shuttle, Long passId) {
         ShuttleEntity savedShuttle = shuttleParser.toEntity(shuttle);
 
         if (shuttle.getId() == null) {
@@ -70,7 +70,7 @@ public class ShuttleServiceImpl implements ShuttleService {
             savedShuttle = shuttleRepository.findById(shuttle.getId()).get();
         }
 
-        passengerService.order(savedShuttle);
+        passengerService.order(savedShuttle, passId);
 
         return savedShuttle;
     }

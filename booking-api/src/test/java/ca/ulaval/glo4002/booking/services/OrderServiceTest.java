@@ -128,7 +128,7 @@ class OrderServiceTest {
 
         context.subject.order(context.aNonExistentOrder);
 
-        verify(context.shuttleInventoryService).order(context.aSupernovaPackagePass.getCategory().getQuality(), DateConstants.START_DATE, DateConstants.END_DATE);
+        verify(context.shuttleInventoryService).order(context.aSupernovaPackagePass.getCategory().getQuality(), DateConstants.START_DATE, DateConstants.END_DATE, context.aSupernovaPackagePass.getId());
     }
 
     @Test
@@ -137,7 +137,7 @@ class OrderServiceTest {
 
         context.subject.order(context.aOrder);
 
-        verify(context.shuttleInventoryService).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate());
+        verify(context.shuttleInventoryService).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate(), context.aPass.getId());
     }
 
     @Test
@@ -147,6 +147,6 @@ class OrderServiceTest {
 
         context.subject.order(context.aOrder);
 
-        verify(context.shuttleInventoryService, times(2)).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate());
+        verify(context.shuttleInventoryService, times(2)).order(context.aPass.getCategory().getQuality(), context.aPass.getEventDate(), context.aPass.getEventDate(), context.aPass.getId());
     }
 }
