@@ -26,11 +26,15 @@ In the logic of `toDto`, the parser knows about oxygen categories, which it shou
 
 If an error occurs during ordering operations (order of passes, oxygen tanks and shuttles), the ordering will not stop. This is a problem.
 
-### Oxygen tank inventory service
+### Oxygen tank inventory service (error in save/get)
 
 Sadly, OXY has a major problem : ordering a second order via `POST /orders` launches an exception in our persistence manager. It is most likely a problem of OneToMany and ManyToOne entity assignation (in services, see `PassService` and `OrderService`, where this was correctly done). This was not solved in time for MEP 1.0.
 
 The service is encapsulated in a try-catch (eh.), so that `OrderService.order(...)` (ordering orders) does not crash because of `OxygenTankInventoryService`.
+
+### Order tank inventory service (code quality)
+
+`OrderTankInventoryService` was done fast. Fast. `.order(...)` is has more spaghetti than an italian restaurant. It has to be refactored.
 
 ## Repositories
 
@@ -40,11 +44,11 @@ Weirdly, when saving the lists of in use and not in use oxygen tanks, they are s
 
 ### Shuttle inventory repository
 
-Same problem that oxygen tank inventory repository, but with arrival and departure shuttles lists.
+Same problem that oxygen tank inventory repository, but with `ShuttleInventoryRepositoryEntity.arrivalShuttles` and `ShuttleInventoryRepositoryEntity.departureShuttles`.
 
 ## Util
 
-### Removal of "\[UTC]" in format
+### Removal of "\[UTC]" in date format
 
 When parsing a date to UTC format, unwanted substring "\[UTC]" is added at the end of the date. We remove it using `String.replaceAll(...)` which is not a viable solution.
 
