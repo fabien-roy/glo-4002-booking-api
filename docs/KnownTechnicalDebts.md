@@ -6,13 +6,13 @@ We aren't perfect. Here's what we know.
 
 ### Dependency injection
 
-As of right now, services aren't injected properly to controllers. There are created within the controller's contructor. This is know, this is horrid.
+As of right now, services aren't properly injected to controllers. There are created within the controller's contructor. This is know, this is horrid.
 
-## Util
+## Domain objects
 
-### Removal of "\[UTC]" in format
+### Inventory
 
-When parsing a date to UTC format, unwanted substring "\[UTC]" is added at the end of the date. We remove it using `String.replaceAll(...)` which is not a viable solution.
+`OxygenTankInventory` and `ShuttleInventory` share a lot in common. They should be merged, somehow. `extends Inventory<OxygenTank>`?
 
 ## Parsers
 
@@ -28,19 +28,25 @@ If an error occurs during ordering operations (order of passes, oxygen tanks and
 
 ### Oxygen tank inventory service
 
-Sadly, OXY has a major proble : ordering a second order via `POST /orders` launched an exception in our persistence manager. This was not solved in time for MEP 1.0.
+Sadly, OXY has a major problem : ordering a second order via `POST /orders` launches an exception in our persistence manager. It is most likely a problem of OneToMany and ManyToOne entity assignation (in services, see `PassService` and `OrderService`, where this was correctly done). This was not solved in time for MEP 1.0.
 
-The service is encapsulated in a try-catch, so that order service (ordering orders) does not crash because of oxygen tank inventory service.
+The service is encapsulated in a try-catch (eh.), so that `OrderService.order(...)` (ordering orders) does not crash because of `OxygenTankInventoryService`.
 
 ## Repositories
 
 ### Oxygen tank inventory repository
 
-Weirdly, when saving the lists of in use and not in use oxygen tanks, they are saved as the same. This is a major problem.
+Weirdly, when saving the lists of in use and not in use oxygen tanks, they are saved as the same. This is a major problem. This is probably due to the fact that `OxygenTanKInventoryEntity.inUseOxygenTanks` and `OxygenTanKInventoryEntity.notInUseOxygenTanks` are both `List<OxygenTankEntity>`. This could be solved using `InUseOxygenTankEntity extends OxygenTankEntity` and `NotInUseOxygenTankEntity extends OxygenTankEntity`.
 
 ### Shuttle inventory repository
 
 Same problem that oxygen tank inventory repository, but with arrival and departure shuttles lists.
+
+## Util
+
+### Removal of "\[UTC]" in format
+
+When parsing a date to UTC format, unwanted substring "\[UTC]" is added at the end of the date. We remove it using `String.replaceAll(...)` which is not a viable solution.
 
 ## Tests
 
