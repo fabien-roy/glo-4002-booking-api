@@ -46,6 +46,12 @@ Weirdly, when saving the lists of in use and not in use oxygen tanks, they are s
 
 Same problem that oxygen tank inventory repository, but with `ShuttleInventoryRepositoryEntity.arrivalShuttles` and `ShuttleInventoryRepositoryEntity.departureShuttles`.
 
+## Entities
+
+### Leaked private keys
+
+Currently, `OrderDto.orderNumber` and `PassDto.passNumber` are litteraly `OrderEntity.id` and `PassEntity.id`. Private keys should never be leaked.
+
 ## Util
 
 ### Removal of "\[UTC]" in date format
