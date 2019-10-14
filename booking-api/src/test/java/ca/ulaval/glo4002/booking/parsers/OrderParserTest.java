@@ -3,10 +3,7 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.constants.VendorConstants;
+import ca.ulaval.glo4002.booking.constants.*;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
@@ -163,10 +160,21 @@ class OrderParserTest {
     void whenParsingToDto_dtoShouldBeValid() {
         OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
-        assertEquals(order.getId(), dto.orderNumber);
+        assertNotNull(dto.orderNumber);
         assertEquals(order.getVendor().getCode(), dto.vendorCode);
         assertEquals(order.getOrderDate().toString().concat("Z"), dto.orderDate);
         assertEquals(1, order.getPasses().size());
+    }
+
+    @Test
+    void whenParsingToDto_dtoOrderNumberShouldBeValid() {
+        OrderWithPassesAsPassesDto dto = subject.toDto(order);
+
+        String vendorCode = dto.orderNumber.substring(0, dto.orderNumber.indexOf(OrderConstants.ORDER_NUMBER_SEPARATOR));
+        String orderNumber = dto.orderNumber.substring(dto.orderNumber.indexOf(OrderConstants.ORDER_NUMBER_SEPARATOR) + 1);
+
+        assertEquals(order.getVendor().getCode(), vendorCode);
+        assertEquals(order.getId().toString(), orderNumber);
     }
 
     @Test

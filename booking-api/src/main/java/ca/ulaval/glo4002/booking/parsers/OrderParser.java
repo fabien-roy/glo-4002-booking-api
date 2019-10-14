@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
+import ca.ulaval.glo4002.booking.constants.OrderConstants;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.domainobjects.vendors.Vendor;
@@ -50,7 +51,7 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
     @Override
     public OrderWithPassesAsPassesDto toDto(Order order) {
         OrderWithPassesAsPassesDto dto = new OrderWithPassesAsPassesDto();
-        dto.orderNumber = order.getId();
+        dto.orderNumber = generateOrderNumber(order);
         dto.orderDate = FestivalDateUtil.toZonedDateTimeString(order.getOrderDate());
         dto.vendorCode = order.getVendor().getCode();
         dto.orderPrice = order.getPrice();
@@ -75,6 +76,10 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
         passeEntities.forEach(pass -> pass.setOrder(orderEntity));
 
         return orderEntity;
+    }
+
+    public String generateOrderNumber(Order order) {
+        return order.getVendor().getCode() + OrderConstants.ORDER_NUMBER_SEPARATOR + order.getId().toString();
     }
 
     private LocalDateTime parseOrderDate(String orderDate) {

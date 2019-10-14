@@ -44,7 +44,7 @@ public class OrderEndToEndTest {
         ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anOrderId);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertEquals(context.anOrderId, response.getBody().orderNumber);
+        assertEquals(context.orderParser.generateOrderNumber(context.orderParser.parseEntity(context.anOrder)), response.getBody().orderNumber);
     }
 
     @Test
@@ -56,8 +56,8 @@ public class OrderEndToEndTest {
 
         assertEquals(Response.Status.OK.getStatusCode(), aResponse.getStatusCodeValue());
         assertEquals(Response.Status.OK.getStatusCode(), anotherResponse.getStatusCodeValue());
-        assertEquals(context.anOrderId, aResponse.getBody().orderNumber);
-        assertEquals(context.anotherOrderId, anotherResponse.getBody().orderNumber);
+        assertEquals(context.orderParser.generateOrderNumber(context.orderParser.parseEntity(context.anOrder)), aResponse.getBody().orderNumber);
+        assertEquals(context.orderParser.generateOrderNumber(context.orderParser.parseEntity(context.anotherOrder)), anotherResponse.getBody().orderNumber);
     }
 
     @Test

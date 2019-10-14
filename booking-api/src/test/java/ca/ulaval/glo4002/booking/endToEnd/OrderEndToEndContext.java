@@ -35,10 +35,11 @@ public class OrderEndToEndContext {
     private static final Double A_ORDER_PRICE = PassConstants.Categories.NEBULA_SINGLE_PASS_PRICE;
     static final Long AN_INVALID_ORDER_ID = -1L;
 
-    public OrderParser orderParser = new OrderParser();
+    OrderParser orderParser = new OrderParser();
+    OrderEntity anOrder;
+    OrderEntity anotherOrder;
+
     private EntityManager entityManager;
-    private OrderEntity anOrder;
-    private OrderEntity anotherOrder;
     private PassEntity aPass;
     private PassEntity anotherPass;
     private Long aPassId = 1L;

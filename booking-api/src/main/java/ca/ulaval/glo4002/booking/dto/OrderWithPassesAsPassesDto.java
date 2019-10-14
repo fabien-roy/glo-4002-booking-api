@@ -8,7 +8,7 @@ import java.util.List;
 
 public class OrderWithPassesAsPassesDto implements Dto {
 
-    public Long orderNumber;
+    public String orderNumber;
 
     @JsonSerialize(using = DoubleContextualSerializer.class)
     @Precision(precision = 2)
