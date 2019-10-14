@@ -32,7 +32,7 @@ Une réponse contenant toutes les informations sur la commande effectuée est re
 
 ```
 {
-   "orderNumber": 1,
+   "orderNumber": "TEAM-1",
    "orderPrice": 500000.00,
    "orderDate": "2050-05-21T15:23:20.142Z",
    "vendorCode": "TEAM",
@@ -76,7 +76,8 @@ Pour les autres erreurs (ex. passCategory qui est invalide, si le champ eventDat
   "description": "invalid format"::string
 } 
 ```
-### GET /orders/{order-id}
+
+### GET /orders/{orderNumber}
 
 #### Réponses
 ```
@@ -103,9 +104,19 @@ Si la commande n’existe pas
 } 
 ```
 
+HTTP 400 Bad request
+
+Si l'orderNumber n'est pas de format <vendorCode>-<orderNumber> (ex : "TEAM-1")
+```
+{
+  "error": "INVALID_ORDER_DTO",
+  "description": "Invalid order format"
+}
+```
+
 ### GET /shuttle-manifests?date="date"
 
-(date est optionnel)
+(date est optionnelle)
 	
 ```
 {
