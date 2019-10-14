@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
+import ca.ulaval.glo4002.booking.constants.ControllerConstants;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,6 +81,17 @@ public class OrderEndToEndTest {
         ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.BAD_REQUEST.getStatusCode(), response.getStatusCodeValue());
+    }
+
+    @Test
+    public void postOrderController_shouldReturnCorrectHeaders() {
+        OrderWithPassesAsEventDatesDto orderDto = context.anOrderDto;
+        context.setUp();
+
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
+
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatusCodeValue());
+        assertEquals( "/orders/" + context.anOrderId, response.getHeaders().get(ControllerConstants.LOCATION_HEADER_NAME).get(0));
     }
 
     @Test
