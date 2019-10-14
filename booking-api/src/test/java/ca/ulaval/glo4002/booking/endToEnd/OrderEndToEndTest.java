@@ -23,7 +23,7 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnHttpErrorPageNotFound_whenOrderNumberIsNonExistent() {
         context.setUp();
 
-        ResponseEntity response = context.orderController.getOrderById(context.anOrderId);
+        ResponseEntity response = context.orderController.getByOrderNumber(context.getOrderNumber(context.anOrderId));
 
         assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatusCodeValue());
     }
@@ -32,7 +32,7 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnHttpErrorPageNotFound_whenOrderNumberIsInvalid() {
         context.setUp();
 
-        ResponseEntity response = context.orderController.getOrderById(OrderEndToEndContext.AN_INVALID_ORDER_ID);
+        ResponseEntity response = context.orderController.getByOrderNumber(context.getOrderNumber(OrderEndToEndContext.AN_INVALID_ORDER_ID));
 
         assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatusCodeValue());
     }
@@ -41,7 +41,7 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnCorrectOrderDto_whenOrderNumberIsExistent() {
         context.setUp().withAnOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.anOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertEquals(context.orderParser.generateOrderNumber(context.orderParser.parseEntity(context.anOrder)), response.getBody().orderNumber);
@@ -51,8 +51,8 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnCorrectOrderDto_whenManyOrderNumberAreExistent() {
         context.setUp().withAnOrder().withAnotherOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anOrderId);
-        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anotherOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.anOrderId));
+        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.anotherOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), aResponse.getStatusCodeValue());
         assertEquals(Response.Status.OK.getStatusCode(), anotherResponse.getStatusCodeValue());

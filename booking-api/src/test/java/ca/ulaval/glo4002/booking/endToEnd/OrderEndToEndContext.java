@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.constants.RepositoryConstants;
-import ca.ulaval.glo4002.booking.constants.VendorConstants;
+import ca.ulaval.glo4002.booking.constants.*;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
@@ -179,5 +176,10 @@ public class OrderEndToEndContext {
         entityManager.getTransaction().commit();
 
         return passId[0];
+    }
+
+    // TODO : MOD, this is horrid.
+    public String getOrderNumber(Long orderId) {
+        return VendorConstants.TEAM_VENDOR_CODE + OrderConstants.ORDER_NUMBER_SEPARATOR + orderId.toString();
     }
 }

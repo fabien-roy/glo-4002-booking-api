@@ -170,11 +170,11 @@ class OrderParserTest {
     void whenParsingToDto_dtoOrderNumberShouldBeValid() {
         OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
-        String vendorCode = dto.orderNumber.substring(0, dto.orderNumber.indexOf(OrderConstants.ORDER_NUMBER_SEPARATOR));
-        String orderNumber = dto.orderNumber.substring(dto.orderNumber.indexOf(OrderConstants.ORDER_NUMBER_SEPARATOR) + 1);
+        String vendorCode = subject.parseVendorCode(dto.orderNumber);
+        Long orderNumber = subject.parseOrderId(dto.orderNumber);
 
         assertEquals(order.getVendor().getCode(), vendorCode);
-        assertEquals(order.getId().toString(), orderNumber);
+        assertEquals(order.getId(), orderNumber);
     }
 
     @Test
@@ -211,5 +211,49 @@ class OrderParserTest {
         OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
         assertNull(dto.passes.get(0).eventDate);
+    }
+
+    @Test
+    void parseOrderId_shouldThrowOrderInvalidFormatException_whenThereIsNoSeparator() {
+        String invalidOrderNumber = "invalidOrderNumber";
+
+        OrderInvalidFormatException thrown = assertThrows(
+                OrderInvalidFormatException.class,
+                ()->subject.parseOrderId(invalidOrderNumber)
+        );
+
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void parseOrderId_shouldReturnCorrectOrderId() {
+        Long expectedOrderId = 1L;
+        String orderNumber = VendorConstants.TEAM_VENDOR_CODE + OrderConstants.ORDER_NUMBER_SEPARATOR + expectedOrderId.toString();
+
+        Long orderId = subject.parseOrderId(orderNumber);
+
+        assertEquals(expectedOrderId, orderId);
+    }
+
+    @Test
+    void parseVendorCode_shouldThrowOrderInvalidFormatException_whenThereIsNoSeparator() {
+        String invalidOrderNumber = "invalidOrderNumber";
+
+        OrderInvalidFormatException thrown = assertThrows(
+                OrderInvalidFormatException.class,
+                ()->subject.parseVendorCode(invalidOrderNumber)
+        );
+
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void parseVendorCode_shouldReturnCorrectVendorCode() {
+        String expectedVendorCode = VendorConstants.TEAM_VENDOR_CODE;
+        String orderNumber = expectedVendorCode + OrderConstants.ORDER_NUMBER_SEPARATOR + "1";
+
+        String vendorCode = subject.parseVendorCode(orderNumber);
+
+        assertEquals(expectedVendorCode, vendorCode);
     }
 }

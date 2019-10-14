@@ -82,6 +82,32 @@ public class OrderParser implements EntityParser<Order, OrderEntity>, ParseDtoPa
         return order.getVendor().getCode() + OrderConstants.ORDER_NUMBER_SEPARATOR + order.getId().toString();
     }
 
+    public Long parseOrderId(String orderNumber) {
+        Integer separator = getOrderNumberSeparator(orderNumber);
+
+        try {
+            return Long.parseLong(orderNumber.substring(separator + 1));
+        } catch (Exception exception) {
+            throw new OrderInvalidFormatException();
+        }
+    }
+
+    public String parseVendorCode(String orderNumber) {
+        Integer separator = getOrderNumberSeparator(orderNumber);
+
+        return orderNumber.substring(0, separator);
+    }
+
+    private Integer getOrderNumberSeparator(String orderNumber) {
+        Integer separator = orderNumber.indexOf(OrderConstants.ORDER_NUMBER_SEPARATOR);
+
+        if (separator < 0) {
+            throw new OrderInvalidFormatException();
+        }
+
+        return separator;
+    }
+
     private LocalDateTime parseOrderDate(String orderDate) {
         try {
             return FestivalDateUtil.toLocalDateTime(orderDate);

@@ -33,10 +33,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(Long id) {
-        OrderEntity orderEntity = orderRepository.findById(id)
-                .orElseThrow(() -> new OrderNotFoundException(id.toString()));
+        OrderEntity orderEntity = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id.toString()));
 
         return orderParser.parseEntity(orderEntity);
+    }
+
+    @Override
+    public Order findByOrderNumber(String orderNumber) {
+        Long orderId = orderParser.parseOrderId(orderNumber);
+
+        return findById(orderId);
     }
 
     @Override
