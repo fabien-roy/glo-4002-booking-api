@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.controllers;
 
+import ca.ulaval.glo4002.booking.constants.ControllerConstants;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.FestivalException;
@@ -7,6 +8,7 @@ import ca.ulaval.glo4002.booking.exceptions.HumanReadableException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.*;
@@ -64,6 +66,9 @@ public class OrderController {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).body(order);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(ControllerConstants.LOCATION_HEADER_NAME, "/orders/" + order.orderNumber);
+
+        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).headers(headers).body(order);
     }
 }
