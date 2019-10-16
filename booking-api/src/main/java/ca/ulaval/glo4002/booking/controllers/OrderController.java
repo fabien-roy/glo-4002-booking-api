@@ -39,11 +39,11 @@ public class OrderController {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getOrderById(@PathParam("id") Long entityId){
+    public ResponseEntity<?> getByOrderNumber(@PathParam("id") String orderNumber){
         OrderWithPassesAsPassesDto order;
 
         try {
-            order = orderParser.toDto(orderService.findById(entityId));
+            order = orderParser.toDto(orderService.findByOrderNumber(orderNumber));
         } catch (HumanReadableException exception) {
             return ResponseEntity.status(exception.getHttpStatus()).body(exception.toErrorDto());
         } catch (FestivalException exception) {

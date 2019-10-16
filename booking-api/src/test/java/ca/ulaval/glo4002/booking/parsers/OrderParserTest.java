@@ -3,10 +3,7 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.builders.VendorBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassCategoryBuilder;
 import ca.ulaval.glo4002.booking.builders.passes.PassOptionBuilder;
-import ca.ulaval.glo4002.booking.constants.DateConstants;
-import ca.ulaval.glo4002.booking.constants.ExceptionConstants;
-import ca.ulaval.glo4002.booking.constants.PassConstants;
-import ca.ulaval.glo4002.booking.constants.VendorConstants;
+import ca.ulaval.glo4002.booking.constants.*;
 import ca.ulaval.glo4002.booking.domainobjects.orders.Order;
 import ca.ulaval.glo4002.booking.domainobjects.passes.Pass;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
@@ -163,10 +160,21 @@ class OrderParserTest {
     void whenParsingToDto_dtoShouldBeValid() {
         OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
-        assertEquals(order.getId(), dto.orderNumber);
+        assertNotNull(dto.orderNumber);
         assertEquals(order.getVendor().getCode(), dto.vendorCode);
         assertEquals(order.getOrderDate().toString().concat("Z"), dto.orderDate);
         assertEquals(1, order.getPasses().size());
+    }
+
+    @Test
+    void whenParsingToDto_dtoOrderNumberShouldBeValid() {
+        OrderWithPassesAsPassesDto dto = subject.toDto(order);
+
+        String vendorCode = subject.parseVendorCode(dto.orderNumber);
+        Long orderNumber = subject.parseOrderId(dto.orderNumber);
+
+        assertEquals(order.getVendor().getCode(), vendorCode);
+        assertEquals(order.getId(), orderNumber);
     }
 
     @Test
@@ -203,5 +211,49 @@ class OrderParserTest {
         OrderWithPassesAsPassesDto dto = subject.toDto(order);
 
         assertNull(dto.passes.get(0).eventDate);
+    }
+
+    @Test
+    void parseOrderId_shouldThrowOrderInvalidFormatException_whenThereIsNoSeparator() {
+        String invalidOrderNumber = "invalidOrderNumber";
+
+        OrderInvalidFormatException thrown = assertThrows(
+                OrderInvalidFormatException.class,
+                ()->subject.parseOrderId(invalidOrderNumber)
+        );
+
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void parseOrderId_shouldReturnCorrectOrderId() {
+        Long expectedOrderId = 1L;
+        String orderNumber = VendorConstants.TEAM_VENDOR_CODE + OrderConstants.ORDER_NUMBER_SEPARATOR + expectedOrderId.toString();
+
+        Long orderId = subject.parseOrderId(orderNumber);
+
+        assertEquals(expectedOrderId, orderId);
+    }
+
+    @Test
+    void parseVendorCode_shouldThrowOrderInvalidFormatException_whenThereIsNoSeparator() {
+        String invalidOrderNumber = "invalidOrderNumber";
+
+        OrderInvalidFormatException thrown = assertThrows(
+                OrderInvalidFormatException.class,
+                ()->subject.parseVendorCode(invalidOrderNumber)
+        );
+
+        assertEquals(ExceptionConstants.Order.INVALID_FORMAT_ERROR, thrown.getMessage());
+    }
+
+    @Test
+    void parseVendorCode_shouldReturnCorrectVendorCode() {
+        String expectedVendorCode = VendorConstants.TEAM_VENDOR_CODE;
+        String orderNumber = expectedVendorCode + OrderConstants.ORDER_NUMBER_SEPARATOR + "1";
+
+        String vendorCode = subject.parseVendorCode(orderNumber);
+
+        assertEquals(expectedVendorCode, vendorCode);
     }
 }

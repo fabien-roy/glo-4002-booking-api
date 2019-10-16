@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.endToEnd;
 
 import ca.ulaval.glo4002.booking.constants.ControllerConstants;
+import ca.ulaval.glo4002.booking.constants.OrderConstants;
+import ca.ulaval.glo4002.booking.constants.VendorConstants;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +26,7 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnHttpErrorPageNotFound_whenOrderNumberIsNonExistent() {
         context.setUp();
 
-        ResponseEntity response = context.orderController.getOrderById(context.anOrderId);
+        ResponseEntity response = context.orderController.getByOrderNumber(context.getOrderNumber(context.anOrderId));
 
         assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatusCodeValue());
     }
@@ -33,7 +35,7 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnHttpErrorPageNotFound_whenOrderNumberIsInvalid() {
         context.setUp();
 
-        ResponseEntity response = context.orderController.getOrderById(OrderEndToEndContext.AN_INVALID_ORDER_ID);
+        ResponseEntity response = context.orderController.getByOrderNumber(context.getOrderNumber(OrderEndToEndContext.AN_INVALID_ORDER_ID));
 
         assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatusCodeValue());
     }
@@ -42,23 +44,23 @@ public class OrderEndToEndTest {
     public void getOrderController_shouldReturnCorrectOrderDto_whenOrderNumberIsExistent() {
         context.setUp().withAnOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.anOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
-        assertEquals(context.anOrderId, response.getBody().orderNumber);
+        assertEquals(context.orderParser.generateOrderNumber(context.orderParser.parseEntity(context.anOrder)), response.getBody().orderNumber);
     }
 
     @Test
     public void getOrderController_shouldReturnCorrectOrderDto_whenManyOrderNumberAreExistent() {
         context.setUp().withAnOrder().withAnotherOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anOrderId);
-        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.anotherOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> aResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.anOrderId));
+        ResponseEntity<OrderWithPassesAsPassesDto> anotherResponse = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.anotherOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), aResponse.getStatusCodeValue());
         assertEquals(Response.Status.OK.getStatusCode(), anotherResponse.getStatusCodeValue());
-        assertEquals(context.anOrderId, aResponse.getBody().orderNumber);
-        assertEquals(context.anotherOrderId, anotherResponse.getBody().orderNumber);
+        assertEquals(context.orderParser.generateOrderNumber(context.orderParser.parseEntity(context.anOrder)), aResponse.getBody().orderNumber);
+        assertEquals(context.orderParser.generateOrderNumber(context.orderParser.parseEntity(context.anotherOrder)), anotherResponse.getBody().orderNumber);
     }
 
     @Test
@@ -91,7 +93,7 @@ public class OrderEndToEndTest {
         ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.addOrder(orderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatusCodeValue());
-        assertEquals( "/orders/" + context.anOrderId, response.getHeaders().get(ControllerConstants.LOCATION_HEADER_NAME).get(0));
+        assertEquals( "/orders/" + VendorConstants.TEAM_VENDOR_CODE + OrderConstants.ORDER_NUMBER_SEPARATOR + context.anOrderId, response.getHeaders().get(ControllerConstants.LOCATION_HEADER_NAME).get(0));
     }
 
     @Test

@@ -6,6 +6,8 @@ public interface OrderService extends Service<Order> {
 
     Order findById(Long id);
 
+    Order findByOrderNumber(String orderNumber);
+
     Iterable<Order> findAll();
 
     Order order(Order order);

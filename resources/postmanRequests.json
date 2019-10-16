@@ -6,15 +6,45 @@
 	},
 	"item": [
 		{
-			"name": "POST /orders",
+			"name": "POST /orders (package)",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"orderDate\": \"2050-05-21T15:23:20.142Z\",\n  \"vendorCode\": \"TEAM\",\n  \"passes\": {\n              \"passCategory\":\"nebula\",\n              \"passOption\": \"package\"\n            }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8181/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /orders (singlePass)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
@@ -45,7 +75,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8181/orders/6",
+					"raw": "http://localhost:8181/orders/TEAM-1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -53,7 +83,7 @@
 					"port": "8181",
 					"path": [
 						"orders",
-						"6"
+						"TEAM-1"
 					]
 				}
 			},
@@ -83,6 +113,29 @@
 			"response": []
 		},
 		{
+			"name": "GET /shuttle-manifests",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8181/shuttle-manifests",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"shuttle-manifests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "GET /shuttle-manifests?date=date",
 			"request": {
 				"method": "GET",
@@ -92,7 +145,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8181/shuttle-manifests?date=2050-07-19",
+					"raw": "http://localhost:8181/shuttle-manifests?date=2050-07-17",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -104,7 +157,7 @@
 					"query": [
 						{
 							"key": "date",
-							"value": "2050-07-19"
+							"value": "2050-07-17"
 						}
 					]
 				}

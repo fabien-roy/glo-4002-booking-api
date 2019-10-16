@@ -26,7 +26,7 @@ public class PassEndToEndTest {
     public void getOrderController_shouldReturnCorrectPassesDto_whenOrderNumberIsExistent() {
         context.setUp().withASinglePassOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.aSinglePassOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertEquals(1, response.getBody().passes.size());
@@ -39,7 +39,7 @@ public class PassEndToEndTest {
     public void getOrderController_shouldReturnCorrectPassesDto_whenOrderNumberIsExistent_andOrderHasMultipleSinglePasses() {
         context.setUp().withMultipleSinglePassOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.aSinglePassOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertEquals(2, response.getBody().passes.size());
@@ -52,7 +52,7 @@ public class PassEndToEndTest {
     public void getOrderController_shouldReturnCorrectPassesDto_whenOrderNumberIsExistent_andOrderHasAPackagePass() {
         context.setUp().withAPackagePassOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.aSinglePassOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertNull(response.getBody().passes.get(0).eventDate);
@@ -63,7 +63,7 @@ public class PassEndToEndTest {
     public void getOrderController_shouldReturnCorrectPassesDto_whenManyOrderNumberAreExistent() {
         context.setUp().withASinglePassOrder().withAnotherSinglePassOrder();
 
-        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getOrderById(context.aSinglePassOrderId);
+        ResponseEntity<OrderWithPassesAsPassesDto> response = (ResponseEntity<OrderWithPassesAsPassesDto>) context.orderController.getByOrderNumber(context.getOrderNumber(context.aSinglePassOrderId));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCodeValue());
         assertEquals(1, response.getBody().passes.size());
