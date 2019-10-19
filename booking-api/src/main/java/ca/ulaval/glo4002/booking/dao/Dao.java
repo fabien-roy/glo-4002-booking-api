@@ -7,9 +7,9 @@ import java.util.Optional;
 
 // TODO : Remove this, but it's useful : https://www.baeldung.com/java-dao-pattern
 
-public interface Dao<T, U> {
+public interface Dao<T> {
 
-    Optional<T> get(U id);
+    Optional<T> get(Id id);
 
     List<T> getAll();
 

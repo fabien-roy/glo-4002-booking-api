@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.controllers;
 
+import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
@@ -36,7 +37,8 @@ public class OrderController {
         OrderWithPassesAsPassesDto orderDto;
 
         try {
-            Order order = repository.getByOrderNumber(orderNumber).get(); // TODO : Should we check?
+            Id orderId = parser.parseIdFromOrderNumber(orderNumber);
+            Order order = repository.getById(orderId).get(); // TODO : Should we check?
             orderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.notFound().build();
@@ -49,9 +51,10 @@ public class OrderController {
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto requestOrderDto) {
         OrderWithPassesAsPassesDto responseOrderDto;
+        Order order;
 
         try {
-            Order order = parser.parseDto(requestOrderDto);
+            order = parser.parseDto(requestOrderDto);
             order = service.order(order);
             responseOrderDto = parser.toDto(order);
         } catch (BookingException exception) {
@@ -59,7 +62,7 @@ public class OrderController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.LOCATION, "/orders/" + responseOrderDto.getOrderNumber());
+        headers.add(HttpHeaders.LOCATION, "/orders/" + order.getOrderNumber());
 
         return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).headers(headers).body(responseOrderDto);
     }

@@ -48,7 +48,7 @@ class OrderDaoTest {
         Optional<Order> foundOrder = subject.get(aOrderNumber);
 
         assertTrue(foundOrder.isPresent());
-        assertEquals(aOrder.getOrderNumber(), foundOrder.get().getOrderNumber());
+        assertEquals(aOrder.getId(), foundOrder.get().getId());
     }
 
     @Test
@@ -62,7 +62,7 @@ class OrderDaoTest {
         Optional<Order> foundOrder = subject.get(aOrderNumber);
 
         assertTrue(foundOrder.isPresent());
-        assertEquals(aOrder.getOrderNumber(), foundOrder.get().getOrderNumber());
+        assertEquals(aOrder.getId(), foundOrder.get().getId());
     }
 
     @Test
@@ -75,8 +75,8 @@ class OrderDaoTest {
         List<Order> orders = subject.getAll();
 
         assertEquals(2, orders.size());
-        assertTrue(orders.stream().anyMatch(order -> order.getOrderNumber().equals(aOrder.getOrderNumber())));
-        assertTrue(orders.stream().anyMatch(order -> order.getOrderNumber().equals(anotherOrder.getOrderNumber())));
+        assertTrue(orders.stream().anyMatch(order -> order.getId().equals(aOrder.getId())));
+        assertTrue(orders.stream().anyMatch(order -> order.getId().equals(anotherOrder.getId())));
     }
 
     @Test

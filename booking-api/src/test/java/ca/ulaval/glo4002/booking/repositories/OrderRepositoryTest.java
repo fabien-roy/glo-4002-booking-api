@@ -25,11 +25,11 @@ class OrderRepositoryTest {
     @Test
     public void getByOrderNumber_shouldReturnCorrectOrder() {
         Order expectedOrder = new Order("aOrderNumber");
-        when(dao.get(expectedOrder.getOrderNumber())).thenReturn(Optional.of(expectedOrder));
+        when(dao.get(expectedOrder.getId())).thenReturn(Optional.of(expectedOrder));
 
-        Optional<Order> order = subject.getByOrderNumber(expectedOrder.getOrderNumber());
+        Optional<Order> order = subject.getById(expectedOrder.getId());
 
         assertTrue(order.isPresent());
-        assertEquals(expectedOrder.getOrderNumber(), order.get().getOrderNumber());
+        assertEquals(expectedOrder.getId(), order.get().getId());
     }
 }

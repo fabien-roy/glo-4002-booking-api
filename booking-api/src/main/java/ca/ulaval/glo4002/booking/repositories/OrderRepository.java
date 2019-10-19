@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.dao.OrderDao;
+import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.Order;
 
 import java.util.Optional;
@@ -13,8 +14,8 @@ public class OrderRepository {
         this.dao = dao;
     }
 
-    public Optional<Order> getByOrderNumber(String orderNumber) {
-        return dao.get(orderNumber);
+    public Optional<Order> getById(Id id) {
+        return dao.get(id);
     }
 
     public void addOrder(Order order) {

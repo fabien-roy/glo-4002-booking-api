@@ -1,6 +1,14 @@
 package ca.ulaval.glo4002.booking.domain;
 
-public interface Id<T> {
+public class Id {
 
-    T getValue();
+    private Long value;
+
+    public Id(Long value) {
+        this.value = value;
+    }
+
+    public Long getValue() {
+        return value;
+    }
 }
