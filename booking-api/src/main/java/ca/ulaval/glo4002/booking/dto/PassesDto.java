@@ -4,8 +4,8 @@ import java.util.List;
 
 public class PassesDto {
 
-    public Long passNumber;
-    public String passCategory;
-    public String passOption;
-    public List<String> eventDates;
+    private Long passNumber;
+    private String passCategory;
+    private String passOption;
+    private List<String> eventDates;
 }

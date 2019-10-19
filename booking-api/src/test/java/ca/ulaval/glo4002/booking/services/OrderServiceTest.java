@@ -1,10 +1,12 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.domain.Order;
+import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class OrderServiceTest {
 
@@ -18,9 +20,11 @@ class OrderServiceTest {
     }
 
     @Test
-    public void order_shouldOrder() {
-        subject.order(A_ORDER);
+    public void order_shouldAddOrder() {
+        Order sentOrder = new Order("aOrderNumber");
 
-        verify(repository).
+        Order resultOrder = subject.order(sentOrder);
+
+        verify(repository).addOrder(resultOrder);
     }
 }

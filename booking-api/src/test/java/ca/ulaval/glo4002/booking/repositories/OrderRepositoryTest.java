@@ -1,33 +1,35 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.dao.OrderDao;
 import ca.ulaval.glo4002.booking.domain.Order;
-import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class OrderRepositoryTest {
 
     private OrderRepository subject;
+    private OrderDao dao;
 
     @BeforeEach
     public void setUpSubject() {
-        subject = new OrderRepository();
-    }
-
-    @Test
-    public void getByOrderNumber_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
-        assertThrows(
-                OrderNotFoundException.class,
-                () -> subject.getByOrderNumber(A_NON_EXISTANT_ORDER_NUMBER)
-        );
+        dao = mock(OrderDao.class);
+        subject = new OrderRepository(dao);
     }
 
     @Test
     public void getByOrderNumber_shouldReturnCorrectOrder() {
-        Order order = subject.getByOrderNumber(A_ORDER_NUMBER);
+        Order expectedOrder = new Order("aOrderNumber");
+        when(dao.get(expectedOrder.getOrderNumber())).thenReturn(Optional.of(expectedOrder));
 
-        assertEquals(A_ORDER_NUMBER, order.getOrderNumber());
+        Optional<Order> order = subject.getByOrderNumber(expectedOrder.getOrderNumber());
+
+        assertTrue(order.isPresent());
+        assertEquals(expectedOrder.getOrderNumber(), order.get().getOrderNumber());
     }
 }

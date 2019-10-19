@@ -11,7 +11,9 @@ public class OrderService {
         this.repository = repository;
     }
 
-    public Order get(String orderNumber) {
-        return repository.getByOrderNumber(orderNumber);
+    public Order order(Order order) {
+        repository.addOrder(order);
+
+        return order;
     }
 }
