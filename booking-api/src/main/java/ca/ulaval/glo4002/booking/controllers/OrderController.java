@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
+import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
@@ -39,7 +40,7 @@ public class OrderController {
 
         try {
             OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
-            Order order = repository.getById(orderNumber.getId()).get(); // TODO : Should we check?
+            Order order = repository.getById(orderNumber.getId()).get();
             orderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.notFound().build();
