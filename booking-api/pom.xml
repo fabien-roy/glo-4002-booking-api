@@ -80,6 +80,23 @@
 		    <artifactId>hibernate-annotations</artifactId>
 		    <version>3.5.6-Final</version>
 		</dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.0.Final</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>byte-buddy</artifactId>
+                    <groupId>net.bytebuddy</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.28.2</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     
 
