@@ -38,6 +38,10 @@ public class OrderNumber {
         return id;
     }
 
+    public void setId(Id id) {
+        this.id = id;
+    }
+
     public String getVendorCode() {
         return vendorCode;
     }

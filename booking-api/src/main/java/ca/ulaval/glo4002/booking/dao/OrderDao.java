@@ -12,9 +12,11 @@ import java.util.Optional;
 public class OrderDao implements Dao<Order> {
 
     private List<Order> orders;
+    private Id nextId;
 
     public OrderDao() {
         orders = new ArrayList<>();
+        nextId = new Id(0L);
     }
 
     @Override
@@ -38,6 +40,9 @@ public class OrderDao implements Dao<Order> {
         if (orders.contains(order)) {
             throw new OrderAlreadyCreatedException(order.getId().getValue().toString());
         }
+
+        order.setId(nextId);
+        nextId = new Id(nextId.getValue() + 1);
 
         orders.add(order);
     }

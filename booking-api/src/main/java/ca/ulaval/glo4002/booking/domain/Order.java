@@ -24,6 +24,10 @@ public class Order {
         return orderNumber.getId();
     }
 
+    public void setId(Id id) {
+        orderNumber.setId(id);
+    }
+
     public String getOrderNumber() {
         return orderNumber.getOrderNumber();
     }

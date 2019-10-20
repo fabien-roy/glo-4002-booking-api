@@ -2,13 +2,17 @@ package ca.ulaval.glo4002.booking.dao;
 
 import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.Order;
+import ca.ulaval.glo4002.booking.domain.OrderDate;
 import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -100,13 +104,27 @@ class OrderDaoTest {
 
     @Test
     public void save_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
-        Id aOrderId = new Id(A_ID);
-        Order aOrder = new Order(aOrderId);
+        OrderDate orderDate = new OrderDate("2050-05-21T15:23:20.142Z");
+        Order aOrder = new Order("VENDOR", orderDate);
         subject.save(aOrder);
 
         assertThrows(
                 OrderAlreadyCreatedException.class,
                 () -> subject.save(aOrder)
         );
+    }
+
+    @Test
+    void save_shouldReturnUniqueIds() {
+        OrderDate orderDate = new OrderDate("2050-05-21T15:23:20.142Z");
+        Order aOrder = new Order("VENDOR", orderDate);
+        Order anotherOrder = new Order("VENDOR", orderDate);
+
+        subject.save(aOrder);
+        subject.save(anotherOrder);
+        List<Order> savedOrders = subject.getAll();
+        List<Order> distinctSavedOrders = savedOrders.stream().distinct().collect(Collectors.toList());
+
+        assertEquals(2, distinctSavedOrders.size());
     }
 }
