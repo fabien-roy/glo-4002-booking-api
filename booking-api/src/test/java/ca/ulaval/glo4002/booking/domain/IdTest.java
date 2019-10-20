@@ -26,4 +26,15 @@ class IdTest {
 
         assertFalse(result);
     }
+
+    @Test
+    void equals_shouldReturnTrue_whenIdHasSameValue() {
+        Long aId = 1L;
+        Id subject = new Id(aId);
+        Id other = new Id(aId);
+
+        boolean result = subject.equals(other);
+
+        assertTrue(result);
+    }
 }
