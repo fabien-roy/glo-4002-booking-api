@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.domain;
 
 import ca.ulaval.glo4002.booking.exceptions.InvalidOrderNumberFormatException;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

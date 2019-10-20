@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 
 public class OrderDate {
 
-    private static final String PATTERN = "y-MM-dEEEH:m:s.SZ";
     private LocalDateTime value;
 
     public OrderDate(String value) {

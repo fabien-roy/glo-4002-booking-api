@@ -50,9 +50,4 @@ class OrderParserTest {
         assertEquals(expectedOrderDate.toString(), order.getOrderDate().toString());
         assertEquals(orderDto.getVendorCode(), order.getVendorCode());
     }
-
-    @Test
-    public void parseDto_shouldThrowInvalidFormatException_whenOrderDateIsInvalid() {
-        // TODO
-    }
 }
