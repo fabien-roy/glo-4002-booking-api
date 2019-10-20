@@ -1,10 +1,11 @@
 package ca.ulaval.glo4002.booking.domain;
 
+import ca.ulaval.glo4002.booking.exceptions.InvalidOrderNumberFormatException;
+
 public class OrderNumber {
 
     private Id id;
     private String vendorCode;
-    private String orderNumber;
 
     public static final String SEPARATOR = "-";
 
@@ -14,7 +15,23 @@ public class OrderNumber {
     }
 
     public OrderNumber(String orderNumber) {
-        // TODO : Parse
+        validateOrderNumber(orderNumber);
+
+        int separatorIndex = orderNumber.indexOf(SEPARATOR);
+
+        String vendorCode = orderNumber.substring(0, separatorIndex);
+        String id = orderNumber.substring(separatorIndex + 1);
+
+        this.id = new Id(id);
+        this.vendorCode = vendorCode;
+    }
+
+    private void validateOrderNumber(String orderNumber) {
+        int numberOfSeparators = orderNumber.split(SEPARATOR).length - 1;
+
+        if (numberOfSeparators != 1) {
+            throw new InvalidOrderNumberFormatException();
+        }
     }
 
     public Id getId() {
@@ -26,6 +43,6 @@ public class OrderNumber {
     }
 
     public String getOrderNumber() {
-        return orderNumber;
+        return id.toString() + SEPARATOR + vendorCode;
     }
 }

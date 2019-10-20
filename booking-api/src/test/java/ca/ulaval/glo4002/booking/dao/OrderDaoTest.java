@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderDaoTest {
 
-    private static final Long A_NON_EXISTENT_ID = -1L;
     private static final Long A_ID = 0L;
     private static final Long ANOTHER_ID = 1L;
+    private static final Long A_NON_EXISTENT_ID = -1L;
 
     private OrderDao subject;
 

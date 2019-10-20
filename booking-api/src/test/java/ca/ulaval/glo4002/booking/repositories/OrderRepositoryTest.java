@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.dao.OrderDao;
+import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import static org.mockito.Mockito.when;
 
 class OrderRepositoryTest {
 
+    private static final Long A_ID = 1L;
     private OrderRepository subject;
     private OrderDao dao;
 
@@ -24,12 +26,13 @@ class OrderRepositoryTest {
 
     @Test
     public void getByOrderNumber_shouldReturnCorrectOrder() {
-        Order expectedOrder = new Order("aOrderNumber");
+        Id expectedOrderId = new Id(A_ID);
+        Order expectedOrder = new Order(expectedOrderId);
         when(dao.get(expectedOrder.getId())).thenReturn(Optional.of(expectedOrder));
 
         Optional<Order> order = subject.getById(expectedOrder.getId());
 
         assertTrue(order.isPresent());
-        assertEquals(expectedOrder.getId(), order.get().getId());
+        assertEquals(expectedOrderId, order.get().getId());
     }
 }

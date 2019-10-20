@@ -7,11 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderTest {
 
     @Test
-    void getOrderNumber_shouldReturnOrderNumber() {
-        // TODO
-    }
-
-    @Test
     void getPrice_shouldReturnPrice() {
         // TODO
     }

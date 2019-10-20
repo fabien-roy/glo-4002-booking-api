@@ -15,4 +15,15 @@ class IdTest {
                 () -> new Id("anInvalidIdFormat")
         );
     }
+
+    @Test
+    void equals_shouldReturnFalse_whenObjectIsNotId() {
+        Long aId = 1L;
+        Id subject = new Id(aId);
+        Object object = new Object();
+
+        boolean result = subject.equals(object);
+
+        assertFalse(result);
+    }
 }
