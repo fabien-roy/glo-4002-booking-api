@@ -9,7 +9,7 @@ public class OrderParser {
 
     // TODO
     public OrderWithPassesAsPassesDto toDto(Order order) {
-        return new OrderWithPassesAsPassesDto();
+        return null;
     }
 
     // TODO
@@ -18,7 +18,7 @@ public class OrderParser {
     }
 
     // TODO
-    public Id parseIdFromOrderNumber(String orderNumber) {
+    public Id parseOrderNumberFromFullOrderNumber(String orderNumber) {
         return null;
     }
 }

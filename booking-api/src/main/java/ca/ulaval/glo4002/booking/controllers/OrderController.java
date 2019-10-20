@@ -31,14 +31,14 @@ public class OrderController {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/{fullOrderNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getByOrderNumber(@PathParam("id") String orderNumber){
+    public ResponseEntity<?> getByOrderNumber(@PathParam("fullOrderNumber") String fullOrderNumber){
         OrderWithPassesAsPassesDto orderDto;
 
         try {
-            Id orderId = parser.parseIdFromOrderNumber(orderNumber);
-            Order order = repository.getById(orderId).get(); // TODO : Should we check?
+            Id orderNumber = parser.parseOrderNumberFromFullOrderNumber(fullOrderNumber);
+            Order order = repository.getById(orderNumber).get(); // TODO : Should we check?
             orderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.notFound().build();
