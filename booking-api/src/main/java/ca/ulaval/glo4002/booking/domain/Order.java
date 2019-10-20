@@ -1,19 +1,23 @@
 package ca.ulaval.glo4002.booking.domain;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public class Order {
 
     private OrderNumber orderNumber;
-    private LocalDateTime orderDate;
+    private OrderDate orderDate;
 
     public Order(Id id) {
-        this.orderNumber = new OrderNumber(id);
+        this.orderNumber = new OrderNumber(id, null);
     }
 
     public Order(String orderNumber) {
         this.orderNumber = new OrderNumber(orderNumber);
+    }
+
+    public Order(String vendorCode, OrderDate orderDate) {
+        this.orderNumber = new OrderNumber(null, vendorCode);
+        this.orderDate = orderDate;
     }
 
     public Id getId() {
@@ -28,7 +32,7 @@ public class Order {
         return orderNumber.getVendorCode();
     }
 
-    public LocalDateTime getOrderDate() {
+    public OrderDate getOrderDate() {
         return orderDate;
     }
 

@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.Order;
+import ca.ulaval.glo4002.booking.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
@@ -31,14 +32,14 @@ public class OrderController {
     }
 
     @GET
-    @Path("/{fullOrderNumber}")
+    @Path("/{requestedOrderNumber}")
     @Produces(MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getByOrderNumber(@PathParam("fullOrderNumber") String fullOrderNumber){
+    public ResponseEntity<?> getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber){
         OrderWithPassesAsPassesDto orderDto;
 
         try {
-            Id orderNumber = parser.parseOrderNumberFromFullOrderNumber(fullOrderNumber);
-            Order order = repository.getById(orderNumber).get(); // TODO : Should we check?
+            OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
+            Order order = repository.getById(orderNumber.getId()).get(); // TODO : Should we check?
             orderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.notFound().build();

@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.Money;
 import ca.ulaval.glo4002.booking.domain.Order;
+import ca.ulaval.glo4002.booking.domain.OrderDate;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
@@ -26,10 +27,8 @@ class OrderParserTest {
     @Test
     public void toDto_shouldBuildDto() {
         Money aPrice = new Money(new BigDecimal(500));
-        String aVendorCode = "aVendorCode";
         Order order = mock(Order.class);
         when(order.getPrice()).thenReturn(aPrice);
-        when(order.getVendorCode()).thenReturn(aVendorCode);
 
         OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
 
@@ -38,14 +37,22 @@ class OrderParserTest {
 
     @Test
     public void parseDto_shouldParseDto() {
+        String orderDate = "2050-05-21T15:23:20.142Z";
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                "2050-07-17",
+                orderDate,
                 "TEAM",
                 new PassesDto()
         );
+        OrderDate expectedOrderDate = new OrderDate(orderDate);
 
         Order order = subject.parseDto(orderDto);
 
-        assertEquals(orderDto.getOrderDate(), order.getOrderDate().toString());
+        assertEquals(expectedOrderDate.toString(), order.getOrderDate().toString());
+        assertEquals(orderDto.getVendorCode(), order.getVendorCode());
+    }
+
+    @Test
+    public void parseDto_shouldThrowInvalidFormatException_whenOrderDateIsInvalid() {
+        // TODO
     }
 }

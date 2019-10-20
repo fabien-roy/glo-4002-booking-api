@@ -10,4 +10,9 @@ class OrderTest {
     void getOrderNumber_shouldReturnOrderNumber() {
         // TODO
     }
+
+    @Test
+    void getPrice_shouldReturnPrice() {
+        // TODO
+    }
 }

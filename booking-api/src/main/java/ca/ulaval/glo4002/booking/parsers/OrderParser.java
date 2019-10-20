@@ -2,23 +2,28 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.Order;
+import ca.ulaval.glo4002.booking.domain.OrderDate;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class OrderParser {
 
-    // TODO
+    // TODO : Add passes to DTO
     public OrderWithPassesAsPassesDto toDto(Order order) {
-        return null;
+        return new OrderWithPassesAsPassesDto(
+                order.getPrice().getValue().doubleValue(),
+                new ArrayList<>()
+        );
     }
 
     // TODO
     public Order parseDto(OrderWithPassesAsEventDatesDto orderDto) {
-        return null;
-    }
+        OrderDate orderDate = new OrderDate(orderDto.getOrderDate());
 
-    // TODO
-    public Id parseOrderNumberFromFullOrderNumber(String orderNumber) {
-        return null;
+        return new Order(orderDto.getVendorCode(), orderDate);
     }
 }

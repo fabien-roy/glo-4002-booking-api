@@ -8,8 +8,9 @@ public class OrderNumber {
 
     public static final String SEPARATOR = "-";
 
-    public OrderNumber(Id id) {
+    public OrderNumber(Id id, String vendorCode) {
         this.id = id;
+        this.vendorCode = vendorCode;
     }
 
     public OrderNumber(String orderNumber) {

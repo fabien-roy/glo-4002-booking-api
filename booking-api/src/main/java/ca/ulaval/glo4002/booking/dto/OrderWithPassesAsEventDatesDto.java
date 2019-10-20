@@ -15,4 +15,8 @@ public class OrderWithPassesAsEventDatesDto {
     public String getOrderDate() {
         return orderDate;
     }
+
+    public String getVendorCode() {
+        return vendorCode;
+    }
 }
