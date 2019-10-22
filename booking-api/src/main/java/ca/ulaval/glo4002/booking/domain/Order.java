@@ -5,11 +5,11 @@ import java.util.List;
 
 public class Order {
 
-    private Long orderCategory;
+    private Long orderCategory; // TODO : Make OrderCategory class
     private OrderNumber orderNumber;
     private OrderDate orderDate;
     private List<Pass> passes;
-    private Money totalPrice;
+    private Money price;
 
     public Order(Id id) {
         this.orderNumber = new OrderNumber(id, null);
@@ -22,8 +22,8 @@ public class Order {
     public Order(Long orderCategory, List<Pass> passes) {
         this.orderCategory = orderCategory;
         this.passes = passes;
-        this.totalPrice = new Money();
-        calculateTotalPrice();
+        this.price = new Money();
+        calculatePrice();
     }
 
     public Order(String vendorCode, OrderDate orderDate) {
@@ -35,7 +35,7 @@ public class Order {
         this.orderNumber = new OrderNumber(null, vendorCode);
         this.orderDate = orderDate;
         this.passes = passes;
-        calculateTotalPrice();
+        calculatePrice();
     }
 
     public Id getId() {
@@ -58,26 +58,27 @@ public class Order {
         return orderDate;
     }
 
-    // TODO : Order.getPrice()
-    public Money getTotalPrice() {
-        return totalPrice;
+    public Money getPrice() {
+        return price;
     }
 
-    private void calculateTotalPrice() {
-        // TODO : if package then totalPrice = calculatePackagePrice()
-        if(orderCategory == 1L && passes.size() >= 5) {
+    // TODO : Refractor this
+    private void calculatePrice() {
+        // TODO : if package then price = calculatePackagePrice()
+        if (orderCategory == 1L && passes.size() >= 5) {
             adjustPassesPrice();
         }
 
-        passes.forEach(pass -> totalPrice.add(pass.getPrice()));
+        passes.forEach(pass -> price.add(pass.getPrice()));
 
-        if(orderCategory == 2L && passes.size() > 3) {
-            totalPrice.applyDiscountPercentage(.10);
+        if (orderCategory == 2L && passes.size() > 3) {
+            BigDecimal discount = BigDecimal.valueOf(.1);
+            price.applyDiscount(discount);
         }
     }
 
+    // TODO : Refractor this
     private void adjustPassesPrice() {
         passes.forEach(pass -> pass.setPrice(new BigDecimal(90000)));
     }
-
 }

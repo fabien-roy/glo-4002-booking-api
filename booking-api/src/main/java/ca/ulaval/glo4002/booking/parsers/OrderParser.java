@@ -12,7 +12,7 @@ public class OrderParser {
     // TODO : Add passes to DTO
     public OrderWithPassesAsPassesDto toDto(Order order) {
         return new OrderWithPassesAsPassesDto(
-                order.getTotalPrice().getValue().doubleValue(),
+                order.getPrice().getValue().doubleValue(),
                 new ArrayList<>()
         );
     }

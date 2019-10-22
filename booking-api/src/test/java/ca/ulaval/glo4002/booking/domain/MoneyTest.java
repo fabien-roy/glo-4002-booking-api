@@ -7,37 +7,53 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MoneyTest {
 
+    private Money subject;
+
     @Test
-    void givenACertainAmount_whenAddingToIt_shouldReturnTheSum() {
-        Money price = new Money(new BigDecimal(100.00));
+    void add_shouldSetValueToSum() {
+        BigDecimal initialValue = new BigDecimal(100.0);
+        BigDecimal addedValue = new BigDecimal(120.0);
+        BigDecimal expectedValue = initialValue.add(addedValue);
+        subject = new Money(initialValue);
 
-        price.add(new Money(new BigDecimal(20.0)));
+        subject.add(new Money(addedValue));
 
-        assertTrue(120.0 == price.getValue().doubleValue());
+        assertEquals(expectedValue, subject.getValue());
     }
 
     @Test
-    void givenAPrice_whenDiscountInPercentageIsApply_shouldApplyTheDiscount() {
-        Money price = new Money(new BigDecimal(100.00));
-        Money expected = new Money(new BigDecimal(90));
+    void applyDiscount_shouldApplyDiscount() {
+        BigDecimal discount = new BigDecimal(.2);
+        BigDecimal initialValue = new BigDecimal(100.0);
+        BigDecimal expectedAmount = initialValue.subtract(initialValue.multiply(discount));
+        Money expectedMoney = new Money(expectedAmount);
+        subject = new Money(initialValue);
 
-        price.applyDiscountPercentage(.10);
+        subject.applyDiscount(discount);
 
-        assertTrue(expected.compareTo(price) == 0);
+        assertEquals(expectedMoney, subject);
     }
 
     @Test
-    void givenTwoMoneyWithEqualAmount_whenCompareTo_shouldReturnTrue() {
-        Money money1 = new Money(new BigDecimal(100.0));
+    void equals_shouldReturnTrue_whenValuesAreEqual() {
+        BigDecimal value = new BigDecimal(100.0);
+        subject = new Money(value);
+        Money moneyWithSameValue = new Money(value);
 
-        assertTrue(money1.compareTo(money1) == 0);
+        boolean result = moneyWithSameValue.equals(subject);
+
+        assertTrue(result);
     }
 
     @Test
-    void givenTwoMoneyWithNotEqualAmounts_whenCompareTo_shouldReturnFalse() {
-        Money money1 = new Money(new BigDecimal(10.0));
-        Money money2 = new Money(new BigDecimal(0.));
+    void equals_shouldReturnFalse_whenValuesAreNotEqual() {
+        BigDecimal aValue = new BigDecimal(100.0);
+        BigDecimal anotherValue = new BigDecimal(200.0);
+        subject = new Money(aValue);
+        Money moneyWithDifferentValue = new Money(anotherValue);
 
-        assertTrue(money1.compareTo(money2) != 0);
+        boolean result = moneyWithDifferentValue.equals(subject);
+
+        assertFalse(result);
     }
 }

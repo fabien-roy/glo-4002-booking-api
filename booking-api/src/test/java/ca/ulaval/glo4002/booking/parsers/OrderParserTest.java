@@ -28,11 +28,11 @@ class OrderParserTest {
     public void toDto_shouldBuildDto() {
         Money aPrice = new Money(new BigDecimal(500));
         Order order = mock(Order.class);
-        when(order.getTotalPrice()).thenReturn(aPrice);
+        when(order.getPrice()).thenReturn(aPrice);
 
         OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
 
-        assertEquals(order.getTotalPrice().getValue().doubleValue(), orderDto.getPrice());
+        assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getPrice());
     }
 
     @Test
