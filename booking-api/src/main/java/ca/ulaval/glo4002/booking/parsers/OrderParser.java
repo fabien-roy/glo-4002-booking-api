@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domain.Order;
-import ca.ulaval.glo4002.booking.domain.OrderDate;
+import ca.ulaval.glo4002.booking.domain.orders.Order;
+import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 

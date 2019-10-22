@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.dao;
 
 import ca.ulaval.glo4002.booking.domain.Id;
-import ca.ulaval.glo4002.booking.domain.Order;
+import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 
