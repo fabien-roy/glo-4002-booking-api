@@ -22,14 +22,15 @@ public class MoneyTest {
     }
 
     @Test
-    void applyDiscount_shouldApplyDiscount() {
-        BigDecimal discount = new BigDecimal(.2);
+    void applyPercentageDiscount_shouldApplyPercentageDiscount() {
+        BigDecimal percentage = new BigDecimal(.1);
+        PercentageDiscount discount = new PercentageDiscount(percentage);
         BigDecimal initialValue = new BigDecimal(100.0);
-        BigDecimal expectedAmount = initialValue.subtract(initialValue.multiply(discount));
+        BigDecimal expectedAmount = discount.apply(initialValue);
         Money expectedMoney = new Money(expectedAmount);
         subject = new Money(initialValue);
 
-        subject.applyDiscount(discount);
+        subject.applyPercentageDiscount(discount);
 
         assertEquals(expectedMoney, subject);
     }
@@ -55,5 +56,16 @@ public class MoneyTest {
         boolean result = moneyWithDifferentValue.equals(subject);
 
         assertFalse(result);
+    }
+
+    @Test
+    void hashCode_shouldReturnValueHashCode() {
+        BigDecimal aValue = new BigDecimal(100.0);
+        int expectedHashCode = aValue.hashCode();
+        subject = new Money(aValue);
+
+        int hashCode = subject.hashCode();
+
+        assertEquals(expectedHashCode, hashCode);
     }
 }

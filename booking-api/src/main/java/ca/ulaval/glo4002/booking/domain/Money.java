@@ -22,11 +22,8 @@ public class Money {
         this.value = this.value.add(money.value);
     }
 
-    // TODO : ACP : Add Discount class?
-    public void applyDiscount(BigDecimal discount) {
-        BigDecimal valueToSubtract = value.multiply(discount);
-
-        value = value.subtract(valueToSubtract);
+    public void applyPercentageDiscount(PercentageDiscount percentageDiscount) {
+        value = percentageDiscount.apply(value);
     }
 
     @Override

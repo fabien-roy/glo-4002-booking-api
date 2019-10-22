@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.domain.orders;
 import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.Money;
 import ca.ulaval.glo4002.booking.domain.Pass;
+import ca.ulaval.glo4002.booking.domain.PercentageDiscount;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -76,8 +77,9 @@ public class Order {
         passes.forEach(pass -> price.add(pass.getPrice()));
 
         if (orderCategory == 2L && passes.size() > 3) {
-            BigDecimal discount = BigDecimal.valueOf(.1);
-            price.applyDiscount(discount);
+            BigDecimal percentage = BigDecimal.valueOf(.1);
+            PercentageDiscount discount = new PercentageDiscount(percentage);
+            price.applyPercentageDiscount(discount);
         }
     }
 
