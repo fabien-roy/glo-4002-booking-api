@@ -36,6 +36,16 @@ public class MoneyTest {
     }
 
     @Test
+    void equals_shouldReturnFalse_whenObjectIsNotId() {
+        subject = new Money();
+        Object object = new Object();
+
+        boolean result = subject.equals(object);
+
+        assertFalse(result);
+    }
+
+    @Test
     void equals_shouldReturnTrue_whenValuesAreEqual() {
         BigDecimal value = new BigDecimal(100.0);
         subject = new Money(value);
