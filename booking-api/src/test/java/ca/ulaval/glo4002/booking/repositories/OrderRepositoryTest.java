@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.dao.OrderDao;
 import ca.ulaval.glo4002.booking.domain.Id;
-import ca.ulaval.glo4002.booking.domain.Order;
+import ca.ulaval.glo4002.booking.domain.orders.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

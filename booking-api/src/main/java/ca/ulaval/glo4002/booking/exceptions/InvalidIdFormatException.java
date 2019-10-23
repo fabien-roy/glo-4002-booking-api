@@ -5,6 +5,6 @@ public class InvalidIdFormatException extends BookingException {
     public InvalidIdFormatException() {
         super("INVALID_ID_FORMAT");
 
-        description = "Invalid Id format";
+        description = "Invalid id format";
     }
 }

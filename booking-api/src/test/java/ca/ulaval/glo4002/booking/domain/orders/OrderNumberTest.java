@@ -1,6 +1,7 @@
-package ca.ulaval.glo4002.booking.domain;
+package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidOrderNumberFormatException;
+import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

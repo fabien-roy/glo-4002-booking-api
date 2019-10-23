@@ -1,17 +1,20 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.Money;
-import ca.ulaval.glo4002.booking.domain.Order;
-import ca.ulaval.glo4002.booking.domain.OrderDate;
+import ca.ulaval.glo4002.booking.domain.orders.Order;
+import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
+import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,27 +24,29 @@ class OrderParserTest {
 
     @BeforeEach
     public void setUpSubject() {
-        subject = new OrderParser();
+        subject = new OrderParser(mock(PassesParser.class));
     }
 
     @Test
     public void toDto_shouldBuildDto() {
         Money aPrice = new Money(new BigDecimal(500));
         Order order = mock(Order.class);
-        when(order.getTotalPrice()).thenReturn(aPrice);
+        when(order.getPrice()).thenReturn(aPrice);
 
         OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
 
-        assertEquals(order.getTotalPrice().getValue().doubleValue(), orderDto.getPrice());
+        assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getPrice());
     }
 
     @Test
     public void parseDto_shouldParseDto() {
         String orderDate = "2050-05-21T15:23:20.142Z";
+        PassesDto passesDto = mock(PassesDto.class);
+        when(passesDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate,
                 "TEAM",
-                new PassesDto()
+                passesDto
         );
         OrderDate expectedOrderDate = new OrderDate(orderDate);
 
@@ -49,5 +54,17 @@ class OrderParserTest {
 
         assertEquals(expectedOrderDate.toString(), order.getOrderDate().toString());
         assertEquals(orderDto.getVendorCode(), order.getVendorCode());
+    }
+
+    @Test
+    public void parseDto_shouldThrowInvalidOrderFormatException_whenThereIsNoPass() {
+        String orderDate = "2050-05-21T15:23:20.142Z";
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                orderDate,
+                "TEAM",
+                null
+        );
+
+        assertThrows(InvalidOrderFormatException.class, () -> subject.parseDto(orderDto));
     }
 }

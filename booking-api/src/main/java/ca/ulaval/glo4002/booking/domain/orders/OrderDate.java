@@ -1,10 +1,10 @@
-package ca.ulaval.glo4002.booking.domain;
+package ca.ulaval.glo4002.booking.domain.orders;
+
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-
-import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateFormatException;
 
 public class OrderDate {
 

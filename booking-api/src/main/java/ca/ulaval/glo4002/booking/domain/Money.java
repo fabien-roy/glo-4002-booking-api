@@ -2,12 +2,12 @@ package ca.ulaval.glo4002.booking.domain;
 
 import java.math.BigDecimal;
 
-public class Money implements Comparable<Money>{
+public class Money {
 
     private BigDecimal value;
 
     public Money() {
-        this.value = new BigDecimal(0.);
+        this.value = BigDecimal.valueOf(0.0);
     }
 
     public Money(BigDecimal value) {
@@ -22,14 +22,27 @@ public class Money implements Comparable<Money>{
         this.value = this.value.add(money.value);
     }
 
-    public void applyDiscountPercentage(Double discount) {
-        value = value.subtract(value.multiply(BigDecimal.valueOf(discount)));
+    public void applyPercentageDiscount(PercentageDiscount percentageDiscount) {
+        value = percentageDiscount.apply(value);
     }
 
-    // TODO : peut-être pas valide, mais évite d'avoir a faire des money.getValue().compareTo(money2.getValue()) ou des money.getValue().get
-    // TODO : moins chiant que override equals avec respecter les 4 règles mathématique d'une relation d'égalité
     @Override
-    public int compareTo(Money money) {
-        return this.value.compareTo(money.value);
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+
+        Money money = (Money) object;
+
+        return value.equals(money.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+    public Money multiply(BigDecimal factor) {
+        value = value.multiply(factor);
+
+        return this;
     }
 }
