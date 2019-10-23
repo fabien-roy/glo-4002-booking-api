@@ -18,11 +18,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class PassesParser {
+public class PassListParser {
 
     private PassFactory passFactory;
 
-    public PassesParser(PassFactory passFactory) {
+    public PassListParser(PassFactory passFactory) {
         this.passFactory = passFactory;
     }
 

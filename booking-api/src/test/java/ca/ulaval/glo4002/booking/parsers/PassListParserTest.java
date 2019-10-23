@@ -26,13 +26,13 @@ import static org.mockito.Mockito.when;
 
 class PassListParserTest {
 
-    private PassesParser subject;
+    private PassListParser subject;
     private PassFactory passFactory;
 
     @BeforeEach
     void setUpSubject() {
         passFactory = mock(PassFactory.class);
-        subject = new PassesParser(passFactory);
+        subject = new PassListParser(passFactory);
     }
 
     @Test

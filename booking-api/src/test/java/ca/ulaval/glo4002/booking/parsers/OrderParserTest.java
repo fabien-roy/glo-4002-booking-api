@@ -24,7 +24,7 @@ class OrderParserTest {
 
     @BeforeEach
     public void setUpSubject() {
-        subject = new OrderParser(mock(PassesParser.class));
+        subject = new OrderParser(mock(PassListParser.class));
     }
 
     @Test

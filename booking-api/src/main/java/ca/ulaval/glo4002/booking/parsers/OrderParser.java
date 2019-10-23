@@ -13,10 +13,10 @@ import java.util.ArrayList;
 
 public class OrderParser {
 
-    public PassesParser passesParser;
+    public PassListParser passListParser;
 
-    public OrderParser(PassesParser passesParser) {
-        this.passesParser = passesParser;
+    public OrderParser(PassListParser passListParser) {
+        this.passListParser = passListParser;
     }
 
     // TODO : Add passes to DTO
@@ -34,7 +34,7 @@ public class OrderParser {
         }
 
         OrderDate orderDate = new OrderDate(orderDto.getOrderDate());
-        PassList passList = passesParser.parsePasses(orderDto.getPasses());
+        PassList passList = passListParser.parsePasses(orderDto.getPasses());
 
         return new Order(orderDto.getVendorCode(), orderDate, passList);
     }
