@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.Money;
+import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
@@ -14,6 +15,7 @@ import ca.ulaval.glo4002.booking.factories.PassFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,7 +42,7 @@ class PassesParserTest {
     void parsePasses_shouldParseASinglePass_whenThereIsOnlyOneEventDate() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> aEventDate = new ArrayList<>(Collections.singleton("2050-07-14"));
+        List<String> aEventDate = new ArrayList<>(Collections.singleton(EventDate.START_DATE.toString()));
         PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, aEventDate);
 
         List<Pass> passes = subject.parsePasses(passesDto);
@@ -52,7 +54,7 @@ class PassesParserTest {
     void parsePasses_shouldParseMultiplePasses_whenThereAreMultipleEventDates() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = new ArrayList<>(Arrays.asList("2050-07-14", "2050-07-15"));
+        List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
 
         List<Pass> passes = subject.parsePasses(passesDto);
@@ -64,7 +66,7 @@ class PassesParserTest {
     void parsePasses_shouldSetSamePassCategoryForEachPass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = new ArrayList<>(Arrays.asList("2050-07-14", "2050-07-15"));
+        List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
 
         List<Pass> passes = subject.parsePasses(passesDto);
@@ -76,7 +78,7 @@ class PassesParserTest {
     void parsePasses_shouldSetSamePassOptionForEachPass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = new ArrayList<>(Arrays.asList("2050-07-14", "2050-07-15"));
+        List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
 
         List<Pass> passes = subject.parsePasses(passesDto);
@@ -88,7 +90,7 @@ class PassesParserTest {
     void parsePasses_shouldThrowDuplicatePassEventDateException_whenEventDateIsDuplicated() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        String aDate = "2050-07-14";
+        String aDate = EventDate.START_DATE.toString();
         List<String> someEventDates = new ArrayList<>(Collections.nCopies(2, aDate));
         PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
 
@@ -98,7 +100,7 @@ class PassesParserTest {
     @Test
     void parsePasses_shouldThrowPackagePassWithEventDateException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
-        List<String> someEventDates = new ArrayList<>(Arrays.asList("2050-07-14", "2050-07-15"));
+        List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassesDto passesDto = new PassesDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
         when(passFactory.buildPassOption(any())).thenReturn(new PackagePassOption(mock(Money.class), mock(PriceCalculationStrategy.class)));
 

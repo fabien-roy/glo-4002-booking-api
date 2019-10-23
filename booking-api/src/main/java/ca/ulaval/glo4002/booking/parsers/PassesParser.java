@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
@@ -35,7 +36,8 @@ public class PassesParser {
         validateEventDates(passesDto.getEventDates(), passOption);
 
         passesDto.getEventDates().forEach(eventDate -> {
-            Pass pass = new Pass(LocalDate.parse(eventDate), passCategory, passOption);
+            EventDate passEventDate = new EventDate(eventDate);
+            Pass pass = new Pass(passEventDate, passCategory, passOption);
             passes.add(pass);
         });
 
