@@ -22,6 +22,10 @@ public class PassList {
         this.passes = passes;
     }
 
+    public PassCategory getCategory() {
+        return category;
+    }
+
     public PassOption getOption() {
         return option;
     }

@@ -1,22 +1,31 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
+import ca.ulaval.glo4002.booking.enums.PassOptions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PassFactoryTest {
 
-    // TODO
+    private PassFactory subject;
+
+    @BeforeEach
+    void setUpSubject() {
+        subject = new PassFactory();
+    }
+
     @Test
     void build_shouldSetSamePriceCalculationStrategyForOptionAndCategory() {
         /*
-        String aPassCategory = PassCategories.SUPERNOVA.toString();
-        String aPassOption = PassOptions.PACKAGE.toString();
-        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
-        when(passFactory.buildPssOption(any())).thenReturn(new PackagePassOption(mock(Money.class)));
-        when(passFactory.buildPassCategory(any())).thenReturn(new PassCategory());
+        PassCategories category = PassCategories.SUPERNOVA;
+        PassOptions option = PassOptions.PACKAGE;
 
-        PassList passList = subject.parsePasses(passListDto);
+        PassList passList = subject.build(category, option);
 
-        assertEquals(passList.getOption().getPriceCalculationStrategy(), passList.getCategory().getPriceCalculationStrategy());
+        assertEquals(passList.getCategory().getPriceCalculationStrategy(), passList.getOption().getPriceCalculationStrategy());
         */
     }
 }
