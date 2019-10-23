@@ -1,6 +1,7 @@
-package ca.ulaval.glo4002.booking.domain;
+package ca.ulaval.glo4002.booking.domain.passes;
 
-import java.math.BigDecimal;
+import ca.ulaval.glo4002.booking.domain.Money;
+
 import java.time.LocalDate;
 
 public class Pass {
@@ -25,7 +26,7 @@ public class Pass {
         return this.price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = new Money(price);
+    public void setPrice(Money price) {
+        this.price = price;
     }
 }

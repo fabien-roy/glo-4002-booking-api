@@ -17,7 +17,6 @@ public class OrderParser {
         );
     }
 
-    // TODO
     public Order parseDto(OrderWithPassesAsEventDatesDto orderDto) {
         OrderDate orderDate = new OrderDate(orderDto.getOrderDate());
 

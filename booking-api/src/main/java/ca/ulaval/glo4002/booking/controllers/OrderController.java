@@ -38,7 +38,7 @@ public class OrderController {
 
         try {
             OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
-            Order order = repository.getById(orderNumber.getId()).get();
+            Order order = repository.getById(orderNumber.getId()).get(); // TODO : ACP : Check if Optional.get() is a good idea
             orderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.notFound().build();

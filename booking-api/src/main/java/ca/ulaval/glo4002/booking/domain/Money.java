@@ -39,4 +39,10 @@ public class Money {
     public int hashCode() {
         return value.hashCode();
     }
+
+    public Money multiply(BigDecimal factor) {
+        value = value.multiply(factor);
+
+        return this;
+    }
 }
