@@ -4,8 +4,8 @@ import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

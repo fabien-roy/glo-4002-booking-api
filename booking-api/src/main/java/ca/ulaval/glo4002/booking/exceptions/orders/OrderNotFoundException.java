@@ -1,4 +1,6 @@
-package ca.ulaval.glo4002.booking.exceptions;
+package ca.ulaval.glo4002.booking.exceptions.orders;
+
+import ca.ulaval.glo4002.booking.exceptions.BookingException;
 
 public class OrderNotFoundException extends BookingException {
 

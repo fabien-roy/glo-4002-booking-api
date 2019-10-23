@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
-public class PassCategory {
+public class PassOption {
 
     private String name;
 
-    public PassCategory(String name) {
+    public PassOption(String name) {
         this.name = name;
     }
 

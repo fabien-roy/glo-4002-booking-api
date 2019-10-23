@@ -2,11 +2,9 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
-import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
-import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.domain.passes.options.SinglePassOption;
+import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -35,7 +33,7 @@ class PassListParserTest {
     @BeforeEach
     void setUpSubject() {
         passFactory = mock(PassFactory.class);
-        passList = new PassList(mock(PassCategory.class), mock(PassOption.class));
+        passList = new PassList(mock(PassCategory.class), mock(PassOption.class), mock(PriceCalculationStrategy.class));
         when(passFactory.build(any(), any())).thenReturn(passList);
 
         subject = new PassListParser(passFactory);
@@ -90,7 +88,7 @@ class PassListParserTest {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
-        passList.setOption(new PackagePassOption(mock(Money.class)));
+        passList.setOption(mock(PassOption.class));
 
         assertThrows(PackagePassWithEventDateException.class, () -> subject.parsePasses(passListDto));
     }
@@ -99,7 +97,7 @@ class PassListParserTest {
     void parsePasses_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.SINGLE_PASS.toString(), null);
-        passList.setOption(new SinglePassOption(mock(Money.class)));
+        passList.setOption(mock(PassOption.class));
 
         assertThrows(SinglePassWithoutEventDateException.class, () -> subject.parsePasses(passListDto));
     }

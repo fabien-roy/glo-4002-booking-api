@@ -11,13 +11,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-class SupernovaPriceCalculationStrategyTest {
+class NoDiscountPriceCalculationStrategyTest {
 
-    private SupernovaPriceCalculationStrategy subject;
+    private NoDiscountPriceCalculationStrategy subject;
 
     @Test
     void calculatePassPrice_shouldReturnPassPrice() {
-        subject = new SupernovaPriceCalculationStrategy();
+        subject = new NoDiscountPriceCalculationStrategy();
         List<Pass> passes = new ArrayList<>();
         passes.add(mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
