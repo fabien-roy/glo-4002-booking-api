@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +17,11 @@ public class OxygenDate {
 			String error = "Invalid oxygen date format";
 			throw new genericException(error);
 		}
+	}
+	
+	//TODO : Refactor
+	public OxygenDate(LocalDate date) {
+		this.date = date.atStartOfDay();
 	}
 
 	@Override

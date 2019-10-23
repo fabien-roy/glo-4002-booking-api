@@ -78,6 +78,6 @@ public class OxygenTankFactoryTest {
     	
     	createdTanks = factory.buildOxygenTankByCategory(category, requestDate, numberOfDays);
     	
-    	//assertTrue(createdTanks.size() == 3);
+    	assertTrue(createdTanks.size() == 3);
     }
 }
