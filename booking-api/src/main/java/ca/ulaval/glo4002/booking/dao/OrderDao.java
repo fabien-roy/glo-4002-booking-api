@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class OrderDao implements Dao<Order> {
+public class OrderDao {
 
     private List<Order> orders;
     private Id nextId;
@@ -19,7 +19,6 @@ public class OrderDao implements Dao<Order> {
         nextId = new Id(0L);
     }
 
-    @Override
     public Optional<Order> get(Id id) {
         Optional<Order> foundOrder = orders.stream().filter(order -> order.getId().equals(id)).findAny();
 
@@ -30,12 +29,10 @@ public class OrderDao implements Dao<Order> {
         return foundOrder;
     }
 
-    @Override
     public List<Order> getAll() {
         return orders;
     }
 
-    @Override
     public void save(Order order) {
         if (orders.contains(order)) {
             throw new OrderAlreadyCreatedException(order.getId().getValue().toString());

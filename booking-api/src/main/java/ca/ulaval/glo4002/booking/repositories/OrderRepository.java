@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class OrderRepository {
 
-    OrderDao dao;
+    private OrderDao dao;
 
     public OrderRepository(OrderDao dao) {
         this.dao = dao;

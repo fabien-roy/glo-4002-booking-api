@@ -5,11 +5,13 @@ import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class OrderRepositoryTest {
@@ -34,5 +36,14 @@ class OrderRepositoryTest {
 
         assertTrue(order.isPresent());
         assertEquals(expectedOrderId, order.get().getId());
+    }
+
+    @Test
+    public void addOrder_shouldSaveOrder() {
+        Order order = new Order(mock(Id.class));
+
+        subject.addOrder(order);
+
+        verify(dao).save(order);
     }
 }

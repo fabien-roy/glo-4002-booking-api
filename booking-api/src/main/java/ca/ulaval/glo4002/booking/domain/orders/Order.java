@@ -10,6 +10,7 @@ public class Order {
     private OrderDate orderDate;
     private PassList passList;
 
+    // TODO : Only used by tests...
     public Order(Id id) {
         this.orderNumber = new OrderNumber(id, null);
     }
