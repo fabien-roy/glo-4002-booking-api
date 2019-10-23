@@ -2,12 +2,24 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
+import ca.ulaval.glo4002.booking.domain.passes.PassOption;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.exceptions.InvalidOrderFormatException;
+import ca.ulaval.glo4002.booking.factories.PassFactory;
 
 import java.util.ArrayList;
 
+// TODO : ACP : Should DTOs handle their creation with an Order?
+
 public class OrderParser {
+
+    public PassesParser passesParser;
+
+    public OrderParser(PassesParser passesParser) {
+        this.passesParser = passesParser;
+    }
 
     // TODO : Add passes to DTO
     public OrderWithPassesAsPassesDto toDto(Order order) {
@@ -17,9 +29,16 @@ public class OrderParser {
         );
     }
 
+    // TODO : Add passes to Order
     public Order parseDto(OrderWithPassesAsEventDatesDto orderDto) {
+        if (orderDto.getPasses() == null) {
+            throw new InvalidOrderFormatException();
+        }
+
+        PassOption passOption = passesParser.parsePassOption(orderDto.getPasses());
+
         OrderDate orderDate = new OrderDate(orderDto.getOrderDate());
 
-        return new Order(orderDto.getVendorCode(), orderDate);
+        return new Order(orderDto.getVendorCode(), orderDate, passOption);
     }
 }

@@ -5,23 +5,26 @@ import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassOption;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
 
     private OrderNumber orderNumber;
     private OrderDate orderDate;
+    private PassOption passOption;
     private List<Pass> passes;
     private Money price;
-    private PassOption passOption;
 
     public Order(Id id) {
         this.orderNumber = new OrderNumber(id, null);
     }
 
-    public Order(String vendorCode, OrderDate orderDate) {
+    public Order(String vendorCode, OrderDate orderDate, PassOption passOption) {
         this.orderNumber = new OrderNumber(null, vendorCode);
         this.orderDate = orderDate;
+        this.passOption = passOption;
+        this.passes = new ArrayList<>(); // TODO : Add passes here
     }
 
     public Id getId() {
@@ -49,7 +52,8 @@ public class Order {
     }
 
     // TODO : Test calculatePrice
-    private void calculatePrice() {
+    // TODO : When should we calculate order price?
+    public void calculatePrice() {
         Money passPrice = passOption.calculatePrice(passes);
         passes.forEach(pass -> pass.setPrice(passPrice));
 

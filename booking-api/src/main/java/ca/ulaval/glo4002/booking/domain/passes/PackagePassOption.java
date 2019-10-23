@@ -7,8 +7,6 @@ import java.util.List;
 
 public class PackagePassOption extends PassOption {
 
-    private PriceCalculationStrategy priceCalculationStrategy;
-
     public PackagePassOption(Money price, PriceCalculationStrategy priceCalculationStrategy) {
         super(price, priceCalculationStrategy);
     }

@@ -19,4 +19,12 @@ public class OrderWithPassesAsEventDatesDto {
     public String getVendorCode() {
         return vendorCode;
     }
+
+    public PassesDto getPasses() {
+        return passes;
+    }
+
+    public String getPassOption() {
+        return passes.getPassOption();
+    }
 }

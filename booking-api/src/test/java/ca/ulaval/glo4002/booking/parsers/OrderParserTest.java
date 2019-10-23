@@ -6,12 +6,15 @@ import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
+import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.exceptions.InvalidOrderFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +24,7 @@ class OrderParserTest {
 
     @BeforeEach
     public void setUpSubject() {
-        subject = new OrderParser();
+        subject = new OrderParser(mock(PassesParser.class));
     }
 
     @Test
@@ -38,10 +41,12 @@ class OrderParserTest {
     @Test
     public void parseDto_shouldParseDto() {
         String orderDate = "2050-05-21T15:23:20.142Z";
+        PassesDto passesDto = mock(PassesDto.class);
+        when(passesDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate,
                 "TEAM",
-                new PassesDto()
+                passesDto
         );
         OrderDate expectedOrderDate = new OrderDate(orderDate);
 
@@ -49,5 +54,17 @@ class OrderParserTest {
 
         assertEquals(expectedOrderDate.toString(), order.getOrderDate().toString());
         assertEquals(orderDto.getVendorCode(), order.getVendorCode());
+    }
+
+    @Test
+    public void parseDto_shouldThrowInvalidOrderFormatException_whenThereIsNoPass() {
+        String orderDate = "2050-05-21T15:23:20.142Z";
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                orderDate,
+                "TEAM",
+                null
+        );
+
+        assertThrows(InvalidOrderFormatException.class, () -> subject.parseDto(orderDto));
     }
 }
