@@ -1,15 +1,16 @@
 package ca.ulaval.glo4002.booking.domain;
 
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
+import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
 public class OxygenTank {
 	private Long id;
-	private Long category;
+	private OxygenTankCategory category;
 	private OxygenDate requestDate;
 	private OxygenDate readyDate;
 	private Money totalPrice;
 
-	public OxygenTank(Long id, Long category, OxygenDate requestDate) {
+	public OxygenTank(Long id, OxygenTankCategory category, OxygenDate requestDate) {
 		this.id = id;
 		this.category = category;
 		this.requestDate = requestDate;
@@ -17,7 +18,7 @@ public class OxygenTank {
 		this.setReadyDate();
 	}
 
-	public OxygenTank(Long category, OxygenDate requestDate) {
+	public OxygenTank(OxygenTankCategory category, OxygenDate requestDate) {
 		this.category = category;
 		this.requestDate = requestDate;
 		this.setMoney();
@@ -46,7 +47,7 @@ public class OxygenTank {
 		return this.id;
 	}
 
-	public Long getCategory() {
+	public OxygenTankCategory getCategory() {
 		return this.category;
 	}
 

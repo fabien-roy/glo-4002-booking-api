@@ -83,7 +83,7 @@ public class OxygenTankInventoryTest {
     }
 
     @Test
-    void whenNotEnoughNotInUseTank_requestTankReturnTheNumberStillNeededToProduce() {
+    void whenNotEnoughNotInUseTank_requestTankShouldReturnTheNumberStillNeededToProduce() {
         Long requestQuantity = 30L;
 
         Long quantity = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_A, requestQuantity);

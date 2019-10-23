@@ -54,5 +54,4 @@ public class OxygenTankInventory {
 
         return quantityStillNeeded;
     }
-
 }
