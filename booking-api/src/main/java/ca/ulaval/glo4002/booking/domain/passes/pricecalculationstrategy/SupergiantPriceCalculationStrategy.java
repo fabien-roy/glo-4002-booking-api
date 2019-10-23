@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy;
 
-import ca.ulaval.glo4002.booking.domain.passes.money.AmountDiscount;
-import ca.ulaval.glo4002.booking.domain.passes.money.Money;
-
 import java.math.BigDecimal;
+
+import ca.ulaval.glo4002.booking.domain.money.AmountDiscount;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 
 public class SupergiantPriceCalculationStrategy implements PriceCalculationStrategy {
 

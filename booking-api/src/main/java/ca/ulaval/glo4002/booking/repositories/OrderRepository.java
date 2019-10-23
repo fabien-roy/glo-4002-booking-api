@@ -8,10 +8,12 @@ import java.util.Optional;
 
 public class OrderRepository {
 
-    OrderDao dao;
+    private OrderDao dao;
+    private PassRepository passRepository;
 
-    public OrderRepository(OrderDao dao) {
+    OrderRepository(OrderDao dao, PassRepository passRepository) {
         this.dao = dao;
+        this.passRepository = passRepository;
     }
 
     public Optional<Order> getById(Id id) {
@@ -19,6 +21,8 @@ public class OrderRepository {
     }
 
     public void addOrder(Order order) {
+        order.getPasses().forEach(pass -> passRepository.addPass(pass));
+
         dao.save(order);
     }
 }

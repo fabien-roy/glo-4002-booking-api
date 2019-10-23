@@ -2,11 +2,8 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
-import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.domain.passes.options.SinglePassOption;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -19,23 +16,40 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class PassListParser {
+class PassListParser {
 
     private PassFactory passFactory;
 
-    public PassListParser(PassFactory passFactory) {
+    PassListParser(PassFactory passFactory) {
         this.passFactory = passFactory;
     }
 
-    public PassList parsePasses(PassListDto passListDto) {
-        List<Pass> passes = new ArrayList<>();
+    List<PassDto> toDto(PassList passList) {
+        String passCategory = passList.getCategory().getName();
+        String passOption = passList.getOption().getName();
 
+        List<PassDto> passDtos = new ArrayList<>();
+        passList.getPasses().forEach(pass ->
+                passDtos.add(new PassDto(
+                    pass.getId().getValue(),
+                    passCategory,
+                    passOption,
+                    pass.getEventDate().toString()
+                )
+        ));
+
+        return passDtos;
+    }
+
+    PassList parseDto(PassListDto passListDto) {
         PassOptions passOption = parsePassOption(passListDto);
         PassCategories passCategory = parsePassCategory(passListDto);
+
+        validateEventDates(passListDto.getEventDates(), passOption);
+
         PassList passList = passFactory.build(passCategory, passOption);
 
-        validateEventDates(passListDto.getEventDates(), passList.getOption());
-
+        List<Pass> passes = new ArrayList<>();
         if (passListDto.getEventDates() == null) {
             passes.add(new Pass());
         } else {
@@ -51,13 +65,13 @@ public class PassListParser {
         return passList;
     }
 
-    private void validateEventDates(List<String> eventDates, PassOption passOption) {
+    private void validateEventDates(List<String> eventDates, PassOptions passOption) {
         if (eventDates == null) {
-            if (passOption instanceof SinglePassOption) {
+            if (passOption.equals(PassOptions.SINGLE_PASS)) {
                 throw new SinglePassWithoutEventDateException();
             }
         } else {
-            if (passOption instanceof PackagePassOption) {
+            if (passOption.equals(PassOptions.PACKAGE)) {
                 throw new PackagePassWithEventDateException();
             }
 

@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.when;
 
 class OrderControllerTest {
 
-    OrderController subject;
-    OrderService service;
-    OrderParser parser;
-    OrderRepository repository;
+    private OrderController subject;
+    private OrderService service;
+    private OrderParser parser;
+    private OrderRepository repository;
 
     @BeforeEach
     void setUpSubject() {

@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class HeartbeatResponse {
-    public final String token;
-    public final OffsetDateTime time;
+    private final String token;
+    private final OffsetDateTime time;
 
     @JsonCreator
     public HeartbeatResponse(@JsonProperty(value = "token", required = true) String token) {

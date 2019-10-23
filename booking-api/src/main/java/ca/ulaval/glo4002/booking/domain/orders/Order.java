@@ -1,8 +1,11 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.*;
+import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.domain.passes.money.Money;
+
+import java.util.List;
 
 public class Order {
 
@@ -10,8 +13,10 @@ public class Order {
     private OrderDate orderDate;
     private PassList passList;
 
+    // TODO : Only used by tests...
     public Order(Id id) {
         this.orderNumber = new OrderNumber(id, null);
+        this.passList = new PassList();
     }
 
     public Order(String vendorCode, OrderDate orderDate, PassList passList) {
@@ -40,7 +45,15 @@ public class Order {
         return orderDate;
     }
 
+    public PassList getPassList() {
+        return passList;
+    }
+
     public Money getPrice() {
         return passList.getPrice();
+    }
+
+    public List<Pass> getPasses() {
+        return passList.getPasses();
     }
 }

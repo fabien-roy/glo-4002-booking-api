@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity
-public class ArtistAvailability {
+class ArtistAvailability {
 
     @Id
     @GeneratedValue
