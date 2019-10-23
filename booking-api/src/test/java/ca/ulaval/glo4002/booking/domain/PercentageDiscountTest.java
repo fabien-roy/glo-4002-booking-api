@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PercentageDiscountTest {
 
-    PercentageDiscount subject;
+    private PercentageDiscount subject;
 
     @Test
     void apply_shouldApply() {
