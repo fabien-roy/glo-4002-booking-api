@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.domain;
 
 import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,8 +12,8 @@ public class OxygenTankInventory {
     private Map<OxygenTankCategory, Long> inUseTanks;
 
     public OxygenTankInventory() {
-        this.notInUseTanks = new HashMap<>();
-        this.inUseTanks = new HashMap<>();
+        this.notInUseTanks = new EnumMap<>(OxygenTankCategory.class);
+        this.inUseTanks = new EnumMap<>(OxygenTankCategory.class);
 
         notInUseTanks.put(OxygenTankCategory.CATEGORY_A, 0L);
         notInUseTanks.put(OxygenTankCategory.CATEGORY_B, 0L);

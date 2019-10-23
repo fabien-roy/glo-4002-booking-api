@@ -60,8 +60,6 @@ public class OxygenTankInventoryTest {
         inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, requestQuantity);
         Long currentQuantity = inventory.getInUseQuantityByCategory(OxygenTankCategory.CATEGORY_B);
 
-        System.out.println(currentQuantity);
-
         assertTrue(currentQuantity == requestQuantity);
     }
 
@@ -70,9 +68,9 @@ public class OxygenTankInventoryTest {
         Long requestQuantity = 10L;
 
         inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, requestQuantity);
-    Long currentQuantity = inventory.getNotInUseQuantityByCategory(OxygenTankCategory.CATEGORY_B);
+        Long currentQuantity = inventory.getNotInUseQuantityByCategory(OxygenTankCategory.CATEGORY_B);
 
-    assertTrue(currentQuantity == CATEGORY_B_QUANTITY - requestQuantity);
+        assertTrue(currentQuantity == CATEGORY_B_QUANTITY - requestQuantity);
     }
 
     @Test
