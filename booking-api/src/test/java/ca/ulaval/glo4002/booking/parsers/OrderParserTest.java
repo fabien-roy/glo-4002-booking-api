@@ -33,7 +33,7 @@ class OrderParserTest {
     }
 
     @Test
-    public void toDto_shouldBuildDto() {
+    public void toDto_shouldBuildDtoWithCorrectPrice() {
         Money aPrice = new Money(new BigDecimal(500));
         Order order = mock(Order.class);
         when(order.getPrice()).thenReturn(aPrice);
@@ -56,7 +56,7 @@ class OrderParserTest {
     }
 
     @Test
-    public void parseDto_shouldParseDto() {
+    public void parseDto_shouldParseDtoWithCorrectOrderDate() {
         String orderDate = "2050-05-21T15:23:20.142Z";
         PassListDto passListDto = mock(PassListDto.class);
         when(passListDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
@@ -70,6 +70,21 @@ class OrderParserTest {
         Order order = subject.parseDto(orderDto);
 
         assertEquals(expectedOrderDate.toString(), order.getOrderDate().toString());
+    }
+
+    @Test
+    public void parseDto_shouldParseDtoWithCorrectVendorCode() {
+        String orderDate = "2050-05-21T15:23:20.142Z";
+        PassListDto passListDto = mock(PassListDto.class);
+        when(passListDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                orderDate,
+                "TEAM",
+                passListDto
+        );
+
+        Order order = subject.parseDto(orderDto);
+
         assertEquals(orderDto.getVendorCode(), order.getVendorCode());
     }
 

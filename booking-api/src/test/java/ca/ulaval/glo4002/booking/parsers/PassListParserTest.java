@@ -1,10 +1,9 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.domain.passes.EventDate;
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -12,6 +11,8 @@ import ca.ulaval.glo4002.booking.exceptions.passes.*;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +38,102 @@ class PassListParserTest {
         when(passFactory.build(any(), any())).thenReturn(passList);
 
         subject = new PassListParser(passFactory);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void toDto_shouldBuildCorrectQuantityOfDtos(int expectedSize) {
+        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, new Pass(aPassNumber)));
+        passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+
+        List<PassDto> passDtos = subject.toDto(passList);
+
+        assertEquals(expectedSize, passDtos.size());
+    }
+
+    @Test
+    void toDto_shouldBuildDtoWithCorrectPassNumbers() {
+        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
+        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aPassNumber), new Pass(anotherPassNumber)));
+        passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+
+        List<PassDto> passDtos = subject.toDto(passList);
+
+        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(aPassNumber.getId().getValue())));
+        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(anotherPassNumber.getId().getValue())));
+    }
+
+    @Test
+    void toDto_shouldBuildDtoWithCorrectCategory() {
+        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        List<Pass> passes = new ArrayList<>(Collections.singletonList(new Pass(aPassNumber)));
+        PassCategory passCategory = mock(PassCategory.class);
+        String expectedPassCategoryName = "expectedPassCategoryName";
+        when(passCategory.getName()).thenReturn(expectedPassCategoryName);
+        passList = new PassList(passes, passCategory, mock(PassOption.class));
+
+        List<PassDto> passDtos = subject.toDto(passList);
+
+        assertEquals(expectedPassCategoryName, passDtos.get(0).getPassCategory());
+    }
+
+    @Test
+    void toDto_shouldSetSameCategoryForAllPasses() {
+        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
+        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aPassNumber), new Pass(anotherPassNumber)));
+        PassCategory passCategory = mock(PassCategory.class);
+        String expectedPassCategoryName = "expectedPassCategoryName";
+        when(passCategory.getName()).thenReturn(expectedPassCategoryName);
+        passList = new PassList(passes, passCategory, mock(PassOption.class));
+
+        List<PassDto> passDtos = subject.toDto(passList);
+
+        assertTrue(passDtos.stream().allMatch(pass -> pass.getPassCategory().equals(expectedPassCategoryName)));
+    }
+
+    @Test
+    void toDto_shouldBuildDtoWithCorrectOption() {
+        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        List<Pass> passes = new ArrayList<>(Collections.singletonList(new Pass(aPassNumber)));
+        PassOption passOption = mock(PassOption.class);
+        String expectedPassOptionName = "expectedPassOptionName";
+        when(passOption.getName()).thenReturn(expectedPassOptionName);
+        passList = new PassList(passes, mock(PassCategory.class), passOption);
+
+        List<PassDto> passDtos = subject.toDto(passList);
+
+        assertEquals(expectedPassOptionName, passDtos.get(0).getPassOption());
+    }
+
+    @Test
+    void toDto_shouldSetSameOptionForAllPasses() {
+        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
+        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aPassNumber), new Pass(anotherPassNumber)));
+        PassOption passOption = mock(PassOption.class);
+        String expectedPassOptionName = "expectedPassOptionName";
+        when(passOption.getName()).thenReturn(expectedPassOptionName);
+        passList = new PassList(passes, mock(PassCategory.class), passOption);
+
+        List<PassDto> passDtos = subject.toDto(passList);
+
+        assertTrue(passDtos.stream().allMatch(pass -> pass.getPassOption().equals(expectedPassOptionName)));
+    }
+
+    @Test
+    void toDto_shouldBuildDtoWithCorrectEventDates() {
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
+        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aEventDate), new Pass(anotherEventDate)));
+        passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+
+        List<PassDto> passDtos = subject.toDto(passList);
+
+        assertTrue(passDtos.stream().anyMatch(pass -> aEventDate.toString().equals(pass.getEventDate())));
+        assertTrue(passDtos.stream().anyMatch(pass -> anotherEventDate.toString().equals(pass.getEventDate())));
     }
 
     @Test

@@ -6,6 +6,14 @@ public class PassNumber {
 
     private Id id;
 
+    public PassNumber() {
+
+    }
+
+    public PassNumber(Id id) {
+        this.id = id;
+    }
+
     public Id getId() {
         return id;
     }

@@ -13,6 +13,11 @@ public class Pass {
         this.passNumber = new PassNumber();
     }
 
+    // TODO : Only used by tests...
+    public Pass(PassNumber passNumber) {
+        this.passNumber = passNumber;
+    }
+
     public Pass(EventDate eventDate) {
         this.passNumber = new PassNumber();
         this.eventDate = eventDate;
