@@ -7,13 +7,11 @@ import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.passes.DuplicatePassEventDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PackagePassWithEventDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.SinglePassWithoutEventDateException;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 class PassListParser {
@@ -73,11 +71,6 @@ class PassListParser {
         } else {
             if (passOption.equals(PassOptions.PACKAGE)) {
                 throw new PackagePassWithEventDateException();
-            }
-
-            boolean hasDuplicates = !eventDates.stream().allMatch(new HashSet<>()::add);
-            if (hasDuplicates) {
-                throw new DuplicatePassEventDateException();
             }
         }
     }
