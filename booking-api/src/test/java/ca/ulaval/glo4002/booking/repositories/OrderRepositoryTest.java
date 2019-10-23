@@ -3,27 +3,33 @@ package ca.ulaval.glo4002.booking.repositories;
 import ca.ulaval.glo4002.booking.dao.OrderDao;
 import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
+import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 class OrderRepositoryTest {
 
     private static final Long A_ID = 1L;
-    private OrderRepository subject;
     private OrderDao dao;
+    private PassRepository passRepository;
+
+    private OrderRepository subject;
 
     @BeforeEach
     public void setUpSubject() {
         dao = mock(OrderDao.class);
-        subject = new OrderRepository(dao);
+        passRepository = mock(PassRepository.class);
+
+        subject = new OrderRepository(dao, passRepository);
     }
 
     @Test
@@ -45,5 +51,16 @@ class OrderRepositoryTest {
         subject.addOrder(order);
 
         verify(dao).save(order);
+    }
+
+    @Test
+    public void addOrder_shouldAddEachPasses() {
+        int numberOfPasses = 2;
+        Order order = mock(Order.class);
+        when(order.getPasses()).thenReturn(new ArrayList<>(Collections.nCopies(numberOfPasses, new Pass())));
+
+        subject.addOrder(order);
+
+        verify(passRepository, times(numberOfPasses)).addPass(any(Pass.class));
     }
 }

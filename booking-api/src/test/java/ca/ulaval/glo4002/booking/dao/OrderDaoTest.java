@@ -33,10 +33,7 @@ class OrderDaoTest {
     public void get_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
         Id aNonExistentOrderId = new Id(A_NON_EXISTENT_ID);
 
-        assertThrows(
-                OrderNotFoundException.class,
-                () -> subject.get(aNonExistentOrderId)
-        );
+        assertThrows(OrderNotFoundException.class, () -> subject.get(aNonExistentOrderId));
     }
 
     @Test
@@ -46,10 +43,7 @@ class OrderDaoTest {
         Order aOrder = new Order(aOrderId);
         subject.save(aOrder);
 
-        assertThrows(
-                OrderNotFoundException.class,
-                () -> subject.get(aNonExistentOrderId)
-        );
+        assertThrows(OrderNotFoundException.class, () -> subject.get(aNonExistentOrderId));
     }
 
     @Test
@@ -108,10 +102,7 @@ class OrderDaoTest {
         Order aOrder = new Order("VENDOR", orderDate, mock(PassList.class));
         subject.save(aOrder);
 
-        assertThrows(
-                OrderAlreadyCreatedException.class,
-                () -> subject.save(aOrder)
-        );
+        assertThrows(OrderAlreadyCreatedException.class, () -> subject.save(aOrder));
     }
 
     @Test
