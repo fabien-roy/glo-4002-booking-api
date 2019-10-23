@@ -13,19 +13,23 @@ public class PassList {
     private PassOption option;
     private Money price;
 
-    public PassList(List<Pass> passes, PassCategory category, PassOption option) {
-        this.passes = passes;
+    public PassList(PassCategory category, PassOption option) {
         this.category = category;
         this.option = option;
+    }
+
+    public void setPasses(List<Pass> passes) {
+        this.passes = passes;
     }
 
     public PassOption getOption() {
         return option;
     }
 
-    public PassCategory getCategory() {
-        return category;
+    public void setOption(PassOption option) {
+        this.option = option;
     }
+
 
     public Money getPrice() {
         return price;

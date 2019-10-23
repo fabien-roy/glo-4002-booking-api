@@ -30,11 +30,11 @@ public class PassListParser {
     public PassList parsePasses(PassListDto passListDto) {
         List<Pass> passes = new ArrayList<>();
 
-        PassOption passOption = parsePassOption(passListDto);
-        PassCategory passCategory = parsePassCategory(passListDto);
-        // passOption.setPriceCalculationStrategy(passCategory.getPriceCalculationStrategy());
+        PassOptions passOption = parsePassOption(passListDto);
+        PassCategories passCategory = parsePassCategory(passListDto);
+        PassList passList = passFactory.build(passCategory, passOption);
 
-        validateEventDates(passListDto.getEventDates(), passOption);
+        validateEventDates(passListDto.getEventDates(), passList.getOption());
 
         if (passListDto.getEventDates() == null) {
             passes.add(new Pass());
@@ -46,7 +46,9 @@ public class PassListParser {
             });
         }
 
-        return new PassList(passes, passCategory, passOption);
+        passList.setPasses(passes);
+
+        return passList;
     }
 
     private void validateEventDates(List<String> eventDates, PassOption passOption) {
@@ -66,15 +68,11 @@ public class PassListParser {
         }
     }
 
-    private PassOption parsePassOption(PassListDto passListDto) {
-        PassOptions passOptionElem = PassOptions.get(passListDto.getPassOption());
-
-        return passFactory.buildPassOption(passOptionElem);
+    private PassOptions parsePassOption(PassListDto passListDto) {
+        return PassOptions.get(passListDto.getPassOption());
     }
 
-    private PassCategory parsePassCategory(PassListDto passListDto) {
-        PassCategories passCategoryElem = PassCategories.get(passListDto.getPassCategory());
-
-        return passFactory.buildPassCategory(passCategoryElem);
+    private PassCategories parsePassCategory(PassListDto passListDto) {
+        return PassCategories.get(passListDto.getPassCategory());
     }
 }
