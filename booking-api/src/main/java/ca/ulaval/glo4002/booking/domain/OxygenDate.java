@@ -22,4 +22,8 @@ public class OxygenDate {
 	public String toString() {
 		return this.date.toString();
 	}
+
+	public void addDays(Long numberOfDays) {
+		this.date = date.plusDays(numberOfDays);
+	}
 }

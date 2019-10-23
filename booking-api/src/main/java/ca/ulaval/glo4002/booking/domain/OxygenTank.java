@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.domain;
 
+import ca.ulaval.glo4002.booking.domain.passes.money.Money;
+
 public class OxygenTank {
 	private Long id;
 	private Long category;
@@ -58,5 +60,9 @@ public class OxygenTank {
 
 	public Money getMoney() {
 		return this.totalPrice;
+	}
+
+	private void calculateReadyDate() {
+
 	}
 }
