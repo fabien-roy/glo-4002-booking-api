@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -15,7 +16,7 @@ class EventDateTest {
     void constructing_shouldSetCorrectValue() {
         LocalDate expectedValue  = EventDate.START_DATE.plusDays(1);
 
-        EventDate subject = new EventDate(expectedValue);
+        EventDate subject = new EventDate(expectedValue.toString());
 
         assertEquals(expectedValue, subject.getValue());
     }
@@ -36,7 +37,7 @@ class EventDateTest {
 
         assertThrows(
                 OutOfBoundsEventDateException.class,
-                () -> new EventDate(aUnderBoundEventDate)
+                () -> new EventDate(aUnderBoundEventDate.toString())
         );
     }
 
@@ -46,7 +47,7 @@ class EventDateTest {
 
         assertThrows(
                 OutOfBoundsEventDateException.class,
-                () -> new EventDate(aOverBoundEventDate)
+                () -> new EventDate(aOverBoundEventDate.toString())
         );
     }
 }
