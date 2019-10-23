@@ -8,6 +8,10 @@ public class Pass {
     private EventDate eventDate;
     private Money price;
 
+    public Pass() {
+
+    }
+
     public Pass(EventDate eventDate) {
         this.eventDate = eventDate;
     }

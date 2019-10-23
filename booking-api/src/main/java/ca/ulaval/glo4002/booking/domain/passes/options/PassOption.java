@@ -8,8 +8,15 @@ public abstract class PassOption {
     protected Money price;
     protected PriceCalculationStrategy priceCalculationStrategy;
 
-    public PassOption(Money price, PriceCalculationStrategy priceCalculationStrategy) {
+    public PassOption(Money price) {
         this.price = price;
+    }
+
+    public PriceCalculationStrategy getPriceCalculationStrategy() {
+        return priceCalculationStrategy;
+    }
+
+    public void setPriceCalculationStrategy(PriceCalculationStrategy priceCalculationStrategy) {
         this.priceCalculationStrategy = priceCalculationStrategy;
     }
 

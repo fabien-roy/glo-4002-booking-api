@@ -19,6 +19,18 @@ public class PassList {
         this.option = option;
     }
 
+    public PassOption getOption() {
+        return option;
+    }
+
+    public PassCategory getCategory() {
+        return category;
+    }
+
+    public Money getPrice() {
+        return price;
+    }
+
     // TODO : Test calculatePrice
     // TODO : When should we calculate order price?
     private void calculatePrice() {
@@ -34,10 +46,6 @@ public class PassList {
         BigDecimal totalValue = passPrice.getValue().multiply(numberOfPasses);
 
         price = new Money(totalValue);
-    }
-
-    public Money getPrice() {
-        return price;
     }
 
     public int size() {

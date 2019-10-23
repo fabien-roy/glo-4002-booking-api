@@ -1,6 +1,12 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
+
 public class PassCategory {
 
-    // TODO : ACP : Check how this is needed
+    private PriceCalculationStrategy priceCalculationStrategy;
+
+    public PriceCalculationStrategy getPriceCalculationStrategy() {
+        return priceCalculationStrategy;
+    }
 }

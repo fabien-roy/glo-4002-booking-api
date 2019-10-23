@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
 import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.options.SinglePassOption;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -31,28 +32,37 @@ public class PassListParser {
 
         PassOption passOption = parsePassOption(passListDto);
         PassCategory passCategory = parsePassCategory(passListDto);
+        // passOption.setPriceCalculationStrategy(passCategory.getPriceCalculationStrategy());
 
         validateEventDates(passListDto.getEventDates(), passOption);
 
-        passListDto.getEventDates().forEach(eventDate -> {
-            EventDate passEventDate = new EventDate(eventDate);
-            Pass pass = new Pass(passEventDate);
-            passes.add(pass);
-        });
+        if (passListDto.getEventDates() == null) {
+            passes.add(new Pass());
+        } else {
+            passListDto.getEventDates().forEach(eventDate -> {
+                EventDate passEventDate = new EventDate(eventDate);
+                Pass pass = new Pass(passEventDate);
+                passes.add(pass);
+            });
+        }
 
         return new PassList(passes, passCategory, passOption);
     }
 
     private void validateEventDates(List<String> eventDates, PassOption passOption) {
-        if (eventDates != null && passOption instanceof PackagePassOption) {
-            throw new PackagePassWithEventDateException();
-        } else if (eventDates == null) {
-            throw new SinglePassWithoutEventDateException();
-        }
+        if (eventDates == null) {
+            if (passOption instanceof SinglePassOption) {
+                throw new SinglePassWithoutEventDateException();
+            }
+        } else {
+            if (passOption instanceof PackagePassOption) {
+                throw new PackagePassWithEventDateException();
+            }
 
-        boolean hasDuplicates = !eventDates.stream().allMatch(new HashSet<>()::add);
-        if (hasDuplicates) {
-            throw new DuplicatePassEventDateException();
+            boolean hasDuplicates = !eventDates.stream().allMatch(new HashSet<>()::add);
+            if (hasDuplicates) {
+                throw new DuplicatePassEventDateException();
+            }
         }
     }
 

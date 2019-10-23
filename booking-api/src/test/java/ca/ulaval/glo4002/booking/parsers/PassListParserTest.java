@@ -1,9 +1,11 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
+import ca.ulaval.glo4002.booking.domain.passes.options.SinglePassOption;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
@@ -60,6 +62,19 @@ class PassListParserTest {
     }
 
     @Test
+    void parsePasses_shouldSetSamePriceCalculationStrategyForOptionAndCategory() {
+        String aPassCategory = PassCategories.SUPERNOVA.toString();
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
+        when(passFactory.buildPassOption(any())).thenReturn(new PackagePassOption(mock(Money.class)));
+        when(passFactory.buildPassCategory(any())).thenReturn(new PassCategory());
+
+        PassList passList = subject.parsePasses(passListDto);
+
+        assertEquals(passList.getOption().getPriceCalculationStrategy(), passList.getCategory().getPriceCalculationStrategy());
+    }
+
+    @Test
     void parsePasses_shouldThrowDuplicatePassEventDateException_whenEventDateIsDuplicated() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
@@ -75,7 +90,7 @@ class PassListParserTest {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
-        when(passFactory.buildPassOption(any())).thenReturn(new PackagePassOption(mock(Money.class), mock(PriceCalculationStrategy.class)));
+        when(passFactory.buildPassOption(any())).thenReturn(new PackagePassOption(mock(Money.class)));
 
         assertThrows(PackagePassWithEventDateException.class, () -> subject.parsePasses(passListDto));
     }
@@ -84,7 +99,7 @@ class PassListParserTest {
     void parsePasses_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.SINGLE_PASS.toString(), null);
-        when(passFactory.buildPassOption(any())).thenReturn(new PackagePassOption(mock(Money.class), mock(PriceCalculationStrategy.class)));
+        when(passFactory.buildPassOption(any())).thenReturn(new SinglePassOption(mock(Money.class)));
 
         assertThrows(SinglePassWithoutEventDateException.class, () -> subject.parsePasses(passListDto));
     }
