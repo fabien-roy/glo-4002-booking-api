@@ -40,81 +40,81 @@ class PassListParserTest {
     }
 
     @Test
-    void parsePasses_shouldBuildAPassList() {
+    void parseDto_shouldBuildAPassList() {
         PassListDto passListDto = new PassListDto(PassCategories.SUPERNOVA.toString(), PassOptions.SINGLE_PASS.toString(), new ArrayList<>());
 
-        subject.parsePasses(passListDto);
+        subject.parseDto(passListDto);
 
         verify(passFactory).build(any(), any());
     }
 
     @Test
-    void parsePasses_shouldParseASinglePass_whenThereIsOnlyOneEventDate() {
+    void parseDto_shouldParseASinglePass_whenThereIsOnlyOneEventDate() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> aEventDate = new ArrayList<>(Collections.singleton(EventDate.START_DATE.toString()));
         PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, aEventDate);
 
-        PassList passList = subject.parsePasses(passListDto);
+        PassList passList = subject.parseDto(passListDto);
 
         assertEquals(1, passList.size());
     }
 
     @Test
-    void parsePasses_shouldParseMultiplePasses_whenThereAreMultipleEventDates() {
+    void parseDto_shouldParseMultiplePasses_whenThereAreMultipleEventDates() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
 
-        PassList passList = subject.parsePasses(passListDto);
+        PassList passList = subject.parseDto(passListDto);
 
         assertEquals(2, passList.size());
     }
 
     @Test
-    void parsePasses_shouldThrowDuplicatePassEventDateException_whenEventDateIsDuplicated() {
+    void parseDto_shouldThrowDuplicatePassEventDateException_whenEventDateIsDuplicated() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         String aDate = EventDate.START_DATE.toString();
         List<String> someEventDates = new ArrayList<>(Collections.nCopies(2, aDate));
         PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
 
-        assertThrows(DuplicatePassEventDateException.class, () -> subject.parsePasses(passListDto));
+        assertThrows(DuplicatePassEventDateException.class, () -> subject.parseDto(passListDto));
     }
 
     @Test
-    void parsePasses_shouldThrowPackagePassWithEventDateException_whenEventDateIsNotNullAndPassOptionIsPackage() {
+    void parseDto_shouldThrowPackagePassWithEventDateException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
         passList.setOption(mock(PassOption.class));
 
-        assertThrows(PackagePassWithEventDateException.class, () -> subject.parsePasses(passListDto));
+        assertThrows(PackagePassWithEventDateException.class, () -> subject.parseDto(passListDto));
     }
 
     @Test
-    void parsePasses_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
+    void parseDto_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.SINGLE_PASS.toString(), null);
         passList.setOption(mock(PassOption.class));
 
-        assertThrows(SinglePassWithoutEventDateException.class, () -> subject.parsePasses(passListDto));
+        assertThrows(SinglePassWithoutEventDateException.class, () -> subject.parseDto(passListDto));
     }
 
     @Test
-    void parsePasses_shouldThrowInvalidPassCategoryException_whenPassCategoryDoesNotExist() {
+    void parseDto_shouldThrowInvalidPassCategoryException_whenPassCategoryDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassCategory";
         PassListDto passListDto = new PassListDto(anInvalidPassOption, PassOptions.PACKAGE.toString(), new ArrayList<>());
 
-        assertThrows(InvalidPassCategoryException.class, () -> subject.parsePasses(passListDto));
+        assertThrows(InvalidPassCategoryException.class, () -> subject.parseDto(passListDto));
     }
 
     @Test
-    void parsePasses_shouldThrowInvalidPassOptionException_whenPassOptionDoesNotExist() {
+    void parseDto_shouldThrowInvalidPassOptionException_whenPassOptionDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassOption";
         PassListDto passListDto = new PassListDto(PassCategories.SUPERNOVA.toString(), anInvalidPassOption, new ArrayList<>());
 
-        assertThrows(InvalidPassOptionException.class, () -> subject.parsePasses(passListDto));
+        assertThrows(InvalidPassOptionException.class, () -> subject.parseDto(passListDto));
     }
 }

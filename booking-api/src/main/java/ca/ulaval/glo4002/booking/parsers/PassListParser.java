@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -24,7 +24,12 @@ public class PassListParser {
         this.passFactory = passFactory;
     }
 
-    public PassList parsePasses(PassListDto passListDto) {
+    // TODO
+    public List<PassDto> toDto(PassList passList) {
+        return new ArrayList<>();
+    }
+
+    public PassList parseDto(PassListDto passListDto) {
         PassOptions passOption = parsePassOption(passListDto);
         PassCategories passCategory = parsePassCategory(passListDto);
 

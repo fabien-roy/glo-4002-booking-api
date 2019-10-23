@@ -45,6 +45,10 @@ public class Order {
         return orderDate;
     }
 
+    public PassList getPassList() {
+        return passList;
+    }
+
     public Money getPrice() {
         return passList.getPrice();
     }

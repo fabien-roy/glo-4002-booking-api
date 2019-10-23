@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
@@ -15,16 +16,20 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class OrderParserTest {
 
     private OrderParser subject;
+    private PassListParser passListParser;
 
     @BeforeEach
     public void setUpSubject() {
-        subject = new OrderParser(mock(PassListParser.class));
+        passListParser = mock(PassListParser.class);
+        subject = new OrderParser(passListParser);
     }
 
     @Test
@@ -36,6 +41,18 @@ class OrderParserTest {
         OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
 
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getPrice());
+    }
+
+    @Test
+    void toDto_shouldCallPassListParser() {
+        Money aPrice = new Money(new BigDecimal(500));
+        Order order = mock(Order.class);
+        when(order.getPassList()).thenReturn(mock(PassList.class));
+        when(order.getPrice()).thenReturn(aPrice);
+
+        subject.toDto(order);
+
+        verify(passListParser).toDto(any());
     }
 
     @Test
