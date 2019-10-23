@@ -1,12 +1,11 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domain.passes.Passes;
+import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.dto.PassesDto;
+import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.passes.*;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class PassesParserTest {
+class PassListParserTest {
 
     private PassesParser subject;
     private PassFactory passFactory;
@@ -41,11 +40,11 @@ class PassesParserTest {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> aEventDate = new ArrayList<>(Collections.singleton(EventDate.START_DATE.toString()));
-        PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, aEventDate);
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, aEventDate);
 
-        Passes passes = subject.parsePasses(passesDto);
+        PassList passList = subject.parsePasses(passListDto);
 
-        assertEquals(1, passes.size());
+        assertEquals(1, passList.size());
     }
 
     @Test
@@ -53,11 +52,11 @@ class PassesParserTest {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
-        PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
 
-        Passes passes = subject.parsePasses(passesDto);
+        PassList passList = subject.parsePasses(passListDto);
 
-        assertEquals(2, passes.size());
+        assertEquals(2, passList.size());
     }
 
     @Test
@@ -66,44 +65,44 @@ class PassesParserTest {
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         String aDate = EventDate.START_DATE.toString();
         List<String> someEventDates = new ArrayList<>(Collections.nCopies(2, aDate));
-        PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
 
-        assertThrows(DuplicatePassEventDateException.class, () -> subject.parsePasses(passesDto));
+        assertThrows(DuplicatePassEventDateException.class, () -> subject.parsePasses(passListDto));
     }
 
     @Test
     void parsePasses_shouldThrowPackagePassWithEventDateException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
-        PassesDto passesDto = new PassesDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
+        PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
         when(passFactory.buildPassOption(any())).thenReturn(new PackagePassOption(mock(Money.class), mock(PriceCalculationStrategy.class)));
 
-        assertThrows(PackagePassWithEventDateException.class, () -> subject.parsePasses(passesDto));
+        assertThrows(PackagePassWithEventDateException.class, () -> subject.parsePasses(passListDto));
     }
 
     @Test
     void parsePasses_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
-        PassesDto passesDto = new PassesDto(aPassCategory, PassOptions.SINGLE_PASS.toString(), null);
+        PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.SINGLE_PASS.toString(), null);
         when(passFactory.buildPassOption(any())).thenReturn(new PackagePassOption(mock(Money.class), mock(PriceCalculationStrategy.class)));
 
-        assertThrows(SinglePassWithoutEventDateException.class, () -> subject.parsePasses(passesDto));
+        assertThrows(SinglePassWithoutEventDateException.class, () -> subject.parsePasses(passListDto));
     }
 
     @Test
     void parsePasses_shouldThrowInvalidPassOptionException_whenPassOptionDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassOption";
-        PassesDto passesDto = new PassesDto(PassCategories.SUPERNOVA.toString(), anInvalidPassOption, new ArrayList<>());
+        PassListDto passListDto = new PassListDto(PassCategories.SUPERNOVA.toString(), anInvalidPassOption, new ArrayList<>());
 
-        assertThrows(InvalidPassOptionException.class, () -> subject.parsePasses(passesDto));
+        assertThrows(InvalidPassOptionException.class, () -> subject.parsePasses(passListDto));
     }
 
     @Test
     void parsePasses_shouldBuildPassOption() {
         String aValidPassOption = PassOptions.PACKAGE.toString();
-        PassesDto passesDto = new PassesDto(PassCategories.SUPERNOVA.toString(), aValidPassOption, new ArrayList<>());
+        PassListDto passListDto = new PassListDto(PassCategories.SUPERNOVA.toString(), aValidPassOption, new ArrayList<>());
 
-        subject.parsePasses(passesDto);
+        subject.parsePasses(passListDto);
 
         verify(passFactory).buildPassOption(any());
     }
@@ -111,17 +110,17 @@ class PassesParserTest {
     @Test
     void parsePasses_shouldThrowInvalidPassCategoryException_whenPassCategoryDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassCategory";
-        PassesDto passesDto = new PassesDto(anInvalidPassOption, PassOptions.PACKAGE.toString(), new ArrayList<>());
+        PassListDto passListDto = new PassListDto(anInvalidPassOption, PassOptions.PACKAGE.toString(), new ArrayList<>());
 
-        assertThrows(InvalidPassCategoryException.class, () -> subject.parsePasses(passesDto));
+        assertThrows(InvalidPassCategoryException.class, () -> subject.parsePasses(passListDto));
     }
 
     @Test
     void parsePasses_shouldBuildPassCategory() {
         String aValidPassCategory = PassCategories.SUPERNOVA.toString();
-        PassesDto passesDto = new PassesDto(aValidPassCategory, PassOptions.PACKAGE.toString(), new ArrayList<>());
+        PassListDto passListDto = new PassListDto(aValidPassCategory, PassOptions.PACKAGE.toString(), new ArrayList<>());
 
-        subject.parsePasses(passesDto);
+        subject.parsePasses(passListDto);
 
         verify(passFactory).buildPassCategory(any());
     }

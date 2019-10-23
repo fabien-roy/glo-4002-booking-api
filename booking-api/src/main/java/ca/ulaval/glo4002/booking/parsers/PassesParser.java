@@ -3,10 +3,10 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
-import ca.ulaval.glo4002.booking.domain.passes.Passes;
+import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
 import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
-import ca.ulaval.glo4002.booking.dto.PassesDto;
+import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.passes.DuplicatePassEventDateException;
@@ -26,21 +26,21 @@ public class PassesParser {
         this.passFactory = passFactory;
     }
 
-    public Passes parsePasses(PassesDto passesDto) {
+    public PassList parsePasses(PassListDto passListDto) {
         List<Pass> passes = new ArrayList<>();
 
-        PassOption passOption = parsePassOption(passesDto);
-        PassCategory passCategory = parsePassCategory(passesDto);
+        PassOption passOption = parsePassOption(passListDto);
+        PassCategory passCategory = parsePassCategory(passListDto);
 
-        validateEventDates(passesDto.getEventDates(), passOption);
+        validateEventDates(passListDto.getEventDates(), passOption);
 
-        passesDto.getEventDates().forEach(eventDate -> {
+        passListDto.getEventDates().forEach(eventDate -> {
             EventDate passEventDate = new EventDate(eventDate);
             Pass pass = new Pass(passEventDate);
             passes.add(pass);
         });
 
-        return new Passes(passes, passCategory, passOption);
+        return new PassList(passes, passCategory, passOption);
     }
 
     private void validateEventDates(List<String> eventDates, PassOption passOption) {
@@ -56,14 +56,14 @@ public class PassesParser {
         }
     }
 
-    private PassOption parsePassOption(PassesDto passesDto) {
-        PassOptions passOptionElem = PassOptions.get(passesDto.getPassOption());
+    private PassOption parsePassOption(PassListDto passListDto) {
+        PassOptions passOptionElem = PassOptions.get(passListDto.getPassOption());
 
         return passFactory.buildPassOption(passOptionElem);
     }
 
-    private PassCategory parsePassCategory(PassesDto passesDto) {
-        PassCategories passCategoryElem = PassCategories.get(passesDto.getPassCategory());
+    private PassCategory parsePassCategory(PassListDto passListDto) {
+        PassCategories passCategoryElem = PassCategories.get(passListDto.getPassCategory());
 
         return passFactory.buildPassCategory(passCategoryElem);
     }

@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.dto.PassesDto;
+import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,12 +41,12 @@ class OrderParserTest {
     @Test
     public void parseDto_shouldParseDto() {
         String orderDate = "2050-05-21T15:23:20.142Z";
-        PassesDto passesDto = mock(PassesDto.class);
-        when(passesDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
+        PassListDto passListDto = mock(PassListDto.class);
+        when(passListDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate,
                 "TEAM",
-                passesDto
+                passListDto
         );
         OrderDate expectedOrderDate = new OrderDate(orderDate);
 

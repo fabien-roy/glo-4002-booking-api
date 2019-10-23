@@ -6,14 +6,14 @@ import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class Passes {
+public class PassList {
 
     private List<Pass> passes;
     private PassCategory category;
     private PassOption option;
     private Money price;
 
-    public Passes(List<Pass> passes, PassCategory category, PassOption option) {
+    public PassList(List<Pass> passes, PassCategory category, PassOption option) {
         this.passes = passes;
         this.category = category;
         this.option = option;

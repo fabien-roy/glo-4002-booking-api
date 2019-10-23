@@ -1,26 +1,23 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.*;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.Passes;
+import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
-
-import java.util.List;
 
 public class Order {
 
     private OrderNumber orderNumber;
     private OrderDate orderDate;
-    private Passes passes;
+    private PassList passList;
 
     public Order(Id id) {
         this.orderNumber = new OrderNumber(id, null);
     }
 
-    public Order(String vendorCode, OrderDate orderDate, Passes passes) {
+    public Order(String vendorCode, OrderDate orderDate, PassList passList) {
         this.orderNumber = new OrderNumber(null, vendorCode);
         this.orderDate = orderDate;
-        this.passes = passes;
+        this.passList = passList;
     }
 
     public Id getId() {
@@ -44,6 +41,6 @@ public class Order {
     }
 
     public Money getPrice() {
-        return passes.getPrice();
+        return passList.getPrice();
     }
 }
