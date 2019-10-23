@@ -34,13 +34,13 @@ public class PassesParser {
         return passes;
     }
 
-    public PassOption parsePassOption(PassesDto passesDto) {
+    private PassOption parsePassOption(PassesDto passesDto) {
         PassOptions passOptionElem = PassOptions.get(passesDto.getPassOption());
 
         return passFactory.buildPassOption(passOptionElem);
     }
 
-    public PassCategory parsePassCategory(PassesDto passesDto) {
+    private PassCategory parsePassCategory(PassesDto passesDto) {
         PassCategories passCategoryElem = PassCategories.get(passesDto.getPassCategory());
 
         return passFactory.buildPassCategory(passCategoryElem);

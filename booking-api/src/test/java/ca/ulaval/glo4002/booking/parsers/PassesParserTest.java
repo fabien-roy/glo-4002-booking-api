@@ -30,37 +30,37 @@ class PassesParserTest {
     // TODO : Refactor to fit actual parser
 
     @Test
-    void parsePassOption_shouldThrowInvalidPassOptionException_whenPassOptionDoesNotExist() {
+    void parsePasses_shouldThrowInvalidPassOptionException_whenPassOptionDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassOption";
         PassesDto passesDto = new PassesDto(PassCategories.SUPERNOVA.toString(), anInvalidPassOption, new ArrayList<>());
 
-        assertThrows(InvalidPassOptionException.class, () -> subject.parsePassOption(passesDto));
+        assertThrows(InvalidPassOptionException.class, () -> subject.parsePasses(passesDto));
     }
 
     @Test
-    void parsePassOption_shouldBuildPassOption() {
+    void parsePasses_shouldBuildPassOption() {
         String aValidPassOption = PassOptions.PACKAGE.toString();
         PassesDto passesDto = new PassesDto(PassCategories.SUPERNOVA.toString(), aValidPassOption, new ArrayList<>());
 
-        subject.parsePassOption(passesDto);
+        subject.parsePasses(passesDto);
 
         verify(passFactory).buildPassOption(any());
     }
 
     @Test
-    void parsePassCategory_shouldThrowInvalidPassCategoryException_whenPassCategoryDoesNotExist() {
+    void parsePasses_shouldThrowInvalidPassCategoryException_whenPassCategoryDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassCategory";
         PassesDto passesDto = new PassesDto(anInvalidPassOption, PassOptions.PACKAGE.toString(), new ArrayList<>());
 
-        assertThrows(InvalidPassCategoryException.class, () -> subject.parsePassCategory(passesDto));
+        assertThrows(InvalidPassCategoryException.class, () -> subject.parsePasses(passesDto));
     }
 
     @Test
-    void parsePassCategory_shouldBuildPassCategory() {
+    void parsePasses_shouldBuildPassCategory() {
         String aValidPassCategory = PassCategories.SUPERNOVA.toString();
         PassesDto passesDto = new PassesDto(aValidPassCategory, PassOptions.PACKAGE.toString(), new ArrayList<>());
 
-        subject.parsePassCategory(passesDto);
+        subject.parsePasses(passesDto);
 
         verify(passFactory).buildPassCategory(any());
     }
