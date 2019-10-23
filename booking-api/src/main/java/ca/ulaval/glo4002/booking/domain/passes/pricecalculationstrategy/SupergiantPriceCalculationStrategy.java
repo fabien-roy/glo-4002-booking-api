@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy;
 
-import ca.ulaval.glo4002.booking.domain.AmountDiscount;
-import ca.ulaval.glo4002.booking.domain.Money;
+import ca.ulaval.glo4002.booking.domain.passes.money.AmountDiscount;
+import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 
 import java.math.BigDecimal;
 

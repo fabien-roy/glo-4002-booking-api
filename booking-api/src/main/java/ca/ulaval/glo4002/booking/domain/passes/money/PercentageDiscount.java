@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domain;
+package ca.ulaval.glo4002.booking.domain.passes.money;
 
 import java.math.BigDecimal;
 

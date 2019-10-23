@@ -4,9 +4,9 @@ public class OrderWithPassesAsEventDatesDto {
 
     private String orderDate;
     private String vendorCode;
-    private PassesDto passes;
+    private PassListDto passes;
 
-    public OrderWithPassesAsEventDatesDto(String orderDate, String vendorCode, PassesDto passes) {
+    public OrderWithPassesAsEventDatesDto(String orderDate, String vendorCode, PassListDto passes) {
         this.orderDate = orderDate;
         this.vendorCode = vendorCode;
         this.passes = passes;
@@ -20,7 +20,7 @@ public class OrderWithPassesAsEventDatesDto {
         return vendorCode;
     }
 
-    public PassesDto getPasses() {
+    public PassListDto getPasses() {
         return passes;
     }
 
