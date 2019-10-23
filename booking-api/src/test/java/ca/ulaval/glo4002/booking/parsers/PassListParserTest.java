@@ -44,7 +44,8 @@ class PassListParserTest {
     @ValueSource(ints = {1, 2, 3})
     void toDto_shouldBuildCorrectQuantityOfDtos(int expectedSize) {
         PassNumber aPassNumber = new PassNumber(new Id(1L));
-        List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, new Pass(aPassNumber)));
+        Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
+        List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
         passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
 
         List<PassDto> passDtos = subject.toDto(passList);
@@ -56,7 +57,9 @@ class PassListParserTest {
     void toDto_shouldBuildDtoWithCorrectPassNumbers() {
         PassNumber aPassNumber = new PassNumber(new Id(1L));
         PassNumber anotherPassNumber = new PassNumber(new Id(2L));
-        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aPassNumber), new Pass(anotherPassNumber)));
+        Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
+        Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
+        List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
 
         List<PassDto> passDtos = subject.toDto(passList);
@@ -68,7 +71,8 @@ class PassListParserTest {
     @Test
     void toDto_shouldBuildDtoWithCorrectCategory() {
         PassNumber aPassNumber = new PassNumber(new Id(1L));
-        List<Pass> passes = new ArrayList<>(Collections.singletonList(new Pass(aPassNumber)));
+        Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
+        List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
@@ -83,7 +87,9 @@ class PassListParserTest {
     void toDto_shouldSetSameCategoryForAllPasses() {
         PassNumber aPassNumber = new PassNumber(new Id(1L));
         PassNumber anotherPassNumber = new PassNumber(new Id(2L));
-        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aPassNumber), new Pass(anotherPassNumber)));
+        Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
+        Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
+        List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
@@ -97,7 +103,8 @@ class PassListParserTest {
     @Test
     void toDto_shouldBuildDtoWithCorrectOption() {
         PassNumber aPassNumber = new PassNumber(new Id(1L));
-        List<Pass> passes = new ArrayList<>(Collections.singletonList(new Pass(aPassNumber)));
+        Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
+        List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassOption passOption = mock(PassOption.class);
         String expectedPassOptionName = "expectedPassOptionName";
         when(passOption.getName()).thenReturn(expectedPassOptionName);
@@ -112,7 +119,9 @@ class PassListParserTest {
     void toDto_shouldSetSameOptionForAllPasses() {
         PassNumber aPassNumber = new PassNumber(new Id(1L));
         PassNumber anotherPassNumber = new PassNumber(new Id(2L));
-        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aPassNumber), new Pass(anotherPassNumber)));
+        Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
+        Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
+        List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassOption passOption = mock(PassOption.class);
         String expectedPassOptionName = "expectedPassOptionName";
         when(passOption.getName()).thenReturn(expectedPassOptionName);
@@ -125,9 +134,13 @@ class PassListParserTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectEventDates() {
+        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
         EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
-        List<Pass> passes = new ArrayList<>(Arrays.asList(new Pass(aEventDate), new Pass(anotherEventDate)));
+        Pass aPass = new Pass(aPassNumber, aEventDate);
+        Pass anotherPass = new Pass(anotherPassNumber, anotherEventDate);
+        List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
 
         List<PassDto> passDtos = subject.toDto(passList);

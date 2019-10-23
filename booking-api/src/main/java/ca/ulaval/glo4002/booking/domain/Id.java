@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.booking.domain;
 
 import ca.ulaval.glo4002.booking.exceptions.InvalidIdFormatException;
 
-import java.util.Objects;
-
 public class Id {
 
     private Long value;

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -25,19 +24,19 @@ class OrderDaoTest {
     private OrderDao subject;
 
     @BeforeEach
-    public void setUpSubject() {
+    void setUpSubject() {
         this.subject = new OrderDao();
     }
 
     @Test
-    public void get_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
+    void get_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
         Id aNonExistentOrderId = new Id(A_NON_EXISTENT_ID);
 
         assertThrows(OrderNotFoundException.class, () -> subject.get(aNonExistentOrderId));
     }
 
     @Test
-    public void get_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
+    void get_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
         Id aNonExistentOrderId = new Id(A_NON_EXISTENT_ID);
         Id aOrderId = new Id(A_ID);
         Order aOrder = new Order(aOrderId);
@@ -47,7 +46,7 @@ class OrderDaoTest {
     }
 
     @Test
-    public void get_shouldReturnOrder() {
+    void get_shouldReturnOrder() {
         Id aOrderId = new Id(A_ID);
         Order aOrder = new Order(aOrderId);
         subject.save(aOrder);
@@ -59,7 +58,7 @@ class OrderDaoTest {
     }
 
     @Test
-    public void get_shouldReturnOrder_whenThereAreMultipleOrders() {
+    void get_shouldReturnOrder_whenThereAreMultipleOrders() {
         Id aOrderId = new Id(A_ID);
         Id anotherOrderId = new Id(ANOTHER_ID);
         Order aOrder = new Order(aOrderId);
@@ -74,7 +73,7 @@ class OrderDaoTest {
     }
 
     @Test
-    public void getAll_shouldReturnAllOrders() {
+    void getAll_shouldReturnAllOrders() {
         Id aOrderId = new Id(A_ID);
         Id anotherOrderId = new Id(ANOTHER_ID);
         Order aOrder = new Order(aOrderId);
@@ -90,14 +89,14 @@ class OrderDaoTest {
     }
 
     @Test
-    public void getAll_shouldReturnEmptyList_whenThereIsNoOrder() {
+    void getAll_shouldReturnEmptyList_whenThereIsNoOrder() {
         List<Order> orders = subject.getAll();
 
         assertTrue(orders.isEmpty());
     }
 
     @Test
-    public void save_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
+    void save_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
         OrderDate orderDate = new OrderDate("2050-05-21T15:23:20.142Z");
         Order aOrder = new Order("VENDOR", orderDate, mock(PassList.class));
         subject.save(aOrder);

@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class EventDateTest {
 
     @Test
-    public void constructing_shouldSetCorrectValue() {
+    void constructing_shouldSetCorrectValue() {
         LocalDate expectedValue  = EventDate.START_DATE.plusDays(1);
 
         EventDate subject = new EventDate(expectedValue);
@@ -21,7 +21,7 @@ class EventDateTest {
     }
 
     @Test
-    public void constructing_shouldThrowInvalidEventDateException_whenEventDateIsInvalid() {
+    void constructing_shouldThrowInvalidEventDateException_whenEventDateIsInvalid() {
         String anInvalidEventDate = "anInvalidDate";
 
         assertThrows(
@@ -31,7 +31,7 @@ class EventDateTest {
     }
 
     @Test
-    public void constructing_shouldThrowOutOfBoundsEventDateException_whenEventDateIsUnderBounds() {
+    void constructing_shouldThrowOutOfBoundsEventDateException_whenEventDateIsUnderBounds() {
         LocalDate aUnderBoundEventDate  = EventDate.START_DATE.minusDays(1);
 
         assertThrows(
@@ -41,7 +41,7 @@ class EventDateTest {
     }
 
     @Test
-    public void constructing_shouldThrowOutOfBoundsEventDateException_whenEventDateIsOverBounds() {
+    void constructing_shouldThrowOutOfBoundsEventDateException_whenEventDateIsOverBounds() {
         LocalDate aOverBoundEventDate  = EventDate.END_DATE.plusDays(1);
 
         assertThrows(

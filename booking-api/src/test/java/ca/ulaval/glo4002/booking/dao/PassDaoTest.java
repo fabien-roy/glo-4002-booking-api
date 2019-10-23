@@ -11,7 +11,7 @@ class PassDaoTest {
     private PassDao subject;
 
     @BeforeEach
-    public void setUpSubject() {
+    void setUpSubject() {
         this.subject = new PassDao();
     }
 

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MoneyTest {
+class MoneyTest {
 
     private Money subject;
 

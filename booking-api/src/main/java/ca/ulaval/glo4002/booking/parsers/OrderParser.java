@@ -2,23 +2,21 @@ package ca.ulaval.glo4002.booking.parsers;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // TODO : ACP : Should DTOs handle their creation with an Order?
 
 public class OrderParser {
 
-    public PassListParser passListParser;
+    private PassListParser passListParser;
 
-    public OrderParser(PassListParser passListParser) {
+    OrderParser(PassListParser passListParser) {
         this.passListParser = passListParser;
     }
 

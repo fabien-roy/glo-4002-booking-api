@@ -7,7 +7,7 @@ public class OrderService {
 
     private OrderRepository repository;
 
-    public OrderService(OrderRepository repository) {
+    OrderService(OrderRepository repository) {
         this.repository = repository;
     }
 

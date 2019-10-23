@@ -14,8 +14,9 @@ public class Pass {
     }
 
     // TODO : Only used by tests...
-    public Pass(PassNumber passNumber) {
+    public Pass(PassNumber passNumber, EventDate eventDate) {
         this.passNumber = passNumber;
+        this.eventDate = eventDate;
     }
 
     public Pass(EventDate eventDate) {
@@ -29,6 +30,10 @@ public class Pass {
 
     public void setId(Id id) {
         passNumber.setId(id);
+    }
+
+    public EventDate getEventDate() {
+        return eventDate;
     }
 
     public Money getPrice() {

@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.domain.passes;
 
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class PassList {
         return priceCalculationStrategy;
     }
 
-    public Money getPassPrice() {
+    private Money getPassPrice() {
         return passes.get(0).getPrice();
     }
 

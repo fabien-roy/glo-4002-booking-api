@@ -1,16 +1,14 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
-import org.springframework.http.HttpStatus;
-
 public abstract class BookingException extends RuntimeException {
 
     protected String description;
 
-    public BookingException(){
+    protected BookingException(){
         super();
     }
 
-    public BookingException(String message) {
+    protected BookingException(String message) {
         super(message);
     }
 

@@ -27,13 +27,13 @@ class OrderParserTest {
     private PassListParser passListParser;
 
     @BeforeEach
-    public void setUpSubject() {
+    void setUpSubject() {
         passListParser = mock(PassListParser.class);
         subject = new OrderParser(passListParser);
     }
 
     @Test
-    public void toDto_shouldBuildDtoWithCorrectPrice() {
+    void toDto_shouldBuildDtoWithCorrectPrice() {
         Money aPrice = new Money(new BigDecimal(500));
         Order order = mock(Order.class);
         when(order.getPrice()).thenReturn(aPrice);
@@ -56,7 +56,7 @@ class OrderParserTest {
     }
 
     @Test
-    public void parseDto_shouldParseDtoWithCorrectOrderDate() {
+    void parseDto_shouldParseDtoWithCorrectOrderDate() {
         String orderDate = "2050-05-21T15:23:20.142Z";
         PassListDto passListDto = mock(PassListDto.class);
         when(passListDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
@@ -73,7 +73,7 @@ class OrderParserTest {
     }
 
     @Test
-    public void parseDto_shouldParseDtoWithCorrectVendorCode() {
+    void parseDto_shouldParseDtoWithCorrectVendorCode() {
         String orderDate = "2050-05-21T15:23:20.142Z";
         PassListDto passListDto = mock(PassListDto.class);
         when(passListDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
@@ -89,7 +89,7 @@ class OrderParserTest {
     }
 
     @Test
-    public void parseDto_shouldThrowInvalidOrderFormatException_whenThereIsNoPass() {
+    void parseDto_shouldThrowInvalidOrderFormatException_whenThereIsNoPass() {
         String orderDate = "2050-05-21T15:23:20.142Z";
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate,

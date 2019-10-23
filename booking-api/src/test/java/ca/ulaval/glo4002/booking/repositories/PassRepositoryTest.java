@@ -20,7 +20,7 @@ class PassRepositoryTest {
     }
 
     @Test
-    public void addPass_shouldSavePass() {
+    void addPass_shouldSavePass() {
         Pass pass = new Pass();
 
         subject.addPass(pass);

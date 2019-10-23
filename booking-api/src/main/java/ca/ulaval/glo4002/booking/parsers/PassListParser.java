@@ -16,20 +16,32 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-public class PassListParser {
+class PassListParser {
 
     private PassFactory passFactory;
 
-    public PassListParser(PassFactory passFactory) {
+    PassListParser(PassFactory passFactory) {
         this.passFactory = passFactory;
     }
 
-    // TODO
-    public List<PassDto> toDto(PassList passList) {
-        return new ArrayList<>();
+    List<PassDto> toDto(PassList passList) {
+        String passCategory = passList.getCategory().getName();
+        String passOption = passList.getOption().getName();
+
+        List<PassDto> passDtos = new ArrayList<>();
+        passList.getPasses().forEach(pass ->
+                passDtos.add(new PassDto(
+                    pass.getId().getValue(),
+                    passCategory,
+                    passOption,
+                    pass.getEventDate().toString()
+                )
+        ));
+
+        return passDtos;
     }
 
-    public PassList parseDto(PassListDto passListDto) {
+    PassList parseDto(PassListDto passListDto) {
         PassOptions passOption = parsePassOption(passListDto);
         PassCategories passCategory = parsePassCategory(passListDto);
 

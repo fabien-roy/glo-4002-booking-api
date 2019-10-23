@@ -6,14 +6,12 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class OrderRepositoryTest {
@@ -25,7 +23,7 @@ class OrderRepositoryTest {
     private OrderRepository subject;
 
     @BeforeEach
-    public void setUpSubject() {
+    void setUpSubject() {
         dao = mock(OrderDao.class);
         passRepository = mock(PassRepository.class);
 
@@ -33,7 +31,7 @@ class OrderRepositoryTest {
     }
 
     @Test
-    public void getByOrderNumber_shouldReturnCorrectOrder() {
+    void getByOrderNumber_shouldReturnCorrectOrder() {
         Id expectedOrderId = new Id(A_ID);
         Order expectedOrder = new Order(expectedOrderId);
         when(dao.get(expectedOrder.getId())).thenReturn(Optional.of(expectedOrder));
@@ -45,7 +43,7 @@ class OrderRepositoryTest {
     }
 
     @Test
-    public void addOrder_shouldSaveOrder() {
+    void addOrder_shouldSaveOrder() {
         Order order = new Order(mock(Id.class));
 
         subject.addOrder(order);
@@ -54,7 +52,7 @@ class OrderRepositoryTest {
     }
 
     @Test
-    public void addOrder_shouldAddEachPasses() {
+    void addOrder_shouldAddEachPasses() {
         int numberOfPasses = 2;
         Order order = mock(Order.class);
         when(order.getPasses()).thenReturn(new ArrayList<>(Collections.nCopies(numberOfPasses, new Pass())));

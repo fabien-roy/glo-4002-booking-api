@@ -22,10 +22,10 @@ import static org.mockito.Mockito.when;
 
 class OrderControllerTest {
 
-    OrderController subject;
-    OrderService service;
-    OrderParser parser;
-    OrderRepository repository;
+    private OrderController subject;
+    private OrderService service;
+    private OrderParser parser;
+    private OrderRepository repository;
 
     @BeforeEach
     void setUpSubject() {

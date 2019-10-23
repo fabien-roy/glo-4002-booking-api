@@ -11,7 +11,7 @@ public class OrderRepository {
     private OrderDao dao;
     private PassRepository passRepository;
 
-    public OrderRepository(OrderDao dao, PassRepository passRepository) {
+    OrderRepository(OrderDao dao, PassRepository passRepository) {
         this.dao = dao;
         this.passRepository = passRepository;
     }
