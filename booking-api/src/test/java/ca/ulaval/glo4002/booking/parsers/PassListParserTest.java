@@ -183,17 +183,6 @@ class PassListParserTest {
     }
 
     @Test
-    void parseDto_shouldThrowDuplicatePassEventDateException_whenEventDateIsDuplicated() {
-        String aPassCategory = PassCategories.SUPERNOVA.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        String aDate = EventDate.START_DATE.toString();
-        List<String> someEventDates = new ArrayList<>(Collections.nCopies(2, aDate));
-        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
-
-        assertThrows(DuplicatePassEventDateException.class, () -> subject.parseDto(passListDto));
-    }
-
-    @Test
     void parseDto_shouldThrowPackagePassWithEventDateException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
