@@ -1,11 +1,9 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domain.Money;
+import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
-import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
@@ -15,7 +13,6 @@ import ca.ulaval.glo4002.booking.factories.PassFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.beans.EventHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

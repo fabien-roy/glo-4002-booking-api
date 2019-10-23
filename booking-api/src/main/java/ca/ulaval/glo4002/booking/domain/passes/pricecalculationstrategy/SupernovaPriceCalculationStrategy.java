@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy;
 
-import ca.ulaval.glo4002.booking.domain.Money;
+import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 
 public class SupernovaPriceCalculationStrategy implements PriceCalculationStrategy {
 

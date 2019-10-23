@@ -1,9 +1,8 @@
 package ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy;
 
-import ca.ulaval.glo4002.booking.domain.Money;
-import ca.ulaval.glo4002.booking.domain.PercentageDiscount;
+import ca.ulaval.glo4002.booking.domain.passes.money.Money;
+import ca.ulaval.glo4002.booking.domain.passes.money.PercentageDiscount;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

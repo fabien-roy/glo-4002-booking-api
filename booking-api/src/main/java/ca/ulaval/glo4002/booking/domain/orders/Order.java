@@ -2,11 +2,9 @@ package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.*;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
-import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Order {

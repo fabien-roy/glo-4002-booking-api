@@ -1,8 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy;
 
-import ca.ulaval.glo4002.booking.domain.Money;
+import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.SupernovaPriceCalculationStrategy;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

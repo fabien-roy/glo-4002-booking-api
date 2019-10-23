@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.dto;
 
-import ca.ulaval.glo4002.booking.domain.Money;
-
 import java.util.List;
 
 public class OrderWithPassesAsPassesDto {
