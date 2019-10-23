@@ -11,10 +11,8 @@ public class PassDao {
         nextId = new Id(0L);
     }
 
-    public Pass save(Pass pass) {
+    public void save(Pass pass) {
         pass.setId(nextId);
         nextId = new Id(nextId.getValue() + 1);
-
-        return pass;
     }
 }

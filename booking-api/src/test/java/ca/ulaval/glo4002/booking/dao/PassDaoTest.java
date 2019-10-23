@@ -20,8 +20,8 @@ class PassDaoTest {
         Pass aPass = new Pass();
         Pass anotherPass = new Pass();
 
-        aPass = subject.save(aPass);
-        anotherPass = subject.save(anotherPass);
+        subject.save(aPass);
+        subject.save(anotherPass);
 
         assertNotEquals(aPass.getId(), anotherPass.getId());
     }

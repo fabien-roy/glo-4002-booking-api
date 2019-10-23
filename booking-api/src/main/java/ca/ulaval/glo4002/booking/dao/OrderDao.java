@@ -33,7 +33,7 @@ public class OrderDao {
         return orders;
     }
 
-    public Order save(Order order) {
+    public void save(Order order) {
         if (orders.contains(order)) {
             throw new OrderAlreadyCreatedException(order.getId().getValue().toString());
         }
@@ -42,7 +42,5 @@ public class OrderDao {
         nextId = new Id(nextId.getValue() + 1);
 
         orders.add(order);
-
-        return order;
     }
 }
