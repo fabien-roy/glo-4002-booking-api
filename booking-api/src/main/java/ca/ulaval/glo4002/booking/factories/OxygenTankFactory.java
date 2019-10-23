@@ -10,7 +10,6 @@ import com.sun.enterprise.module.bootstrap.BootException;
 import ca.ulaval.glo4002.booking.domain.OxygenDate;
 import ca.ulaval.glo4002.booking.domain.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.OxygenTankInventory;
-import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
 public class OxygenTankFactory {
@@ -24,6 +23,7 @@ public class OxygenTankFactory {
 		this.inventory = inventory;
 	}
 	
+	// TODO : Maybe refactor this because it's really ugly and missign the part where we create tank in bundle for grade A and grade B
     public List<OxygenTank> buildOxygenTankByCategory(OxygenTankCategory category, LocalDate requestDate, Long numberOfDays) throws BootException {
     	if(requestDate.isAfter(START_OF_FESTIVAL_DATE)) throw new BootException("Error trying to book after start of festival");
     	
@@ -46,15 +46,14 @@ public class OxygenTankFactory {
     				createdTanks.add(new OxygenTank(categoryForDate, new OxygenDate(requestDate)));
     			}
     		} else {
-    			quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
+    			quantityToCover = inventory.requestTankByCategory(categoryForDate, quantityToCover);
     			
     			if(quantityToCover > 0) {
     				for(int i = 0; i < quantityToCover; i++) {
     					createdTanks.add(new OxygenTank(categoryForDate, new OxygenDate(requestDate)));
     				}
     			}
-    		}
-    		
+    		}	
     	}
     	
     	return createdTanks;

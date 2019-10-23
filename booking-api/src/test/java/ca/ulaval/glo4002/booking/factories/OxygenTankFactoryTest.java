@@ -80,4 +80,32 @@ public class OxygenTankFactoryTest {
     	
     	assertTrue(createdTanks.size() == 3);
     }
+    
+    @Test
+    void build_shouldReturnEmptyList_whenCategoryIsNebulaButReserveForCategoryAAndBCanCoverAllTankNeededAndStill10DaysBeforeStart () throws BootException {
+    	Long numberOfDays = 1L;
+    	OxygenTankCategory category = OxygenTankCategory.CATEGORY_A;
+    	LocalDate requestDate = START_OF_FESTIVAL_DATE.minusDays(15);
+    	when(inventory.requestTankByCategory(category, 3L)).thenReturn(2L);
+    	when(inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, 2L)).thenReturn(0L);
+    	
+    	createdTanks = factory.buildOxygenTankByCategory(category, requestDate, numberOfDays);
+    	
+    	assertTrue(createdTanks.size() == 0);
+    }
+    
+    @Test
+    void build_shouldReturnTwoCategoryBTank_whenCategoryIsNebulaButReserveForCategoryACanCoverOneTankAndStill10DaysBeforeStart () throws BootException {
+    	Long numberOfDays = 1L;
+    	OxygenTankCategory category = OxygenTankCategory.CATEGORY_A;
+    	LocalDate requestDate = START_OF_FESTIVAL_DATE.minusDays(15);
+    	when(inventory.requestTankByCategory(category, 3L)).thenReturn(2L);
+    	when(inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, 2L)).thenReturn(2L);
+    	
+    	createdTanks = factory.buildOxygenTankByCategory(category, requestDate, numberOfDays);
+    	
+    	assertTrue(createdTanks.size() == 2);
+    	assertEquals(OxygenTankCategory.CATEGORY_B, createdTanks.get(0).getCategory());
+    	assertEquals(OxygenTankCategory.CATEGORY_B, createdTanks.get(1).getCategory());
+    }
 }
