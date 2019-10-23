@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.factories;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.sun.enterprise.module.bootstrap.BootException;
@@ -35,18 +36,33 @@ public class OxygenTankFactory {
         	quantityToCover = numberOfDays * 3;
         }
     	
-    	quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
-    	
-    	if(quantityToCover == 0) {
-    		
-    	} else {
-    		
+    	quantityToCover = checkIfNotInUseCanCoverTheNeed(category, quantityToCover);
+    
+    	if(quantityToCover > 0) {
+    		category = getCategoryForRequestDate(category, requestDate);
     	}
     	
     	return createdTanks;
     }
 
-	private OxygenTankCategory getCategoryForRequestDate(OxygenTankCategory category, OrderDate requestDate) {
+    // TODO : really feel like a hack to iterate through enum, also will work if there is no more time to produce anything except E but
+    // if there is time we want to create A or B before using stored tank.
+    // see TODO of buildOxygenTankByCategory this logic is maybe not needed
+	private Long checkIfNotInUseCanCoverTheNeed(OxygenTankCategory category, Long quantityToCover) {
+		OxygenTankCategory[] categories = OxygenTankCategory.values();
+		Integer idx = category.ordinal();
+		
+		quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
+		
+		while(quantityToCover != 0  && idx < categories.length) {
+			quantityToCover = inventory.requestTankByCategory(categories[idx], quantityToCover);
+			idx++;
+		}
+		
+		return quantityToCover;
+	}
+
+	private OxygenTankCategory getCategoryForRequestDate(OxygenTankCategory category, LocalDate requestDate) {
 		return null;
 	}
 }
