@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PriceCalculationStrategy {
 
-    Money calculatePassPrice(List<Pass> passes, Money price);
+    Money calculatePassPrice(int passQuantity, Money price);
 }

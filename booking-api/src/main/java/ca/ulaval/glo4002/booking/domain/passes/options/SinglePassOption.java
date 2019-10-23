@@ -1,9 +1,7 @@
-package ca.ulaval.glo4002.booking.domain.passes;
+package ca.ulaval.glo4002.booking.domain.passes.options;
 
 import ca.ulaval.glo4002.booking.domain.Money;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
-
-import java.util.List;
 
 public class SinglePassOption extends PassOption {
 
@@ -11,7 +9,7 @@ public class SinglePassOption extends PassOption {
         super(price, priceCalculationStrategy);
     }
 
-    public Money calculatePrice(List<Pass> pass) {
-        return priceCalculationStrategy.calculatePassPrice(pass, price);
+    public Money calculatePrice(int passQuantity) {
+        return priceCalculationStrategy.calculatePassPrice(passQuantity, price);
     }
 }

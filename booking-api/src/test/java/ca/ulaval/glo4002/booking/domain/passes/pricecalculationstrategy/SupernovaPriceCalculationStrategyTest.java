@@ -24,7 +24,7 @@ class SupernovaPriceCalculationStrategyTest {
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money expectedPrice = new Money(aAmount);
 
-        Money price = subject.calculatePassPrice(passes, expectedPrice);
+        Money price = subject.calculatePassPrice(passes.size(), expectedPrice);
 
         assertEquals(expectedPrice, price);
     }

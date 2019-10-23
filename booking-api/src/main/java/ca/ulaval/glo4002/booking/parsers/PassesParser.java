@@ -1,9 +1,16 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.Pass;
+import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
+import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PassesParser {
 
@@ -13,24 +20,29 @@ public class PassesParser {
         this.passFactory = passFactory;
     }
 
+    public List<Pass> parsePasses(PassesDto passesDto) {
+        List<Pass> passes = new ArrayList<>();
+
+        PassOption passOption = parsePassOption(passesDto);
+        PassCategory passCategory = parsePassCategory(passesDto);
+
+        passesDto.getEventDates().forEach(eventDate -> {
+            Pass pass = new Pass(LocalDate.parse(eventDate), passOption, passCategory);
+            passes.add(pass);
+        });
+
+        return passes;
+    }
+
     public PassOption parsePassOption(PassesDto passesDto) {
         PassOptions passOptionElem = PassOptions.get(passesDto.getPassOption());
 
         return passFactory.buildPassOption(passOptionElem);
     }
 
-    // TODO : ACP : PassesParser.parserPassCategory
-    /*
     public PassCategory parsePassCategory(PassesDto passesDto) {
-        PassCategories passCategoryElem;
-
-        try {
-            passCategoryElem = PassCategories.get(passesDto.getPassCategory());
-        } catch(Exception exception) {
-            throw new InvalidPassCategoryException();
-        }
+        PassCategories passCategoryElem = PassCategories.get(passesDto.getPassCategory());
 
         return passFactory.buildPassCategory(passCategoryElem);
     }
-    */
 }

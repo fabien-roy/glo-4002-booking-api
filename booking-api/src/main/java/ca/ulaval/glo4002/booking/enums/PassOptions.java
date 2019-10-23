@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.enums;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidPassOptionException;
+import ca.ulaval.glo4002.booking.exceptions.passes.InvalidPassOptionException;
 
 import java.util.HashMap;
 import java.util.Map;

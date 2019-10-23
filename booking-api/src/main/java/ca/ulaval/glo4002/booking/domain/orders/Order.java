@@ -2,7 +2,8 @@ package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.*;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
+import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ public class Order {
 
     private OrderNumber orderNumber;
     private OrderDate orderDate;
-    private PassOption passOption;
     private List<Pass> passes;
     private Money price;
 
@@ -20,11 +20,10 @@ public class Order {
         this.orderNumber = new OrderNumber(id, null);
     }
 
-    public Order(String vendorCode, OrderDate orderDate, PassOption passOption) {
+    public Order(String vendorCode, OrderDate orderDate, List<Pass> passes) {
         this.orderNumber = new OrderNumber(null, vendorCode);
         this.orderDate = orderDate;
-        this.passOption = passOption;
-        this.passes = new ArrayList<>(); // TODO : Add passes here
+        this.passes = passes;
     }
 
     public Id getId() {
@@ -54,7 +53,9 @@ public class Order {
     // TODO : Test calculatePrice
     // TODO : When should we calculate order price?
     public void calculatePrice() {
-        Money passPrice = passOption.calculatePrice(passes);
+        Pass firstPass = passes.get(0);
+        Money passPrice = firstPass.calculatePrice(passes.size());
+
         passes.forEach(pass -> pass.setPrice(passPrice));
 
         calculateTotalPrice(passPrice);

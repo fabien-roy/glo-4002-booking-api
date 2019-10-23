@@ -3,12 +3,13 @@ package ca.ulaval.glo4002.booking.dao;
 import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -105,7 +106,7 @@ class OrderDaoTest {
     @Test
     public void save_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
         OrderDate orderDate = new OrderDate("2050-05-21T15:23:20.142Z");
-        Order aOrder = new Order("VENDOR", orderDate, mock(PassOption.class));
+        Order aOrder = new Order("VENDOR", orderDate, new ArrayList<>());
         subject.save(aOrder);
 
         assertThrows(
@@ -117,8 +118,8 @@ class OrderDaoTest {
     @Test
     void save_shouldReturnUniqueIds() {
         OrderDate orderDate = new OrderDate("2050-05-21T15:23:20.142Z");
-        Order aOrder = new Order("VENDOR", orderDate, mock(PassOption.class));
-        Order anotherOrder = new Order("VENDOR", orderDate, mock(PassOption.class));
+        Order aOrder = new Order("VENDOR", orderDate, new ArrayList<>());
+        Order anotherOrder = new Order("VENDOR", orderDate, new ArrayList<>());
 
         subject.save(aOrder);
         subject.save(anotherOrder);

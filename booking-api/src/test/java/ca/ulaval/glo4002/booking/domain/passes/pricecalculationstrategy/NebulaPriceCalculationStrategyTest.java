@@ -31,7 +31,7 @@ class NebulaPriceCalculationStrategyTest {
         Money aPrice = new Money(aAmount);
         Money expectedPrice = new Money(new PercentageDiscount(NebulaPriceCalculationStrategy.DISCOUNT_PERCENTAGE).apply(aAmount));
 
-        Money price = subject.calculatePassPrice(passes, aPrice);
+        Money price = subject.calculatePassPrice(passes.size(), aPrice);
 
         assertEquals(expectedPrice, price);
     }
@@ -43,7 +43,7 @@ class NebulaPriceCalculationStrategyTest {
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money expectedPrice = new Money(aAmount);
 
-        Money price = subject.calculatePassPrice(passes, expectedPrice);
+        Money price = subject.calculatePassPrice(passes.size(), expectedPrice);
 
         assertEquals(expectedPrice, price);
     }
