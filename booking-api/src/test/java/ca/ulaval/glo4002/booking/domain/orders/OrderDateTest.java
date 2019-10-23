@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateFormatException;
 import org.junit.jupiter.api.Test;
 
