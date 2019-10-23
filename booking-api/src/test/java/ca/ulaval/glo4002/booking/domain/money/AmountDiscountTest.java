@@ -1,7 +1,8 @@
 package ca.ulaval.glo4002.booking.domain.money;
 
-import ca.ulaval.glo4002.booking.domain.passes.money.AmountDiscount;
 import org.junit.jupiter.api.Test;
+
+import ca.ulaval.glo4002.booking.domain.money.AmountDiscount;
 
 import java.math.BigDecimal;
 

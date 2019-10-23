@@ -1,8 +1,10 @@
 package ca.ulaval.glo4002.booking.domain.money;
 
-import ca.ulaval.glo4002.booking.domain.passes.money.Money;
-import ca.ulaval.glo4002.booking.domain.passes.money.PercentageDiscount;
 import org.junit.jupiter.api.Test;
+
+import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.domain.money.PercentageDiscount;
+
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,32 +12,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class MoneyTest {
 
     private Money subject;
-
-    @Test
-    void add_shouldSetValueToSum() {
-        BigDecimal initialValue = new BigDecimal(100.0);
-        BigDecimal addedValue = new BigDecimal(120.0);
-        BigDecimal expectedValue = initialValue.add(addedValue);
-        subject = new Money(initialValue);
-
-        subject.add(new Money(addedValue));
-
-        assertEquals(expectedValue, subject.getValue());
-    }
-
-    @Test
-    void applyPercentageDiscount_shouldApplyPercentageDiscount() {
-        BigDecimal percentage = new BigDecimal(.1);
-        PercentageDiscount discount = new PercentageDiscount(percentage);
-        BigDecimal initialValue = new BigDecimal(100.0);
-        BigDecimal expectedAmount = discount.apply(initialValue);
-        Money expectedMoney = new Money(expectedAmount);
-        subject = new Money(initialValue);
-
-        subject.applyPercentageDiscount(discount);
-
-        assertEquals(expectedMoney, subject);
-    }
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotId() {

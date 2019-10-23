@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
 import ca.ulaval.glo4002.booking.domain.Id;
-import ca.ulaval.glo4002.booking.domain.passes.money.Money;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 
 public class Pass {
 

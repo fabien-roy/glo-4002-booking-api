@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domain.passes.money;
+package ca.ulaval.glo4002.booking.domain.money;
 
 import java.math.BigDecimal;
 
@@ -16,14 +16,6 @@ public class Money {
 
     public BigDecimal getValue() {
         return value;
-    }
-
-    public void add(Money money) {
-        this.value = this.value.add(money.value);
-    }
-
-    public void applyPercentageDiscount(PercentageDiscount percentageDiscount) {
-        value = percentageDiscount.apply(value);
     }
 
     @Override
