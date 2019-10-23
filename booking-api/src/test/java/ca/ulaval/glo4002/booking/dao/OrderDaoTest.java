@@ -120,11 +120,9 @@ class OrderDaoTest {
         Order aOrder = new Order("VENDOR", orderDate, mock(PassList.class));
         Order anotherOrder = new Order("VENDOR", orderDate, mock(PassList.class));
 
-        subject.save(aOrder);
-        subject.save(anotherOrder);
-        List<Order> savedOrders = subject.getAll();
-        List<Order> distinctSavedOrders = savedOrders.stream().distinct().collect(Collectors.toList());
+        aOrder = subject.save(aOrder);
+        anotherOrder = subject.save(anotherOrder);
 
-        assertEquals(2, distinctSavedOrders.size());
+        assertNotEquals(aOrder.getId(), anotherOrder.getId());
     }
 }
