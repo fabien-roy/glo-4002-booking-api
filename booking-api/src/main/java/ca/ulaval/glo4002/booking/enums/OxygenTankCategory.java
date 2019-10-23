@@ -7,9 +7,9 @@ import java.util.Map;
 
 public enum OxygenTankCategory {
 
-    CATEGORYA("Grade A"),
-    CATEGORYB("Grade B"),
-    CATEGORYE("Grade E");
+    CATEGORY_A("Grade A"),
+    CATEGORY_B("Grade B"),
+    CATEGORY_E("Grade E");
 
     private String category;
     private static final Map<String, OxygenTankCategory> lookup = new HashMap<>();
