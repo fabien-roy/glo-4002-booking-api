@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain;
 
-import ca.ulaval.glo4002.booking.domain.passes.money.Money;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
 public class OxygenTank {

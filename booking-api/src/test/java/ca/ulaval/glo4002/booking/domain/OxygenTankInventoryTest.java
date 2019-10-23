@@ -26,7 +26,7 @@ public class OxygenTankInventoryTest {
     }
 
     @Test
-    void WhenCreated_notInUseTankIninventoryIsEmpty() {
+    void WhenCreated_notInUseTankInInventoryIsEmpty() {
         emptyInventory = new OxygenTankInventory();
 
         assertTrue(emptyInventory.getNotInUseQuantityByCategory(OxygenTankCategory.CATEGORY_A) == 0);
