@@ -2,23 +2,22 @@ package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.*;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
+import ca.ulaval.glo4002.booking.domain.passes.Passes;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class Order {
 
     private OrderNumber orderNumber;
     private OrderDate orderDate;
-    private List<Pass> passes;
-    private Money price;
+    private Passes passes;
 
     public Order(Id id) {
         this.orderNumber = new OrderNumber(id, null);
     }
 
-    public Order(String vendorCode, OrderDate orderDate, List<Pass> passes) {
+    public Order(String vendorCode, OrderDate orderDate, Passes passes) {
         this.orderNumber = new OrderNumber(null, vendorCode);
         this.orderDate = orderDate;
         this.passes = passes;
@@ -45,24 +44,6 @@ public class Order {
     }
 
     public Money getPrice() {
-        return price;
-    }
-
-    // TODO : Test calculatePrice
-    // TODO : When should we calculate order price?
-    public void calculatePrice() {
-        Pass firstPass = passes.get(0);
-        Money passPrice = firstPass.calculatePrice(passes.size());
-
-        passes.forEach(pass -> pass.setPrice(passPrice));
-
-        calculateTotalPrice(passPrice);
-    }
-
-    private void calculateTotalPrice(Money passPrice) {
-        BigDecimal numberOfPasses = BigDecimal.valueOf(passes.size());
-        BigDecimal totalValue = passPrice.getValue().multiply(numberOfPasses);
-
-        price = new Money(totalValue);
+        return passes.getPrice();
     }
 }

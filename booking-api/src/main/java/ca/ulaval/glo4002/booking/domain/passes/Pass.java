@@ -7,13 +7,9 @@ public class Pass {
 
     private EventDate eventDate;
     private Money price;
-    private PassCategory category;
-    private PassOption option;
 
-    public Pass(EventDate eventDate, PassCategory category, PassOption option) {
+    public Pass(EventDate eventDate) {
         this.eventDate = eventDate;
-        this.category = category;
-        this.option = option;
     }
 
     public Money getPrice() {
@@ -22,17 +18,5 @@ public class Pass {
 
     public void setPrice(Money price) {
         this.price = price;
-    }
-
-    public Money calculatePrice(int passQuantity) {
-        return option.calculatePrice(passQuantity);
-    }
-
-    public PassCategory getCategory() {
-        return category;
-    }
-
-    public PassOption getOption() {
-        return option;
     }
 }

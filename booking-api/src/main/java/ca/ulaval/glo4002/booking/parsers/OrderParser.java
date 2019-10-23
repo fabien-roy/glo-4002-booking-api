@@ -4,6 +4,7 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
+import ca.ulaval.glo4002.booking.domain.passes.Passes;
 import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
@@ -37,7 +38,7 @@ public class OrderParser {
         }
 
         OrderDate orderDate = new OrderDate(orderDto.getOrderDate());
-        List<Pass> passes = passesParser.parsePasses(orderDto.getPasses());
+        Passes passes = passesParser.parsePasses(orderDto.getPasses());
 
         return new Order(orderDto.getVendorCode(), orderDate, passes);
     }

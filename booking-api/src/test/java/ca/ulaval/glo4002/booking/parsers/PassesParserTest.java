@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import ca.ulaval.glo4002.booking.domain.passes.Passes;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
@@ -42,7 +43,7 @@ class PassesParserTest {
         List<String> aEventDate = new ArrayList<>(Collections.singleton(EventDate.START_DATE.toString()));
         PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, aEventDate);
 
-        List<Pass> passes = subject.parsePasses(passesDto);
+        Passes passes = subject.parsePasses(passesDto);
 
         assertEquals(1, passes.size());
     }
@@ -54,33 +55,9 @@ class PassesParserTest {
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
 
-        List<Pass> passes = subject.parsePasses(passesDto);
+        Passes passes = subject.parsePasses(passesDto);
 
         assertEquals(2, passes.size());
-    }
-
-    @Test
-    void parsePasses_shouldSetSamePassCategoryForEachPass() {
-        String aPassCategory = PassCategories.SUPERNOVA.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
-        PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
-
-        List<Pass> passes = subject.parsePasses(passesDto);
-
-        assertEquals(passes.get(0).getCategory(), passes.get(1).getCategory());
-    }
-
-    @Test
-    void parsePasses_shouldSetSamePassOptionForEachPass() {
-        String aPassCategory = PassCategories.SUPERNOVA.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
-        PassesDto passesDto = new PassesDto(aPassCategory, aPassOption, someEventDates);
-
-        List<Pass> passes = subject.parsePasses(passesDto);
-
-        assertEquals(passes.get(0).getOption(), passes.get(1).getOption());
     }
 
     @Test

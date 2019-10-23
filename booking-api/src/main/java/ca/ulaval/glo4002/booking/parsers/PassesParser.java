@@ -3,18 +3,17 @@ package ca.ulaval.glo4002.booking.parsers;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
+import ca.ulaval.glo4002.booking.domain.passes.Passes;
 import ca.ulaval.glo4002.booking.domain.passes.options.PackagePassOption;
 import ca.ulaval.glo4002.booking.domain.passes.options.PassOption;
 import ca.ulaval.glo4002.booking.dto.PassesDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 import ca.ulaval.glo4002.booking.exceptions.passes.DuplicatePassEventDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PackagePassWithEventDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.SinglePassWithoutEventDateException;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +26,7 @@ public class PassesParser {
         this.passFactory = passFactory;
     }
 
-    public List<Pass> parsePasses(PassesDto passesDto) {
+    public Passes parsePasses(PassesDto passesDto) {
         List<Pass> passes = new ArrayList<>();
 
         PassOption passOption = parsePassOption(passesDto);
@@ -37,11 +36,11 @@ public class PassesParser {
 
         passesDto.getEventDates().forEach(eventDate -> {
             EventDate passEventDate = new EventDate(eventDate);
-            Pass pass = new Pass(passEventDate, passCategory, passOption);
+            Pass pass = new Pass(passEventDate);
             passes.add(pass);
         });
 
-        return passes;
+        return new Passes(passes, passCategory, passOption);
     }
 
     private void validateEventDates(List<String> eventDates, PassOption passOption) {
