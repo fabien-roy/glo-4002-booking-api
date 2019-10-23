@@ -13,10 +13,6 @@ public class OrderDate {
     public static final LocalDateTime END_DATE_TIME = LocalDateTime.of(2050, 7, 17, 0, 0);
     private LocalDateTime value;
 
-    public OrderDate(LocalDateTime value) {
-        this.value = value;
-    }
-
     public OrderDate(String value) {
         LocalDateTime newValue;
 
