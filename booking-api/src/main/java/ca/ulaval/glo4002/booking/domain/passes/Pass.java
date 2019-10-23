@@ -9,14 +9,14 @@ public class Pass {
 
     private LocalDate eventDate;
     private Money price;
-    private PassOption option;
     private PassCategory category;
+    private PassOption option;
 
     // TODO : Add EventDate class (like OrderDate)
-    public Pass(LocalDate eventDate, PassOption option, PassCategory category) {
+    public Pass(LocalDate eventDate, PassCategory category, PassOption option) {
         this.eventDate = eventDate;
-        this.option = option;
         this.category = category;
+        this.option = option;
     }
 
     public Money getPrice() {
@@ -29,5 +29,13 @@ public class Pass {
 
     public Money calculatePrice(int passQuantity) {
         return option.calculatePrice(passQuantity);
+    }
+
+    public PassCategory getCategory() {
+        return category;
+    }
+
+    public PassOption getOption() {
+        return option;
     }
 }
