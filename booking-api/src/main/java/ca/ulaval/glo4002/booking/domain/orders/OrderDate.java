@@ -14,8 +14,6 @@ public class OrderDate {
     private LocalDateTime value;
 
     public OrderDate(LocalDateTime value) {
-        validateOrderDate(value);
-
         this.value = value;
     }
 
