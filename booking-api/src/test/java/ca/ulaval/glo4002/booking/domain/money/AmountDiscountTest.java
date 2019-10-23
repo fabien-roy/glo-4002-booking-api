@@ -13,7 +13,7 @@ class AmountDiscountTest {
     private AmountDiscount subject;
 
     @Test
-    void apply_shouldApply() {
+    void apply_shouldApplyTheDiscount() {
         BigDecimal amount = new BigDecimal(.1);
         subject = new AmountDiscount(amount);
         BigDecimal value = new BigDecimal(100.0);
