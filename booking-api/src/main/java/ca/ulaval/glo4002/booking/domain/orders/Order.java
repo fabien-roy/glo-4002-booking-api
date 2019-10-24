@@ -6,15 +6,16 @@ import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
 
     private OrderNumber orderNumber;
-    private OrderDate orderDate;
+    private LocalDateTime orderDate;
     private PassList passList;
 
-    public Order(OrderNumber orderNumber, OrderDate orderDate, PassList passList) {
+    public Order(OrderNumber orderNumber, LocalDateTime orderDate, PassList passList) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.passList = passList;
@@ -28,7 +29,7 @@ public class Order {
         return orderNumber.getVendorCode();
     }
 
-    public OrderDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 
