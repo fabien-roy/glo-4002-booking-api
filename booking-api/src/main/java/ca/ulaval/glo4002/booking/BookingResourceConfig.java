@@ -59,7 +59,7 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpServices() {
-        orderService = new OrderService(orderRepository, orderFactory);
+        orderService = new OrderService(orderRepository, orderFactory, orderParser);
     }
 
     private void setUpParser() {

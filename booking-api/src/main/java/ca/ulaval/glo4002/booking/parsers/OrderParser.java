@@ -6,9 +6,6 @@ import ca.ulaval.glo4002.booking.dto.PassDto;
 
 import java.util.List;
 
-// TODO : ACP : Should DTOs handle their creation with an Order?
-
-// TODO : Parser = Mapper
 public class OrderParser {
 
     private PassListFactory passListFactory;
@@ -21,6 +18,7 @@ public class OrderParser {
         List<PassDto> passes = passListFactory.toDto(order.getPassList());
 
         return new OrderWithPassesAsPassesDto(
+                order.getOrderNumber().toString(),
                 order.getPrice().getValue().doubleValue(),
                 passes
         );

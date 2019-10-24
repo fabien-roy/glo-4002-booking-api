@@ -43,19 +43,15 @@ public class OrderController {
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto requestOrderDto) {
         OrderWithPassesAsPassesDto responseOrderDto;
-        Order order;
 
         try {
-            // TODO : Receive DTO from service
-            order = service.order(requestOrderDto);
-            responseOrderDto = null;
-            // responseOrderDto = parser.toDto(order);
+            responseOrderDto = service.order(requestOrderDto);
         } catch (BookingException exception) {
             return ResponseEntity.badRequest().build();
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.LOCATION, "/orders/" + order.getOrderNumber());
+        headers.add(HttpHeaders.LOCATION, "/orders/" + responseOrderDto.getOrderNumber());
 
         return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).headers(headers).body(responseOrderDto);
     }

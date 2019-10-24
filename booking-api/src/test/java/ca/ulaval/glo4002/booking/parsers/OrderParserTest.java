@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
+import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
@@ -19,6 +20,8 @@ class OrderParserTest {
 
     private OrderParser subject;
     private PassListFactory passListFactory;
+    private OrderNumber orderNumber;
+    private Order order;
 
     @BeforeEach
     void setUpSubject() {
@@ -26,12 +29,25 @@ class OrderParserTest {
         subject = new OrderParser(passListFactory);
     }
 
+    @BeforeEach
+    void setUpOrder() {
+        orderNumber = mock(OrderNumber.class);
+        order = mock(Order.class);
+        when(orderNumber.toString()).thenReturn("expectedOrderNumber");
+        when(order.getOrderNumber()).thenReturn(orderNumber);
+        when(order.getPrice()).thenReturn(new Money(new BigDecimal(500)));
+        when(order.getPassList()).thenReturn(mock(PassList.class));
+    }
+
+    @Test
+    void toDto_shouldBuildDtoWithCorrectOrderNumber() {
+        OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
+
+        assertEquals(orderNumber.toString(), orderDto.getOrderNumber());
+    }
+
     @Test
     void toDto_shouldBuildDtoWithCorrectPrice() {
-        Money aPrice = new Money(new BigDecimal(500));
-        Order order = mock(Order.class);
-        when(order.getPrice()).thenReturn(aPrice);
-
         OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
 
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getPrice());
@@ -39,11 +55,6 @@ class OrderParserTest {
 
     @Test
     void toDto_shouldCallPassListParser() {
-        Money aPrice = new Money(new BigDecimal(500));
-        Order order = mock(Order.class);
-        when(order.getPassList()).thenReturn(mock(PassList.class));
-        when(order.getPrice()).thenReturn(aPrice);
-
         subject.toDto(order);
 
         verify(passListFactory).toDto(any());
