@@ -34,13 +34,13 @@ public class OrderController {
     @Path("/{requestedOrderNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber){
-        OrderWithPassesAsPassesDto orderDto;
+        OrderWithPassesAsPassesDto orderDto = null;
 
         try {
-            OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
+            // OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
             // TODO : Use OrderService.get()
-            Order order = repository.getById(orderNumber.getNumber()).get(); // TODO : ACP : Check if Optional.get() is a good idea
-            orderDto = parser.toDto(order);
+            // Order order = repository.getByOrderNumber(orderNumber.getNumber()).get(); // TODO : ACP : Check if Optional.get() is a good idea
+            // orderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.notFound().build();
         }

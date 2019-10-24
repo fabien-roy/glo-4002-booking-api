@@ -38,10 +38,10 @@ public class OrderDao {
 
     public void save(Order order) {
         if (orders.contains(order)) {
-            throw new OrderAlreadyCreatedException(order.getOrderNumber());
+            throw new OrderAlreadyCreatedException(order.getOrderNumber().toString());
         }
 
-        order.setNumber(nextId);
+        // order.setNumber(nextId);
         nextId = new Number(nextId.getValue() + 1);
 
         orders.add(order);

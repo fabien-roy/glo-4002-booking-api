@@ -1,31 +1,39 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.dao.OrderDao;
-import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
+import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 // TODO : Have an interface for each repository : OrderRepository
 // TODO : Rename InMemoryOrderRepository
 public class OrderRepository {
 
-    // TODO : Remove Daos, use list directly in repository
-    private OrderDao dao;
-    private PassRepository passRepository;
+    private List<Order> orders;
 
-    public OrderRepository(OrderDao dao, PassRepository passRepository) {
-        this.dao = dao;
-        this.passRepository = passRepository;
+    public OrderRepository() {
+        orders = new ArrayList<>();
     }
 
-    public Optional<Order> getById(Number id) {
-        return dao.get(id);
+    public Optional<Order> getByOrderNumber(OrderNumber orderNumber) {
+        Optional<Order> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber)).findAny();
+
+        if (!foundOrder.isPresent()) {
+            throw new OrderNotFoundException(orderNumber.toString());
+        }
+
+        return foundOrder;
     }
 
     public void addOrder(Order order) {
-        order.getPasses().forEach(pass -> passRepository.addPass(pass));
+        if (orders.contains(order)) {
+            throw new OrderAlreadyCreatedException(order.getOrderNumber().toString());
+        }
 
-        dao.save(order);
+        orders.add(order);
     }
 }

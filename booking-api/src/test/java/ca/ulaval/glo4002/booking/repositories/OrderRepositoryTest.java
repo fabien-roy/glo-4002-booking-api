@@ -27,7 +27,7 @@ class OrderRepositoryTest {
         dao = mock(OrderDao.class);
         passRepository = mock(PassRepository.class);
 
-        subject = new OrderRepository(dao, passRepository);
+        subject = new OrderRepository();
     }
 
     @Test
@@ -37,7 +37,7 @@ class OrderRepositoryTest {
         Order expectedOrder = new Order(expectedOrderId);
         when(dao.get(expectedOrder.getId())).thenReturn(Optional.of(expectedOrder));
 
-        Optional<Order> order = subject.getById(expectedOrder.getId());
+        Optional<Order> order = subject.getByOrderNumber(expectedOrder.getId());
 
         assertTrue(order.isPresent());
         assertEquals(expectedOrderId, order.get().getId());

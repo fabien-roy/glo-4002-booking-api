@@ -1,51 +1,25 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OrderNumberTest {
 
     private OrderNumber subject;
 
     @Test
-    void constructing_shouldThrowInvalidOrderNumberFormatException_whenOrderNumberHasNoSeparator() {
-        String orderNumberWithoutSeparator = "123TEAM";
+    void constructing_shouldSetNewNumber_whenThereIsNone() {
+        subject = new OrderNumber(null, "VENDOR");
 
-        assertThrows(
-                InvalidOrderNumberFormatException.class,
-                () -> new OrderNumber(orderNumberWithoutSeparator)
-        );
+        assertNotNull(subject.getNumber());
     }
 
     @Test
-    void constructing_shouldThrowInvalidOrderNumberFormatException_whenOrderNumberHasMultipleSeparator() {
-        String orderNumberMultipleSeparators = "123" + OrderNumber.SEPARATOR + "TEAM" + OrderNumber.SEPARATOR + "YEAH";
+    void constructing_shouldSetUniqueNumbers() {
+        subject = new OrderNumber(null, "VENDOR");
+        OrderNumber other = new OrderNumber(null, "VENDOR");
 
-        assertThrows(
-                InvalidOrderNumberFormatException.class,
-                () -> new OrderNumber(orderNumberMultipleSeparators)
-        );
-    }
-
-    @Test
-    void getVendorCode_shouldReturnCorrectVendorCode() {
-        String expectedVendorCode = "VENDOR";
-
-        subject = new OrderNumber(expectedVendorCode + OrderNumber.SEPARATOR + "123");
-
-        assertEquals(expectedVendorCode, subject.getVendorCode());
-    }
-
-    @Test
-    void getId_shouldReturnCorrectId() {
-        Number expectedId = new Number(1L);
-
-        subject = new OrderNumber("VENDOR" + OrderNumber.SEPARATOR + expectedId.toString());
-
-        assertEquals(expectedId.getValue(), subject.getNumber().getValue());
+        assertNotEquals(subject.getNumber(), other.getNumber());
     }
 }

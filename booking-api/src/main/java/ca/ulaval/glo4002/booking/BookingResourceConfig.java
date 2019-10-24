@@ -14,10 +14,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 // TODO : Use hk2 for injection
 public class BookingResourceConfig extends ResourceConfig {
 
-    PassDao passDao;
     OrderDao orderDao;
 
-    PassRepository passRepository;
     OrderRepository orderRepository;
 
     OrderService orderService;
@@ -47,13 +45,11 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpDaos() {
-        passDao = new PassDao();
         orderDao = new OrderDao();
     }
 
     private void setUpRepositories() {
-        passRepository = new PassRepository(passDao);
-        orderRepository = new OrderRepository(orderDao, passRepository);
+        orderRepository = new OrderRepository();
     }
 
     private void setUpServices() {

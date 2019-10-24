@@ -14,8 +14,8 @@ public class Order {
     private PassList passList;
 
     // TODO : Only used by tests...
-    public Order(Number id) {
-        this.orderNumber = new OrderNumber(id, null);
+    public Order(Number number) {
+        this.orderNumber = new OrderNumber(number, null);
         this.passList = new PassList();
     }
 
@@ -25,12 +25,8 @@ public class Order {
         this.passList = passList;
     }
 
-    public void setNumber(Number number) {
-        orderNumber.setNumber(number);
-    }
-
-    public String getOrderNumber() {
-        return orderNumber.getOrderNumber();
+    public OrderNumber getOrderNumber() {
+        return orderNumber;
     }
 
     public String getVendorCode() {

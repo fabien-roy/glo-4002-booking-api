@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
+import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
@@ -40,7 +41,7 @@ class OrderControllerTest {
     @Test
     void getByOrderNumber_shouldReturnNotFound_whenOrderIsNotFound() {
         String aOrderNumber = "aOrderNumber";
-        when(repository.getById(any())).thenThrow(new OrderNotFoundException(aOrderNumber));
+        when(repository.getByOrderNumber(any())).thenThrow(new OrderNotFoundException(aOrderNumber));
 
         ResponseEntity<?> response = subject.getByOrderNumber(aOrderNumber);
 
@@ -50,7 +51,7 @@ class OrderControllerTest {
     @Test
     void getByOrderNumber_shouldReturnOk() {
         String aOrderNumber = "VENDOR-123";
-        when(repository.getById(any())).thenReturn(Optional.of(mock(Order.class)));
+        when(repository.getByOrderNumber(any())).thenReturn(Optional.of(mock(Order.class)));
 
         ResponseEntity<?> response = subject.getByOrderNumber(aOrderNumber);
 
@@ -72,7 +73,7 @@ class OrderControllerTest {
     void addOrder_shouldReturnCreated() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
         Order aOrder = mock(Order.class);
-        when(aOrder.getOrderNumber()).thenReturn("TEAM-123");
+        when(aOrder.getOrderNumber().toString()).thenReturn("TEAM-123");
         when(service.order(any())).thenReturn(aOrder);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
@@ -85,7 +86,7 @@ class OrderControllerTest {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
         Order aOrder = mock(Order.class);
         String aOrderNumber = "TEAM-123";
-        when(aOrder.getOrderNumber()).thenReturn(aOrderNumber);
+        when(aOrder.getOrderNumber().toString()).thenReturn(aOrderNumber);
         when(service.order(any())).thenReturn(aOrder);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
