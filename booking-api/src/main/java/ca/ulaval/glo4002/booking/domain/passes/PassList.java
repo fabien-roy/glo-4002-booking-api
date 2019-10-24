@@ -15,11 +15,6 @@ public class PassList {
     private Money price;
     private PriceCalculationStrategy priceCalculationStrategy;
 
-    // TODO : Only used by tests...
-    public PassList() {
-        this.passes = new ArrayList<>();
-    }
-
     public PassList(PassCategory category, PassOption option, PriceCalculationStrategy priceCalculationStrategy) {
         this.category = category;
         this.option = option;
