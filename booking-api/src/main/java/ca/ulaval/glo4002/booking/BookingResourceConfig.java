@@ -67,7 +67,7 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpControllers() {
-        orderController = new OrderController(orderService, orderRepository, orderParser);
+        orderController = new OrderController(orderService);
     }
 
     private void registerResources() {

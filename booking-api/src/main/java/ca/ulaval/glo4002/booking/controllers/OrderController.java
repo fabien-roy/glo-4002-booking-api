@@ -1,12 +1,10 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -21,26 +19,19 @@ import javax.ws.rs.core.Response;
 public class OrderController {
 
     private OrderService service;
-    private OrderRepository repository;
-    private OrderParser parser;
 
-    public OrderController(OrderService service, OrderRepository repository, OrderParser parser) {
+    public OrderController(OrderService service) {
         this.service = service;
-        this.repository = repository;
-        this.parser = parser;
     }
 
     @GET
     @Path("/{requestedOrderNumber}")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber){
-        OrderWithPassesAsPassesDto orderDto = null;
+        OrderWithPassesAsPassesDto orderDto;
 
         try {
-            // OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
-            // TODO : Use OrderService.get()
-            // Order order = repository.getByOrderNumber(orderNumber.getNumber()).get(); // TODO : ACP : Check if Optional.get() is a good idea
-            // orderDto = parser.toDto(order);
+            orderDto = service.getByOrderNumber(requestedOrderNumber);
         } catch (BookingException exception) {
             return ResponseEntity.notFound().build();
         }
@@ -55,8 +46,10 @@ public class OrderController {
         Order order;
 
         try {
+            // TODO : Receive DTO from service
             order = service.order(requestOrderDto);
-            responseOrderDto = parser.toDto(order);
+            responseOrderDto = null;
+            // responseOrderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.badRequest().build();
         }

@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
@@ -24,5 +25,10 @@ public class OrderService {
 
         // TODO : Return DTO
         return order;
+    }
+
+    // TODO
+    public OrderWithPassesAsPassesDto getByOrderNumber(String requestedOrderNumber) {
+        return null;
     }
 }
