@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.dto;
 
+import ca.ulaval.glo4002.booking.domain.money.Money;
+
 import java.util.List;
 
 public class OrderWithPassesAsPassesDto {
@@ -23,7 +25,15 @@ public class OrderWithPassesAsPassesDto {
         return orderNumber;
     }
 
-    public double getPrice() {
+    public double getOrderPrice() {
         return orderPrice;
+    }
+
+    public List<PassDto> getPasses() {
+        return passes;
+    }
+
+    public void setPasses(List<PassDto> passes) {
+        this.passes = passes;
     }
 }
