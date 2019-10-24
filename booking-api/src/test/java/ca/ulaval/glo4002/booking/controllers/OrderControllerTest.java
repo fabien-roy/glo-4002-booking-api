@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -59,14 +60,11 @@ class OrderControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
-    // TODO : Repair following tests when working on controller
-    /*
     @Test
     void addOrder_shouldReturnCreated() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        Order aOrder = mock(Order.class);
-        when(aOrder.getOrderNumber().toString()).thenReturn("TEAM-123");
-        when(service.order(any())).thenReturn(aOrder);
+        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
+        when(service.order(any())).thenReturn(expectedOrderDto);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 
@@ -76,16 +74,15 @@ class OrderControllerTest {
     @Test
     void addOrder_shouldReturnLocationHeaders() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        Order aOrder = mock(Order.class);
-        String aOrderNumber = "TEAM-123";
-        when(aOrder.getOrderNumber().toString()).thenReturn(aOrderNumber);
-        when(service.order(any())).thenReturn(aOrder);
+        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
+        String expectedOrderNumber = "expectedOrderNumber";
+        when(expectedOrderDto.getOrderNumber()).thenReturn(expectedOrderNumber);
+        when(service.order(any())).thenReturn(expectedOrderDto);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 
         assertNotNull(response.getHeaders());
         assertEquals(1, response.getHeaders().get(HttpHeaders.LOCATION).size());
-        assertEquals("/orders/" + aOrderNumber, response.getHeaders().get(HttpHeaders.LOCATION).get(0));
+        assertEquals("/orders/" + expectedOrderNumber, response.getHeaders().get(HttpHeaders.LOCATION).get(0));
     }
-    */
 }
