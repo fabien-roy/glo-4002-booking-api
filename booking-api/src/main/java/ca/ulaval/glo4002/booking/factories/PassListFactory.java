@@ -7,9 +7,11 @@ import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.exceptions.passes.InvalidEventDateFormatException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PackagePassWithEventDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.SinglePassWithoutEventDateException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class PassListFactory {
             passes.add(new Pass(numberGenerator.generate()));
         } else {
             passListDto.getEventDates().forEach(eventDate -> {
-                EventDate passEventDate = new EventDate(eventDate);
-                Pass pass = new Pass(numberGenerator.generate(), passEventDate);
+                LocalDate builtEventDate = buildEventDate(eventDate);
+                Pass pass = new Pass(numberGenerator.generate(), new EventDate(builtEventDate));
                 passes.add(pass);
             });
         }
@@ -56,6 +58,14 @@ public class PassListFactory {
             if (passOption.equals(PassOptions.PACKAGE)) {
                 throw new PackagePassWithEventDateException();
             }
+        }
+    }
+
+    private LocalDate buildEventDate(String eventDate) {
+        try {
+            return LocalDate.parse(eventDate);
+        } catch (Exception exception) {
+            throw new InvalidEventDateFormatException();
         }
     }
 

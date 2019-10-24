@@ -6,13 +6,11 @@ import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCal
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.passes.InvalidPassCategoryException;
-import ca.ulaval.glo4002.booking.exceptions.passes.InvalidPassOptionException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PackagePassWithEventDateException;
-import ca.ulaval.glo4002.booking.exceptions.passes.SinglePassWithoutEventDateException;
+import ca.ulaval.glo4002.booking.exceptions.passes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -103,5 +101,20 @@ class PassListFactoryTest {
         PassListDto passListDto = new PassListDto(PassCategories.SUPERNOVA.toString(), anInvalidPassOption, new ArrayList<>());
 
         assertThrows(InvalidPassOptionException.class, () -> subject.buildWithDto(passListDto));
+    }
+
+    @Test
+    void buildWithDto_shouldThrowInvalidEventDateException_whenEventDateIsInvalid() {
+        String anInvalidEventDate = "anInvalidDate";
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.SINGLE_PASS.toString(),
+                Collections.singletonList(anInvalidEventDate)
+        );
+
+        assertThrows(
+                InvalidEventDateFormatException.class,
+                () -> subject.buildWithDto(passListDto)
+        );
     }
 }

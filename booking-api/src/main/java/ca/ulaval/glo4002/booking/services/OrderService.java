@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
+import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
@@ -27,8 +28,11 @@ public class OrderService {
         return mapper.toDto(order);
     }
 
-    // TODO getByOrderNumber
     public OrderWithPassesAsPassesDto getByOrderNumber(String requestedOrderNumber) {
-        return null;
+        OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
+
+        Order order = repository.getByOrderNumber(orderNumber).get(); // TODO : Is using get a good idea?
+
+        return mapper.toDto(order);
     }
 }
