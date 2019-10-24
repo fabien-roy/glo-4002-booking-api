@@ -5,31 +5,21 @@ import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 
 public class Pass {
 
-    private PassNumber passNumber;
+    private Number passNumber;
     private EventDate eventDate;
     private Money price;
 
-    public Pass() {
-        this.passNumber = new PassNumber();
+    public Pass(Number passNumber) {
+        this.passNumber = passNumber;
     }
 
-    // TODO : Only used by tests...
-    public Pass(PassNumber passNumber, EventDate eventDate) {
+    public Pass(Number passNumber, EventDate eventDate) {
         this.passNumber = passNumber;
         this.eventDate = eventDate;
     }
 
-    public Pass(EventDate eventDate) {
-        this.passNumber = new PassNumber();
-        this.eventDate = eventDate;
-    }
-
-    public Number getId() {
-        return passNumber.getId();
-    }
-
-    public void setId(Number id) {
-        passNumber.setId(id);
+    public Number getPassNumber() {
+        return passNumber;
     }
 
     public EventDate getEventDate() {

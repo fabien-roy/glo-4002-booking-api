@@ -30,7 +30,7 @@ class PassListMapperTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void toDto_shouldBuildCorrectQuantityOfDtos(int expectedSize) {
-        PassNumber aPassNumber = new PassNumber(new Number(1L));
+        Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
         PassList passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
@@ -42,8 +42,8 @@ class PassListMapperTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectPassNumbers() {
-        PassNumber aPassNumber = new PassNumber(new Number(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
+        Number aPassNumber = new Number(1L);
+        Number anotherPassNumber = new Number(2L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
@@ -51,13 +51,13 @@ class PassListMapperTest {
 
         List<PassDto> passDtos = subject.toDto(passList);
 
-        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(aPassNumber.getId().getValue())));
-        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(anotherPassNumber.getId().getValue())));
+        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(aPassNumber.getValue())));
+        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(anotherPassNumber.getValue())));
     }
 
     @Test
     void toDto_shouldBuildDtoWithCorrectCategory() {
-        PassNumber aPassNumber = new PassNumber(new Number(1L));
+        Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassCategory passCategory = mock(PassCategory.class);
@@ -72,8 +72,8 @@ class PassListMapperTest {
 
     @Test
     void toDto_shouldSetSameCategoryForAllPasses() {
-        PassNumber aPassNumber = new PassNumber(new Number(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
+        Number aPassNumber = new Number(1L);
+        Number anotherPassNumber = new Number(2L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
@@ -89,7 +89,7 @@ class PassListMapperTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectOption() {
-        PassNumber aPassNumber = new PassNumber(new Number(1L));
+        Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassOption passOption = mock(PassOption.class);
@@ -104,8 +104,8 @@ class PassListMapperTest {
 
     @Test
     void toDto_shouldSetSameOptionForAllPasses() {
-        PassNumber aPassNumber = new PassNumber(new Number(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
+        Number aPassNumber = new Number(1L);
+        Number anotherPassNumber = new Number(2L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
@@ -121,8 +121,8 @@ class PassListMapperTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectEventDates() {
-        PassNumber aPassNumber = new PassNumber(new Number(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
+        Number aPassNumber = new Number(1L);
+        Number anotherPassNumber = new Number(2L);
         EventDate aEventDate = mock(EventDate.class);
         EventDate anotherEventDate = mock(EventDate.class);
         when(aEventDate.toString()).thenReturn(OrderFactory.START_DATE_TIME.toString());

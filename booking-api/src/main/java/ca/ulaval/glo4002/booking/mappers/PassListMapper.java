@@ -15,7 +15,7 @@ public class PassListMapper {
         List<PassDto> passDtos = new ArrayList<>();
         passList.getPasses().forEach(pass ->
                 passDtos.add(new PassDto(
-                    pass.getId().getValue(),
+                    pass.getPassNumber().getValue(),
                     passCategory,
                     passOption,
                     pass.getEventDate().toString()

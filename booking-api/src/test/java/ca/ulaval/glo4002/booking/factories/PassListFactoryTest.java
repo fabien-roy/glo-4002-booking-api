@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
@@ -28,11 +29,12 @@ class PassListFactoryTest {
 
     @BeforeEach
     void setUpSubject() {
+        NumberGenerator numberGenerator = new NumberGenerator();
         passFactory = mock(PassFactory.class);
         passList = new PassList(mock(PassCategory.class), mock(PassOption.class), mock(PriceCalculationStrategy.class));
         when(passFactory.build(any(), any())).thenReturn(passList);
 
-        subject = new PassListFactory(passFactory);
+        subject = new PassListFactory(numberGenerator, passFactory);
     }
 
     @Test

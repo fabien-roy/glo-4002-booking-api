@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
@@ -14,9 +15,11 @@ import java.util.List;
 
 public class PassListFactory {
 
+    private NumberGenerator numberGenerator;
     private PassFactory passFactory;
 
-    public PassListFactory(PassFactory passFactory) {
+    public PassListFactory(NumberGenerator numberGenerator, PassFactory passFactory) {
+        this.numberGenerator = numberGenerator;
         this.passFactory = passFactory;
     }
 
@@ -30,11 +33,11 @@ public class PassListFactory {
 
         List<Pass> passes = new ArrayList<>();
         if (passListDto.getEventDates() == null) {
-            passes.add(new Pass());
+            passes.add(new Pass(numberGenerator.generate()));
         } else {
             passListDto.getEventDates().forEach(eventDate -> {
                 EventDate passEventDate = new EventDate(eventDate);
-                Pass pass = new Pass(passEventDate);
+                Pass pass = new Pass(numberGenerator.generate(), passEventDate);
                 passes.add(pass);
             });
         }

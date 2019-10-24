@@ -56,7 +56,7 @@ public class BookingResourceConfig extends ResourceConfig {
 
     private void setUpFactories() {
         passFactory = new PassFactory();
-        passListFactory = new PassListFactory(passFactory);
+        passListFactory = new PassListFactory(numberGenerator, passFactory);
         orderFactory = new OrderFactory(numberGenerator, passListFactory);
     }
 
