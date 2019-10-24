@@ -83,7 +83,7 @@ class OrderFactoryTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 anInvalidOrderDate,
                 "TEAM",
-                null
+                mock(PassListDto.class)
         );
 
         assertThrows(
@@ -99,7 +99,7 @@ class OrderFactoryTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 aUnderBoundZonedValue.toString(),
                 "TEAM",
-                null
+                mock(PassListDto.class)
         );
 
         assertThrows(
@@ -115,7 +115,7 @@ class OrderFactoryTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 aOverBoundZonedValue.toString(),
                 "TEAM",
-                null
+                mock(PassListDto.class)
         );
 
         assertThrows(

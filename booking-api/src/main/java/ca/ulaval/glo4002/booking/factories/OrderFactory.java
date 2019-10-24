@@ -9,7 +9,6 @@ import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatExcepti
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 import ca.ulaval.glo4002.booking.parsers.PassListFactory;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -33,7 +32,6 @@ public class OrderFactory {
         if (orderDto.getPasses() == null) {
             throw new InvalidOrderFormatException();
         }
-
 
         OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderDto.getVendorCode());
         LocalDateTime orderDate = buildOrderDate(orderDto.getOrderDate());
