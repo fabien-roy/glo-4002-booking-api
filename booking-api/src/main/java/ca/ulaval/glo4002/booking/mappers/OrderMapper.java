@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.parsers;
+package ca.ulaval.glo4002.booking.mappers;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
@@ -8,14 +8,14 @@ import java.util.List;
 
 public class OrderMapper {
 
-    private PassListFactory passListFactory;
+    private PassListMapper passListMapper;
 
-    public OrderMapper(PassListFactory passListFactory) {
-        this.passListFactory = passListFactory;
+    public OrderMapper(PassListMapper passListMapper) {
+        this.passListMapper = passListMapper;
     }
 
     public OrderWithPassesAsPassesDto toDto(Order order) {
-        List<PassDto> passes = passListFactory.toDto(order.getPassList());
+        List<PassDto> passes = passListMapper.toDto(order.getPassList());
 
         return new OrderWithPassesAsPassesDto(
                 order.getOrderNumber().toString(),

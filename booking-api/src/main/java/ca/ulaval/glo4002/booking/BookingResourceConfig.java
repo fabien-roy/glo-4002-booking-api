@@ -4,8 +4,8 @@ import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.parsers.OrderMapper;
-import ca.ulaval.glo4002.booking.parsers.PassListFactory;
+import ca.ulaval.glo4002.booking.mappers.OrderMapper;
+import ca.ulaval.glo4002.booking.mappers.PassListMapper;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,7 +17,7 @@ public class BookingResourceConfig extends ResourceConfig {
 
     OrderRepository orderRepository;
 
-    PassListFactory passListFactory;
+    PassListMapper passListMapper;
     PassFactory passFactory;
     OrderFactory orderFactory;
 
@@ -53,9 +53,9 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpFactories() {
-        passListFactory = new PassListFactory(passFactory);
+        passListMapper = new PassListMapper(passFactory);
         passFactory = new PassFactory();
-        orderFactory = new OrderFactory(numberGenerator, passListFactory);
+        orderFactory = new OrderFactory(numberGenerator, passListMapper);
     }
 
     private void setUpServices() {
@@ -63,7 +63,7 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpParser() {
-        orderMapper = new OrderMapper(passListFactory);
+        orderMapper = new OrderMapper(passListMapper);
     }
 
     private void setUpControllers() {

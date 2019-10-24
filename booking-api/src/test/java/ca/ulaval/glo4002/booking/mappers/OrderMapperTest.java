@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.parsers;
+package ca.ulaval.glo4002.booking.mappers;
 
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
@@ -19,14 +19,14 @@ import static org.mockito.Mockito.when;
 class OrderMapperTest {
 
     private OrderMapper subject;
-    private PassListFactory passListFactory;
+    private PassListMapper passListMapper;
     private OrderNumber orderNumber;
     private Order order;
 
     @BeforeEach
     void setUpSubject() {
-        passListFactory = mock(PassListFactory.class);
-        subject = new OrderMapper(passListFactory);
+        passListMapper = mock(PassListMapper.class);
+        subject = new OrderMapper(passListMapper);
     }
 
     @BeforeEach
@@ -57,6 +57,6 @@ class OrderMapperTest {
     void toDto_shouldCallPassListParser() {
         subject.toDto(order);
 
-        verify(passListFactory).toDto(any());
+        verify(passListMapper).toDto(any());
     }
 }

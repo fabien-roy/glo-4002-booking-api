@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.parsers;
+package ca.ulaval.glo4002.booking.mappers;
 
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
@@ -14,11 +14,12 @@ import ca.ulaval.glo4002.booking.factories.PassFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PassListFactory {
+// TODO : Separate Factory and Mapper
+public class PassListMapper {
 
     private PassFactory passFactory;
 
-    public PassListFactory(PassFactory passFactory) {
+    public PassListMapper(PassFactory passFactory) {
         this.passFactory = passFactory;
     }
 

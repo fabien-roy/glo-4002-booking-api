@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.parsers;
+package ca.ulaval.glo4002.booking.mappers;
 
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.passes.*;
@@ -25,9 +25,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class PassListFactoryTest {
+class PassListMapperTest {
 
-    private PassListFactory subject;
+    private PassListMapper subject;
     private PassFactory passFactory;
     private PassList passList;
 
@@ -37,7 +37,7 @@ class PassListFactoryTest {
         passList = new PassList(mock(PassCategory.class), mock(PassOption.class), mock(PriceCalculationStrategy.class));
         when(passFactory.build(any(), any())).thenReturn(passList);
 
-        subject = new PassListFactory(passFactory);
+        subject = new PassListMapper(passFactory);
     }
 
     @ParameterizedTest
