@@ -1,11 +1,32 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderNumberTest {
+
+    @Test
+    void constructing_shouldThrowInvalidOrderNumberFormatException_whenOrderNumberHasNoSeparator() {
+        String orderNumberWithoutSeparator = "123TEAM";
+
+        assertThrows(
+                InvalidOrderNumberFormatException.class,
+                () -> new OrderNumber(orderNumberWithoutSeparator)
+        );
+    }
+
+    @Test
+    void constructing_shouldThrowInvalidOrderNumberFormatException_whenOrderNumberHasMultipleSeparator() {
+        String orderNumberMultipleSeparators = "123" + OrderNumber.SEPARATOR + "TEAM" + OrderNumber.SEPARATOR + "YEAH";
+
+        assertThrows(
+                InvalidOrderNumberFormatException.class,
+                () -> new OrderNumber(orderNumberMultipleSeparators)
+        );
+    }
 
     @Test
     void toString_shouldReturnCorrectFormat() {

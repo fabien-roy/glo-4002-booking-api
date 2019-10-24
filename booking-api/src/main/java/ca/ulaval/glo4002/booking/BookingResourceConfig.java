@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassListFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassListMapper;
+import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -51,7 +52,7 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpRepositories() {
-        orderRepository = new OrderRepository();
+        orderRepository = new InMemoryOrderRepository();
     }
 
     private void setUpFactories() {

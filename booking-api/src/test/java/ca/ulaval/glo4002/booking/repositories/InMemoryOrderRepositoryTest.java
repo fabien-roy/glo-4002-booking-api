@@ -16,13 +16,13 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class OrderRepositoryTest {
+class InMemoryOrderRepositoryTest {
 
     private OrderRepository subject;
 
     @BeforeEach
     void setUpSubject() {
-        subject = new OrderRepository();
+        subject = new InMemoryOrderRepository();
     }
 
     @Test
