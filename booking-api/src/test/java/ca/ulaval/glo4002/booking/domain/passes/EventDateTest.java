@@ -15,7 +15,7 @@ class EventDateTest {
 
         assertThrows(
                 OutOfBoundsEventDateException.class,
-                () -> new EventDate(aUnderBoundEventDate.toString())
+                () -> new EventDate(aUnderBoundEventDate)
         );
     }
 
@@ -25,7 +25,7 @@ class EventDateTest {
 
         assertThrows(
                 OutOfBoundsEventDateException.class,
-                () -> new EventDate(aOverBoundEventDate.toString())
+                () -> new EventDate(aOverBoundEventDate)
         );
     }
 }

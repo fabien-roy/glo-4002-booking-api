@@ -38,8 +38,8 @@ public class PassListFactory {
             passes.add(new Pass(numberGenerator.generate()));
         } else {
             passListDto.getEventDates().forEach(eventDate -> {
-                LocalDate builtEventDate = buildEventDate(eventDate);
-                Pass pass = new Pass(numberGenerator.generate(), new EventDate(builtEventDate));
+                EventDate builtEventDate = buildEventDate(eventDate);
+                Pass pass = new Pass(numberGenerator.generate(), builtEventDate);
                 passes.add(pass);
             });
         }
@@ -61,12 +61,16 @@ public class PassListFactory {
         }
     }
 
-    private LocalDate buildEventDate(String eventDate) {
+    private EventDate buildEventDate(String eventDate) {
+        LocalDate parsedEventDate;
+
         try {
-            return LocalDate.parse(eventDate);
+            parsedEventDate = LocalDate.parse(eventDate);
         } catch (Exception exception) {
             throw new InvalidEventDateFormatException();
         }
+
+        return new EventDate(parsedEventDate);
     }
 
     private PassOptions parsePassOption(PassListDto passListDto) {
