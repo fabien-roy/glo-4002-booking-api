@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 
 public class OrderNumber {
 

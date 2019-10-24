@@ -5,7 +5,6 @@ import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

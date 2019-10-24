@@ -8,7 +8,6 @@ import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
-import ca.ulaval.glo4002.booking.mappers.PassListMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,9 +27,9 @@ class OrderFactoryTest {
     @BeforeEach
     void setUpSubject() {
         NumberGenerator numberGenerator = new NumberGenerator();
-        PassListMapper passListMapper = mock(PassListMapper.class);
+        PassListFactory passListFactory = mock(PassListFactory.class);
 
-        this.subject = new OrderFactory(numberGenerator, passListMapper);
+        this.subject = new OrderFactory(numberGenerator, passListFactory);
     }
 
     @Test

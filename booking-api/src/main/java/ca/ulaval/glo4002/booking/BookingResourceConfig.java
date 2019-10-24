@@ -4,6 +4,7 @@ import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
+import ca.ulaval.glo4002.booking.factories.PassListFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassListMapper;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
@@ -17,12 +18,13 @@ public class BookingResourceConfig extends ResourceConfig {
 
     OrderRepository orderRepository;
 
-    PassListMapper passListMapper;
     PassFactory passFactory;
+    PassListFactory passListFactory;
     OrderFactory orderFactory;
 
     OrderService orderService;
 
+    PassListMapper passListMapper;
     OrderMapper orderMapper;
 
     OrderController orderController;
@@ -34,7 +36,7 @@ public class BookingResourceConfig extends ResourceConfig {
         setUpRepositories();
         setUpFactories();
         setUpServices();
-        setUpParser();
+        setUpMappers();
         setUpControllers();
 
         registerResources();
@@ -53,16 +55,17 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpFactories() {
-        passListMapper = new PassListMapper(passFactory);
         passFactory = new PassFactory();
-        orderFactory = new OrderFactory(numberGenerator, passListMapper);
+        passListFactory = new PassListFactory(passFactory);
+        orderFactory = new OrderFactory(numberGenerator, passListFactory);
     }
 
     private void setUpServices() {
         orderService = new OrderService(orderRepository, orderFactory, orderMapper);
     }
 
-    private void setUpParser() {
+    private void setUpMappers() {
+        passListMapper = new PassListMapper();
         orderMapper = new OrderMapper(passListMapper);
     }
 

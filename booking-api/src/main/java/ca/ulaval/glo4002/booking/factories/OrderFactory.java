@@ -8,7 +8,6 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
-import ca.ulaval.glo4002.booking.mappers.PassListMapper;
 
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
@@ -21,11 +20,11 @@ public class OrderFactory {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
 
     private NumberGenerator numberGenerator;
-    private PassListMapper passListMapper;
+    private PassListFactory passListFactory;
 
-    public OrderFactory(NumberGenerator numberGenerator, PassListMapper passListMapper) {
+    public OrderFactory(NumberGenerator numberGenerator, PassListFactory passListFactory) {
         this.numberGenerator = numberGenerator;
-        this.passListMapper = passListMapper;
+        this.passListFactory = passListFactory;
     }
 
     public Order buildWithDto(OrderWithPassesAsEventDatesDto orderDto) {
@@ -35,7 +34,7 @@ public class OrderFactory {
 
         OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderDto.getVendorCode());
         LocalDateTime orderDate = buildOrderDate(orderDto.getOrderDate());
-        PassList passList = passListMapper.parseDto(orderDto.getPasses());
+        PassList passList = passListFactory.buildWithDto(orderDto.getPasses());
 
         return new Order(orderNumber, orderDate, passList);
     }
