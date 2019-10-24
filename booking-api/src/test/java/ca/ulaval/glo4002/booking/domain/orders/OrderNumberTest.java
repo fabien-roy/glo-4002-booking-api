@@ -1,25 +1,21 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
+import ca.ulaval.glo4002.booking.domain.Number;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrderNumberTest {
 
-    private OrderNumber subject;
-
     @Test
-    void constructing_shouldSetNewNumber_whenThereIsNone() {
-        subject = new OrderNumber(null, "VENDOR");
+    void toString_shouldReturnCorrectFormat() {
+        Number aNumber = new Number(1L);
+        String aVendor = "VENDOR";
+        String expectedResult = aVendor + OrderNumber.SEPARATOR + aNumber.toString();
+        OrderNumber subject = new OrderNumber(aNumber, aVendor);
 
-        assertNotNull(subject.getNumber());
-    }
+        String result = subject.toString();
 
-    @Test
-    void constructing_shouldSetUniqueNumbers() {
-        subject = new OrderNumber(null, "VENDOR");
-        OrderNumber other = new OrderNumber(null, "VENDOR");
-
-        assertNotEquals(subject.getNumber(), other.getNumber());
+        assertEquals(expectedResult, result);
     }
 }

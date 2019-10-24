@@ -15,11 +15,6 @@ public class OrderNumber {
         this.vendorCode = vendorCode;
     }
 
-    public OrderNumber(String vendorCode, NumberGenerator numberGenerator) {
-        this.number = numberGenerator.generate();
-        this.vendorCode = vendorCode;
-    }
-
     public Number getNumber() {
         return number;
     }
@@ -30,6 +25,6 @@ public class OrderNumber {
 
     @Override
     public String toString() {
-        return number.toString() + SEPARATOR + vendorCode;
+        return vendorCode + SEPARATOR + number.toString();
     }
 }

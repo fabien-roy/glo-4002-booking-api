@@ -24,7 +24,7 @@ public class OrderFactory {
             throw new InvalidOrderFormatException();
         }
 
-        OrderNumber orderNumber = new OrderNumber(orderDto.getVendorCode(), numberGenerator);
+        OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderDto.getVendorCode());
         OrderDate orderDate = new OrderDate(orderDto.getOrderDate());
         PassList passList = passListFactory.parseDto(orderDto.getPasses());
 
