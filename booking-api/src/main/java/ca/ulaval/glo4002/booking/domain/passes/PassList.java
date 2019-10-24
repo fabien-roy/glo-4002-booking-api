@@ -20,13 +20,6 @@ public class PassList {
         this.passes = new ArrayList<>();
     }
 
-    // TODO : Only used by tests...
-    public PassList(List<Pass> passes, PassCategory category, PassOption option) {
-        this.passes = passes;
-        this.category = category;
-        this.option = option;
-    }
-
     public PassList(PassCategory category, PassOption option, PriceCalculationStrategy priceCalculationStrategy) {
         this.category = category;
         this.option = option;

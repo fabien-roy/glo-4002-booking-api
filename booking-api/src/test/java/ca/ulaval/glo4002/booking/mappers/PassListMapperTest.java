@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.mappers;
 
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.passes.*;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +34,8 @@ class PassListMapperTest {
         Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
-        PassList passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassList passList = new PassList(mock(PassCategory.class), mock(PassOption.class), mock(PriceCalculationStrategy.class));
+        passList.setPasses(passes);
 
         List<PassDto> passDtos = subject.toDto(passList);
 
@@ -47,7 +49,8 @@ class PassListMapperTest {
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassList passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassList passList = new PassList(mock(PassCategory.class), mock(PassOption.class), mock(PriceCalculationStrategy.class));
+        passList.setPasses(passes);
 
         List<PassDto> passDtos = subject.toDto(passList);
 
@@ -63,7 +66,8 @@ class PassListMapperTest {
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
-        PassList passList = new PassList(passes, passCategory, mock(PassOption.class));
+        PassList passList = new PassList(passCategory, mock(PassOption.class), mock(PriceCalculationStrategy.class));
+        passList.setPasses(passes);
 
         List<PassDto> passDtos = subject.toDto(passList);
 
@@ -80,7 +84,8 @@ class PassListMapperTest {
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
-        PassList passList = new PassList(passes, passCategory, mock(PassOption.class));
+        PassList passList = new PassList(passCategory, mock(PassOption.class), mock(PriceCalculationStrategy.class));
+        passList.setPasses(passes);
 
         List<PassDto> passDtos = subject.toDto(passList);
 
@@ -95,7 +100,8 @@ class PassListMapperTest {
         PassOption passOption = mock(PassOption.class);
         String expectedPassOptionName = "expectedPassOptionName";
         when(passOption.getName()).thenReturn(expectedPassOptionName);
-        PassList passList = new PassList(passes, mock(PassCategory.class), passOption);
+        PassList passList = new PassList(mock(PassCategory.class), passOption, mock(PriceCalculationStrategy.class));
+        passList.setPasses(passes);
 
         List<PassDto> passDtos = subject.toDto(passList);
 
@@ -112,7 +118,8 @@ class PassListMapperTest {
         PassOption passOption = mock(PassOption.class);
         String expectedPassOptionName = "expectedPassOptionName";
         when(passOption.getName()).thenReturn(expectedPassOptionName);
-        PassList passList = new PassList(passes, mock(PassCategory.class), passOption);
+        PassList passList = new PassList(mock(PassCategory.class), passOption, mock(PriceCalculationStrategy.class));
+        passList.setPasses(passes);
 
         List<PassDto> passDtos = subject.toDto(passList);
 
@@ -130,7 +137,8 @@ class PassListMapperTest {
         Pass aPass = new Pass(aPassNumber, aEventDate);
         Pass anotherPass = new Pass(anotherPassNumber, anotherEventDate);
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassList passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassList passList = new PassList(mock(PassCategory.class), mock(PassOption.class), mock(PriceCalculationStrategy.class));
+        passList.setPasses(passes);
 
         List<PassDto> passDtos = subject.toDto(passList);
 
