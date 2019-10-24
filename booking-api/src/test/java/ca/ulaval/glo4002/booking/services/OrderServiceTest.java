@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 class OrderServiceTest {
 

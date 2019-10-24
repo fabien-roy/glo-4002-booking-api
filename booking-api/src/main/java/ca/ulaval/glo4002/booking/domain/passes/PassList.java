@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PassList {

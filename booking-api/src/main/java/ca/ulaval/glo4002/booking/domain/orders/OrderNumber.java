@@ -20,11 +20,11 @@ public class OrderNumber {
 
         int separatorIndex = orderNumber.indexOf(SEPARATOR);
 
-        String vendorCode = orderNumber.substring(0, separatorIndex);
-        String number = orderNumber.substring(separatorIndex + 1);
+        String parsedVendorCode = orderNumber.substring(0, separatorIndex);
+        String parsedNumber = orderNumber.substring(separatorIndex + 1);
 
-        this.number = new Number(number);
-        this.vendorCode = vendorCode;
+        this.number = new Number(parsedNumber);
+        this.vendorCode = parsedVendorCode;
     }
 
     public Number getNumber() {
