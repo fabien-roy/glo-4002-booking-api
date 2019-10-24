@@ -11,11 +11,6 @@ public class EventDate {
     public static final LocalDate END_DATE = LocalDate.of(2050, 7, 24);
     private LocalDate value;
 
-    // TODO : Only used by tests...
-    public EventDate(LocalDate value) {
-        this.value = value;
-    }
-
     public EventDate(String value) {
         LocalDate newValue;
 

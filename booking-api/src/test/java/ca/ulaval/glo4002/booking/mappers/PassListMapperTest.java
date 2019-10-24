@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.mappers;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.dto.PassDto;
+import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -122,8 +123,10 @@ class PassListMapperTest {
     void toDto_shouldBuildDtoWithCorrectEventDates() {
         PassNumber aPassNumber = new PassNumber(new Number(1L));
         PassNumber anotherPassNumber = new PassNumber(new Number(2L));
-        EventDate aEventDate = new EventDate(EventDate.START_DATE);
-        EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
+        EventDate aEventDate = mock(EventDate.class);
+        EventDate anotherEventDate = mock(EventDate.class);
+        when(aEventDate.toString()).thenReturn(OrderFactory.START_DATE_TIME.toString());
+        when(anotherEventDate.toString()).thenReturn(OrderFactory.END_DATE_TIME.toString());
         Pass aPass = new Pass(aPassNumber, aEventDate);
         Pass anotherPass = new Pass(anotherPassNumber, anotherEventDate);
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
