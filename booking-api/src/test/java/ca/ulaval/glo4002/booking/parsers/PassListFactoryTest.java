@@ -25,9 +25,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class PassListParserTest {
+class PassListFactoryTest {
 
-    private PassListParser subject;
+    private PassListFactory subject;
     private PassFactory passFactory;
     private PassList passList;
 
@@ -37,7 +37,7 @@ class PassListParserTest {
         passList = new PassList(mock(PassCategory.class), mock(PassOption.class), mock(PriceCalculationStrategy.class));
         when(passFactory.build(any(), any())).thenReturn(passList);
 
-        subject = new PassListParser(passFactory);
+        subject = new PassListFactory(passFactory);
     }
 
     @ParameterizedTest

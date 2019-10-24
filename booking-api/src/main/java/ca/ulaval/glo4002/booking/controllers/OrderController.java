@@ -55,8 +55,7 @@ public class OrderController {
         Order order;
 
         try {
-            order = parser.parseDto(requestOrderDto);
-            order = service.order(order);
+            order = service.order(requestOrderDto);
             responseOrderDto = parser.toDto(order);
         } catch (BookingException exception) {
             return ResponseEntity.badRequest().build();

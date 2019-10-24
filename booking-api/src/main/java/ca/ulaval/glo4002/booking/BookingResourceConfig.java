@@ -1,28 +1,28 @@
 package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.controllers.OrderController;
-import ca.ulaval.glo4002.booking.dao.OrderDao;
-import ca.ulaval.glo4002.booking.dao.PassDao;
+import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.parsers.PassListParser;
+import ca.ulaval.glo4002.booking.parsers.PassListFactory;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
-import ca.ulaval.glo4002.booking.repositories.PassRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.glassfish.jersey.server.ResourceConfig;
 
 // TODO : Use hk2 for injection
 public class BookingResourceConfig extends ResourceConfig {
 
-    OrderDao orderDao;
+    NumberGenerator numberGenerator;
 
     OrderRepository orderRepository;
 
+    PassListFactory passListFactory;
+    PassFactory passFactory;
+    OrderFactory orderFactory;
+
     OrderService orderService;
 
-    PassFactory passFactory;
-
-    PassListParser passListParser;
     OrderParser orderParser;
 
     OrderController orderController;
@@ -30,10 +30,10 @@ public class BookingResourceConfig extends ResourceConfig {
     public BookingResourceConfig() {
         addPackages();
 
-        setUpDaos();
+        setUpGenerators();
         setUpRepositories();
-        setUpServices();
         setUpFactories();
+        setUpServices();
         setUpParser();
         setUpControllers();
 
@@ -44,25 +44,26 @@ public class BookingResourceConfig extends ResourceConfig {
         packages("ca.ulaval.glo4002.booking");
     }
 
-    private void setUpDaos() {
-        orderDao = new OrderDao();
+    private void setUpGenerators() {
+        numberGenerator = new NumberGenerator();
     }
 
     private void setUpRepositories() {
         orderRepository = new OrderRepository();
     }
 
-    private void setUpServices() {
-        orderService = new OrderService(orderRepository);
+    private void setUpFactories() {
+        passListFactory = new PassListFactory(passFactory);
+        passFactory = new PassFactory();
+        orderFactory = new OrderFactory(numberGenerator, passListFactory);
     }
 
-    private void setUpFactories() {
-        passFactory = new PassFactory();
+    private void setUpServices() {
+        orderService = new OrderService(orderRepository, orderFactory);
     }
 
     private void setUpParser() {
-        passListParser = new PassListParser(passFactory);
-        orderParser = new OrderParser(passListParser);
+        orderParser = new OrderParser(passListFactory);
     }
 
     private void setUpControllers() {

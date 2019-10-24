@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
@@ -19,8 +20,8 @@ public class Order {
         this.passList = new PassList();
     }
 
-    public Order(String vendorCode, OrderDate orderDate, PassList passList) {
-        this.orderNumber = new OrderNumber(null, vendorCode);
+    public Order(OrderNumber orderNumber, OrderDate orderDate, PassList passList) {
+        this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.passList = passList;
     }
