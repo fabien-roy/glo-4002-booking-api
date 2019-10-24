@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.services.OrderService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -16,8 +17,9 @@ import javax.ws.rs.core.Response;
 @Path("/orders")
 public class OrderController {
 
-    private OrderService service;
+    private final OrderService service;
 
+    @Inject
     public OrderController(OrderService service) {
         this.service = service;
     }

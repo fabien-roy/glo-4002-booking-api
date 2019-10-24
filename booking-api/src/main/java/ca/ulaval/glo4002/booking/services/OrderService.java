@@ -8,12 +8,15 @@ import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
+import javax.inject.Inject;
+
 public class OrderService {
 
-    private OrderRepository repository;
-    private OrderFactory factory;
-    private OrderMapper mapper;
+    private final OrderRepository repository;
+    private final OrderFactory factory;
+    private final OrderMapper mapper;
 
+    @Inject
     public OrderService(OrderRepository repository, OrderFactory factory, OrderMapper mapper) {
         this.repository = repository;
         this.factory = factory;

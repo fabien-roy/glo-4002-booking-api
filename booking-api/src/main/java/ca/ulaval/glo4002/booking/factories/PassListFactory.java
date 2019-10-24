@@ -11,15 +11,17 @@ import ca.ulaval.glo4002.booking.exceptions.passes.InvalidEventDateFormatExcepti
 import ca.ulaval.glo4002.booking.exceptions.passes.PackagePassWithEventDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.SinglePassWithoutEventDateException;
 
+import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PassListFactory {
 
-    private NumberGenerator numberGenerator;
-    private PassFactory passFactory;
+    private final NumberGenerator numberGenerator;
+    private final PassFactory passFactory;
 
+    @Inject
     public PassListFactory(NumberGenerator numberGenerator, PassFactory passFactory) {
         this.numberGenerator = numberGenerator;
         this.passFactory = passFactory;

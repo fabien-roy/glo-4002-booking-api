@@ -9,6 +9,7 @@ import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatExcepti
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 
+import javax.inject.Inject;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,9 +20,10 @@ public class OrderFactory {
     public static final LocalDateTime END_DATE_TIME = LocalDateTime.of(2050, 7, 17, 0, 0);
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
 
-    private NumberGenerator numberGenerator;
-    private PassListFactory passListFactory;
+    private final NumberGenerator numberGenerator;
+    private final PassListFactory passListFactory;
 
+    @Inject
     public OrderFactory(NumberGenerator numberGenerator, PassListFactory passListFactory) {
         this.numberGenerator = numberGenerator;
         this.passListFactory = passListFactory;
