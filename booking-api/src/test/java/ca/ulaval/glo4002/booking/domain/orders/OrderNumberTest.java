@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
 import org.junit.jupiter.api.Test;
 
@@ -42,10 +42,10 @@ class OrderNumberTest {
 
     @Test
     void getId_shouldReturnCorrectId() {
-        Id expectedId = new Id(1L);
+        Number expectedId = new Number(1L);
 
         subject = new OrderNumber("VENDOR" + OrderNumber.SEPARATOR + expectedId.toString());
 
-        assertEquals(expectedId.getValue(), subject.getId().getValue());
+        assertEquals(expectedId.getValue(), subject.getNumber().getValue());
     }
 }

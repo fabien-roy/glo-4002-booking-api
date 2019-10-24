@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.dao;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
@@ -12,14 +12,15 @@ import java.util.Optional;
 public class OrderDao {
 
     private List<Order> orders;
-    private Id nextId;
+    private Number nextId;
 
     public OrderDao() {
         orders = new ArrayList<>();
-        nextId = new Id(0L);
+        nextId = new Number(0L);
     }
 
-    public Optional<Order> get(Id id) {
+    public Optional<Order> get(Number id) {
+        /*
         Optional<Order> foundOrder = orders.stream().filter(order -> order.getId().equals(id)).findAny();
 
         if (!foundOrder.isPresent()) {
@@ -27,6 +28,8 @@ public class OrderDao {
         }
 
         return foundOrder;
+        */
+        return null;
     }
 
     public List<Order> getAll() {
@@ -35,11 +38,11 @@ public class OrderDao {
 
     public void save(Order order) {
         if (orders.contains(order)) {
-            throw new OrderAlreadyCreatedException(order.getId().getValue().toString());
+            throw new OrderAlreadyCreatedException(order.getOrderNumber());
         }
 
-        order.setId(nextId);
-        nextId = new Id(nextId.getValue() + 1);
+        order.setNumber(nextId);
+        nextId = new Number(nextId.getValue() + 1);
 
         orders.add(order);
     }

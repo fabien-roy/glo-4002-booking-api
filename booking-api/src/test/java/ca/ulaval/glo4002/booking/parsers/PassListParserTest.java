@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.parsers;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassDto;
@@ -43,7 +43,7 @@ class PassListParserTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void toDto_shouldBuildCorrectQuantityOfDtos(int expectedSize) {
-        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        PassNumber aPassNumber = new PassNumber(new Number(1L));
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
         passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
@@ -55,8 +55,8 @@ class PassListParserTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectPassNumbers() {
-        PassNumber aPassNumber = new PassNumber(new Id(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
+        PassNumber aPassNumber = new PassNumber(new Number(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
@@ -70,7 +70,7 @@ class PassListParserTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectCategory() {
-        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        PassNumber aPassNumber = new PassNumber(new Number(1L));
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassCategory passCategory = mock(PassCategory.class);
@@ -85,8 +85,8 @@ class PassListParserTest {
 
     @Test
     void toDto_shouldSetSameCategoryForAllPasses() {
-        PassNumber aPassNumber = new PassNumber(new Id(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
+        PassNumber aPassNumber = new PassNumber(new Number(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
@@ -102,7 +102,7 @@ class PassListParserTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectOption() {
-        PassNumber aPassNumber = new PassNumber(new Id(1L));
+        PassNumber aPassNumber = new PassNumber(new Number(1L));
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassOption passOption = mock(PassOption.class);
@@ -117,8 +117,8 @@ class PassListParserTest {
 
     @Test
     void toDto_shouldSetSameOptionForAllPasses() {
-        PassNumber aPassNumber = new PassNumber(new Id(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
+        PassNumber aPassNumber = new PassNumber(new Number(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
@@ -134,8 +134,8 @@ class PassListParserTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectEventDates() {
-        PassNumber aPassNumber = new PassNumber(new Id(1L));
-        PassNumber anotherPassNumber = new PassNumber(new Id(2L));
+        PassNumber aPassNumber = new PassNumber(new Number(1L));
+        PassNumber anotherPassNumber = new PassNumber(new Number(2L));
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
         EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
         Pass aPass = new Pass(aPassNumber, aEventDate);

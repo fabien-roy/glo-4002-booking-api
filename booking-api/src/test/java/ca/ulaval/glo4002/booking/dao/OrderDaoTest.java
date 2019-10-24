@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.dao;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderDate;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
@@ -30,15 +30,15 @@ class OrderDaoTest {
 
     @Test
     void get_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
-        Id aNonExistentOrderId = new Id(A_NON_EXISTENT_ID);
+        Number aNonExistentOrderId = new Number(A_NON_EXISTENT_ID);
 
         assertThrows(OrderNotFoundException.class, () -> subject.get(aNonExistentOrderId));
     }
 
     @Test
     void get_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
-        Id aNonExistentOrderId = new Id(A_NON_EXISTENT_ID);
-        Id aOrderId = new Id(A_ID);
+        Number aNonExistentOrderId = new Number(A_NON_EXISTENT_ID);
+        Number aOrderId = new Number(A_ID);
         Order aOrder = new Order(aOrderId);
         subject.save(aOrder);
 
@@ -47,20 +47,20 @@ class OrderDaoTest {
 
     @Test
     void get_shouldReturnOrder() {
-        Id aOrderId = new Id(A_ID);
+        Number aOrderId = new Number(A_ID);
         Order aOrder = new Order(aOrderId);
         subject.save(aOrder);
 
         Optional<Order> foundOrder = subject.get(aOrderId);
 
         assertTrue(foundOrder.isPresent());
-        assertEquals(aOrder.getId(), foundOrder.get().getId());
+        assertEquals(aOrder.getOrderNumber(), foundOrder.get().getOrderNumber());
     }
 
     @Test
     void get_shouldReturnOrder_whenThereAreMultipleOrders() {
-        Id aOrderId = new Id(A_ID);
-        Id anotherOrderId = new Id(ANOTHER_ID);
+        Number aOrderId = new Number(A_ID);
+        Number anotherOrderId = new Number(ANOTHER_ID);
         Order aOrder = new Order(aOrderId);
         Order anotherOrder = new Order(anotherOrderId);
         subject.save(aOrder);
@@ -69,13 +69,13 @@ class OrderDaoTest {
         Optional<Order> foundOrder = subject.get(aOrderId);
 
         assertTrue(foundOrder.isPresent());
-        assertEquals(aOrder.getId(), foundOrder.get().getId());
+        assertEquals(aOrder.getOrderNumber(), foundOrder.get().getOrderNumber());
     }
 
     @Test
     void getAll_shouldReturnAllOrders() {
-        Id aOrderId = new Id(A_ID);
-        Id anotherOrderId = new Id(ANOTHER_ID);
+        Number aOrderId = new Number(A_ID);
+        Number anotherOrderId = new Number(ANOTHER_ID);
         Order aOrder = new Order(aOrderId);
         Order anotherOrder = new Order(anotherOrderId);
         subject.save(aOrder);
@@ -84,8 +84,8 @@ class OrderDaoTest {
         List<Order> orders = subject.getAll();
 
         assertEquals(2, orders.size());
-        assertTrue(orders.stream().anyMatch(order -> order.getId().equals(aOrder.getId())));
-        assertTrue(orders.stream().anyMatch(order -> order.getId().equals(anotherOrder.getId())));
+        assertTrue(orders.stream().anyMatch(order -> order.getOrderNumber().equals(aOrder.getOrderNumber())));
+        assertTrue(orders.stream().anyMatch(order -> order.getOrderNumber().equals(anotherOrder.getOrderNumber())));
     }
 
     @Test
@@ -113,6 +113,6 @@ class OrderDaoTest {
         subject.save(aOrder);
         subject.save(anotherOrder);
 
-        assertNotEquals(aOrder.getId(), anotherOrder.getId());
+        assertNotEquals(aOrder.getOrderNumber(), anotherOrder.getOrderNumber());
     }
 }

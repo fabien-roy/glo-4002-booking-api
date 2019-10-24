@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.*;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
@@ -14,7 +14,7 @@ public class Order {
     private PassList passList;
 
     // TODO : Only used by tests...
-    public Order(Id id) {
+    public Order(Number id) {
         this.orderNumber = new OrderNumber(id, null);
         this.passList = new PassList();
     }
@@ -25,12 +25,8 @@ public class Order {
         this.passList = passList;
     }
 
-    public Id getId() {
-        return orderNumber.getId();
-    }
-
-    public void setId(Id id) {
-        orderNumber.setId(id);
+    public void setNumber(Number number) {
+        orderNumber.setNumber(number);
     }
 
     public String getOrderNumber() {

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.passes.money.Money;
 
 public class Pass {
@@ -24,11 +24,11 @@ public class Pass {
         this.eventDate = eventDate;
     }
 
-    public Id getId() {
+    public Number getId() {
         return passNumber.getId();
     }
 
-    public void setId(Id id) {
+    public void setId(Number id) {
         passNumber.setId(id);
     }
 

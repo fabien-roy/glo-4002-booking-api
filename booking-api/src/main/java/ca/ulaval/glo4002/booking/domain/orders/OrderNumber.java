@@ -1,34 +1,33 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
 
 public class OrderNumber {
 
-    // TODO : Long in OrderNumber should not come from Dao
-    private Id id;
+    private Number number;
     private String vendorCode;
 
     public static final String SEPARATOR = "-";
 
-    public OrderNumber(Id id, String vendorCode) {
-        this.id = id;
+    public OrderNumber(Number number, String vendorCode) {
+        this.number = number;
         this.vendorCode = vendorCode;
     }
 
     public OrderNumber(String orderNumber) {
-        validateOrderNumber(orderNumber);
+        validateFormat(orderNumber);
 
         int separatorIndex = orderNumber.indexOf(SEPARATOR);
 
         String vendorCode = orderNumber.substring(0, separatorIndex);
-        String id = orderNumber.substring(separatorIndex + 1);
+        String number = orderNumber.substring(separatorIndex + 1);
 
-        this.id = new Id(id);
+        this.number = new Number(number);
         this.vendorCode = vendorCode;
     }
 
-    private void validateOrderNumber(String orderNumber) {
+    private void validateFormat(String orderNumber) {
         int numberOfSeparators = orderNumber.split(SEPARATOR).length - 1;
 
         if (numberOfSeparators != 1) {
@@ -36,12 +35,12 @@ public class OrderNumber {
         }
     }
 
-    public Id getId() {
-        return id;
+    public Number getNumber() {
+        return number;
     }
 
-    public void setId(Id id) {
-        this.id = id;
+    public void setNumber(Number number) {
+        this.number = number;
     }
 
     public String getVendorCode() {
@@ -49,6 +48,6 @@ public class OrderNumber {
     }
 
     public String getOrderNumber() {
-        return id.toString() + SEPARATOR + vendorCode;
+        return number.toString() + SEPARATOR + vendorCode;
     }
 }

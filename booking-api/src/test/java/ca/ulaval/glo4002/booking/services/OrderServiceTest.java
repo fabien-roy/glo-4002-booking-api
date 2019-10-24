@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ class OrderServiceTest {
 
     @Test
     void order_shouldAddOrder() {
-        Id sentOrderId = new Id(A_ID);
+        Number sentOrderId = new Number(A_ID);
         Order sentOrder = new Order(sentOrderId);
 
         Order resultOrder = subject.order(sentOrder);
