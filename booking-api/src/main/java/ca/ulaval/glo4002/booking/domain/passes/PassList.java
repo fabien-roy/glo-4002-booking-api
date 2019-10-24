@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PassList {
@@ -14,18 +13,6 @@ public class PassList {
     private PassOption option;
     private Money price;
     private PriceCalculationStrategy priceCalculationStrategy;
-
-    // TODO : Only used by tests...
-    public PassList() {
-        this.passes = new ArrayList<>();
-    }
-
-    // TODO : Only used by tests...
-    public PassList(List<Pass> passes, PassCategory category, PassOption option) {
-        this.passes = passes;
-        this.category = category;
-        this.option = option;
-    }
 
     public PassList(PassCategory category, PassOption option, PriceCalculationStrategy priceCalculationStrategy) {
         this.category = category;

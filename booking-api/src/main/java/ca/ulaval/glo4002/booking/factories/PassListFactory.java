@@ -1,45 +1,31 @@
-package ca.ulaval.glo4002.booking.parsers;
+package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.exceptions.passes.InvalidEventDateFormatException;
 import ca.ulaval.glo4002.booking.exceptions.passes.PackagePassWithEventDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.SinglePassWithoutEventDateException;
-import ca.ulaval.glo4002.booking.factories.PassFactory;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class PassListParser {
+public class PassListFactory {
 
+    private NumberGenerator numberGenerator;
     private PassFactory passFactory;
 
-    PassListParser(PassFactory passFactory) {
+    public PassListFactory(NumberGenerator numberGenerator, PassFactory passFactory) {
+        this.numberGenerator = numberGenerator;
         this.passFactory = passFactory;
     }
 
-    List<PassDto> toDto(PassList passList) {
-        String passCategory = passList.getCategory().getName();
-        String passOption = passList.getOption().getName();
-
-        List<PassDto> passDtos = new ArrayList<>();
-        passList.getPasses().forEach(pass ->
-                passDtos.add(new PassDto(
-                    pass.getId().getValue(),
-                    passCategory,
-                    passOption,
-                    pass.getEventDate().toString()
-                )
-        ));
-
-        return passDtos;
-    }
-
-    PassList parseDto(PassListDto passListDto) {
+    public PassList buildWithDto(PassListDto passListDto) {
         PassOptions passOption = parsePassOption(passListDto);
         PassCategories passCategory = parsePassCategory(passListDto);
 
@@ -49,11 +35,11 @@ class PassListParser {
 
         List<Pass> passes = new ArrayList<>();
         if (passListDto.getEventDates() == null) {
-            passes.add(new Pass());
+            passes.add(new Pass(numberGenerator.generate()));
         } else {
             passListDto.getEventDates().forEach(eventDate -> {
-                EventDate passEventDate = new EventDate(eventDate);
-                Pass pass = new Pass(passEventDate);
+                LocalDate builtEventDate = buildEventDate(eventDate);
+                Pass pass = new Pass(numberGenerator.generate(), new EventDate(builtEventDate));
                 passes.add(pass);
             });
         }
@@ -72,6 +58,14 @@ class PassListParser {
             if (passOption.equals(PassOptions.PACKAGE)) {
                 throw new PackagePassWithEventDateException();
             }
+        }
+    }
+
+    private LocalDate buildEventDate(String eventDate) {
+        try {
+            return LocalDate.parse(eventDate);
+        } catch (Exception exception) {
+            throw new InvalidEventDateFormatException();
         }
     }
 

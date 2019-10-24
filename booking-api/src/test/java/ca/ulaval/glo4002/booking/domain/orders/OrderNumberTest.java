@@ -1,15 +1,12 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OrderNumberTest {
-
-    private OrderNumber subject;
 
     @Test
     void constructing_shouldThrowInvalidOrderNumberFormatException_whenOrderNumberHasNoSeparator() {
@@ -32,20 +29,14 @@ class OrderNumberTest {
     }
 
     @Test
-    void getVendorCode_shouldReturnCorrectVendorCode() {
-        String expectedVendorCode = "VENDOR";
+    void toString_shouldReturnCorrectFormat() {
+        Number aNumber = new Number(1L);
+        String aVendor = "VENDOR";
+        String expectedResult = aVendor + OrderNumber.SEPARATOR + aNumber.toString();
+        OrderNumber subject = new OrderNumber(aNumber, aVendor);
 
-        subject = new OrderNumber(expectedVendorCode + OrderNumber.SEPARATOR + "123");
+        String result = subject.toString();
 
-        assertEquals(expectedVendorCode, subject.getVendorCode());
-    }
-
-    @Test
-    void getId_shouldReturnCorrectId() {
-        Id expectedId = new Id(1L);
-
-        subject = new OrderNumber("VENDOR" + OrderNumber.SEPARATOR + expectedId.toString());
-
-        assertEquals(expectedId.getValue(), subject.getId().getValue());
+        assertEquals(expectedResult, result);
     }
 }

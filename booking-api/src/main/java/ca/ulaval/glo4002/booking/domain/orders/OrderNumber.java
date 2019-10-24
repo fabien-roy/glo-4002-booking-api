@@ -1,17 +1,17 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.Id;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
 
 public class OrderNumber {
 
-    private Id id;
+    private Number number;
     private String vendorCode;
 
     public static final String SEPARATOR = "-";
 
-    public OrderNumber(Id id, String vendorCode) {
-        this.id = id;
+    public OrderNumber(Number number, String vendorCode) {
+        this.number = number;
         this.vendorCode = vendorCode;
     }
 
@@ -20,11 +20,24 @@ public class OrderNumber {
 
         int separatorIndex = orderNumber.indexOf(SEPARATOR);
 
-        String vendorCode = orderNumber.substring(0, separatorIndex);
-        String id = orderNumber.substring(separatorIndex + 1);
+        String parsedVendorCode = orderNumber.substring(0, separatorIndex);
+        String parsedNumber = orderNumber.substring(separatorIndex + 1);
 
-        this.id = new Id(id);
-        this.vendorCode = vendorCode;
+        this.number = new Number(parsedNumber);
+        this.vendorCode = parsedVendorCode;
+    }
+
+    public Number getNumber() {
+        return number;
+    }
+
+    public String getVendorCode() {
+        return vendorCode;
+    }
+
+    @Override
+    public String toString() {
+        return vendorCode + SEPARATOR + number.toString();
     }
 
     private void validateOrderNumber(String orderNumber) {
@@ -33,21 +46,5 @@ public class OrderNumber {
         if (numberOfSeparators != 1) {
             throw new InvalidOrderNumberFormatException();
         }
-    }
-
-    public Id getId() {
-        return id;
-    }
-
-    public void setId(Id id) {
-        this.id = id;
-    }
-
-    public String getVendorCode() {
-        return vendorCode;
-    }
-
-    public String getOrderNumber() {
-        return id.toString() + SEPARATOR + vendorCode;
     }
 }

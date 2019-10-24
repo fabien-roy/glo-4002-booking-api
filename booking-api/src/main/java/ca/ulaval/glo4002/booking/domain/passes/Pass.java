@@ -1,35 +1,25 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
-import ca.ulaval.glo4002.booking.domain.Id;
 import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.domain.Number;
 
 public class Pass {
 
-    private PassNumber passNumber;
+    private Number passNumber;
     private EventDate eventDate;
     private Money price;
 
-    public Pass() {
-        this.passNumber = new PassNumber();
+    public Pass(Number passNumber) {
+        this.passNumber = passNumber;
     }
 
-    // TODO : Only used by tests...
-    public Pass(PassNumber passNumber, EventDate eventDate) {
+    public Pass(Number passNumber, EventDate eventDate) {
         this.passNumber = passNumber;
         this.eventDate = eventDate;
     }
 
-    public Pass(EventDate eventDate) {
-        this.passNumber = new PassNumber();
-        this.eventDate = eventDate;
-    }
-
-    public Id getId() {
-        return passNumber.getId();
-    }
-
-    public void setId(Id id) {
-        passNumber.setId(id);
+    public Number getPassNumber() {
+        return passNumber;
     }
 
     public EventDate getEventDate() {

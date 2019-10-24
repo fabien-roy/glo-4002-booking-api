@@ -1,26 +1,25 @@
 package ca.ulaval.glo4002.booking.domain;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidIdFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidNumberFormatException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class IdTest {
+class NumberTest {
 
-    private Id subject;
+    private Number subject;
 
     @Test
-    void constructing_shouldThrowInvalidIdFormatException_whenIdIsInvalid() {
+    void constructing_shouldThrowInvalidNumberFormatException_whenNumberIsInvalid() {
         assertThrows(
-                InvalidIdFormatException.class,
-                () -> new Id("anInvalidIdFormat")
+                InvalidNumberFormatException.class,
+                () -> new Number("anInvalidNumberFormat")
         );
     }
 
     @Test
-    void equals_shouldReturnFalse_whenObjectIsNotId() {
-        Long aId = 1L;
-        subject = new Id(aId);
+    void equals_shouldReturnFalse_whenObjectIsNotNumber() {
+        subject = new Number(1L);
         Object object = new Object();
 
         boolean result = subject.equals(object);
@@ -30,9 +29,9 @@ class IdTest {
 
     @Test
     void equals_shouldReturnTrue_whenIdHasSameValue() {
-        Long aId = 1L;
-        subject = new Id(aId);
-        Id other = new Id(aId);
+        Long aValue = 1L;
+        subject = new Number(aValue);
+        Number other = new Number(aValue);
 
         boolean result = subject.equals(other);
 
@@ -43,7 +42,7 @@ class IdTest {
     void hashCode_shouldReturnValueHashCode() {
         Long aValue = 1L;
         int expectedHashCode = aValue.hashCode();
-        subject = new Id(aValue);
+        subject = new Number(aValue);
 
         int hashCode = subject.hashCode();
 

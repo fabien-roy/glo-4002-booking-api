@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
-public class InvalidIdFormatException extends BookingException {
+public class InvalidNumberFormatException extends BookingException {
 
-    public InvalidIdFormatException() {
+    public InvalidNumberFormatException() {
         super("INVALID_ID_FORMAT");
 
         description = "Invalid id format";
