@@ -11,6 +11,7 @@ public class OrderDate {
 
     public static final LocalDateTime START_DATE_TIME = LocalDateTime.of(2050, 1, 1, 0, 0);
     public static final LocalDateTime END_DATE_TIME = LocalDateTime.of(2050, 7, 17, 0, 0);
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
     private LocalDateTime value;
 
     public OrderDate(String value) {

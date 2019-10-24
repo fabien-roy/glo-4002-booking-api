@@ -17,7 +17,7 @@ public class OrderService {
     }
 
     public Order order(OrderWithPassesAsEventDatesDto orderDto) {
-        Order order = factory.build(orderDto);
+        Order order = factory.buildWithDto(orderDto);
 
         repository.addOrder(order);
 

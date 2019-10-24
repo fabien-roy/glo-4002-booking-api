@@ -14,12 +14,6 @@ public class Order {
     private OrderDate orderDate;
     private PassList passList;
 
-    // TODO : Only used by tests...
-    public Order(Number number) {
-        this.orderNumber = new OrderNumber(number, null);
-        this.passList = new PassList();
-    }
-
     public Order(OrderNumber orderNumber, OrderDate orderDate, PassList passList) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;

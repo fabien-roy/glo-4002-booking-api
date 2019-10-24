@@ -19,7 +19,7 @@ public class OrderFactory {
         this.passListFactory = passListFactory;
     }
 
-    public Order build(OrderWithPassesAsEventDatesDto orderDto) {
+    public Order buildWithDto(OrderWithPassesAsEventDatesDto orderDto) {
         if (orderDto.getPasses() == null) {
             throw new InvalidOrderFormatException();
         }
