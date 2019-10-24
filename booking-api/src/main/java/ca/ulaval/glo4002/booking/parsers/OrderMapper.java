@@ -6,11 +6,11 @@ import ca.ulaval.glo4002.booking.dto.PassDto;
 
 import java.util.List;
 
-public class OrderParser {
+public class OrderMapper {
 
     private PassListFactory passListFactory;
 
-    public OrderParser(PassListFactory passListFactory) {
+    public OrderMapper(PassListFactory passListFactory) {
         this.passListFactory = passListFactory;
     }
 

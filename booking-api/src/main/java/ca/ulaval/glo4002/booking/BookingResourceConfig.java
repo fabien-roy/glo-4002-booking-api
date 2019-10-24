@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.parsers.OrderParser;
+import ca.ulaval.glo4002.booking.parsers.OrderMapper;
 import ca.ulaval.glo4002.booking.parsers.PassListFactory;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
@@ -23,7 +23,7 @@ public class BookingResourceConfig extends ResourceConfig {
 
     OrderService orderService;
 
-    OrderParser orderParser;
+    OrderMapper orderMapper;
 
     OrderController orderController;
 
@@ -59,11 +59,11 @@ public class BookingResourceConfig extends ResourceConfig {
     }
 
     private void setUpServices() {
-        orderService = new OrderService(orderRepository, orderFactory, orderParser);
+        orderService = new OrderService(orderRepository, orderFactory, orderMapper);
     }
 
     private void setUpParser() {
-        orderParser = new OrderParser(passListFactory);
+        orderMapper = new OrderMapper(passListFactory);
     }
 
     private void setUpControllers() {

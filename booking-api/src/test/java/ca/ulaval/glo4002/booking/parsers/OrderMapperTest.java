@@ -16,9 +16,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class OrderParserTest {
+class OrderMapperTest {
 
-    private OrderParser subject;
+    private OrderMapper subject;
     private PassListFactory passListFactory;
     private OrderNumber orderNumber;
     private Order order;
@@ -26,7 +26,7 @@ class OrderParserTest {
     @BeforeEach
     void setUpSubject() {
         passListFactory = mock(PassListFactory.class);
-        subject = new OrderParser(passListFactory);
+        subject = new OrderMapper(passListFactory);
     }
 
     @BeforeEach

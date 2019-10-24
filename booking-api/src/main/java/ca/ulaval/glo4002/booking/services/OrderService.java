@@ -4,19 +4,19 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
-import ca.ulaval.glo4002.booking.parsers.OrderParser;
+import ca.ulaval.glo4002.booking.parsers.OrderMapper;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 
 public class OrderService {
 
     private OrderRepository repository;
     private OrderFactory factory;
-    private OrderParser parser;
+    private OrderMapper mapper;
 
-    public OrderService(OrderRepository repository, OrderFactory factory, OrderParser parser) {
+    public OrderService(OrderRepository repository, OrderFactory factory, OrderMapper mapper) {
         this.repository = repository;
         this.factory = factory;
-        this.parser = parser;
+        this.mapper = mapper;
     }
 
     public OrderWithPassesAsPassesDto order(OrderWithPassesAsEventDatesDto orderDto) {
@@ -24,7 +24,7 @@ public class OrderService {
 
         repository.addOrder(order);
 
-        return parser.toDto(order);
+        return mapper.toDto(order);
     }
 
     // TODO getByOrderNumber
