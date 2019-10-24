@@ -6,12 +6,15 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 
 import java.util.Optional;
 
+// TODO : Have an interface for each repository : OrderRepository
+// TODO : Rename InMemoryOrderRepository
 public class OrderRepository {
 
+    // TODO : Remove Daos, use list directly in repository
     private OrderDao dao;
     private PassRepository passRepository;
 
-    OrderRepository(OrderDao dao, PassRepository passRepository) {
+    public OrderRepository(OrderDao dao, PassRepository passRepository) {
         this.dao = dao;
         this.passRepository = passRepository;
     }

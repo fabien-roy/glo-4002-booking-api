@@ -16,6 +16,7 @@ public class OrderDate {
     public OrderDate(String value) {
         LocalDateTime newValue;
 
+        // TODO : This parsing should be nearer to UI (parser?)
         try {
             newValue = ZonedDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
         } catch (Exception exception) {

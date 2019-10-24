@@ -3,11 +3,12 @@ package ca.ulaval.glo4002.booking.repositories;
 import ca.ulaval.glo4002.booking.dao.PassDao;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 
-class PassRepository {
+// TODO : Rendered useless, since passNumber will be generated elsewhere
+public class PassRepository {
 
     private PassDao dao;
 
-    PassRepository(PassDao dao) {
+    public PassRepository(PassDao dao) {
         this.dao = dao;
     }
 

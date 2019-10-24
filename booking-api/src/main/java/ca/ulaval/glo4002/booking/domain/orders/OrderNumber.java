@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatExcep
 
 public class OrderNumber {
 
+    // TODO : Long in OrderNumber should not come from Dao
     private Id id;
     private String vendorCode;
 

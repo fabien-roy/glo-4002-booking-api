@@ -12,11 +12,12 @@ import java.util.List;
 
 // TODO : ACP : Should DTOs handle their creation with an Order?
 
+// TODO : Parser = Mapper
 public class OrderParser {
 
     private PassListParser passListParser;
 
-    OrderParser(PassListParser passListParser) {
+    public OrderParser(PassListParser passListParser) {
         this.passListParser = passListParser;
     }
 

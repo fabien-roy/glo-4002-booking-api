@@ -14,11 +14,11 @@ import ca.ulaval.glo4002.booking.factories.PassFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-class PassListParser {
+public class PassListParser {
 
     private PassFactory passFactory;
 
-    PassListParser(PassFactory passFactory) {
+    public PassListParser(PassFactory passFactory) {
         this.passFactory = passFactory;
     }
 

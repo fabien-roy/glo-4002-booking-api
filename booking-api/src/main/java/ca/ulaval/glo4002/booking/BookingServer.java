@@ -16,7 +16,7 @@ public class BookingServer implements Runnable {
     public void run() {
         Server server = new Server(PORT);
         ServletContextHandler contextHandler = new ServletContextHandler(server, "/");
-        ResourceConfig packageConfig = new ResourceConfig().packages("ca.ulaval.glo4002.booking");
+        ResourceConfig packageConfig = new BookingResourceConfig();
         ServletContainer container = new ServletContainer(packageConfig);
         ServletHolder servletHolder = new ServletHolder(container);
 
@@ -32,3 +32,4 @@ public class BookingServer implements Runnable {
         }
     }
 }
+
