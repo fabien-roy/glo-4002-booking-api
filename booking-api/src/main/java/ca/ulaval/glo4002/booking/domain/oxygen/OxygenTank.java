@@ -27,6 +27,10 @@ public class OxygenTank {
 	}
 
 	private void setMoney() {
+		this.totalPrice = this.calculateMoney();
+	}
+
+	private Money calculateMoney() {
 		// TO DO adapt & set
 		/*
 		 * Double pricePerUnit = category.getProduction().getPricePerUnit(); Long
@@ -35,13 +39,19 @@ public class OxygenTank {
 		 * 
 		 * return (pricePerUnit * producedUnit) / producedTank;
 		 */
+		return null;
 	}
 
 	private void setReadyDate() {
+		this.readyDate = this.calculateReadyDate();
+	}
+
+	private OxygenDate calculateReadyDate() {
 		/*
 		 * TODO adapt
 		 * requestDate.plusDays(category.getProduction().getProductionTime().toDays());
 		 */
+		return null;
 	}
 
 	public Long getId() {
@@ -62,9 +72,5 @@ public class OxygenTank {
 
 	public Money getMoney() {
 		return this.totalPrice;
-	}
-
-	private void calculateReadyDate() {
-
 	}
 }

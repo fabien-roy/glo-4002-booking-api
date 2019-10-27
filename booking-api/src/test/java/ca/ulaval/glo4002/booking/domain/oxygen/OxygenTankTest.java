@@ -15,12 +15,12 @@ class OxygenTankTest {
 	}
 
 	@Test
-	void getCategoryOxygenCategoryA_shouldReturnCategoryB() {
+	void getCategoryOxygenCategoryB_shouldReturnCategoryB() {
 		// TODO THIS TEST
 	}
 
 	@Test
-	void getCategoryOxygenCategoryA_shouldReturnCategoryE() {
+	void getCategoryOxygenCategoryE_shouldReturnCategoryE() {
 		// TODO THIS TEST
 	}
 
