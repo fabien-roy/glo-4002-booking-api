@@ -8,8 +8,8 @@ import ca.ulaval.glo4002.booking.exceptions.shuttles.InvalidShuttleCategoryExcep
 public enum ShuttleCategories {
 	
 	ETSPACESHIP("ETSpaceship"),
-	SUPERGIANT("Supergiant"),
-	NEBULA("Nebula");
+	MILLENIUMFALCON("Millenium Falcon"),
+	SPACEX("Space X");
 	
 	private String category;
 	private static final Map<String, ShuttleCategories> lookup = new HashMap<>();
