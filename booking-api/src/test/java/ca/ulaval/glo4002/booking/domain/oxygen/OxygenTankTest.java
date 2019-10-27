@@ -13,10 +13,10 @@ import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
 class OxygenTankTest {
 
-	OxygenTank oxygenA;
-	OxygenTank oxygenB;
-	OxygenTank oxygenE;
-	OxygenDate requestDate;
+	private OxygenTank oxygenA;
+	private OxygenTank oxygenB;
+	private OxygenTank oxygenE;
+	private OxygenDate requestDate;
 
 	@BeforeEach
 	void initTest() {
