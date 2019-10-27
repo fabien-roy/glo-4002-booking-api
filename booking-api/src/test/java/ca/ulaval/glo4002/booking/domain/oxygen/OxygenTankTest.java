@@ -2,11 +2,13 @@ package ca.ulaval.glo4002.booking.domain.oxygen;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
 class OxygenTankTest {
@@ -67,17 +69,26 @@ class OxygenTankTest {
 
 	@Test
 	void getMoneyOfOxygenCategoryA_shouldReturnMoneyBigDecimal1950() {
-		// TODO THIS TEST
+		BigDecimal tankPrice = new BigDecimal(1950);
+		Money expectedMoney = new Money(tankPrice);
+
+		assertEquals(expectedMoney, this.oxygenA.getMoney());
 	}
 
 	@Test
 	void getMoneyOfOxygenCategoryB_shouldReturnMoneyBigDecimal1600() {
-		// TODO THIS TEST
+		BigDecimal tankPrice = new BigDecimal(1600);
+		Money expectedMoney = new Money(tankPrice);
+
+		assertEquals(expectedMoney, this.oxygenB.getMoney());
 	}
 
 	@Test
 	void getMoneyOfOxygenCategoryE_shouldReturnMoneyBigDecimal5000() {
-		// TODO THIS TEST
+		BigDecimal tankPrice = new BigDecimal(5000);
+		Money expectedMoney = new Money(tankPrice);
+
+		assertEquals(expectedMoney, this.oxygenE.getMoney());
 	}
 
 }
