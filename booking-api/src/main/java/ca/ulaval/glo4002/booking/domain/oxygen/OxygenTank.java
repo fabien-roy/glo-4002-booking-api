@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domain;
+package ca.ulaval.glo4002.booking.domain.oxygen;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domain;
+package ca.ulaval.glo4002.booking.domain.oxygen;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,8 +18,8 @@ public class OxygenDate {
 			throw new genericException(error);
 		}
 	}
-	
-	//TODO : Refactor
+
+	// TODO : Refactor
 	public OxygenDate(LocalDate date) {
 		this.date = date.atStartOfDay();
 	}
