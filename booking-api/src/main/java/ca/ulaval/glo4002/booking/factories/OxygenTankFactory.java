@@ -2,10 +2,7 @@ package ca.ulaval.glo4002.booking.factories;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import com.sun.enterprise.module.bootstrap.BootException;
 
 import ca.ulaval.glo4002.booking.domain.OxygenDate;
 import ca.ulaval.glo4002.booking.domain.OxygenTank;
@@ -17,60 +14,85 @@ public class OxygenTankFactory {
 	private OxygenTankInventory inventory;
 	
 	private static final LocalDate START_OF_FESTIVAL_DATE = LocalDate.of(2050, 07, 17);
-	private static final OxygenTankCategory[] categories = OxygenTankCategory.values();
-	
+	private static final Integer CATEGORY_A_CREATION_NUMBER = 5;
+	private static final Integer CATEGORY_B_CREATION_NUMBER = 3;
+	private static final Integer CATEGORY_E_CREATION_NUMBER = 1;
+
 	public OxygenTankFactory(OxygenTankInventory inventory) {
 		this.inventory = inventory;
 	}
-	
-	// TODO : Maybe refactor this because it's really ugly and missign the part where we create tank in bundle for grade A and grade B
-    public List<OxygenTank> buildOxygenTankByCategory(OxygenTankCategory category, LocalDate requestDate, Long numberOfDays) throws BootException {
-    	if(requestDate.isAfter(START_OF_FESTIVAL_DATE)) throw new BootException("Error trying to book after start of festival");
-    	
-    	List<OxygenTank> createdTanks = new ArrayList<>();
-    	
-    	Integer quantityToCover = 0;
-        
-    	if(category == OxygenTankCategory.CATEGORY_E) {
-    		quantityToCover = Math.toIntExact(numberOfDays * 5);
-        } else {
-        	quantityToCover = Math.toIntExact(numberOfDays * 3);
-        }
-    	
-    	quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
-    
-    	if(quantityToCover > 0) {
-    		OxygenTankCategory categoryForDate = getCategoryForRequestDate(category, requestDate);
-    		if(category == categoryForDate) {
-    			for(int i = 0; i < quantityToCover; i++) {
-    				createdTanks.add(new OxygenTank(categoryForDate, new OxygenDate(requestDate)));
-    			}
-    		} else {
-    			quantityToCover = inventory.requestTankByCategory(categoryForDate, quantityToCover);
-    			
-    			if(quantityToCover > 0) {
-    				for(int i = 0; i < quantityToCover; i++) {
-    					createdTanks.add(new OxygenTank(categoryForDate, new OxygenDate(requestDate)));
-    				}
-    			}
-    		}	
-    	}
-    	
-    	return createdTanks;
-    }
 
-    // TODO : Refactor needed
-	private OxygenTankCategory getCategoryForRequestDate(OxygenTankCategory category, LocalDate requestDate) {
+	public List<OxygenTank> buildOxygenTank(OxygenTankCategory category, LocalDate requestDate, Long numberOfDays) {
+		List<OxygenTank> newTanks = new ArrayList<>();
+		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
+
+		quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
+		OxygenTankCategory possibleCategory = getCategoryForRequestDate(category, requestDate);
+
+		if(possibleCategory != category) {
+			quantityToCover = checkInventory(category, possibleCategory, quantityToCover);
+		}
+
+		Integer numberOfTanksByBundle = getNumberOfTanksByCategoryForCreation(possibleCategory);
+		OxygenDate requestedDate = new OxygenDate(requestDate);
+
+		while(quantityToCover > 0) {
+			for(Integer i = 0; i < numberOfTanksByBundle; i++) {
+				newTanks.add(new OxygenTank(possibleCategory, requestedDate));
+			}
+			quantityToCover -= numberOfTanksByBundle;
+		}
+
+		// TODO : add in inventory from the factory  or from somewhere else?
+		return newTanks;
+	}
+
+	private Integer checkInventory(OxygenTankCategory category, OxygenTankCategory possibleCategory, Integer quantityToCover) {
 		if(category == OxygenTankCategory.CATEGORY_A) {
-			if(requestDate.plusDays(20).isBefore(START_OF_FESTIVAL_DATE.plusDays(1))) {
+			quantityToCover = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, quantityToCover);
+			if(possibleCategory == OxygenTankCategory.CATEGORY_E) {
+				quantityToCover = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_E, quantityToCover);
+			}
+		} else if(category == OxygenTankCategory.CATEGORY_B) {
+			quantityToCover = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_E, quantityToCover);
+		}
+
+		return quantityToCover;
+	}
+
+	// TODO : Switch case ? and no object member all in the method?
+	private Integer getNumberOfTanksByCategoryForCreation(OxygenTankCategory category) {
+		if(category == OxygenTankCategory.CATEGORY_A) {
+			return CATEGORY_A_CREATION_NUMBER;
+		} else if(category == OxygenTankCategory.CATEGORY_B) {
+			return CATEGORY_B_CREATION_NUMBER;
+		} else {
+			return CATEGORY_E_CREATION_NUMBER;
+		}
+	}
+
+	private Integer getQuantityToCoverForOrderCategory(OxygenTankCategory category, Long numberOfDays) {
+		if(category == OxygenTankCategory.CATEGORY_E) {
+			return (int) (numberOfDays * 5);
+		} else {
+			return (int) (numberOfDays * 3);
+		}
+	}
+
+    // TODO : Refactor needed seem too complexe
+	private OxygenTankCategory getCategoryForRequestDate(OxygenTankCategory category, LocalDate requestDate) {
+		LocalDate readyBeforeDate = START_OF_FESTIVAL_DATE.plusDays(1);
+
+		if(category == OxygenTankCategory.CATEGORY_A) {
+			if(requestDate.plusDays(20).isBefore(readyBeforeDate)) {
 				return OxygenTankCategory.CATEGORY_A;
-			} else if (requestDate.plusDays(10).isBefore(START_OF_FESTIVAL_DATE.plusDays(1))) {
+			} else if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
 				return OxygenTankCategory.CATEGORY_B;
 			} else {
 				return OxygenTankCategory.CATEGORY_E;
 			}
 		} else if(category == OxygenTankCategory.CATEGORY_B) {
-			if(requestDate.plusDays(10).isBefore(START_OF_FESTIVAL_DATE.plusDays(1))) {
+			if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
 				return OxygenTankCategory.CATEGORY_B;
 			} else {
 				return OxygenTankCategory.CATEGORY_E;
@@ -79,4 +101,5 @@ public class OxygenTankFactory {
 			return OxygenTankCategory.CATEGORY_E;
 		}
 	}
+
 }

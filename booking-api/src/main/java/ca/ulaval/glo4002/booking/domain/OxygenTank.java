@@ -18,6 +18,7 @@ public class OxygenTank {
 		this.setReadyDate();
 	}
 
+	// TODO : generate an new ID ?
 	public OxygenTank(OxygenTankCategory category, OxygenDate requestDate) {
 		this.category = category;
 		this.requestDate = requestDate;
