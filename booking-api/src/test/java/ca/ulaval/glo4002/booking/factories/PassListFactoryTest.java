@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;

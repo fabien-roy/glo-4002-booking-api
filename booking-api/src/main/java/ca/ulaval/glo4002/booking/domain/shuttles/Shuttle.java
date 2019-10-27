@@ -16,5 +16,9 @@ public class Shuttle {
 		this.price = price;
 	}
 	
+	public String getShuttleName() {
+		return category.toString();
+	}
+	
 	
 }

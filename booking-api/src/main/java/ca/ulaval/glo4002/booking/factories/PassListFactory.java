@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
