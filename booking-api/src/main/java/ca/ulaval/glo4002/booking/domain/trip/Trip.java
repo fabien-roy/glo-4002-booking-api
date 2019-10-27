@@ -37,5 +37,17 @@ public class Trip {
 		
 		return passNumbers;
 	}
+	
+	public void addPassenger(Passenger passenger) {
+		if (!shuttleIsFull()) {
+			passengers.add(passenger);
+		} else {
+			//TODO what do we do else
+		}
+	}
+	
+	private boolean shuttleIsFull() {
+		return shuttle.getMaxPassengersCapacity() > passengers.size();
+	}
 
 }

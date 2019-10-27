@@ -20,5 +20,7 @@ public class Shuttle {
 		return category.toString();
 	}
 	
-	
+	public Integer getMaxPassengersCapacity() {
+		return maxCapacity.getNumberOfPeople();
+	}
 }

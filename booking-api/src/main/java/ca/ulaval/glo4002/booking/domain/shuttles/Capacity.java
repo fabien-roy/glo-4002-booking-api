@@ -7,5 +7,9 @@ public class Capacity {
 	public Capacity(Integer numberOfPeople) {
 		this.numberOfPeople = numberOfPeople;
 	}
+	
+	public Integer getNumberOfPeople() {
+		return numberOfPeople;
+	}
 
 }

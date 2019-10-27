@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.shuttles.Capacity;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class ShuttleFactory {
@@ -18,14 +19,14 @@ public class ShuttleFactory {
 	private static final Capacity SPACEX_CAPACITY = new Capacity(30);
 	private static final Money SPACEX_PRICE = new Money(new BigDecimal(30000));
 	
-	public Shuttle buildShuttle(ShuttleCategories category) {
+	public Shuttle buildShuttleByPassCategory(PassCategories category) {
 		switch(category) {
-		case ETSPACESHIP:
+		case SUPERNOVA:
 			return new Shuttle(ShuttleCategories.ETSPACESHIP, ETSPACESHIP_CAPACITY, ETSPACESHIP_PRICE);
 		default:
-		case MILLENIUMFALCON:
+		case SUPERGIANT:
 			return new Shuttle(ShuttleCategories.MILLENIUMFALCON, MILLENIUMFALCON_CAPACITY, MILLENIUMFALCON_PRICE);
-		case SPACEX:
+		case NEBULA:
 			return new Shuttle(ShuttleCategories.SPACEX, SPACEX_CAPACITY, SPACEX_PRICE);
 		}
 	}
