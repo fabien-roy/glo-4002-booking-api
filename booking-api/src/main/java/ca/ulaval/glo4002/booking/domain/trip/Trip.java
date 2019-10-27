@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.domain.Number;
 
 public class Trip {
 	
@@ -30,7 +31,9 @@ public class Trip {
 	public List<Number> getPassengersPassNumbers() {
 		List<Number> passNumbers = new ArrayList<>();
 		
-		passengers.stream().map(Passenger::getPassNumber).forEach(number -> passNumbers.add(number));
+		passengers.stream()
+		.map(Passenger::getPassNumber)
+		.forEach(passNumbers::add);
 		
 		return passNumbers;
 	}

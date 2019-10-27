@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.trip;
 
+import ca.ulaval.glo4002.booking.domain.Number;
+
 public class Passenger {
 	
 	private Number passNumber;
