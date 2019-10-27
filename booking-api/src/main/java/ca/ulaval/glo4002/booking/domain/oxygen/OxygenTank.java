@@ -47,11 +47,13 @@ public class OxygenTank {
 	}
 
 	private OxygenDate calculateReadyDate() {
-		/*
-		 * TODO adapt
-		 * requestDate.plusDays(category.getProduction().getProductionTime().toDays());
-		 */
-		return null;
+		OxygenDate readyDate = this.requestDate;
+		if (this.category == OxygenTankCategory.CATEGORY_A) {
+			readyDate.addDays(20L);
+		} else if (this.category == OxygenTankCategory.CATEGORY_B) {
+			readyDate.addDays(10L);
+		}
+		return readyDate;
 	}
 
 	public Long getId() {

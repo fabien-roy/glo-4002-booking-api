@@ -39,4 +39,16 @@ class OxygenDateTest {
 		assertEquals(expectedValue.atStartOfDay(), subject.getDate());
 	}
 
+	@Test
+	public void add10Days_shouldReturnDate10DaysLater() {
+		LocalDate beginningDate = LocalDate.of(2050, 7, 1);
+		LocalDateTime expectedDate = beginningDate.atStartOfDay();
+		expectedDate = expectedDate.plusDays(10);
+
+		OxygenDate subject = new OxygenDate(beginningDate);
+		subject.addDays(10L);
+
+		assertEquals(expectedDate, subject.getDate());
+	}
+
 }
