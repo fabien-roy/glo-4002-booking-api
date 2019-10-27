@@ -1,19 +1,15 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.parsers.OrderParser;
-import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,23 +20,19 @@ class OrderControllerTest {
 
     private OrderController subject;
     private OrderService service;
-    private OrderParser parser;
-    private OrderRepository repository;
 
     @BeforeEach
     void setUpSubject() {
         service = mock(OrderService.class);
-        parser = mock(OrderParser.class);
-        repository = mock(OrderRepository.class);
 
-        subject = new OrderController(service, repository, parser);
+        subject = new OrderController(service);
     }
 
     // TODO : ACP : Controllers must throw correct http status and error dto
     @Test
     void getByOrderNumber_shouldReturnNotFound_whenOrderIsNotFound() {
         String aOrderNumber = "aOrderNumber";
-        when(repository.getById(any())).thenThrow(new OrderNotFoundException(aOrderNumber));
+        when(service.getByOrderNumber(any())).thenThrow(new OrderNotFoundException(aOrderNumber));
 
         ResponseEntity<?> response = subject.getByOrderNumber(aOrderNumber);
 
@@ -50,7 +42,7 @@ class OrderControllerTest {
     @Test
     void getByOrderNumber_shouldReturnOk() {
         String aOrderNumber = "VENDOR-123";
-        when(repository.getById(any())).thenReturn(Optional.of(mock(Order.class)));
+        when(service.getByOrderNumber(any())).thenReturn(mock(OrderWithPassesAsPassesDto.class));
 
         ResponseEntity<?> response = subject.getByOrderNumber(aOrderNumber);
 
@@ -71,9 +63,8 @@ class OrderControllerTest {
     @Test
     void addOrder_shouldReturnCreated() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        Order aOrder = mock(Order.class);
-        when(aOrder.getOrderNumber()).thenReturn("TEAM-123");
-        when(service.order(any())).thenReturn(aOrder);
+        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
+        when(service.order(any())).thenReturn(expectedOrderDto);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 
@@ -83,15 +74,15 @@ class OrderControllerTest {
     @Test
     void addOrder_shouldReturnLocationHeaders() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        Order aOrder = mock(Order.class);
-        String aOrderNumber = "TEAM-123";
-        when(aOrder.getOrderNumber()).thenReturn(aOrderNumber);
-        when(service.order(any())).thenReturn(aOrder);
+        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
+        String expectedOrderNumber = "expectedOrderNumber";
+        when(expectedOrderDto.getOrderNumber()).thenReturn(expectedOrderNumber);
+        when(service.order(any())).thenReturn(expectedOrderDto);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 
         assertNotNull(response.getHeaders());
         assertEquals(1, response.getHeaders().get(HttpHeaders.LOCATION).size());
-        assertEquals("/orders/" + aOrderNumber, response.getHeaders().get(HttpHeaders.LOCATION).get(0));
+        assertEquals("/orders/" + expectedOrderNumber, response.getHeaders().get(HttpHeaders.LOCATION).get(0));
     }
 }

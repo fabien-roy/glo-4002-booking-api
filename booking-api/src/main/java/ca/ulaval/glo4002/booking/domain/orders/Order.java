@@ -1,47 +1,33 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.domain.*;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Order {
 
     private OrderNumber orderNumber;
-    private OrderDate orderDate;
+    private LocalDateTime orderDate;
     private PassList passList;
 
-    // TODO : Only used by tests...
-    public Order(Id id) {
-        this.orderNumber = new OrderNumber(id, null);
-        this.passList = new PassList();
-    }
-
-    public Order(String vendorCode, OrderDate orderDate, PassList passList) {
-        this.orderNumber = new OrderNumber(null, vendorCode);
+    public Order(OrderNumber orderNumber, LocalDateTime orderDate, PassList passList) {
+        this.orderNumber = orderNumber;
         this.orderDate = orderDate;
         this.passList = passList;
     }
 
-    public Id getId() {
-        return orderNumber.getId();
-    }
-
-    public void setId(Id id) {
-        orderNumber.setId(id);
-    }
-
-    public String getOrderNumber() {
-        return orderNumber.getOrderNumber();
+    public OrderNumber getOrderNumber() {
+        return orderNumber;
     }
 
     public String getVendorCode() {
         return orderNumber.getVendorCode();
     }
 
-    public OrderDate getOrderDate() {
+    public LocalDateTime getOrderDate() {
         return orderDate;
     }
 

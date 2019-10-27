@@ -89,28 +89,16 @@
 		    <version>2.1.10.RELEASE</version>
 		</dependency>
 
-        <!-- TODO : Probably not going to need hivernate -->
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-annotations</artifactId>
-		    <version>3.5.6-Final</version>
-		</dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.0.Final</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>byte-buddy</artifactId>
-                    <groupId>net.bytebuddy</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.28.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.2.Final</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

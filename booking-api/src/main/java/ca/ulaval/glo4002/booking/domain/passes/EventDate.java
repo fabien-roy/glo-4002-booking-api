@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
-import ca.ulaval.glo4002.booking.exceptions.passes.InvalidEventDateFormatException;
 import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException;
 
 import java.time.LocalDate;
@@ -15,20 +14,6 @@ public class EventDate {
         validateEventDate(value);
 
         this.value = value;
-    }
-
-    public EventDate(String value) {
-        LocalDate newValue;
-
-        try {
-            newValue = LocalDate.parse(value);
-        } catch (Exception exception) {
-            throw new InvalidEventDateFormatException();
-        }
-
-        validateEventDate(newValue);
-
-        this.value = newValue;
     }
 
     public LocalDate getValue() {

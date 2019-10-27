@@ -1,34 +1,13 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
-import ca.ulaval.glo4002.booking.exceptions.passes.InvalidEventDateFormatException;
 import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EventDateTest {
-
-    @Test
-    void constructing_shouldSetCorrectValue() {
-        LocalDate expectedValue  = EventDate.START_DATE.plusDays(1);
-
-        EventDate subject = new EventDate(expectedValue);
-
-        assertEquals(expectedValue, subject.getValue());
-    }
-
-    @Test
-    void constructing_shouldThrowInvalidEventDateException_whenEventDateIsInvalid() {
-        String anInvalidEventDate = "anInvalidDate";
-
-        assertThrows(
-                InvalidEventDateFormatException.class,
-                () -> new EventDate(anInvalidEventDate)
-        );
-    }
 
     @Test
     void constructing_shouldThrowOutOfBoundsEventDateException_whenEventDateIsUnderBounds() {
