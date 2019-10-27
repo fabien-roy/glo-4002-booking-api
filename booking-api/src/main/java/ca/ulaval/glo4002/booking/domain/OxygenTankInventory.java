@@ -7,8 +7,6 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO : modify Map<OxygenTankCategory, Long> notInUseTanks; AND Map<OxygenTankCategory, Long> inUseTanks;
-// to Map<OxygenTankCategory, List<OxygenTank>> notInUseTanks AND Map<OxygenTankCategory, List<OxygenTank>> inUseTanks;
 public class OxygenTankInventory {
 
     private Map<OxygenTankCategory, List<OxygenTank>> notInUseTanks;

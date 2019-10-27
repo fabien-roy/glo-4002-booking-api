@@ -10,12 +10,11 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class OxygenTankInventoryTest {
 
     private OxygenTankInventory inventory;
-    OxygenTankInventory emptyInventory;
+    private OxygenTankInventory emptyInventory;
 
     private OxygenTank mockedTankCategoryA;
     private OxygenTank mockedTankCategoryB;
