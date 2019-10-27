@@ -32,4 +32,8 @@ public class OxygenDate {
 	public void addDays(Long numberOfDays) {
 		this.date = date.plusDays(numberOfDays);
 	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
 }
