@@ -38,7 +38,7 @@ public class OxygenTankFactoryTest {
 	void build_shouldReturnEmptyList_whenCategoryIsNebulaButReserveCanCoverAllTanksNeeded() throws BootException {
 		Long numberOfDays = 1L;
 		OxygenTankCategory category = OxygenTankCategory.CATEGORY_A;
-		when(inventory.requestTankByCategory(category, 3L)).thenReturn(0L);
+		when(inventory.requestTankByCategory(category, 3)).thenReturn(0);
 		
 		createdTanks = factory.buildOxygenTankByCategory(category, START_OF_FESTIVAL_DATE, numberOfDays);
 		
@@ -50,7 +50,7 @@ public class OxygenTankFactoryTest {
 	void build_shouldReturnEmptyList_whenCategoryIsSupergiantButReserveCanCoverAllTanksNeeded() throws BootException {
 		Long numberOfDays = 1L;
 		OxygenTankCategory category = OxygenTankCategory.CATEGORY_B;
-		when(inventory.requestTankByCategory(category, 3L)).thenReturn(0L);
+		when(inventory.requestTankByCategory(category, 3)).thenReturn(0);
 		
 		createdTanks = factory.buildOxygenTankByCategory(category, START_OF_FESTIVAL_DATE, numberOfDays);
 		
@@ -62,7 +62,7 @@ public class OxygenTankFactoryTest {
 	void build_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() throws BootException {
 		Long numberOfDays = 1L;
 		OxygenTankCategory category = OxygenTankCategory.CATEGORY_E;
-		when(inventory.requestTankByCategory(category, 3L)).thenReturn(0L);
+		when(inventory.requestTankByCategory(category, 3)).thenReturn(0);
 		
 		createdTanks = factory.buildOxygenTankByCategory(category, START_OF_FESTIVAL_DATE, numberOfDays);
 		
@@ -74,7 +74,7 @@ public class OxygenTankFactoryTest {
     	Long numberOfDays = 1L;
     	OxygenTankCategory category = OxygenTankCategory.CATEGORY_A;
     	LocalDate requestDate = START_OF_FESTIVAL_DATE.minusDays(21);
-    	when(inventory.requestTankByCategory(category, 3L)).thenReturn(3L);
+    	when(inventory.requestTankByCategory(category, 3)).thenReturn(3);
     	
     	createdTanks = factory.buildOxygenTankByCategory(category, requestDate, numberOfDays);
     	
@@ -86,8 +86,8 @@ public class OxygenTankFactoryTest {
     	Long numberOfDays = 1L;
     	OxygenTankCategory category = OxygenTankCategory.CATEGORY_A;
     	LocalDate requestDate = START_OF_FESTIVAL_DATE.minusDays(15);
-    	when(inventory.requestTankByCategory(category, 3L)).thenReturn(2L);
-    	when(inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, 2L)).thenReturn(0L);
+    	when(inventory.requestTankByCategory(category, 3)).thenReturn(2);
+    	when(inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, 2)).thenReturn(0);
     	
     	createdTanks = factory.buildOxygenTankByCategory(category, requestDate, numberOfDays);
     	
@@ -99,8 +99,8 @@ public class OxygenTankFactoryTest {
     	Long numberOfDays = 1L;
     	OxygenTankCategory category = OxygenTankCategory.CATEGORY_A;
     	LocalDate requestDate = START_OF_FESTIVAL_DATE.minusDays(15);
-    	when(inventory.requestTankByCategory(category, 3L)).thenReturn(2L);
-    	when(inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, 2L)).thenReturn(2L);
+    	when(inventory.requestTankByCategory(category, 3)).thenReturn(2);
+    	when(inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, 2)).thenReturn(2);
     	
     	createdTanks = factory.buildOxygenTankByCategory(category, requestDate, numberOfDays);
     	

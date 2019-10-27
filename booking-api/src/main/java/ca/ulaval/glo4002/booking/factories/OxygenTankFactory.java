@@ -29,12 +29,12 @@ public class OxygenTankFactory {
     	
     	List<OxygenTank> createdTanks = new ArrayList<>();
     	
-    	Long quantityToCover = 0L;
+    	Integer quantityToCover = 0;
         
     	if(category == OxygenTankCategory.CATEGORY_E) {
-    		quantityToCover = numberOfDays * 5;
+    		quantityToCover = Math.toIntExact(numberOfDays * 5);
         } else {
-        	quantityToCover = numberOfDays * 3;
+        	quantityToCover = Math.toIntExact(numberOfDays * 3);
         }
     	
     	quantityToCover = inventory.requestTankByCategory(category, quantityToCover);

@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.booking.domain.money;
 
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.money.AmountDiscount;
-
 import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

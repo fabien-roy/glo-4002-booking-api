@@ -2,56 +2,65 @@ package ca.ulaval.glo4002.booking.domain;
 
 import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 // TODO : modify Map<OxygenTankCategory, Long> notInUseTanks; AND Map<OxygenTankCategory, Long> inUseTanks;
 // to Map<OxygenTankCategory, List<OxygenTank>> notInUseTanks AND Map<OxygenTankCategory, List<OxygenTank>> inUseTanks;
 public class OxygenTankInventory {
 
-    private Map<OxygenTankCategory, Long> notInUseTanks;
-    private Map<OxygenTankCategory, Long> inUseTanks;
+    private Map<OxygenTankCategory, List<OxygenTank>> notInUseTanks;
+    private Map<OxygenTankCategory, List<OxygenTank>> inUseTanks;
 
     public OxygenTankInventory() {
         this.notInUseTanks = new EnumMap<>(OxygenTankCategory.class);
         this.inUseTanks = new EnumMap<>(OxygenTankCategory.class);
 
-        notInUseTanks.put(OxygenTankCategory.CATEGORY_A, 0L);
-        notInUseTanks.put(OxygenTankCategory.CATEGORY_B, 0L);
-        notInUseTanks.put(OxygenTankCategory.CATEGORY_E, 0L);
+        notInUseTanks.put(OxygenTankCategory.CATEGORY_A, new ArrayList<OxygenTank>());
+        notInUseTanks.put(OxygenTankCategory.CATEGORY_B, new ArrayList<OxygenTank>());
+        notInUseTanks.put(OxygenTankCategory.CATEGORY_E, new ArrayList<OxygenTank>());
 
-        inUseTanks.put(OxygenTankCategory.CATEGORY_A, 0L);
-        inUseTanks.put(OxygenTankCategory.CATEGORY_B, 0L);
-        inUseTanks.put(OxygenTankCategory.CATEGORY_E, 0L);
+        inUseTanks.put(OxygenTankCategory.CATEGORY_A, new ArrayList<OxygenTank>());
+        inUseTanks.put(OxygenTankCategory.CATEGORY_B, new ArrayList<OxygenTank>());
+        inUseTanks.put(OxygenTankCategory.CATEGORY_E, new ArrayList<OxygenTank>());
     }
 
-    public Long getNotInUseQuantityByCategory(OxygenTankCategory category) {
+    // TODO : not sure if needed
+    public List<OxygenTank> getNotInUseByCategory(OxygenTankCategory category) {
         return notInUseTanks.get(category);
     }
 
-    public Long getInUseQuantityByCategory(OxygenTankCategory category) {
+    // TODO : not sure if needed
+    public List<OxygenTank> getInUseByCategory(OxygenTankCategory category) {
         return inUseTanks.get(category);
     }
 
-    public void addTankToInventory(OxygenTankCategory category, Long quantity) {
-        Long currentQuantity = notInUseTanks.get(category);
-
-        notInUseTanks.replace(category, currentQuantity + quantity);
+    // TODO : not sure if needed, used in test
+    public Integer getNotInUseQuantityByCategory(OxygenTankCategory category) {
+        return notInUseTanks.get(category).size();
     }
 
-    public Long requestTankByCategory(OxygenTankCategory category, Long quantity) {
-        Long currentNotInUseQuantity = notInUseTanks.get(category);
-        Long currentInUseQuantity = inUseTanks.get(category);
-        Long quantityStillNeeded = 0L;
+    // TODO : not sure if needed, used in test
+    public Integer getInUseQuantityByCategory(OxygenTankCategory category) {
+        return inUseTanks.get(category).size();
+    }
 
-        if(currentNotInUseQuantity >= quantity) {
-            notInUseTanks.replace(category, currentNotInUseQuantity - quantity);
-            inUseTanks.replace(category, currentInUseQuantity + quantity);
-        } else {
-            notInUseTanks.replace(category, 0L);
-            inUseTanks.replace(category, currentInUseQuantity + currentNotInUseQuantity);
-            quantityStillNeeded = Math.abs(currentNotInUseQuantity - quantity);
+    public void addTankToInventory(OxygenTankCategory category, List<OxygenTank> newTanks) {
+        notInUseTanks.get(category).addAll(newTanks);
+    }
+
+    public Integer requestTankByCategory(OxygenTankCategory category, Integer quantity) {
+        Integer quantityStillNeeded = quantity;
+        // TODO : Better name ?
+        List<OxygenTank> notInUseCategory = notInUseTanks.get(category);
+        List<OxygenTank> inUseCategory = inUseTanks.get(category);
+
+        while(notInUseCategory.size() > 0 && quantityStillNeeded > 0) {
+            inUseCategory.add(notInUseCategory.remove(notInUseCategory.size() - 1));
+
+            quantityStillNeeded--;
         }
 
         return quantityStillNeeded;

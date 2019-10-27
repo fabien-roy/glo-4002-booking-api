@@ -5,24 +5,37 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
 
+import java.util.Collections;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class OxygenTankInventoryTest {
 
     private OxygenTankInventory inventory;
     OxygenTankInventory emptyInventory;
 
-    private final Long CATEGORY_A_QUANTITY = 25L;
-    private final Long CATEGORY_B_QUANTITY = 12L;
-    private final Long CATEGORY_E_QUANTITY = 5L;
+    private OxygenTank mockedTankCategoryA;
+    private OxygenTank mockedTankCategoryB;
+    private OxygenTank mockedTankCategoryE;
+
+    private final Integer CATEGORY_A_QUANTITY = 25;
+    private final Integer CATEGORY_B_QUANTITY = 12;
+    private final Integer CATEGORY_E_QUANTITY = 5;
 
     @BeforeEach
     void setupOxygenTankInventory() {
         inventory = new OxygenTankInventory();
 
-        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_A, CATEGORY_A_QUANTITY);
-        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_B, CATEGORY_B_QUANTITY);
-        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_E, CATEGORY_E_QUANTITY);
+        mockedTankCategoryA = mock(OxygenTank.class);
+        mockedTankCategoryB = mock(OxygenTank.class);
+        mockedTankCategoryE = mock(OxygenTank.class);
+
+        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_A, Collections.nCopies(CATEGORY_A_QUANTITY, mockedTankCategoryA));
+        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_B, Collections.nCopies(CATEGORY_B_QUANTITY, mockedTankCategoryB));
+        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_E, Collections.nCopies(CATEGORY_E_QUANTITY, mockedTankCategoryE));
     }
 
     @Test
@@ -45,48 +58,48 @@ public class OxygenTankInventoryTest {
 
     @Test
     void addTankToInventory_updateNumberOfTankInNotInUse() {
-        Long addedQuantity = 5L;
+        Integer addedQuantity = 5;
 
-        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_A, addedQuantity);
-        Long currentQuantity = inventory.getNotInUseQuantityByCategory(OxygenTankCategory.CATEGORY_A);
+        inventory.addTankToInventory(OxygenTankCategory.CATEGORY_A, Collections.nCopies(addedQuantity, mockedTankCategoryA));
+        Integer currentQuantity = inventory.getNotInUseQuantityByCategory(OxygenTankCategory.CATEGORY_A);
 
         assertTrue(currentQuantity == CATEGORY_A_QUANTITY + addedQuantity);
     }
 
     @Test
     void requestTank_updateQuantityInUse() {
-        Long requestQuantity = 10L;
+        Integer requestQuantity = 10;
 
         inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, requestQuantity);
-        Long currentQuantity = inventory.getInUseQuantityByCategory(OxygenTankCategory.CATEGORY_B);
+        Integer currentQuantity = inventory.getInUseQuantityByCategory(OxygenTankCategory.CATEGORY_B);
 
         assertTrue(currentQuantity == requestQuantity);
     }
 
     @Test
     void requestTank_updateQuantityNotInUse() {
-        Long requestQuantity = 10L;
+        Integer requestQuantity = 10;
 
         inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_B, requestQuantity);
-        Long currentQuantity = inventory.getNotInUseQuantityByCategory(OxygenTankCategory.CATEGORY_B);
+        Integer currentQuantity = inventory.getNotInUseQuantityByCategory(OxygenTankCategory.CATEGORY_B);
 
         assertTrue(currentQuantity == CATEGORY_B_QUANTITY - requestQuantity);
     }
 
     @Test
     void whenEnoughTankNotInUse_requestTankShouldReturnZero() {
-        Long requestQuantity = 5L;
+        Integer requestQuantity = 5;
 
-        Long quantityNeeded = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_E, requestQuantity);
+        Integer quantityNeeded = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_E, requestQuantity);
 
         assertTrue(quantityNeeded == 0);
     }
 
     @Test
     void whenNotEnoughNotInUseTank_requestTankShouldReturnTheNumberStillNeededToProduce() {
-        Long requestQuantity = 30L;
+        Integer requestQuantity = 30;
 
-        Long quantity = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_A, requestQuantity);
+        Integer quantity = inventory.requestTankByCategory(OxygenTankCategory.CATEGORY_A, requestQuantity);
 
         assertTrue(quantity == Math.abs(CATEGORY_A_QUANTITY - requestQuantity));
     }
