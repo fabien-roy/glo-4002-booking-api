@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domain.shuttles;
+package ca.ulaval.glo4002.booking.domain.trip;
 
 public class Passenger {
 	

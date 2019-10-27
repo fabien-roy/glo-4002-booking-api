@@ -1,9 +1,10 @@
-package ca.ulaval.glo4002.booking.domain.shuttles;
+package ca.ulaval.glo4002.booking.domain.trip;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 
 public class Trip {
 	
