@@ -1,9 +1,10 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
-//TODO : maybe extends another class ? We begin to have Exception bloating like in the first project maybe a better ways to do it
-public class InvalidOxygenCategoryException extends genericException {
+public class InvalidOxygenCategoryException extends BookingException {
 
-    public InvalidOxygenCategoryException(String exception) {
-        super(exception);
+    public InvalidOxygenCategoryException() {
+        super("INVALID_OXYGEN_CATEGORY");
+
+        description = "Invalid oxygen category";
     }
 }

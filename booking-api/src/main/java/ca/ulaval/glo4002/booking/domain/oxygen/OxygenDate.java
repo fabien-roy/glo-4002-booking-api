@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import ca.ulaval.glo4002.booking.exceptions.genericException;
-
 public class OxygenDate {
 	private LocalDateTime date;
 

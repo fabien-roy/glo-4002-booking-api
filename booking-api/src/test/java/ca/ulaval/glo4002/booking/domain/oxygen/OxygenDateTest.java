@@ -9,8 +9,6 @@ import java.time.ZonedDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.exceptions.genericException;
-
 class OxygenDateTest {
 
 	@Test

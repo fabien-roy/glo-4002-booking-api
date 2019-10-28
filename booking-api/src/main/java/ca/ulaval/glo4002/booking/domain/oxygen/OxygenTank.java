@@ -3,16 +3,16 @@ package ca.ulaval.glo4002.booking.domain.oxygen;
 import java.math.BigDecimal;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.enums.OxygenTankCategory;
+import ca.ulaval.glo4002.booking.enums.OxygenCategory;
 
 public class OxygenTank {
 	private Long id;
-	private OxygenTankCategory category;
+	private OxygenCategory category;
 	private OxygenDate requestDate;
 	private OxygenDate readyDate;
 	private Money totalPrice;
 
-	public OxygenTank(Long id, OxygenTankCategory category, OxygenDate requestDate) {
+	public OxygenTank(Long id, OxygenCategory category, OxygenDate requestDate) {
 		this.id = id;
 		this.category = category;
 		this.requestDate = requestDate;
@@ -21,7 +21,7 @@ public class OxygenTank {
 	}
 
 	// TODO : generate an new ID ?
-	public OxygenTank(OxygenTankCategory category, OxygenDate requestDate) {
+	public OxygenTank(OxygenCategory category, OxygenDate requestDate) {
 		this.category = category;
 		this.requestDate = requestDate;
 		this.setMoney();
@@ -37,15 +37,15 @@ public class OxygenTank {
 		int nbRessources = 0;
 		int ressourcesPrice = 0;
 
-		if (this.category == OxygenTankCategory.CATEGORY_A) {
+		if (this.category == OxygenCategory.A) {
 			nbTankCreated = 5;
 			nbRessources = 15;
 			ressourcesPrice = 650;
-		} else if (this.category == OxygenTankCategory.CATEGORY_B) {
+		} else if (this.category == OxygenCategory.B) {
 			nbTankCreated = 3;
 			nbRessources = 8;
 			ressourcesPrice = 600;
-		} else if (this.category == OxygenTankCategory.CATEGORY_E) {
+		} else if (this.category == OxygenCategory.E) {
 			nbTankCreated = 1;
 			nbRessources = 1;
 			ressourcesPrice = 5000;
@@ -61,9 +61,9 @@ public class OxygenTank {
 
 	private OxygenDate calculateReadyDate() {
 		OxygenDate readyDate = this.requestDate;
-		if (this.category == OxygenTankCategory.CATEGORY_A) {
+		if (this.category == OxygenCategory.A) {
 			readyDate.addDays(20L);
-		} else if (this.category == OxygenTankCategory.CATEGORY_B) {
+		} else if (this.category == OxygenCategory.B) {
 			readyDate.addDays(10L);
 		}
 		return readyDate;
@@ -73,7 +73,7 @@ public class OxygenTank {
 		return this.id;
 	}
 
-	public OxygenTankCategory getCategory() {
+	public OxygenCategory getCategory() {
 		return this.category;
 	}
 

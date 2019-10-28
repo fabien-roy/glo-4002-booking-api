@@ -5,20 +5,25 @@ import org.junit.jupiter.api.Test;
 
 class InMemoryOxygenTankInventoryRepositoryTest {
 
-	private OxygenTankInventoryRepository inventoryRepository;
+	private OxygenTankInventoryRepository subject;
 
 	@BeforeEach
 	void initRepositoryTest() {
-		this.inventoryRepository = new InMemoryOxygenTankInventoryRepository();
+		this.subject = new InMemoryOxygenTankInventoryRepository();
 	}
 
 	@Test
-	void whenGetInventory_inventoryIsReturn() {
+	void getInventory_shouldReturnInventory() {
 		// TODO this test
 	}
 
 	@Test
-	void whensetInventory_inventoryIsSet() {
+	void getInventory_shouldReturnNewInventory_whenNoneWasCreated() {
+		// TODO this test
+	}
+
+	@Test
+	void setInventory_shouldSetInventory() {
 		// TODO this test
 	}
 }

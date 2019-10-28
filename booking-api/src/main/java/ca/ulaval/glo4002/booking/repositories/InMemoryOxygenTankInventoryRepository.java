@@ -11,7 +11,6 @@ public class InMemoryOxygenTankInventoryRepository implements OxygenTankInventor
 	}
 
 	@Override
-	// TODO : Not sur if optional is needed in that case
 	public OxygenTankInventory getInventory() {
 		if (inventory == null) {
 			this.inventory = new OxygenTankInventory();
