@@ -15,5 +15,9 @@ public class TripDto {
 		this.passengers = passengers;
 	}
 	
+	public String getTripDate() {
+		return date;
+	}
+	
 	
 }
