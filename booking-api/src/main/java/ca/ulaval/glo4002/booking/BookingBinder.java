@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.controllers.OrderController;
+import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
@@ -10,6 +11,7 @@ import ca.ulaval.glo4002.booking.mappers.PassListMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 public class BookingBinder extends AbstractBinder {
@@ -40,6 +42,7 @@ public class BookingBinder extends AbstractBinder {
 
     private void bindServices() {
         bindAsContract(OrderService.class);
+        bindAsContract(ShuttleManifestService.class);
     }
 
     private void bindMappers() {
@@ -49,5 +52,6 @@ public class BookingBinder extends AbstractBinder {
 
     private void bindControllers() {
         bindAsContract(OrderController.class);
+        bindAsContract(ShuttleManifestController.class);
     }
 }
