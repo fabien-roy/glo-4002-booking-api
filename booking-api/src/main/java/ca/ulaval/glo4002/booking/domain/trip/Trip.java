@@ -6,14 +6,14 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class Trip {
 	
 	private EventDate date;
 	private Shuttle shuttle;
 	private List<Passenger> passengers;
-	
-	
+
 	public Trip(EventDate date, Shuttle shuttle, List<Passenger> passengers) {
 		this.date = date;
 		this.shuttle = shuttle;
@@ -24,8 +24,8 @@ public class Trip {
 		return date;
 	}
 	
-	public String getShuttleName() {
-		return shuttle.getShuttleName();
+	public ShuttleCategories getShuttleCategory() {
+		return shuttle.getCategory();
 	}
 	
 	public List<Number> getPassengersPassNumbers() {
@@ -47,7 +47,7 @@ public class Trip {
 	}
 	
 	private boolean shuttleIsFull() {
-		return shuttle.getMaxPassengersCapacity() > passengers.size();
+		return shuttle.getMaxCapacity() > passengers.size();
 	}
 
 }

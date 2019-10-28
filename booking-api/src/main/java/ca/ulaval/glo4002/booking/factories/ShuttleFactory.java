@@ -3,31 +3,30 @@ package ca.ulaval.glo4002.booking.factories;
 import java.math.BigDecimal;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.shuttles.Capacity;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class ShuttleFactory {
 	
-	private static final Capacity ETSPACESHIP_CAPACITY = new Capacity(1);
-	private static final Money ETSPACESHIP_PRICE = new Money(new BigDecimal(100000));
+	public static final Integer ET_SPACESHIP_MAX_CAPACITY = 1;
+	public static final Money ET_SPACESHIP_PRICE = new Money(new BigDecimal(100000));
 
-	private static final Capacity MILLENIUMFALCON_CAPACITY = new Capacity(20);
-	private static final Money MILLENIUMFALCON_PRICE = new Money(new BigDecimal(65000));
+	public static final Integer MILLENNIUM_FALCON_MAX_CAPACITY = 20;
+	public static final Money MILLENNIUM_FALCON_PRICE = new Money(new BigDecimal(65000));
 	
-	private static final Capacity SPACEX_CAPACITY = new Capacity(30);
-	private static final Money SPACEX_PRICE = new Money(new BigDecimal(30000));
+	public static final Integer SPACE_X_MAX_CAPACITY = 30;
+	public static final Money SPACE_X_PRICE = new Money(new BigDecimal(30000));
 	
-	public Shuttle buildShuttleByPassCategory(PassCategories category) {
+	public Shuttle build(PassCategories category) {
 		switch(category) {
-		case SUPERNOVA:
-			return new Shuttle(ShuttleCategories.ETSPACESHIP, ETSPACESHIP_CAPACITY, ETSPACESHIP_PRICE);
-		default:
-		case SUPERGIANT:
-			return new Shuttle(ShuttleCategories.MILLENIUMFALCON, MILLENIUMFALCON_CAPACITY, MILLENIUMFALCON_PRICE);
-		case NEBULA:
-			return new Shuttle(ShuttleCategories.SPACEX, SPACEX_CAPACITY, SPACEX_PRICE);
+            case SUPERNOVA:
+                return new Shuttle(ShuttleCategories.ETSPACESHIP, ET_SPACESHIP_MAX_CAPACITY, ET_SPACESHIP_PRICE);
+            case SUPERGIANT:
+                return new Shuttle(ShuttleCategories.MILLENIUMFALCON, MILLENNIUM_FALCON_MAX_CAPACITY, MILLENNIUM_FALCON_PRICE);
+			default:
+            case NEBULA:
+                return new Shuttle(ShuttleCategories.SPACEX, SPACE_X_MAX_CAPACITY, SPACE_X_PRICE);
 		}
 	}
 }
