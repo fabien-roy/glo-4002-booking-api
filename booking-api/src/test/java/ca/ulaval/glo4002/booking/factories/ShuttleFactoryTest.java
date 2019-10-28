@@ -23,7 +23,7 @@ class ShuttleFactoryTest {
 
         Shuttle shuttle = subject.build(category);
 
-        assertEquals(ShuttleCategories.ETSPACESHIP, shuttle.getCategory());
+        assertEquals(ShuttleCategories.ET_SPACESHIP, shuttle.getCategory());
         assertEquals(ShuttleFactory.ET_SPACESHIP_MAX_CAPACITY, shuttle.getMaxCapacity());
         assertEquals(ShuttleFactory.ET_SPACESHIP_PRICE, shuttle.getPrice());
     }
@@ -34,7 +34,7 @@ class ShuttleFactoryTest {
 
         Shuttle shuttle = subject.build(category);
 
-        assertEquals(ShuttleCategories.MILLENIUMFALCON, shuttle.getCategory());
+        assertEquals(ShuttleCategories.MILLENNIUM_FALCON, shuttle.getCategory());
         assertEquals(ShuttleFactory.MILLENNIUM_FALCON_MAX_CAPACITY, shuttle.getMaxCapacity());
         assertEquals(ShuttleFactory.MILLENNIUM_FALCON_PRICE, shuttle.getPrice());
     }
@@ -45,7 +45,7 @@ class ShuttleFactoryTest {
 
         Shuttle shuttle = subject.build(category);
 
-        assertEquals(ShuttleCategories.SPACEX, shuttle.getCategory());
+        assertEquals(ShuttleCategories.SPACE_X, shuttle.getCategory());
         assertEquals(ShuttleFactory.SPACE_X_MAX_CAPACITY, shuttle.getMaxCapacity());
         assertEquals(ShuttleFactory.SPACE_X_PRICE, shuttle.getPrice());
     }

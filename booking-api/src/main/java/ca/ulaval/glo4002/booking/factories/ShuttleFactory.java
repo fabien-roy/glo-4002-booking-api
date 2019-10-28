@@ -21,12 +21,12 @@ public class ShuttleFactory {
 	public Shuttle build(PassCategories category) {
 		switch(category) {
             case SUPERNOVA:
-                return new Shuttle(ShuttleCategories.ETSPACESHIP, ET_SPACESHIP_MAX_CAPACITY, ET_SPACESHIP_PRICE);
+                return new Shuttle(ShuttleCategories.ET_SPACESHIP, ET_SPACESHIP_MAX_CAPACITY, ET_SPACESHIP_PRICE);
             case SUPERGIANT:
-                return new Shuttle(ShuttleCategories.MILLENIUMFALCON, MILLENNIUM_FALCON_MAX_CAPACITY, MILLENNIUM_FALCON_PRICE);
+                return new Shuttle(ShuttleCategories.MILLENNIUM_FALCON, MILLENNIUM_FALCON_MAX_CAPACITY, MILLENNIUM_FALCON_PRICE);
 			default:
             case NEBULA:
-                return new Shuttle(ShuttleCategories.SPACEX, SPACE_X_MAX_CAPACITY, SPACE_X_PRICE);
+                return new Shuttle(ShuttleCategories.SPACE_X, SPACE_X_MAX_CAPACITY, SPACE_X_PRICE);
 		}
 	}
 }
