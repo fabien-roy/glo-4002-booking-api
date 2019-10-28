@@ -27,5 +27,4 @@ public class TripMapper {
 		
 		return tripDtos;
 	}
-
 }
