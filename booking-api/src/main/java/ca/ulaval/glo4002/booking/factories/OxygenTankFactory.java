@@ -7,13 +7,15 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenDate;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.enums.OxygenCategory;
 
 public class OxygenTankFactory {
 
+	// TODO : OXY : Refactor this whole thing, it is way, way to massive.
+
 	private OxygenTankInventory inventory;
 
-	private static final LocalDate START_OF_FESTIVAL_DATE = LocalDate.of(2050, 07, 17);
 	private static final Integer CATEGORY_A_CREATION_NUMBER = 5;
 	private static final Integer CATEGORY_B_CREATION_NUMBER = 3;
 	private static final Integer CATEGORY_E_CREATION_NUMBER = 1;
@@ -82,7 +84,7 @@ public class OxygenTankFactory {
 
 	// TODO : Refactor needed seem too complexe
 	private OxygenCategory getCategoryForRequestDate(OxygenCategory category, LocalDate requestDate) {
-		LocalDate readyBeforeDate = START_OF_FESTIVAL_DATE.plusDays(1);
+		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
 
 		if (category == OxygenCategory.A) {
 			if (requestDate.plusDays(20).isBefore(readyBeforeDate)) {
@@ -102,5 +104,4 @@ public class OxygenTankFactory {
 			return OxygenCategory.E;
 		}
 	}
-
 }

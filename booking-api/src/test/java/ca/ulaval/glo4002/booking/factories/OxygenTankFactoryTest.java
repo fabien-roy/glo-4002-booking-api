@@ -42,7 +42,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, START_OF_FESTIVAL_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 0);
+		assertEquals(0, createdTanks.size());
 	}
 
 	// TODO : Maybe not needed test for Nebula cover the two other cases as well
@@ -54,7 +54,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, START_OF_FESTIVAL_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 0);
+		assertEquals(0, createdTanks.size());
 	}
 
 	// TODO : Maybe not needed test for Nebula cover the two other cases as well
@@ -66,7 +66,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, START_OF_FESTIVAL_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 0);
+		assertEquals(0, createdTanks.size());
 	}
 
 	@Test
@@ -78,18 +78,18 @@ public class OxygenTankFactoryTest {
 		createdTanks = factory.buildOxygenTank(category, VALID_CATEGORY_A_BUILD_DATE, numberOfDays);
 
 		// TODO : magic number
-		assertTrue(createdTanks.size() == 5);
+		assertEquals(5, createdTanks.size());
 	}
 
 	@Test
 	void build_shouldBuildTenOxygenTankCategoryIsNebulaAndNoTankInReserveAndOrderIsForThreeDays() {
-		Long numberofDays = 3L;
+		Long numberOfDays = 3L;
 		OxygenCategory category = OxygenCategory.A;
 		when(inventory.requestTankByCategory(category, 9)).thenReturn(9);
 
-		createdTanks = factory.buildOxygenTank(category, VALID_CATEGORY_A_BUILD_DATE, numberofDays);
+		createdTanks = factory.buildOxygenTank(category, VALID_CATEGORY_A_BUILD_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 10);
+		assertEquals(10, createdTanks.size());
 	}
 
 	@Test
@@ -100,7 +100,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, VALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 3);
+		assertEquals(3, createdTanks.size());
 	}
 
 	@Test
@@ -111,7 +111,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, VALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 9);
+		assertEquals(9, createdTanks.size());
 
 	}
 
@@ -123,7 +123,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, START_OF_FESTIVAL_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 5);
+		assertEquals(5, createdTanks.size());
 	}
 
 	@Test
@@ -134,7 +134,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, START_OF_FESTIVAL_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 15);
+		assertEquals(15, createdTanks.size());
 	}
 
 	@Test
@@ -146,7 +146,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, INVALID_CATEGORY_A_BUILD_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 0);
+		assertEquals(0, createdTanks.size());
 	}
 
 	@Test
@@ -159,7 +159,7 @@ public class OxygenTankFactoryTest {
 		createdTanks = factory.buildOxygenTank(category, VALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
 		// TODO : Magic Number
-		assertTrue(createdTanks.size() == 3);
+		assertEquals(3, createdTanks.size());
 	}
 
 	@Test
@@ -173,7 +173,7 @@ public class OxygenTankFactoryTest {
 		createdTanks = factory.buildOxygenTank(category, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
 		// TODO : magic number
-		assertTrue(createdTanks.size() == 1);
+		assertEquals(1, createdTanks.size());
 		assertEquals(OxygenCategory.E, createdTanks.get(0).getCategory());
 	}
 
@@ -186,7 +186,7 @@ public class OxygenTankFactoryTest {
 
 		createdTanks = factory.buildOxygenTank(category, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
-		assertTrue(createdTanks.size() == 1);
+		assertEquals(1, createdTanks.size());
 		assertEquals(OxygenCategory.E, createdTanks.get(0).getCategory());
 	}
 }
