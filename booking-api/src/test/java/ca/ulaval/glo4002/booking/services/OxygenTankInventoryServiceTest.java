@@ -21,7 +21,7 @@ class OxygenTankInventoryServiceTest {
 	}
 
 	@Test
-	void buildOxygenTank_shouldBuildTheOxygenTank() {
-		// TODO Fail this test then the the method and pass the test
+	void orderOxygenTank_shouldOrderOxygenTanks() {
+	    // TODO : OxygenTankInventoryService.orderOxygenTanks tests
 	}
 }
