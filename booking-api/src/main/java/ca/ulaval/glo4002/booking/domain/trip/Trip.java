@@ -31,9 +31,7 @@ public class Trip {
 	public List<Number> getPassengersPassNumbers() {
 		List<Number> passNumbers = new ArrayList<>();
 		
-		passengers.stream()
-		.map(Passenger::getPassNumber)
-		.forEach(passNumbers::add);
+		passengers.stream().map(Passenger::getPassNumber).forEach(passNumbers::add);
 		
 		return passNumbers;
 	}
@@ -49,5 +47,4 @@ public class Trip {
 	private boolean shuttleIsFull() {
 		return shuttle.getMaxCapacity() > passengers.size();
 	}
-
 }

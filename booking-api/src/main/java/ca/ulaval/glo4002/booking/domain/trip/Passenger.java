@@ -13,5 +13,4 @@ public class Passenger {
 	public Number getPassNumber() {
 		return passNumber;
 	}
-
 }
