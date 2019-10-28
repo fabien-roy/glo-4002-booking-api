@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.enums;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidOxygenCategoryException;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
 
 import java.util.HashMap;
 import java.util.Map;

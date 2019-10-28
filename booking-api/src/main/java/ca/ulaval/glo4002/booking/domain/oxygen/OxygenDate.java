@@ -1,37 +1,40 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
+import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenDateFormatException;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class OxygenDate {
-	private LocalDateTime date;
 
-	public OxygenDate(String date) {
+	private LocalDateTime value;
+
+	public OxygenDate(String value) {
+		// TODO : OXY : This parsing must be in a Factory, not in the constructor
 		try {
-			this.date = ZonedDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
+			this.value = ZonedDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
 		} catch (Exception exception) {
-			String error = "Invalid oxygen date format";
-			throw new genericException(error);
+			throw new InvalidOxygenDateFormatException();
 		}
 	}
 
 	// TODO : Refactor
-	public OxygenDate(LocalDate date) {
-		this.date = date.atStartOfDay();
+	public OxygenDate(LocalDate value) {
+		this.value = value.atStartOfDay();
 	}
 
 	@Override
 	public String toString() {
-		return this.date.toString();
+		return value.toString();
 	}
 
-	public void addDays(Long numberOfDays) {
-		this.date = date.plusDays(numberOfDays);
+	public void addDays(int numberOfDays) {
+		this.value = value.plusDays(numberOfDays);
 	}
 
-	public LocalDateTime getDate() {
-		return date;
+	public LocalDateTime getValue() {
+		return value;
 	}
 }

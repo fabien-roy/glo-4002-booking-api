@@ -7,15 +7,18 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenDateFormatException;
 import org.junit.jupiter.api.Test;
 
 class OxygenDateTest {
+
+	private OxygenDate subject;
 
 	@Test
 	public void constructing_shouldThrowInvalidOxygenDateException_whenOxygenDateIsInvalid() {
 		String anInvalidOxygenDate = "anInvalidDate";
 
-		assertThrows(genericException.class, () -> new OxygenDate(anInvalidOxygenDate));
+		assertThrows(InvalidOxygenDateFormatException.class, () -> new OxygenDate(anInvalidOxygenDate));
 	}
 
 	@Test
@@ -23,18 +26,18 @@ class OxygenDateTest {
 		LocalDateTime expectedValue = LocalDateTime.of(2050, 7, 1, 0, 0);
 		ZonedDateTime expectedZonedValue = ZonedDateTime.of(expectedValue, ZoneId.systemDefault());
 
-		OxygenDate subject = new OxygenDate(expectedZonedValue.toString());
+		subject = new OxygenDate(expectedZonedValue.toString());
 
-		assertEquals(expectedValue, subject.getDate());
+		assertEquals(expectedValue, subject.getValue());
 	}
 
 	@Test
 	public void constructingWithDate_shouldCreateOxygenDate_whenOxygenIsValid() {
 		LocalDate expectedValue = LocalDate.of(2050, 7, 1);
 
-		OxygenDate subject = new OxygenDate(expectedValue);
+		subject = new OxygenDate(expectedValue);
 
-		assertEquals(expectedValue.atStartOfDay(), subject.getDate());
+		assertEquals(expectedValue.atStartOfDay(), subject.getValue());
 	}
 
 	@Test
@@ -43,10 +46,9 @@ class OxygenDateTest {
 		LocalDateTime expectedDate = beginningDate.atStartOfDay();
 		expectedDate = expectedDate.plusDays(10);
 
-		OxygenDate subject = new OxygenDate(beginningDate);
-		subject.addDays(10L);
+		subject = new OxygenDate(beginningDate);
+		subject.addDays(10);
 
-		assertEquals(expectedDate, subject.getDate());
+		assertEquals(expectedDate, subject.getValue());
 	}
-
 }

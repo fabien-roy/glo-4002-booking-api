@@ -51,22 +51,22 @@ Une réponse contenant toutes les informations sur la commande effectuée est re
 
 HTTP 404 NOT FOUND
 
-Si la date d’achat est en dehors de la période d’achat (1er janvier 2050 au 16 juillet 2050 inclusivement).
+Si la value d’achat est en dehors de la période d’achat (1er janvier 2050 au 16 juillet 2050 inclusivement).
 ```
    {
      "error": "ORDER_NOT_FOUND"::string,
-     "description" : "order date should be between January 1 2050 and July 16 2050"::string
+     "description" : "order value should be between January 1 2050 and July 16 2050"::string
    } 
 ```
 
 HTTP 400 Bad Request
 
-Si une date (dans eventDates) pour laquelle on veut acheter une passe est en dehors de la durée du festival (17 juillet 2050 au 24 juillet 2050 inclusivement).
+Si une value (dans eventDates) pour laquelle on veut acheter une passe est en dehors de la durée du festival (17 juillet 2050 au 24 juillet 2050 inclusivement).
 
    ```
    {
      "error": "INVALID_PASS_DATE"::string,
-     "description" : "event date should be between July 17 2050 and July 24 2050"::string
+     "description" : "event value should be between July 17 2050 and July 24 2050"::string
    }  
 ```
 HTTP 400 Bad request
@@ -105,32 +105,32 @@ Si la commande n’existe pas
 } 
 ```
 
-### GET /shuttle-manifests?date="date"
+### GET /shuttle-manifests?value="value"
 
-(date est optionnel)
+(value est optionnel)
 	
 ```
 {
  "departures": [  
                     {
-                       "date": "2050-07-19",
+                       "value": "2050-07-19",
                        "shuttleName": "ET Spaceship",
                        "passengers": [123456789]
                     }, 
                     {
-                       "date": "2050-07-19",
+                       "value": "2050-07-19",
                        "shuttleName": "SpaceX",
                        "passengers": [234567891]
                     }
                 ],
  "arrivals": [
                    {
-                     "date": "2050-07-19",
+                     "value": "2050-07-19",
                      "shuttleName": "ET Spaceship",
                      "passengers": [123456789]
                    }, 
                    {
-                     "date": "2050-07-19",
+                     "value": "2050-07-19",
                      "shuttleName": "SpaceX",
                      "passengers": [234567891]
                    }
@@ -154,28 +154,28 @@ Si la commande n’existe pas
                ],
   "history" : [
                  {
-                     "date": "2050-03-10",
+                     "value": "2050-03-10",
                      "qtyOxygenTankBought": 0,
                      "qtyWaterUsed": 0,
                      "qtyCandlesUsed": 15,
                      "qtyOxygenTankMade": 0
                  },
                  {
-                     "date": "2050-03-30",
+                     "value": "2050-03-30",
                      "qtyOxygenTankBought": 0,
                      "qtyWaterUsed": 0,
                      "qtyCandlesUsed": 0,
                      "qtyOxygenTankMade": 5
                  },
                  {
-                     "date": "2050-04-25",
+                     "value": "2050-04-25",
                      "qtyOxygenTankBought": 0,
                      "qtyWaterUsed": 8,
                      "qtyCandlesUsed": 0,
                      "qtyOxygenTankMade": 0
                  },
                  {
-                     "date": "2050-05-05",
+                     "value": "2050-05-05",
                      "qtyOxygenTankBought": 0,
                      "qtyWaterUsed": 0,
                      "qtyCandlesUsed": 0,

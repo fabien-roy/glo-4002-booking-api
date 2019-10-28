@@ -6,86 +6,80 @@ import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.OxygenCategory;
 
 public class OxygenTank {
-	private Long id;
+
+	public static final int CATEGORY_A_NUMBER_OF_TANKS_CREATED = 5;
+	public static final int CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED = 15;
+	public static final int CATEGORY_A_RESOURCE_PRICE = 650;
+	public static final int CATEGORY_B_NUMBER_OF_TANKS_CREATED = 3;
+	public static final int CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED = 8;
+	public static final int CATEGORY_B_RESOURCE_PRICE = 600;
+	public static final int CATEGORY_E_NUMBER_OF_TANKS_CREATED = 1;
+	public static final int CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED = 1;
+	public static final int CATEGORY_E_RESOURCE_PRICE = 5000;
+
 	private OxygenCategory category;
 	private OxygenDate requestDate;
 	private OxygenDate readyDate;
-	private Money totalPrice;
+	private Money price;
 
-	public OxygenTank(Long id, OxygenCategory category, OxygenDate requestDate) {
-		this.id = id;
-		this.category = category;
-		this.requestDate = requestDate;
-		this.setMoney();
-		this.setReadyDate();
-	}
-
-	// TODO : generate an new ID ?
 	public OxygenTank(OxygenCategory category, OxygenDate requestDate) {
 		this.category = category;
 		this.requestDate = requestDate;
-		this.setMoney();
-		this.setReadyDate();
-	}
 
-	private void setMoney() {
-		this.totalPrice = this.calculateMoney();
-	}
-
-	private Money calculateMoney() {
-		int nbTankCreated = 1;
-		int nbRessources = 0;
-		int ressourcesPrice = 0;
-
-		if (this.category == OxygenCategory.A) {
-			nbTankCreated = 5;
-			nbRessources = 15;
-			ressourcesPrice = 650;
-		} else if (this.category == OxygenCategory.B) {
-			nbTankCreated = 3;
-			nbRessources = 8;
-			ressourcesPrice = 600;
-		} else if (this.category == OxygenCategory.E) {
-			nbTankCreated = 1;
-			nbRessources = 1;
-			ressourcesPrice = 5000;
-		}
-
-		BigDecimal tankPrice = new BigDecimal((nbRessources * ressourcesPrice) / nbTankCreated);
-		return new Money(tankPrice);
-	}
-
-	private void setReadyDate() {
-		this.readyDate = this.calculateReadyDate();
-	}
-
-	private OxygenDate calculateReadyDate() {
-		OxygenDate readyDate = this.requestDate;
-		if (this.category == OxygenCategory.A) {
-			readyDate.addDays(20L);
-		} else if (this.category == OxygenCategory.B) {
-			readyDate.addDays(10L);
-		}
-		return readyDate;
-	}
-
-	public Long getId() {
-		return this.id;
+		calculatePrice();
+		calculateReadyDate();
 	}
 
 	public OxygenCategory getCategory() {
 		return this.category;
 	}
 
-	public OxygenDate getRequestDate() {
-		return this.requestDate;
-	}
-
 	public OxygenDate getReadyDate() {
 		return this.readyDate;
 	}
 
-	public Money getMoney() {
-		return this.totalPrice;
+	public Money getPrice() {
+		return this.price;
+	}
+
+	private void calculatePrice() {
+		int nbTankCreated;
+		int nbResources;
+		int resourcesPrice;
+
+		switch (this.category) {
+			case A:
+				nbTankCreated = CATEGORY_A_NUMBER_OF_TANKS_CREATED;
+				nbResources = CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED;
+				resourcesPrice = CATEGORY_A_RESOURCE_PRICE;
+				break;
+			case B:
+				nbTankCreated = CATEGORY_B_NUMBER_OF_TANKS_CREATED;
+				nbResources = CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED;
+				resourcesPrice = CATEGORY_B_RESOURCE_PRICE;
+				break;
+			default:
+			case E:
+				nbTankCreated = CATEGORY_E_NUMBER_OF_TANKS_CREATED;
+				nbResources = CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED;
+				resourcesPrice = CATEGORY_E_RESOURCE_PRICE;
+				break;
+		}
+
+		BigDecimal tankPrice = new BigDecimal((nbResources * resourcesPrice) / nbTankCreated);
+
+		this.price = new Money(tankPrice);
+	}
+
+	private void calculateReadyDate() {
+		OxygenDate readyDate = this.requestDate;
+
+		if (this.category == OxygenCategory.A) {
+			readyDate.addDays(20);
+		} else if (this.category == OxygenCategory.B) {
+			readyDate.addDays(10);
+		}
+
+		this.readyDate = readyDate;
 	}
 }
