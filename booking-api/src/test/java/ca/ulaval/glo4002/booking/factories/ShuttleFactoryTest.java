@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
@@ -14,7 +15,7 @@ class ShuttleFactoryTest {
 
     @BeforeEach
     void setUpSubject() {
-        subject = new ShuttleFactory();
+        subject = new ShuttleFactory(new NumberGenerator());
     }
 
     @Test
