@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,10 @@ import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleNotFoundException;
 public class InMemoryShuttleRepository implements ShuttleRepository {
 	
 	private List<Shuttle> shuttles;
+	
+	public InMemoryShuttleRepository() {
+		shuttles = new ArrayList<>();
+	}
 	
 	@Override
 	public Optional<Shuttle> findByShuttleNumber(Number shuttleNumber) {
@@ -29,6 +34,7 @@ public class InMemoryShuttleRepository implements ShuttleRepository {
 		if(shuttles.contains(shuttle)) {
 			throw new ShuttleAlreadyCreatedException(shuttle.getShuttleNumber().toString());
 		} 
+		
 		shuttles.add(shuttle);
 	}
 
