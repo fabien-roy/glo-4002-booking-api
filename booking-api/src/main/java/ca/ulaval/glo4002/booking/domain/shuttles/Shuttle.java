@@ -2,7 +2,9 @@ package ca.ulaval.glo4002.booking.domain.shuttles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.trip.Trip;
@@ -42,4 +44,35 @@ public class Shuttle {
 	public Money getPrice() {
 		return price;
 	}
+
+	public List<Trip> getDepartures() {
+		return departures;
+	}
+
+	public List<Trip> getArrivals() {
+		return arrivals;
+	}
+	
+	public void addDeparture(Trip trip) {
+		departures.add(trip);
+	}
+	
+	public void addArrival(Trip trip) {
+		arrivals.add(trip);
+	}
+	
+	public List<Trip> getDeparturesByDate(EventDate date) {
+		return departures.
+				stream().
+				filter(departure -> date.equals(departure.getTripDate())).
+				collect(Collectors.toList());
+	}
+	
+	public List<Trip> getArrivalsByDate(EventDate date) {
+		return arrivals.
+				stream().
+				filter(arrival -> date.equals(arrival.getTripDate())).
+				collect(Collectors.toList());
+	}
+	
 }
