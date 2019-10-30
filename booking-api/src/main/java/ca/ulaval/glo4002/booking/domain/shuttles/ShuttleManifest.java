@@ -10,6 +10,14 @@ public class ShuttleManifest {
 	private List<Trip> departures;
 	private List<Trip> arrivals;
 	
+	
+	public ShuttleManifest(List<Shuttle> shuttles) {
+		for (Shuttle shuttle : shuttles) {
+			arrivals.addAll(shuttle.getArrivals());
+			departures.addAll(shuttle.getDepartures());
+		}
+	}
+	
 	public ShuttleManifest(EventDate date, List<Shuttle> shuttles) {
 		for (Shuttle shuttle : shuttles) {
 			arrivals.addAll(shuttle.getArrivalsByDate(date));
