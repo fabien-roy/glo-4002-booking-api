@@ -38,4 +38,7 @@ public class InMemoryShuttleRepository implements ShuttleRepository {
 		shuttles.add(shuttle);
 	}
 
+	public List<Shuttle> findAll() {
+		return shuttles;
+	}
 }
