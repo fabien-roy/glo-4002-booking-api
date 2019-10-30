@@ -46,44 +46,44 @@ class InMemoryOrderRepositoryTest {
 
     @Test
     void getByOrderNumber_shouldReturnOrder() {
-        OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
-        LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+        OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
+        LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
         PassList aPassList = mock(PassList.class);
-        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassList);
-        subject.addOrder(aOrder);
+        Order anOrder = new Order(anOrderNumber, anOrderDate, aPassList);
+        subject.addOrder(anOrder);
 
-        Optional<Order> foundOrder = subject.getByOrderNumber(aOrderNumber);
+        Optional<Order> foundOrder = subject.getByOrderNumber(anOrderNumber);
 
         assertTrue(foundOrder.isPresent());
-        assertEquals(aOrderNumber, foundOrder.get().getOrderNumber());
+        assertEquals(anOrderNumber, foundOrder.get().getOrderNumber());
     }
 
     @Test
     void getByOrderNumber_shouldReturnOrders_whenThereAreMultipleOrders() {
-        OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
+        OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
         OrderNumber anotherOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
         LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
         PassList aPassList = mock(PassList.class);
-        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassList);
+        Order anOrder = new Order(anOrderNumber, aOrderDate, aPassList);
         Order anotherOrder = new Order(anotherOrderNumber, aOrderDate, aPassList);
-        subject.addOrder(aOrder);
+        subject.addOrder(anOrder);
         subject.addOrder(anotherOrder);
 
-        Optional<Order> foundOrder = subject.getByOrderNumber(aOrderNumber);
+        Optional<Order> foundOrder = subject.getByOrderNumber(anOrderNumber);
         Optional<Order> otherFoundOrder = subject.getByOrderNumber(anotherOrderNumber);
 
         assertTrue(foundOrder.isPresent());
         assertTrue(otherFoundOrder.isPresent());
-        assertEquals(aOrderNumber, foundOrder.get().getOrderNumber());
+        assertEquals(anOrderNumber, foundOrder.get().getOrderNumber());
         assertEquals(anotherOrderNumber, otherFoundOrder.get().getOrderNumber());
     }
 
     @Test
     void addOrder_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
-        OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
-        LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+        OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
+        LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
         PassList aPassList = mock(PassList.class);
-        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassList);
+        Order aOrder = new Order(anOrderNumber, anOrderDate, aPassList);
         subject.addOrder(aOrder);
 
         assertThrows(OrderAlreadyCreatedException.class, () -> subject.addOrder(aOrder));

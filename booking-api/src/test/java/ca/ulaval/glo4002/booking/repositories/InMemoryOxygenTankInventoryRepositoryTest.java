@@ -1,29 +1,48 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+// TODO : not sure if these kind of test are part of unit testing, for example if Repo where a BD we should'nt test this in unit testing
+
 class InMemoryOxygenTankInventoryRepositoryTest {
 
-	private OxygenTankInventoryRepository subject;
+	private OxygenTankInventoryRepository inMemoryRepository;
+	private OxygenTankInventory inventory;
 
 	@BeforeEach
 	void initRepositoryTest() {
-		this.subject = new InMemoryOxygenTankInventoryRepository();
+		this.inMemoryRepository = new InMemoryOxygenTankInventoryRepository();
+		inventory = new OxygenTankInventory();
+		inMemoryRepository.setInventory(inventory);
 	}
 
 	@Test
 	void getInventory_shouldReturnInventory() {
-		// TODO this test
+		OxygenTankInventory getInventory =  inMemoryRepository.getInventory();
+
+		assertEquals(inventory, getInventory);
 	}
 
 	@Test
 	void getInventory_shouldReturnNewInventory_whenNoneWasCreated() {
-		// TODO this test
+		OxygenTankInventory inventory =  inMemoryRepository.getInventory();
+
+		assertNotNull(inventory);
+		assertTrue(inventory instanceof OxygenTankInventory);
 	}
 
 	@Test
 	void setInventory_shouldSetInventory() {
-		// TODO this test
+		OxygenTankInventory newInventory = new OxygenTankInventory();
+
+		inMemoryRepository.setInventory(newInventory);
+		OxygenTankInventory getInventory = inMemoryRepository.getInventory();
+
+		assertEquals(newInventory, getInventory);
+		assertNotEquals(inventory, getInventory);
 	}
 }
