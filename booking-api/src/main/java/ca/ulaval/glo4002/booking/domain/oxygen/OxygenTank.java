@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.OxygenCategory;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
 
 public class OxygenTank {
 
@@ -58,12 +59,13 @@ public class OxygenTank {
 				nbResources = CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED;
 				resourcesPrice = CATEGORY_B_RESOURCE_PRICE;
 				break;
-			default:
 			case E:
 				nbTankCreated = CATEGORY_E_NUMBER_OF_TANKS_CREATED;
 				nbResources = CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED;
 				resourcesPrice = CATEGORY_E_RESOURCE_PRICE;
 				break;
+			default:
+				throw new InvalidOxygenCategoryException();
 		}
 
 		BigDecimal tankPrice = new BigDecimal((nbResources * resourcesPrice) / nbTankCreated);

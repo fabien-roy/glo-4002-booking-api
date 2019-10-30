@@ -25,12 +25,18 @@ public class OxygenTankInventory {
 		inUseTanks.put(OxygenCategory.E, new ArrayList<>());
 	}
 
-	// TODO : OXY : Not sure if needed, used in test
+	public List<OxygenTank> getNotInUseTankByCategory(OxygenCategory category) {
+		return notInUseTanks.get(category);
+	}
+
+	public List<OxygenTank> getInUseTanksByCategory(OxygenCategory category) {
+		return inUseTanks.get(category);
+	}
+
 	public Integer getNotInUseQuantityByCategory(OxygenCategory category) {
 		return notInUseTanks.get(category).size();
 	}
 
-	// TODO : OXY : Not sure if needed, used in test
 	public Integer getInUseQuantityByCategory(OxygenCategory category) {
 		return inUseTanks.get(category).size();
 	}
@@ -39,8 +45,6 @@ public class OxygenTankInventory {
 		notInUseTanks.get(category).addAll(newTanks);
 	}
 
-	// TODO : OXY : Not sure this is the correct behaviour.
-	// This should return a list of requested OxygenTank, not an integer...
 	public Integer requestTankByCategory(OxygenCategory category, Integer quantity) {
 		Integer quantityStillNeeded = quantity;
 		List<OxygenTank> notInUseTanksForCategory = notInUseTanks.get(category);
