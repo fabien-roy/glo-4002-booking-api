@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 class OxygenDateTest {
 
-	private OxygenDate subject;
+	private OxygenDate oxygenDate;
 
 	@Test
 	public void constructing_shouldThrowInvalidOxygenDateException_whenOxygenDateIsInvalid() {
@@ -26,18 +26,18 @@ class OxygenDateTest {
 		LocalDateTime expectedValue = LocalDateTime.of(2050, 7, 1, 0, 0);
 		ZonedDateTime expectedZonedValue = ZonedDateTime.of(expectedValue, ZoneId.systemDefault());
 
-		subject = new OxygenDate(expectedZonedValue.toString());
+		oxygenDate = new OxygenDate(expectedZonedValue.toString());
 
-		assertEquals(expectedValue, subject.getValue());
+		assertEquals(expectedValue, oxygenDate.getValue());
 	}
 
 	@Test
 	public void constructingWithDate_shouldCreateOxygenDate_whenOxygenIsValid() {
 		LocalDate expectedValue = LocalDate.of(2050, 7, 1);
 
-		subject = new OxygenDate(expectedValue);
+		oxygenDate = new OxygenDate(expectedValue);
 
-		assertEquals(expectedValue.atStartOfDay(), subject.getValue());
+		assertEquals(expectedValue.atStartOfDay(), oxygenDate.getValue());
 	}
 
 	@Test
@@ -46,9 +46,9 @@ class OxygenDateTest {
 		LocalDateTime expectedDate = beginningDate.atStartOfDay();
 		expectedDate = expectedDate.plusDays(10);
 
-		subject = new OxygenDate(beginningDate);
-		subject.addDays(10);
+		oxygenDate = new OxygenDate(beginningDate);
+		oxygenDate.addDays(10);
 
-		assertEquals(expectedDate, subject.getValue());
+		assertEquals(expectedDate, oxygenDate.getValue());
 	}
 }

@@ -10,14 +10,14 @@ import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
 
 class OxygenTankInventoryServiceTest {
 
-	private OxygenTankInventoryService subject;
+	private OxygenTankInventoryService oxygenTankInventoryService;
 
 	@BeforeEach
 	void setUpSubject() {
 		OxygenTankInventoryRepository repository = mock(OxygenTankInventoryRepository.class);
 		OxygenTankFactory factory = mock(OxygenTankFactory.class);
 
-		subject = new OxygenTankInventoryService(repository, factory);
+		oxygenTankInventoryService = new OxygenTankInventoryService(repository, factory);
 	}
 
 	@Test

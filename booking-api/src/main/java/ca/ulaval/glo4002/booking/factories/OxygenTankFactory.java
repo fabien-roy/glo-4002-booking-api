@@ -64,7 +64,6 @@ public class OxygenTankFactory {
 		return quantityToCover;
 	}
 
-	// TODO : Switch case ? and no object member all in the method?
 	private Integer getNumberOfTanksByCategoryForCreation(OxygenCategory category) {
 	    switch (category) {
             case A:
@@ -111,5 +110,5 @@ public class OxygenTankFactory {
                 throw new InvalidOxygenCategoryException();
         }
 	}
-	
+
 }

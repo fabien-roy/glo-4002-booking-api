@@ -8,7 +8,7 @@ import java.util.List;
 
 public class PassListMapper {
 
-    List<PassDto> toDto(PassList passList) {
+    public List<PassDto> toDto(PassList passList) {
         String passCategory = passList.getCategory().getName();
         String passOption = passList.getOption().getName();
 

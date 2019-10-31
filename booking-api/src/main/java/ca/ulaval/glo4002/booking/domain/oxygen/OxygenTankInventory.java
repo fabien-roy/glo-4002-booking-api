@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import ca.ulaval.glo4002.booking.enums.OxygenCategory;
 
@@ -57,5 +54,10 @@ public class OxygenTankInventory {
 		}
 
 		return quantityStillNeeded;
+	}
+
+	// TODO : OXY is it ok ?
+	public Set<OxygenCategory> getKeys() {
+		return inUseTanks.keySet();
 	}
 }

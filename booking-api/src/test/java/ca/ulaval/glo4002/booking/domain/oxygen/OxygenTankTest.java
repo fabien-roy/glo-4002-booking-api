@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.booking.enums.OxygenCategory;
 
 class OxygenTankTest {
 
-    private OxygenTank subject;
+    private OxygenTank oxygenTank;
 	private OxygenDate requestDate;
 
 	@BeforeEach
@@ -23,23 +23,23 @@ class OxygenTankTest {
 
 	@Test
 	void getCategoryOxygenCategoryA_shouldReturnCategoryA() {
-		subject = new OxygenTank(OxygenCategory.A, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.A, requestDate);
 
-		assertEquals(OxygenCategory.A, subject.getCategory());
+		assertEquals(OxygenCategory.A, oxygenTank.getCategory());
 	}
 
 	@Test
 	void getCategoryOxygenCategoryB_shouldReturnCategoryB() {
-		subject = new OxygenTank(OxygenCategory.B, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.B, requestDate);
 
-		assertEquals(OxygenCategory.B, subject.getCategory());
+		assertEquals(OxygenCategory.B, oxygenTank.getCategory());
 	}
 
 	@Test
 	void getCategoryOxygenCategoryE_shouldReturnCategoryE() {
-		subject = new OxygenTank(OxygenCategory.E, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.E, requestDate);
 
-		assertEquals(OxygenCategory.E, subject.getCategory());
+		assertEquals(OxygenCategory.E, oxygenTank.getCategory());
 	}
 
 	@Test
@@ -47,9 +47,9 @@ class OxygenTankTest {
 		OxygenDate expectedDate = requestDate;
 		expectedDate.addDays(20);
 
-		subject = new OxygenTank(OxygenCategory.A, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.A, requestDate);
 
-		assertEquals(expectedDate, subject.getReadyDate());
+		assertEquals(expectedDate, oxygenTank.getReadyDate());
 	}
 
 	@Test
@@ -57,16 +57,16 @@ class OxygenTankTest {
 		OxygenDate expectedDate = requestDate;
 		expectedDate.addDays(10);
 
-		subject = new OxygenTank(OxygenCategory.B, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.B, requestDate);
 
-		assertEquals(expectedDate, subject.getReadyDate());
+		assertEquals(expectedDate, oxygenTank.getReadyDate());
 	}
 
 	@Test
 	void getReadyDateOxygenCategoryE_shouldReturnSameDay() {
-		subject = new OxygenTank(OxygenCategory.E, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.E, requestDate);
 
-		assertEquals(requestDate, subject.getReadyDate());
+		assertEquals(requestDate, oxygenTank.getReadyDate());
 	}
 
 	@Test
@@ -74,9 +74,9 @@ class OxygenTankTest {
 		BigDecimal tankPrice = new BigDecimal((OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED * OxygenTank.CATEGORY_A_RESOURCE_PRICE) / OxygenTank.CATEGORY_A_NUMBER_OF_TANKS_CREATED);
 		Money expectedPrice = new Money(tankPrice);
 
-		subject = new OxygenTank(OxygenCategory.A, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.A, requestDate);
 
-		assertEquals(expectedPrice, subject.getPrice());
+		assertEquals(expectedPrice, oxygenTank.getPrice());
 	}
 
 	@Test
@@ -84,9 +84,9 @@ class OxygenTankTest {
 		BigDecimal tankPrice = new BigDecimal((OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED * OxygenTank.CATEGORY_B_RESOURCE_PRICE) / OxygenTank.CATEGORY_B_NUMBER_OF_TANKS_CREATED);
 		Money expectedPrice = new Money(tankPrice);
 
-		subject = new OxygenTank(OxygenCategory.B, requestDate);
+		oxygenTank = new OxygenTank(OxygenCategory.B, requestDate);
 
-		assertEquals(expectedPrice, subject.getPrice());
+		assertEquals(expectedPrice, oxygenTank.getPrice());
 	}
 
 	@Test

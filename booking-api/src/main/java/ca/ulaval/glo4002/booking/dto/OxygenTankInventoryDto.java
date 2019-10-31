@@ -2,29 +2,21 @@ package ca.ulaval.glo4002.booking.dto;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-
 public class OxygenTankInventoryDto {
-	private String oxygenCategory;
-	List<OxygenTank> notInUseTanks;
-	List<OxygenTank> inUseTanks;
+	List<String> oxygenCategories;
+	List<Long> tanksQuantity;
 
-	public OxygenTankInventoryDto(String oxygenCategory, List<OxygenTank> notInUseTanks, List<OxygenTank> inUseTanks) {
-		this.oxygenCategory = oxygenCategory;
-		this.notInUseTanks = notInUseTanks;
-		this.inUseTanks = inUseTanks;
+	public OxygenTankInventoryDto(List<String> categories, List<Long> tanksQuantity) {
+		this.oxygenCategories = categories;
+		this.tanksQuantity = tanksQuantity;
 	}
 
-	public String getOxygenCategory() {
-		return oxygenCategory;
+	public List<String> getCategories() {
+		return oxygenCategories;
 	}
 
-	public List<OxygenTank> getNotInUseTanks() {
-		return notInUseTanks;
-	}
-
-	public List<OxygenTank> getInUseTanks() {
-		return inUseTanks;
+	public List<Long> getTanksQuantity() {
+		return tanksQuantity;
 	}
 
 }
