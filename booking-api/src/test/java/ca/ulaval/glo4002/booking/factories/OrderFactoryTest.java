@@ -93,7 +93,7 @@ class OrderFactoryTest {
 
     @Test
     void buildWithDto_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsUnderBounds() {
-        LocalDateTime aUnderBoundValue  = OrderFactory.START_DATE_TIME.minusDays(1);
+        LocalDateTime aUnderBoundValue = OrderFactory.START_DATE_TIME.minusDays(1);
         ZonedDateTime aUnderBoundZonedValue = ZonedDateTime.of(aUnderBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 aUnderBoundZonedValue.toString(),
@@ -109,7 +109,7 @@ class OrderFactoryTest {
 
     @Test
     void buildWithDto_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsOverBounds() {
-        LocalDateTime aOverBoundValue  = OrderFactory.END_DATE_TIME.plusDays(1);
+        LocalDateTime aOverBoundValue = OrderFactory.END_DATE_TIME.plusDays(1);
         ZonedDateTime aOverBoundZonedValue = ZonedDateTime.of(aOverBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 aOverBoundZonedValue.toString(),
