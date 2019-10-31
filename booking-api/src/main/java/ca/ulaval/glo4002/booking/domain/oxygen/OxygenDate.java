@@ -9,10 +9,12 @@ import java.time.format.DateTimeFormatter;
 
 public class OxygenDate {
 
+    // TODO : OXY Maybe just a LocalDate time not needed for a oxygenTanks
     private LocalDateTime value;
 
     public OxygenDate(String value) {
         // TODO : OXY : This parsing must be in a Factory, not in the constructor
+        // TODO : OXY : Not sure if actually needed OxyDate should receive a LocalDate not a string since not in the front of the JSON order
         try {
             this.value = ZonedDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
         } catch (Exception exception) {
@@ -20,7 +22,7 @@ public class OxygenDate {
         }
     }
 
-    // TODO : Refactor
+    // TODO : OXY : Refactor
     public OxygenDate(LocalDate value) {
         this.value = value.atStartOfDay();
     }

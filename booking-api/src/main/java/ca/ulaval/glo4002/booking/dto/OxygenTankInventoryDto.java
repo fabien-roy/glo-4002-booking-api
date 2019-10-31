@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.dto;
 import java.util.List;
 
 public class OxygenTankInventoryDto {
+	// TODO : OXY : not sure how we implements this, same as v1 ? With InventoryItemDto ??
 	List<String> oxygenCategories;
 	List<Long> tanksQuantity;
 
