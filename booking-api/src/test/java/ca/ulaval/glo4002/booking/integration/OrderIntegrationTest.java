@@ -85,7 +85,6 @@ public class OrderIntegrationTest {
         OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(order.getOrderNumber().toString(), orderDto.getOrderNumber()); // TODO : ACP : Remove orderNumber from DTO
         assertEquals(0.0, orderDto.getOrderPrice()); // TODO : ACP : Assert correct orderPrice when working
     }
 

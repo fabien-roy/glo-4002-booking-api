@@ -6,8 +6,6 @@ import java.util.List;
 
 public class OrderWithPassesAsPassesDto {
 
-    // TODO : Check if we want orderNumber in response DTO
-    private String orderNumber;
     /*
     @JsonSerialize(using = DoubleContextualSerializer.class)
     @Precision(precision = 2)
@@ -15,14 +13,9 @@ public class OrderWithPassesAsPassesDto {
     private double orderPrice;
     private List<PassDto> passes;
 
-    public OrderWithPassesAsPassesDto(String orderNumber, double orderPrice, List<PassDto> passes) {
-        this.orderNumber = orderNumber;
+    public OrderWithPassesAsPassesDto(double orderPrice, List<PassDto> passes) {
         this.orderPrice = orderPrice;
         this.passes = passes;
-    }
-
-    public String getOrderNumber() {
-        return orderNumber;
     }
 
     public double getOrderPrice() {

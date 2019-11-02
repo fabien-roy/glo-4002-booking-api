@@ -61,8 +61,7 @@ class OrderControllerTest {
     @Test
     void addOrder_shouldReturnCreated() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
-        when(service.order(any())).thenReturn(expectedOrderDto);
+        when(service.order(any())).thenReturn("aOrderNumber");
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 
@@ -72,10 +71,8 @@ class OrderControllerTest {
     @Test
     void addOrder_shouldReturnLocationHeaders() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
         String expectedOrderNumber = "expectedOrderNumber";
-        when(expectedOrderDto.getOrderNumber()).thenReturn(expectedOrderNumber);
-        when(service.order(any())).thenReturn(expectedOrderDto);
+        when(service.order(any())).thenReturn(expectedOrderNumber);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 

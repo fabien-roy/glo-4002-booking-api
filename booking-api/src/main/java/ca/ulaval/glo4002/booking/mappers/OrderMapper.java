@@ -27,7 +27,6 @@ public class OrderMapper {
         }
 
         return new OrderWithPassesAsPassesDto(
-                order.getOrderNumber().toString(),
                 price, // TODO : ACP : When price actually works, use directly
                 passes
         );
