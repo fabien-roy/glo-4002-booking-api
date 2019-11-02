@@ -1,32 +1,22 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
+import ca.ulaval.glo4002.booking.dto.ErrorDto;
+import org.springframework.http.HttpStatus;
+
 public abstract class BookingException extends RuntimeException {
 
     protected String description;
-
-    protected BookingException(){
-        super();
-    }
+    protected HttpStatus status;
 
     protected BookingException(String message) {
         super(message);
     }
 
-    public BookingException(String message, Throwable cause) {
-        super(message, cause);
+    public HttpStatus getStatus() {
+        return status;
     }
 
-    public BookingException(Throwable cause) {
-        super(cause);
-    }
-
-    public BookingException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    public BookingException(String message, String description) {
-        super(message);
-
-        this.description = description;
+    public ErrorDto toErrorDto() {
+        return new ErrorDto(getMessage(), description);
     }
 }

@@ -5,8 +5,7 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 
 import javax.inject.Inject;
@@ -31,7 +30,7 @@ public class OrderFactory {
 
     public Order buildWithDto(OrderWithPassesAsEventDatesDto orderDto) {
         if (orderDto.getPasses() == null) {
-            throw new InvalidOrderFormatException();
+            throw new InvalidFormatException();
         }
 
         OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderDto.getVendorCode());
@@ -53,7 +52,7 @@ public class OrderFactory {
         try {
             return ZonedDateTime.parse(orderDate, DATE_TIME_FORMATTER).toLocalDateTime();
         } catch (Exception exception) {
-            throw new InvalidOrderDateFormatException();
+            throw new InvalidFormatException();
         }
     }
 

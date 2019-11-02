@@ -5,8 +5,7 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -65,7 +64,7 @@ class OrderFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidOrderFormatException_whenThereIsNoPass() {
+    void buildWithDto_shouldThrowInvalidFormatException_whenThereIsNoPass() {
         ZonedDateTime orderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate.toString(),
@@ -73,11 +72,11 @@ class OrderFactoryTest {
                 null
         );
 
-        assertThrows(InvalidOrderFormatException.class, () -> subject.buildWithDto(orderDto));
+        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(orderDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidOrderDateException_whenOrderDateIsInvalid() {
+    void buildWithDto_shouldThrowInvalidFormatException_whenOrderDateIsInvalid() {
         String anInvalidOrderDate = "anInvalidDate";
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 anInvalidOrderDate,
@@ -85,10 +84,7 @@ class OrderFactoryTest {
                 mock(PassListDto.class)
         );
 
-        assertThrows(
-                InvalidOrderDateFormatException.class,
-                () -> subject.buildWithDto(orderDto)
-        );
+        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(orderDto));
     }
 
     @Test
@@ -117,9 +113,6 @@ class OrderFactoryTest {
                 mock(PassListDto.class)
         );
 
-        assertThrows(
-                OutOfBoundsOrderDateException.class,
-                () -> subject.buildWithDto(orderDto)
-        );
+        assertThrows(OutOfBoundsOrderDateException.class, () -> subject.buildWithDto(orderDto));
     }
 }

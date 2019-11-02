@@ -7,9 +7,7 @@ import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.passes.InvalidEventDateFormatException;
-import ca.ulaval.glo4002.booking.exceptions.passes.PackagePassWithEventDateException;
-import ca.ulaval.glo4002.booking.exceptions.passes.SinglePassWithoutEventDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -54,11 +52,11 @@ public class PassListFactory {
     private void validateEventDates(List<String> eventDates, PassOptions passOption) {
         if (eventDates == null) {
             if (passOption.equals(PassOptions.SINGLE_PASS)) {
-                throw new SinglePassWithoutEventDateException();
+                throw new InvalidFormatException();
             }
         } else {
             if (passOption.equals(PassOptions.PACKAGE)) {
-                throw new PackagePassWithEventDateException();
+                throw new InvalidFormatException();
             }
         }
     }
@@ -69,7 +67,7 @@ public class PassListFactory {
         try {
             parsedEventDate = LocalDate.parse(eventDate);
         } catch (Exception exception) {
-            throw new InvalidEventDateFormatException();
+            throw new InvalidFormatException();
         }
 
         return new EventDate(parsedEventDate);

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.enums;
 
-import ca.ulaval.glo4002.booking.exceptions.passes.InvalidPassOptionException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,7 @@ public enum PassOptions {
     public static PassOptions get(String option) {
         PassOptions foundOption = lookup.get(option);
 
-        if (foundOption == null) throw new InvalidPassOptionException();
+        if (foundOption == null) throw new InvalidFormatException();
 
         return foundOption;
     }

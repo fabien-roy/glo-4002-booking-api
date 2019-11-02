@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 import org.junit.jupiter.api.Test;
 
@@ -24,13 +24,10 @@ class OrderDateTest {
     }
 
     @Test
-    void constructing_shouldThrowInvalidOrderDateException_whenOrderDateIsInvalid() {
+    void constructing_shouldThrowInvalidFormatException_whenOrderDateIsInvalid() {
         String anInvalidOrderDate = "anInvalidDate";
 
-        assertThrows(
-                InvalidOrderDateFormatException.class,
-                () -> new OrderDate(anInvalidOrderDate)
-        );
+        assertThrows(InvalidFormatException.class, () -> new OrderDate(anInvalidOrderDate));
     }
 
     @Test

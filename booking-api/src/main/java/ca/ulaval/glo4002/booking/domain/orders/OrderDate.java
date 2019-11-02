@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class OrderDate {
         try {
             newValue = ZonedDateTime.parse(value, DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
         } catch (Exception exception) {
-            throw new InvalidOrderDateFormatException();
+            throw new InvalidFormatException();
         }
 
         validateOrderDate(newValue);

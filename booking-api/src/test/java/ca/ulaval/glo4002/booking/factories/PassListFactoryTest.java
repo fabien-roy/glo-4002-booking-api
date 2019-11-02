@@ -6,9 +6,11 @@ import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCal
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.passes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -68,13 +70,13 @@ class PassListFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowPackagePassWithEventDateException_whenEventDateIsNotNullAndPassOptionIsPackage() {
+    void buildWithDto_shouldThrowInvalidFormatException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
         passList.setOption(mock(PassOption.class));
 
-        assertThrows(PackagePassWithEventDateException.class, () -> subject.buildWithDto(passListDto));
+        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(passListDto));
     }
 
     @Test
@@ -83,27 +85,27 @@ class PassListFactoryTest {
         PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.SINGLE_PASS.toString(), null);
         passList.setOption(mock(PassOption.class));
 
-        assertThrows(SinglePassWithoutEventDateException.class, () -> subject.buildWithDto(passListDto));
+        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(passListDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidPassCategoryException_whenPassCategoryDoesNotExist() {
+    void buildWithDto_shouldThrowInvalidFormatException_whenPassCategoryDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassCategory";
         PassListDto passListDto = new PassListDto(anInvalidPassOption, PassOptions.PACKAGE.toString(), new ArrayList<>());
 
-        assertThrows(InvalidPassCategoryException.class, () -> subject.buildWithDto(passListDto));
+        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(passListDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidPassOptionException_whenPassOptionDoesNotExist() {
+    void buildWithDto_shouldThrowInvalidFormatException_whenPassOptionDoesNotExist() {
         String anInvalidPassOption = "anInvalidPassOption";
         PassListDto passListDto = new PassListDto(PassCategories.SUPERNOVA.toString(), anInvalidPassOption, new ArrayList<>());
 
-        assertThrows(InvalidPassOptionException.class, () -> subject.buildWithDto(passListDto));
+        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(passListDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidEventDateException_whenEventDateIsInvalid() {
+    void buildWithDto_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
         String anInvalidEventDate = "anInvalidDate";
         PassListDto passListDto = new PassListDto(
                 PassCategories.SUPERNOVA.toString(),
@@ -111,9 +113,6 @@ class PassListFactoryTest {
                 Collections.singletonList(anInvalidEventDate)
         );
 
-        assertThrows(
-                InvalidEventDateFormatException.class,
-                () -> subject.buildWithDto(passListDto)
-        );
+        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(passListDto));
     }
 }

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 public class OrderNumber {
 
@@ -44,7 +44,7 @@ public class OrderNumber {
         int numberOfSeparators = orderNumber.split(SEPARATOR).length - 1;
 
         if (numberOfSeparators != 1) {
-            throw new InvalidOrderNumberFormatException();
+            throw new InvalidFormatException();
         }
     }
 }
