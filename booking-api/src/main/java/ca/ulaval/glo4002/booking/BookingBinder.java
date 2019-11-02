@@ -29,6 +29,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindRepositories() {
+        // TODO : ACP : Repository seems to be re-created during runtime
         bind(InMemoryOrderRepository.class).to(OrderRepository.class);
     }
 

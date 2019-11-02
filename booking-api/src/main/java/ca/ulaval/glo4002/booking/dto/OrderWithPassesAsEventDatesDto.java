@@ -6,6 +6,10 @@ public class OrderWithPassesAsEventDatesDto {
     private String vendorCode;
     private PassListDto passes;
 
+    public OrderWithPassesAsEventDatesDto() {
+        // Empty constructor for parsing
+    }
+
     public OrderWithPassesAsEventDatesDto(String orderDate, String vendorCode, PassListDto passes) {
         this.orderDate = orderDate;
         this.vendorCode = vendorCode;
