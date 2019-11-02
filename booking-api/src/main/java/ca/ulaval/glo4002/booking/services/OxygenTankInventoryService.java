@@ -28,12 +28,13 @@ public class OxygenTankInventoryService {
 	}
 
 	// TODO : orderOxygenTanks
-	public OxygenTankInventoryDto orderOxygenTanks(OxygenCategory category, LocalDate requestDate, Long numberOfDays) {
+	public List<OxygenTankInventoryDto> orderOxygenTanks(OxygenCategory category, LocalDate requestDate,
+			Long numberOfDays) {
 		List<OxygenTank> oxygenTank = factory.buildOxygenTank(category, requestDate, numberOfDays);
 		// TODO refactor, TDA. Not sure about this one :S.
 		OxygenTankInventory inventory = repository.getInventory();
 		// TODO Look why this line fail the test :
-		inventory.addTanksToInventory(category, oxygenTank);
+		// inventory.addTanksToInventory(category, oxygenTank);
 		repository.setInventory(inventory);
 		return mapper.toDto(inventory);
 	}

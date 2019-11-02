@@ -1,22 +1,20 @@
 package ca.ulaval.glo4002.booking.dto;
 
-import java.util.List;
-
 public class OxygenTankInventoryDto {
-	// TODO : OXY : not sure how we implements this, same as v1 ? With InventoryItemDto ??
-	List<String> oxygenCategories;
-	List<Long> tanksQuantity;
+	// TODO : String and Long changed (were list). Check if its okay
+	String oxygenCategories;
+	Long tanksQuantity;
 
-	public OxygenTankInventoryDto(List<String> categories, List<Long> tanksQuantity) {
+	public OxygenTankInventoryDto(String categories, Long tanksQuantity) {
 		this.oxygenCategories = categories;
 		this.tanksQuantity = tanksQuantity;
 	}
 
-	public List<String> getCategories() {
+	public String getCategories() {
 		return oxygenCategories;
 	}
 
-	public List<Long> getTanksQuantity() {
+	public Long getTanksQuantity() {
 		return tanksQuantity;
 	}
 
