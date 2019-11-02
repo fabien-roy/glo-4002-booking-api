@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 
 import java.util.ArrayList;
@@ -28,10 +27,6 @@ public class InMemoryOrderRepository implements OrderRepository {
     }
 
     public void addOrder(Order order) {
-        if (orders.contains(order)) {
-            throw new OrderAlreadyCreatedException(order.getOrderNumber().toString());
-        }
-
         orders.add(order);
     }
 }

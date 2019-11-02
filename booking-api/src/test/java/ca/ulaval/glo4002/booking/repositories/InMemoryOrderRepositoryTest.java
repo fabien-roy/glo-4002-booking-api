@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
 import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -76,16 +75,5 @@ class InMemoryOrderRepositoryTest {
         assertTrue(otherFoundOrder.isPresent());
         assertEquals(aOrderNumber, foundOrder.get().getOrderNumber());
         assertEquals(anotherOrderNumber, otherFoundOrder.get().getOrderNumber());
-    }
-
-    @Test
-    void addOrder_shouldThrowOrderAlreadyCreatedException_whenOrderAlreadyExists() {
-        OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
-        LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
-        PassList aPassList = mock(PassList.class);
-        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassList);
-        subject.addOrder(aOrder);
-
-        assertThrows(OrderAlreadyCreatedException.class, () -> subject.addOrder(aOrder));
     }
 }
