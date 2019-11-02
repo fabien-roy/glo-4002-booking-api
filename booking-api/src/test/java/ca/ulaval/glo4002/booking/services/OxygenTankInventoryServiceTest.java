@@ -1,26 +1,39 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.mockito.Mockito.mock;
+import ca.ulaval.glo4002.booking.enums.OxygenCategory;
+import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
+import ca.ulaval.glo4002.booking.mappers.OxygenTankInventoryMapper;
+import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
 
 class OxygenTankInventoryServiceTest {
 
-    private OxygenTankInventoryService oxygenTankInventoryService;
+	private OxygenTankInventoryService oxygenTankInventoryService;
+	private OxygenTankInventoryRepository repository;
 
-    @BeforeEach
-    void setUpSubject() {
-        OxygenTankInventoryRepository repository = mock(OxygenTankInventoryRepository.class);
-        OxygenTankFactory factory = mock(OxygenTankFactory.class);
+	@BeforeEach
+	void setUpSubject() {
+		repository = mock(OxygenTankInventoryRepository.class);
+		OxygenTankFactory factory = mock(OxygenTankFactory.class);
+		OxygenTankInventoryMapper mapper = mock(OxygenTankInventoryMapper.class);
 
-        oxygenTankInventoryService = new OxygenTankInventoryService(repository, factory);
-    }
+		oxygenTankInventoryService = new OxygenTankInventoryService(repository, factory, mapper);
+	}
 
-    @Test
-    void orderOxygenTank_shouldOrderOxygenTanks() {
-        // TODO : OXY : OxygenTankInventoryService.orderOxygenTanks tests
-    }
+	@Test
+	void orderOxygenTank_shouldOrderOxygenTanks() {
+		OxygenCategory category = OxygenCategory.A;
+		LocalDate requestDate = LocalDate.of(2050, 06, 17);
+		Long numberOfDays = 1L;
+		oxygenTankInventoryService.orderOxygenTanks(category, requestDate, numberOfDays);
+		// TODO not sure about this test, should maybe refactor
+		verify(repository).setInventory(any());
+	}
 }
