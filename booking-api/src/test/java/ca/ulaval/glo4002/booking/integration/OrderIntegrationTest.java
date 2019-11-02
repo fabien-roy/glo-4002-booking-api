@@ -10,7 +10,9 @@ import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.domain.passes.PassOption;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.ErrorDto;
+import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
@@ -25,12 +27,16 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 // TODO : Integration tests should boot server on another port and use BookingResourceConfig to inject dependencies
@@ -128,5 +134,41 @@ public class OrderIntegrationTest {
         assertEquals(expectedErrorDescription, errorDto.getDescription());
     }
 
-    // TODO : Write POST tests
+    @Test
+    public void addOrder_shouldAddOrder() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.PACKAGE.toString()
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenOrderDateIsUnderBounds() {
+
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenOrderDateIsOverBounds() {
+
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenOrderDateIsInvalid() {
+
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenVendorCodeIsInvalid() {
+
+    }
 }

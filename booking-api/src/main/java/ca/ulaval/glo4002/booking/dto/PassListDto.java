@@ -8,8 +8,9 @@ public class PassListDto {
     private String passOption;
     private List<String> eventDates;
 
-    public PassListDto() {
-        // Empty constructor for parsing
+    public PassListDto(String passCategory, String passOption) {
+        this.passCategory = passCategory;
+        this.passOption = passOption;
     }
 
     public PassListDto(String passCategory, String passOption, List<String> eventDates) {
