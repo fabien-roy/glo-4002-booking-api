@@ -5,15 +5,9 @@ import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.dto.ErrorDto;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.dto.PassListDto;
+import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
@@ -84,13 +78,79 @@ public class PassIntegrationTest {
         orderRepository.addOrder(order);
 
         ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
+        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(0);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1, order.getPassList().getPasses().size());
-        assertEquals(pass.getPassNumber().getValue(), orderDto.getPasses().get(0).getPassNumber());
-        assertEquals(passList.getCategory().getName(), orderDto.getPasses().get(0).getPassCategory());
-        assertEquals(passList.getOption().getName(), orderDto.getPasses().get(0).getPassOption());
-        assertNull(orderDto.getPasses().get(0).getEventDate());
+        assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
+        assertEquals(passList.getCategory().getName(), passDto.getPassCategory());
+        assertEquals(passList.getOption().getName(), passDto.getPassOption());
+        assertNull(passDto.getEventDate());
+    }
+
+    @Test
+    public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
+        PassList passList = new PassList(
+                new PassCategory(PassCategories.SUPERNOVA.toString()),
+                new PassOption(PassOptions.SINGLE_PASS.toString()),
+                new NoDiscountPriceCalculationStrategy()
+        );
+        Pass pass = new Pass(
+                new Number(1L),
+                new EventDate(EventDate.START_DATE)
+        );
+        passList.setPasses(Collections.singletonList(pass));
+        Order order = new Order(
+                new OrderNumber(new Number(1L), "VENDOR"),
+                OrderFactory.START_DATE_TIME,
+                passList
+        );
+        orderRepository.addOrder(order);
+
+        ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(0);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
+        assertEquals(passList.getCategory().getName(), passDto.getPassCategory());
+        assertEquals(passList.getOption().getName(), passDto.getPassOption());
+        assertEquals(pass.getEventDate().toString(), passDto.getEventDate());
+    }
+
+    @Test
+    public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
+        PassList passList = new PassList(
+                new PassCategory(PassCategories.SUPERNOVA.toString()),
+                new PassOption(PassOptions.SINGLE_PASS.toString()),
+                new NoDiscountPriceCalculationStrategy()
+        );
+        Pass aPass = new Pass(
+                new Number(1L),
+                new EventDate(EventDate.START_DATE)
+        );
+        Pass anotherPass = new Pass(
+                new Number(2L),
+                new EventDate(EventDate.START_DATE.plusDays(1))
+        );
+        passList.setPasses(Arrays.asList(aPass, anotherPass));
+        Order order = new Order(
+                new OrderNumber(new Number(1L), "VENDOR"),
+                OrderFactory.START_DATE_TIME,
+                passList
+        );
+        orderRepository.addOrder(order);
+
+        ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        PassDto aPassDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(0);
+        PassDto anotherPassDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(1);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(aPass.getPassNumber().getValue(), aPassDto.getPassNumber());
+        assertEquals(passList.getCategory().getName(), aPassDto.getPassCategory());
+        assertEquals(passList.getOption().getName(), aPassDto.getPassOption());
+        assertEquals(aPass.getEventDate().toString(), aPassDto.getEventDate());
+        assertEquals(anotherPass.getPassNumber().getValue(), anotherPassDto.getPassNumber());
+        assertEquals(passList.getCategory().getName(), anotherPassDto.getPassCategory());
+        assertEquals(passList.getOption().getName(), anotherPassDto.getPassOption());
+        assertEquals(anotherPass.getEventDate().toString(), anotherPassDto.getEventDate());
     }
 }
