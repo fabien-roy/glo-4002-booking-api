@@ -195,11 +195,21 @@ public class OrderIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenOrderDateIsInvalid() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.PACKAGE.toString()
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                "anInvalidOrderDate",
+                "VENDOR",
+                passListDto
+        );
 
-    }
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
 
-    @Test
-    public void addOrder_shouldReturnBadRequest_whenVendorCodeIsInvalid() {
-
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(InvalidFormatException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidFormatException.DESCRIPTION, errorDto.getDescription());
     }
 }
