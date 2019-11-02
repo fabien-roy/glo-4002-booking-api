@@ -40,13 +40,6 @@ class OrderMapperTest {
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectOrderNumber() {
-        OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
-
-        assertEquals(orderNumber.toString(), orderDto.getOrderNumber());
-    }
-
-    @Test
     void toDto_shouldBuildDtoWithCorrectOrderPrice() {
         OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
 

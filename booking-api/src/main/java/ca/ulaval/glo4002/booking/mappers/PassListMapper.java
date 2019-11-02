@@ -13,14 +13,19 @@ public class PassListMapper {
         String passOption = passList.getOption().getName();
 
         List<PassDto> passDtos = new ArrayList<>();
-        passList.getPasses().forEach(pass ->
+        passList.getPasses().forEach(pass -> {
+                String eventDate = null;
+
+                if (pass.getEventDate() != null) eventDate = pass.getEventDate().toString();
+
                 passDtos.add(new PassDto(
                     pass.getPassNumber().getValue(),
                     passCategory,
                     passOption,
-                    pass.getEventDate().toString()
-                )
-        ));
+                    eventDate
+                ));
+            }
+        );
 
         return passDtos;
     }

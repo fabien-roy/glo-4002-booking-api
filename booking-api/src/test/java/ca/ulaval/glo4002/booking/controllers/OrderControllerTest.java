@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,6 @@ class OrderControllerTest {
         subject = new OrderController(service);
     }
 
-    // TODO : ACP : Controllers must throw correct http status and error dto
     @Test
     void getByOrderNumber_shouldReturnNotFound_whenOrderIsNotFound() {
         String aOrderNumber = "aOrderNumber";
@@ -49,11 +48,10 @@ class OrderControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    // TODO : ACP : Controllers must throw correct http status and error dto
     @Test
     void addOrder_shouldReturnBadRequest_whenBadRequest() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        when(service.order(any())).thenThrow(new OrderAlreadyCreatedException("aOrderNumber"));
+        when(service.order(any())).thenThrow(new InvalidFormatException());
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 
@@ -63,8 +61,7 @@ class OrderControllerTest {
     @Test
     void addOrder_shouldReturnCreated() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
-        when(service.order(any())).thenReturn(expectedOrderDto);
+        when(service.order(any())).thenReturn("aOrderNumber");
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 
@@ -74,10 +71,8 @@ class OrderControllerTest {
     @Test
     void addOrder_shouldReturnLocationHeaders() {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-        OrderWithPassesAsPassesDto expectedOrderDto = mock(OrderWithPassesAsPassesDto.class);
         String expectedOrderNumber = "expectedOrderNumber";
-        when(expectedOrderDto.getOrderNumber()).thenReturn(expectedOrderNumber);
-        when(service.order(any())).thenReturn(expectedOrderDto);
+        when(service.order(any())).thenReturn(expectedOrderNumber);
 
         ResponseEntity<?> response = subject.addOrder(aOrderDto);
 

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderNumberFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 public class OrderNumber {
 
@@ -40,11 +40,25 @@ public class OrderNumber {
         return vendorCode + SEPARATOR + number.toString();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof OrderNumber)) return false;
+
+        OrderNumber otherOrderNumber = (OrderNumber) other;
+
+        return number.equals(otherOrderNumber.getNumber()) && vendorCode.equals(otherOrderNumber.getVendorCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return number.hashCode() + vendorCode.hashCode();
+    }
+
     private void validateOrderNumber(String orderNumber) {
         int numberOfSeparators = orderNumber.split(SEPARATOR).length - 1;
 
         if (numberOfSeparators != 1) {
-            throw new InvalidOrderNumberFormatException();
+            throw new InvalidFormatException();
         }
     }
 }

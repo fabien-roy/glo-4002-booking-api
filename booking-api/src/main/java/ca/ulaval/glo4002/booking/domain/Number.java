@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidNumberFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 public class Number {
 
@@ -14,7 +14,7 @@ public class Number {
         try {
             this.value = Long.parseLong(value);
         } catch (Exception exception) {
-            throw new InvalidNumberFormatException();
+            throw new InvalidFormatException();
         }
     }
 

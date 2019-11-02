@@ -23,12 +23,12 @@ public class OrderService {
         this.mapper = mapper;
     }
 
-    public OrderWithPassesAsPassesDto order(OrderWithPassesAsEventDatesDto orderDto) {
+    public String order(OrderWithPassesAsEventDatesDto orderDto) {
         Order order = factory.buildWithDto(orderDto);
 
         repository.addOrder(order);
 
-        return mapper.toDto(order);
+        return order.getOrderNumber().toString();
     }
 
     public OrderWithPassesAsPassesDto getByOrderNumber(String requestedOrderNumber) {

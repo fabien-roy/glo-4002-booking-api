@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidNumberFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,11 +10,8 @@ class NumberTest {
     private Number subject;
 
     @Test
-    void constructing_shouldThrowInvalidNumberFormatException_whenNumberIsInvalid() {
-        assertThrows(
-                InvalidNumberFormatException.class,
-                () -> new Number("anInvalidNumberFormat")
-        );
+    void constructing_shouldThrowInvalidFormatException_whenNumberIsInvalid() {
+        assertThrows(InvalidFormatException.class, () -> new Number("anInvalidNumberFormat"));
     }
 
     @Test
