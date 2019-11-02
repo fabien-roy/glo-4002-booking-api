@@ -11,8 +11,6 @@ import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
@@ -30,7 +28,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 

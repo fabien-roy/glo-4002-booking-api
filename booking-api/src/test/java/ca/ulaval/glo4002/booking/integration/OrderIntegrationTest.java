@@ -17,7 +17,7 @@ import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassListFactory;
@@ -170,8 +170,8 @@ public class OrderIntegrationTest {
         ErrorDto errorDto = (ErrorDto) response.getBody();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals(OutOfBoundsOrderDateException.MESSAGE, errorDto.getError());
-        assertEquals(OutOfBoundsOrderDateException.DESCRIPTION, errorDto.getDescription());
+        assertEquals(InvalidOrderDateException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidOrderDateException.DESCRIPTION, errorDto.getDescription());
     }
 
     @Test
@@ -190,8 +190,8 @@ public class OrderIntegrationTest {
         ErrorDto errorDto = (ErrorDto) response.getBody();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals(OutOfBoundsOrderDateException.MESSAGE, errorDto.getError());
-        assertEquals(OutOfBoundsOrderDateException.DESCRIPTION, errorDto.getDescription());
+        assertEquals(InvalidOrderDateException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidOrderDateException.DESCRIPTION, errorDto.getDescription());
     }
 
     @Test

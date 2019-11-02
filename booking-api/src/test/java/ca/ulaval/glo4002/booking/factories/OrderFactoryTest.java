@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -88,7 +88,7 @@ class OrderFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsUnderBounds() {
+    void buildWithDto_shouldThrowInvalidOrderDateException_whenOrderDateIsUnderBounds() {
         LocalDateTime aUnderBoundValue  = OrderFactory.START_DATE_TIME.minusDays(1);
         ZonedDateTime aUnderBoundZonedValue = ZonedDateTime.of(aUnderBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
@@ -98,13 +98,13 @@ class OrderFactoryTest {
         );
 
         assertThrows(
-                OutOfBoundsOrderDateException.class,
+                InvalidOrderDateException.class,
                 () -> subject.buildWithDto(orderDto)
         );
     }
 
     @Test
-    void buildWithDto_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsOverBounds() {
+    void buildWithDto_shouldThrowInvalidOrderDateException_whenOrderDateIsOverBounds() {
         LocalDateTime aOverBoundValue  = OrderFactory.END_DATE_TIME.plusDays(1);
         ZonedDateTime aOverBoundZonedValue = ZonedDateTime.of(aOverBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
@@ -113,6 +113,6 @@ class OrderFactoryTest {
                 mock(PassListDto.class)
         );
 
-        assertThrows(OutOfBoundsOrderDateException.class, () -> subject.buildWithDto(orderDto));
+        assertThrows(InvalidOrderDateException.class, () -> subject.buildWithDto(orderDto));
     }
 }

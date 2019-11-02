@@ -7,8 +7,7 @@ import org.springframework.http.HttpStatus;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-// TODO : ACP : Rename to InvalidOrderDateException
-public class OutOfBoundsOrderDateException extends BookingException {
+public class InvalidOrderDateException extends BookingException {
 
     private static final DateTimeFormatter MESSAGE_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMMM d y").withLocale(Locale.ENGLISH);
     public static final String MESSAGE = "INVALID_ORDER_DATE";
@@ -17,7 +16,7 @@ public class OutOfBoundsOrderDateException extends BookingException {
             " and " +
             OrderFactory.END_DATE_TIME.format(MESSAGE_DATE_TIME_FORMATTER);
 
-    public OutOfBoundsOrderDateException() {
+    public InvalidOrderDateException() {
         super(MESSAGE);
 
         description = DESCRIPTION;

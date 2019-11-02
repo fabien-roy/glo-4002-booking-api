@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateException;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
@@ -58,7 +58,7 @@ public class OrderFactory {
 
     private void validateOrderDate(LocalDateTime orderDate) {
         if (orderDate.isBefore(START_DATE_TIME) || orderDate.isAfter(END_DATE_TIME)) {
-            throw new OutOfBoundsOrderDateException();
+            throw new InvalidOrderDateException();
         }
     }
 }

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -31,24 +31,18 @@ class OrderDateTest {
     }
 
     @Test
-    void constructing_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsUnderBounds() {
+    void constructing_shouldThrowInvalidOrderDateException_whenOrderDateIsUnderBounds() {
         LocalDateTime aUnderBoundValue  = OrderDate.START_DATE_TIME.minusDays(1);
         ZonedDateTime aUnderBoundZonedValue = ZonedDateTime.of(aUnderBoundValue, ZoneId.systemDefault());
 
-        assertThrows(
-                OutOfBoundsOrderDateException.class,
-                () -> new OrderDate(aUnderBoundZonedValue.toString())
-        );
+        assertThrows(InvalidOrderDateException.class, () -> new OrderDate(aUnderBoundZonedValue.toString()));
     }
 
     @Test
-    void constructing_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsOverBounds() {
+    void constructing_shouldThrowInvalidOrderDateException_whenOrderDateIsOverBounds() {
         LocalDateTime aOverBoundValue  = OrderDate.END_DATE_TIME.plusDays(1);
         ZonedDateTime aOverBoundZonedValue = ZonedDateTime.of(aOverBoundValue, ZoneId.systemDefault());
 
-        assertThrows(
-                OutOfBoundsOrderDateException.class,
-                () -> new OrderDate(aOverBoundZonedValue.toString())
-        );
+        assertThrows(InvalidOrderDateException.class, () -> new OrderDate(aOverBoundZonedValue.toString()));
     }
 }
