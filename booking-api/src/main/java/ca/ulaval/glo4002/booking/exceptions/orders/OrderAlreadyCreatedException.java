@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.exceptions.orders;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import org.springframework.http.HttpStatus;
 
+// TODO : ACP : This is useless
 public class OrderAlreadyCreatedException extends BookingException {
 
     public OrderAlreadyCreatedException(String orderNumber) {

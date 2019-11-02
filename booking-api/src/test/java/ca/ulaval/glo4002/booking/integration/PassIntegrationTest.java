@@ -13,6 +13,7 @@ import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassListFactory;
@@ -152,5 +153,168 @@ public class PassIntegrationTest {
         assertEquals(passList.getCategory().getName(), anotherPassDto.getPassCategory());
         assertEquals(passList.getOption().getName(), anotherPassDto.getPassOption());
         assertEquals(anotherPass.getEventDate().toString(), anotherPassDto.getEventDate());
+    }
+
+    @Test
+    public void addOrder_shouldAddPasses_whenPassesAreSinglePass() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.SINGLE_PASS.toString(),
+                Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString())
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenPassIsPackageAndHasEventDate() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.PACKAGE.toString(),
+                Collections.singletonList(EventDate.START_DATE.toString())
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(InvalidFormatException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidFormatException.DESCRIPTION, errorDto.getDescription());
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenPassIsSinglePackageAndHasNoEventDate() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.SINGLE_PASS.toString()
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(InvalidFormatException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidFormatException.DESCRIPTION, errorDto.getDescription());
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenPassCategoryIsInvalid() {
+        PassListDto passListDto = new PassListDto(
+                "anInvalidPassCategory",
+                PassOptions.PACKAGE.toString()
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(InvalidFormatException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidFormatException.DESCRIPTION, errorDto.getDescription());
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenPassOptionIsInvalid() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                "anInvalidPassOption"
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(InvalidFormatException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidFormatException.DESCRIPTION, errorDto.getDescription());
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenEventDateIsInvalid() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.SINGLE_PASS.toString(),
+                Collections.singletonList("anInvalidOrderDate")
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(InvalidFormatException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidFormatException.DESCRIPTION, errorDto.getDescription());
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenEventDateIsUnderBounds() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.SINGLE_PASS.toString(),
+                Collections.singletonList(EventDate.START_DATE.minusDays(1).toString())
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(OutOfBoundsEventDateException.MESSAGE, errorDto.getError());
+        assertEquals(OutOfBoundsEventDateException.DESCRIPTION, errorDto.getDescription());
+    }
+
+    @Test
+    public void addOrder_shouldReturnBadRequest_whenEventDateIsOverBounds() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.SINGLE_PASS.toString(),
+                Collections.singletonList(EventDate.END_DATE.plusDays(1).toString())
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
+
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(OutOfBoundsEventDateException.MESSAGE, errorDto.getError());
+        assertEquals(OutOfBoundsEventDateException.DESCRIPTION, errorDto.getDescription());
     }
 }
