@@ -9,4 +9,12 @@ public class ErrorDto {
         this.error = error;
         this.description = description;
     }
+
+    public String getError() {
+        return error;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

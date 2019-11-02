@@ -40,6 +40,20 @@ public class OrderNumber {
         return vendorCode + SEPARATOR + number.toString();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof OrderNumber)) return false;
+
+        OrderNumber otherOrderNumber = (OrderNumber) other;
+
+        return number.equals(otherOrderNumber.getNumber()) && vendorCode.equals(otherOrderNumber.getVendorCode());
+    }
+
+    @Override
+    public int hashCode() {
+        return number.hashCode() + vendorCode.hashCode();
+    }
+
     private void validateOrderNumber(String orderNumber) {
         int numberOfSeparators = orderNumber.split(SEPARATOR).length - 1;
 

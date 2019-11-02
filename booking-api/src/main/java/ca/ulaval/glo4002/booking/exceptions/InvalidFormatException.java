@@ -4,10 +4,13 @@ import org.springframework.http.HttpStatus;
 
 public class InvalidFormatException extends BookingException {
 
-    public InvalidFormatException() {
-        super("INVALID_FORMAT");
+    public static final String MESSAGE = "INVALID_FORMAT";
+    public static final String DESCRIPTION = "Invalid format";
 
-        description = "Invalid format";
+    public InvalidFormatException() {
+        super(MESSAGE);
+
+        description = DESCRIPTION;
         status = HttpStatus.BAD_REQUEST;
     }
 }

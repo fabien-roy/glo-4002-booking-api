@@ -5,10 +5,13 @@ import org.springframework.http.HttpStatus;
 
 public class OrderNotFoundException extends BookingException {
 
-    public OrderNotFoundException(String orderNumber) {
-        super("ORDER_NOT_FOUND");
+    public static final String MESSAGE = "ORDER_NOT_FOUND";
+    public static final String DESCRIPTION = "Order with number {orderNumber} not found";
 
-        description = "Order with number " + orderNumber + " already exists";
+    public OrderNotFoundException(String orderNumber) {
+        super(MESSAGE);
+
+        description = DESCRIPTION.replace("{orderNumber}", orderNumber);
         status = HttpStatus.NOT_FOUND;
     }
 }
