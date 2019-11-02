@@ -5,9 +5,14 @@ import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
+import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.PassOption;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.ErrorDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
+import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
@@ -22,6 +27,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -54,17 +61,25 @@ public class OrderIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrder() {
+        PassList passList = new PassList(
+                new PassCategory(PassCategories.SUPERNOVA.toString()),
+                new PassOption(PassOptions.PACKAGE.toString()),
+                new NoDiscountPriceCalculationStrategy()
+        );
+        passList.setPasses(new ArrayList<>());
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
-                mock(PassList.class)
+                passList
         );
         orderRepository.addOrder(order);
 
         ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        // OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
+        OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(order.getOrderNumber().toString(), orderDto.getOrderNumber()); // TODO : ACP : Remove orderNumber from DTO
+        assertEquals(0.0, orderDto.getOrderPrice()); // TODO : ACP : Assert correct orderPrice when working
     }
 
     @Test

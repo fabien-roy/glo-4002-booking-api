@@ -18,10 +18,17 @@ public class OrderMapper {
 
     public OrderWithPassesAsPassesDto toDto(Order order) {
         List<PassDto> passes = passListMapper.toDto(order.getPassList());
+        double price;
+
+        if (order.getPrice() == null) {
+            price = 0.0;
+        } else {
+            price = order.getPrice().getValue().doubleValue();
+        }
 
         return new OrderWithPassesAsPassesDto(
                 order.getOrderNumber().toString(),
-                order.getPrice().getValue().doubleValue(),
+                price, // TODO : ACP : When price actually works, use directly
                 passes
         );
     }
