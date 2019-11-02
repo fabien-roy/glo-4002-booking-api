@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassListFactory;
@@ -290,8 +290,8 @@ public class PassIntegrationTest {
         ErrorDto errorDto = (ErrorDto) response.getBody();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals(OutOfBoundsEventDateException.MESSAGE, errorDto.getError());
-        assertEquals(OutOfBoundsEventDateException.DESCRIPTION, errorDto.getDescription());
+        assertEquals(InvalidEventDateException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidEventDateException.DESCRIPTION, errorDto.getDescription());
     }
 
     @Test
@@ -311,7 +311,7 @@ public class PassIntegrationTest {
         ErrorDto errorDto = (ErrorDto) response.getBody();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals(OutOfBoundsEventDateException.MESSAGE, errorDto.getError());
-        assertEquals(OutOfBoundsEventDateException.DESCRIPTION, errorDto.getDescription());
+        assertEquals(InvalidEventDateException.MESSAGE, errorDto.getError());
+        assertEquals(InvalidEventDateException.DESCRIPTION, errorDto.getDescription());
     }
 }

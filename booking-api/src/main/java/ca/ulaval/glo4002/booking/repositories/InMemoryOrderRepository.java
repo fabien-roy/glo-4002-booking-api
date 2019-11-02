@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

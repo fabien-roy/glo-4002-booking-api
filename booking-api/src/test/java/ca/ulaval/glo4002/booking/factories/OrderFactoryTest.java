@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

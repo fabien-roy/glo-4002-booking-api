@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.exceptions.passes;
+package ca.ulaval.glo4002.booking.exceptions;
 
 import ca.ulaval.glo4002.booking.domain.passes.EventDate;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
@@ -7,8 +7,7 @@ import org.springframework.http.HttpStatus;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-// TODO : ACP : Rename to InvalidEventDateException
-public class OutOfBoundsEventDateException extends BookingException {
+public class InvalidEventDateException extends BookingException {
 
     private static final DateTimeFormatter MESSAGE_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMMM d y").withLocale(Locale.ENGLISH);
     public static final String MESSAGE = "INVALID_EVENT_DATE";
@@ -17,7 +16,7 @@ public class OutOfBoundsEventDateException extends BookingException {
             " and " +
             EventDate.END_DATE.format(MESSAGE_DATE_TIME_FORMATTER);
 
-    public OutOfBoundsEventDateException() {
+    public InvalidEventDateException() {
         super(MESSAGE);
 
         description = DESCRIPTION;

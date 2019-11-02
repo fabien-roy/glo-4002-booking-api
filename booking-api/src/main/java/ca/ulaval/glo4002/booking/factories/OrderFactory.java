@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassList;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;

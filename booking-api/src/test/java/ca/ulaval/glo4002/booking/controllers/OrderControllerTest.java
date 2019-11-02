@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderAlreadyCreatedException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.OrderAlreadyCreatedException;
+import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

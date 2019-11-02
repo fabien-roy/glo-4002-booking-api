@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.exceptions.orders;
+package ca.ulaval.glo4002.booking.exceptions;
 
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
