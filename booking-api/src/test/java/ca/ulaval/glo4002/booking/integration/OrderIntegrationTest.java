@@ -17,6 +17,7 @@ import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.orders.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassListFactory;
@@ -154,12 +155,42 @@ public class OrderIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenOrderDateIsUnderBounds() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.PACKAGE.toString()
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.START_DATE_TIME.minusDays(1), ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
 
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(OutOfBoundsOrderDateException.MESSAGE, errorDto.getError());
+        assertEquals(OutOfBoundsOrderDateException.DESCRIPTION, errorDto.getDescription());
     }
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenOrderDateIsOverBounds() {
+        PassListDto passListDto = new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.PACKAGE.toString()
+        );
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                ZonedDateTime.of(OrderFactory.END_DATE_TIME.plusDays(1), ZoneId.systemDefault()).toString(),
+                "VENDOR",
+                passListDto
+        );
 
+        ResponseEntity<?> response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getBody();
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(OutOfBoundsOrderDateException.MESSAGE, errorDto.getError());
+        assertEquals(OutOfBoundsOrderDateException.DESCRIPTION, errorDto.getDescription());
     }
 
     @Test
