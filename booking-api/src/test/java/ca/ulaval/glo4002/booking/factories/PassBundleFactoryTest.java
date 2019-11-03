@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -32,21 +34,20 @@ class PassBundleFactoryTest {
 
     @BeforeEach
     void setUpSubject() {
+        subject = new PassBundleFactory(new PassFactory(new NumberGenerator()));
+    }
+
+    @Test
+    void buildWithDto_shouldBuildAPassList() {
+        PassBundleDto passBundleDto = new PassBundleDto(PassCategories.SUPERNOVA.toString(), PassOptions.SINGLE_PASS.toString(), new ArrayList<>());
         passFactory = mock(PassFactory.class);
         Pass pass = new Pass(
                 new Number(1L),
                 new EventDate(EventDate.START_DATE),
                 new Money(new BigDecimal(100.0))
         );
-        List<Pass> passes = Collections.singletonList(pass);
-        when(passFactory.buildAll(any(), any())).thenReturn(passes);
-
+        when(passFactory.buildAll(any(), any())).thenReturn(Collections.singletonList(pass));
         subject = new PassBundleFactory(passFactory);
-    }
-
-    @Test
-    void buildWithDto_shouldBuildAPassList() {
-        PassBundleDto passBundleDto = new PassBundleDto(PassCategories.SUPERNOVA.toString(), PassOptions.SINGLE_PASS.toString(), new ArrayList<>());
 
         subject.build(passBundleDto);
 
@@ -145,47 +146,50 @@ class PassBundleFactoryTest {
         assertEquals(passBundle.getOption().getName(), PassOptions.PACKAGE.toString());
     }
 
-    @Test
-    void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupernova() {
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 5})
+    void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupernova(int passQuantity) {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.START_DATE.toString());
         PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, someEventDates);
         PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
 
         PassBundle passBundle = subject.build(passBundleDto);
         Money passPrice = passBundle.getPasses().get(0).getPrice();
-        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(someEventDates.size(), passPrice);
+        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
 
         assertEquals(expectedPrice, passBundle.getPrice());
     }
 
-    @Test
-    void build_shouldBuildSupergiantPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupergiant() {
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1})
+    void build_shouldBuildSupergiantPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupergiant(int passQuantity) {
         String aPassCategory = PassCategories.SUPERGIANT.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.START_DATE.toString());
         PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, someEventDates);
         PriceCalculationStrategy priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
+        Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE);
+        Money expectedPrice = passPrice.multiply(new BigDecimal(passQuantity));
 
         PassBundle passBundle = subject.build(passBundleDto);
-        Money passPrice = passBundle.getPasses().get(0).getPrice();
-        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(someEventDates.size(), passPrice);
 
         assertEquals(expectedPrice, passBundle.getPrice());
     }
 
-    @Test
-    void build_shouldBuildNebulaPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsNebula() {
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, NebulaPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1})
+    void build_shouldBuildNebulaPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsNebula(int passQuantity) {
         String aPassCategory = PassCategories.NEBULA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.START_DATE.toString());
         PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, someEventDates);
         PriceCalculationStrategy priceCalculationStrategy = new NebulaPriceCalculationStrategy();
+        Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, PassBundleFactory.NEBULA_SINGLE_PASS_PRICE);
+        Money expectedPrice = passPrice.multiply(new BigDecimal(passQuantity));
 
         PassBundle passBundle = subject.build(passBundleDto);
-        Money passPrice = passBundle.getPasses().get(0).getPrice();
-        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(someEventDates.size(), passPrice);
 
         assertEquals(expectedPrice, passBundle.getPrice());
     }
