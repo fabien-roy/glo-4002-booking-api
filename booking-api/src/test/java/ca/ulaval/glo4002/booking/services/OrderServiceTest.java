@@ -80,9 +80,4 @@ class OrderServiceTest {
 
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
     }
-
-    @Test
-    void getByOrderNumber_shouldGetOrder_whenOrderIsAdded() {
-        // TODO
-    }
 }

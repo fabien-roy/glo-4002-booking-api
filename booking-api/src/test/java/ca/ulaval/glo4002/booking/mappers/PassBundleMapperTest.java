@@ -139,6 +139,4 @@ class PassBundleMapperTest {
         assertTrue(passDtos.stream().anyMatch(pass -> aEventDate.toString().equals(pass.getEventDate())));
         assertTrue(passDtos.stream().anyMatch(pass -> anotherEventDate.toString().equals(pass.getEventDate())));
     }
-
-    // TODO : Add tests for money
 }
