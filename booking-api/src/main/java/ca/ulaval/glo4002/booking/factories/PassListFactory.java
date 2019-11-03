@@ -1,9 +1,11 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.passes.EventDate;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.*;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -11,42 +13,38 @@ import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PassListFactory {
 
-    private final NumberGenerator numberGenerator;
     private final PassFactory passFactory;
 
     @Inject
-    public PassListFactory(NumberGenerator numberGenerator, PassFactory passFactory) {
-        this.numberGenerator = numberGenerator;
+    public PassListFactory(PassFactory passFactory) {
         this.passFactory = passFactory;
     }
 
-    public PassList buildWithDto(PassListDto passListDto) {
-        PassOptions passOption = parsePassOption(passListDto);
-        PassCategories passCategory = parsePassCategory(passListDto);
+    public PassList build(PassListDto passListDto) {
+        PassCategories parsedPassCategory = parsePassCategory(passListDto);
+        PassOptions parsedPassOption = parsePassOption(passListDto);
 
-        validateEventDates(passListDto.getEventDates(), passOption);
+        validateEventDates(passListDto.getEventDates(), parsedPassOption);
 
-        PassList passList = passFactory.build(passCategory, passOption);
+        PassCategory passCategory = buildCategory(parsedPassCategory);
+        PassOption passOption = buildOption(parsedPassOption);
+        PriceCalculationStrategy priceCalculationStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
 
-        List<Pass> passes = new ArrayList<>();
-        if (passListDto.getEventDates() == null) {
-            passes.add(new Pass(numberGenerator.generate()));
-        } else {
-            passListDto.getEventDates().forEach(eventDate -> {
-                EventDate builtEventDate = buildEventDate(eventDate);
-                Pass pass = new Pass(numberGenerator.generate(), builtEventDate);
-                passes.add(pass);
-            });
-        }
+        List<Pass> passes = passFactory.buildAll(passListDto.getEventDates());
 
-        passList.setPasses(passes);
+        return new PassList(passes, passCategory, passOption, priceCalculationStrategy);
+    }
 
-        return passList;
+    private PassOptions parsePassOption(PassListDto passListDto) {
+        return PassOptions.get(passListDto.getPassOption());
+    }
+
+    private PassCategories parsePassCategory(PassListDto passListDto) {
+        return PassCategories.get(passListDto.getPassCategory());
     }
 
     private void validateEventDates(List<String> eventDates, PassOptions passOption) {
@@ -61,23 +59,43 @@ public class PassListFactory {
         }
     }
 
-    private EventDate buildEventDate(String eventDate) {
-        LocalDate parsedEventDate;
-
-        try {
-            parsedEventDate = LocalDate.parse(eventDate);
-        } catch (Exception exception) {
-            throw new InvalidFormatException();
+    private PassCategory buildCategory(PassCategories category) {
+        switch(category) {
+            case SUPERNOVA:
+                return new PassCategory(PassCategories.SUPERNOVA.toString());
+            case SUPERGIANT:
+                return new PassCategory(PassCategories.SUPERGIANT.toString());
+            default:
+            case NEBULA:
+                return new PassCategory(PassCategories.NEBULA.toString());
         }
-
-        return new EventDate(parsedEventDate);
     }
 
-    private PassOptions parsePassOption(PassListDto passListDto) {
-        return PassOptions.get(passListDto.getPassOption());
+    private PassOption buildOption(PassOptions option) {
+        switch (option) {
+            case PACKAGE:
+                return new PassOption(PassOptions.PACKAGE.toString());
+            default:
+            case SINGLE_PASS:
+                return new PassOption(PassOptions.SINGLE_PASS.toString());
+        }
     }
 
-    private PassCategories parsePassCategory(PassListDto passListDto) {
-        return PassCategories.get(passListDto.getPassCategory());
+    private PriceCalculationStrategy buildPriceCalculationStrategy(PassCategories category, PassOptions option) {
+        switch (option) {
+            case PACKAGE:
+                return new NoDiscountPriceCalculationStrategy();
+            default:
+            case SINGLE_PASS:
+                switch(category) {
+                    case SUPERNOVA:
+                        return new NoDiscountPriceCalculationStrategy();
+                    case SUPERGIANT:
+                        return new SupergiantPriceCalculationStrategy();
+                    default:
+                    case NEBULA:
+                        return new NebulaPriceCalculationStrategy();
+                }
+        }
     }
 }

@@ -14,18 +14,17 @@ public class PassList {
     private Money price;
     private PriceCalculationStrategy priceCalculationStrategy;
 
-    public PassList(PassCategory category, PassOption option, PriceCalculationStrategy priceCalculationStrategy) {
+    public PassList(List<Pass> passes, PassCategory category, PassOption option, PriceCalculationStrategy priceCalculationStrategy) {
+        this.passes = passes;
         this.category = category;
         this.option = option;
         this.priceCalculationStrategy = priceCalculationStrategy;
+
+        calculatePrice();
     }
 
     public List<Pass> getPasses() {
         return passes;
-    }
-
-    public void setPasses(List<Pass> passes) {
-        this.passes = passes;
     }
 
     public PassCategory getCategory() {
@@ -53,16 +52,9 @@ public class PassList {
     }
 
     // TODO : Test calculatePrice
-    // TODO : When should we calculate order price?
     private void calculatePrice() {
         Money passPrice = priceCalculationStrategy.calculatePassPrice(passes.size(), getPassPrice());
 
-        passes.forEach(pass -> pass.setPrice(passPrice));
-
-        calculateTotalPrice(passPrice);
-    }
-
-    private void calculateTotalPrice(Money passPrice) {
         BigDecimal numberOfPasses = BigDecimal.valueOf(passes.size());
         BigDecimal totalValue = passPrice.getValue().multiply(numberOfPasses);
 

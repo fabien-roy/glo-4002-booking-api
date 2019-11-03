@@ -47,8 +47,8 @@ public class PassIntegrationTest {
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        PassFactory passFactory = new PassFactory();
-        PassListFactory passListFactory = new PassListFactory(numberGenerator, passFactory);
+        PassFactory passFactory = new PassFactory(numberGenerator);
+        PassListFactory passListFactory = new PassListFactory(passFactory);
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passListFactory);
 
         PassListMapper passListMapper = new PassListMapper();
@@ -61,13 +61,13 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsPackage() {
+        Pass pass = new Pass(new Number(1L));
         PassList passList = new PassList(
+                Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString()),
                 new PassOption(PassOptions.PACKAGE.toString()),
                 new NoDiscountPriceCalculationStrategy()
         );
-        Pass pass = new Pass(new Number(1L));
-        passList.setPasses(Collections.singletonList(pass));
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
@@ -87,16 +87,13 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
+        Pass pass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE));
         PassList passList = new PassList(
+                Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString()),
                 new PassOption(PassOptions.SINGLE_PASS.toString()),
                 new NoDiscountPriceCalculationStrategy()
         );
-        Pass pass = new Pass(
-                new Number(1L),
-                new EventDate(EventDate.START_DATE)
-        );
-        passList.setPasses(Collections.singletonList(pass));
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
@@ -116,11 +113,6 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
-        PassList passList = new PassList(
-                new PassCategory(PassCategories.SUPERNOVA.toString()),
-                new PassOption(PassOptions.SINGLE_PASS.toString()),
-                new NoDiscountPriceCalculationStrategy()
-        );
         Pass aPass = new Pass(
                 new Number(1L),
                 new EventDate(EventDate.START_DATE)
@@ -129,7 +121,12 @@ public class PassIntegrationTest {
                 new Number(2L),
                 new EventDate(EventDate.START_DATE.plusDays(1))
         );
-        passList.setPasses(Arrays.asList(aPass, anotherPass));
+        PassList passList = new PassList(
+                Arrays.asList(aPass, anotherPass),
+                new PassCategory(PassCategories.SUPERNOVA.toString()),
+                new PassOption(PassOptions.SINGLE_PASS.toString()),
+                new NoDiscountPriceCalculationStrategy()
+        );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,

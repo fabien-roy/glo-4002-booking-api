@@ -54,8 +54,8 @@ public class OrderIntegrationTest {
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        PassFactory passFactory = new PassFactory();
-        PassListFactory passListFactory = new PassListFactory(numberGenerator, passFactory);
+        PassFactory passFactory = new PassFactory(numberGenerator);
+        PassListFactory passListFactory = new PassListFactory(passFactory);
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passListFactory);
 
         PassListMapper passListMapper = new PassListMapper();
@@ -69,11 +69,11 @@ public class OrderIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrder() {
         PassList passList = new PassList(
+                new ArrayList<>(),
                 new PassCategory(PassCategories.SUPERNOVA.toString()),
                 new PassOption(PassOptions.PACKAGE.toString()),
                 new NoDiscountPriceCalculationStrategy()
         );
-        passList.setPasses(new ArrayList<>());
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,

@@ -35,7 +35,7 @@ public class OrderFactory {
 
         OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderDto.getVendorCode());
         LocalDateTime orderDate = buildOrderDate(orderDto.getOrderDate());
-        PassList passList = passListFactory.buildWithDto(orderDto.getPasses());
+        PassList passList = passListFactory.build(orderDto.getPasses());
 
         return new Order(orderNumber, orderDate, passList);
     }
