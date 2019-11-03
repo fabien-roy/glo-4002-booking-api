@@ -29,44 +29,4 @@ class PassFactoryTest {
 
         subject = new PassFactory(numberGenerator);
     }
-
-    @Test
-    void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupernova() {
-        PassCategories category = PassCategories.SUPERNOVA;
-        PassOptions option = PassOptions.SINGLE_PASS;
-
-        PassList passList = subject.build(Collections.singletonList(mock(Pass.class)), category, option);
-
-        assertTrue(passList.getPriceCalculationStrategy() instanceof NoDiscountPriceCalculationStrategy);
-    }
-
-    @Test
-    void build_shouldBuildSupergiantPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupergiant() {
-        PassCategories category = PassCategories.SUPERGIANT;
-        PassOptions option = PassOptions.SINGLE_PASS;
-
-        PassList passList = subject.build(Collections.singletonList(mock(Pass.class)), category, option);
-
-        assertTrue(passList.getPriceCalculationStrategy() instanceof SupergiantPriceCalculationStrategy);
-    }
-
-    @Test
-    void build_shouldBuildNebulaPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsNebula() {
-        PassCategories category = PassCategories.NEBULA;
-        PassOptions option = PassOptions.SINGLE_PASS;
-
-        PassList passList = subject.build(Collections.singletonList(mock(Pass.class)), category, option);
-
-        assertTrue(passList.getPriceCalculationStrategy() instanceof NebulaPriceCalculationStrategy);
-    }
-
-    @ParameterizedTest
-    @EnumSource(PassCategories.class)
-    void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsPackage(PassCategories category) {
-        PassOptions option = PassOptions.PACKAGE;
-
-        PassList passList = subject.build(Collections.singletonList(mock(Pass.class)), category, option);
-
-        assertTrue(passList.getPriceCalculationStrategy() instanceof NoDiscountPriceCalculationStrategy);
-    }
 }

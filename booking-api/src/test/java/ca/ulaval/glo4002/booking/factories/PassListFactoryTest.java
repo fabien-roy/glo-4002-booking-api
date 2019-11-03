@@ -2,13 +2,19 @@ package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.passes.*;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassListDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import net.bytebuddy.implementation.bind.annotation.Super;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,9 +52,8 @@ class PassListFactoryTest {
     @Test
     void build_shouldBuildCategory_whenCategoryIsSupernova() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
-        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
 
         PassList passList = subject.build(passListDto);
 
@@ -58,9 +63,8 @@ class PassListFactoryTest {
     @Test
     void build_shouldBuildCategory_whenCategoryIsSupergiant() {
         String aPassCategory = PassCategories.SUPERGIANT.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
-        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
 
         PassList passList = subject.build(passListDto);
 
@@ -70,9 +74,8 @@ class PassListFactoryTest {
     @Test
     void build_shouldBuildCategory_whenCategoryIsNebula() {
         String aPassCategory = PassCategories.NEBULA.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
-        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
 
         PassList passList = subject.build(passListDto);
 
@@ -95,12 +98,58 @@ class PassListFactoryTest {
     void build_shouldBuildOption_whenOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.PACKAGE.toString();
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
+
+        PassList passList = subject.build(passListDto);
+
+        assertEquals(passList.getOption().getName(), PassOptions.PACKAGE.toString());
+    }
+
+    @Test
+    void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupernova() {
+        String aPassCategory = PassCategories.SUPERNOVA.toString();
+        String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
         PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
 
         PassList passList = subject.build(passListDto);
 
-        assertEquals(passList.getOption().getName(), PassOptions.PACKAGE.toString());
+        assertTrue(passList.getPriceCalculationStrategy() instanceof NoDiscountPriceCalculationStrategy);
+    }
+
+    @Test
+    void build_shouldBuildSupergiantPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupergiant() {
+        String aPassCategory = PassCategories.SUPERGIANT.toString();
+        String aPassOption = PassOptions.SINGLE_PASS.toString();
+        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+
+        PassList passList = subject.build(passListDto);
+
+        assertTrue(passList.getPriceCalculationStrategy() instanceof SupergiantPriceCalculationStrategy);
+    }
+
+    @Test
+    void build_shouldBuildNebulaPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsNebula() {
+        String aPassCategory = PassCategories.NEBULA.toString();
+        String aPassOption = PassOptions.SINGLE_PASS.toString();
+        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+
+        PassList passList = subject.build(passListDto);
+
+        assertTrue(passList.getPriceCalculationStrategy() instanceof NebulaPriceCalculationStrategy);
+    }
+
+    @ParameterizedTest
+    @EnumSource(PassCategories.class)
+    void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsPackage(PassCategories category) {
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassListDto passListDto = new PassListDto(category.toString(), aPassOption, null);
+
+        PassList passList = subject.build(passListDto);
+
+        assertTrue(passList.getPriceCalculationStrategy() instanceof NoDiscountPriceCalculationStrategy);
     }
 
     @Test
