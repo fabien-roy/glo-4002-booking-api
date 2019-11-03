@@ -153,41 +153,6 @@ class PassListFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldParseASinglePass_whenThereIsOnlyOneEventDate() {
-        String aPassCategory = PassCategories.SUPERNOVA.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<String> aEventDate = new ArrayList<>(Collections.singleton(EventDate.START_DATE.toString()));
-        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, aEventDate);
-
-        PassList passList = subject.build(passListDto);
-
-        assertEquals(1, passList.size());
-    }
-
-    @Test
-    void buildWithDto_shouldParseMultiplePasses_whenThereAreMultipleEventDates() {
-        String aPassCategory = PassCategories.SUPERNOVA.toString();
-        String aPassOption = PassOptions.SINGLE_PASS.toString();
-        List<Pass> somePasses = Arrays.asList(
-                new Pass(new Number(1L), new EventDate(EventDate.START_DATE)),
-                new Pass(new Number(1L), new EventDate(EventDate.START_DATE.plusDays(1)))
-        );
-        List<String> someEventDates = somePasses.stream().map(Pass::getEventDate).map(EventDate::toString).collect(Collectors.toList());
-        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
-        passList = new PassList(
-                somePasses,
-                mock(PassCategory.class),
-                mock(PassOption.class),
-                mock(PriceCalculationStrategy.class)
-        );
-        when(passFactory.build(any(), any(), any())).thenReturn(passList);
-
-        PassList passList = subject.build(passListDto);
-
-        assertEquals(2, passList.size());
-    }
-
-    @Test
     void buildWithDto_shouldThrowInvalidFormatException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
