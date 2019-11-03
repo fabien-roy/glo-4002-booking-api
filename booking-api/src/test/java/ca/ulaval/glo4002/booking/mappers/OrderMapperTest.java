@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.mappers;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,14 +19,14 @@ import static org.mockito.Mockito.when;
 class OrderMapperTest {
 
     private OrderMapper subject;
-    private PassListMapper passListMapper;
+    private PassBundleMapper passBundleMapper;
     private OrderNumber orderNumber;
     private Order order;
 
     @BeforeEach
     void setUpSubject() {
-        passListMapper = mock(PassListMapper.class);
-        subject = new OrderMapper(passListMapper);
+        passBundleMapper = mock(PassBundleMapper.class);
+        subject = new OrderMapper(passBundleMapper);
     }
 
     @BeforeEach
@@ -36,7 +36,7 @@ class OrderMapperTest {
         when(orderNumber.toString()).thenReturn("expectedOrderNumber");
         when(order.getOrderNumber()).thenReturn(orderNumber);
         when(order.getPrice()).thenReturn(new Money(new BigDecimal(500)));
-        when(order.getPassList()).thenReturn(mock(PassList.class));
+        when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
     }
 
     @Test
@@ -50,6 +50,6 @@ class OrderMapperTest {
     void toDto_shouldCallPassListParser() {
         subject.toDto(order);
 
-        verify(passListMapper).toDto(any());
+        verify(passBundleMapper).toDto(any());
     }
 }

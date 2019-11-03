@@ -9,25 +9,18 @@ import java.util.List;
 
 public class OrderMapper {
 
-    private final PassListMapper passListMapper;
+    private final PassBundleMapper passBundleMapper;
 
     @Inject
-    public OrderMapper(PassListMapper passListMapper) {
-        this.passListMapper = passListMapper;
+    public OrderMapper(PassBundleMapper passBundleMapper) {
+        this.passBundleMapper = passBundleMapper;
     }
 
     public OrderWithPassesAsPassesDto toDto(Order order) {
-        List<PassDto> passes = passListMapper.toDto(order.getPassList());
-        double price;
-
-        if (order.getPrice() == null) {
-            price = 0.0;
-        } else {
-            price = order.getPrice().getValue().doubleValue();
-        }
+        List<PassDto> passes = passBundleMapper.toDto(order.getPassBundle());
 
         return new OrderWithPassesAsPassesDto(
-                price, // TODO : ACP : When price actually works, use directly
+                order.getPrice().getValue().doubleValue(),
                 passes
         );
     }

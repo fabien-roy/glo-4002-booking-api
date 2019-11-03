@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.repositories;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,8 +36,8 @@ class InMemoryOrderRepositoryTest {
         OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
         OrderNumber aOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
         LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
-        PassList aPassList = mock(PassList.class);
-        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassList);
+        PassBundle aPassBundle = mock(PassBundle.class);
+        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassBundle);
         subject.addOrder(aOrder);
 
         assertThrows(OrderNotFoundException.class, () -> subject.getByOrderNumber(aNonExistentOrderNumber));
@@ -47,8 +47,8 @@ class InMemoryOrderRepositoryTest {
     void getByOrderNumber_shouldReturnOrder() {
         OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
         LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
-        PassList aPassList = mock(PassList.class);
-        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassList);
+        PassBundle aPassBundle = mock(PassBundle.class);
+        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassBundle);
         subject.addOrder(aOrder);
 
         Optional<Order> foundOrder = subject.getByOrderNumber(aOrderNumber);
@@ -62,9 +62,9 @@ class InMemoryOrderRepositoryTest {
         OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
         OrderNumber anotherOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
         LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
-        PassList aPassList = mock(PassList.class);
-        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassList);
-        Order anotherOrder = new Order(anotherOrderNumber, aOrderDate, aPassList);
+        PassBundle aPassBundle = mock(PassBundle.class);
+        Order aOrder = new Order(aOrderNumber, aOrderDate, aPassBundle);
+        Order anotherOrder = new Order(anotherOrderNumber, aOrderDate, aPassBundle);
         subject.addOrder(aOrder);
         subject.addOrder(anotherOrder);
 

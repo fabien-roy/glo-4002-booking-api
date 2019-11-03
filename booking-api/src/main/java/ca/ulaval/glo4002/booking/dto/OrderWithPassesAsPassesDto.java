@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.dto;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 
 import java.util.List;
 

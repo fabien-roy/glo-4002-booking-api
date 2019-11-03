@@ -5,14 +5,11 @@ import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.dto.ErrorDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.dto.PassListDto;
+import ca.ulaval.glo4002.booking.dto.PassBundleDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
@@ -20,9 +17,9 @@ import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.factories.PassListFactory;
+import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassListMapper;
+import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
@@ -34,7 +31,6 @@ import org.springframework.http.ResponseEntity;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -47,6 +43,7 @@ public class OrderIntegrationTest {
 
     private OrderController controller;
     private OrderRepository orderRepository;
+    private PassBundleFactory passBundleFactory;
 
     @BeforeEach
     public void setUpController() {
@@ -54,12 +51,12 @@ public class OrderIntegrationTest {
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        PassFactory passFactory = new PassFactory();
-        PassListFactory passListFactory = new PassListFactory(numberGenerator, passFactory);
-        OrderFactory orderFactory = new OrderFactory(numberGenerator, passListFactory);
+        PassFactory passFactory = new PassFactory(numberGenerator);
+        passBundleFactory = new PassBundleFactory(passFactory);
+        OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
-        PassListMapper passListMapper = new PassListMapper();
-        OrderMapper orderMapper = new OrderMapper(passListMapper);
+        PassBundleMapper passBundleMapper = new PassBundleMapper();
+        OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper);
 
@@ -68,16 +65,14 @@ public class OrderIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrder() {
-        PassList passList = new PassList(
-                new PassCategory(PassCategories.SUPERNOVA.toString()),
-                new PassOption(PassOptions.PACKAGE.toString()),
-                new NoDiscountPriceCalculationStrategy()
-        );
-        passList.setPasses(new ArrayList<>());
+        PassBundle passBundle = passBundleFactory.build(new PassBundleDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.PACKAGE.toString()
+        ));
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
-                passList
+                passBundle
         );
         orderRepository.addOrder(order);
 
@@ -85,7 +80,7 @@ public class OrderIntegrationTest {
         OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(0.0, orderDto.getOrderPrice()); // TODO : ACP : Assert correct orderPrice when working
+        // TODO : ACP : Assert correct orderPrice when working
     }
 
     @Test
@@ -119,7 +114,7 @@ public class OrderIntegrationTest {
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
-                mock(PassList.class)
+                mock(PassBundle.class)
         );
         orderRepository.addOrder(order);
         Number aNonExistentOrderId = new Number(2L);
@@ -137,14 +132,14 @@ public class OrderIntegrationTest {
     // TODO : ACP : This also tests pass when there is only one pass. Is that wrong?
     @Test
     public void addOrder_shouldAddOrder() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -155,14 +150,14 @@ public class OrderIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenOrderDateIsUnderBounds() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME.minusDays(1), ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -175,14 +170,14 @@ public class OrderIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenOrderDateIsOverBounds() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.END_DATE_TIME.plusDays(1), ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -195,14 +190,14 @@ public class OrderIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenOrderDateIsInvalid() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 "anInvalidOrderDate",
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);

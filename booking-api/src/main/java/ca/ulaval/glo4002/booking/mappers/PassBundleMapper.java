@@ -1,19 +1,19 @@
 package ca.ulaval.glo4002.booking.mappers;
 
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.dto.PassDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PassListMapper {
+public class PassBundleMapper {
 
-    List<PassDto> toDto(PassList passList) {
-        String passCategory = passList.getCategory().getName();
-        String passOption = passList.getOption().getName();
+    List<PassDto> toDto(PassBundle passBundle) {
+        String passCategory = passBundle.getCategory().getName();
+        String passOption = passBundle.getOption().getName();
 
         List<PassDto> passDtos = new ArrayList<>();
-        passList.getPasses().forEach(pass -> {
+        passBundle.getPasses().forEach(pass -> {
                 String eventDate = null;
 
                 if (pass.getEventDate() != null) eventDate = pass.getEventDate().toString();

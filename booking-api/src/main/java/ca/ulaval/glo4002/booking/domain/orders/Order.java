@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.domain.orders;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,12 +11,12 @@ public class Order {
 
     private OrderNumber orderNumber;
     private LocalDateTime orderDate;
-    private PassList passList;
+    private PassBundle passBundle;
 
-    public Order(OrderNumber orderNumber, LocalDateTime orderDate, PassList passList) {
+    public Order(OrderNumber orderNumber, LocalDateTime orderDate, PassBundle passBundle) {
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
-        this.passList = passList;
+        this.passBundle = passBundle;
     }
 
     public OrderNumber getOrderNumber() {
@@ -31,15 +31,15 @@ public class Order {
         return orderDate;
     }
 
-    public PassList getPassList() {
-        return passList;
+    public PassBundle getPassBundle() {
+        return passBundle;
     }
 
     public Money getPrice() {
-        return passList.getPrice();
+        return passBundle.getPrice();
     }
 
     public List<Pass> getPasses() {
-        return passList.getPasses();
+        return passBundle.getPasses();
     }
 }
