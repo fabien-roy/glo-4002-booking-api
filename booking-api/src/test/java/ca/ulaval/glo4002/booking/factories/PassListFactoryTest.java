@@ -17,11 +17,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,7 +34,12 @@ class PassListFactoryTest {
     @BeforeEach
     void setUpSubject() {
         passFactory = mock(PassFactory.class);
-        List<Pass> passes = Collections.singletonList(new Pass(new Number(1L), new EventDate(EventDate.START_DATE), mock(Money.class)));
+        Pass pass = new Pass(
+                new Number(1L),
+                new EventDate(EventDate.START_DATE),
+                new Money(new BigDecimal(100.0))
+        );
+        List<Pass> passes = Collections.singletonList(pass);
         when(passFactory.buildAll(any(), any())).thenReturn(passes);
 
         subject = new PassListFactory(passFactory);
@@ -105,19 +110,19 @@ class PassListFactoryTest {
         assertEquals(passList.getOption().getName(), PassOptions.PACKAGE.toString());
     }
 
-    // TODO : Rethink price calculation tests
-
-    /*
     @Test
     void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupernova() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
         PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+        PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
 
         PassList passList = subject.build(passListDto);
+        Money passPrice = passList.getPasses().get(0).getPrice();
+        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(someEventDates.size(), passPrice);
 
-        assertTrue(passList.getPriceCalculationStrategy() instanceof NoDiscountPriceCalculationStrategy);
+        assertEquals(expectedPrice, passList.getPrice());
     }
 
     @Test
@@ -126,10 +131,13 @@ class PassListFactoryTest {
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
         PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+        PriceCalculationStrategy priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
 
         PassList passList = subject.build(passListDto);
+        Money passPrice = passList.getPasses().get(0).getPrice();
+        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(someEventDates.size(), passPrice);
 
-        assertTrue(passList.getPriceCalculationStrategy() instanceof SupergiantPriceCalculationStrategy);
+        assertEquals(expectedPrice, passList.getPrice());
     }
 
     @Test
@@ -138,23 +146,29 @@ class PassListFactoryTest {
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
         PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+        PriceCalculationStrategy priceCalculationStrategy = new NebulaPriceCalculationStrategy();
 
         PassList passList = subject.build(passListDto);
+        Money passPrice = passList.getPasses().get(0).getPrice();
+        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(someEventDates.size(), passPrice);
 
-        assertTrue(passList.getPriceCalculationStrategy() instanceof NebulaPriceCalculationStrategy);
+        assertEquals(expectedPrice, passList.getPrice());
     }
 
     @ParameterizedTest
     @EnumSource(PassCategories.class)
     void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsPackage(PassCategories category) {
+        String aPassCategory = category.toString();
         String aPassOption = PassOptions.PACKAGE.toString();
-        PassListDto passListDto = new PassListDto(category.toString(), aPassOption, null);
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
+        PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
 
         PassList passList = subject.build(passListDto);
+        Money passPrice = passList.getPasses().get(0).getPrice();
+        Money expectedPrice = priceCalculationStrategy.calculatePassPrice(1, passPrice);
 
-        assertTrue(passList.getPriceCalculationStrategy() instanceof NoDiscountPriceCalculationStrategy);
+        assertEquals(expectedPrice, passList.getPrice());
     }
-    */
 
     // TODO : Refactor the following tests
 
