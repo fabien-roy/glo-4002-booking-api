@@ -170,15 +170,12 @@ class PassListFactoryTest {
         assertEquals(expectedPrice, passList.getPrice());
     }
 
-    // TODO : Refactor the following tests
-
-    /*
     @Test
     void buildWithDto_shouldThrowInvalidFormatException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
-        List<String> someEventDates = new ArrayList<>(Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString()));
-        PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.PACKAGE.toString(), someEventDates);
-        passList.setOption(mock(PassOption.class));
+        String aPassOption = PassOptions.PACKAGE.toString();
+        List<String> someEventDates = Collections.singletonList(EventDate.START_DATE.toString());
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
 
         assertThrows(InvalidFormatException.class, () -> subject.build(passListDto));
     }
@@ -186,38 +183,37 @@ class PassListFactoryTest {
     @Test
     void buildWithDto_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
-        PassListDto passListDto = new PassListDto(aPassCategory, PassOptions.SINGLE_PASS.toString(), null);
-        passList.setOption(mock(PassOption.class));
+        String aPassOption = PassOptions.SINGLE_PASS.toString();
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, null);
 
         assertThrows(InvalidFormatException.class, () -> subject.build(passListDto));
     }
 
     @Test
     void buildWithDto_shouldThrowInvalidFormatException_whenPassCategoryDoesNotExist() {
-        String anInvalidPassOption = "anInvalidPassCategory";
-        PassListDto passListDto = new PassListDto(anInvalidPassOption, PassOptions.PACKAGE.toString(), new ArrayList<>());
+        String anInvalidPassCategory = "anInvalidPassCategory";
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassListDto passListDto = new PassListDto(anInvalidPassCategory, aPassOption, null);
 
         assertThrows(InvalidFormatException.class, () -> subject.build(passListDto));
     }
 
     @Test
     void buildWithDto_shouldThrowInvalidFormatException_whenPassOptionDoesNotExist() {
+        String aPassCategory = PassCategories.SUPERNOVA.toString();
         String anInvalidPassOption = "anInvalidPassOption";
-        PassListDto passListDto = new PassListDto(PassCategories.SUPERNOVA.toString(), anInvalidPassOption, new ArrayList<>());
+        PassListDto passListDto = new PassListDto(aPassCategory, anInvalidPassOption, null);
 
         assertThrows(InvalidFormatException.class, () -> subject.build(passListDto));
     }
 
     @Test
     void buildWithDto_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
-        String anInvalidEventDate = "anInvalidDate";
-        PassListDto passListDto = new PassListDto(
-                PassCategories.SUPERNOVA.toString(),
-                PassOptions.SINGLE_PASS.toString(),
-                Collections.singletonList(anInvalidEventDate)
-        );
+        String aPassCategory = PassCategories.SUPERNOVA.toString();
+        String aPassOption = PassOptions.PACKAGE.toString();
+        List<String> anInvalidEventDate = Collections.singletonList("anInvalidEventDate");
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, anInvalidEventDate);
 
         assertThrows(InvalidFormatException.class, () -> subject.build(passListDto));
     }
-    */
 }
