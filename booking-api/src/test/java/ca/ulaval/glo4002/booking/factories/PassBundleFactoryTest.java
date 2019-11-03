@@ -87,6 +87,42 @@ class PassBundleFactoryTest {
     }
 
     @Test
+    void build_shouldBuildCategoryPricePerOption_whenCategoryIsSupernova() {
+        String aPassCategory = PassCategories.SUPERNOVA.toString();
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, null);
+
+        PassBundle passBundle = subject.build(passBundleDto);
+
+        assertEquals(PassBundleFactory.SUPERNOVA_PACKAGE_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.PACKAGE));
+        assertEquals(PassBundleFactory.SUPERNOVA_SINGLE_PASS_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.SINGLE_PASS));
+    }
+
+    @Test
+    void build_shouldBuildCategoryPricePerOption_whenCategoryIsSupergiant() {
+        String aPassCategory = PassCategories.SUPERGIANT.toString();
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, null);
+
+        PassBundle passBundle = subject.build(passBundleDto);
+
+        assertEquals(PassBundleFactory.SUPERGIANT_PACKAGE_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.PACKAGE));
+        assertEquals(PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.SINGLE_PASS));
+    }
+
+    @Test
+    void build_shouldBuildCategoryPricePerOption_whenCategoryIsNebula() {
+        String aPassCategory = PassCategories.NEBULA.toString();
+        String aPassOption = PassOptions.PACKAGE.toString();
+        PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, null);
+
+        PassBundle passBundle = subject.build(passBundleDto);
+
+        assertEquals(PassBundleFactory.NEBULA_PACKAGE_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.PACKAGE));
+        assertEquals(PassBundleFactory.NEBULA_SINGLE_PASS_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.SINGLE_PASS));
+    }
+
+    @Test
     void build_shouldBuildOption_whenOptionIsSinglePass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();

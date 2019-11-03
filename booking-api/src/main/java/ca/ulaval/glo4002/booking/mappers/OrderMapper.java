@@ -18,16 +18,9 @@ public class OrderMapper {
 
     public OrderWithPassesAsPassesDto toDto(Order order) {
         List<PassDto> passes = passBundleMapper.toDto(order.getPassBundle());
-        double price;
-
-        if (order.getPrice() == null) {
-            price = 0.0;
-        } else {
-            price = order.getPrice().getValue().doubleValue();
-        }
 
         return new OrderWithPassesAsPassesDto(
-                price, // TODO : ACP : When price actually works, use directly
+                order.getPrice().getValue().doubleValue(),
                 passes
         );
     }

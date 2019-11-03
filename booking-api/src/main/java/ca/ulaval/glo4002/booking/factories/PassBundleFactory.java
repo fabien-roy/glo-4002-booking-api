@@ -18,12 +18,12 @@ import java.util.List;
 
 public class PassBundleFactory {
 
-    private static final Money SUPERNOVA_PACKAGE_PRICE = new Money(new BigDecimal(700000));
-    private static final Money SUPERNOVA_SINGLE_PASS_PRICE = new Money(new BigDecimal(150000));
-    private static final Money SUPERGIANT_PACKAGE_PRICE = new Money(new BigDecimal(500000));
-    private static final Money SUPERGIANT_SINGLE_PASS_PRICE = new Money(new BigDecimal(100000));
-    private static final Money NEBULA_PACKAGE_PRICE = new Money(new BigDecimal(250000));
-    private static final Money NEBULA_SINGLE_PASS_PRICE = new Money(new BigDecimal(50000));
+    public static final Money SUPERNOVA_PACKAGE_PRICE = new Money(new BigDecimal(700000));
+    public static final Money SUPERNOVA_SINGLE_PASS_PRICE = new Money(new BigDecimal(150000));
+    public static final Money SUPERGIANT_PACKAGE_PRICE = new Money(new BigDecimal(500000));
+    public static final Money SUPERGIANT_SINGLE_PASS_PRICE = new Money(new BigDecimal(100000));
+    public static final Money NEBULA_PACKAGE_PRICE = new Money(new BigDecimal(250000));
+    public static final Money NEBULA_SINGLE_PASS_PRICE = new Money(new BigDecimal(50000));
 
     private final PassFactory passFactory;
 
