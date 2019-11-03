@@ -31,10 +31,6 @@ public class PassBundle {
         return option;
     }
 
-    public void setOption(PassOption option) {
-        this.option = option;
-    }
-
     public Money getPrice() {
         return price;
     }
