@@ -12,6 +12,8 @@ import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
+import javax.inject.Singleton;
+
 public class BookingBinder extends AbstractBinder {
 
     @Override
@@ -29,7 +31,6 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindRepositories() {
-        // TODO : ACP : Repository seems to be re-created during runtime
         bind(InMemoryOrderRepository.class).to(OrderRepository.class);
     }
 
@@ -49,6 +50,6 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindControllers() {
-        bindAsContract(OrderController.class);
+        bindAsContract(OrderController.class).in(Singleton.class);
     }
 }
