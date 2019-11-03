@@ -24,7 +24,7 @@ public class OrderService {
     }
 
     public String order(OrderWithPassesAsEventDatesDto orderDto) {
-        Order order = factory.buildWithDto(orderDto);
+        Order order = factory.build(orderDto);
 
         repository.addOrder(order);
 

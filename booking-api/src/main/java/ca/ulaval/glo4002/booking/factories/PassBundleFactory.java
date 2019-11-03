@@ -42,20 +42,23 @@ public class PassBundleFactory {
         PassOption passOption = buildOption(parsedPassOption);
         PriceCalculationStrategy priceCalculationStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
 
-        // TODO : Move this
-        int passQuantity;
-        if (passBundleDto.getEventDates() == null) {
-            passQuantity = 1;
-        } else {
-            passQuantity = passBundleDto.getEventDates().size();
-        }
-
         Money passPrice = passCategory.getPricePerOption(parsedPassOption);
-        passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
+        passPrice = calculatePassPrice(passBundleDto.getEventDates(), passPrice, priceCalculationStrategy);
 
         List<Pass> passes = passFactory.buildAll(passBundleDto.getEventDates(), passPrice);
 
         return new PassBundle(passes, passCategory, passOption);
+    }
+
+    private Money calculatePassPrice(List<String> eventDates, Money passPrice, PriceCalculationStrategy priceCalculationStrategy) {
+        int passQuantity;
+        if (eventDates == null) {
+            passQuantity = 1;
+        } else {
+            passQuantity = eventDates.size();
+        }
+
+        return priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
     }
 
     private PassOptions parsePassOption(PassBundleDto passBundleDto) {

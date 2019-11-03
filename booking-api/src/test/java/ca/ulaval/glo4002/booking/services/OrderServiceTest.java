@@ -55,7 +55,7 @@ class OrderServiceTest {
         );
         Order order = mock(Order.class);
         when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
-        when(factory.buildWithDto(any())).thenReturn(order);
+        when(factory.build(any())).thenReturn(order);
 
         subject.order(orderDto);
 

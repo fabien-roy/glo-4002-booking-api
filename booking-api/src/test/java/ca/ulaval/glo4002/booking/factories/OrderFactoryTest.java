@@ -32,7 +32,7 @@ class OrderFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldParseDtoWithCorrectOrderDate() {
+    void build_shouldParseDtoWithCorrectOrderDate() {
         ZonedDateTime orderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
         PassBundleDto passBundleDto = mock(PassBundleDto.class);
         when(passBundleDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
@@ -42,13 +42,13 @@ class OrderFactoryTest {
                 passBundleDto
         );
 
-        Order order = subject.buildWithDto(orderDto);
+        Order order = subject.build(orderDto);
 
         assertEquals(orderDate.toLocalDateTime(), order.getOrderDate());
     }
 
     @Test
-    void buildWithDto_shouldParseDtoWithCorrectVendorCode() {
+    void build_shouldParseDtoWithCorrectVendorCode() {
         ZonedDateTime orderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
         PassBundleDto passBundleDto = mock(PassBundleDto.class);
         when(passBundleDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
@@ -58,13 +58,13 @@ class OrderFactoryTest {
                 passBundleDto
         );
 
-        Order order = subject.buildWithDto(orderDto);
+        Order order = subject.build(orderDto);
 
         assertEquals(orderDto.getVendorCode(), order.getVendorCode());
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidFormatException_whenThereIsNoPass() {
+    void build_shouldThrowInvalidFormatException_whenThereIsNoPass() {
         ZonedDateTime orderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate.toString(),
@@ -72,11 +72,11 @@ class OrderFactoryTest {
                 null
         );
 
-        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(orderDto));
+        assertThrows(InvalidFormatException.class, () -> subject.build(orderDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidFormatException_whenOrderDateIsInvalid() {
+    void build_shouldThrowInvalidFormatException_whenOrderDateIsInvalid() {
         String anInvalidOrderDate = "anInvalidDate";
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 anInvalidOrderDate,
@@ -84,11 +84,11 @@ class OrderFactoryTest {
                 mock(PassBundleDto.class)
         );
 
-        assertThrows(InvalidFormatException.class, () -> subject.buildWithDto(orderDto));
+        assertThrows(InvalidFormatException.class, () -> subject.build(orderDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidOrderDateException_whenOrderDateIsUnderBounds() {
+    void build_shouldThrowInvalidOrderDateException_whenOrderDateIsUnderBounds() {
         LocalDateTime aUnderBoundValue  = OrderFactory.START_DATE_TIME.minusDays(1);
         ZonedDateTime aUnderBoundZonedValue = ZonedDateTime.of(aUnderBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
@@ -99,12 +99,12 @@ class OrderFactoryTest {
 
         assertThrows(
                 InvalidOrderDateException.class,
-                () -> subject.buildWithDto(orderDto)
+                () -> subject.build(orderDto)
         );
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidOrderDateException_whenOrderDateIsOverBounds() {
+    void build_shouldThrowInvalidOrderDateException_whenOrderDateIsOverBounds() {
         LocalDateTime aOverBoundValue  = OrderFactory.END_DATE_TIME.plusDays(1);
         ZonedDateTime aOverBoundZonedValue = ZonedDateTime.of(aOverBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
@@ -113,6 +113,6 @@ class OrderFactoryTest {
                 mock(PassBundleDto.class)
         );
 
-        assertThrows(InvalidOrderDateException.class, () -> subject.buildWithDto(orderDto));
+        assertThrows(InvalidOrderDateException.class, () -> subject.build(orderDto));
     }
 }
