@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.factories;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
@@ -20,12 +20,12 @@ public class OrderFactory {
     public static final LocalDateTime END_DATE_TIME = LocalDateTime.of(2050, 7, 17, 0, 0);
 
     private final NumberGenerator numberGenerator;
-    private final PassListFactory passListFactory;
+    private final PassBundleFactory passBundleFactory;
 
     @Inject
-    public OrderFactory(NumberGenerator numberGenerator, PassListFactory passListFactory) {
+    public OrderFactory(NumberGenerator numberGenerator, PassBundleFactory passBundleFactory) {
         this.numberGenerator = numberGenerator;
-        this.passListFactory = passListFactory;
+        this.passBundleFactory = passBundleFactory;
     }
 
     public Order buildWithDto(OrderWithPassesAsEventDatesDto orderDto) {
@@ -35,9 +35,9 @@ public class OrderFactory {
 
         OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderDto.getVendorCode());
         LocalDateTime orderDate = buildOrderDate(orderDto.getOrderDate());
-        PassList passList = passListFactory.build(orderDto.getPasses());
+        PassBundle passBundle = passBundleFactory.build(orderDto.getPasses());
 
-        return new Order(orderNumber, orderDate, passList);
+        return new Order(orderNumber, orderDate, passBundle);
     }
 
     private LocalDateTime buildOrderDate(String sentOrderDate) {

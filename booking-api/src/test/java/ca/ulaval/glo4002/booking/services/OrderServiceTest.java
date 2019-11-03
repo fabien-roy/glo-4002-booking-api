@@ -6,17 +6,16 @@ import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
-import ca.ulaval.glo4002.booking.domain.passes.PassList;
+import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.domain.passes.PassOption;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.dto.PassListDto;
+import ca.ulaval.glo4002.booking.dto.PassBundleDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassListMapper;
+import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,7 +40,7 @@ class OrderServiceTest {
     void setUpSubject() {
         repository = mock(OrderRepository.class);
         factory = mock(OrderFactory.class);
-        OrderMapper mapper = new OrderMapper(new PassListMapper());
+        OrderMapper mapper = new OrderMapper(new PassBundleMapper());
 
         subject = new OrderService(repository, factory, mapper);
     }
@@ -52,7 +51,7 @@ class OrderServiceTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 "aOrderDate",
                 aVendorCode,
-                mock(PassListDto.class)
+                mock(PassBundleDto.class)
         );
         Order order = mock(Order.class);
         when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
@@ -69,12 +68,12 @@ class OrderServiceTest {
         Pass pass = mock(Pass.class);
         when(pass.getPassNumber()).thenReturn(new Number(1L));
         when(pass.getPrice()).thenReturn(new Money(new BigDecimal(0.0)));
-        PassList passList = new PassList(
+        PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
                 new PassOption(PassOptions.PACKAGE.toString())
         );
-        Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passList);
+        Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passBundle);
         when(repository.getByOrderNumber(aOrderNumber)).thenReturn(Optional.of(order));
 
         OrderWithPassesAsPassesDto orderDto = subject.getByOrderNumber(aOrderNumber.toString());

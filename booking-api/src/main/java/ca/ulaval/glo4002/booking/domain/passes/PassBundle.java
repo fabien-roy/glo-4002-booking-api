@@ -1,19 +1,18 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class PassList {
+public class PassBundle {
 
     private List<Pass> passes;
     private PassCategory category;
     private PassOption option;
     private Money price;
 
-    public PassList(List<Pass> passes, PassCategory category, PassOption option) {
+    public PassBundle(List<Pass> passes, PassCategory category, PassOption option) {
         this.passes = passes;
         this.category = category;
         this.option = option;

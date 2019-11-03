@@ -9,15 +9,15 @@ import java.util.List;
 
 public class OrderMapper {
 
-    private final PassListMapper passListMapper;
+    private final PassBundleMapper passBundleMapper;
 
     @Inject
-    public OrderMapper(PassListMapper passListMapper) {
-        this.passListMapper = passListMapper;
+    public OrderMapper(PassBundleMapper passBundleMapper) {
+        this.passBundleMapper = passBundleMapper;
     }
 
     public OrderWithPassesAsPassesDto toDto(Order order) {
-        List<PassDto> passes = passListMapper.toDto(order.getPassList());
+        List<PassDto> passes = passBundleMapper.toDto(order.getPassBundle());
         double price;
 
         if (order.getPrice() == null) {

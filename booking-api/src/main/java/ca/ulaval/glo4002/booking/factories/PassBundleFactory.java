@@ -1,13 +1,12 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.dto.PassListDto;
+import ca.ulaval.glo4002.booking.dto.PassBundleDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
@@ -15,11 +14,9 @@ import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class PassListFactory {
+public class PassBundleFactory {
 
     private static final Money SUPERNOVA_PACKAGE_PRICE = new Money(new BigDecimal(700000));
     private static final Money SUPERNOVA_SINGLE_PASS_PRICE = new Money(new BigDecimal(150000));
@@ -31,15 +28,15 @@ public class PassListFactory {
     private final PassFactory passFactory;
 
     @Inject
-    public PassListFactory(PassFactory passFactory) {
+    public PassBundleFactory(PassFactory passFactory) {
         this.passFactory = passFactory;
     }
 
-    public PassList build(PassListDto passListDto) {
-        PassCategories parsedPassCategory = parsePassCategory(passListDto);
-        PassOptions parsedPassOption = parsePassOption(passListDto);
+    public PassBundle build(PassBundleDto passBundleDto) {
+        PassCategories parsedPassCategory = parsePassCategory(passBundleDto);
+        PassOptions parsedPassOption = parsePassOption(passBundleDto);
 
-        validateEventDates(passListDto.getEventDates(), parsedPassOption);
+        validateEventDates(passBundleDto.getEventDates(), parsedPassOption);
 
         PassCategory passCategory = buildCategory(parsedPassCategory, parsedPassOption);
         PassOption passOption = buildOption(parsedPassOption);
@@ -47,26 +44,26 @@ public class PassListFactory {
 
         // TODO : Move this
         int passQuantity;
-        if (passListDto.getEventDates() == null) {
+        if (passBundleDto.getEventDates() == null) {
             passQuantity = 1;
         } else {
-            passQuantity = passListDto.getEventDates().size();
+            passQuantity = passBundleDto.getEventDates().size();
         }
 
         Money passPrice = passCategory.getPricePerOption(parsedPassOption);
         passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
 
-        List<Pass> passes = passFactory.buildAll(passListDto.getEventDates(), passPrice);
+        List<Pass> passes = passFactory.buildAll(passBundleDto.getEventDates(), passPrice);
 
-        return new PassList(passes, passCategory, passOption);
+        return new PassBundle(passes, passCategory, passOption);
     }
 
-    private PassOptions parsePassOption(PassListDto passListDto) {
-        return PassOptions.get(passListDto.getPassOption());
+    private PassOptions parsePassOption(PassBundleDto passBundleDto) {
+        return PassOptions.get(passBundleDto.getPassOption());
     }
 
-    private PassCategories parsePassCategory(PassListDto passListDto) {
-        return PassCategories.get(passListDto.getPassCategory());
+    private PassCategories parsePassCategory(PassBundleDto passBundleDto) {
+        return PassCategories.get(passBundleDto.getPassCategory());
     }
 
     private void validateEventDates(List<String> eventDates, PassOptions passOption) {

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class PassListTest {
+class PassBundleTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
@@ -25,12 +25,12 @@ class PassListTest {
         when(pass.getPrice()).thenReturn(passPrice);
         List<Pass> passes = Collections.nCopies(passQuantity, pass);
 
-        PassList passList = new PassList(
+        PassBundle passBundle = new PassBundle(
                 passes,
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
                 new PassOption(PassOptions.PACKAGE.toString())
         );
 
-        assertEquals(expectedPrice, passList.getPrice());
+        assertEquals(expectedPrice, passBundle.getPrice());
     }
 }

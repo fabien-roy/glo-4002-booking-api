@@ -4,9 +4,9 @@ import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.factories.PassListFactory;
+import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassListMapper;
+import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
@@ -34,7 +34,7 @@ public class BookingBinder extends AbstractBinder {
 
     private void bindFactories() {
         bindAsContract(PassFactory.class);
-        bindAsContract(PassListFactory.class);
+        bindAsContract(PassBundleFactory.class);
         bindAsContract(OrderFactory.class);
     }
 
@@ -43,7 +43,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindMappers() {
-        bindAsContract(PassListMapper.class);
+        bindAsContract(PassBundleMapper.class);
         bindAsContract(OrderMapper.class);
     }
 

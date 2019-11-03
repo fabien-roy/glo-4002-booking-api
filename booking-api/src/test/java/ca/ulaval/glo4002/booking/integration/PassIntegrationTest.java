@@ -7,7 +7,6 @@ import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.*;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -15,9 +14,9 @@ import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.factories.PassListFactory;
+import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassListMapper;
+import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
@@ -49,11 +48,11 @@ public class PassIntegrationTest {
         NumberGenerator numberGenerator = new NumberGenerator();
 
         PassFactory passFactory = new PassFactory(numberGenerator);
-        PassListFactory passListFactory = new PassListFactory(passFactory);
-        OrderFactory orderFactory = new OrderFactory(numberGenerator, passListFactory);
+        PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
+        OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
-        PassListMapper passListMapper = new PassListMapper();
-        OrderMapper orderMapper = new OrderMapper(passListMapper);
+        PassBundleMapper passBundleMapper = new PassBundleMapper();
+        OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper);
 
@@ -63,7 +62,7 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsPackage() {
         Pass pass = new Pass(new Number(1L), mock(Money.class));
-        PassList passList = new PassList(
+        PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
                 new PassOption(PassOptions.PACKAGE.toString())
@@ -71,7 +70,7 @@ public class PassIntegrationTest {
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
-                passList
+                passBundle
         );
         orderRepository.addOrder(order);
 
@@ -80,15 +79,15 @@ public class PassIntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
-        assertEquals(passList.getCategory().getName(), passDto.getPassCategory());
-        assertEquals(passList.getOption().getName(), passDto.getPassOption());
+        assertEquals(passBundle.getCategory().getName(), passDto.getPassCategory());
+        assertEquals(passBundle.getOption().getName(), passDto.getPassOption());
         assertNull(passDto.getEventDate());
     }
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
         Pass pass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE), mock(Money.class));
-        PassList passList = new PassList(
+        PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
                 new PassOption(PassOptions.SINGLE_PASS.toString())
@@ -96,7 +95,7 @@ public class PassIntegrationTest {
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
-                passList
+                passBundle
         );
         orderRepository.addOrder(order);
 
@@ -105,8 +104,8 @@ public class PassIntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
-        assertEquals(passList.getCategory().getName(), passDto.getPassCategory());
-        assertEquals(passList.getOption().getName(), passDto.getPassOption());
+        assertEquals(passBundle.getCategory().getName(), passDto.getPassCategory());
+        assertEquals(passBundle.getOption().getName(), passDto.getPassOption());
         assertEquals(pass.getEventDate().toString(), passDto.getEventDate());
     }
 
@@ -122,7 +121,7 @@ public class PassIntegrationTest {
                 new EventDate(EventDate.START_DATE.plusDays(1)),
                 mock(Money.class)
         );
-        PassList passList = new PassList(
+        PassBundle passBundle = new PassBundle(
                 Arrays.asList(aPass, anotherPass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
                 new PassOption(PassOptions.SINGLE_PASS.toString())
@@ -130,7 +129,7 @@ public class PassIntegrationTest {
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
-                passList
+                passBundle
         );
         orderRepository.addOrder(order);
 
@@ -140,18 +139,18 @@ public class PassIntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(aPass.getPassNumber().getValue(), aPassDto.getPassNumber());
-        assertEquals(passList.getCategory().getName(), aPassDto.getPassCategory());
-        assertEquals(passList.getOption().getName(), aPassDto.getPassOption());
+        assertEquals(passBundle.getCategory().getName(), aPassDto.getPassCategory());
+        assertEquals(passBundle.getOption().getName(), aPassDto.getPassOption());
         assertEquals(aPass.getEventDate().toString(), aPassDto.getEventDate());
         assertEquals(anotherPass.getPassNumber().getValue(), anotherPassDto.getPassNumber());
-        assertEquals(passList.getCategory().getName(), anotherPassDto.getPassCategory());
-        assertEquals(passList.getOption().getName(), anotherPassDto.getPassOption());
+        assertEquals(passBundle.getCategory().getName(), anotherPassDto.getPassCategory());
+        assertEquals(passBundle.getOption().getName(), anotherPassDto.getPassOption());
         assertEquals(anotherPass.getEventDate().toString(), anotherPassDto.getEventDate());
     }
 
     @Test
     public void addOrder_shouldAddPasses_whenPassesAreSinglePass() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
                 Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString())
@@ -159,7 +158,7 @@ public class PassIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -170,7 +169,7 @@ public class PassIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenPassIsPackageAndHasEventDate() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString(),
                 Collections.singletonList(EventDate.START_DATE.toString())
@@ -178,7 +177,7 @@ public class PassIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -191,14 +190,14 @@ public class PassIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenPassIsSinglePackageAndHasNoEventDate() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -211,14 +210,14 @@ public class PassIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenPassCategoryIsInvalid() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 "anInvalidPassCategory",
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -231,14 +230,14 @@ public class PassIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenPassOptionIsInvalid() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 "anInvalidPassOption"
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -251,7 +250,7 @@ public class PassIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenEventDateIsInvalid() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
                 Collections.singletonList("anInvalidOrderDate")
@@ -259,7 +258,7 @@ public class PassIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -272,7 +271,7 @@ public class PassIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenEventDateIsUnderBounds() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
                 Collections.singletonList(EventDate.START_DATE.minusDays(1).toString())
@@ -280,7 +279,7 @@ public class PassIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);
@@ -293,7 +292,7 @@ public class PassIntegrationTest {
 
     @Test
     public void addOrder_shouldReturnBadRequest_whenEventDateIsOverBounds() {
-        PassListDto passListDto = new PassListDto(
+        PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
                 Collections.singletonList(EventDate.END_DATE.plusDays(1).toString())
@@ -301,7 +300,7 @@ public class PassIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passListDto
+                passBundleDto
         );
 
         ResponseEntity<?> response = controller.addOrder(orderDto);

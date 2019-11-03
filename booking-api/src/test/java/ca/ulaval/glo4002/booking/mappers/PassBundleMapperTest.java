@@ -3,8 +3,6 @@ package ca.ulaval.glo4002.booking.mappers;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.*;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.PassDto;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,13 +20,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class PassListMapperTest {
+class PassBundleMapperTest {
 
-    private PassListMapper subject;
+    private PassBundleMapper subject;
 
     @BeforeEach
     void setUpSubject() {
-        subject = new PassListMapper();
+        subject = new PassBundleMapper();
     }
 
     @ParameterizedTest
@@ -38,9 +35,9 @@ class PassListMapperTest {
         Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
-        PassList passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), mock(PassOption.class));
 
-        List<PassDto> passDtos = subject.toDto(passList);
+        List<PassDto> passDtos = subject.toDto(passBundle);
 
         assertEquals(expectedSize, passDtos.size());
     }
@@ -52,9 +49,9 @@ class PassListMapperTest {
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class), mock(Money.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassList passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), mock(PassOption.class));
 
-        List<PassDto> passDtos = subject.toDto(passList);
+        List<PassDto> passDtos = subject.toDto(passBundle);
 
         assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(aPassNumber.getValue())));
         assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(anotherPassNumber.getValue())));
@@ -68,9 +65,9 @@ class PassListMapperTest {
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
-        PassList passList = new PassList(passes, passCategory, mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, passCategory, mock(PassOption.class));
 
-        List<PassDto> passDtos = subject.toDto(passList);
+        List<PassDto> passDtos = subject.toDto(passBundle);
 
         assertEquals(expectedPassCategoryName, passDtos.get(0).getPassCategory());
     }
@@ -85,9 +82,9 @@ class PassListMapperTest {
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
-        PassList passList = new PassList(passes, passCategory, mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, passCategory, mock(PassOption.class));
 
-        List<PassDto> passDtos = subject.toDto(passList);
+        List<PassDto> passDtos = subject.toDto(passBundle);
 
         assertTrue(passDtos.stream().allMatch(pass -> pass.getPassCategory().equals(expectedPassCategoryName)));
     }
@@ -100,9 +97,9 @@ class PassListMapperTest {
         PassOption passOption = mock(PassOption.class);
         String expectedPassOptionName = "expectedPassOptionName";
         when(passOption.getName()).thenReturn(expectedPassOptionName);
-        PassList passList = new PassList(passes, mock(PassCategory.class), passOption);
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), passOption);
 
-        List<PassDto> passDtos = subject.toDto(passList);
+        List<PassDto> passDtos = subject.toDto(passBundle);
 
         assertEquals(expectedPassOptionName, passDtos.get(0).getPassOption());
     }
@@ -117,9 +114,9 @@ class PassListMapperTest {
         PassOption passOption = mock(PassOption.class);
         String expectedPassOptionName = "expectedPassOptionName";
         when(passOption.getName()).thenReturn(expectedPassOptionName);
-        PassList passList = new PassList(passes, mock(PassCategory.class), passOption);
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), passOption);
 
-        List<PassDto> passDtos = subject.toDto(passList);
+        List<PassDto> passDtos = subject.toDto(passBundle);
 
         assertTrue(passDtos.stream().allMatch(pass -> pass.getPassOption().equals(expectedPassOptionName)));
     }
@@ -135,9 +132,9 @@ class PassListMapperTest {
         Pass aPass = new Pass(aPassNumber, aEventDate, mock(Money.class));
         Pass anotherPass = new Pass(anotherPassNumber, anotherEventDate, mock(Money.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassList passList = new PassList(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), mock(PassOption.class));
 
-        List<PassDto> passDtos = subject.toDto(passList);
+        List<PassDto> passDtos = subject.toDto(passBundle);
 
         assertTrue(passDtos.stream().anyMatch(pass -> aEventDate.toString().equals(pass.getEventDate())));
         assertTrue(passDtos.stream().anyMatch(pass -> anotherEventDate.toString().equals(pass.getEventDate())));
