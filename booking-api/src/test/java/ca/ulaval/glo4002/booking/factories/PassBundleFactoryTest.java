@@ -206,7 +206,7 @@ class PassBundleFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidFormatException_whenEventDateIsNotNullAndPassOptionIsPackage() {
+    void build_shouldThrowInvalidFormatException_whenEventDateIsNotNullAndPassOptionIsPackage() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.PACKAGE.toString();
         List<String> someEventDates = Collections.singletonList(EventDate.START_DATE.toString());
@@ -216,7 +216,7 @@ class PassBundleFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
+    void build_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.SINGLE_PASS.toString();
         PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, null);
@@ -225,7 +225,7 @@ class PassBundleFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidFormatException_whenPassCategoryDoesNotExist() {
+    void build_shouldThrowInvalidFormatException_whenPassCategoryDoesNotExist() {
         String anInvalidPassCategory = "anInvalidPassCategory";
         String aPassOption = PassOptions.PACKAGE.toString();
         PassBundleDto passBundleDto = new PassBundleDto(anInvalidPassCategory, aPassOption, null);
@@ -234,7 +234,7 @@ class PassBundleFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidFormatException_whenPassOptionDoesNotExist() {
+    void build_shouldThrowInvalidFormatException_whenPassOptionDoesNotExist() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String anInvalidPassOption = "anInvalidPassOption";
         PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, anInvalidPassOption, null);
@@ -243,7 +243,7 @@ class PassBundleFactoryTest {
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
+    void build_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
         String aPassCategory = PassCategories.SUPERNOVA.toString();
         String aPassOption = PassOptions.PACKAGE.toString();
         List<String> anInvalidEventDate = Collections.singletonList("anInvalidEventDate");
