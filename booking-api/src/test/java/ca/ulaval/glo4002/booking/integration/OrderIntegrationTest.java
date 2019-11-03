@@ -47,6 +47,7 @@ public class OrderIntegrationTest {
 
     private OrderController controller;
     private OrderRepository orderRepository;
+    private PassListFactory passListFactory;
 
     @BeforeEach
     public void setUpController() {
@@ -55,7 +56,7 @@ public class OrderIntegrationTest {
         NumberGenerator numberGenerator = new NumberGenerator();
 
         PassFactory passFactory = new PassFactory(numberGenerator);
-        PassListFactory passListFactory = new PassListFactory(passFactory);
+        passListFactory = new PassListFactory(passFactory);
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passListFactory);
 
         PassListMapper passListMapper = new PassListMapper();
@@ -68,11 +69,10 @@ public class OrderIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrder() {
-        PassList passList = new PassList(
-                new ArrayList<>(),
-                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
-                new PassOption(PassOptions.PACKAGE.toString())
-        );
+        PassList passList = passListFactory.build(new PassListDto(
+                PassCategories.SUPERNOVA.toString(),
+                PassOptions.PACKAGE.toString()
+        ));
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
                 OrderFactory.START_DATE_TIME,
@@ -84,7 +84,7 @@ public class OrderIntegrationTest {
         OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(0.0, orderDto.getOrderPrice()); // TODO : ACP : Assert correct orderPrice when working
+        // TODO : ACP : Assert correct orderPrice when working
     }
 
     @Test
