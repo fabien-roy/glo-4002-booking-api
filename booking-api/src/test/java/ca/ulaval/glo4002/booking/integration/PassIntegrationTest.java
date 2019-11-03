@@ -27,6 +27,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -62,7 +63,8 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsPackage() {
-        Pass pass = new Pass(new Number(1L), mock(Money.class));
+        Money passPrice = new Money(new BigDecimal(100.0));
+        Pass pass = new Pass(new Number(1L), passPrice);
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
@@ -87,7 +89,8 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
-        Pass pass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE), mock(Money.class));
+        Money passPrice = new Money(new BigDecimal(100.0));
+        Pass pass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE), passPrice);
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
@@ -112,11 +115,8 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
-        Pass aPass = new Pass(
-                new Number(1L),
-                new EventDate(EventDate.START_DATE),
-                mock(Money.class)
-        );
+        Money passPrice = new Money(new BigDecimal(100.0));
+        Pass aPass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE), passPrice);
         Pass anotherPass = new Pass(
                 new Number(2L),
                 new EventDate(EventDate.START_DATE.plusDays(1)),
