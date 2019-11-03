@@ -29,25 +29,6 @@ class PassFactoryTest {
 
         subject = new PassFactory(numberGenerator);
     }
-    @Test
-    void build_shouldBuildOption_whenOptionIsSinglePass() {
-        PassCategories category = PassCategories.SUPERNOVA;
-        PassOptions option = PassOptions.SINGLE_PASS;
-
-        PassList passList = subject.build(Collections.singletonList(mock(Pass.class)), category, option);
-
-        assertEquals(passList.getOption().getName(), PassOptions.SINGLE_PASS.toString());
-    }
-
-    @Test
-    void build_shouldBuildOption_whenOptionIsPackage() {
-        PassCategories category = PassCategories.SUPERNOVA;
-        PassOptions option = PassOptions.SINGLE_PASS;
-
-        PassList passList = subject.build(Collections.singletonList(mock(Pass.class)), category, option);
-
-        assertEquals(passList.getOption().getName(), PassOptions.SINGLE_PASS.toString());
-    }
 
     @Test
     void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupernova() {

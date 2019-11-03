@@ -79,6 +79,29 @@ class PassListFactoryTest {
         assertEquals(passList.getCategory().getName(), PassCategories.NEBULA.toString());
     }
 
+    @Test
+    void build_shouldBuildOption_whenOptionIsSinglePass() {
+        String aPassCategory = PassCategories.SUPERNOVA.toString();
+        String aPassOption = PassOptions.SINGLE_PASS.toString();
+        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+
+        PassList passList = subject.build(passListDto);
+
+        assertEquals(passList.getOption().getName(), PassOptions.SINGLE_PASS.toString());
+    }
+
+    @Test
+    void build_shouldBuildOption_whenOptionIsPackage() {
+        String aPassCategory = PassCategories.SUPERNOVA.toString();
+        String aPassOption = PassOptions.PACKAGE.toString();
+        List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        PassListDto passListDto = new PassListDto(aPassCategory, aPassOption, someEventDates);
+
+        PassList passList = subject.build(passListDto);
+
+        assertEquals(passList.getOption().getName(), PassOptions.PACKAGE.toString());
+    }
 
     @Test
     void buildWithDto_shouldParseASinglePass_whenThereIsOnlyOneEventDate() {
