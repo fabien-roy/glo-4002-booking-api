@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
@@ -15,10 +16,12 @@ import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
+import ca.ulaval.glo4002.booking.mappers.PassListMapper;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -38,7 +41,7 @@ class OrderServiceTest {
     void setUpSubject() {
         repository = mock(OrderRepository.class);
         factory = mock(OrderFactory.class);
-        OrderMapper mapper = mock(OrderMapper.class);
+        OrderMapper mapper = new OrderMapper(new PassListMapper());
 
         subject = new OrderService(repository, factory, mapper);
     }
@@ -63,11 +66,13 @@ class OrderServiceTest {
     @Test
     void getByOrderNumber_shouldGetOrder() {
         OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "Vendor");
+        Pass pass = mock(Pass.class);
+        when(pass.getPassNumber()).thenReturn(new Number(1L));
+        when(pass.getPrice()).thenReturn(new Money(new BigDecimal(0.0)));
         PassList passList = new PassList(
-                Collections.singletonList(mock(Pass.class)),
-                new PassCategory(PassCategories.SUPERNOVA.toString()),
-                new PassOption(PassOptions.PACKAGE.toString()),
-                new NoDiscountPriceCalculationStrategy()
+                Collections.singletonList(pass),
+                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassOption(PassOptions.PACKAGE.toString())
         );
         Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passList);
         when(repository.getByOrderNumber(aOrderNumber)).thenReturn(Optional.of(order));

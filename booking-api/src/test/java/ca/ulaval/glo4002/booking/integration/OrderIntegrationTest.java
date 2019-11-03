@@ -70,9 +70,8 @@ public class OrderIntegrationTest {
     public void getByOrderNumber_shouldReturnOrder() {
         PassList passList = new PassList(
                 new ArrayList<>(),
-                new PassCategory(PassCategories.SUPERNOVA.toString()),
-                new PassOption(PassOptions.PACKAGE.toString()),
-                new NoDiscountPriceCalculationStrategy()
+                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassOption(PassOptions.PACKAGE.toString())
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),

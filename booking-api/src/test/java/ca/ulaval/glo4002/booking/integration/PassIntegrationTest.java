@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.integration;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.*;
@@ -61,12 +62,11 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsPackage() {
-        Pass pass = new Pass(new Number(1L));
+        Pass pass = new Pass(new Number(1L), mock(Money.class));
         PassList passList = new PassList(
                 Collections.singletonList(pass),
-                new PassCategory(PassCategories.SUPERNOVA.toString()),
-                new PassOption(PassOptions.PACKAGE.toString()),
-                new NoDiscountPriceCalculationStrategy()
+                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassOption(PassOptions.PACKAGE.toString())
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
@@ -87,12 +87,11 @@ public class PassIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
-        Pass pass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE));
+        Pass pass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE), mock(Money.class));
         PassList passList = new PassList(
                 Collections.singletonList(pass),
-                new PassCategory(PassCategories.SUPERNOVA.toString()),
-                new PassOption(PassOptions.SINGLE_PASS.toString()),
-                new NoDiscountPriceCalculationStrategy()
+                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassOption(PassOptions.SINGLE_PASS.toString())
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
@@ -115,17 +114,18 @@ public class PassIntegrationTest {
     public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
         Pass aPass = new Pass(
                 new Number(1L),
-                new EventDate(EventDate.START_DATE)
+                new EventDate(EventDate.START_DATE),
+                mock(Money.class)
         );
         Pass anotherPass = new Pass(
                 new Number(2L),
-                new EventDate(EventDate.START_DATE.plusDays(1))
+                new EventDate(EventDate.START_DATE.plusDays(1)),
+                mock(Money.class)
         );
         PassList passList = new PassList(
                 Arrays.asList(aPass, anotherPass),
-                new PassCategory(PassCategories.SUPERNOVA.toString()),
-                new PassOption(PassOptions.SINGLE_PASS.toString()),
-                new NoDiscountPriceCalculationStrategy()
+                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassOption(PassOptions.SINGLE_PASS.toString())
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),

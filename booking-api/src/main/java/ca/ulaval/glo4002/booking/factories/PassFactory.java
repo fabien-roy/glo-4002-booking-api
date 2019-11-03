@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
@@ -18,15 +19,15 @@ public class PassFactory {
         this.numberGenerator = numberGenerator;
     }
 
-    public List<Pass> buildAll(List<String> eventDates) {
+    public List<Pass> buildAll(List<String> eventDates, Money passPrice) {
         List<Pass> passes = new ArrayList<>();
 
         if (eventDates == null) {
-            passes.add(new Pass(numberGenerator.generate()));
+            passes.add(new Pass(numberGenerator.generate(), passPrice));
         } else {
             eventDates.forEach(eventDate -> {
                 EventDate builtEventDate = buildEventDate(eventDate);
-                Pass pass = new Pass(numberGenerator.generate(), builtEventDate);
+                Pass pass = new Pass(numberGenerator.generate(), builtEventDate, passPrice);
                 passes.add(pass);
             });
         }

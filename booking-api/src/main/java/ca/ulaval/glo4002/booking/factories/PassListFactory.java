@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
@@ -12,10 +13,20 @@ import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 import javax.inject.Inject;
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PassListFactory {
+
+    private static final Money SUPERNOVA_PACKAGE_PRICE = new Money(new BigDecimal(700000));
+    private static final Money SUPERNOVA_SINGLE_PASS_PRICE = new Money(new BigDecimal(150000));
+    private static final Money SUPERGIANT_PACKAGE_PRICE = new Money(new BigDecimal(500000));
+    private static final Money SUPERGIANT_SINGLE_PASS_PRICE = new Money(new BigDecimal(100000));
+    private static final Money NEBULA_PACKAGE_PRICE = new Money(new BigDecimal(250000));
+    private static final Money NEBULA_SINGLE_PASS_PRICE = new Money(new BigDecimal(50000));
 
     private final PassFactory passFactory;
 
@@ -30,13 +41,24 @@ public class PassListFactory {
 
         validateEventDates(passListDto.getEventDates(), parsedPassOption);
 
-        PassCategory passCategory = buildCategory(parsedPassCategory);
+        PassCategory passCategory = buildCategory(parsedPassCategory, parsedPassOption);
         PassOption passOption = buildOption(parsedPassOption);
         PriceCalculationStrategy priceCalculationStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
 
-        List<Pass> passes = passFactory.buildAll(passListDto.getEventDates());
+        // TODO : Move this
+        int passQuantity;
+        if (passListDto.getEventDates() == null) {
+            passQuantity = 1;
+        } else {
+            passQuantity = passListDto.getEventDates().size();
+        }
 
-        return new PassList(passes, passCategory, passOption, priceCalculationStrategy);
+        Money passPrice = passCategory.getPricePerOption(parsedPassOption);
+        passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
+
+        List<Pass> passes = passFactory.buildAll(passListDto.getEventDates(), passPrice);
+
+        return new PassList(passes, passCategory, passOption);
     }
 
     private PassOptions parsePassOption(PassListDto passListDto) {
@@ -59,16 +81,30 @@ public class PassListFactory {
         }
     }
 
-    private PassCategory buildCategory(PassCategories category) {
+    private PassCategory buildCategory(PassCategories category, PassOptions option) {
+        PassCategory passCategory;
+        EnumMap<PassOptions, Money> pricePerOption = new EnumMap<>(PassOptions.class);
+
         switch(category) {
             case SUPERNOVA:
-                return new PassCategory(PassCategories.SUPERNOVA.toString());
+                pricePerOption.put(PassOptions.PACKAGE, SUPERNOVA_PACKAGE_PRICE);
+                pricePerOption.put(PassOptions.SINGLE_PASS, SUPERNOVA_SINGLE_PASS_PRICE);
+                passCategory = new PassCategory(PassCategories.SUPERNOVA.toString(), pricePerOption);
+                break;
             case SUPERGIANT:
-                return new PassCategory(PassCategories.SUPERGIANT.toString());
+                pricePerOption.put(PassOptions.PACKAGE, SUPERGIANT_PACKAGE_PRICE);
+                pricePerOption.put(PassOptions.SINGLE_PASS, SUPERGIANT_SINGLE_PASS_PRICE);
+                passCategory = new PassCategory(PassCategories.SUPERGIANT.toString(), pricePerOption);
+                break;
             default:
             case NEBULA:
-                return new PassCategory(PassCategories.NEBULA.toString());
+                pricePerOption.put(PassOptions.PACKAGE, NEBULA_PACKAGE_PRICE);
+                pricePerOption.put(PassOptions.SINGLE_PASS, NEBULA_SINGLE_PASS_PRICE);
+                passCategory = new PassCategory(PassCategories.NEBULA.toString(), pricePerOption);
+                break;
         }
+
+        return passCategory;
     }
 
     private PassOption buildOption(PassOptions option) {
