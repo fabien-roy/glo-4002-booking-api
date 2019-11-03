@@ -28,7 +28,7 @@ public class OrderFactory {
         this.passBundleFactory = passBundleFactory;
     }
 
-    public Order buildWithDto(OrderWithPassesAsEventDatesDto orderDto) {
+    public Order build(OrderWithPassesAsEventDatesDto orderDto) {
         if (orderDto.getPasses() == null) {
             throw new InvalidFormatException();
         }
