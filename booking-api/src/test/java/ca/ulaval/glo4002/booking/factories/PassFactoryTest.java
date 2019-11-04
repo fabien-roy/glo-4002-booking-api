@@ -17,18 +17,18 @@ import static org.mockito.Mockito.mock;
 
 class PassFactoryTest {
 
-    private PassFactory subject;
+    private PassFactory factory;
 
     @BeforeEach
-    void setUpSubject() {
+    void setUpFactory() {
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        subject = new PassFactory(numberGenerator);
+        factory = new PassFactory(numberGenerator);
     }
 
     @Test
     void buildAll_shouldBuildASinglePass_whenThereNoEventDate() {
-        List<Pass> passes = subject.buildAll(null, mock(Money.class));
+        List<Pass> passes = factory.buildAll(null, mock(Money.class));
 
         assertEquals(1, passes.size());
     }
@@ -37,7 +37,7 @@ class PassFactoryTest {
     void buildAll_shouldBuildASinglePass_whenThereIsOnlyOneEventDate() {
         List<String> aEventDate = Collections.singletonList(EventDate.START_DATE.toString());
 
-        List<Pass> passes = subject.buildAll(aEventDate, mock(Money.class));
+        List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
 
         assertEquals(1, passes.size());
     }
@@ -46,7 +46,7 @@ class PassFactoryTest {
     void buildAll_shouldBuildMultiplePasses_whenThereAreMultipleEventDates() {
         List<String> aEventDate = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
 
-        List<Pass> passes = subject.buildAll(aEventDate, mock(Money.class));
+        List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
 
         assertEquals(2, passes.size());
     }

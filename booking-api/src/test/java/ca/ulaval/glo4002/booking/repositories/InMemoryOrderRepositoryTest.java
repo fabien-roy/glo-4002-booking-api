@@ -17,18 +17,18 @@ import static org.mockito.Mockito.*;
 
 class InMemoryOrderRepositoryTest {
 
-    private OrderRepository subject;
+    private OrderRepository repository;
 
     @BeforeEach
-    void setUpSubject() {
-        subject = new InMemoryOrderRepository();
+    void setUpRepository() {
+        repository = new InMemoryOrderRepository();
     }
 
     @Test
     void getOrderNumber_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
         OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
 
-        assertThrows(OrderNotFoundException.class, () -> subject.getByOrderNumber(aNonExistentOrderNumber));
+        assertThrows(OrderNotFoundException.class, () -> repository.getByOrderNumber(aNonExistentOrderNumber));
     }
 
     @Test
@@ -38,9 +38,9 @@ class InMemoryOrderRepositoryTest {
         LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
         PassBundle aPassBundle = mock(PassBundle.class);
         Order aOrder = new Order(aOrderNumber, aOrderDate, aPassBundle);
-        subject.addOrder(aOrder);
+        repository.addOrder(aOrder);
 
-        assertThrows(OrderNotFoundException.class, () -> subject.getByOrderNumber(aNonExistentOrderNumber));
+        assertThrows(OrderNotFoundException.class, () -> repository.getByOrderNumber(aNonExistentOrderNumber));
     }
 
     @Test
@@ -49,9 +49,9 @@ class InMemoryOrderRepositoryTest {
         LocalDateTime aOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
         PassBundle aPassBundle = mock(PassBundle.class);
         Order aOrder = new Order(aOrderNumber, aOrderDate, aPassBundle);
-        subject.addOrder(aOrder);
+        repository.addOrder(aOrder);
 
-        Optional<Order> foundOrder = subject.getByOrderNumber(aOrderNumber);
+        Optional<Order> foundOrder = repository.getByOrderNumber(aOrderNumber);
 
         assertTrue(foundOrder.isPresent());
         assertEquals(aOrderNumber, foundOrder.get().getOrderNumber());
@@ -65,11 +65,11 @@ class InMemoryOrderRepositoryTest {
         PassBundle aPassBundle = mock(PassBundle.class);
         Order aOrder = new Order(aOrderNumber, aOrderDate, aPassBundle);
         Order anotherOrder = new Order(anotherOrderNumber, aOrderDate, aPassBundle);
-        subject.addOrder(aOrder);
-        subject.addOrder(anotherOrder);
+        repository.addOrder(aOrder);
+        repository.addOrder(anotherOrder);
 
-        Optional<Order> foundOrder = subject.getByOrderNumber(aOrderNumber);
-        Optional<Order> otherFoundOrder = subject.getByOrderNumber(anotherOrderNumber);
+        Optional<Order> foundOrder = repository.getByOrderNumber(aOrderNumber);
+        Optional<Order> otherFoundOrder = repository.getByOrderNumber(anotherOrderNumber);
 
         assertTrue(foundOrder.isPresent());
         assertTrue(otherFoundOrder.isPresent());

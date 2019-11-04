@@ -21,14 +21,14 @@ import static org.mockito.Mockito.when;
 
 class OrderFactoryTest {
 
-    private OrderFactory subject;
+    private OrderFactory factory;
 
     @BeforeEach
-    void setUpSubject() {
+    void setUpFactory() {
         NumberGenerator numberGenerator = new NumberGenerator();
         PassBundleFactory passBundleFactory = mock(PassBundleFactory.class);
 
-        this.subject = new OrderFactory(numberGenerator, passBundleFactory);
+        this.factory = new OrderFactory(numberGenerator, passBundleFactory);
     }
 
     @Test
@@ -42,7 +42,7 @@ class OrderFactoryTest {
                 passBundleDto
         );
 
-        Order order = subject.build(orderDto);
+        Order order = factory.build(orderDto);
 
         assertEquals(orderDate.toLocalDateTime(), order.getOrderDate());
     }
@@ -58,7 +58,7 @@ class OrderFactoryTest {
                 passBundleDto
         );
 
-        Order order = subject.build(orderDto);
+        Order order = factory.build(orderDto);
 
         assertEquals(orderDto.getVendorCode(), order.getVendorCode());
     }
@@ -72,7 +72,7 @@ class OrderFactoryTest {
                 null
         );
 
-        assertThrows(InvalidFormatException.class, () -> subject.build(orderDto));
+        assertThrows(InvalidFormatException.class, () -> factory.build(orderDto));
     }
 
     @Test
@@ -84,7 +84,7 @@ class OrderFactoryTest {
                 mock(PassBundleDto.class)
         );
 
-        assertThrows(InvalidFormatException.class, () -> subject.build(orderDto));
+        assertThrows(InvalidFormatException.class, () -> factory.build(orderDto));
     }
 
     @Test
@@ -99,7 +99,7 @@ class OrderFactoryTest {
 
         assertThrows(
                 InvalidOrderDateException.class,
-                () -> subject.build(orderDto)
+                () -> factory.build(orderDto)
         );
     }
 
@@ -113,6 +113,6 @@ class OrderFactoryTest {
                 mock(PassBundleDto.class)
         );
 
-        assertThrows(InvalidOrderDateException.class, () -> subject.build(orderDto));
+        assertThrows(InvalidOrderDateException.class, () -> factory.build(orderDto));
     }
 }

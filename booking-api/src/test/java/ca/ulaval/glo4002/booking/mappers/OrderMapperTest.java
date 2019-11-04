@@ -18,14 +18,14 @@ import static org.mockito.Mockito.when;
 
 class OrderMapperTest {
 
-    private OrderMapper subject;
+    private OrderMapper orderMapper;
     private PassBundleMapper passBundleMapper;
     private Order order;
 
     @BeforeEach
-    void setUpSubject() {
+    void setUpMapper() {
         passBundleMapper = mock(PassBundleMapper.class);
-        subject = new OrderMapper(passBundleMapper);
+        orderMapper = new OrderMapper(passBundleMapper);
     }
 
     @BeforeEach
@@ -40,7 +40,7 @@ class OrderMapperTest {
 
     @Test
     void toDto_shouldBuildDtoWithCorrectOrderPrice() {
-        OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
+        OrderWithPassesAsPassesDto orderDto = orderMapper.toDto(order);
 
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
     }
@@ -51,7 +51,7 @@ class OrderMapperTest {
         when(order.getPrice()).thenReturn(new Money(new BigDecimal(orderPrice)));
         String expectedOrderPrice = "123.12";
 
-        OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
+        OrderWithPassesAsPassesDto orderDto = orderMapper.toDto(order);
 
         assertEquals(expectedOrderPrice, Double.toString(orderDto.getOrderPrice()));
     }
@@ -62,14 +62,14 @@ class OrderMapperTest {
         when(order.getPrice()).thenReturn(new Money(new BigDecimal(orderPrice)));
         String expectedOrderPrice = "123.1";
 
-        OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
+        OrderWithPassesAsPassesDto orderDto = orderMapper.toDto(order);
 
         assertEquals(expectedOrderPrice, Double.toString(orderDto.getOrderPrice()));
     }
 
     @Test
     void toDto_shouldCallPassListParser() {
-        subject.toDto(order);
+        orderMapper.toDto(order);
 
         verify(passBundleMapper).toDto(any());
     }

@@ -18,14 +18,14 @@ import static org.mockito.Mockito.when;
 
 class OrderControllerTest {
 
-    private OrderController subject;
+    private OrderController controller;
     private OrderService service;
 
     @BeforeEach
-    void setUpSubject() {
+    void setUpController() {
         service = mock(OrderService.class);
 
-        subject = new OrderController(service);
+        controller = new OrderController(service);
     }
 
     @Test
@@ -33,7 +33,7 @@ class OrderControllerTest {
         String aOrderNumber = "aOrderNumber";
         when(service.getByOrderNumber(any())).thenThrow(new OrderNotFoundException(aOrderNumber));
 
-        ResponseEntity<?> response = subject.getByOrderNumber(aOrderNumber);
+        ResponseEntity<?> response = controller.getByOrderNumber(aOrderNumber);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
@@ -43,7 +43,7 @@ class OrderControllerTest {
         String aOrderNumber = "VENDOR-123";
         when(service.getByOrderNumber(any())).thenReturn(mock(OrderWithPassesAsPassesDto.class));
 
-        ResponseEntity<?> response = subject.getByOrderNumber(aOrderNumber);
+        ResponseEntity<?> response = controller.getByOrderNumber(aOrderNumber);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
@@ -53,7 +53,7 @@ class OrderControllerTest {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
         when(service.order(any())).thenThrow(new InvalidFormatException());
 
-        ResponseEntity<?> response = subject.addOrder(aOrderDto);
+        ResponseEntity<?> response = controller.addOrder(aOrderDto);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -63,7 +63,7 @@ class OrderControllerTest {
         OrderWithPassesAsEventDatesDto aOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
         when(service.order(any())).thenReturn("aOrderNumber");
 
-        ResponseEntity<?> response = subject.addOrder(aOrderDto);
+        ResponseEntity<?> response = controller.addOrder(aOrderDto);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
@@ -74,7 +74,7 @@ class OrderControllerTest {
         String expectedOrderNumber = "expectedOrderNumber";
         when(service.order(any())).thenReturn(expectedOrderNumber);
 
-        ResponseEntity<?> response = subject.addOrder(aOrderDto);
+        ResponseEntity<?> response = controller.addOrder(aOrderDto);
 
         assertNotNull(response.getHeaders());
         assertEquals(1, response.getHeaders().get(HttpHeaders.LOCATION).size());

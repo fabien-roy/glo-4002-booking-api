@@ -18,9 +18,9 @@ class OrderDateTest {
         LocalDateTime expectedValue  = OrderDate.START_DATE_TIME.plusDays(1);
         ZonedDateTime expectedZonedValue = ZonedDateTime.of(expectedValue, ZoneId.systemDefault());
 
-        OrderDate subject = new OrderDate(expectedZonedValue.toString());
+        OrderDate date = new OrderDate(expectedZonedValue.toString());
 
-        assertEquals(expectedValue, subject.getValue());
+        assertEquals(expectedValue, date.getValue());
     }
 
     @Test

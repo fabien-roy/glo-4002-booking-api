@@ -32,17 +32,17 @@ import static org.mockito.Mockito.when;
 
 class OrderServiceTest {
 
-    private OrderService subject;
+    private OrderService service;
     private OrderRepository repository;
     private OrderFactory factory;
 
     @BeforeEach
-    void setUpSubject() {
+    void setUpService() {
         repository = mock(OrderRepository.class);
         factory = mock(OrderFactory.class);
         OrderMapper mapper = new OrderMapper(new PassBundleMapper());
 
-        subject = new OrderService(repository, factory, mapper);
+        service = new OrderService(repository, factory, mapper);
     }
 
     @Test
@@ -57,7 +57,7 @@ class OrderServiceTest {
         when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
         when(factory.build(any())).thenReturn(order);
 
-        subject.order(orderDto);
+        service.order(orderDto);
 
         verify(repository).addOrder(any());
     }
@@ -76,7 +76,7 @@ class OrderServiceTest {
         Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passBundle);
         when(repository.getByOrderNumber(aOrderNumber)).thenReturn(Optional.of(order));
 
-        OrderWithPassesAsPassesDto orderDto = subject.getByOrderNumber(aOrderNumber.toString());
+        OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(aOrderNumber.toString());
 
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
     }

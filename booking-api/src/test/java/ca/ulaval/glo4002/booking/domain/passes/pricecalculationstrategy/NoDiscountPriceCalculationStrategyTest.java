@@ -13,17 +13,15 @@ import static org.mockito.Mockito.mock;
 
 class NoDiscountPriceCalculationStrategyTest {
 
-    private NoDiscountPriceCalculationStrategy subject;
-
     @Test
     void calculatePassPrice_shouldReturnPassPrice() {
-        subject = new NoDiscountPriceCalculationStrategy();
+        NoDiscountPriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
         List<Pass> passes = new ArrayList<>();
         passes.add(mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money expectedPrice = new Money(aAmount);
 
-        Money price = subject.calculatePassPrice(passes.size(), expectedPrice);
+        Money price = priceCalculationStrategy.calculatePassPrice(passes.size(), expectedPrice);
 
         assertEquals(expectedPrice, price);
     }
