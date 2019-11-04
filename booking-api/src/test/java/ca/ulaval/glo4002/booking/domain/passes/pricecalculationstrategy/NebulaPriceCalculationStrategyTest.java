@@ -25,9 +25,9 @@ class NebulaPriceCalculationStrategyTest {
 
     @Test
     void calculatePassPrice_shouldReturnPassPriceWithDiscount_whenPassQuantityIsOverThreshold() {
-        List<Pass> passes = new ArrayList<>(Collections.nCopies(NebulaPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1, mock(Pass.class)));
+        List<Pass> passes = Collections.nCopies(NebulaPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1, mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
-        Money aPrice = new Money(aAmount);
+        Money aPrice = new Money(BigDecimal.valueOf(100.0));
         Money expectedPrice = new Money(new PercentageDiscount(NebulaPriceCalculationStrategy.DISCOUNT_PERCENTAGE).apply(aAmount));
 
         Money price = priceCalculationStrategy.calculatePassPrice(passes.size(), aPrice);
@@ -37,8 +37,7 @@ class NebulaPriceCalculationStrategyTest {
 
     @Test
     void calculatePassPrice_shouldReturnPassPriceWithoutDiscount_whenPassQuantityIsNotOverThreshold() {
-        List<Pass> passes = new ArrayList<>(Collections.nCopies(NebulaPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD - 1, mock(Pass.class)));
-        passes.add(mock(Pass.class));
+        List<Pass> passes = Collections.nCopies(NebulaPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD - 1, mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money expectedPrice = new Money(aAmount);
 

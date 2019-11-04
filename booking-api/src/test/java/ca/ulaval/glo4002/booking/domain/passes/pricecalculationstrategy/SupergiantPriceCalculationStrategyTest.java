@@ -25,7 +25,7 @@ class SupergiantPriceCalculationStrategyTest {
 
     @Test
     void calculatePassPrice_shouldReturnPassPriceWithDiscount_whenPassQuantityIsOverThreshold() {
-        List<Pass> passes = new ArrayList<>(Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1, mock(Pass.class)));
+        List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1, mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money aPrice = new Money(aAmount);
         Money expectedPrice = new Money(new AmountDiscount(SupergiantPriceCalculationStrategy.DISCOUNT_AMOUNT).apply(aAmount));
@@ -37,8 +37,7 @@ class SupergiantPriceCalculationStrategyTest {
 
     @Test
     void calculatePassPrice_shouldReturnPassPriceWithoutDiscount_whenPassQuantityIsNotOverThreshold() {
-        List<Pass> passes = new ArrayList<>(Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD - 1, mock(Pass.class)));
-        passes.add(mock(Pass.class));
+        List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD - 1, mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money expectedPrice = new Money(aAmount);
 
