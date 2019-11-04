@@ -10,13 +10,15 @@ public class Pass {
     private EventDate eventDate;
     private Money price;
 
-    public Pass(Number passNumber) {
+    public Pass(Number passNumber, Money price) {
         this.passNumber = passNumber;
+        this.price = price;
     }
 
-    public Pass(Number passNumber, EventDate eventDate) {
+    public Pass(Number passNumber, EventDate eventDate, Money price) {
         this.passNumber = passNumber;
         this.eventDate = eventDate;
+        this.price = price;
     }
 
     public Number getPassNumber() {
@@ -29,9 +31,5 @@ public class Pass {
 
     public Money getPrice() {
         return this.price;
-    }
-
-    public void setPrice(Money price) {
-        this.price = price;
     }
 }

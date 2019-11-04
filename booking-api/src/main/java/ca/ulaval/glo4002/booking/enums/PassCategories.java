@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.enums;
 
-import ca.ulaval.glo4002.booking.exceptions.passes.InvalidPassCategoryException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +33,7 @@ public enum PassCategories {
     public static PassCategories get(String category) {
         PassCategories foundCategory = lookup.get(category);
 
-        if (foundCategory == null) throw new InvalidPassCategoryException();
+        if (foundCategory == null) throw new InvalidFormatException();
 
         return foundCategory;
     }

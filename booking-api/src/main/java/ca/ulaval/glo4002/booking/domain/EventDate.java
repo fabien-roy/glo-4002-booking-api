@@ -1,11 +1,12 @@
 package ca.ulaval.glo4002.booking.domain;
 
-import ca.ulaval.glo4002.booking.exceptions.passes.OutOfBoundsEventDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 
 import java.time.LocalDate;
 
 public class EventDate {
 
+    // TODO : ACP : Those should be EventDate
     public static final LocalDate START_DATE = LocalDate.of(2050, 7, 17);
     public static final LocalDate END_DATE = LocalDate.of(2050, 7, 24);
     private LocalDate value;
@@ -27,7 +28,7 @@ public class EventDate {
 
     private void validateEventDate(LocalDate value) {
         if (value.isBefore(START_DATE) || value.isAfter(END_DATE)) {
-            throw new OutOfBoundsEventDateException();
+            throw new InvalidEventDateException();
         }
     }
 }

@@ -16,33 +16,32 @@ import static org.mockito.Mockito.mock;
 
 class SupergiantPriceCalculationStrategyTest {
 
-    private SupergiantPriceCalculationStrategy subject;
+    private SupergiantPriceCalculationStrategy priceCalculationStrategy;
 
     @BeforeEach
-    void setUpSubject() {
-        subject = new SupergiantPriceCalculationStrategy();
+    void setUpPriceCalculationStrategy() {
+        priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
     }
 
     @Test
     void calculatePassPrice_shouldReturnPassPriceWithDiscount_whenPassQuantityIsOverThreshold() {
-        List<Pass> passes = new ArrayList<>(Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1, mock(Pass.class)));
+        List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1, mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money aPrice = new Money(aAmount);
         Money expectedPrice = new Money(new AmountDiscount(SupergiantPriceCalculationStrategy.DISCOUNT_AMOUNT).apply(aAmount));
 
-        Money price = subject.calculatePassPrice(passes.size(), aPrice);
+        Money price = priceCalculationStrategy.calculatePassPrice(passes.size(), aPrice);
 
         assertEquals(expectedPrice, price);
     }
 
     @Test
     void calculatePassPrice_shouldReturnPassPriceWithoutDiscount_whenPassQuantityIsNotOverThreshold() {
-        List<Pass> passes = new ArrayList<>();
-        passes.add(mock(Pass.class));
+        List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD - 1, mock(Pass.class));
         BigDecimal aAmount = BigDecimal.valueOf(100.0);
         Money expectedPrice = new Money(aAmount);
 
-        Money price = subject.calculatePassPrice(passes.size(), expectedPrice);
+        Money price = priceCalculationStrategy.calculatePassPrice(passes.size(), expectedPrice);
 
         assertEquals(expectedPrice, price);
     }

@@ -7,24 +7,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NumberGeneratorTest {
 
-    private NumberGenerator subject;
+    private NumberGenerator generator;
 
     @BeforeEach
-    void setUpSubject() {
-        subject = new NumberGenerator();
+    void setUpGenerator() {
+        generator = new NumberGenerator();
     }
 
     @Test
     void generate_shouldReturnNumber() {
-        Number number = subject.generate();
+        Number number = generator.generate();
 
         assertNotNull(number);
     }
 
     @Test
     void generate_shouldReturnDifferentNumbers() {
-        Number number = subject.generate();
-        Number otherNumber = subject.generate();
+        Number number = generator.generate();
+        Number otherNumber = generator.generate();
 
         assertNotEquals(number, otherNumber);
     }
