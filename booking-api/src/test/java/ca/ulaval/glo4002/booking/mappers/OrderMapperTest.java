@@ -68,7 +68,7 @@ class OrderMapperTest {
     }
 
     @Test
-    void toDto_shouldCallPassListParser() {
+    void toDto_shouldCallPassListMapper() {
         orderMapper.toDto(order);
 
         verify(passBundleMapper).toDto(any());
