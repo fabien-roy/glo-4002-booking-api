@@ -8,7 +8,7 @@ import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.enums.OxygenCategory;
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class OxygenTankInventoryTest {
 
@@ -30,11 +30,11 @@ public class OxygenTankInventoryTest {
 		mockedTankCategoryB = mock(OxygenTank.class);
 		mockedTankCategoryE = mock(OxygenTank.class);
 
-		oxygenTankInventory.addTanksToInventory(OxygenCategory.A,
+		oxygenTankInventory.addTanksToInventory(OxygenCategories.A,
 				Collections.nCopies(CATEGORY_A_QUANTITY, mockedTankCategoryA));
-		oxygenTankInventory.addTanksToInventory(OxygenCategory.B,
+		oxygenTankInventory.addTanksToInventory(OxygenCategories.B,
 				Collections.nCopies(CATEGORY_B_QUANTITY, mockedTankCategoryB));
-		oxygenTankInventory.addTanksToInventory(OxygenCategory.E,
+		oxygenTankInventory.addTanksToInventory(OxygenCategories.E,
 				Collections.nCopies(CATEGORY_E_QUANTITY, mockedTankCategoryE));
 	}
 
@@ -42,27 +42,27 @@ public class OxygenTankInventoryTest {
 	void constructing_shouldSetNoNotInUseTank() {
 		oxygenTankInventory = new OxygenTankInventory();
 
-		assertEquals(0, (int) oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategory.A));
-		assertEquals(0, (int) oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategory.B));
-		assertEquals(0, (int) oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategory.E));
+		assertEquals(0, (int) oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.A));
+		assertEquals(0, (int) oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.B));
+		assertEquals(0, (int) oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.E));
 	}
 
 	@Test
 	void constructing_shouldSetNoInUseTank() {
 		oxygenTankInventory = new OxygenTankInventory();
 
-		assertEquals(0, (int) oxygenTankInventory.getInUseQuantityByCategory(OxygenCategory.A));
-		assertEquals(0, (int) oxygenTankInventory.getInUseQuantityByCategory(OxygenCategory.B));
-		assertEquals(0, (int) oxygenTankInventory.getInUseQuantityByCategory(OxygenCategory.E));
+		assertEquals(0, (int) oxygenTankInventory.getInUseQuantityByCategory(OxygenCategories.A));
+		assertEquals(0, (int) oxygenTankInventory.getInUseQuantityByCategory(OxygenCategories.B));
+		assertEquals(0, (int) oxygenTankInventory.getInUseQuantityByCategory(OxygenCategories.E));
 	}
 
 	@Test
 	void addTankToInventory_shouldUpdateNumberOfTankInNotInUse() {
 		Integer addedQuantity = 5;
 
-		oxygenTankInventory.addTanksToInventory(OxygenCategory.A,
+		oxygenTankInventory.addTanksToInventory(OxygenCategories.A,
 				Collections.nCopies(addedQuantity, mockedTankCategoryA));
-		Integer currentQuantity = oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategory.A);
+		Integer currentQuantity = oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.A);
 
 		assertEquals((int) currentQuantity, CATEGORY_A_QUANTITY + addedQuantity);
 	}
@@ -71,8 +71,8 @@ public class OxygenTankInventoryTest {
 	void requestTankByCategory_shouldUpdateQuantityInUse() {
 		Integer requestQuantity = 10;
 
-		oxygenTankInventory.requestTankByCategory(OxygenCategory.B, requestQuantity);
-		Integer currentQuantity = oxygenTankInventory.getInUseQuantityByCategory(OxygenCategory.B);
+		oxygenTankInventory.requestTankByCategory(OxygenCategories.B, requestQuantity);
+		Integer currentQuantity = oxygenTankInventory.getInUseQuantityByCategory(OxygenCategories.B);
 
 		assertSame(currentQuantity, requestQuantity);
 	}
@@ -81,8 +81,8 @@ public class OxygenTankInventoryTest {
 	void requestTank_shouldUpdateQuantityNotInUse() {
 		Integer requestQuantity = 10;
 
-		oxygenTankInventory.requestTankByCategory(OxygenCategory.B, requestQuantity);
-		Integer currentQuantity = oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategory.B);
+		oxygenTankInventory.requestTankByCategory(OxygenCategories.B, requestQuantity);
+		Integer currentQuantity = oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.B);
 
 		assertEquals((int) currentQuantity, CATEGORY_B_QUANTITY - requestQuantity);
 	}
@@ -91,7 +91,7 @@ public class OxygenTankInventoryTest {
 	void requestTank_shouldReturnNone_whenThereIsEnoughNotInUseTanks() {
 		Integer requestedQuantity = 5;
 
-		Integer quantityNeeded = oxygenTankInventory.requestTankByCategory(OxygenCategory.E, requestedQuantity);
+		Integer quantityNeeded = oxygenTankInventory.requestTankByCategory(OxygenCategories.E, requestedQuantity);
 
 		assertEquals(0, (int) quantityNeeded);
 	}
@@ -100,7 +100,7 @@ public class OxygenTankInventoryTest {
 	void requestTank_shouldReturnTheNumberStillNeededToProduce_whenNotEnoughNotInUseTank() {
 		Integer requestedQuantity = 30;
 
-		Integer quantity = oxygenTankInventory.requestTankByCategory(OxygenCategory.A, requestedQuantity);
+		Integer quantity = oxygenTankInventory.requestTankByCategory(OxygenCategories.A, requestedQuantity);
 
 		assertEquals((int) quantity, Math.abs(CATEGORY_A_QUANTITY - requestedQuantity));
 	}

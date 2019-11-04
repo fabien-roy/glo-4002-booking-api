@@ -6,53 +6,53 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ca.ulaval.glo4002.booking.enums.OxygenCategory;
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class OxygenTankInventory {
 
-	private Map<OxygenCategory, List<OxygenTank>> notInUseTanks;
-	private Map<OxygenCategory, List<OxygenTank>> inUseTanks;
+	private Map<OxygenCategories, List<OxygenTank>> notInUseTanks;
+	private Map<OxygenCategories, List<OxygenTank>> inUseTanks;
 
 	public OxygenTankInventory() {
-		this.notInUseTanks = new EnumMap<>(OxygenCategory.class);
-		this.inUseTanks = new EnumMap<>(OxygenCategory.class);
+		this.notInUseTanks = new EnumMap<>(OxygenCategories.class);
+		this.inUseTanks = new EnumMap<>(OxygenCategories.class);
 
-		notInUseTanks.put(OxygenCategory.A, new ArrayList<>());
-		notInUseTanks.put(OxygenCategory.B, new ArrayList<>());
-		notInUseTanks.put(OxygenCategory.E, new ArrayList<>());
+		notInUseTanks.put(OxygenCategories.A, new ArrayList<>());
+		notInUseTanks.put(OxygenCategories.B, new ArrayList<>());
+		notInUseTanks.put(OxygenCategories.E, new ArrayList<>());
 
-		inUseTanks.put(OxygenCategory.A, new ArrayList<>());
-		inUseTanks.put(OxygenCategory.B, new ArrayList<>());
-		inUseTanks.put(OxygenCategory.E, new ArrayList<>());
+		inUseTanks.put(OxygenCategories.A, new ArrayList<>());
+		inUseTanks.put(OxygenCategories.B, new ArrayList<>());
+		inUseTanks.put(OxygenCategories.E, new ArrayList<>());
 	}
 
-	public List<OxygenTank> getNotInUseTankByCategory(OxygenCategory category) {
+	public List<OxygenTank> getNotInUseTankByCategory(OxygenCategories category) {
 		return notInUseTanks.get(category);
 	}
 
-	public List<OxygenTank> getInUseTanksByCategory(OxygenCategory category) {
+	public List<OxygenTank> getInUseTanksByCategory(OxygenCategories category) {
 		return inUseTanks.get(category);
 	}
 
-	public Integer getNotInUseQuantityByCategory(OxygenCategory category) {
+	public Integer getNotInUseQuantityByCategory(OxygenCategories category) {
 		return notInUseTanks.get(category).size();
 	}
 
-	public Integer getInUseQuantityByCategory(OxygenCategory category) {
+	public Integer getInUseQuantityByCategory(OxygenCategories category) {
 		return inUseTanks.get(category).size();
 	}
 
-	public Integer getAllQuantityByCategory(OxygenCategory category) {
+	public Integer getAllQuantityByCategory(OxygenCategories category) {
 		Integer used = this.getInUseQuantityByCategory(category);
 		Integer notUsed = this.getNotInUseQuantityByCategory(category);
 		return used + notUsed;
 	}
 
-	public void addTanksToInventory(OxygenCategory category, List<OxygenTank> newTanks) {
+	public void addTanksToInventory(OxygenCategories category, List<OxygenTank> newTanks) {
 		notInUseTanks.get(category).addAll(newTanks);
 	}
 
-	public Integer requestTankByCategory(OxygenCategory category, Integer quantity) {
+	public Integer requestTankByCategory(OxygenCategories category, Integer quantity) {
 		Integer quantityStillNeeded = quantity;
 		List<OxygenTank> notInUseTanksForCategory = notInUseTanks.get(category);
 		List<OxygenTank> inUseTanksForCategory = inUseTanks.get(category);
@@ -67,7 +67,7 @@ public class OxygenTankInventory {
 	}
 
 	// TODO : OXY is it ok ?
-	public Set<OxygenCategory> getKeys() {
+	public Set<OxygenCategories> getKeys() {
 		return inUseTanks.keySet();
 	}
 }

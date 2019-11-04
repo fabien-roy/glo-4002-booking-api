@@ -5,22 +5,22 @@ import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryExceptio
 import java.util.HashMap;
 import java.util.Map;
 
-public enum OxygenCategory {
+public enum OxygenCategories {
 
     A("A"),
     B("B"),
     E("E");
 
     private String category;
-    private static final Map<String, OxygenCategory> lookup = new HashMap<>();
+    private static final Map<String, OxygenCategories> lookup = new HashMap<>();
 
     static {
-        for(OxygenCategory category : OxygenCategory.values()) {
+        for(OxygenCategories category : OxygenCategories.values()) {
             lookup.put(category.toString(), category);
         }
     }
 
-    OxygenCategory(String category) {
+    OxygenCategories(String category) {
         this.category = category;
     }
 
@@ -29,8 +29,8 @@ public enum OxygenCategory {
         return category;
     }
 
-    public static OxygenCategory get(String category) {
-        OxygenCategory foundCategory = lookup.get(category);
+    public static OxygenCategories get(String category) {
+        OxygenCategories foundCategory = lookup.get(category);
 
         if (foundCategory == null) throw new InvalidOxygenCategoryException();
 

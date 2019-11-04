@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.enums.OxygenCategory;
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
 import ca.ulaval.glo4002.booking.mappers.OxygenTankInventoryMapper;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
@@ -29,7 +29,7 @@ class OxygenTankInventoryServiceTest {
 
 	@Test
 	void orderOxygenTank_shouldOrderOxygenTanks() {
-		OxygenCategory category = OxygenCategory.A;
+		OxygenCategories category = OxygenCategories.A;
 		LocalDate requestDate = LocalDate.of(2050, 06, 17);
 		Long numberOfDays = 1L;
 		oxygenTankInventoryService.orderOxygenTanks(category, requestDate, numberOfDays);

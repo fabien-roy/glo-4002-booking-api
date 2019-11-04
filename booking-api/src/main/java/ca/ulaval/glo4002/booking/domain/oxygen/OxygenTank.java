@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.enums.OxygenCategory;
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
 
 import java.math.BigDecimal;
@@ -18,12 +18,12 @@ public class OxygenTank {
     public static final int CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED = 1;
     public static final int CATEGORY_E_RESOURCE_PRICE = 5000;
 
-    private OxygenCategory category;
+    private OxygenCategories category;
     private OxygenDate requestDate;
     private OxygenDate readyDate;
     private Money price;
 
-    public OxygenTank(OxygenCategory category, OxygenDate requestDate) {
+    public OxygenTank(OxygenCategories category, OxygenDate requestDate) {
         this.category = category;
         this.requestDate = requestDate;
 
@@ -31,7 +31,7 @@ public class OxygenTank {
         calculateReadyDate();
     }
 
-    public OxygenCategory getCategory() {
+    public OxygenCategories getCategory() {
         return this.category;
     }
 
@@ -76,9 +76,9 @@ public class OxygenTank {
     private void calculateReadyDate() {
         OxygenDate readyDate = this.requestDate;
 
-        if (this.category == OxygenCategory.A) {
+        if (this.category == OxygenCategories.A) {
             readyDate.addDays(20);
-        } else if (this.category == OxygenCategory.B) {
+        } else if (this.category == OxygenCategories.B) {
             readyDate.addDays(10);
         }
 

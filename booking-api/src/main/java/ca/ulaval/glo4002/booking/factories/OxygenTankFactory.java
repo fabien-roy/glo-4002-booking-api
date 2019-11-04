@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenDate;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
 import ca.ulaval.glo4002.booking.domain.EventDate;
-import ca.ulaval.glo4002.booking.enums.OxygenCategory;
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
 
 public class OxygenTankFactory {
@@ -25,12 +25,12 @@ public class OxygenTankFactory {
 		this.inventory = inventory;
 	}
 
-	public List<OxygenTank> buildOxygenTank(OxygenCategory category, LocalDate requestDate, Long numberOfDays) {
+	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Long numberOfDays) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
 
 		quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
-		OxygenCategory possibleCategory = getCategoryForRequestDate(category, requestDate);
+		OxygenCategories possibleCategory = getCategoryForRequestDate(category, requestDate);
 
 		if (possibleCategory != category) {
 			quantityToCover = checkInventory(category, possibleCategory, quantityToCover);
@@ -50,21 +50,21 @@ public class OxygenTankFactory {
 		return newTanks;
 	}
 
-	private Integer checkInventory(OxygenCategory category, OxygenCategory possibleCategory,
+	private Integer checkInventory(OxygenCategories category, OxygenCategories possibleCategory,
                                    Integer quantityToCover) {
-		if (category == OxygenCategory.A) {
-			quantityToCover = inventory.requestTankByCategory(OxygenCategory.B, quantityToCover);
-			if (possibleCategory == OxygenCategory.E) {
-				quantityToCover = inventory.requestTankByCategory(OxygenCategory.E, quantityToCover);
+		if (category == OxygenCategories.A) {
+			quantityToCover = inventory.requestTankByCategory(OxygenCategories.B, quantityToCover);
+			if (possibleCategory == OxygenCategories.E) {
+				quantityToCover = inventory.requestTankByCategory(OxygenCategories.E, quantityToCover);
 			}
-		} else if (category == OxygenCategory.B) {
-			quantityToCover = inventory.requestTankByCategory(OxygenCategory.E, quantityToCover);
+		} else if (category == OxygenCategories.B) {
+			quantityToCover = inventory.requestTankByCategory(OxygenCategories.E, quantityToCover);
 		}
 
 		return quantityToCover;
 	}
 
-	private Integer getNumberOfTanksByCategoryForCreation(OxygenCategory category) {
+	private Integer getNumberOfTanksByCategoryForCreation(OxygenCategories category) {
 	    switch (category) {
             case A:
                 return CATEGORY_A_CREATION_NUMBER;
@@ -77,8 +77,8 @@ public class OxygenTankFactory {
         }
 	}
 
-	private Integer getQuantityToCoverForOrderCategory(OxygenCategory category, Long numberOfDays) {
-		if (category == OxygenCategory.E) {
+	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Long numberOfDays) {
+		if (category == OxygenCategories.E) {
 			return (int) (numberOfDays * 5);
 		} else {
 			return (int) (numberOfDays * 3);
@@ -86,26 +86,26 @@ public class OxygenTankFactory {
 	}
 
 	// TODO : Refactor needed seem too complexe
-	private OxygenCategory getCategoryForRequestDate(OxygenCategory category, LocalDate requestDate) {
+	private OxygenCategories getCategoryForRequestDate(OxygenCategories category, LocalDate requestDate) {
 		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
 
 		switch (category) {
             case A:
                 if(requestDate.plusDays(20).isBefore(readyBeforeDate)) {
-                    return OxygenCategory.A;
+                    return OxygenCategories.A;
                 } else if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-                    return OxygenCategory.B;
+                    return OxygenCategories.B;
                 } else {
-                    return OxygenCategory.E;
+                    return OxygenCategories.E;
                 }
             case B:
                 if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-                    return OxygenCategory.B;
+                    return OxygenCategories.B;
                 } else {
-                    return OxygenCategory.E;
+                    return OxygenCategories.E;
                 }
             case E:
-                return OxygenCategory.E;
+                return OxygenCategories.E;
             default:
                 throw new InvalidOxygenCategoryException();
         }
