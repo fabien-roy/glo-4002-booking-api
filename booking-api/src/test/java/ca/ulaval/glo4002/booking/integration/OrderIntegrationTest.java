@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.integration;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
@@ -29,6 +30,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -80,7 +82,7 @@ public class OrderIntegrationTest {
         OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        // TODO : ACP : Assert correct orderPrice when working
+        assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
     }
 
     @Test
