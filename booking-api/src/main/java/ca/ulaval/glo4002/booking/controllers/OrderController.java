@@ -12,7 +12,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-// TODO : Send correct error dtos
+// TODO : Use ExceptionMapper for ErrorDto and HttpStatus
 
 @Path("/orders")
 public class OrderController {
@@ -33,7 +33,9 @@ public class OrderController {
         try {
             orderDto = service.getByOrderNumber(requestedOrderNumber);
         } catch (BookingException exception) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
         }
 
         return ResponseEntity.ok().body(orderDto);
@@ -42,17 +44,19 @@ public class OrderController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto requestOrderDto) {
-        OrderWithPassesAsPassesDto responseOrderDto;
+        String orderNumber;
 
         try {
-            responseOrderDto = service.order(requestOrderDto);
+            orderNumber = service.order(requestOrderDto);
         } catch (BookingException exception) {
+            return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
+        } catch (Exception exception) {
             return ResponseEntity.badRequest().build();
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.LOCATION, "/orders/" + responseOrderDto.getOrderNumber());
+        headers.add(HttpHeaders.LOCATION, "/orders/" + orderNumber);
 
-        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).headers(headers).body(responseOrderDto);
+        return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).headers(headers).build();
     }
 }

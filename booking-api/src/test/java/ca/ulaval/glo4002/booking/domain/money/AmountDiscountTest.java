@@ -8,16 +8,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AmountDiscountTest {
 
-    private AmountDiscount subject;
+    private AmountDiscount discount;
 
     @Test
     void apply_shouldApplyTheDiscount() {
         BigDecimal amount = new BigDecimal(.1);
-        subject = new AmountDiscount(amount);
+        discount = new AmountDiscount(amount);
         BigDecimal value = new BigDecimal(100.0);
         BigDecimal expectedValue = value.subtract(amount);
 
-        BigDecimal actualValue = subject.apply(value);
+        BigDecimal actualValue = discount.apply(value);
 
         assertEquals(expectedValue, actualValue);
     }

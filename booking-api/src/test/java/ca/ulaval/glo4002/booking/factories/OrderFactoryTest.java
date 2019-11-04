@@ -3,11 +3,10 @@ package ca.ulaval.glo4002.booking.factories;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.PassListDto;
+import ca.ulaval.glo4002.booking.dto.PassBundleDto;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderDateFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.InvalidOrderFormatException;
-import ca.ulaval.glo4002.booking.exceptions.orders.OutOfBoundsOrderDateException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,50 +21,50 @@ import static org.mockito.Mockito.when;
 
 class OrderFactoryTest {
 
-    private OrderFactory subject;
+    private OrderFactory factory;
 
     @BeforeEach
-    void setUpSubject() {
+    void setUpFactory() {
         NumberGenerator numberGenerator = new NumberGenerator();
-        PassListFactory passListFactory = mock(PassListFactory.class);
+        PassBundleFactory passBundleFactory = mock(PassBundleFactory.class);
 
-        this.subject = new OrderFactory(numberGenerator, passListFactory);
+        this.factory = new OrderFactory(numberGenerator, passBundleFactory);
     }
 
     @Test
-    void buildWithDto_shouldParseDtoWithCorrectOrderDate() {
+    void build_shouldParseDtoWithCorrectOrderDate() {
         ZonedDateTime orderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
-        PassListDto passListDto = mock(PassListDto.class);
-        when(passListDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
+        PassBundleDto passBundleDto = mock(PassBundleDto.class);
+        when(passBundleDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate.toString(),
                 "TEAM",
-                passListDto
+                passBundleDto
         );
 
-        Order order = subject.buildWithDto(orderDto);
+        Order order = factory.build(orderDto);
 
         assertEquals(orderDate.toLocalDateTime(), order.getOrderDate());
     }
 
     @Test
-    void buildWithDto_shouldParseDtoWithCorrectVendorCode() {
+    void build_shouldParseDtoWithCorrectVendorCode() {
         ZonedDateTime orderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
-        PassListDto passListDto = mock(PassListDto.class);
-        when(passListDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
+        PassBundleDto passBundleDto = mock(PassBundleDto.class);
+        when(passBundleDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate.toString(),
                 "TEAM",
-                passListDto
+                passBundleDto
         );
 
-        Order order = subject.buildWithDto(orderDto);
+        Order order = factory.build(orderDto);
 
         assertEquals(orderDto.getVendorCode(), order.getVendorCode());
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidOrderFormatException_whenThereIsNoPass() {
+    void build_shouldThrowInvalidFormatException_whenThereIsNoPass() {
         ZonedDateTime orderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 orderDate.toString(),
@@ -73,53 +72,47 @@ class OrderFactoryTest {
                 null
         );
 
-        assertThrows(InvalidOrderFormatException.class, () -> subject.buildWithDto(orderDto));
+        assertThrows(InvalidFormatException.class, () -> factory.build(orderDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowInvalidOrderDateException_whenOrderDateIsInvalid() {
+    void build_shouldThrowInvalidFormatException_whenOrderDateIsInvalid() {
         String anInvalidOrderDate = "anInvalidDate";
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 anInvalidOrderDate,
                 "TEAM",
-                mock(PassListDto.class)
+                mock(PassBundleDto.class)
         );
 
-        assertThrows(
-                InvalidOrderDateFormatException.class,
-                () -> subject.buildWithDto(orderDto)
-        );
+        assertThrows(InvalidFormatException.class, () -> factory.build(orderDto));
     }
 
     @Test
-    void buildWithDto_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsUnderBounds() {
-        LocalDateTime aUnderBoundValue = OrderFactory.START_DATE_TIME.minusDays(1);
+    void build_shouldThrowInvalidOrderDateException_whenOrderDateIsUnderBounds() {
+        LocalDateTime aUnderBoundValue  = OrderFactory.START_DATE_TIME.minusDays(1);
         ZonedDateTime aUnderBoundZonedValue = ZonedDateTime.of(aUnderBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 aUnderBoundZonedValue.toString(),
                 "TEAM",
-                mock(PassListDto.class)
+                mock(PassBundleDto.class)
         );
 
         assertThrows(
-                OutOfBoundsOrderDateException.class,
-                () -> subject.buildWithDto(orderDto)
+                InvalidOrderDateException.class,
+                () -> factory.build(orderDto)
         );
     }
 
     @Test
-    void buildWithDto_shouldThrowOutOfBoundsOrderDateException_whenOrderDateIsOverBounds() {
-        LocalDateTime aOverBoundValue = OrderFactory.END_DATE_TIME.plusDays(1);
+    void build_shouldThrowInvalidOrderDateException_whenOrderDateIsOverBounds() {
+        LocalDateTime aOverBoundValue  = OrderFactory.END_DATE_TIME.plusDays(1);
         ZonedDateTime aOverBoundZonedValue = ZonedDateTime.of(aOverBoundValue, ZoneId.systemDefault());
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 aOverBoundZonedValue.toString(),
                 "TEAM",
-                mock(PassListDto.class)
+                mock(PassBundleDto.class)
         );
 
-        assertThrows(
-                OutOfBoundsOrderDateException.class,
-                () -> subject.buildWithDto(orderDto)
-        );
+        assertThrows(InvalidOrderDateException.class, () -> factory.build(orderDto));
     }
 }

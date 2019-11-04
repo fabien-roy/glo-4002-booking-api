@@ -1,28 +1,25 @@
 package ca.ulaval.glo4002.booking.domain;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidNumberFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class NumberTest {
 
-    private Number subject;
+    private Number number;
 
     @Test
-    void constructing_shouldThrowInvalidNumberFormatException_whenNumberIsInvalid() {
-        assertThrows(
-                InvalidNumberFormatException.class,
-                () -> new Number("anInvalidNumberFormat")
-        );
+    void constructing_shouldThrowInvalidFormatException_whenNumberIsInvalid() {
+        assertThrows(InvalidFormatException.class, () -> new Number("anInvalidNumberFormat"));
     }
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotNumber() {
-        subject = new Number(1L);
+        number = new Number(1L);
         Object object = new Object();
 
-        boolean result = subject.equals(object);
+        boolean result = number.equals(object);
 
         assertFalse(result);
     }
@@ -30,10 +27,10 @@ class NumberTest {
     @Test
     void equals_shouldReturnTrue_whenIdHasSameValue() {
         Long aValue = 1L;
-        subject = new Number(aValue);
+        number = new Number(aValue);
         Number other = new Number(aValue);
 
-        boolean result = subject.equals(other);
+        boolean result = number.equals(other);
 
         assertTrue(result);
     }
@@ -42,9 +39,9 @@ class NumberTest {
     void hashCode_shouldReturnValueHashCode() {
         Long aValue = 1L;
         int expectedHashCode = aValue.hashCode();
-        subject = new Number(aValue);
+        number = new Number(aValue);
 
-        int hashCode = subject.hashCode();
+        int hashCode = number.hashCode();
 
         assertEquals(expectedHashCode, hashCode);
     }

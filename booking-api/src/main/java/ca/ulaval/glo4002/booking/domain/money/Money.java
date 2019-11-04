@@ -6,10 +6,6 @@ public class Money {
 
     private BigDecimal value;
 
-    public Money() {
-        this.value = BigDecimal.valueOf(0.0);
-    }
-
     public Money(BigDecimal value) {
         this.value = value;
     }
