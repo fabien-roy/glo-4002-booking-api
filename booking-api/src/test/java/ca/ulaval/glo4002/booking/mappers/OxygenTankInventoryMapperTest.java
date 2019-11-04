@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
@@ -33,6 +34,7 @@ public class OxygenTankInventoryMapperTest {
 		inventory.addTanksToInventory(OxygenCategories.A, newTanks);
 	}
 
+	@Test
 	void toDto_shouldBuildDtoWithCorrectOxygenCategories() {
 		List<OxygenTankInventoryDto> oxygenTankInventoryDto = subject.toDto(inventory);
 		assertEquals(oxygenTankInventoryDto.get(0).getCategories(), OxygenCategories.E.toString());
@@ -40,6 +42,7 @@ public class OxygenTankInventoryMapperTest {
 		assertEquals(oxygenTankInventoryDto.get(2).getCategories(), OxygenCategories.A.toString());
 	}
 
+	@Test
 	void toDto_shouldBuildDtoWithCorrectTanksQuantity() {
 		List<OxygenTankInventoryDto> oxygenTankInventoryDto = subject.toDto(inventory);
 
