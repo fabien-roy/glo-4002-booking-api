@@ -30,10 +30,8 @@ class TripTest {
 	void setUpPassengers() {
 		aPassenger = mock(Passenger.class);
 		when(aPassenger.getPassNumber()).thenReturn(new Number(10000000L));
-		when(aPassenger.getPassCategory()).thenReturn(PassCategories.SUPERNOVA);
 		anotherPassenger = mock(Passenger.class);
 		when(anotherPassenger.getPassNumber()).thenReturn(new Number(10000001L));
-		when(anotherPassenger.getPassCategory()).thenReturn(PassCategories.SUPERNOVA);
 	}
 
 	@BeforeEach

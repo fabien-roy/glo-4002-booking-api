@@ -38,15 +38,10 @@ public class Trip {
 	}
 	
 	public void addPassenger(Passenger passenger) {
-		if (!shuttleIsFull()) {
-			passengers.add(passenger);
-		} else {
-			throw new ShuttleFullException();
-		}
+		passengers.add(passenger);
 	}
 	
-	private boolean shuttleIsFull() {
+	public boolean isFull() {
 		return shuttle.getMaxCapacity() == passengers.size();
 	}
-
 }
