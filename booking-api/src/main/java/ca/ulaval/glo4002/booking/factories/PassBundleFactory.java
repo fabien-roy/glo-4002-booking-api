@@ -39,7 +39,6 @@ public class PassBundleFactory {
         validateEventDates(passBundleDto.getEventDates(), parsedPassOption);
 
         PassCategory passCategory = buildCategory(parsedPassCategory, parsedPassOption);
-        PassOption passOption = buildOption(parsedPassOption);
         PriceCalculationStrategy priceCalculationStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
 
         Money passPrice = passCategory.getPricePerOption(parsedPassOption);
@@ -47,7 +46,7 @@ public class PassBundleFactory {
 
         List<Pass> passes = passFactory.buildAll(passBundleDto.getEventDates(), passPrice);
 
-        return new PassBundle(passes, passCategory, passOption);
+        return new PassBundle(passes, passCategory, parsedPassOption);
     }
 
     private Money calculatePassPrice(List<String> eventDates, Money passPrice, PriceCalculationStrategy priceCalculationStrategy) {
@@ -105,16 +104,6 @@ public class PassBundleFactory {
         }
 
         return passCategory;
-    }
-
-    private PassOption buildOption(PassOptions option) {
-        switch (option) {
-            case PACKAGE:
-                return new PassOption(PassOptions.PACKAGE.toString());
-            default:
-            case SINGLE_PASS:
-                return new PassOption(PassOptions.SINGLE_PASS.toString());
-        }
     }
 
     private PriceCalculationStrategy buildPriceCalculationStrategy(PassCategories category, PassOptions option) {

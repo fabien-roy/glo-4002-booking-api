@@ -68,7 +68,7 @@ public class PassIntegrationTest {
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
-                new PassOption(PassOptions.PACKAGE.toString())
+                PassOptions.PACKAGE
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
@@ -83,7 +83,7 @@ public class PassIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
         assertEquals(passBundle.getCategory().getName(), passDto.getPassCategory());
-        assertEquals(passBundle.getOption().getName(), passDto.getPassOption());
+        assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
         assertNull(passDto.getEventDate());
     }
 
@@ -94,7 +94,7 @@ public class PassIntegrationTest {
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
-                new PassOption(PassOptions.SINGLE_PASS.toString())
+                PassOptions.SINGLE_PASS
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
@@ -109,7 +109,7 @@ public class PassIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
         assertEquals(passBundle.getCategory().getName(), passDto.getPassCategory());
-        assertEquals(passBundle.getOption().getName(), passDto.getPassOption());
+        assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
         assertEquals(pass.getEventDate().toString(), passDto.getEventDate());
     }
 
@@ -125,7 +125,7 @@ public class PassIntegrationTest {
         PassBundle passBundle = new PassBundle(
                 Arrays.asList(aPass, anotherPass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
-                new PassOption(PassOptions.SINGLE_PASS.toString())
+                PassOptions.SINGLE_PASS
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
@@ -141,11 +141,11 @@ public class PassIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(aPass.getPassNumber().getValue(), aPassDto.getPassNumber());
         assertEquals(passBundle.getCategory().getName(), aPassDto.getPassCategory());
-        assertEquals(passBundle.getOption().getName(), aPassDto.getPassOption());
+        assertEquals(passBundle.getOption().toString(), aPassDto.getPassOption());
         assertEquals(aPass.getEventDate().toString(), aPassDto.getEventDate());
         assertEquals(anotherPass.getPassNumber().getValue(), anotherPassDto.getPassNumber());
         assertEquals(passBundle.getCategory().getName(), anotherPassDto.getPassCategory());
-        assertEquals(passBundle.getOption().getName(), anotherPassDto.getPassOption());
+        assertEquals(passBundle.getOption().toString(), anotherPassDto.getPassOption());
         assertEquals(anotherPass.getEventDate().toString(), anotherPassDto.getEventDate());
     }
 

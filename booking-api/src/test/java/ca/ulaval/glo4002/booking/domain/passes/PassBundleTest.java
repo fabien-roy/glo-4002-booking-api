@@ -28,7 +28,7 @@ class PassBundleTest {
         PassBundle passBundle = new PassBundle(
                 passes,
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
-                new PassOption(PassOptions.PACKAGE.toString())
+                PassOptions.PACKAGE
         );
 
         assertEquals(expectedPrice, passBundle.getPrice());
