@@ -1,12 +1,18 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class History {
 	private Map<LocalDate, List<OxygenTank>> requestedOxygenTanks;
 	private Map<LocalDate, List<OxygenTank>> producedOxygenTanks;
+
+	public History() {
+		this.requestedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
+		this.producedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
+	}
 
 	public History(Map<LocalDate, List<OxygenTank>> requestedOxygenTanks,
 			Map<LocalDate, List<OxygenTank>> producedOxygenTanks) {
@@ -28,5 +34,11 @@ public class History {
 
 	public List<OxygenTank> getProducedOxygenTanksForDate(LocalDate date) {
 		return null;
+	}
+
+	public void addRequestedTankToHistory(LocalDate date, List<OxygenTank> oxygenTanks) {
+	}
+
+	public void addProducedTankToHistory(LocalDate date, List<OxygenTank> oxygenTanks) {
 	}
 }
