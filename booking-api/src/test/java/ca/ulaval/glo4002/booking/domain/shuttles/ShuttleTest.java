@@ -36,10 +36,10 @@ public class ShuttleTest {
 		aTrip = mock(Trip.class);
 		when(aTrip.getTripDate()).thenReturn(AN_EVENT_DATE);		
 	}
+
 	@BeforeEach
 	public void shuttleSetUp() {
-		shuttle = new Shuttle(numberGenerator.generate(), 
-				A_SHUTTLE_CATEGORY, A_MAX_CAPACITY, A_PRICE);
+		shuttle = new Shuttle(A_SHUTTLE_CATEGORY, A_MAX_CAPACITY, A_PRICE);
 	}
 	
 	@Test

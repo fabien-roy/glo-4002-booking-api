@@ -12,7 +12,6 @@ import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class Shuttle {
 
-	private Number shuttleNumber;
 	private ShuttleCategories category;
 	private Integer maxCapacity;
 	private Money price;
@@ -20,17 +19,12 @@ public class Shuttle {
 	private List<Trip> arrivals;
 	
 	
-	public Shuttle(Number shuttleNumber, ShuttleCategories category, Integer maxCapacity, Money price) {
-		this.shuttleNumber = shuttleNumber;
+	public Shuttle(ShuttleCategories category, Integer maxCapacity, Money price) {
 		this.category = category;
 		this.maxCapacity = maxCapacity;
 		this.price = price;
 		this.departures = new ArrayList<>();
 		this.arrivals = new ArrayList<>();
-	}
-	
-	public Number getShuttleNumber() {
-		return shuttleNumber;
 	}
 	
 	public ShuttleCategories getCategory() {

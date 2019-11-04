@@ -1,8 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,12 +13,12 @@ class ShuttleFactoryTest {
 
     @BeforeEach
     void setUpSubject() {
-        subject = new ShuttleFactory(new NumberGenerator());
+        subject = new ShuttleFactory();
     }
 
     @Test
-    void build_shouldBuildEtSpaceshipShuttle_whenCategoryIsSupernova() {
-        PassCategories category = PassCategories.SUPERNOVA;
+    void build_shouldBuildEtSpaceshipShuttle_whenCategoryIsEtSpaceship() {
+        ShuttleCategories category = ShuttleCategories.ET_SPACESHIP;
 
         Shuttle shuttle = subject.build(category);
 
@@ -30,8 +28,8 @@ class ShuttleFactoryTest {
     }
 
     @Test
-    void build_shouldBuildMillenniumFalconShuttle_whenCategoryIsSupergiant() {
-        PassCategories category = PassCategories.SUPERGIANT;
+    void build_shouldBuildMillenniumFalconShuttle_whenCategoryIsMillenniumFalcon() {
+        ShuttleCategories category = ShuttleCategories.MILLENNIUM_FALCON;
 
         Shuttle shuttle = subject.build(category);
 
@@ -41,8 +39,8 @@ class ShuttleFactoryTest {
     }
 
     @Test
-    void build_shouldBuildSpaceXShuttle_whenCategoryIsNebula() {
-        PassCategories category = PassCategories.NEBULA;
+    void build_shouldBuildSpaceXShuttle_whenCategoryIsSpaceX() {
+        ShuttleCategories category = ShuttleCategories.SPACE_X;
 
         Shuttle shuttle = subject.build(category);
 

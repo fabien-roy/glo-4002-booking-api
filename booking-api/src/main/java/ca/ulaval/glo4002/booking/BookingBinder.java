@@ -12,9 +12,9 @@ import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.mappers.TripMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
-import ca.ulaval.glo4002.booking.repositories.InMemoryShuttleRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
-import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
+import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -38,7 +38,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindRepositories() {
-        bind(InMemoryShuttleRepository.class).to(ShuttleRepository.class);
+        bind(InMemoryTripRepository.class).to(TripRepository.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class);
     }
 
