@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,12 +21,14 @@ class HistoryTest {
 	private LocalDate aRequestDate = LocalDate.of(2050, 7, 1);
 	private LocalDate anOtherRequestDate = LocalDate.of(2050, 6, 22);
 	private LocalDate aProducedDate = LocalDate.of(2050, 7, 10);
+	Map<LocalDate, List<OxygenTank>> requestedOxygenTanks;
+	Map<LocalDate, List<OxygenTank>> producedOxygenTanks;
 
 	@BeforeEach
 	void setupHistory() {
 		setUpOxygenList();
-		Map<LocalDate, List<OxygenTank>> requestedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
-		Map<LocalDate, List<OxygenTank>> producedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
+		requestedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
+		producedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
 		requestedOxygenTanks.put(aRequestDate, aOxygenTankList);
 		requestedOxygenTanks.put(anOtherRequestDate, anOtherOxygenTankList);
 		producedOxygenTanks.put(aProducedDate, aThirdOxygenTankList);
@@ -33,6 +36,9 @@ class HistoryTest {
 	}
 
 	private void setUpOxygenList() {
+		aOxygenTankList = new ArrayList<OxygenTank>();
+		anOtherOxygenTankList = new ArrayList<OxygenTank>();
+		aThirdOxygenTankList = new ArrayList<OxygenTank>();
 		OxygenTank tank = mock(OxygenTank.class);
 		aOxygenTankList.add(tank);
 		aOxygenTankList.add(tank);
@@ -56,18 +62,22 @@ class HistoryTest {
 
 	@Test
 	void getRequestedOxygenTank_shouldReturnMapForRequestedOxygenTanks() {
+		assertEquals(history.getRequestedOxygenTanks(), requestedOxygenTanks);
 	}
 
 	@Test
-	void getRequestedOxygenTank_shouldReturnMapForProducedOxygenTanks() {
+	void getProducedOxygenTank_shouldReturnMapForProducedOxygenTanks() {
+		assertEquals(history.getProducedOxygenTanks(), producedOxygenTanks);
 	}
 
 	@Test
 	void getRequestedOxygenTanksForDate_shouldReturnListRequestedOxygenTanksForDate() {
+		assertEquals(history.getRequestedOxygenTanksForDate(aRequestDate), requestedOxygenTanks.get(aRequestDate));
 	}
 
 	@Test
 	void getProducedOxygenTanksForDate_shouldReturnListProducedOxygenTanksForDate() {
+		assertEquals(history.getProducedOxygenTanksForDate(aProducedDate), producedOxygenTanks.get(aProducedDate));
 	}
 
 	@Test
