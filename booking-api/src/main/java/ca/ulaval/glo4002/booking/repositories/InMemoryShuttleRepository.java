@@ -16,7 +16,8 @@ public class InMemoryShuttleRepository implements ShuttleRepository {
 	public InMemoryShuttleRepository() {
 		shuttles = new ArrayList<>();
 	}
-	
+
+	// TODO : TRANS : Is this really necessary?
 	@Override
 	public Optional<Shuttle> findByShuttleNumber(Number shuttleNumber) {
         Optional<Shuttle> foundShuttle = shuttles.
@@ -27,10 +28,12 @@ public class InMemoryShuttleRepository implements ShuttleRepository {
         if(!foundShuttle.isPresent()) {
         	throw new ShuttleNotFoundException(shuttleNumber.toString());        
         }
+
         return foundShuttle;
 	}
 
 	public void addShuttle(Shuttle shuttle) {
+		// TODO : TRANS : Will this ever happen?
 		if(shuttles.contains(shuttle)) {
 			throw new ShuttleAlreadyCreatedException(shuttle.getShuttleNumber().toString());
 		} 
