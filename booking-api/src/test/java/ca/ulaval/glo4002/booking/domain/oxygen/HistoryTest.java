@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 class HistoryTest {
 
 	private History history;
-	private List<OxygenTank> aOxygenTankList;
+	private List<OxygenTank> anOxygenTankList;
 	private List<OxygenTank> anOtherOxygenTankList;
 	private List<OxygenTank> aThirdOxygenTankList;
 	private LocalDate aRequestDate = LocalDate.of(2050, 7, 1);
@@ -29,20 +29,20 @@ class HistoryTest {
 		setUpOxygenList();
 		requestedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
 		producedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
-		requestedOxygenTanks.put(aRequestDate, aOxygenTankList);
+		requestedOxygenTanks.put(aRequestDate, anOxygenTankList);
 		requestedOxygenTanks.put(anOtherRequestDate, anOtherOxygenTankList);
 		producedOxygenTanks.put(aProducedDate, aThirdOxygenTankList);
 		history = new History(requestedOxygenTanks, producedOxygenTanks);
 	}
 
 	private void setUpOxygenList() {
-		aOxygenTankList = new ArrayList<OxygenTank>();
+		anOxygenTankList = new ArrayList<OxygenTank>();
 		anOtherOxygenTankList = new ArrayList<OxygenTank>();
 		aThirdOxygenTankList = new ArrayList<OxygenTank>();
 		OxygenTank tank = mock(OxygenTank.class);
-		aOxygenTankList.add(tank);
-		aOxygenTankList.add(tank);
-		aOxygenTankList.add(tank);
+		anOxygenTankList.add(tank);
+		anOxygenTankList.add(tank);
+		anOxygenTankList.add(tank);
 		anOtherOxygenTankList.add(tank);
 		anOtherOxygenTankList.add(tank);
 		aThirdOxygenTankList.add(tank);
@@ -82,9 +82,13 @@ class HistoryTest {
 
 	@Test
 	void addRequestedTankToHistory_shouldAddToResquestedTank() {
+		history.addRequestedTankToHistory(aProducedDate, aThirdOxygenTankList);
+		assertEquals(aThirdOxygenTankList, history.getRequestedOxygenTanksForDate(aProducedDate));
 	}
 
 	@Test
 	void addProducedTankToHistory_shouldAddToProducedTank() {
+		history.addProducedTankToHistory(aRequestDate, anOxygenTankList);
+		assertEquals(anOxygenTankList, history.getRequestedOxygenTanksForDate(aRequestDate));
 	}
 }

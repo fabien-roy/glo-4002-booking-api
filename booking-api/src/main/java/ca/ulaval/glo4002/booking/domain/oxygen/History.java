@@ -37,8 +37,10 @@ public class History {
 	}
 
 	public void addRequestedTankToHistory(LocalDate date, List<OxygenTank> oxygenTanks) {
+		requestedOxygenTanks.put(date, oxygenTanks);
 	}
 
 	public void addProducedTankToHistory(LocalDate date, List<OxygenTank> oxygenTanks) {
+		producedOxygenTanks.put(date, oxygenTanks);
 	}
 }
