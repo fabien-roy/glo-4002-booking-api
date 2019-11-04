@@ -44,8 +44,8 @@ class TripTest {
 	
 	@Test
 	void addPassenger_whenShuttleHasPlacesEmpty_passengerShouldBeAdded() {
-		EventDate anEventDate = new EventDate(LocalDate.of(2050, 7, 21));
-		Trip trip = new Trip(anEventDate, aShuttle);
+		LocalDate aTripDate = EventDate.START_DATE;
+		Trip trip = new Trip(aTripDate, aShuttle);
 
 		trip.addPassenger(aPassenger);
 		
@@ -54,8 +54,8 @@ class TripTest {
 	
 	@Test
 	void addPassenger_whenShuttleIsFull_shuttleFullExceptionShouldBeThrown() {
-		EventDate anEventDate = new EventDate(LocalDate.of(2050, 7, 21));
-		Trip trip = new Trip(anEventDate, aShuttle);
+		LocalDate aTripDate = EventDate.START_DATE;
+		Trip trip = new Trip(aTripDate, aShuttle);
 
 		trip.addPassenger(aPassenger);
 

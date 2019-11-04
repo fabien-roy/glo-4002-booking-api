@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.shuttles;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,14 +56,14 @@ public class Shuttle {
 		arrivals.add(trip);
 	}
 	
-	public List<Trip> getDeparturesByDate(EventDate date) {
+	public List<Trip> getDeparturesByDate(LocalDate date) {
 		return departures.
 				stream().
 				filter(departure -> date.equals(departure.getTripDate())).
 				collect(Collectors.toList());
 	}
 	
-	public List<Trip> getArrivalsByDate(EventDate date) {
+	public List<Trip> getArrivalsByDate(LocalDate date) {
 		return arrivals.
 				stream().
 				filter(arrival -> date.equals(arrival.getTripDate())).

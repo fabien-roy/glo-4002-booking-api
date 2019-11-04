@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
@@ -9,20 +10,20 @@ import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import javax.inject.Inject;
 import java.util.List;
 
-public class ShuttleService {
+public class TripService {
 
     TripRepository repository;
     ShuttleFactory factory;
 
     @Inject
-    public ShuttleService(TripRepository repository, ShuttleFactory factory) {
+    public TripService(TripRepository repository, ShuttleFactory factory) {
         this.repository = repository;
         this.factory = factory;
     }
 
-    public void orderAll(PassCategories passCategory, List<EventDate> eventDates) {
+    public void orderAll(PassCategories passCategory, List<Pass> passes) {
         ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
 
-        eventDates.forEach(eventDate -> repository.addPassenger(shuttleCategory, eventDate));
+        passes.forEach(pass -> repository.addPassenger(shuttleCategory, pass.getEventDate().getValue(), pass.getPassNumber()));
     }
 }

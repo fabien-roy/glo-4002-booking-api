@@ -23,25 +23,25 @@ class TripMapperTest {
     private static TripMapper subject;
     private Trip aTrip;
     private Trip anotherTrip;
-    private static EventDate anEventDate;
-    private static EventDate anotherEventDate;
+    private static LocalDate aTripDate;
+    private static LocalDate anotherTripDate;
     private static ShuttleCategories aShuttleCategory;
     
     @BeforeAll
     public static void setUpSuject() {
     	subject = new TripMapper();
-    	anEventDate = new EventDate(LocalDate.of(2050, 7, 17));
-    	anotherEventDate = new EventDate(LocalDate.of(2050, 7, 21));
+    	aTripDate = EventDate.START_DATE;
+    	anotherTripDate = EventDate.START_DATE.plusDays(1);
     	aShuttleCategory = ShuttleCategories.ET_SPACESHIP;
     }
     
     @BeforeEach
     public void testSetUp() {
     	aTrip = mock(Trip.class);
-    	when(aTrip.getTripDate()).thenReturn(anEventDate);
+    	when(aTrip.getTripDate()).thenReturn(aTripDate);
     	when(aTrip.getShuttleCategory()).thenReturn(aShuttleCategory);
     	anotherTrip = mock(Trip.class);
-    	when(anotherTrip.getTripDate()).thenReturn(anotherEventDate);
+    	when(anotherTrip.getTripDate()).thenReturn(anotherTripDate);
     	when(anotherTrip.getShuttleCategory()).thenReturn(aShuttleCategory);
     	someTrips = new ArrayList<>();
     }
