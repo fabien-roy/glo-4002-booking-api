@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,5 +48,32 @@ class ShuttleFactoryTest {
         assertEquals(ShuttleCategories.SPACE_X, shuttle.getCategory());
         assertEquals(ShuttleFactory.SPACE_X_MAX_CAPACITY, shuttle.getMaxCapacity());
         assertEquals(ShuttleFactory.SPACE_X_PRICE, shuttle.getPrice());
+    }
+
+    @Test
+    void build_shouldBuildEtSpaceship_whenCategoryIsSupernova() {
+        PassCategories passCategory = PassCategories.SUPERNOVA;
+
+        ShuttleCategories category = subject.buildCategory(passCategory);
+
+        assertEquals(ShuttleCategories.ET_SPACESHIP, category);
+    }
+
+    @Test
+    void build_shouldBuildMillenniumFalcon_whenCategoryIsSupergiant() {
+        PassCategories passCategory = PassCategories.SUPERGIANT;
+
+        ShuttleCategories category = subject.buildCategory(passCategory);
+
+        assertEquals(ShuttleCategories.MILLENNIUM_FALCON, category);
+    }
+
+    @Test
+    void build_shouldBuildSpaceX_whenCategoryIsNebula() {
+        PassCategories passCategory = PassCategories.NEBULA;
+
+        ShuttleCategories category = subject.buildCategory(passCategory);
+
+        assertEquals(ShuttleCategories.SPACE_X, category);
     }
 }
