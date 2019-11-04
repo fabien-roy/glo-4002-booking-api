@@ -6,10 +6,15 @@ import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
+import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
+import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
+import ca.ulaval.glo4002.booking.mappers.TripMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryShuttleRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
+import ca.ulaval.glo4002.booking.repositories.ShuttleRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -33,12 +38,14 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindRepositories() {
+        bind(InMemoryShuttleRepository.class).to(ShuttleRepository.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class);
     }
 
     private void bindFactories() {
         bindAsContract(PassFactory.class);
         bindAsContract(PassBundleFactory.class);
+        bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
     }
 
@@ -49,11 +56,13 @@ public class BookingBinder extends AbstractBinder {
 
     private void bindMappers() {
         bindAsContract(PassBundleMapper.class);
+        bindAsContract(TripMapper.class);
+        bindAsContract(ShuttleManifestMapper.class);
         bindAsContract(OrderMapper.class);
     }
 
     private void bindControllers() {
-        bindAsContract(OrderController.class).in(Singleton.class);
         bindAsContract(ShuttleManifestController.class).in(Singleton.class);
+        bindAsContract(OrderController.class).in(Singleton.class);
     }
 }

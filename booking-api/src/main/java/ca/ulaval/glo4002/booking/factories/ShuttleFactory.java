@@ -20,7 +20,8 @@ public class ShuttleFactory {
 	
 	public static final Integer SPACE_X_MAX_CAPACITY = 30;
 	public static final Money SPACE_X_PRICE = new Money(new BigDecimal(30000));
-	
+
+	// TODO : TRANS : Pretty sure Shuttles do not need a number
 	private final NumberGenerator numberGenerator;
 	
 	@Inject

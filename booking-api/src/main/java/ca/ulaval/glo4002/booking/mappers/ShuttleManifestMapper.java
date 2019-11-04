@@ -23,5 +23,4 @@ public class ShuttleManifestMapper {
 		
 		return new ShuttleManifestDto(arrivals, departures);
 	}
-
 }
