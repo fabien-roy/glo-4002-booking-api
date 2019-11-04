@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.dto.PassDto;
+import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -36,7 +37,7 @@ class PassBundleMapperTest {
         Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
-        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), PassOptions.SINGLE_PASS);
 
         List<PassDto> passDtos = mapper.toDto(passBundle);
 
@@ -50,7 +51,7 @@ class PassBundleMapperTest {
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class), mock(Money.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), PassOptions.SINGLE_PASS);
 
         List<PassDto> passDtos = mapper.toDto(passBundle);
 
@@ -66,7 +67,7 @@ class PassBundleMapperTest {
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
-        PassBundle passBundle = new PassBundle(passes, passCategory, mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, passCategory, PassOptions.SINGLE_PASS);
 
         List<PassDto> passDtos = mapper.toDto(passBundle);
 
@@ -83,7 +84,7 @@ class PassBundleMapperTest {
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
         when(passCategory.getName()).thenReturn(expectedPassCategoryName);
-        PassBundle passBundle = new PassBundle(passes, passCategory, mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, passCategory, PassOptions.SINGLE_PASS);
 
         List<PassDto> passDtos = mapper.toDto(passBundle);
 
@@ -95,9 +96,8 @@ class PassBundleMapperTest {
         Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
-        PassOption passOption = mock(PassOption.class);
-        String expectedPassOptionName = "expectedPassOptionName";
-        when(passOption.getName()).thenReturn(expectedPassOptionName);
+        PassOptions passOption = PassOptions.SINGLE_PASS;
+        String expectedPassOptionName = passOption.toString();
         PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), passOption);
 
         List<PassDto> passDtos = mapper.toDto(passBundle);
@@ -112,9 +112,8 @@ class PassBundleMapperTest {
         Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class), mock(Money.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassOption passOption = mock(PassOption.class);
-        String expectedPassOptionName = "expectedPassOptionName";
-        when(passOption.getName()).thenReturn(expectedPassOptionName);
+        PassOptions passOption = PassOptions.SINGLE_PASS;
+        String expectedPassOptionName = passOption.toString();
         PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), passOption);
 
         List<PassDto> passDtos = mapper.toDto(passBundle);
@@ -133,7 +132,7 @@ class PassBundleMapperTest {
         Pass aPass = new Pass(aPassNumber, aEventDate, mock(Money.class));
         Pass anotherPass = new Pass(anotherPassNumber, anotherEventDate, mock(Money.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), mock(PassOption.class));
+        PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), PassOptions.SINGLE_PASS);
 
         List<PassDto> passDtos = mapper.toDto(passBundle);
 

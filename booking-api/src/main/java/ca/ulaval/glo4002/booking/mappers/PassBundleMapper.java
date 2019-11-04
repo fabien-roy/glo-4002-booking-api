@@ -10,7 +10,7 @@ public class PassBundleMapper {
 
     List<PassDto> toDto(PassBundle passBundle) {
         String passCategory = passBundle.getCategory().getName();
-        String passOption = passBundle.getOption().getName();
+        String passOption = passBundle.getOption().toString();
 
         List<PassDto> passDtos = new ArrayList<>();
         passBundle.getPasses().forEach(pass -> {

@@ -132,7 +132,7 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(passBundle.getOption().getName(), PassOptions.SINGLE_PASS.toString());
+        assertEquals(passBundle.getOption().toString(), PassOptions.SINGLE_PASS.toString());
     }
 
     @Test
@@ -143,7 +143,7 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(passBundle.getOption().getName(), PassOptions.PACKAGE.toString());
+        assertEquals(passBundle.getOption().toString(), PassOptions.PACKAGE.toString());
     }
 
     @ParameterizedTest

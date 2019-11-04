@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.enums.PassOptions;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,10 +10,10 @@ public class PassBundle {
 
     private List<Pass> passes;
     private PassCategory category;
-    private PassOption option;
+    private PassOptions option;
     private Money price;
 
-    public PassBundle(List<Pass> passes, PassCategory category, PassOption option) {
+    public PassBundle(List<Pass> passes, PassCategory category, PassOptions option) {
         this.passes = passes;
         this.category = category;
         this.option = option;
@@ -27,7 +28,7 @@ public class PassBundle {
         return category;
     }
 
-    public PassOption getOption() {
+    public PassOptions getOption() {
         return option;
     }
 

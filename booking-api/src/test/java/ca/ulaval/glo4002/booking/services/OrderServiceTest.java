@@ -7,7 +7,6 @@ import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.domain.passes.PassOption;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassBundleDto;
@@ -71,7 +70,7 @@ class OrderServiceTest {
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
-                new PassOption(PassOptions.PACKAGE.toString())
+                PassOptions.PACKAGE
         );
         Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passBundle);
         when(repository.getByOrderNumber(aOrderNumber)).thenReturn(Optional.of(order));
