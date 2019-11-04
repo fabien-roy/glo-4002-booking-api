@@ -47,12 +47,29 @@ class InMemoryTripRepositoryTest {
 
 	@Test
 	void addPassenger_shouldAddNewDepartureTrip_whenTripIsFull() {
-		// TODO
+		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Number aPassNumber = new Number(1L);
+		Number anotherPassNumber = new Number(1L);
+		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+
+		repository.addPassenger(aCategory, aTripDate, anotherPassNumber);
+
+		assertEquals(2, repository.getDepartures().size());
 	}
 
 	@Test
 	void addPassenger_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
-		// TODO
+		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
+		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Number aPassNumber = new Number(1L);
+		Number anotherPassNumber = new Number(1L);
+
+		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+		repository.addPassenger(anotherCategory, aTripDate, anotherPassNumber);
+
+		assertEquals(2, repository.getDepartures().size());
 	}
 
 	@Test
@@ -116,16 +133,41 @@ class InMemoryTripRepositoryTest {
 
 	@Test
 	void addPassenger_shouldAddToExistingArrivalTrip_whenTripIsNotFull() {
-		// TODO
+		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Number aPassNumber = new Number(1L);
+		Number anotherPassNumber = new Number(1L);
+
+		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+		repository.addPassenger(aCategory, aTripDate, anotherPassNumber);
+
+		assertEquals(1, repository.getArrivals().size());
 	}
 
 	@Test
 	void addPassenger_shouldAddNewArrivalTrip_whenTripIsFull() {
-		// TODO
+		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Number aPassNumber = new Number(1L);
+		Number anotherPassNumber = new Number(1L);
+
+		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+		repository.addPassenger(aCategory, aTripDate, anotherPassNumber);
+
+		assertEquals(2, repository.getArrivals().size());
 	}
 
 	@Test
 	void addPassenger_shouldAddNewArrivalTrip_whenTripIsNotSameCategory() {
-		// TODO
+		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
+		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Number aPassNumber = new Number(1L);
+		Number anotherPassNumber = new Number(1L);
+
+		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+		repository.addPassenger(anotherCategory, aTripDate, anotherPassNumber);
+
+		assertEquals(2, repository.getArrivals().size());
 	}
 }
