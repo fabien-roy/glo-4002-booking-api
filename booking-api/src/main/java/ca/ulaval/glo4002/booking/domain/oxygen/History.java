@@ -29,11 +29,11 @@ public class History {
 	}
 
 	public List<OxygenTank> getRequestedOxygenTanksForDate(LocalDate date) {
-		return null;
+		return requestedOxygenTanks.get(date);
 	}
 
 	public List<OxygenTank> getProducedOxygenTanksForDate(LocalDate date) {
-		return null;
+		return producedOxygenTanks.get(date);
 	}
 
 	public void addRequestedTankToHistory(LocalDate date, List<OxygenTank> oxygenTanks) {
