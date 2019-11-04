@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.enums;
 
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import org.omg.CORBA.DynAnyPackage.Invalid;
 
 import java.util.HashMap;
 import java.util.Map;
