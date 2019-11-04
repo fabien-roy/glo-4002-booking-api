@@ -170,4 +170,17 @@ class InMemoryTripRepositoryTest {
 
 		assertEquals(2, repository.getArrivals().size());
 	}
+
+	@Test
+    void whenPassengerAddedWithDepartureAndArrivalDates_thenDatesAddedToRightLists(){
+	    ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+	    LocalDate aDepartureDate = EventDate.START_DATE;
+	    LocalDate anArrivalDate = EventDate.END_DATE;
+	    Number aPassNumber = new Number(1L);
+
+	    repository.addPassenger(aCategory, aDepartureDate, anArrivalDate, aPassNumber);
+
+	    assertEquals(1, repository.getDepartures().size());
+	    assertEquals(1, repository.getArrivals().size());
+    }
 }
