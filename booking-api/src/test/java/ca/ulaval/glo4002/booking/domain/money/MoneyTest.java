@@ -15,7 +15,7 @@ class MoneyTest {
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotId() {
-        subject = new Money();
+        subject = new Money(new BigDecimal(100.0));
         Object object = new Object();
 
         boolean result = subject.equals(object);
