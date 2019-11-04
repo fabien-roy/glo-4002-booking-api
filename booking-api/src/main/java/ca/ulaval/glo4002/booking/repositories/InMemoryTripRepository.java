@@ -1,10 +1,5 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domain.trip.Passenger;
@@ -13,6 +8,10 @@ import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InMemoryTripRepository implements TripRepository {
 	
@@ -39,16 +38,18 @@ public class InMemoryTripRepository implements TripRepository {
 
 	@Override
 	public void addPassenger(ShuttleCategories shuttleCategory, LocalDate tripDate, Number passNumber) {
-	    Trip departure = getNextAvailableDeparture(shuttleCategory, tripDate);
+	    Trip departure = getNextAvailableTrip(shuttleCategory, tripDate, departures);
+	    Trip arrival = getNextAvailableTrip(shuttleCategory, tripDate, arrivals);
 
 		Passenger passenger = new Passenger(passNumber);
 
 		departure.addPassenger(passenger);
+		arrival.addPassenger(passenger);
 	}
 
-	private Trip getNextAvailableDeparture(ShuttleCategories shuttleCategory, LocalDate tripDate) {
-		Trip nextDeparture;
-	    List<Trip> departuresOnDate = departures
+	private Trip getNextAvailableTrip(ShuttleCategories shuttleCategory, LocalDate tripDate, List<Trip> tripList) {
+		Trip nextTrip;
+		List<Trip> departuresOnDate = tripList
 				.stream()
 				.filter(trip -> trip.getTripDate().equals(tripDate))
 				.filter(trip -> trip.getShuttleCategory().equals(shuttleCategory))
@@ -57,12 +58,12 @@ public class InMemoryTripRepository implements TripRepository {
 
 		if (departuresOnDate.isEmpty()) {
 			Shuttle departureShuttle = shuttleFactory.build(shuttleCategory);
-			nextDeparture = new Trip(tripDate, departureShuttle);
-			departures.add(nextDeparture);
+			nextTrip = new Trip(tripDate, departureShuttle);
+			tripList.add(nextTrip);
 		} else {
-		    nextDeparture = departuresOnDate.get(0);
+		    nextTrip = departuresOnDate.get(0);
 		}
 
-		return nextDeparture;
+		return nextTrip;
 	}
 }

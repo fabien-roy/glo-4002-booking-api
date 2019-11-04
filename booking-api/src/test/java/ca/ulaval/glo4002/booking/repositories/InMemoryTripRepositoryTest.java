@@ -1,18 +1,16 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-
-import java.time.LocalDate;
-
 import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.trip.Trip;
+import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InMemoryTripRepositoryTest {
 	
@@ -36,7 +34,7 @@ class InMemoryTripRepositoryTest {
 
 	@Test
 	void addPassenger_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
-		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		LocalDate aTripDate = EventDate.START_DATE;
 		Number aPassNumber = new Number(1L);
 		Number anotherPassNumber = new Number(1L);
