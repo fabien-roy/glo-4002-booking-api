@@ -1,14 +1,33 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ReportTest {
 
-	@Test
-	void test() {
-		fail("Not yet implemented");
+	Report report;
+
+	@BeforeEach
+	void setUpReport() {
 	}
 
+	@Test
+	void constructing_shouldSetHistory() {
+
+	}
+
+	@Test
+	void constructing_shouldSetOxygenTankInventory() {
+
+	}
+
+	@Test
+	void getHistory_shouldReturnHistory() {
+
+	}
+
+	@Test
+	void getOxygenTankInventory_shouldReturnOxygenTankInventory() {
+
+	}
 }
