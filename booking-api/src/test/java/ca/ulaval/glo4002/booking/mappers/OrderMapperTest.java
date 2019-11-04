@@ -20,7 +20,6 @@ class OrderMapperTest {
 
     private OrderMapper subject;
     private PassBundleMapper passBundleMapper;
-    private OrderNumber orderNumber;
     private Order order;
 
     @BeforeEach
@@ -31,7 +30,7 @@ class OrderMapperTest {
 
     @BeforeEach
     void setUpOrder() {
-        orderNumber = mock(OrderNumber.class);
+        OrderNumber orderNumber = mock(OrderNumber.class);
         order = mock(Order.class);
         when(orderNumber.toString()).thenReturn("expectedOrderNumber");
         when(order.getOrderNumber()).thenReturn(orderNumber);
@@ -44,6 +43,28 @@ class OrderMapperTest {
         OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
 
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
+    }
+
+    @Test
+    public void toDto_shouldBuildDtoOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
+        double orderPrice = 123.123;
+        when(order.getPrice()).thenReturn(new Money(new BigDecimal(orderPrice)));
+        String expectedOrderPrice = "123.12";
+
+        OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
+
+        assertEquals(expectedOrderPrice, Double.toString(orderDto.getOrderPrice()));
+    }
+
+    @Test
+    public void toDto_shouldBuildDtoOrderPriceWithTwoDigits_whenOrderPriceHasLesThanTwoDigits() {
+        double orderPrice = 123.1;
+        when(order.getPrice()).thenReturn(new Money(new BigDecimal(orderPrice)));
+        String expectedOrderPrice = "123.1";
+
+        OrderWithPassesAsPassesDto orderDto = subject.toDto(order);
+
+        assertEquals(expectedOrderPrice, Double.toString(orderDto.getOrderPrice()));
     }
 
     @Test

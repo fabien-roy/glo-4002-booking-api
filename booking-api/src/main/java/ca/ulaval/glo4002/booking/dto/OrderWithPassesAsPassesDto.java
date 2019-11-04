@@ -1,16 +1,9 @@
 package ca.ulaval.glo4002.booking.dto;
 
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-
 import java.util.List;
 
 public class OrderWithPassesAsPassesDto {
 
-    /*
-    @JsonSerialize(using = DoubleContextualSerializer.class)
-    @Precision(precision = 2)
-    */
     private double orderPrice;
     private List<PassDto> passes;
 
