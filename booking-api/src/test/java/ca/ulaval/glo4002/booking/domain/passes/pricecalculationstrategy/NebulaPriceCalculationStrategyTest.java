@@ -1,18 +1,18 @@
 package ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy;
 
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.money.PercentageDiscount;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.domain.money.PercentageDiscount;
+import ca.ulaval.glo4002.booking.domain.passes.Pass;
 
 class NebulaPriceCalculationStrategyTest {
 
