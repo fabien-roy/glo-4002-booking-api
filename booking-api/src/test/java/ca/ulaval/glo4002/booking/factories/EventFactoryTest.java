@@ -4,6 +4,7 @@ import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
+import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,8 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class EventFactoryTest {
 
@@ -113,6 +113,14 @@ class EventFactoryTest {
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsAbsent() {
         // TODO
+    }
+
+    @Test
+    void build_shouldThrowInvalidProgramException_whenActivityIsInvalid() {
+        String anInvalidActivity = "anInvalidActivity";
+        ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), anInvalidActivity, "aArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
     }
 
     @Test
