@@ -162,16 +162,6 @@ class EventFactoryTest {
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenPmIsDefinedTwice() {
-        // TODO
-    }
-
-    @Test
-    void build_shouldThrowInvalidProgramException_whenAmIsDefinedTwice() {
-        // TODO
-    }
-
-    @Test
     void build_shouldThrowInvalidProgramException_whenAmIsArtist() {
         // TODO
     }
