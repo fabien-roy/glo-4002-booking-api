@@ -24,39 +24,16 @@ class InMemoryArtistRepositoryTest {
 
     @Test
     void getByName_shouldReturnArtist() {
-        String artistName = "aArtist";
-        Artist expectedArtist = new Artist(artistName, mock(Money.class), 1);
-        repository.addAll(Collections.singletonList(expectedArtist));
+        String artistName = InMemoryArtistRepository.getPreparedArtists().get(0).getName();
 
-        Artist artists = repository.getByName(artistName);
+        Artist artist = repository.getByName(artistName);
 
-        assertEquals(expectedArtist, artists);
-    }
-
-    @Test
-    void getByName_shouldReturnArtist_whenThereAreMultipleArtists() {
-        String artistName = "aArtist";
-        Artist expectedArtist = new Artist(artistName, mock(Money.class), 1);
-        Artist anotherArtist = new Artist("anotherArtist", mock(Money.class), 1);
-        repository.addAll(Arrays.asList(expectedArtist, anotherArtist));
-
-        Artist artists = repository.getByName(artistName);
-
-        assertEquals(expectedArtist, artists);
-    }
-
-    @Test
-    void getByName_shouldThrowInvalidProgramException_whenThereIsNoArtist() {
-        String aNonExistentArtistName = "aNonExistentArtistName";
-
-        assertThrows(InvalidProgramException.class, () -> repository.getByName(aNonExistentArtistName));
+        assertEquals(artistName, artist.getName());
     }
 
     @Test
     void getByName_shouldThrowInvalidProgramException_whenArtistDoesNotExist() {
         String aNonExistentArtistName = "aNonExistentArtistName";
-        Artist anArtist = new Artist("aArtist", mock(Money.class), 1);
-        repository.addAll(Collections.singletonList(anArtist));
 
         assertThrows(InvalidProgramException.class, () -> repository.getByName(aNonExistentArtistName));
     }
