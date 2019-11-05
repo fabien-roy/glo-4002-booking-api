@@ -61,7 +61,7 @@ class ProgramControllerTest {
     @Test
     void add_shouldReturnBadRequest_whenBadRequest() {
         ProgramDto aProgramDto = mock(ProgramDto.class);
-        doThrow(new InvalidFormatException()).when(programService).addProgram(aProgramDto);
+        doThrow(new InvalidFormatException()).when(programService).add(aProgramDto);
 
         ResponseEntity<?> response = controller.add(aProgramDto);
 

@@ -44,7 +44,7 @@ public class ProgramController {
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> add(ProgramDto programDto) {
         try {
-            programService.addProgram(programDto);
+            programService.add(programDto);
         } catch (BookingException exception) {
             return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
         } catch (Exception exception) {

@@ -13,7 +13,7 @@ public class InMemoryEventRepository implements EventRepository {
         events = new ArrayList<>();
     }
 
-    public void add(Event event) {
+    public void addAll(List<Event> event) {
         // TODO
     }
 }
