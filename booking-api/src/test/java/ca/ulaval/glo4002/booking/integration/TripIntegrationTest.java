@@ -4,6 +4,8 @@ import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.domain.passes.Pass;
+import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -178,34 +180,64 @@ class TripIntegrationTest {
         assertEquals(expectedShuttleCategory.toString(), shuttleManifestDto.getDepartures().get(0).getShuttleName());
     }
 
-    @Test
-    void addOrder_shouldAddPassengerToArrivalTrip() {
-        // TODO
+    @ParameterizedTest
+    @EnumSource(PassCategories.class)
+    void addOrder_shouldAddToNewArrivalTrip_whenTripIsFull(PassCategories passCategory) {
+        int maxCapacity = getMaxCapacityForPassCategory(passCategory);
+        String aDate = EventDate.START_DATE.toString();
+        List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(2, shuttleManifestDto.getArrivals().size());
     }
 
-    @Test
-    void addOrder_shouldAddPassengerToDepartureTrip() {
-        // TODO
+    @ParameterizedTest
+    @EnumSource(PassCategories.class)
+    void addOrder_shouldAddToNewDepartureTrip_whenTripIsFull(PassCategories passCategory) {
+        int maxCapacity = getMaxCapacityForPassCategory(passCategory);
+        String aDate = EventDate.START_DATE.toString();
+        List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(2, shuttleManifestDto.getDepartures().size());
     }
 
-    @Test
-    void addOrder_shouldAddToNewArrivalTrip_whenTripIsFull() {
-        // TODO
+    @ParameterizedTest
+    @EnumSource(PassCategories.class)
+    void addOrder_shouldAddToExistingArrivalTrip_whenTripIsNotFull(PassCategories passCategory) {
+        int maxCapacity = getMaxCapacityForPassCategory(passCategory);
+        String aDate = EventDate.START_DATE.toString();
+        List<String> someDates = Collections.nCopies(maxCapacity, aDate);
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(1, shuttleManifestDto.getArrivals().size());
     }
 
-    @Test
-    void addOrder_shouldAddToNewDepartureTrip_whenTripIsFull() {
-        // TODO
-    }
+    @ParameterizedTest
+    @EnumSource(PassCategories.class)
+    void addOrder_shouldAddToExistingDepartureTrip_whenTripIsNotFull(PassCategories passCategory) {
+        int maxCapacity = getMaxCapacityForPassCategory(passCategory);
+        String aDate = EventDate.START_DATE.toString();
+        List<String> someDates = Collections.nCopies(maxCapacity, aDate);
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
-    @Test
-    void addOrder_shouldAddToExistingArrivalTrip_whenTripIsNotFull() {
-        // TODO
-    }
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
 
-    @Test
-    void addOrder_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
-        // TODO
+        assertEquals(1, shuttleManifestDto.getDepartures().size());
     }
 
     private OrderWithPassesAsEventDatesDto buildDto(PassCategories passCategory, PassOptions passOptions, List<String> eventDates) {
@@ -220,5 +252,12 @@ class TripIntegrationTest {
                 "VENDOR",
                 passBundleDto
         );
+    }
+
+    private int getMaxCapacityForPassCategory(PassCategories passCategory) {
+        ShuttleCategories shuttleCategory = shuttleFactory.buildCategory(passCategory);
+        Shuttle shuttle = shuttleFactory.build(shuttleCategory);
+
+        return shuttle.getMaxCapacity();
     }
 }
