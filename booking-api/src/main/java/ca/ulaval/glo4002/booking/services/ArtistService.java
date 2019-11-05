@@ -15,7 +15,9 @@ public class ArtistService {
     }
 
     public ArtistListDto getAll(String orderBy) {
-        // TODO
+        // TODO : With orderBy null
+        // TODO : With orderBy lowCost
+        // TODO : With orderBy mostPopular
 
         return null;
     }
