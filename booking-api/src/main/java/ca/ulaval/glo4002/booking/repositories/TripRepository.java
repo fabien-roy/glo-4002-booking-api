@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface TripRepository {
 
-    List<Trip> getDepartures();
+    List<Trip> getDeparturesForDate(LocalDate tripDate);
 
-    List<Trip> getArrivals();
+    List<Trip> getArrivalsForDate(LocalDate tripDate);
 
 	void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, LocalDate tripDate);
 

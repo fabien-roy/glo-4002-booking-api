@@ -26,12 +26,12 @@ public class InMemoryTripRepository implements TripRepository {
 	}
 
 	@Override
-	public List<Trip> getDepartures() {
+	public List<Trip> getDeparturesForDate(LocalDate tripDate) {
 	    return departures;
 	}
 
 	@Override
-	public List<Trip> getArrivals() {
+	public List<Trip> getArrivalsForDate(LocalDate tripDate) {
 	    return arrivals;
 	}
 

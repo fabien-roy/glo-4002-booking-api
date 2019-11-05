@@ -30,7 +30,7 @@ class InMemoryTripRepositoryTest {
 
 	    repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 
-	    assertEquals(1, repository.getDepartures().size());
+	    assertEquals(1, repository.getDeparturesForDate(aTripDate).size());
 	}
 
 	@Test
@@ -43,7 +43,7 @@ class InMemoryTripRepositoryTest {
 
 		repository.addPassengerToDepartures(anotherPassenger, aCategory, aTripDate);
 
-		assertEquals(1, repository.getDepartures().size());
+		assertEquals(1, repository.getDeparturesForDate(aTripDate).size());
 	}
 
 	@Test
@@ -56,7 +56,7 @@ class InMemoryTripRepositoryTest {
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToDepartures(anotherPassenger, aCategory, aTripDate);
 
-		assertEquals(2, repository.getDepartures().size());
+		assertEquals(2, repository.getDeparturesForDate(aTripDate).size());
 	}
 
 	@Test
@@ -70,7 +70,7 @@ class InMemoryTripRepositoryTest {
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToDepartures(anotherPassenger, anotherCategory, aTripDate);
 
-		assertEquals(2, repository.getDepartures().size());
+		assertEquals(2, repository.getDeparturesForDate(aTripDate).size());
 	}
 
 	@Test
@@ -80,7 +80,7 @@ class InMemoryTripRepositoryTest {
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
-		Trip trip = repository.getDepartures().get(0);
+		Trip trip = repository.getDeparturesForDate(expectedTripDate).get(0);
 
 		assertEquals(expectedTripDate, trip.getTripDate());
 	}
@@ -93,7 +93,7 @@ class InMemoryTripRepositoryTest {
 		Passenger aPassenger = new Passenger(expectedPassNumber);
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
-		Number passNumber = repository.getDepartures().get(0).getPassengersPassNumbers().get(0);
+		Number passNumber = repository.getDeparturesForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
 
 		assertEquals(expectedPassNumber, passNumber);
 	}
@@ -106,7 +106,7 @@ class InMemoryTripRepositoryTest {
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 
-		assertEquals(1, repository.getArrivals().size());
+		assertEquals(1, repository.getArrivalsForDate(aTripDate).size());
 	}
 
 	@Test
@@ -119,7 +119,7 @@ class InMemoryTripRepositoryTest {
 
 		repository.addPassengerToArrivals(anotherPassenger, aCategory, aTripDate);
 
-		assertEquals(1, repository.getArrivals().size());
+		assertEquals(1, repository.getArrivalsForDate(aTripDate).size());
 	}
 
 	@Test
@@ -132,7 +132,7 @@ class InMemoryTripRepositoryTest {
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToArrivals(anotherPassenger, aCategory, aTripDate);
 
-		assertEquals(2, repository.getArrivals().size());
+		assertEquals(2, repository.getArrivalsForDate(aTripDate).size());
 	}
 
 	@Test
@@ -146,7 +146,7 @@ class InMemoryTripRepositoryTest {
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToArrivals(anotherPassenger, anotherCategory, aTripDate);
 
-		assertEquals(2, repository.getArrivals().size());
+		assertEquals(2, repository.getArrivalsForDate(aTripDate).size());
 	}
 
 	@Test
@@ -156,7 +156,7 @@ class InMemoryTripRepositoryTest {
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
-		Trip trip = repository.getArrivals().get(0);
+		Trip trip = repository.getArrivalsForDate(expectedTripDate).get(0);
 
 		assertEquals(expectedTripDate, trip.getTripDate());
 	}
@@ -169,7 +169,7 @@ class InMemoryTripRepositoryTest {
 		Passenger aPassenger = new Passenger(expectedPassNumber);
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
-		Number passNumber = repository.getArrivals().get(0).getPassengersPassNumbers().get(0);
+		Number passNumber = repository.getArrivalsForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
 
 		assertEquals(expectedPassNumber, passNumber);
 	}
