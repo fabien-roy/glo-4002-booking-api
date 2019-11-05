@@ -49,14 +49,4 @@ class TripTest {
 		
 		assertEquals(aPassenger.getPassNumber(), trip.getPassengersPassNumbers().get(0));
 	}
-	
-	@Test
-	void addPassenger_whenShuttleIsFull_shuttleFullExceptionShouldBeThrown() {
-		LocalDate aTripDate = EventDate.START_DATE;
-		Trip trip = new Trip(aTripDate, aShuttle);
-
-		trip.addPassenger(aPassenger);
-
-		assertThrows(ShuttleFullException.class, () -> trip.addPassenger(anotherPassenger));
-	}
 }
