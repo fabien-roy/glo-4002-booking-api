@@ -23,7 +23,7 @@ public class TripService {
         this.factory = factory;
     }
 
-    public void orderAll(PassCategories passCategory, List<Pass> passes) {
+    void orderAll(PassCategories passCategory, List<Pass> passes) {
         ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
 
         passes.forEach(pass -> {
@@ -32,18 +32,18 @@ public class TripService {
             if (pass.getEventDate() == null) {
                 orderForFullFestival(passenger, shuttleCategory);
             } else {
-                orderForEventDate(passenger, shuttleCategory, pass.getEventDate().getValue());
+                orderForEventDate(passenger, shuttleCategory, pass.getEventDate());
             }
         });
     }
 
-    private void orderForEventDate(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {
+    private void orderForEventDate(Passenger passenger, ShuttleCategories category, EventDate tripDate) {
         repository.addPassengerToArrivals(passenger, category, tripDate);
         repository.addPassengerToDepartures(passenger, category, tripDate);
     }
 
     private void orderForFullFestival(Passenger passenger, ShuttleCategories category) {
-        repository.addPassengerToArrivals(passenger, category, EventDate.START_DATE);
-        repository.addPassengerToDepartures(passenger, category, EventDate.END_DATE);
+        repository.addPassengerToArrivals(passenger, category, new EventDate(EventDate.START_DATE));
+        repository.addPassengerToDepartures(passenger, category, new EventDate(EventDate.END_DATE));
     }
 }

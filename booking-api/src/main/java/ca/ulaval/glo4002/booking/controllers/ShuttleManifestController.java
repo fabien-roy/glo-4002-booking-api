@@ -38,7 +38,7 @@ public class ShuttleManifestController {
 	        }
         } else {
         	try {
-        		shuttleManifestDto = service.getAllTrips();
+        		shuttleManifestDto = service.getTrips();
         	} catch (BookingException exception) {
 	            return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
 	        } catch (Exception exception) {

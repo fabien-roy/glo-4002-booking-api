@@ -36,7 +36,7 @@ class ShuttleManifestControllerTest {
     
     @Test
     void getWithoutDate_shouldReturnOk() {
-        when(service.getAllTrips()).thenReturn(mock(ShuttleManifestDto.class));
+        when(service.getTrips()).thenReturn(mock(ShuttleManifestDto.class));
 
         ResponseEntity<?> response = controller.get(null);
 

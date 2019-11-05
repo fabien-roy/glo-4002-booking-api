@@ -25,7 +25,7 @@ class NumberTest {
     }
 
     @Test
-    void equals_shouldReturnTrue_whenIdHasSameValue() {
+    void equals_shouldReturnTrue_whenNumberHasSameValue() {
         Long aValue = 1L;
         number = new Number(aValue);
         Number other = new Number(aValue);
@@ -33,6 +33,16 @@ class NumberTest {
         boolean result = number.equals(other);
 
         assertTrue(result);
+    }
+
+    @Test
+    void equals_shouldReturnFalse_whenNumberHasDifferentValue() {
+        number = new Number(1L);
+        Number other = new Number(2L);
+
+        boolean result = number.equals(other);
+
+        assertFalse(result);
     }
 
     @Test

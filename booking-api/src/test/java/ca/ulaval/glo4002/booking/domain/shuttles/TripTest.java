@@ -1,19 +1,14 @@
-package ca.ulaval.glo4002.booking.domain.trip;
+package ca.ulaval.glo4002.booking.domain.shuttles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
-import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 
@@ -21,13 +16,12 @@ class TripTest {
 
 	private static Shuttle aShuttle;
 	private static Passenger aPassenger;
-	private static Passenger anotherPassenger;
 
 	@BeforeEach
 	void setUpPassengers() {
 		aPassenger = mock(Passenger.class);
 		when(aPassenger.getPassNumber()).thenReturn(new Number(10000000L));
-		anotherPassenger = mock(Passenger.class);
+		Passenger anotherPassenger = mock(Passenger.class);
 		when(anotherPassenger.getPassNumber()).thenReturn(new Number(10000001L));
 	}
 
@@ -39,7 +33,7 @@ class TripTest {
 	
 	@Test
 	void addPassenger_whenShuttleHasPlacesEmpty_passengerShouldBeAdded() {
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Trip trip = new Trip(aTripDate, aShuttle);
 
 		trip.addPassenger(aPassenger);

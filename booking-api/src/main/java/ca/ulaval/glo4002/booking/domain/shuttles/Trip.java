@@ -4,22 +4,23 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class Trip {
 	
-	private LocalDate date;
+	private EventDate date;
 	private Shuttle shuttle;
 	private List<Passenger> passengers;
 	
-	public Trip(LocalDate date, Shuttle shuttle) {
+	public Trip(EventDate date, Shuttle shuttle) {
 		this.date = date;
 		this.shuttle = shuttle;
 		this.passengers = new ArrayList<>();
 	}
 
-	public LocalDate getTripDate() {
+	public EventDate getTripDate() {
 		return date;
 	}
 	

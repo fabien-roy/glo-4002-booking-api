@@ -23,15 +23,15 @@ class TripMapperTest {
     private static TripMapper subject;
     private Trip aTrip;
     private Trip anotherTrip;
-    private static LocalDate aTripDate;
-    private static LocalDate anotherTripDate;
+    private static EventDate aTripDate;
+    private static EventDate anotherTripDate;
     private static ShuttleCategories aShuttleCategory;
     
     @BeforeAll
     public static void setUpSuject() {
     	subject = new TripMapper();
-    	aTripDate = EventDate.START_DATE;
-    	anotherTripDate = EventDate.START_DATE.plusDays(1);
+    	aTripDate = new EventDate(EventDate.START_DATE);
+    	anotherTripDate = new EventDate(EventDate.START_DATE.plusDays(1));
     	aShuttleCategory = ShuttleCategories.ET_SPACESHIP;
     }
     

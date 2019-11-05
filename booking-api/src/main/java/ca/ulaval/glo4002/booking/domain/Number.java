@@ -31,9 +31,9 @@ public class Number {
     public boolean equals(Object other) {
         if (!(other instanceof Number)) return false;
 
-        Number otherId = (Number) other;
+        Number otherNumber = (Number) other;
 
-        return this.value.equals(otherId.getValue());
+        return this.value.equals(otherNumber.getValue());
     }
 
     @Override

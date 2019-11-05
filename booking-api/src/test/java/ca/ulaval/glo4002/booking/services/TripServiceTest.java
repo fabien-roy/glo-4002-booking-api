@@ -39,7 +39,7 @@ class TripServiceTest {
 
         service.orderAll(category, somePasses);
 
-        verify(repository, times(1)).addPassengerToDepartures(any(), any(), eq(aEventDate.getValue()));
+        verify(repository, times(1)).addPassengerToDepartures(any(), any(), eq(aEventDate));
     }
 
     @Test
@@ -51,7 +51,7 @@ class TripServiceTest {
 
         service.orderAll(category, somePasses);
 
-        verify(repository, times(1)).addPassengerToArrivals(any(), any(), eq(aEventDate.getValue()));
+        verify(repository, times(1)).addPassengerToArrivals(any(), any(), eq(aEventDate));
     }
 
     @Test
@@ -65,8 +65,8 @@ class TripServiceTest {
 
         service.orderAll(category, somePasses);
 
-        verify(repository).addPassengerToDepartures(any(), any(), eq(aEventDate.getValue()));
-        verify(repository).addPassengerToDepartures(any(), any(), eq(anotherEventDate.getValue()));
+        verify(repository).addPassengerToDepartures(any(), any(), eq(aEventDate));
+        verify(repository).addPassengerToDepartures(any(), any(), eq(anotherEventDate));
     }
 
     @Test
@@ -80,8 +80,8 @@ class TripServiceTest {
 
         service.orderAll(category, somePasses);
 
-        verify(repository).addPassengerToArrivals(any(), any(), eq(aEventDate.getValue()));
-        verify(repository).addPassengerToArrivals(any(), any(), eq(anotherEventDate.getValue()));
+        verify(repository).addPassengerToArrivals(any(), any(), eq(aEventDate));
+        verify(repository).addPassengerToArrivals(any(), any(), eq(anotherEventDate));
     }
 
     @Test
@@ -120,7 +120,7 @@ class TripServiceTest {
 
         service.orderAll(category, somePasses);
 
-        verify(repository).addPassengerToDepartures(any(), any(), eq(EventDate.END_DATE));
+        verify(repository).addPassengerToDepartures(any(), any(), eq(new EventDate(EventDate.END_DATE)));
     }
 
     @Test
@@ -131,6 +131,6 @@ class TripServiceTest {
 
         service.orderAll(category, somePasses);
 
-        verify(repository).addPassengerToArrivals(any(), any(), eq(EventDate.START_DATE));
+        verify(repository).addPassengerToArrivals(any(), any(), eq(new EventDate(EventDate.START_DATE)));
     }
 }

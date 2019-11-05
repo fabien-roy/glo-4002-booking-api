@@ -26,7 +26,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void getDeparturesForDate_shouldReturnDeparturesForDate() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate expectedTripDate = EventDate.START_DATE;
+		EventDate expectedTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
 
@@ -38,7 +38,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void getArrivalsForDate_shouldReturnArrivalsForDate() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate expectedTripDate = EventDate.START_DATE;
+		EventDate expectedTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
 
@@ -50,7 +50,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 	    repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
@@ -61,7 +61,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
@@ -74,7 +74,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -88,7 +88,7 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -101,7 +101,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddTripDate_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate expectedTripDate = EventDate.START_DATE;
+		EventDate expectedTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
@@ -113,7 +113,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddPassenger_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Number expectedPassNumber = new Number(1L);
 		Passenger aPassenger = new Passenger(expectedPassNumber);
 
@@ -126,7 +126,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
@@ -137,7 +137,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
@@ -150,7 +150,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -164,7 +164,7 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -177,7 +177,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddTripDate_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate expectedTripDate = EventDate.START_DATE;
+		EventDate expectedTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
@@ -189,7 +189,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddPassenger_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate aTripDate = EventDate.START_DATE;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Number expectedPassNumber = new Number(1L);
 		Passenger aPassenger = new Passenger(expectedPassNumber);
 

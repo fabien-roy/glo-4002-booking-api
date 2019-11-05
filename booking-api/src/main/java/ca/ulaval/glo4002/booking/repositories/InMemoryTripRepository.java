@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
@@ -26,44 +27,46 @@ public class InMemoryTripRepository implements TripRepository {
 	}
 
 	@Override
-	public List<Trip> getDeparturesForDate(LocalDate tripDate) {
-		return getTripsForDate(departures, tripDate);
+	public List<Trip> getArrivals() {
+		return arrivals;
 	}
 
 	@Override
-	public List<Trip> getArrivalsForDate(LocalDate tripDate) {
-	    return getTripsForDate(arrivals, tripDate);
-	}
-
-	private List<Trip> getTripsForDate(List<Trip> trips, LocalDate tripDate) {
-		return trips.stream().filter(trip -> trip.getTripDate().equals(tripDate)).collect(Collectors.toList());
-	}
-	
-	public List<Trip> getAllArrivals() {
-		return arrivals;
-	}
-	
-	public List<Trip> getAllDepartures() {
+	public List<Trip> getDepartures() {
 		return departures;
 	}
 
 	@Override
-	public void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {
+	public List<Trip> getDeparturesForDate(EventDate tripDate) {
+		return getTripsForDate(departures, tripDate);
+	}
+
+	@Override
+	public List<Trip> getArrivalsForDate(EventDate tripDate) {
+	    return getTripsForDate(arrivals, tripDate);
+	}
+
+	private List<Trip> getTripsForDate(List<Trip> trips, EventDate tripDate) {
+		return trips.stream().filter(trip -> trip.getTripDate().equals(tripDate)).collect(Collectors.toList());
+	}
+
+	@Override
+	public void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, EventDate tripDate) {
 		addPassenger(passenger, departures, category, tripDate);
 	}
 
 	@Override
-	public void addPassengerToArrivals(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {
+	public void addPassengerToArrivals(Passenger passenger, ShuttleCategories category, EventDate tripDate) {
 		addPassenger(passenger, arrivals, category, tripDate);
 	}
 
-	private void addPassenger(Passenger passenger, List<Trip> trips, ShuttleCategories shuttleCategory, LocalDate tripDate) {
+	private void addPassenger(Passenger passenger, List<Trip> trips, ShuttleCategories shuttleCategory, EventDate tripDate) {
 		Trip trip = getNextAvailableTrip(trips, shuttleCategory, tripDate);
 
 		trip.addPassenger(passenger);
 	}
 
-	private Trip getNextAvailableTrip(List<Trip> trips, ShuttleCategories shuttleCategory, LocalDate tripDate) {
+	private Trip getNextAvailableTrip(List<Trip> trips, ShuttleCategories shuttleCategory, EventDate tripDate) {
 		Trip nextTrip;
 		List<Trip> departuresOnDate = getAvailableTrips(trips, shuttleCategory, tripDate);
 
@@ -78,7 +81,7 @@ public class InMemoryTripRepository implements TripRepository {
 		return nextTrip;
 	}
 
-	private List<Trip> getAvailableTrips(List<Trip> trips, ShuttleCategories category, LocalDate tripDate) {
+	private List<Trip> getAvailableTrips(List<Trip> trips, ShuttleCategories category, EventDate tripDate) {
 		return trips
 				.stream()
 				.filter(trip -> trip.getTripDate().equals(tripDate))

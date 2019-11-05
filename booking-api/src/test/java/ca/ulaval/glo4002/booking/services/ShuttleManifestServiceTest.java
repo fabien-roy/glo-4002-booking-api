@@ -7,8 +7,6 @@ import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -46,7 +44,7 @@ class ShuttleManifestServiceTest {
 
     @Test
     void getWithDate_shouldCallRepositoryForArrivals() {
-        LocalDate aDate = EventDate.START_DATE;
+        EventDate aDate = new EventDate(EventDate.START_DATE);
 
         service.getTripsForDate(aDate.toString());
 
@@ -55,7 +53,7 @@ class ShuttleManifestServiceTest {
 
     @Test
     void getWithDate_shouldCallRepositoryForDepartures() {
-        LocalDate aDate = EventDate.START_DATE;
+        EventDate aDate = new EventDate(EventDate.START_DATE);
 
         service.getTripsForDate(aDate.toString());
 
@@ -64,25 +62,22 @@ class ShuttleManifestServiceTest {
     
     @Test
     void getWithoutDate_shouldCallMapper() {
-
-        service.getAllTrips();
+        service.getTrips();
 
         verify(shuttleManifestMapper).toDto(any(), any());
     }
 
     @Test
     void getWithoutDate_shouldCallRepositoryForArrivals() {
+        service.getTrips();
 
-        service.getAllTrips();
-
-        verify(tripRepository).getAllArrivals();
+        verify(tripRepository).getArrivals();
     }
 
     @Test
     void getWithoutDate_shouldCallRepositoryForDepartures() {
+        service.getTrips();
 
-        service.getAllTrips();
-
-        verify(tripRepository).getAllDepartures();
+        verify(tripRepository).getDepartures();
     }
 }
