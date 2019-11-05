@@ -162,20 +162,10 @@ class EventFactoryTest {
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenAmIsArtist() {
-        // TODO
-    }
-
-    @Test
     void build_shouldThrowInvalidProgramException_whenAmIsAbsent() {
         ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), null, "aArtist");
 
         assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
-    }
-
-    @Test
-    void build_shouldThrowInvalidProgramException_whenPmIsActivity() {
-        // TODO
     }
 
     @Test
