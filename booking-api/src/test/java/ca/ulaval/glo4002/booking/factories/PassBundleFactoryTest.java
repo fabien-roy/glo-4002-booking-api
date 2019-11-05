@@ -43,8 +43,7 @@ class PassBundleFactoryTest {
         PassFactory passFactory = mock(PassFactory.class);
         Pass pass = new Pass(
                 new Number(1L),
-                new EventDate(EventDate.START_DATE),
-                new Money(new BigDecimal(100.0))
+                new Money(new BigDecimal(100.0)), new EventDate(EventDate.START_DATE)
         );
         when(passFactory.buildAll(any(), any())).thenReturn(Collections.singletonList(pass));
         passBundleFactory = new PassBundleFactory(passFactory);

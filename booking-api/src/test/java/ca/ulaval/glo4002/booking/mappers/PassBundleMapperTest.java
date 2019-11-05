@@ -35,7 +35,7 @@ class PassBundleMapperTest {
     @ValueSource(ints = {1, 2, 3})
     void toDto_shouldBuildCorrectQuantityOfDtos(int expectedSize) {
         Number aPassNumber = new Number(1L);
-        Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
+        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
         PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), PassOptions.SINGLE_PASS);
 
@@ -48,8 +48,8 @@ class PassBundleMapperTest {
     void toDto_shouldBuildDtoWithCorrectPassNumbers() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
-        Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
-        Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class), mock(Money.class));
+        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), PassOptions.SINGLE_PASS);
 
@@ -62,7 +62,7 @@ class PassBundleMapperTest {
     @Test
     void toDto_shouldBuildDtoWithCorrectCategory() {
         Number aPassNumber = new Number(1L);
-        Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
+        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
@@ -78,8 +78,8 @@ class PassBundleMapperTest {
     void toDto_shouldSetSameCategoryForAllPasses() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
-        Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
-        Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class), mock(Money.class));
+        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassCategory passCategory = mock(PassCategory.class);
         String expectedPassCategoryName = "expectedPassCategoryName";
@@ -94,7 +94,7 @@ class PassBundleMapperTest {
     @Test
     void toDto_shouldBuildDtoWithCorrectOption() {
         Number aPassNumber = new Number(1L);
-        Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
+        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassOptions passOption = PassOptions.SINGLE_PASS;
         String expectedPassOptionName = passOption.toString();
@@ -109,8 +109,8 @@ class PassBundleMapperTest {
     void toDto_shouldSetSameOptionForAllPasses() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
-        Pass aPass = new Pass(aPassNumber, mock(EventDate.class), mock(Money.class));
-        Pass anotherPass = new Pass(anotherPassNumber, mock(EventDate.class), mock(Money.class));
+        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassOptions passOption = PassOptions.SINGLE_PASS;
         String expectedPassOptionName = passOption.toString();
@@ -129,8 +129,8 @@ class PassBundleMapperTest {
         EventDate anotherEventDate = mock(EventDate.class);
         when(aEventDate.toString()).thenReturn(OrderFactory.START_DATE_TIME.toString());
         when(anotherEventDate.toString()).thenReturn(OrderFactory.END_DATE_TIME.toString());
-        Pass aPass = new Pass(aPassNumber, aEventDate, mock(Money.class));
-        Pass anotherPass = new Pass(anotherPassNumber, anotherEventDate, mock(Money.class));
+        Pass aPass = new Pass(aPassNumber, mock(Money.class), aEventDate);
+        Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), anotherEventDate);
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassBundle passBundle = new PassBundle(passes, mock(PassCategory.class), PassOptions.SINGLE_PASS);
 

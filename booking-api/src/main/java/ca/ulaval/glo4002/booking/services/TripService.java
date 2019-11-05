@@ -24,7 +24,6 @@ public class TripService {
     public void orderAll(PassCategories passCategory, List<Pass> passes) {
         ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
 
-        //TODO: Add condition for package (departure and arrival date are not the same)
         passes.forEach(pass -> {
             Passenger passenger = new Passenger(pass.getPassNumber());
 

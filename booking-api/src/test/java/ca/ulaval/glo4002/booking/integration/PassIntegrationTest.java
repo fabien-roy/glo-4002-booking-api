@@ -8,7 +8,6 @@ import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.*;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -91,7 +90,7 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass pass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE), passPrice);
+        Pass pass = new Pass(new Number(1L), passPrice, new EventDate(EventDate.START_DATE));
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA.toString(), null),
@@ -117,11 +116,10 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass aPass = new Pass(new Number(1L), new EventDate(EventDate.START_DATE), passPrice);
+        Pass aPass = new Pass(new Number(1L), passPrice, new EventDate(EventDate.START_DATE));
         Pass anotherPass = new Pass(
                 new Number(2L),
-                new EventDate(EventDate.START_DATE.plusDays(1)),
-                mock(Money.class)
+                mock(Money.class), new EventDate(EventDate.START_DATE.plusDays(1))
         );
         PassBundle passBundle = new PassBundle(
                 Arrays.asList(aPass, anotherPass),
