@@ -38,6 +38,14 @@ public class InMemoryTripRepository implements TripRepository {
 	private List<Trip> getTripsForDate(List<Trip> trips, LocalDate tripDate) {
 		return trips.stream().filter(trip -> trip.getTripDate().equals(tripDate)).collect(Collectors.toList());
 	}
+	
+	public List<Trip> getAllArrivals() {
+		return arrivals;
+	}
+	
+	public List<Trip> getAllDepartures() {
+		return departures;
+	}
 
 	@Override
 	public void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {

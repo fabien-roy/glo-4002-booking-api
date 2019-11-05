@@ -29,36 +29,60 @@ class ShuttleManifestServiceTest {
     }
 
     @Test
-    void get_shouldCallMapper() {
+    void getWithDate_shouldCallMapper() {
         String aDate = EventDate.START_DATE.toString();
 
-        service.get(aDate);
+        service.getTripsForDate(aDate);
 
         verify(shuttleManifestMapper).toDto(any(), any());
     }
 
     @Test
-    void get_shouldThrowInvalidFormatException_whenDateIsInvalid() {
+    void getWithDate_shouldThrowInvalidFormatException_whenDateIsInvalid() {
         String anInvalidDate = "anInvalidDate";
 
-        assertThrows(InvalidFormatException.class, () -> service.get(anInvalidDate));
+        assertThrows(InvalidFormatException.class, () -> service.getTripsForDate(anInvalidDate));
     }
 
     @Test
-    void get_shouldCallRepositoryForArrivals() {
+    void getWithDate_shouldCallRepositoryForArrivals() {
         LocalDate aDate = EventDate.START_DATE;
 
-        service.get(aDate.toString());
+        service.getTripsForDate(aDate.toString());
 
         verify(tripRepository).getArrivalsForDate(aDate);
     }
 
     @Test
-    void get_shouldCallRepositoryForDepartures() {
+    void getWithDate_shouldCallRepositoryForDepartures() {
         LocalDate aDate = EventDate.START_DATE;
 
-        service.get(aDate.toString());
+        service.getTripsForDate(aDate.toString());
 
         verify(tripRepository).getDeparturesForDate(aDate);
+    }
+    
+    @Test
+    void getWithoutDate_shouldCallMapper() {
+
+        service.getAllTrips();
+
+        verify(shuttleManifestMapper).toDto(any(), any());
+    }
+
+    @Test
+    void getWithoutDate_shouldCallRepositoryForArrivals() {
+
+        service.getAllTrips();
+
+        verify(tripRepository).getAllArrivals();
+    }
+
+    @Test
+    void getWithoutDate_shouldCallRepositoryForDepartures() {
+
+        service.getAllTrips();
+
+        verify(tripRepository).getAllDepartures();
     }
 }

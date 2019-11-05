@@ -21,13 +21,20 @@ public class ShuttleManifestService {
         this.shuttleManifestMapper = shuttleManifestMapper;
     }
 
-    public ShuttleManifestDto get(String date) {
+    public ShuttleManifestDto getTripsForDate(String date) {
         LocalDate tripDate = buildTripDate(date);
 
         List<Trip> arrivalsForDate = tripRepository.getArrivalsForDate(tripDate);
         List<Trip> departuresForDate = tripRepository.getDeparturesForDate(tripDate);
 
         return shuttleManifestMapper.toDto(arrivalsForDate, departuresForDate);
+    }
+    
+    public ShuttleManifestDto getAllTrips() {
+    	List<Trip> arrivals = tripRepository.getAllArrivals();
+    	List<Trip> departures = tripRepository.getAllDepartures();
+    	
+    	return shuttleManifestMapper.toDto(arrivals, departures);
     }
 
     private LocalDate buildTripDate(String tripDate) {

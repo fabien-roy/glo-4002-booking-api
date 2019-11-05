@@ -1,16 +1,16 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
-import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
+import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 
 class ShuttleManifestControllerTest {
 
@@ -25,11 +25,20 @@ class ShuttleManifestControllerTest {
     }
 
     @Test
-    void getByOrderNumber_shouldReturnOk() {
+    void getWithADate_shouldReturnOk() {
         String aDate = "aDate";
-        when(service.get(aDate)).thenReturn(mock(ShuttleManifestDto.class));
+        when(service.getTripsForDate(aDate)).thenReturn(mock(ShuttleManifestDto.class));
 
         ResponseEntity<?> response = controller.get(aDate);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+    
+    @Test
+    void getWithoutDate_shouldReturnOk() {
+        when(service.getAllTrips()).thenReturn(mock(ShuttleManifestDto.class));
+
+        ResponseEntity<?> response = controller.get(null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }

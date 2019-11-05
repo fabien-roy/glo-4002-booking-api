@@ -12,6 +12,10 @@ public interface TripRepository {
     List<Trip> getDeparturesForDate(LocalDate tripDate);
 
     List<Trip> getArrivalsForDate(LocalDate tripDate);
+    
+    List<Trip> getAllArrivals();
+    
+    List<Trip> getAllDepartures();
 
 	void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, LocalDate tripDate);
 
