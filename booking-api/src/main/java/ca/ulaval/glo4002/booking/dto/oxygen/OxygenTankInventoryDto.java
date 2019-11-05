@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.dto;
+package ca.ulaval.glo4002.booking.dto.oxygen;
 
 public class OxygenTankInventoryDto {
 	// TODO : String and Long changed (were list). Check if its okay

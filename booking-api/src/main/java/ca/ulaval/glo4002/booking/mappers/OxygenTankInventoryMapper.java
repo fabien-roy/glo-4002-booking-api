@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
-import ca.ulaval.glo4002.booking.dto.OxygenTankInventoryDto;
+import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class OxygenTankInventoryMapper {

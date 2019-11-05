@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
-import ca.ulaval.glo4002.booking.dto.OxygenTankInventoryDto;
+import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class OxygenTankInventoryMapperTest {

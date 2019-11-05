@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.controllers.ProgramController;
+import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
@@ -57,6 +58,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ShuttleManifestService.class);
         bindAsContract(ProgramService.class);
         bindAsContract(ArtistService.class);
+        bindAsContract(ProfitService.class);
     }
 
     private void bindMappers() {
@@ -70,5 +72,6 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ProgramController.class).in(Singleton.class);
         bindAsContract(OrderController.class).in(Singleton.class);
         bindAsContract(ShuttleManifestController.class).in(Singleton.class);
+        bindAsContract(ReportController.class).in(Singleton.class);
     }
 }

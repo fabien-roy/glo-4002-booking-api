@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.dto;
+package ca.ulaval.glo4002.booking.dto.oxygen;
 
 public class HistoryItemDto {
 	public String date;

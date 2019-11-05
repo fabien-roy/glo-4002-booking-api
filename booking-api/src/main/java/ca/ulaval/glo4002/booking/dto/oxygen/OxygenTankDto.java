@@ -1,6 +1,8 @@
-package ca.ulaval.glo4002.booking.dto;
+package ca.ulaval.glo4002.booking.dto.oxygen;
 
+// TODO : OXY : Can someone PLEASE tell me what this is?
 public class OxygenTankDto {
+
 	private Long oxygenId;
 	private String oxygenCategory;
 	private String oxygenRequestDate;
