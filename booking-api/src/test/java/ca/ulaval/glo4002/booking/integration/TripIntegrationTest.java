@@ -1,54 +1,48 @@
 package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.controllers.OrderController;
+import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.domain.EventDate;
-import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.domain.passes.PassCategory;
 import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
+import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
+import ca.ulaval.glo4002.booking.mappers.TripMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-public class TripIntegrationTest {
+class TripIntegrationTest {
 
-    private OrderController controller;
-    private OrderRepository orderRepository;
+    private OrderController orderController;
+    private ShuttleManifestController shuttleManifestController;
 
     @BeforeEach
-    public void setUpController() {
+    void setUpController() {
         NumberGenerator numberGenerator = new NumberGenerator();
 
         PassFactory passFactory = new PassFactory(numberGenerator);
@@ -57,83 +51,152 @@ public class TripIntegrationTest {
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
-        orderRepository = new InMemoryOrderRepository();
+        OrderRepository orderRepository = new InMemoryOrderRepository();
 
         PassBundleMapper passBundleMapper = new PassBundleMapper();
+        TripMapper tripMapper = new TripMapper();
+        ShuttleManifestMapper shuttleManifestMapper = new ShuttleManifestMapper(tripMapper);
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
+        ShuttleManifestService shuttleManifestService = new ShuttleManifestService(tripRepository, shuttleManifestMapper);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService);
 
-        controller = new OrderController(orderService);
+        orderController = new OrderController(orderService);
+        shuttleManifestController = new ShuttleManifestController(shuttleManifestService);
     }
 
     @Test
-    public void addOrder_shouldAddArrivalTrip() {
+    void addOrder_shouldAddArrivalTrip() {
+        String aDate = EventDate.START_DATE.toString();
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(1, shuttleManifestDto.getArrivals().size());
+        assertEquals(aDate, shuttleManifestDto.getArrivals().get(0).getDate());
+    }
+
+    @Test
+    void addOrder_shouldAddDepartureTrip() {
+        String aDate = EventDate.START_DATE.toString();
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(1, shuttleManifestDto.getDepartures().size());
+        assertEquals(aDate, shuttleManifestDto.getDepartures().get(0).getDate());
+    }
+
+    @Test
+    void addOrder_shouldAddMultipleArrivalTrips_whenThereAreManyPasses() {
+        String aDate = EventDate.START_DATE.toString();
+        String anotherDate = EventDate.START_DATE.plusDays(1).toString();
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(2, shuttleManifestDto.getArrivals().size());
+        assertTrue(shuttleManifestDto.getArrivals().stream().anyMatch(arrival -> arrival.getDate().equals(aDate)));
+        assertTrue(shuttleManifestDto.getArrivals().stream().anyMatch(arrival -> arrival.getDate().equals(anotherDate)));
+    }
+
+    @Test
+    void addOrder_shouldAddMultipleDepartureTrips_whenThereAreManyPasses() {
+        String aDate = EventDate.START_DATE.toString();
+        String anotherDate = EventDate.START_DATE.plusDays(1).toString();
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(2, shuttleManifestDto.getArrivals().size());
+        assertTrue(shuttleManifestDto.getDepartures().stream().anyMatch(departure -> departure.getDate().equals(aDate)));
+        assertTrue(shuttleManifestDto.getDepartures().stream().anyMatch(departure -> departure.getDate().equals(anotherDate)));
+    }
+
+    @Test
+    void addOrder_shouldAddArrivalTripOnStartDate_whenPassIsPackage() {
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(1, shuttleManifestDto.getArrivals().size());
+        assertEquals(EventDate.START_DATE.toString(), shuttleManifestDto.getArrivals().get(0).getDate());
+    }
+
+    @Test
+    void addOrder_shouldAddDepartureTripOnEndDate_whenPassIsPackage() {
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(1, shuttleManifestDto.getDepartures().size());
+        assertEquals(EventDate.END_DATE.toString(), shuttleManifestDto.getDepartures().get(0).getDate());
+    }
+
+    @Test
+    void addOrder_shouldAddArrivalTripsWithCorrectCategory() {
+        // TODO
+    }
+
+    @Test
+    void addOrder_shouldAddDepartureTripsWithCorrectCategory() {
+        // TODO
+    }
+
+    @Test
+    void addOrder_shouldAddPassengerToArrivalTrip() {
+        // TODO
+    }
+
+    @Test
+    void addOrder_shouldAddPassengerToDepartureTrip() {
+        // TODO
+    }
+
+    @Test
+    void addOrder_shouldAddToNewArrivalTrip_whenTripIsFull() {
+        // TODO
+    }
+
+    @Test
+    void addOrder_shouldAddToNewDepartureTrip_whenTripIsFull() {
+        // TODO
+    }
+
+    @Test
+    void addOrder_shouldAddToExistingArrivalTrip_whenTripIsNotFull() {
+        // TODO
+    }
+
+    @Test
+    void addOrder_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
+        // TODO
+    }
+
+    private OrderWithPassesAsEventDatesDto buildDto(PassCategories passCategory, PassOptions passOptions, List<String> eventDates) {
         PassBundleDto passBundleDto = new PassBundleDto(
-                PassCategories.SUPERNOVA.toString(),
-                PassOptions.SINGLE_PASS.toString(),
-                Collections.singletonList(EventDate.START_DATE.toString())
+                passCategory.toString(),
+                passOptions.toString(),
+                eventDates
         );
-        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+
+        return new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
-    }
-
-    @Test
-    public void addOrder_shouldAddDepartureTrip() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddMultipleArrivalTrips_whenThereAreManyPasses() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddMultipleDepartureTrips_whenThereAreManyPasses() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddArrivalTripOnStartDate_whenPassIsPackage() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddDepartureTripOnEndDate_whenPassIsPackage() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddArrivalTripsWithCorrectCategory() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddDepartureTripsWithCorrectCategory() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddToNewArrivalTrip_whenTripIsFull() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddToNewDepartureTrip_whenTripIsFull() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddToExistingArrivalTrip_whenTripIsNotFull() {
-        // TODO
-    }
-
-    @Test
-    public void addOrder_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
-        // TODO
     }
 }
