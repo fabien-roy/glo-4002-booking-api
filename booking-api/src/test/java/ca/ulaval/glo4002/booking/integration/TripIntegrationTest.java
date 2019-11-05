@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.dto.*;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
@@ -24,6 +25,8 @@ import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.http.ResponseEntity;
 
 import java.time.ZoneId;
@@ -40,6 +43,7 @@ class TripIntegrationTest {
 
     private OrderController orderController;
     private ShuttleManifestController shuttleManifestController;
+    private ShuttleFactory shuttleFactory;
 
     @BeforeEach
     void setUpController() {
@@ -47,7 +51,7 @@ class TripIntegrationTest {
 
         PassFactory passFactory = new PassFactory(numberGenerator);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
-        ShuttleFactory shuttleFactory = new ShuttleFactory();
+        shuttleFactory = new ShuttleFactory();
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
@@ -146,14 +150,32 @@ class TripIntegrationTest {
         assertEquals(EventDate.END_DATE.toString(), shuttleManifestDto.getDepartures().get(0).getDate());
     }
 
-    @Test
-    void addOrder_shouldAddArrivalTripsWithCorrectCategory() {
-        // TODO
+    @ParameterizedTest
+    @EnumSource(PassCategories.class)
+    void addOrder_shouldAddArrivalTripsWithCorrectName(PassCategories passCategory) {
+        String aDate = EventDate.START_DATE.toString();
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+        ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(expectedShuttleCategory.toString(), shuttleManifestDto.getArrivals().get(0).getShuttleName());
     }
 
-    @Test
-    void addOrder_shouldAddDepartureTripsWithCorrectCategory() {
-        // TODO
+    @ParameterizedTest
+    @EnumSource(PassCategories.class)
+    void addOrder_shouldAddDepartureTripsWithCorrectName(PassCategories passCategory) {
+        String aDate = EventDate.START_DATE.toString();
+        OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+        ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
+
+        orderController.addOrder(orderDto);
+        ResponseEntity<?> response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+
+        assertEquals(expectedShuttleCategory.toString(), shuttleManifestDto.getDepartures().get(0).getShuttleName());
     }
 
     @Test
