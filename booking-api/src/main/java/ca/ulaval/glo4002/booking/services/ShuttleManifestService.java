@@ -9,7 +9,6 @@ import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ShuttleManifestService {
 

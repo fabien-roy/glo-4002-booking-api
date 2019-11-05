@@ -59,7 +59,7 @@ class TripMapperTest {
     	List<TripDto> tripDtos = subject.toDto(someTrips);
     	
     	assertEquals(someTrips.size(), tripDtos.size());
-    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getTripDate());
+    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getDate());
     	assertEquals(aTrip.getShuttleCategory().toString(), aShuttleCategory.toString());
     }
     
@@ -71,9 +71,9 @@ class TripMapperTest {
     	List<TripDto> tripDtos = subject.toDto(someTrips);
     	
     	assertEquals(someTrips.size(), tripDtos.size());
-    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getTripDate());
+    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getDate());
     	assertEquals(aTrip.getShuttleCategory().toString(), aShuttleCategory.toString());
-    	assertEquals(anotherTrip.getTripDate().toString(), tripDtos.get(1).getTripDate());
+    	assertEquals(anotherTrip.getTripDate().toString(), tripDtos.get(1).getDate());
     	assertEquals(anotherTrip.getShuttleCategory().toString(), aShuttleCategory.toString());
     }
 }
