@@ -9,8 +9,14 @@ import java.util.List;
 public class EventFactory {
 
     public List<Event> build(List<ProgramEventDto> eventDtos) {
-        // TODO
+        List<Event> events = new ArrayList<>();
 
-        return new ArrayList<>();
+        eventDtos.forEach(eventDto -> {
+            Event event = new Event();
+
+            events.add(event);
+        });
+
+        return events;
     }
 }
