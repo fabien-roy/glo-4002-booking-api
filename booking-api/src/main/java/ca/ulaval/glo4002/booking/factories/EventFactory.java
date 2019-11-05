@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -28,14 +29,15 @@ public class EventFactory {
     }
 
     private EventDate buildEventDate(String eventDate) {
-        LocalDate parsedEventDate;
+        EventDate parsedEventDate;
 
         try {
-            parsedEventDate = LocalDate.parse(eventDate);
+            LocalDate localDate = LocalDate.parse(eventDate);
+            parsedEventDate = new EventDate(localDate);
         } catch (Exception exception) {
-            throw new InvalidFormatException();
+            throw new InvalidProgramException();
         }
 
-        return new EventDate(parsedEventDate);
+        return parsedEventDate;
     }
 }

@@ -115,7 +115,26 @@ class EventFactoryTest {
 
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsInvalid() {
-        // TODO
+        String anInvalidDate = "anInvalidDate";
+        ProgramEventDto aEventDto = new ProgramEventDto(anInvalidDate, Activities.YOGA.toString(), "aArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+    }
+
+    @Test
+    void build_shouldThrowInvalidProgramException_whenEventDateIsUnderBounds() {
+        String anUnderBoundsEventDate = EventDate.START_DATE.minusDays(1).toString();
+        ProgramEventDto aEventDto = new ProgramEventDto(anUnderBoundsEventDate, Activities.YOGA.toString(), "aArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+    }
+
+    @Test
+    void build_shouldThrowInvalidProgramException_whenEventDateIsOverBounds() {
+        String anOverBoundsEventDate = EventDate.END_DATE.plusDays(1).toString();
+        ProgramEventDto aEventDto = new ProgramEventDto(anOverBoundsEventDate, Activities.YOGA.toString(), "aArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
     }
 
     @Test
