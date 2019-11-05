@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.Artist;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
@@ -38,8 +39,7 @@ class ArtistServiceTest {
     @Test
     void getAll_shouldReturnAllArtistNames_whenOrderByIsNull() {
         String expectedArtistName = "expectedArtistName";
-        Artist artist = mock(Artist.class);
-        when(artist.getName()).thenReturn(expectedArtistName);
+        Artist artist = new Artist(expectedArtistName, mock(Money.class), 1);
         when(artistRepository.getAll()).thenReturn(Collections.singletonList(artist));
 
         ArtistListDto artistListDto = service.getAll(null);
