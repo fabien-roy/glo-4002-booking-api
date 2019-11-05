@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.domain.Artist;
-import ca.ulaval.glo4002.booking.domain.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +11,11 @@ public class InMemoryArtistRepository implements ArtistRepository {
 
     public InMemoryArtistRepository() {
         artists = new ArrayList<>();
+    }
+
+    @Override
+    public void addAll(List<Artist> artists) {
+        // TODO
     }
 
     @Override

@@ -6,9 +6,9 @@ public class Artist {
 
     private String name;
     private Money cost;
-    private int membersAmount;
+    private Integer membersAmount;
 
-    public Artist(String name, Money cost, int membersAmount) {
+    public Artist(String name, Money cost, Integer membersAmount) {
         this.name = name;
         this.cost = cost;
         this.membersAmount = membersAmount;
@@ -22,7 +22,23 @@ public class Artist {
         return cost;
     }
 
-    public int getMembersAmount() {
+    public Integer getMembersAmount() {
         return membersAmount;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Artist)) return false;
+
+        Artist otherArtist = (Artist) other;
+
+        return name.equals(otherArtist.getName())
+                && cost.equals(otherArtist.getCost())
+                && membersAmount.equals(otherArtist.getMembersAmount());
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode() + cost.hashCode() + membersAmount.hashCode();
     }
 }
