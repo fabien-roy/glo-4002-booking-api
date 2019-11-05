@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.Artist;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
+import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
 import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
 import ca.ulaval.glo4002.booking.repositories.EventRepository;
 
@@ -26,10 +27,12 @@ public class ArtistService {
 
         if (orderBy == null) {
             artistNames = artistRepository.getAll().stream().map(Artist::getName).collect(Collectors.toList());
-        }
+        } else {
+            ArtistOrderings ordering = ArtistOrderings.get(orderBy);
 
-        // TODO : With orderBy lowCost
-        // TODO : With orderBy mostPopular
+            // TODO : With orderBy lowCost
+            // TODO : With orderBy mostPopular
+        }
 
         return new ArtistListDto(artistNames);
     }
