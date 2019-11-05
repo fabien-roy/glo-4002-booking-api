@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryArtistRepositoryTest {
 
@@ -23,8 +21,13 @@ class InMemoryArtistRepositoryTest {
     }
 
     @Test
+    void constructing_shouldFillArtistsWithPreparedDate() {
+        assertFalse(repository.getAll().isEmpty());
+    }
+
+    @Test
     void getByName_shouldReturnArtist() {
-        String artistName = InMemoryArtistRepository.getPreparedArtists().get(0).getName();
+        String artistName = repository.getAll().get(0).getName();
 
         Artist artist = repository.getByName(artistName);
 

@@ -28,8 +28,13 @@ public class InMemoryArtistRepository implements ArtistRepository {
         return foundArtist.get();
     }
 
+    @Override
+    public List<Artist> getAll() {
+        return artists;
+    }
+
     // TODO : Shouldn't this be done at server start? (jersey)
-    public static List<Artist> getPreparedArtists() {
+    private List<Artist> getPreparedArtists() {
         List<Artist> preparedArtists = new ArrayList<>();
 
         preparedArtists.add(new Artist("Sun 41", new Money(new BigDecimal(100000)), 5));
