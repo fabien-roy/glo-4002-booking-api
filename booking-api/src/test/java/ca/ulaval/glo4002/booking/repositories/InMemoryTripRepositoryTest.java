@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,6 +21,30 @@ class InMemoryTripRepositoryTest {
 	@BeforeEach
 	void setUpRepository() {
 		repository = new InMemoryTripRepository(new ShuttleFactory());
+	}
+
+	@Test
+	void getDeparturesForDate_shouldReturnDeparturesForDate() {
+		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		LocalDate expectedTripDate = EventDate.START_DATE;
+		Passenger aPassenger = new Passenger(new Number(1L));
+		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
+
+		List<Trip> trips = repository.getDeparturesForDate(expectedTripDate);
+
+		assertEquals(expectedTripDate, trips.get(0).getTripDate());
+	}
+
+	@Test
+	void getArrivalsForDate_shouldReturnArrivalsForDate() {
+		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		LocalDate expectedTripDate = EventDate.START_DATE;
+		Passenger aPassenger = new Passenger(new Number(1L));
+		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
+
+		List<Trip> trips = repository.getArrivalsForDate(expectedTripDate);
+
+		assertEquals(expectedTripDate, trips.get(0).getTripDate());
 	}
 
 	@Test

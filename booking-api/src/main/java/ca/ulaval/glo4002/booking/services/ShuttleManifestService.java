@@ -38,8 +38,4 @@ public class ShuttleManifestService {
             throw new InvalidFormatException();
         }
     }
-
-    private List<Trip> getTripsForDate(List<Trip> trips, LocalDate tripDate) {
-        return trips.stream().filter(trip -> trip.getTripDate().equals(tripDate)).collect(Collectors.toList());
-    }
 }
