@@ -14,7 +14,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
@@ -27,7 +26,6 @@ public class ShuttleTest {
 	private static final Money A_PRICE = new Money(new BigDecimal(65000));
 	private static final LocalDate A_TRIP_DATE = LocalDate.of(2050, 7, 21);
 	private static final LocalDate ANOTHER_TRIP_DATE = LocalDate.of(2050, 7, 22);
-	private static NumberGenerator numberGenerator = new NumberGenerator();
 	
 	@BeforeAll
 	public static void tripSetUp() {
