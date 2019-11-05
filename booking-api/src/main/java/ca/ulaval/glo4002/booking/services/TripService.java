@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.trip.Passenger;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
@@ -8,6 +9,7 @@ import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TripService {
@@ -27,8 +29,21 @@ public class TripService {
         passes.forEach(pass -> {
             Passenger passenger = new Passenger(pass.getPassNumber());
 
-            repository.addPassengerToDepartures(passenger, shuttleCategory, pass.getEventDate().getValue());
-            repository.addPassengerToArrivals(passenger, shuttleCategory, pass.getEventDate().getValue());
+            if (pass.getEventDate() == null) {
+                orderForFullFestival(passenger, shuttleCategory);
+            } else {
+                orderForEventDate(passenger, shuttleCategory, pass.getEventDate().getValue());
+            }
         });
+    }
+
+    private void orderForEventDate(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {
+        repository.addPassengerToDepartures(passenger, category, tripDate);
+        repository.addPassengerToArrivals(passenger, category, tripDate);
+    }
+
+    private void orderForFullFestival(Passenger passenger, ShuttleCategories category) {
+        repository.addPassengerToDepartures(passenger, category, EventDate.START_DATE);
+        repository.addPassengerToArrivals(passenger, category, EventDate.END_DATE);
     }
 }

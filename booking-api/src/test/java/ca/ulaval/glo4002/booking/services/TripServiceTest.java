@@ -55,20 +55,6 @@ class TripServiceTest {
     }
 
     @Test
-    void orderAll_shouldAddPassengerToDeparturesMultipleTimes_whenThereAreMultiplePasses() {
-        PassCategories category = PassCategories.SUPERNOVA;
-        EventDate aEventDate = new EventDate(EventDate.START_DATE);
-        EventDate anotherEventDate = new EventDate(EventDate.END_DATE);
-        Pass aPass = new Pass(mock(Number.class), mock(Money.class), aEventDate);
-        Pass anotherPass = new Pass(mock(Number.class), mock(Money.class), anotherEventDate);
-        List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
-
-        service.orderAll(category, somePasses);
-
-        verify(repository, times(2)).addPassengerToDepartures(any(), any(), any());
-    }
-
-    @Test
     void orderAll_shouldAddPassengerToCorrectDeparturesDates_whenThereAreMultiplePasses() {
         PassCategories category = PassCategories.SUPERNOVA;
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
@@ -99,6 +85,20 @@ class TripServiceTest {
     }
 
     @Test
+    void orderAll_shouldAddPassengerToDeparturesMultipleTimes_whenThereAreMultiplePasses() {
+        PassCategories category = PassCategories.SUPERNOVA;
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        EventDate anotherEventDate = new EventDate(EventDate.END_DATE);
+        Pass aPass = new Pass(mock(Number.class), mock(Money.class), aEventDate);
+        Pass anotherPass = new Pass(mock(Number.class), mock(Money.class), anotherEventDate);
+        List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
+
+        service.orderAll(category, somePasses);
+
+        verify(repository, times(2)).addPassengerToDepartures(any(), any(), any());
+    }
+
+    @Test
     void orderAll_shouldAddPassengerToArrivalsMultipleTimes_whenThereAreMultiplePasses() {
         PassCategories category = PassCategories.SUPERNOVA;
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
@@ -114,11 +114,23 @@ class TripServiceTest {
 
     @Test
     void orderAll_shouldAddPassengerToDeparturesOfStartDate_whenPassHasNoEventDate() {
-        // TODO : TRANS : Test TripService
+        PassCategories category = PassCategories.SUPERNOVA;
+        Pass aPass = new Pass(mock(Number.class), mock(Money.class));
+        List<Pass> somePasses = Collections.singletonList(aPass);
+
+        service.orderAll(category, somePasses);
+
+        verify(repository).addPassengerToDepartures(any(), any(), eq(EventDate.START_DATE));
     }
 
     @Test
     void orderAll_shouldAddPassengerToArrivalsOfEndDate_whenPassHasNoEventDate() {
-        // TODO : TRANS : Test TripService
+        PassCategories category = PassCategories.SUPERNOVA;
+        Pass aPass = new Pass(mock(Number.class), mock(Money.class));
+        List<Pass> somePasses = Collections.singletonList(aPass);
+
+        service.orderAll(category, somePasses);
+
+        verify(repository).addPassengerToArrivals(any(), any(), eq(EventDate.END_DATE));
     }
 }
