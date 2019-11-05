@@ -19,7 +19,7 @@ public class EventFactory {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
 
-            Event event = new Event(eventDate, activity);
+            Event event = new Event(eventDate, activity, eventDto.getPm());
 
             events.add(event);
         });

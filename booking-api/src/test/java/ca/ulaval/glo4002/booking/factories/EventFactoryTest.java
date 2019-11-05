@@ -92,12 +92,25 @@ class EventFactoryTest {
 
     @Test
     void build_shouldBuildCorrectArtist() {
-        // TODO
+        String aArtist = "aArtist";
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
+
+        List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
+
+        assertEquals(aArtist, events.get(0).getArtist());
     }
 
     @Test
     void build_shouldBuildCorrectArtists_whenThereAreMultipleEvents() {
-        // TODO
+        String aArtist = "aArtist";
+        String anotherArtist = "anotherArtist";
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
+        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), Activities.YOGA, anotherArtist);
+
+        List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
+
+        assertTrue(events.stream().anyMatch(event -> event.getArtist().equals(aArtist)));
+        assertTrue(events.stream().anyMatch(event -> event.getArtist().equals(anotherArtist)));
     }
 
     @Test
