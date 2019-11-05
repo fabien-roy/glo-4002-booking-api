@@ -46,28 +46,32 @@ public class InMemoryTripRepository implements TripRepository {
 	}
 
 	private void addPassenger(Passenger passenger, List<Trip> trips, ShuttleCategories shuttleCategory, LocalDate tripDate) {
-		Trip trip = getNextAvailableTrip(shuttleCategory, tripDate, trips);
+		Trip trip = getNextAvailableTrip(trips, shuttleCategory, tripDate);
 
 		trip.addPassenger(passenger);
 	}
 
-	private Trip getNextAvailableTrip(ShuttleCategories shuttleCategory, LocalDate tripDate, List<Trip> tripList) {
+	private Trip getNextAvailableTrip(List<Trip> trips, ShuttleCategories shuttleCategory, LocalDate tripDate) {
 		Trip nextTrip;
-		List<Trip> departuresOnDate = tripList
-				.stream()
-				.filter(trip -> trip.getTripDate().equals(tripDate))
-				.filter(trip -> trip.getShuttleCategory().equals(shuttleCategory))
-				.filter(trip -> !trip.isFull())
-				.collect(Collectors.toList());
+		List<Trip> departuresOnDate = getAvailableTrips(trips, shuttleCategory, tripDate);
 
 		if (departuresOnDate.isEmpty()) {
 			Shuttle departureShuttle = shuttleFactory.build(shuttleCategory);
 			nextTrip = new Trip(tripDate, departureShuttle);
-			tripList.add(nextTrip);
+			trips.add(nextTrip);
 		} else {
 		    nextTrip = departuresOnDate.get(0);
 		}
 
 		return nextTrip;
+	}
+
+	private List<Trip> getAvailableTrips(List<Trip> trips, ShuttleCategories category, LocalDate tripDate) {
+		return trips
+				.stream()
+				.filter(trip -> trip.getTripDate().equals(tripDate))
+				.filter(trip -> trip.getShuttleCategory().equals(category))
+				.filter(trip -> !trip.isFull())
+				.collect(Collectors.toList());
 	}
 }
