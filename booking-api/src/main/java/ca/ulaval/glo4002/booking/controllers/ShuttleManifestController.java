@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
+import ca.ulaval.glo4002.booking.dto.shuttles.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;

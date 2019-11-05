@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import org.springframework.http.HttpStatus;
 
 import java.time.format.DateTimeFormatter;

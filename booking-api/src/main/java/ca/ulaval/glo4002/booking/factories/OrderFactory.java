@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
 

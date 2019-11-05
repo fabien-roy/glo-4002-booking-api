@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.PassBundleDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;

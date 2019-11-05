@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.services.OrderService;

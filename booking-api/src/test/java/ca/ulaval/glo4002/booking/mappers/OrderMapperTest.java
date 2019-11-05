@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

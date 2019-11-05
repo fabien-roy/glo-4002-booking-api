@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domain;
+package ca.ulaval.glo4002.booking.domain.events;
 
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 

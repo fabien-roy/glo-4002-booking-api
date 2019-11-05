@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;

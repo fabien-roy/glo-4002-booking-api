@@ -4,8 +4,8 @@ import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;

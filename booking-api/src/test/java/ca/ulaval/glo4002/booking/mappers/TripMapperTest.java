@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +11,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
-import ca.ulaval.glo4002.booking.dto.TripDto;
+import ca.ulaval.glo4002.booking.dto.shuttles.TripDto;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 class TripMapperTest {

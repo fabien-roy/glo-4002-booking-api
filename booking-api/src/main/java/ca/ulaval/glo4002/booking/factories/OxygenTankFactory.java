@@ -7,7 +7,7 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenDate;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
 

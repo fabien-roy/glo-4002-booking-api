@@ -5,7 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
-import ca.ulaval.glo4002.booking.dto.TripDto;
+import ca.ulaval.glo4002.booking.dto.shuttles.TripDto;
 
 public class TripMapper {
 	

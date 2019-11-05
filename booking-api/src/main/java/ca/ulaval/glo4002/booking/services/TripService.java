@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
@@ -9,7 +9,6 @@ import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 
 import javax.inject.Inject;
-import java.time.LocalDate;
 import java.util.List;
 
 public class TripService {

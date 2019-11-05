@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.mappers;
 
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.dto.PassDto;
+import ca.ulaval.glo4002.booking.dto.passes.PassDto;
 
 import java.util.ArrayList;
 import java.util.List;

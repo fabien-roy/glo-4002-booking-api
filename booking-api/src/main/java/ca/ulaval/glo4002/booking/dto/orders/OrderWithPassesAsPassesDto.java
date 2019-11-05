@@ -1,4 +1,6 @@
-package ca.ulaval.glo4002.booking.dto;
+package ca.ulaval.glo4002.booking.dto.orders;
+
+import ca.ulaval.glo4002.booking.dto.passes.PassDto;
 
 import java.util.List;
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
+import ca.ulaval.glo4002.booking.dto.shuttles.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 
 class ShuttleManifestControllerTest {

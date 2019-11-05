@@ -2,11 +2,12 @@ package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.dto.*;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
+import ca.ulaval.glo4002.booking.dto.shuttles.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;

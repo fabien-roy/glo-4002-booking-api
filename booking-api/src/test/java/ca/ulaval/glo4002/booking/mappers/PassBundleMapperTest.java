@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.mappers;
 
-import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.*;
-import ca.ulaval.glo4002.booking.dto.PassDto;
+import ca.ulaval.glo4002.booking.dto.passes.PassDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;

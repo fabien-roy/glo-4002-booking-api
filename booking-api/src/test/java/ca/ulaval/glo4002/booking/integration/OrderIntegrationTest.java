@@ -3,14 +3,13 @@ package ca.ulaval.glo4002.booking.integration;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.dto.ErrorDto;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.dto.PassBundleDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
@@ -34,7 +33,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 

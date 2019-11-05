@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NebulaPr
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.dto.PassBundleDto;
+import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
