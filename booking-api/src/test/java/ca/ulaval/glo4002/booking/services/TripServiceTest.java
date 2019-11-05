@@ -113,24 +113,24 @@ class TripServiceTest {
     }
 
     @Test
-    void orderAll_shouldAddPassengerToDeparturesOfStartDate_whenPassHasNoEventDate() {
+    void orderAll_shouldAddPassengerToDeparturesOfEndDate_whenPassHasNoEventDate() {
         PassCategories category = PassCategories.SUPERNOVA;
         Pass aPass = new Pass(mock(Number.class), mock(Money.class));
         List<Pass> somePasses = Collections.singletonList(aPass);
 
         service.orderAll(category, somePasses);
 
-        verify(repository).addPassengerToDepartures(any(), any(), eq(EventDate.START_DATE));
+        verify(repository).addPassengerToDepartures(any(), any(), eq(EventDate.END_DATE));
     }
 
     @Test
-    void orderAll_shouldAddPassengerToArrivalsOfEndDate_whenPassHasNoEventDate() {
+    void orderAll_shouldAddPassengerToArrivalsOfStartDate_whenPassHasNoEventDate() {
         PassCategories category = PassCategories.SUPERNOVA;
         Pass aPass = new Pass(mock(Number.class), mock(Money.class));
         List<Pass> somePasses = Collections.singletonList(aPass);
 
         service.orderAll(category, somePasses);
 
-        verify(repository).addPassengerToArrivals(any(), any(), eq(EventDate.END_DATE));
+        verify(repository).addPassengerToArrivals(any(), any(), eq(EventDate.START_DATE));
     }
 }

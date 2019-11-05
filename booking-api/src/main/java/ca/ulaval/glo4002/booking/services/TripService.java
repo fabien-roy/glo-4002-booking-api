@@ -38,12 +38,12 @@ public class TripService {
     }
 
     private void orderForEventDate(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {
-        repository.addPassengerToDepartures(passenger, category, tripDate);
         repository.addPassengerToArrivals(passenger, category, tripDate);
+        repository.addPassengerToDepartures(passenger, category, tripDate);
     }
 
     private void orderForFullFestival(Passenger passenger, ShuttleCategories category) {
-        repository.addPassengerToDepartures(passenger, category, EventDate.START_DATE);
-        repository.addPassengerToArrivals(passenger, category, EventDate.END_DATE);
+        repository.addPassengerToArrivals(passenger, category, EventDate.START_DATE);
+        repository.addPassengerToDepartures(passenger, category, EventDate.END_DATE);
     }
 }
