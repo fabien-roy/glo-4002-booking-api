@@ -139,7 +139,11 @@ class EventFactoryTest {
 
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsDuplicate() {
-        // TODO
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        ProgramEventDto aEventDto = buildEventDto(aEventDate, Activities.YOGA, "aArtist");
+        ProgramEventDto anotherEventDto = buildEventDto(aEventDate, Activities.YOGA, "anotherArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Arrays.asList(aEventDto, anotherEventDto)));
     }
 
     @Test
@@ -171,13 +175,27 @@ class EventFactoryTest {
     }
 
     @Test
+    void build_shouldThrowInvalidProgramException_whenAmIsAbsent() {
+        // TODO
+    }
+
+    @Test
     void build_shouldThrowInvalidProgramException_whenPmIsActivity() {
         // TODO
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenArtistIsDuplicate() {
+    void build_shouldThrowInvalidProgramException_whenPmIsAbsent() {
         // TODO
+    }
+
+    @Test
+    void build_shouldThrowInvalidProgramException_whenArtistIsDuplicate() {
+        String aArtist = "aArtist";
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
+        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Arrays.asList(aEventDto, anotherEventDto)));
     }
 
     private ProgramEventDto buildEventDto(EventDate eventDate, Activities activity, String artist) {
