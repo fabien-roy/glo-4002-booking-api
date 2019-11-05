@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.domain.trip;
+package ca.ulaval.glo4002.booking.domain.shuttles;
 
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.enums.PassCategories;

@@ -7,17 +7,15 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 
+import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
-import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 
 class TripTest {

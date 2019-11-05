@@ -1,13 +1,11 @@
-package ca.ulaval.glo4002.booking.domain.trip;
+package ca.ulaval.glo4002.booking.domain.shuttles;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
-import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
 
 public class Trip {
 	

@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ca.ulaval.glo4002.booking.domain.EventDate;
-import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.trip.Trip;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class Shuttle {

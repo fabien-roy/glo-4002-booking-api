@@ -16,7 +16,6 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.trip.Trip;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class ShuttleTest {

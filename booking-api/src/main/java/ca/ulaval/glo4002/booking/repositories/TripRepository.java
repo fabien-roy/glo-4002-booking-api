@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.trip.Passenger;
-import ca.ulaval.glo4002.booking.domain.trip.Trip;
+import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 import java.time.LocalDate;
