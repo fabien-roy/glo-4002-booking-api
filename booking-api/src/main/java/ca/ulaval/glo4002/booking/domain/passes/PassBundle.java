@@ -40,6 +40,4 @@ public class PassBundle {
     public Money getPricePerOption(PassOptions option) {
         return category.getPricePerOption(option);
     }
-
-    // TODO : ACP : GetEventDates (with consideration for package)
 }
