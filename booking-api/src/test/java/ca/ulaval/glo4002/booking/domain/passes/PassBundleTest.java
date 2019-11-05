@@ -27,7 +27,7 @@ class PassBundleTest {
 
         PassBundle passBundle = new PassBundle(
                 passes,
-                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassCategory(PassCategories.SUPERNOVA, null),
                 PassOptions.PACKAGE
         );
 

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.EventDate;
-import ca.ulaval.glo4002.booking.domain.trip.Trip;
+import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
 import ca.ulaval.glo4002.booking.dto.TripDto;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
@@ -23,15 +23,15 @@ class TripMapperTest {
     private static TripMapper subject;
     private Trip aTrip;
     private Trip anotherTrip;
-    private static LocalDate aTripDate;
-    private static LocalDate anotherTripDate;
+    private static EventDate aTripDate;
+    private static EventDate anotherTripDate;
     private static ShuttleCategories aShuttleCategory;
     
     @BeforeAll
     public static void setUpSuject() {
     	subject = new TripMapper();
-    	aTripDate = EventDate.START_DATE;
-    	anotherTripDate = EventDate.START_DATE.plusDays(1);
+    	aTripDate = new EventDate(EventDate.START_DATE);
+    	anotherTripDate = new EventDate(EventDate.START_DATE.plusDays(1));
     	aShuttleCategory = ShuttleCategories.ET_SPACESHIP;
     }
     
@@ -59,7 +59,7 @@ class TripMapperTest {
     	List<TripDto> tripDtos = subject.toDto(someTrips);
     	
     	assertEquals(someTrips.size(), tripDtos.size());
-    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getTripDate());
+    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getDate());
     	assertEquals(aTrip.getShuttleCategory().toString(), aShuttleCategory.toString());
     }
     
@@ -71,9 +71,9 @@ class TripMapperTest {
     	List<TripDto> tripDtos = subject.toDto(someTrips);
     	
     	assertEquals(someTrips.size(), tripDtos.size());
-    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getTripDate());
+    	assertEquals(aTrip.getTripDate().toString(), tripDtos.get(0).getDate());
     	assertEquals(aTrip.getShuttleCategory().toString(), aShuttleCategory.toString());
-    	assertEquals(anotherTrip.getTripDate().toString(), tripDtos.get(1).getTripDate());
+    	assertEquals(anotherTrip.getTripDate().toString(), tripDtos.get(1).getDate());
     	assertEquals(anotherTrip.getShuttleCategory().toString(), aShuttleCategory.toString());
     }
 }

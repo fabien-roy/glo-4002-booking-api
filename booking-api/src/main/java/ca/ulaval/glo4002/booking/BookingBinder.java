@@ -21,6 +21,7 @@ import ca.ulaval.glo4002.booking.services.OxygenTankInventoryService;
 import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
+import ca.ulaval.glo4002.booking.services.TripService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.inject.Singleton;
@@ -30,8 +31,8 @@ public class BookingBinder extends AbstractBinder {
     @Override
     protected void configure() {
         bindGenerators();
-        bindRepositories();
         bindFactories();
+        bindRepositories();
         bindServices();
         bindMappers();
         bindControllers();
@@ -39,12 +40,6 @@ public class BookingBinder extends AbstractBinder {
 
     private void bindGenerators() {
         bindAsContract(NumberGenerator.class);
-    }
-
-    private void bindRepositories() {
-        bind(InMemoryOxygenTankInventoryRepository.class).to(OxygenTankInventoryRepository.class);
-        bind(InMemoryTripRepository.class).to(TripRepository.class);
-        bind(InMemoryOrderRepository.class).to(OrderRepository.class);
     }
 
     private void bindFactories() {
@@ -55,8 +50,15 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OrderFactory.class);
     }
 
+    private void bindRepositories() {
+        bind(InMemoryOxygenTankInventoryRepository.class).to(OxygenTankInventoryRepository.class).in(Singleton.class);
+        bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
+        bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
+    }
+
     private void bindServices() {
         bindAsContract(OxygenTankInventoryService.class);
+        bindAsContract(TripService.class);
         bindAsContract(OrderService.class);
         bindAsContract(ShuttleManifestService.class);
     }

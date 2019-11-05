@@ -1,22 +1,23 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 
 import java.util.Map;
 
 public class PassCategory {
 
-    private String name;
+    private PassCategories category;
     private Map<PassOptions, Money> pricePerOption;
 
-    public PassCategory(String name, Map<PassOptions, Money> pricePerOption) {
-        this.name = name;
+    public PassCategory(PassCategories category, Map<PassOptions, Money> pricePerOption) {
+        this.category = category;
         this.pricePerOption = pricePerOption;
     }
 
-    public String getName() {
-        return name;
+    public PassCategories getCategory() {
+        return category;
     }
 
     public Money getPricePerOption(PassOptions option) {

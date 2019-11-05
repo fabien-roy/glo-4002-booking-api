@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ca.ulaval.glo4002.booking.domain.shuttles.ShuttleManifest;
+import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
 import ca.ulaval.glo4002.booking.dto.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.dto.TripDto;
 
@@ -17,10 +17,10 @@ public class ShuttleManifestMapper {
 		this.tripMapper = tripMapper;
 	}
 	
-	public ShuttleManifestDto toDto(ShuttleManifest shuttleManifest) {
-		List<TripDto> arrivals = tripMapper.toDto(shuttleManifest.getArrivals());
-		List<TripDto> departures = tripMapper.toDto(shuttleManifest.getDepartures());
+	public ShuttleManifestDto toDto(List<Trip> arrivals, List<Trip> departures) {
+		List<TripDto> arrivalDtos = tripMapper.toDto(arrivals);
+		List<TripDto> departureDtos = tripMapper.toDto(departures);
 		
-		return new ShuttleManifestDto(arrivals, departures);
+		return new ShuttleManifestDto(arrivalDtos, departureDtos);
 	}
 }

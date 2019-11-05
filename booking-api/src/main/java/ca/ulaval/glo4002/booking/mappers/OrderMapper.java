@@ -1,15 +1,14 @@
 package ca.ulaval.glo4002.booking.mappers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+
+import javax.inject.Inject;
+
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.dto.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.dto.PassDto;
-
-import javax.inject.Inject;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Locale;
 
 public class OrderMapper {
 

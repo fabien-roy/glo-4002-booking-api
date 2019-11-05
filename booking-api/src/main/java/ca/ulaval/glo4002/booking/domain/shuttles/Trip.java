@@ -1,27 +1,26 @@
-package ca.ulaval.glo4002.booking.domain.trip;
+package ca.ulaval.glo4002.booking.domain.shuttles;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
-import ca.ulaval.glo4002.booking.exceptions.shuttles.ShuttleFullException;
 
 public class Trip {
 	
-	private LocalDate date;
+	private EventDate date;
 	private Shuttle shuttle;
 	private List<Passenger> passengers;
 	
-	public Trip(LocalDate date, Shuttle shuttle) {
+	public Trip(EventDate date, Shuttle shuttle) {
 		this.date = date;
 		this.shuttle = shuttle;
 		this.passengers = new ArrayList<>();
 	}
 
-	public LocalDate getTripDate() {
+	public EventDate getTripDate() {
 		return date;
 	}
 	

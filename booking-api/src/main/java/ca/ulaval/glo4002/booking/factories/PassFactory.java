@@ -28,7 +28,7 @@ public class PassFactory {
         } else {
             eventDates.forEach(eventDate -> {
                 EventDate builtEventDate = buildEventDate(eventDate);
-                Pass pass = new Pass(numberGenerator.generate(), builtEventDate, passPrice);
+                Pass pass = new Pass(numberGenerator.generate(), passPrice, builtEventDate);
                 passes.add(pass);
             });
         }

@@ -88,18 +88,18 @@ public class PassBundleFactory {
             case SUPERNOVA:
                 pricePerOption.put(PassOptions.PACKAGE, SUPERNOVA_PACKAGE_PRICE);
                 pricePerOption.put(PassOptions.SINGLE_PASS, SUPERNOVA_SINGLE_PASS_PRICE);
-                passCategory = new PassCategory(PassCategories.SUPERNOVA.toString(), pricePerOption);
+                passCategory = new PassCategory(PassCategories.SUPERNOVA, pricePerOption);
                 break;
             case SUPERGIANT:
                 pricePerOption.put(PassOptions.PACKAGE, SUPERGIANT_PACKAGE_PRICE);
                 pricePerOption.put(PassOptions.SINGLE_PASS, SUPERGIANT_SINGLE_PASS_PRICE);
-                passCategory = new PassCategory(PassCategories.SUPERGIANT.toString(), pricePerOption);
+                passCategory = new PassCategory(PassCategories.SUPERGIANT, pricePerOption);
                 break;
             default:
             case NEBULA:
                 pricePerOption.put(PassOptions.PACKAGE, NEBULA_PACKAGE_PRICE);
                 pricePerOption.put(PassOptions.SINGLE_PASS, NEBULA_SINGLE_PASS_PRICE);
-                passCategory = new PassCategory(PassCategories.NEBULA.toString(), pricePerOption);
+                passCategory = new PassCategory(PassCategories.NEBULA, pricePerOption);
                 break;
         }
 

@@ -34,14 +34,16 @@ class OrderServiceTest {
     private OrderService service;
     private OrderRepository repository;
     private OrderFactory factory;
+    private TripService tripService;
 
     @BeforeEach
     void setUpService() {
         repository = mock(OrderRepository.class);
         factory = mock(OrderFactory.class);
         OrderMapper mapper = new OrderMapper(new PassBundleMapper());
+        tripService = mock(TripService.class);
 
-        service = new OrderService(repository, factory, mapper);
+        service = new OrderService(repository, factory, mapper, tripService);
     }
 
     @Test
@@ -54,11 +56,34 @@ class OrderServiceTest {
         );
         Order order = mock(Order.class);
         when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
+        PassBundle passBundle = mock(PassBundle.class);
+        when(passBundle.getCategory()).thenReturn(PassCategories.SUPERNOVA);
+        when(order.getPassBundle()).thenReturn(passBundle);
         when(factory.build(any())).thenReturn(order);
 
         service.order(orderDto);
 
         verify(repository).addOrder(any());
+    }
+
+    @Test
+    void order_shouldOrderTrips() {
+        String aVendorCode = "aVendorCode";
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                "aOrderDate",
+                aVendorCode,
+                mock(PassBundleDto.class)
+        );
+        Order order = mock(Order.class);
+        when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
+        PassBundle passBundle = mock(PassBundle.class);
+        when(passBundle.getCategory()).thenReturn(PassCategories.SUPERNOVA);
+        when(order.getPassBundle()).thenReturn(passBundle);
+        when(factory.build(any())).thenReturn(order);
+
+        service.order(orderDto);
+
+        verify(tripService).orderAll(any(), any());
     }
 
     @Test
@@ -69,7 +94,7 @@ class OrderServiceTest {
         when(pass.getPrice()).thenReturn(new Money(new BigDecimal(0.0)));
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
-                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassCategory(PassCategories.SUPERNOVA, null),
                 PassOptions.PACKAGE
         );
         Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passBundle);

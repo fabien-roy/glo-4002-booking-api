@@ -19,11 +19,15 @@ import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
+import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
+import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -49,18 +53,21 @@ public class OrderIntegrationTest {
 
     @BeforeEach
     public void setUpController() {
-        orderRepository = new InMemoryOrderRepository();
-
         NumberGenerator numberGenerator = new NumberGenerator();
 
         PassFactory passFactory = new PassFactory(numberGenerator);
         passBundleFactory = new PassBundleFactory(passFactory);
+        ShuttleFactory shuttleFactory = new ShuttleFactory();
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
+
+        TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
+        orderRepository = new InMemoryOrderRepository();
 
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper);
+        TripService tripService = new TripService(tripRepository, shuttleFactory);
+        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService);
 
         controller = new OrderController(orderService);
     }

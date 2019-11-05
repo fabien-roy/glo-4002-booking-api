@@ -1,19 +1,23 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.trip.Trip;
+import ca.ulaval.glo4002.booking.domain.EventDate;
+import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface TripRepository {
 
+    List<Trip> getArrivals();
+    
     List<Trip> getDepartures();
 
-    List<Trip> getArrivals();
+    List<Trip> getDeparturesForDate(EventDate tripDate);
 
-	void addPassenger(ShuttleCategories shuttleCategory, LocalDate eventDate, Number passNumber);
+    List<Trip> getArrivalsForDate(EventDate tripDate);
 
-    void addPassenger(ShuttleCategories shuttleCategory, LocalDate departureDate, LocalDate arrivalDate, Number passNumber);
+	void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, EventDate tripDate);
+
+    void addPassengerToArrivals(Passenger passenger, ShuttleCategories category, EventDate tripDate);
 }

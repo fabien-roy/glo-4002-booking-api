@@ -26,6 +26,20 @@ public class EventDate {
         return value.toString();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof EventDate)) return false;
+
+        EventDate otherEventDate = (EventDate) other;
+
+        return this.value.equals(otherEventDate.getValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
     private void validateEventDate(LocalDate value) {
         if (value.isBefore(START_DATE) || value.isAfter(END_DATE)) {
             throw new InvalidEventDateException();
