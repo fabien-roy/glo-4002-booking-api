@@ -24,7 +24,7 @@ public class ProgramController {
     }
 
     @GET
-    @Path("/artists/")
+    @Path("/artists")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getArtists(@QueryParam("orderBy") String orderBy) {
         ArtistListDto artistListDto;
