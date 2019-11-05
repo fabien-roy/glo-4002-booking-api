@@ -51,10 +51,9 @@ class InMemoryOrderRepositoryTest {
         Order aOrder = new Order(anOrderNumber, aOrderDate, aPassBundle);
         repository.addOrder(aOrder);
 
-        Optional<Order> foundOrder = repository.getByOrderNumber(anOrderNumber);
+        Order foundOrder = repository.getByOrderNumber(anOrderNumber);
 
-        assertTrue(foundOrder.isPresent());
-        assertEquals(anOrderNumber, foundOrder.get().getOrderNumber());
+        assertEquals(anOrderNumber, foundOrder.getOrderNumber());
     }
 
     @Test
@@ -68,12 +67,10 @@ class InMemoryOrderRepositoryTest {
         repository.addOrder(aOrder);
         repository.addOrder(anotherOrder);
 
-        Optional<Order> foundOrder = repository.getByOrderNumber(anOrderNumber);
-        Optional<Order> otherFoundOrder = repository.getByOrderNumber(anotherOrderNumber);
+        Order foundOrder = repository.getByOrderNumber(anOrderNumber);
+        Order otherFoundOrder = repository.getByOrderNumber(anotherOrderNumber);
 
-        assertTrue(foundOrder.isPresent());
-        assertTrue(otherFoundOrder.isPresent());
-        assertEquals(anOrderNumber, foundOrder.get().getOrderNumber());
-        assertEquals(anotherOrderNumber, otherFoundOrder.get().getOrderNumber());
+        assertEquals(anOrderNumber, foundOrder.getOrderNumber());
+        assertEquals(anotherOrderNumber, otherFoundOrder.getOrderNumber());
     }
 }

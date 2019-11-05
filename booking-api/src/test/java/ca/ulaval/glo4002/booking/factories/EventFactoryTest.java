@@ -1,10 +1,13 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.Artist;
 import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
+import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,14 +18,19 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class EventFactoryTest {
 
     private EventFactory eventFactory;
+    private ArtistRepository artistRepository;
 
     @BeforeEach
     void setUpFactory() {
-        this.eventFactory = new EventFactory();
+        artistRepository = mock(ArtistRepository.class);
+
+        this.eventFactory = new EventFactory(artistRepository);
     }
 
     @Test
@@ -92,25 +100,31 @@ class EventFactoryTest {
 
     @Test
     void build_shouldBuildCorrectArtist() {
-        String aArtist = "aArtist";
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
+        String aArtistName = "aArtist";
+        Artist aArtist = new Artist(aArtistName, mock(Money.class), 1);
+        when(artistRepository.getByName(aArtistName)).thenReturn(aArtist);
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtistName);
 
         List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
 
-        assertEquals(aArtist, events.get(0).getArtist());
+        assertEquals(aArtistName, events.get(0).getArtistName());
     }
 
     @Test
     void build_shouldBuildCorrectArtists_whenThereAreMultipleEvents() {
-        String aArtist = "aArtist";
-        String anotherArtist = "anotherArtist";
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
-        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), Activities.YOGA, anotherArtist);
+        String aArtistName = "aArtist";
+        String anotherArtistName = "anotherArtist";
+        Artist aArtist = new Artist(aArtistName, mock(Money.class), 1);
+        Artist anotherArtist = new Artist(anotherArtistName, mock(Money.class), 1);
+        when(artistRepository.getByName(aArtistName)).thenReturn(aArtist);
+        when(artistRepository.getByName(anotherArtistName)).thenReturn(anotherArtist);
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtistName);
+        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), Activities.YOGA, anotherArtistName);
 
         List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
 
-        assertTrue(events.stream().anyMatch(event -> event.getArtist().equals(aArtist)));
-        assertTrue(events.stream().anyMatch(event -> event.getArtist().equals(anotherArtist)));
+        assertTrue(events.stream().anyMatch(event -> event.getArtistName().equals(aArtistName)));
+        assertTrue(events.stream().anyMatch(event -> event.getArtistName().equals(anotherArtistName)));
     }
 
     @Test

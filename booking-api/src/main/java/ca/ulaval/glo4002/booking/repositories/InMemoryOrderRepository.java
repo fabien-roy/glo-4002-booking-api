@@ -16,14 +16,14 @@ public class InMemoryOrderRepository implements OrderRepository {
         orders = new ArrayList<>();
     }
 
-    public Optional<Order> getByOrderNumber(OrderNumber orderNumber) {
+    public Order getByOrderNumber(OrderNumber orderNumber) {
         Optional<Order> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber)).findAny();
 
         if (!foundOrder.isPresent()) {
             throw new OrderNotFoundException(orderNumber.toString());
         }
 
-        return foundOrder;
+        return foundOrder.get();
     }
 
     public void addOrder(Order order) {
