@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.booking.repositories;
 
 import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.domain.passes.Pass;
+import ca.ulaval.glo4002.booking.domain.trip.Passenger;
 import ca.ulaval.glo4002.booking.domain.trip.Trip;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
@@ -22,165 +24,154 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassenger_shouldAddNewDepartureTrip_whenThereIsNone() {
+	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
+		Passenger aPassenger = new Passenger(new Number(1L));
 
-	    repository.addPassenger(aCategory, aTripDate, aPassNumber);
+	    repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 
 	    assertEquals(1, repository.getDepartures().size());
 	}
 
 	@Test
-	void addPassenger_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
+	void addPassengerToDepartures_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
-		Number anotherPassNumber = new Number(1L);
-		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+		Passenger aPassenger = new Passenger(new Number(1L));
+		Passenger anotherPassenger = new Passenger(new Number(2L));
+		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 
-		repository.addPassenger(aCategory, aTripDate, anotherPassNumber);
+		repository.addPassengerToDepartures(anotherPassenger, aCategory, aTripDate);
 
 		assertEquals(1, repository.getDepartures().size());
 	}
 
 	@Test
-	void addPassenger_shouldAddNewDepartureTrip_whenTripIsFull() {
+	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
-		Number anotherPassNumber = new Number(1L);
-		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+		Passenger aPassenger = new Passenger(new Number(1L));
+		Passenger anotherPassenger = new Passenger(new Number(2L));
 
-		repository.addPassenger(aCategory, aTripDate, anotherPassNumber);
+		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
+		repository.addPassengerToDepartures(anotherPassenger, aCategory, aTripDate);
 
 		assertEquals(2, repository.getDepartures().size());
 	}
 
 	@Test
-	void addPassenger_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
+	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
-		Number anotherPassNumber = new Number(1L);
+		Passenger aPassenger = new Passenger(new Number(1L));
+		Passenger anotherPassenger = new Passenger(new Number(2L));
 
-		repository.addPassenger(aCategory, aTripDate, aPassNumber);
-		repository.addPassenger(anotherCategory, aTripDate, anotherPassNumber);
+		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
+		repository.addPassengerToDepartures(anotherPassenger, anotherCategory, aTripDate);
 
 		assertEquals(2, repository.getDepartures().size());
 	}
 
 	@Test
-	void addPassenger_shouldAddTripDate_toDepartureTrips() {
+	void addPassengerToDepartures_shouldAddTripDate_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		LocalDate expectedTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
+		Passenger aPassenger = new Passenger(new Number(1L));
 
-		repository.addPassenger(aCategory, expectedTripDate, aPassNumber);
+		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
 		Trip trip = repository.getDepartures().get(0);
 
 		assertEquals(expectedTripDate, trip.getTripDate());
 	}
 
 	@Test
-	void addPassenger_shouldAddPassenger_toDepartureTrips() {
+	void addPassengerToDepartures_shouldAddPassenger_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		LocalDate aTripDate = EventDate.START_DATE;
 		Number expectedPassNumber = new Number(1L);
+		Passenger aPassenger = new Passenger(expectedPassNumber);
 
-		repository.addPassenger(aCategory, aTripDate, expectedPassNumber);
+		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 		Number passNumber = repository.getDepartures().get(0).getPassengersPassNumbers().get(0);
 
 		assertEquals(expectedPassNumber, passNumber);
 	}
 
 	@Test
-	void addPassenger_shouldAddNewArrivalTrip_whenThereIsNone() {
+	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
+		Passenger aPassenger = new Passenger(new Number(1L));
 
-		repository.addPassenger(aCategory, aTripDate, aPassNumber);
+		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 
 		assertEquals(1, repository.getArrivals().size());
 	}
 
 	@Test
-	void addPassenger_shouldAddTripDate_toArrivalTrips() {
+	void addPassengerToArrivals_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
+		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Passenger aPassenger = new Passenger(new Number(1L));
+		Passenger anotherPassenger = new Passenger(new Number(2L));
+		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
+
+		repository.addPassengerToArrivals(anotherPassenger, aCategory, aTripDate);
+
+		assertEquals(1, repository.getArrivals().size());
+	}
+
+	@Test
+	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsFull() {
+		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Passenger aPassenger = new Passenger(new Number(1L));
+		Passenger anotherPassenger = new Passenger(new Number(2L));
+
+		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
+		repository.addPassengerToArrivals(anotherPassenger, aCategory, aTripDate);
+
+		assertEquals(2, repository.getArrivals().size());
+	}
+
+	@Test
+	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
+		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
+		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
+		LocalDate aTripDate = EventDate.START_DATE;
+		Passenger aPassenger = new Passenger(new Number(1L));
+		Passenger anotherPassenger = new Passenger(new Number(2L));
+
+		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
+		repository.addPassengerToArrivals(anotherPassenger, anotherCategory, aTripDate);
+
+		assertEquals(2, repository.getArrivals().size());
+	}
+
+	@Test
+	void addPassengerToArrivals_shouldAddTripDate_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		LocalDate expectedTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
+		Passenger aPassenger = new Passenger(new Number(1L));
 
-		repository.addPassenger(aCategory, expectedTripDate, aPassNumber);
+		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
 		Trip trip = repository.getArrivals().get(0);
 
 		assertEquals(expectedTripDate, trip.getTripDate());
 	}
 
 	@Test
-	void addPassenger_shouldAddPassenger_toArrivalTrips() {
+	void addPassengerToArrivals_shouldAddPassenger_toDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		LocalDate aTripDate = EventDate.START_DATE;
 		Number expectedPassNumber = new Number(1L);
+		Passenger aPassenger = new Passenger(expectedPassNumber);
 
-		repository.addPassenger(aCategory, aTripDate, expectedPassNumber);
+		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 		Number passNumber = repository.getArrivals().get(0).getPassengersPassNumbers().get(0);
 
 		assertEquals(expectedPassNumber, passNumber);
 	}
-
-	@Test
-	void addPassenger_shouldAddToExistingArrivalTrip_whenTripIsNotFull() {
-		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
-		Number anotherPassNumber = new Number(1L);
-
-		repository.addPassenger(aCategory, aTripDate, aPassNumber);
-		repository.addPassenger(aCategory, aTripDate, anotherPassNumber);
-
-		assertEquals(1, repository.getArrivals().size());
-	}
-
-	@Test
-	void addPassenger_shouldAddNewArrivalTrip_whenTripIsFull() {
-		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
-		Number anotherPassNumber = new Number(1L);
-
-		repository.addPassenger(aCategory, aTripDate, aPassNumber);
-		repository.addPassenger(aCategory, aTripDate, anotherPassNumber);
-
-		assertEquals(2, repository.getArrivals().size());
-	}
-
-	@Test
-	void addPassenger_shouldAddNewArrivalTrip_whenTripIsNotSameCategory() {
-		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
-		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		LocalDate aTripDate = EventDate.START_DATE;
-		Number aPassNumber = new Number(1L);
-		Number anotherPassNumber = new Number(1L);
-
-		repository.addPassenger(aCategory, aTripDate, aPassNumber);
-		repository.addPassenger(anotherCategory, aTripDate, anotherPassNumber);
-
-		assertEquals(2, repository.getArrivals().size());
-	}
-
-	@Test
-    void whenPassengerAddedWithDepartureAndArrivalDates_thenDatesAddedToRightLists(){
-	    ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-	    LocalDate aDepartureDate = EventDate.START_DATE;
-	    LocalDate anArrivalDate = EventDate.END_DATE;
-	    Number aPassNumber = new Number(1L);
-
-	    repository.addPassenger(aCategory, aDepartureDate, anArrivalDate, aPassNumber);
-
-	    assertEquals(1, repository.getDepartures().size());
-	    assertEquals(1, repository.getArrivals().size());
-    }
 }

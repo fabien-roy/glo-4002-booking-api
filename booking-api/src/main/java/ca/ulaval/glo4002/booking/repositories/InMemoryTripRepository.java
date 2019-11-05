@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.domain.trip.Passenger;
 import ca.ulaval.glo4002.booking.domain.trip.Trip;
@@ -37,25 +36,19 @@ public class InMemoryTripRepository implements TripRepository {
 	}
 
 	@Override
-	public void addPassenger(ShuttleCategories shuttleCategory, LocalDate tripDate, Number passNumber) {
-	    Trip departure = getNextAvailableTrip(shuttleCategory, tripDate, departures);
-	    Trip arrival = getNextAvailableTrip(shuttleCategory, tripDate, arrivals);
-
-		Passenger passenger = new Passenger(passNumber);
-
-		departure.addPassenger(passenger);
-		arrival.addPassenger(passenger);
+	public void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {
+		addPassenger(passenger, departures, category, tripDate);
 	}
 
 	@Override
-	public void addPassenger(ShuttleCategories shuttleCategory, LocalDate departureDate, LocalDate arrivalDate, Number passNumber){
-		Trip departure = getNextAvailableTrip(shuttleCategory, departureDate, departures);
-		Trip arrival = getNextAvailableTrip(shuttleCategory, arrivalDate, arrivals);
+	public void addPassengerToArrivals(Passenger passenger, ShuttleCategories category, LocalDate tripDate) {
+		addPassenger(passenger, arrivals, category, tripDate);
+	}
 
-		Passenger passenger = new Passenger(passNumber);
+	private void addPassenger(Passenger passenger, List<Trip> trips, ShuttleCategories shuttleCategory, LocalDate tripDate) {
+		Trip trip = getNextAvailableTrip(shuttleCategory, tripDate, trips);
 
-		departure.addPassenger(passenger);
-		arrival.addPassenger(passenger);
+		trip.addPassenger(passenger);
 	}
 
 	private Trip getNextAvailableTrip(ShuttleCategories shuttleCategory, LocalDate tripDate, List<Trip> tripList) {
