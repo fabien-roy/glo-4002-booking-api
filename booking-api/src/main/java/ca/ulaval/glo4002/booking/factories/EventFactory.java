@@ -7,8 +7,6 @@ import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +17,9 @@ public class EventFactory {
 
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
-            Event event = new Event(eventDate, Activities.YOGA);
+            Activities activity = Activities.get(eventDto.getAm());
+
+            Event event = new Event(eventDate, activity);
 
             events.add(event);
         });
