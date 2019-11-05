@@ -29,6 +29,16 @@ class OrderControllerTest {
     }
 
     @Test
+    void getByOrderNumber_shouldReturnBadRequest_whenBadRequest() {
+        String aOrderNumber = "aOrderNumber";
+        when(service.getByOrderNumber(any())).thenThrow(new InvalidFormatException());
+
+        ResponseEntity<?> response = controller.getByOrderNumber(aOrderNumber);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    }
+
+    @Test
     void getByOrderNumber_shouldReturnNotFound_whenOrderIsNotFound() {
         String aOrderNumber = "aOrderNumber";
         when(service.getByOrderNumber(any())).thenThrow(new OrderNotFoundException(aOrderNumber));

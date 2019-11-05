@@ -1,7 +1,10 @@
 package ca.ulaval.glo4002.booking.controllers;
 
+import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
 import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.services.ArtistService;
 import ca.ulaval.glo4002.booking.services.ProgramService;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +29,22 @@ public class ProgramController {
     @Path("/artists/}")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getArtists(@QueryParam("orderBy") String orderBy) {
-        // TODO : artistService.get(orderBy)
+        ArtistListDto artistListDto;
 
-        return null;
+        try {
+            artistListDto = artistService.getAll(orderBy);
+        } catch (BookingException exception) {
+            return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok().body(artistListDto);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> addOrder(ProgramDto programDto) {
+    public ResponseEntity<?> add(ProgramDto programDto) {
         // TODO : programService.add(programDto)
 
         return null;
