@@ -148,7 +148,9 @@ class EventFactoryTest {
 
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsAbsent() {
-        // TODO
+        ProgramEventDto aEventDto = new ProgramEventDto(null, Activities.YOGA.toString(), "aArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
     }
 
     @Test
@@ -176,7 +178,9 @@ class EventFactoryTest {
 
     @Test
     void build_shouldThrowInvalidProgramException_whenAmIsAbsent() {
-        // TODO
+        ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), null, "aArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
     }
 
     @Test
@@ -186,7 +190,9 @@ class EventFactoryTest {
 
     @Test
     void build_shouldThrowInvalidProgramException_whenPmIsAbsent() {
-        // TODO
+        ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), Activities.YOGA.toString(), null);
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
     }
 
     @Test

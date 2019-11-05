@@ -34,11 +34,17 @@ public class EventFactory {
 
     private void validateEventDates(List<ProgramEventDto> eventDtos) {
         List<String> eventDates = eventDtos.stream().map(ProgramEventDto::getEventDate).collect(Collectors.toList());
+
         validateAllDifferent(eventDates);
     }
 
     private void validateArtists(List<ProgramEventDto> eventDtos) {
+        boolean hasNull = eventDtos.stream().anyMatch(eventDto -> eventDto.getPm() == null);
+
+        if (hasNull) throw new InvalidProgramException();
+
         List<String> eventDates = eventDtos.stream().map(ProgramEventDto::getPm).collect(Collectors.toList());
+
         validateAllDifferent(eventDates);
     }
 
