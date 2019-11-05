@@ -16,11 +16,15 @@ import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.PassFactory;
 import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
+import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
+import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -45,18 +49,21 @@ public class PassIntegrationTest {
 
     @BeforeEach
     public void setUpController() {
-        orderRepository = new InMemoryOrderRepository();
-
         NumberGenerator numberGenerator = new NumberGenerator();
 
         PassFactory passFactory = new PassFactory(numberGenerator);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
+        ShuttleFactory shuttleFactory = new ShuttleFactory();
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
+
+        TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
+        orderRepository = new InMemoryOrderRepository();
 
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper);
+        TripService tripService = new TripService(tripRepository, shuttleFactory);
+        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService);
 
         controller = new OrderController(orderService);
     }
@@ -67,7 +74,7 @@ public class PassIntegrationTest {
         Pass pass = new Pass(new Number(1L), passPrice);
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
-                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassCategory(PassCategories.SUPERNOVA, null),
                 PassOptions.PACKAGE
         );
         Order order = new Order(
@@ -82,7 +89,7 @@ public class PassIntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
-        assertEquals(passBundle.getCategory().getName(), passDto.getPassCategory());
+        assertEquals(passBundle.getCategory().toString(), passDto.getPassCategory());
         assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
         assertNull(passDto.getEventDate());
     }
@@ -93,7 +100,7 @@ public class PassIntegrationTest {
         Pass pass = new Pass(new Number(1L), passPrice, new EventDate(EventDate.START_DATE));
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
-                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassCategory(PassCategories.SUPERNOVA, null),
                 PassOptions.SINGLE_PASS
         );
         Order order = new Order(
@@ -108,7 +115,7 @@ public class PassIntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
-        assertEquals(passBundle.getCategory().getName(), passDto.getPassCategory());
+        assertEquals(passBundle.getCategory().toString(), passDto.getPassCategory());
         assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
         assertEquals(pass.getEventDate().toString(), passDto.getEventDate());
     }
@@ -123,7 +130,7 @@ public class PassIntegrationTest {
         );
         PassBundle passBundle = new PassBundle(
                 Arrays.asList(aPass, anotherPass),
-                new PassCategory(PassCategories.SUPERNOVA.toString(), null),
+                new PassCategory(PassCategories.SUPERNOVA, null),
                 PassOptions.SINGLE_PASS
         );
         Order order = new Order(
@@ -139,11 +146,11 @@ public class PassIntegrationTest {
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(aPass.getPassNumber().getValue(), aPassDto.getPassNumber());
-        assertEquals(passBundle.getCategory().getName(), aPassDto.getPassCategory());
+        assertEquals(passBundle.getCategory().toString(), aPassDto.getPassCategory());
         assertEquals(passBundle.getOption().toString(), aPassDto.getPassOption());
         assertEquals(aPass.getEventDate().toString(), aPassDto.getEventDate());
         assertEquals(anotherPass.getPassNumber().getValue(), anotherPassDto.getPassNumber());
-        assertEquals(passBundle.getCategory().getName(), anotherPassDto.getPassCategory());
+        assertEquals(passBundle.getCategory().toString(), anotherPassDto.getPassCategory());
         assertEquals(passBundle.getOption().toString(), anotherPassDto.getPassOption());
         assertEquals(anotherPass.getEventDate().toString(), anotherPassDto.getEventDate());
     }

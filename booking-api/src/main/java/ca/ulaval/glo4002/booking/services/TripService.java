@@ -14,8 +14,8 @@ import java.util.List;
 
 public class TripService {
 
-    private TripRepository repository;
-    private ShuttleFactory factory;
+    private final TripRepository repository;
+    private final ShuttleFactory factory;
 
     @Inject
     public TripService(TripRepository repository, ShuttleFactory factory) {

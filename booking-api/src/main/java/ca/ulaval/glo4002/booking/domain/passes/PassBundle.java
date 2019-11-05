@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 
 import java.math.BigDecimal;
@@ -24,8 +25,8 @@ public class PassBundle {
         return passes;
     }
 
-    public PassCategory getCategory() {
-        return category;
+    public PassCategories getCategory() {
+        return category.getCategory();
     }
 
     public PassOptions getOption() {
@@ -34,6 +35,10 @@ public class PassBundle {
 
     public Money getPrice() {
         return price;
+    }
+
+    public Money getPricePerOption(PassOptions option) {
+        return category.getPricePerOption(option);
     }
 
     // TODO : ACP : GetEventDates (with consideration for package)

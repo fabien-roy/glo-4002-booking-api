@@ -61,7 +61,7 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(passBundle.getCategory().getName(), PassCategories.SUPERNOVA.toString());
+        assertEquals(PassCategories.SUPERNOVA, passBundle.getCategory());
     }
 
     @Test
@@ -72,7 +72,7 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(passBundle.getCategory().getName(), PassCategories.SUPERGIANT.toString());
+        assertEquals(PassCategories.SUPERGIANT, passBundle.getCategory());
     }
 
     @Test
@@ -83,7 +83,7 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(passBundle.getCategory().getName(), PassCategories.NEBULA.toString());
+        assertEquals(PassCategories.NEBULA, passBundle.getCategory());
     }
 
     @Test
@@ -94,8 +94,8 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(PassBundleFactory.SUPERNOVA_PACKAGE_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.PACKAGE));
-        assertEquals(PassBundleFactory.SUPERNOVA_SINGLE_PASS_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.SINGLE_PASS));
+        assertEquals(PassBundleFactory.SUPERNOVA_PACKAGE_PRICE, passBundle.getPricePerOption(PassOptions.PACKAGE));
+        assertEquals(PassBundleFactory.SUPERNOVA_SINGLE_PASS_PRICE, passBundle.getPricePerOption(PassOptions.SINGLE_PASS));
     }
 
     @Test
@@ -106,8 +106,8 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(PassBundleFactory.SUPERGIANT_PACKAGE_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.PACKAGE));
-        assertEquals(PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.SINGLE_PASS));
+        assertEquals(PassBundleFactory.SUPERGIANT_PACKAGE_PRICE, passBundle.getPricePerOption(PassOptions.PACKAGE));
+        assertEquals(PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE, passBundle.getPricePerOption(PassOptions.SINGLE_PASS));
     }
 
     @Test
@@ -118,8 +118,8 @@ class PassBundleFactoryTest {
 
         PassBundle passBundle = passBundleFactory.build(passBundleDto);
 
-        assertEquals(PassBundleFactory.NEBULA_PACKAGE_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.PACKAGE));
-        assertEquals(PassBundleFactory.NEBULA_SINGLE_PASS_PRICE, passBundle.getCategory().getPricePerOption(PassOptions.SINGLE_PASS));
+        assertEquals(PassBundleFactory.NEBULA_PACKAGE_PRICE, passBundle.getPricePerOption(PassOptions.PACKAGE));
+        assertEquals(PassBundleFactory.NEBULA_SINGLE_PASS_PRICE, passBundle.getPricePerOption(PassOptions.SINGLE_PASS));
     }
 
     @Test
