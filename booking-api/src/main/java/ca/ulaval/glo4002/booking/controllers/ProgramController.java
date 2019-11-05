@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.booking.controllers;
 
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.services.ArtistService;
 import ca.ulaval.glo4002.booking.services.ProgramService;
@@ -45,8 +43,14 @@ public class ProgramController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> add(ProgramDto programDto) {
-        // TODO : programService.add(programDto)
+        try {
+            programService.addProgram(programDto);
+        } catch (BookingException exception) {
+            return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().build();
+        }
 
-        return null;
+        return ResponseEntity.ok().build();
     }
 }
