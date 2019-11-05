@@ -6,6 +6,8 @@ import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,14 +67,27 @@ class EventFactoryTest {
         assertTrue(events.stream().anyMatch(event -> event.getEventDate().equals(anotherEventDate)));
     }
 
-    @Test
-    void build_shouldBuildCorrectActivity() {
-        // TODO
+    @ParameterizedTest
+    @EnumSource(Activities.class)
+    void build_shouldBuildCorrectActivity(Activities activity) {
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), activity, "aArtist");
+
+        List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
+
+        assertEquals(activity, events.get(0).getActivity());
     }
 
     @Test
     void build_shouldBuildCorrectActivities_whenThereAreMultipleEvents() {
-        // TODO
+        Activities aActivity = Activities.YOGA;
+        Activities anotherActivity = Activities.CARDIO;
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), aActivity, "aArtist");
+        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), anotherActivity, "anotherArtist");
+
+        List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
+
+        assertTrue(events.stream().anyMatch(event -> event.getActivity().equals(aActivity)));
+        assertTrue(events.stream().anyMatch(event -> event.getActivity().equals(anotherActivity)));
     }
 
     @Test
