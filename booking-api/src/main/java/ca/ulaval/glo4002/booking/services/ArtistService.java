@@ -22,6 +22,7 @@ public class ArtistService {
         this.eventRepository = eventRepository;
     }
 
+    // TODO : This doesn't work. We have to ask orderRepository to know which artist is the most popular...
     public ArtistListDto getAll(String orderBy) {
         List<String> artistNames = new ArrayList<>();
 
