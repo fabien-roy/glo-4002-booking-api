@@ -2,5 +2,13 @@ package ca.ulaval.glo4002.booking.domain.events;
 
 public class Event {
 
-    // TODO
+    private EventDate eventDate;
+
+    public Event(EventDate eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public EventDate getEventDate() {
+        return eventDate;
+    }
 }

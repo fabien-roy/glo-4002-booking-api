@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EventFactoryTest {
 
@@ -24,10 +25,7 @@ class EventFactoryTest {
 
     @Test
     void build_shouldBuildCorrectAmountOfEvents_whenThereIsOneEvent() {
-        String aEventDate = EventDate.START_DATE.toString();
-        String aActivity = Activities.YOGA.toString();
-        String aArtist = "aArtist";
-        ProgramEventDto aEventDto = new ProgramEventDto(aEventDate, aActivity, aArtist);
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, "aArtist");
 
         List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
 
@@ -36,13 +34,8 @@ class EventFactoryTest {
 
     @Test
     void build_shouldBuildCorrectAmountOfEvents_whenThereAreMultipleEvents() {
-        String aEventDate = EventDate.START_DATE.toString();
-        String anotherEventDate = EventDate.START_DATE.plusDays(1).toString();
-        String aActivity = Activities.YOGA.toString();
-        String aArtist = "aArtist";
-        String anotherArtist = "aArtist";
-        ProgramEventDto aEventDto = new ProgramEventDto(aEventDate, aActivity, aArtist);
-        ProgramEventDto anotherEventDto = new ProgramEventDto(anotherEventDate, aActivity, anotherArtist);
+        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, "aArtist");
+        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), Activities.YOGA, "anotherArtist");
 
         List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
 
@@ -51,12 +44,25 @@ class EventFactoryTest {
 
     @Test
     void build_shouldBuildCorrectEventDate() {
-        // TODO
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        ProgramEventDto aEventDto = buildEventDto(aEventDate, Activities.YOGA, "aArtist");
+
+        List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
+
+        assertEquals(aEventDate, events.get(0).getEventDate());
     }
 
     @Test
     void build_shouldBuildCorrectEventDates_whenThereAreMultipleEvents() {
-        // TODO
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
+        ProgramEventDto aEventDto = buildEventDto(aEventDate, Activities.YOGA, "aArtist");
+        ProgramEventDto anotherEventDto = buildEventDto(anotherEventDate, Activities.YOGA, "anotherArtist");
+
+        List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
+
+        assertTrue(events.stream().anyMatch(event -> event.getEventDate().equals(aEventDate)));
+        assertTrue(events.stream().anyMatch(event -> event.getEventDate().equals(anotherEventDate)));
     }
 
     @Test
@@ -76,6 +82,11 @@ class EventFactoryTest {
 
     @Test
     void build_shouldBuildCorrectArtists_whenThereAreMultipleEvents() {
+        // TODO
+    }
+
+    @Test
+    void build_shouldThrowInvalidProgramException_whenEventDateIsInvalid() {
         // TODO
     }
 
@@ -112,5 +123,9 @@ class EventFactoryTest {
     @Test
     void build_shouldThrowInvalidProgramException_whenArtistIsDuplicate() {
         // TODO
+    }
+
+    private ProgramEventDto buildEventDto(EventDate eventDate, Activities activity, String artist) {
+        return new ProgramEventDto(eventDate.toString(), activity.toString(), artist);
     }
 }
