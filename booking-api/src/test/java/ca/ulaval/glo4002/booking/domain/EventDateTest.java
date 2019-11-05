@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domain;
 
+import ca.ulaval.glo4002.booking.domain.EventDate;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import org.junit.jupiter.api.Test;
 

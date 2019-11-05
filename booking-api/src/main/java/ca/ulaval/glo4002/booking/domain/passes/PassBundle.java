@@ -35,4 +35,6 @@ public class PassBundle {
     public Money getPrice() {
         return price;
     }
+
+    // TODO : ACP : GetEventDates (with consideration for package)
 }

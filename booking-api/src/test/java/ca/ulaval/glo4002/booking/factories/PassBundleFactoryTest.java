@@ -31,7 +31,6 @@ import static org.mockito.Mockito.*;
 class PassBundleFactoryTest {
 
     private PassBundleFactory passBundleFactory;
-    private PassFactory passFactory;
 
     @BeforeEach
     void setUpFactory() {
@@ -41,7 +40,7 @@ class PassBundleFactoryTest {
     @Test
     void buildWithDto_shouldBuildAPassList() {
         PassBundleDto passBundleDto = new PassBundleDto(PassCategories.SUPERNOVA.toString(), PassOptions.SINGLE_PASS.toString(), new ArrayList<>());
-        passFactory = mock(PassFactory.class);
+        PassFactory passFactory = mock(PassFactory.class);
         Pass pass = new Pass(
                 new Number(1L),
                 new EventDate(EventDate.START_DATE),
