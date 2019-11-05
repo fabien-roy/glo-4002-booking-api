@@ -5,11 +5,7 @@ import ca.ulaval.glo4002.booking.controllers.ProgramController;
 import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.factories.OrderFactory;
-import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
-import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
-import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
+import ca.ulaval.glo4002.booking.factories.*;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
@@ -42,6 +38,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenTankFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
+        bindAsContract(EventFactory.class);
     }
 
     private void bindRepositories() {
