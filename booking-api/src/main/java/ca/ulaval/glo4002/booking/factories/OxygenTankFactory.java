@@ -73,7 +73,7 @@ public class OxygenTankFactory {
             case E:
                 return CATEGORY_E_CREATION_NUMBER;
             default:
-                throw new InvalidOxygenCategoryException();
+                throw new InvalidOxygenCategoryException(category);
         }
 	}
 
@@ -107,7 +107,7 @@ public class OxygenTankFactory {
             case E:
                 return OxygenCategories.E;
             default:
-                throw new InvalidOxygenCategoryException();
+                throw new InvalidOxygenCategoryException(category);
         }
 	}
 

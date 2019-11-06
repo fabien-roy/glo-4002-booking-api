@@ -32,7 +32,7 @@ public enum OxygenCategories {
     public static OxygenCategories get(String category) {
         OxygenCategories foundCategory = lookup.get(category);
 
-        if (foundCategory == null) throw new InvalidOxygenCategoryException();
+        if (foundCategory == null) throw new InvalidOxygenCategoryException(category);
 
         return foundCategory;
     }

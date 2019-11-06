@@ -65,7 +65,7 @@ public class OxygenTank {
                 resourcesPrice = CATEGORY_E_RESOURCE_PRICE;
                 break;
             default:
-                throw new InvalidOxygenCategoryException();
+                throw new InvalidOxygenCategoryException(category);
         }
 
         BigDecimal tankPrice = new BigDecimal((nbResources * resourcesPrice) / nbTankCreated);

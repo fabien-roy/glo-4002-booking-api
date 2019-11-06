@@ -58,7 +58,8 @@ public class OxygenTankInventory {
 		List<OxygenTank> inUseTanksForCategory = inUseTanks.get(category);
 
 		while (!notInUseTanksForCategory.isEmpty() && quantityStillNeeded > 0) {
-			inUseTanksForCategory.add(notInUseTanksForCategory.remove(notInUseTanksForCategory.size() - 1));
+			OxygenTank transferedTank = notInUseTanksForCategory.remove(notInUseTanksForCategory.size() - 1);
+			inUseTanksForCategory.add(transferedTank);
 
 			quantityStillNeeded--;
 		}
