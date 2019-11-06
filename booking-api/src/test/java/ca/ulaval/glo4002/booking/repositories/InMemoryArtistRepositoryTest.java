@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.Artist;
+import ca.ulaval.glo4002.booking.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,7 +29,7 @@ class InMemoryArtistRepositoryTest {
     void getByName_shouldReturnArtist() {
         String artistName = repository.getAll().get(0).getName();
 
-        Artist artist = repository.getByName(artistName);
+        BookingArtist artist = repository.getByName(artistName);
 
         assertEquals(artistName, artist.getName());
     }

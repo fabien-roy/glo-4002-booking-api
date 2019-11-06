@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.Artist;
+import ca.ulaval.glo4002.booking.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
@@ -33,7 +33,7 @@ public class EventFactory {
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
-            Artist artist = artistRepository.getByName(eventDto.getPm());
+            BookingArtist artist = artistRepository.getByName(eventDto.getPm());
 
             Event event = new Event(eventDate, activity, artist);
 

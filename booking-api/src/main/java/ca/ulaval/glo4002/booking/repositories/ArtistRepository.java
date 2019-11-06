@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.Artist;
+import ca.ulaval.glo4002.booking.domain.BookingArtist;
 
 import java.util.List;
 
 public interface ArtistRepository {
 
-    Artist getByName(String name);
+    BookingArtist getByName(String name);
 
-    List<Artist> getAll();
+    List<BookingArtist> getAll();
 }
