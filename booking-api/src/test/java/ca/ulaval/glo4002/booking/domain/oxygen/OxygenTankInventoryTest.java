@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -105,9 +106,58 @@ public class OxygenTankInventoryTest {
 		assertEquals((int) quantity, Math.abs(CATEGORY_A_QUANTITY - requestedQuantity));
 	}
 
-	/*
-	 * TODO test those methods : getNotInUseQuantityByCategory,
-	 * getInUseQuantityByCategory, getInUseTanksByCategory,
-	 * getNotInUseTankByCategory and getAllQuantityByCategory
-	 */
+	@Test
+	void getNotInUseQuantityByCategory_shouldReturnRightNumber() {
+		Integer numberA = oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.A);
+		Integer numberB = oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.B);
+		Integer numberE = oxygenTankInventory.getNotInUseQuantityByCategory(OxygenCategories.E);
+
+		assertEquals(numberA, CATEGORY_A_QUANTITY);
+		assertEquals(numberB, CATEGORY_B_QUANTITY);
+		assertEquals(numberE, CATEGORY_E_QUANTITY);
+	}
+
+	@Test
+	void getInUseQuantityByCategory_shouldReturnRightNumber() {
+		Integer numberA = oxygenTankInventory.getInUseQuantityByCategory(OxygenCategories.A);
+		Integer numberB = oxygenTankInventory.getInUseQuantityByCategory(OxygenCategories.B);
+		Integer numberE = oxygenTankInventory.getInUseQuantityByCategory(OxygenCategories.E);
+
+		assertEquals(numberA, 0);
+		assertEquals(numberB, 0);
+		assertEquals(numberE, 0);
+	}
+
+	@Test
+	void getInUseTanksByCategory_shouldReturnRightNumber() {
+		List<OxygenTank> listA = oxygenTankInventory.getInUseTanksByCategory(OxygenCategories.A);
+		List<OxygenTank> listB = oxygenTankInventory.getInUseTanksByCategory(OxygenCategories.B);
+		List<OxygenTank> listE = oxygenTankInventory.getInUseTanksByCategory(OxygenCategories.E);
+
+		assertEquals(listA.size(), 0);
+		assertEquals(listB.size(), 0);
+		assertEquals(listE.size(), 0);
+	}
+
+	@Test
+	void getNotInUseTankByCategory_shouldReturnRightNumber() {
+		List<OxygenTank> listA = oxygenTankInventory.getNotInUseTankByCategory(OxygenCategories.A);
+		List<OxygenTank> listB = oxygenTankInventory.getNotInUseTankByCategory(OxygenCategories.B);
+		List<OxygenTank> listE = oxygenTankInventory.getNotInUseTankByCategory(OxygenCategories.E);
+
+		assertEquals(listA.size(), CATEGORY_A_QUANTITY);
+		assertEquals(listB.size(), CATEGORY_B_QUANTITY);
+		assertEquals(listE.size(), CATEGORY_E_QUANTITY);
+	}
+
+	@Test
+	void getAllQuantityByCategory_shouldReturnRightNumber() {
+		Integer numberA = oxygenTankInventory.getAllQuantityByCategory(OxygenCategories.A);
+		Integer numberB = oxygenTankInventory.getAllQuantityByCategory(OxygenCategories.B);
+		Integer numberE = oxygenTankInventory.getAllQuantityByCategory(OxygenCategories.E);
+
+		assertEquals(numberA, CATEGORY_A_QUANTITY);
+		assertEquals(numberB, CATEGORY_B_QUANTITY);
+		assertEquals(numberE, CATEGORY_E_QUANTITY);
+	}
 }
