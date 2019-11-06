@@ -20,7 +20,7 @@ class OxygenTankInventoryServiceTest {
 	private OxygenTankInventoryRepository repository;
 
 	@BeforeEach
-	void setUpSubject() {
+	void setUpOxygenTankInventoryService() {
 		repository = mock(OxygenTankInventoryRepository.class);
 		OxygenTankFactory factory = mock(OxygenTankFactory.class);
 		OxygenTankInventoryMapper mapper = mock(OxygenTankInventoryMapper.class);

@@ -15,56 +15,29 @@ public class OxygenTankFactory {
 
 	// TODO : OXY : Refactor this whole thing, it is way, way to massive. (how ?)
 
-	private OxygenTankInventory inventory;
-
 	private static final Integer CATEGORY_A_CREATION_NUMBER = 5;
 	private static final Integer CATEGORY_B_CREATION_NUMBER = 3;
 	private static final Integer CATEGORY_E_CREATION_NUMBER = 1;
 
-	public OxygenTankFactory(OxygenTankInventory inventory) {
-		this.inventory = inventory;
+	public OxygenTankFactory() {
+		
 	}
 
-	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Integer numberOfDays) {
+	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
-		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
-
-		quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
-		OxygenCategories possibleCategory = getCategoryForRequestDate(category, requestDate);
-
-		if (possibleCategory != category) {
-			quantityToCover = checkInventory(category, possibleCategory, quantityToCover);
-		}
-
-		Integer numberOfTanksByBundle = getNumberOfTanksByCategoryForCreation(possibleCategory);
+		Integer numberOfTanksByBundle = getNumberOfTanksByCategoryForCreation(category);
 		OxygenDate requestedDate = new OxygenDate(requestDate);
-		Integer quantityOfTanksStillNeeded = quantityToCover;
 		
 		while (quantityToCover > 0) {
 			for (Integer i = 0; i < numberOfTanksByBundle; i++) {
-				newTanks.add(new OxygenTank(possibleCategory, requestedDate));
+				newTanks.add(new OxygenTank(category, requestedDate));
 			}
 			quantityToCover -= numberOfTanksByBundle;
 		}
 
-		// TODO : add in inventory from the factory or from somewhere else?
-		inventory.addTanksToInventory(possibleCategory, newTanks);
-		inventory.requestTankByCategory(possibleCategory, quantityOfTanksStillNeeded);
 		return newTanks;
 	}
 
-	private Integer checkInventory(OxygenCategories category, OxygenCategories possibleCategory, Integer quantityToCover) {
-		if (category == OxygenCategories.A) {
-			quantityToCover = inventory.requestTankByCategory(OxygenCategories.B, quantityToCover);
-			if (possibleCategory == OxygenCategories.E) {
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.E, quantityToCover);
-			}
-		} else if (category == OxygenCategories.B) {
-			quantityToCover = inventory.requestTankByCategory(OxygenCategories.E, quantityToCover);
-		}
-
-		return quantityToCover;
-	}
 
 	private Integer getNumberOfTanksByCategoryForCreation(OxygenCategories category) {
 	    switch (category) {
@@ -74,40 +47,6 @@ public class OxygenTankFactory {
                 return CATEGORY_B_CREATION_NUMBER;
             case E:
                 return CATEGORY_E_CREATION_NUMBER;
-            default:
-                throw new InvalidOxygenCategoryException(category);
-        }
-	}
-
-	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Integer numberOfDays) {
-		if (category == OxygenCategories.E) {
-			return (int) (numberOfDays * 5);
-		} else {
-			return (int) (numberOfDays * 3);
-		}
-	}
-
-	// TODO : Refactor needed seem too complexe
-	private OxygenCategories getCategoryForRequestDate(OxygenCategories category, LocalDate requestDate) {
-		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
-
-		switch (category) {
-            case A:
-                if(requestDate.plusDays(20).isBefore(readyBeforeDate)) {
-                    return OxygenCategories.A;
-                } else if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-                    return OxygenCategories.B;
-                } else {
-                    return OxygenCategories.E;
-                }
-            case B:
-                if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-                    return OxygenCategories.B;
-                } else {
-                    return OxygenCategories.E;
-                }
-            case E:
-                return OxygenCategories.E;
             default:
                 throw new InvalidOxygenCategoryException(category);
         }
