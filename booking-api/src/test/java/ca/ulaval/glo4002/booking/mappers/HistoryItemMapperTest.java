@@ -12,28 +12,33 @@ class HistoryItemMapperTest {
 		mapper = new HistoryItemMapper();
 	}
 
-	@Test
-	void toDto_shoulsBuildWithCorrectDate() {
+	@BeforeEach
+	void setUpMockHistory() {
 
 	}
 
 	@Test
-	void toDto_shoulsBuildWithCorrectQtyOxygenTankBought() {
+	void toDto_shouldBuildWithCorrectDate() {
 
 	}
 
 	@Test
-	void toDto_shoulsBuildWithCorrectQtyWaterUsed() {
+	void toDto_shouldBuildWithCorrectQtyOxygenTankBought() {
 
 	}
 
 	@Test
-	void toDto_shoulsBuildWithCorrectQtyCandlesUsed() {
+	void toDto_shouldBuildWithCorrectQtyWaterUsed() {
 
 	}
 
 	@Test
-	void toDto_shoulsBuildWithCorrectQtyOxygenTankMade() {
+	void toDto_shouldBuildWithCorrectQtyCandlesUsed() {
+
+	}
+
+	@Test
+	void toDto_shouldBuildWithCorrectQtyOxygenTankMade() {
 
 	}
 }
