@@ -1,7 +1,8 @@
 package ca.ulaval.glo4002.booking.services;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 
@@ -31,7 +32,7 @@ class OxygenTankInventoryServiceTest {
 	void orderOxygenTank_shouldOrderOxygenTanks() {
 		OxygenCategories category = OxygenCategories.A;
 		LocalDate requestDate = LocalDate.of(2050, 06, 17);
-		Long numberOfDays = 1L;
+		Integer numberOfDays = 1;
 		oxygenTankInventoryService.orderOxygenTanks(category, requestDate, numberOfDays);
 		// TODO not sure about this test, should maybe refactor
 		verify(repository).setInventory(any());

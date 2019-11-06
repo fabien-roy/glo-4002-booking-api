@@ -29,7 +29,7 @@ public class OxygenTankInventoryService {
 
 	// TODO : orderOxygenTanks
 	public List<OxygenTankInventoryDto> orderOxygenTanks(OxygenCategories category, LocalDate requestDate,
-                                                         Long numberOfDays) {
+                                                         Integer numberOfDays) {
 		List<OxygenTank> oxygenTank = factory.buildOxygenTank(category, requestDate, numberOfDays);
 		// TODO refactor, TDA. Not sure about this one :S.
 		OxygenTankInventory inventory = repository.getInventory();

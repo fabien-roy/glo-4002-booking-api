@@ -1,7 +1,8 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.mock;
 
 import java.util.Collections;
 import java.util.List;

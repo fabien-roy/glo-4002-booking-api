@@ -25,7 +25,7 @@ public class OxygenTankFactory {
 		this.inventory = inventory;
 	}
 
-	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Long numberOfDays) {
+	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Integer numberOfDays) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
 
@@ -79,7 +79,7 @@ public class OxygenTankFactory {
         }
 	}
 
-	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Long numberOfDays) {
+	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Integer numberOfDays) {
 		if (category == OxygenCategories.E) {
 			return (int) (numberOfDays * 5);
 		} else {
