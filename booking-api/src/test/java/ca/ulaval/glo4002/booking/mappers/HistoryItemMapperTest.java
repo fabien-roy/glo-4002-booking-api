@@ -12,11 +12,6 @@ class HistoryItemMapperTest {
 		mapper = new HistoryItemMapper();
 	}
 
-	@BeforeEach
-	void setUpMockHistory() {
-
-	}
-
 	@Test
 	void toDto_shouldBuildWithCorrectDate() {
 
