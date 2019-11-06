@@ -37,7 +37,7 @@ public class OrderService {
     public OrderWithPassesAsPassesDto getByOrderNumber(String requestedOrderNumber) {
         OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
 
-        Order order = repository.getByOrderNumber(orderNumber).get(); // TODO : Is using get a good idea?
+        Order order = repository.getByOrderNumber(orderNumber);
 
         return mapper.toDto(order);
     }

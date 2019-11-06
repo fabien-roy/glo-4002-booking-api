@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface OrderRepository {
 
-    Optional<Order> getByOrderNumber(OrderNumber orderNumber);
+    Order getByOrderNumber(OrderNumber orderNumber);
 
     void addOrder(Order order);
 }

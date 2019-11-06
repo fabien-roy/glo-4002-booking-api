@@ -98,7 +98,7 @@ class OrderServiceTest {
                 PassOptions.PACKAGE
         );
         Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passBundle);
-        when(repository.getByOrderNumber(aOrderNumber)).thenReturn(Optional.of(order));
+        when(repository.getByOrderNumber(aOrderNumber)).thenReturn(order);
 
         OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(aOrderNumber.toString());
 
