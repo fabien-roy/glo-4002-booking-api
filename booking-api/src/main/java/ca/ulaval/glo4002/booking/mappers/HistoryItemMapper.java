@@ -7,7 +7,7 @@ import java.util.Map;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.History;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.dto.HistoryItemDto;
+import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 
 public class HistoryItemMapper {
 
