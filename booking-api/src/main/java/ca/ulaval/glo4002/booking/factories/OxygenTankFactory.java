@@ -38,7 +38,8 @@ public class OxygenTankFactory {
 
 		Integer numberOfTanksByBundle = getNumberOfTanksByCategoryForCreation(possibleCategory);
 		OxygenDate requestedDate = new OxygenDate(requestDate);
-
+		Integer quantityOfTanksStillNeeded = quantityToCover;
+		
 		while (quantityToCover > 0) {
 			for (Integer i = 0; i < numberOfTanksByBundle; i++) {
 				newTanks.add(new OxygenTank(possibleCategory, requestedDate));
@@ -47,11 +48,12 @@ public class OxygenTankFactory {
 		}
 
 		// TODO : add in inventory from the factory or from somewhere else?
+		inventory.addTanksToInventory(possibleCategory, newTanks);
+		inventory.requestTankByCategory(possibleCategory, quantityOfTanksStillNeeded);
 		return newTanks;
 	}
 
-	private Integer checkInventory(OxygenCategories category, OxygenCategories possibleCategory,
-                                   Integer quantityToCover) {
+	private Integer checkInventory(OxygenCategories category, OxygenCategories possibleCategory, Integer quantityToCover) {
 		if (category == OxygenCategories.A) {
 			quantityToCover = inventory.requestTankByCategory(OxygenCategories.B, quantityToCover);
 			if (possibleCategory == OxygenCategories.E) {
