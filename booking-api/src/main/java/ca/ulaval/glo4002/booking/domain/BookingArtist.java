@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.domain;
 
 import ca.ulaval.glo4002.booking.domain.money.Money;
 
-public class Artist {
+public class BookingArtist {
 
     private String name;
     private Money cost;
@@ -10,7 +10,7 @@ public class Artist {
     private String musicStyle;
     private Integer popularityRank;
 
-    public Artist(String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank) {
+    public BookingArtist(String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank) {
 		this.name = name;
 		this.cost = cost;
 		this.numberOfPeople = numberOfPeople;
@@ -40,15 +40,15 @@ public class Artist {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Artist)) return false;
+        if (!(other instanceof BookingArtist)) return false;
 
-        Artist otherArtist = (Artist) other;
+        BookingArtist otherBookingArtist = (BookingArtist) other;
 
-        return name.equals(otherArtist.getName())
-                && cost.equals(otherArtist.getCost())
-                && numberOfPeople.equals(otherArtist.getNumberOfPeople())
-                && musicStyle.equals(otherArtist.getMusicStyle())
-                && popularityRank.equals(otherArtist.getPopularityRank());
+        return name.equals(otherBookingArtist.getName())
+                && cost.equals(otherBookingArtist.getCost())
+                && numberOfPeople.equals(otherBookingArtist.getNumberOfPeople())
+                && musicStyle.equals(otherBookingArtist.getMusicStyle())
+                && popularityRank.equals(otherBookingArtist.getPopularityRank());
     }
 
     @Override

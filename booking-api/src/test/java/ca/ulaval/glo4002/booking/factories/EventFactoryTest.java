@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
-import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
+import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

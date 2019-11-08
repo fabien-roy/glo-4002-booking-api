@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
 
-public class ArtistConverterTest {
+public class BookingArtistConverterTest {
 
 	private static ArtistRepository artistRepository;
 	private static ArtistConverter artistConverter;
@@ -26,7 +26,4 @@ public class ArtistConverterTest {
 		
 		verify(artistRepository, times(1)).findAll();
 	}
-	
-	
-	
 }

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.domain.Artist;
+import ca.ulaval.glo4002.booking.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
 
@@ -20,11 +20,11 @@ public class ArtistConverter {
 	}
 
 	// TODO : This should receive a list of external artists, it should not know the repository
-	public List<Artist> convertExternalArtists() {
-		List<Artist> artists = new ArrayList<>();
+	public List<BookingArtist> convertExternalArtists() {
+		List<BookingArtist> bookingArtists = new ArrayList<>();
 
 		for (ca.ulaval.glo4002.organisation.domain.Artist artist : artistRepository.findAll()) {
-			Artist bookingArtist = new Artist(
+			BookingArtist bookingArtist = new BookingArtist(
 					artist.getName(),
 					new Money(new BigDecimal(artist.getPrice())),
 					artist.getNbPeople(),
@@ -32,9 +32,9 @@ public class ArtistConverter {
 					artist.getPopularityRank()
 			);
 
-			artists.add(bookingArtist);
+			bookingArtists.add(bookingArtist);
 		}
 
-		return artists;
+		return bookingArtists;
 	}
 }

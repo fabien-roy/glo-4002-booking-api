@@ -8,16 +8,16 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-class ArtistTest {
+class BookingArtistTest {
 
-    private Artist artist;
+    private BookingArtist bookingArtist;
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotArtist() {
-        artist = new Artist("aArtist", mock(Money.class), 1, "aMusicStyle", 1);
+        bookingArtist = new BookingArtist("aArtist", mock(Money.class), 1, "aMusicStyle", 1);
         Object object = new Object();
 
-        boolean result = artist.equals(object);
+        boolean result = bookingArtist.equals(object);
 
         assertFalse(result);
     }
@@ -29,10 +29,10 @@ class ArtistTest {
         Integer membersAmount = 1;
         String musicStyle = "aMusicStyle";
         Integer popularityRank = 1;
-        artist = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
-        Artist other = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
+        bookingArtist = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
+        BookingArtist other = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
 
-        boolean result = artist.equals(other);
+        boolean result = bookingArtist.equals(other);
 
         assertTrue(result);
     }
@@ -45,10 +45,10 @@ class ArtistTest {
         Integer membersAmount = 1;
         String musicStyle = "aMusicStyle";
         Integer popularityRank = 1;
-        artist = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
-        Artist other = new Artist(otherName, cost, membersAmount, musicStyle, popularityRank);
+        bookingArtist = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
+        BookingArtist other = new BookingArtist(otherName, cost, membersAmount, musicStyle, popularityRank);
 
-        boolean result = artist.equals(other);
+        boolean result = bookingArtist.equals(other);
 
         assertFalse(result);
     }
@@ -61,10 +61,10 @@ class ArtistTest {
         Integer membersAmount = 1;
         String musicStyle = "aMusicStyle";
         Integer popularityRank = 1;
-        artist = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
-        Artist other = new Artist(name, otherCost, membersAmount, musicStyle, popularityRank);
+        bookingArtist = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
+        BookingArtist other = new BookingArtist(name, otherCost, membersAmount, musicStyle, popularityRank);
 
-        boolean result = artist.equals(other);
+        boolean result = bookingArtist.equals(other);
 
         assertFalse(result);
     }
@@ -77,10 +77,10 @@ class ArtistTest {
         Integer otherMembersAmount = 2;
         String musicStyle = "aMusicStyle";
         Integer popularityRank = 1;
-        artist = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
-        Artist other = new Artist(name, cost, otherMembersAmount, musicStyle, popularityRank);
+        bookingArtist = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
+        BookingArtist other = new BookingArtist(name, cost, otherMembersAmount, musicStyle, popularityRank);
 
-        boolean result = artist.equals(other);
+        boolean result = bookingArtist.equals(other);
 
         assertFalse(result);
     }
@@ -93,10 +93,10 @@ class ArtistTest {
         String musicStyle = "aMusicStyle";
         String otherMusicStyle = "anotherMusicStyle";
         Integer popularityRank = 1;
-        artist = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
-        Artist other = new Artist(name, cost, membersAmount, otherMusicStyle, popularityRank);
+        bookingArtist = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
+        BookingArtist other = new BookingArtist(name, cost, membersAmount, otherMusicStyle, popularityRank);
 
-        boolean result = artist.equals(other);
+        boolean result = bookingArtist.equals(other);
 
         assertFalse(result);
     }
@@ -109,10 +109,10 @@ class ArtistTest {
         String musicStyle = "aMusicStyle";
         Integer popularityRank = 1;
         Integer otherPopularityRank = 2;
-        artist = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
-        Artist other = new Artist(name, cost, membersAmount, musicStyle, otherPopularityRank);
+        bookingArtist = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
+        BookingArtist other = new BookingArtist(name, cost, membersAmount, musicStyle, otherPopularityRank);
 
-        boolean result = artist.equals(other);
+        boolean result = bookingArtist.equals(other);
 
         assertFalse(result);
     }
@@ -124,10 +124,10 @@ class ArtistTest {
         Integer membersAmount = 1;
         String musicStyle = "aMusicStyle";
         Integer popularityRank = 1;
-        artist = new Artist(name, cost, membersAmount, musicStyle, popularityRank);
+        bookingArtist = new BookingArtist(name, cost, membersAmount, musicStyle, popularityRank);
         int expectedHashCode = name.hashCode() + cost.hashCode() + membersAmount.hashCode() + musicStyle.hashCode() + popularityRank.hashCode();
 
-        int hashCode = artist.hashCode();
+        int hashCode = bookingArtist.hashCode();
 
         assertEquals(expectedHashCode, hashCode);
     }

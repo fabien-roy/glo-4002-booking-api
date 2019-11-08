@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domain.Artist;
+import ca.ulaval.glo4002.booking.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
-import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
-import ca.ulaval.glo4002.booking.repositories.EventRepository;
+import ca.ulaval.glo4002.organisation.domain.Artist;
+import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -14,25 +14,23 @@ import java.util.stream.Collectors;
 public class ArtistService {
 
     private final ArtistRepository artistRepository;
-    private final EventRepository eventRepository;
 
     @Inject
-    public ArtistService(ArtistRepository artistRepository, EventRepository eventRepository) {
+    public ArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
-        this.eventRepository = eventRepository;
     }
 
-    // TODO : This doesn't work. We have to ask orderRepository to know which artist is the most popular...
+    // TODO : ArtistService.getAll()
     public ArtistListDto getAll(String orderBy) {
+        List<Artist> artists = artistRepository.findAll();
         List<String> artistNames = new ArrayList<>();
 
         if (orderBy == null) {
-            artistNames = artistRepository.getAll().stream().map(Artist::getName).collect(Collectors.toList());
+            artistNames = artists.stream().map(Artist::getName).collect(Collectors.toList());
         } else {
             ArtistOrderings ordering = ArtistOrderings.get(orderBy);
 
-            // TODO : With orderBy lowCost
-            // TODO : With orderBy mostPopular
+            // TODO : Order
         }
 
         return new ArtistListDto(artistNames);
