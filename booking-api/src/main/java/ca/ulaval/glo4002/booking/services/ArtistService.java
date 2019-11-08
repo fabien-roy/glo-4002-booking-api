@@ -63,8 +63,8 @@ public class ArtistService {
 
     private List<BookingArtist> orderByLowCost(List<BookingArtist> artists) {
         return artists
-                   .stream()
-                   .sorted(Comparator.comparing(BookingArtist::getCost).reversed().thenComparing(BookingArtist::getPopularityRank))
-                   .collect(Collectors.toList());
+                .stream()
+                .sorted(Comparator.comparing(BookingArtist::getCost).reversed().thenComparing(BookingArtist::getPopularityRank))
+                .collect(Collectors.toList());
     }
 }
