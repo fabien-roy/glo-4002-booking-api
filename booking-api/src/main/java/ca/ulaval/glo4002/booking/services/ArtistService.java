@@ -1,13 +1,11 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.BookingArtist;
-import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.factories.ArtistFactory;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
 import ca.ulaval.glo4002.organisation.domain.Artist;
 import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
-import com.google.common.collect.Lists;
 
 import javax.inject.Inject;
 import java.util.*;
