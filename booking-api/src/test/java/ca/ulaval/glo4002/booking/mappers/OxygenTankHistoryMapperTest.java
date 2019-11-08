@@ -21,6 +21,8 @@ import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 class OxygenTankHistoryMapperTest {
 
+	// TODO : Refactor OxygenTankHistoryMapper tests
+
 	OxygenTankHistoryMapper mapper;
 	OxygenTankInventory mockedInventory;
 	History mockedHistory;
@@ -34,9 +36,7 @@ class OxygenTankHistoryMapperTest {
 
 	@BeforeEach
 	void setupHistory() {
-		// TODO maybe refactor this
-		mockedHistory = mock(History.class);
-		List<OxygenTank> tanks = new ArrayList<OxygenTank>();
+		List<OxygenTank> tanks = new ArrayList<>();
 		OxygenTank tankA = mock(OxygenTank.class);
 		when(tankA.getCategory()).thenReturn(OxygenCategories.A);
 		tanks.add(tankA);
@@ -46,9 +46,13 @@ class OxygenTankHistoryMapperTest {
 		OxygenTank tankE = mock(OxygenTank.class);
 		when(tankE.getCategory()).thenReturn(OxygenCategories.E);
 		tanks.add(tankE);
+
+		mockedHistory = mock(History.class);
 		when(mockedHistory.getProducedOxygenTanksForDate(any())).thenReturn(tanks);
-		Map<LocalDate, List<OxygenTank>> oxygenMap = new HashMap<LocalDate, List<OxygenTank>>();
+
+		Map<LocalDate, List<OxygenTank>> oxygenMap = new HashMap<>();
 		oxygenMap.put(date, tanks);
+
 		when(mockedHistory.getProducedOxygenTanks()).thenReturn(oxygenMap);
 		when(mockedHistory.getRequestedOxygenTanks()).thenReturn(oxygenMap);
 	}
@@ -128,6 +132,6 @@ class OxygenTankHistoryMapperTest {
 	}
 
 	private void fillInventory(OxygenTankInventory mockedInventory) {
-//TODO test this (and implement it)
+		// TODO test this (and implement it)
 	}
 }
