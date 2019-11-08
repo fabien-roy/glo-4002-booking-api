@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
+import ca.ulaval.glo4002.booking.dto.oxygen.OxygenInventoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
 import ca.ulaval.glo4002.booking.mappers.OxygenTankInventoryMapper;
@@ -28,8 +28,8 @@ public class OxygenTankInventoryService {
 	}
 
 	// TODO : orderOxygenTanks
-	public List<OxygenTankInventoryItemDto> orderOxygenTanks(OxygenCategories category, LocalDate requestDate,
-                                                             Integer numberOfDays) {
+	public List<OxygenInventoryItemDto> orderOxygenTanks(OxygenCategories category, LocalDate requestDate,
+														 Integer numberOfDays) {
 		List<OxygenTank> oxygenTank = factory.buildOxygenTank(category, requestDate, numberOfDays);
 		// TODO refactor, TDA. Not sure about this one :S.
 		OxygenInventory inventory = repository.getInventory();

@@ -4,19 +4,19 @@ import java.util.List;
 
 public class OxygenReportDto {
 
-	public List<OxygenTankInventoryItemDto> inventory;
-	public List<HistoryItemDto> history;
+	private List<OxygenInventoryItemDto> inventory;
+	private List<OxygenHistoryItemDto> history;
 
-	public OxygenReportDto(List<OxygenTankInventoryItemDto> inventory, List<HistoryItemDto> history) {
+	public OxygenReportDto(List<OxygenInventoryItemDto> inventory, List<OxygenHistoryItemDto> history) {
 		this.inventory = inventory;
 		this.history = history;
 	}
 
-	public List<OxygenTankInventoryItemDto> getInventory() {
+	public List<OxygenInventoryItemDto> getInventory() {
 		return inventory;
 	}
 
-	public List<HistoryItemDto> getHistory() {
+	public List<OxygenHistoryItemDto> getHistory() {
 		return history;
 	}
 }

@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
+import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 class OxygenTankOxygenHistoryMapperTest {
@@ -59,14 +59,14 @@ class OxygenTankOxygenHistoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildWithCorrectDate() {
-		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
+		List<OxygenHistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
 		assertEquals(items.get(0).getDate(), date.toString());
 	}
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyOxygenTankBought() {
-		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
+		List<OxygenHistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
 		List<OxygenTank> tanks = mockedOxygenHistory.getProducedOxygenTanksForDate(date);
 		// TODO not sure about this part
@@ -86,7 +86,7 @@ class OxygenTankOxygenHistoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyWaterUsed() {
-		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
+		List<OxygenHistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
 		List<OxygenTank> tanks = mockedOxygenHistory.getProducedOxygenTanksForDate(date);
 		int nbTankB = 0;
@@ -105,7 +105,7 @@ class OxygenTankOxygenHistoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyCandlesUsed() {
-		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
+		List<OxygenHistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
 		List<OxygenTank> tanks = mockedOxygenHistory.getProducedOxygenTanksForDate(date);
 		int nbTankA = 0;
@@ -124,7 +124,7 @@ class OxygenTankOxygenHistoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyOxygenTankMade() {
-		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
+		List<OxygenHistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
 		Integer qtyOxygen = mockedOxygenHistory.getProducedOxygenTanksForDate(date).size();
 

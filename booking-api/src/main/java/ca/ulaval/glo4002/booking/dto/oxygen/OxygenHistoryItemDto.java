@@ -1,14 +1,15 @@
 package ca.ulaval.glo4002.booking.dto.oxygen;
 
-public class HistoryItemDto {
+public class OxygenHistoryItemDto {
+
 	private String date;
 	private Long qtyOxygenTankBought;
 	private Long qtyWaterUsed;
 	private Long qtyCandlesUsed;
 	private Long qtyOxygenTankMade;
 
-	public HistoryItemDto(String date, Long qtyOxygenTankBought, Long qtyWaterUsed, Long qtyCandlesUsed,
-			Long qtyOxygenTankMade) {
+	public OxygenHistoryItemDto(String date, Long qtyOxygenTankBought, Long qtyWaterUsed, Long qtyCandlesUsed,
+								Long qtyOxygenTankMade) {
 		this.date = date;
 		this.qtyOxygenTankBought = qtyOxygenTankBought;
 		this.qtyWaterUsed = qtyWaterUsed;

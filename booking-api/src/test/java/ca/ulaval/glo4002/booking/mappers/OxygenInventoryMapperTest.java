@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
+import ca.ulaval.glo4002.booking.dto.oxygen.OxygenInventoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class OxygenInventoryMapperTest {
@@ -36,19 +36,19 @@ public class OxygenInventoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildDtoWithCorrectOxygenCategoriesOrder() {
-		List<OxygenTankInventoryItemDto> oxygenTankInventoryItemDto = subject.toDto(inventory);
+		List<OxygenInventoryItemDto> oxygenInventoryItemDto = subject.toDto(inventory);
 
-		assertEquals(oxygenTankInventoryItemDto.get(0).getGradeTankOxygen(), OxygenCategories.E.toString());
-		assertEquals(oxygenTankInventoryItemDto.get(1).getGradeTankOxygen(), OxygenCategories.B.toString());
-		assertEquals(oxygenTankInventoryItemDto.get(2).getGradeTankOxygen(), OxygenCategories.A.toString());
+		assertEquals(oxygenInventoryItemDto.get(0).getGradeTankOxygen(), OxygenCategories.E.toString());
+		assertEquals(oxygenInventoryItemDto.get(1).getGradeTankOxygen(), OxygenCategories.B.toString());
+		assertEquals(oxygenInventoryItemDto.get(2).getGradeTankOxygen(), OxygenCategories.A.toString());
 	}
 
 	@Test
 	void toDto_shouldBuildDtoWithCorrectTanksQuantityE() {
 		Integer expectedQuantityE = inventory.getAllQuantityByCategory(OxygenCategories.E);
 
-		List<OxygenTankInventoryItemDto> oxygenTankInventoryItemDto = subject.toDto(inventory);
-		Long quantityE = oxygenTankInventoryItemDto.get(0).getQuantity();
+		List<OxygenInventoryItemDto> oxygenInventoryItemDto = subject.toDto(inventory);
+		Long quantityE = oxygenInventoryItemDto.get(0).getQuantity();
 
 		assertEquals(expectedQuantityE.longValue(), quantityE);
 	}
@@ -57,8 +57,8 @@ public class OxygenInventoryMapperTest {
 	void toDto_shouldBuildDtoWithCorrectTanksQuantityB() {
 		Integer expectedQuantityB = inventory.getAllQuantityByCategory(OxygenCategories.B);
 
-		List<OxygenTankInventoryItemDto> oxygenTankInventoryItemDto = subject.toDto(inventory);
-		Long quantityB = oxygenTankInventoryItemDto.get(1).getQuantity();
+		List<OxygenInventoryItemDto> oxygenInventoryItemDto = subject.toDto(inventory);
+		Long quantityB = oxygenInventoryItemDto.get(1).getQuantity();
 
 		assertEquals(expectedQuantityB.longValue(), quantityB);
 	}
@@ -67,8 +67,8 @@ public class OxygenInventoryMapperTest {
 	void toDto_shouldBuildDtoWithCorrectTanksQuantityA() {
 		Integer expectedQuantityA = inventory.getAllQuantityByCategory(OxygenCategories.A);
 
-		List<OxygenTankInventoryItemDto> oxygenTankInventoryItemDto = subject.toDto(inventory);
-		Long quantityA = oxygenTankInventoryItemDto.get(2).getQuantity();
+		List<OxygenInventoryItemDto> oxygenInventoryItemDto = subject.toDto(inventory);
+		Long quantityA = oxygenInventoryItemDto.get(2).getQuantity();
 
 		assertEquals(expectedQuantityA.longValue(), quantityA);
 	}

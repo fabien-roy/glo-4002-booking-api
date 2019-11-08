@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.dto.oxygen;
 
-public class OxygenTankInventoryItemDto {
+public class OxygenInventoryItemDto {
 
-	String gradeTankOxygen;
-	Long quantity;
+	private String gradeTankOxygen;
+	private Long quantity;
 
-	public OxygenTankInventoryItemDto(String gradeTankOxygen, Long quantity) {
+	public OxygenInventoryItemDto(String gradeTankOxygen, Long quantity) {
 		this.gradeTankOxygen = gradeTankOxygen;
 		this.quantity = quantity;
 	}
@@ -17,5 +17,4 @@ public class OxygenTankInventoryItemDto {
 	public Long getQuantity() {
 		return quantity;
 	}
-
 }

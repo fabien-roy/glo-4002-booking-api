@@ -5,12 +5,12 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
+import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 
 public class OxygenTankHistoryMapper {
 
-	public List<HistoryItemDto> toDto(OxygenHistory oxygenHistory) {
-		List<HistoryItemDto> historyList = new ArrayList<>();
+	public List<OxygenHistoryItemDto> toDto(OxygenHistory oxygenHistory) {
+		List<OxygenHistoryItemDto> historyList = new ArrayList<>();
 
 		oxygenHistory.getRequestedOxygenTanks().forEach((requestedDate, oxygenTanks) -> {
 			Long qtyOxygenTankBought = 0L;
@@ -45,7 +45,7 @@ public class OxygenTankHistoryMapper {
 				}
 			}
 
-			HistoryItemDto dto = new HistoryItemDto(
+			OxygenHistoryItemDto dto = new OxygenHistoryItemDto(
 					requestedDate.toString(),
 					qtyOxygenTankBought,
 					qtyWaterUsed,
