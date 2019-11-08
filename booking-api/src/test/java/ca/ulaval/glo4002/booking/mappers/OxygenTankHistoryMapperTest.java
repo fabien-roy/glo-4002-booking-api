@@ -19,16 +19,16 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-class HistoryItemMapperTest {
+class OxygenTankHistoryMapperTest {
 
-	HistoryItemMapper mapper;
+	OxygenTankHistoryMapper mapper;
 	OxygenTankInventory mockedInventory;
 	History mockedHistory;
 	LocalDate date = LocalDate.of(2050, 7, 1);
 
 	@BeforeEach
 	void setUpMapper() {
-		mapper = new HistoryItemMapper();
+		mapper = new OxygenTankHistoryMapper();
 		mockedInventory = mock(OxygenTankInventory.class);
 	}
 

@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-public class HistoryItemMapper {
+public class OxygenTankHistoryMapper {
 
 	public List<HistoryItemDto> toDto(History history) {
 		List<HistoryItemDto> historyList = new ArrayList<HistoryItemDto>();
