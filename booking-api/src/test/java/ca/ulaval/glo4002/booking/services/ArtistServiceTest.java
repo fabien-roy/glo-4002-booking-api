@@ -16,12 +16,17 @@ import static org.mockito.Mockito.when;
 
 class ArtistServiceTest {
 
-    ArtistService service;
-    ArtistRepository artistRepository;
+    private ArtistService service;
+    private ArtistRepository artistRepository;
+    private Artist secondPopularAndFirstCostArtist = mockArtist("a", 500, 2);
+    private Artist firstPopularAndThirdCostArtist = mockArtist("b", 200, 1);
+    private Artist thirdPopularAndEqualFourthCostArtist = mockArtist("c", 100, 3);
+    private Artist fourthPopularAndSecondCostArtist = mockArtist("d", 300, 4);
+    private Artist fifthPopularAndEqualFourthCostArtist = mockArtist("e", 100, 5);
 
     @BeforeEach
     void setUpService() {
-        List<Artist> artists = getArtists();
+        List<Artist> artists = mockArtists();
         artistRepository = mock(ArtistRepository.class);
         when(artistRepository.findAll()).thenReturn(artists);
 
@@ -42,41 +47,53 @@ class ArtistServiceTest {
         assertFalse(artistListDto.getArtists().isEmpty());
     }
 
+    // TODO : byPopularity and null should be a single test
     @Test
-    void getAll_shouldReturnAllArtistNamesOrderedByCost_whenOrderByIsByCost() {
+    void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsNull() {
         ArtistListDto artistListDto = service.getAll(null);
 
-        assertEquals(getArtists().get(1).getName(), artistListDto.getArtists().get(0));
-        assertEquals(getArtists().get(0).getName(), artistListDto.getArtists().get(1));
-        assertEquals(getArtists().get(2).getName(), artistListDto.getArtists().get(2));
-        assertEquals(getArtists().get(3).getName(), artistListDto.getArtists().get(3));
-        assertEquals(getArtists().get(4).getName(), artistListDto.getArtists().get(4));
+        assertEquals(firstPopularAndThirdCostArtist, artistListDto.getArtists().get(0));
+        assertEquals(secondPopularAndFirstCostArtist, artistListDto.getArtists().get(1));
+        assertEquals(thirdPopularAndEqualFourthCostArtist, artistListDto.getArtists().get(2));
+        assertEquals(fourthPopularAndSecondCostArtist, artistListDto.getArtists().get(3));
+        assertEquals(fifthPopularAndEqualFourthCostArtist, artistListDto.getArtists().get(4));
     }
 
     @Test
     void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsByPopularity() {
         ArtistListDto artistListDto = service.getAll(null);
 
-        assertEquals(getArtists().get(1).getName(), artistListDto.getArtists().get(0));
-        assertEquals(getArtists().get(3).getName(), artistListDto.getArtists().get(1));
-        assertEquals(getArtists().get(0).getName(), artistListDto.getArtists().get(2));
-        assertEquals(getArtists().get(2).getName(), artistListDto.getArtists().get(3));
-        assertEquals(getArtists().get(4).getName(), artistListDto.getArtists().get(4));
+        assertEquals(firstPopularAndThirdCostArtist, artistListDto.getArtists().get(0));
+        assertEquals(secondPopularAndFirstCostArtist, artistListDto.getArtists().get(1));
+        assertEquals(thirdPopularAndEqualFourthCostArtist, artistListDto.getArtists().get(2));
+        assertEquals(fourthPopularAndSecondCostArtist, artistListDto.getArtists().get(3));
+        assertEquals(fifthPopularAndEqualFourthCostArtist, artistListDto.getArtists().get(4));
     }
 
-    private List<Artist> getArtists() {
+    @Test
+    void getAll_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsByCost() {
+        ArtistListDto artistListDto = service.getAll(null);
+
+        assertEquals(secondPopularAndFirstCostArtist, artistListDto.getArtists().get(0));
+        assertEquals(fourthPopularAndSecondCostArtist, artistListDto.getArtists().get(1));
+        assertEquals(firstPopularAndThirdCostArtist, artistListDto.getArtists().get(2));
+        assertEquals(thirdPopularAndEqualFourthCostArtist, artistListDto.getArtists().get(3));
+        assertEquals(fifthPopularAndEqualFourthCostArtist, artistListDto.getArtists().get(4));
+    }
+
+    private List<Artist> mockArtists() {
         List<Artist> artists = new ArrayList<>();
 
-        artists.add(getArtist("a", 500, 2));
-        artists.add(getArtist("b", 200, 1));
-        artists.add(getArtist("c", 100, 3));
-        artists.add(getArtist("d", 200, 4));
-        artists.add(getArtist("e", 100, 5));
+        artists.add(secondPopularAndFirstCostArtist);
+        artists.add(firstPopularAndThirdCostArtist);
+        artists.add(thirdPopularAndEqualFourthCostArtist);
+        artists.add(fourthPopularAndSecondCostArtist);
+        artists.add(fifthPopularAndEqualFourthCostArtist);
 
         return artists;
     }
 
-    private Artist getArtist(String name, Integer price, Integer popularityRank) {
+    private Artist mockArtist(String name, Integer price, Integer popularityRank) {
         Artist artist = mock(Artist.class);
 
         when(artist.getName()).thenReturn(name);

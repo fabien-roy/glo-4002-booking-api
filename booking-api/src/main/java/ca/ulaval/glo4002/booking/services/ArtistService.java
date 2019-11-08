@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.organisation.domain.Artist;
 import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
 
 import javax.inject.Inject;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,11 +31,12 @@ public class ArtistService {
                     break;
                 default:
                 case MOST_POPULAR:
-                    artists = orderByMostPopular(artists);
+                    // TODO : Is this necessary
                     break;
             }
         }
 
+        artists = orderByMostPopular(artists);
         List<String> artistNames = getArtistNames(artists);
 
         return new ArtistListDto(artistNames);
@@ -45,10 +47,10 @@ public class ArtistService {
     }
 
     private List<Artist> orderByMostPopular(List<Artist> artists) {
-        return artists;
+        return artists.stream().sorted(Comparator.comparing(Artist::getPopularityRank)).collect(Collectors.toList());
     }
 
     private List<Artist> orderByLowCost(List<Artist> artists) {
-        return artists;
+        return artists.stream().sorted(Comparator.comparing(Artist::getPrice)).collect(Collectors.toList());
     }
 }
