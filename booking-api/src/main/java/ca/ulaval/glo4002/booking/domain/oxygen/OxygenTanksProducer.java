@@ -1,13 +1,13 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OxygenTanksProducer {
 	
@@ -31,7 +31,9 @@ public class OxygenTanksProducer {
 		quantityToCover = checkInventory(category, possibleCategory, quantityToCover);
 		
 		if(quantityToCover > 0) {
-			newTanks.addAll(factory.buildOxygenTank(possibleCategory, requestDate, quantityToCover));
+
+			factory.buildOxygenTank(possibleCategory, requestDate, quantityToCover);
+			//newTanks.addAll(collection);
 			
 			inventory.addTanksToInventory(category, newTanks);
 			inventory.requestTankByCategory(category, quantityToCover);
@@ -42,9 +44,9 @@ public class OxygenTanksProducer {
 	
 	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Integer numberOfDays) {
 		if (category == OxygenCategories.E) {
-			return (int) (numberOfDays * 5);
+			return (numberOfDays * 5);
 		} else {
-			return (int) (numberOfDays * 3);
+			return (numberOfDays * 3);
 		}
 	}
 	

@@ -1,19 +1,15 @@
 package ca.ulaval.glo4002.booking.factories;
 
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenDate;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenDate;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
-import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
-
 public class OxygenTankFactory {
-
-	// TODO : OXY : Refactor this whole thing, it is way, way to massive. (how ?)
 
 	private static final Integer CATEGORY_A_CREATION_NUMBER = 5;
 	private static final Integer CATEGORY_B_CREATION_NUMBER = 3;
@@ -37,7 +33,6 @@ public class OxygenTankFactory {
 
 		return newTanks;
 	}
-
 
 	private Integer getNumberOfTanksByCategoryForCreation(OxygenCategories category) {
 	    switch (category) {
