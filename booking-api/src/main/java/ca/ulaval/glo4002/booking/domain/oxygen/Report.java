@@ -1,22 +1,22 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
 public class Report {
-	private History history;
+
+	private OxygenHistory oxygenHistory;
 	private OxygenTankInventory oxygenTankInventory;
 
 	public Report() {
-		history = new History();
+		oxygenHistory = new OxygenHistory();
 		oxygenTankInventory = new OxygenTankInventory();
 	}
 
-	public Report(History history, OxygenTankInventory oxygenTankInventory) {
-		super();
-		this.history = history;
+	public Report(OxygenHistory oxygenHistory, OxygenTankInventory oxygenTankInventory) {
+		this.oxygenHistory = oxygenHistory;
 		this.oxygenTankInventory = oxygenTankInventory;
 	}
 
-	public History getHistory() {
-		return history;
+	public OxygenHistory getOxygenHistory() {
+		return oxygenHistory;
 	}
 
 	public OxygenTankInventory getOxygenTankInventory() {

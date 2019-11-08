@@ -10,22 +10,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.History;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-class OxygenTankHistoryMapperTest {
+class OxygenTankOxygenHistoryMapperTest {
 
 	// TODO : Refactor OxygenTankHistoryMapper tests
 
 	OxygenTankHistoryMapper mapper;
 	OxygenTankInventory mockedInventory;
-	History mockedHistory;
+	OxygenHistory mockedOxygenHistory;
 	LocalDate date = LocalDate.of(2050, 7, 1);
 
 	@BeforeEach
@@ -47,28 +47,28 @@ class OxygenTankHistoryMapperTest {
 		when(tankE.getCategory()).thenReturn(OxygenCategories.E);
 		tanks.add(tankE);
 
-		mockedHistory = mock(History.class);
-		when(mockedHistory.getProducedOxygenTanksForDate(any())).thenReturn(tanks);
+		mockedOxygenHistory = mock(OxygenHistory.class);
+		when(mockedOxygenHistory.getProducedOxygenTanksForDate(any())).thenReturn(tanks);
 
 		Map<LocalDate, List<OxygenTank>> oxygenMap = new HashMap<>();
 		oxygenMap.put(date, tanks);
 
-		when(mockedHistory.getProducedOxygenTanks()).thenReturn(oxygenMap);
-		when(mockedHistory.getRequestedOxygenTanks()).thenReturn(oxygenMap);
+		when(mockedOxygenHistory.getProducedOxygenTanks()).thenReturn(oxygenMap);
+		when(mockedOxygenHistory.getRequestedOxygenTanks()).thenReturn(oxygenMap);
 	}
 
 	@Test
 	void toDto_shouldBuildWithCorrectDate() {
-		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
+		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
 		assertEquals(items.get(0).getDate(), date.toString());
 	}
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyOxygenTankBought() {
-		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
+		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
-		List<OxygenTank> tanks = mockedHistory.getProducedOxygenTanksForDate(date);
+		List<OxygenTank> tanks = mockedOxygenHistory.getProducedOxygenTanksForDate(date);
 		// TODO not sure about this part
 		int nbTankE = 0;
 		for (int i = 0; i < tanks.size(); i++) {
@@ -86,9 +86,9 @@ class OxygenTankHistoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyWaterUsed() {
-		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
+		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
-		List<OxygenTank> tanks = mockedHistory.getProducedOxygenTanksForDate(date);
+		List<OxygenTank> tanks = mockedOxygenHistory.getProducedOxygenTanksForDate(date);
 		int nbTankB = 0;
 		for (int i = 0; i < tanks.size(); i++) {
 			if (tanks.get(i).getCategory() == OxygenCategories.B) {
@@ -105,9 +105,9 @@ class OxygenTankHistoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyCandlesUsed() {
-		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
+		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
-		List<OxygenTank> tanks = mockedHistory.getProducedOxygenTanksForDate(date);
+		List<OxygenTank> tanks = mockedOxygenHistory.getProducedOxygenTanksForDate(date);
 		int nbTankA = 0;
 		for (int i = 0; i < tanks.size(); i++) {
 			if (tanks.get(i).getCategory() == OxygenCategories.A) {
@@ -124,9 +124,9 @@ class OxygenTankHistoryMapperTest {
 
 	@Test
 	void toDto_shouldBuildWithCorrectQtyOxygenTankMade() {
-		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
+		List<HistoryItemDto> items = mapper.toDto(mockedOxygenHistory);
 
-		Integer qtyOxygen = mockedHistory.getProducedOxygenTanksForDate(date).size();
+		Integer qtyOxygen = mockedOxygenHistory.getProducedOxygenTanksForDate(date).size();
 
 		assertEquals(qtyOxygen.longValue(), items.get(0).getQtyOxygenTankMade());
 	}

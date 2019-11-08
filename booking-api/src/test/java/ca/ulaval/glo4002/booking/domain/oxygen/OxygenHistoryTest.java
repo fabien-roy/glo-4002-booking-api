@@ -12,33 +12,33 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class HistoryTest {
+class OxygenHistoryTest {
 
-	private History history;
+	private OxygenHistory oxygenHistory;
 	private List<OxygenTank> anOxygenTankList;
 	private List<OxygenTank> anOtherOxygenTankList;
 	private List<OxygenTank> aThirdOxygenTankList;
 	private LocalDate aRequestDate = LocalDate.of(2050, 7, 1);
 	private LocalDate anOtherRequestDate = LocalDate.of(2050, 6, 22);
 	private LocalDate aProducedDate = LocalDate.of(2050, 7, 10);
-	Map<LocalDate, List<OxygenTank>> requestedOxygenTanks;
-	Map<LocalDate, List<OxygenTank>> producedOxygenTanks;
+	private Map<LocalDate, List<OxygenTank>> requestedOxygenTanks;
+	private Map<LocalDate, List<OxygenTank>> producedOxygenTanks;
 
 	@BeforeEach
 	void setupHistory() {
 		setUpOxygenList();
-		requestedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
-		producedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
+		requestedOxygenTanks = new HashMap<>();
+		producedOxygenTanks = new HashMap<>();
 		requestedOxygenTanks.put(aRequestDate, anOxygenTankList);
 		requestedOxygenTanks.put(anOtherRequestDate, anOtherOxygenTankList);
 		producedOxygenTanks.put(aProducedDate, aThirdOxygenTankList);
-		history = new History(requestedOxygenTanks, producedOxygenTanks);
+		oxygenHistory = new OxygenHistory(requestedOxygenTanks, producedOxygenTanks);
 	}
 
 	private void setUpOxygenList() {
-		anOxygenTankList = new ArrayList<OxygenTank>();
-		anOtherOxygenTankList = new ArrayList<OxygenTank>();
-		aThirdOxygenTankList = new ArrayList<OxygenTank>();
+		anOxygenTankList = new ArrayList<>();
+		anOtherOxygenTankList = new ArrayList<>();
+		aThirdOxygenTankList = new ArrayList<>();
 		OxygenTank tank = mock(OxygenTank.class);
 		anOxygenTankList.add(tank);
 		anOxygenTankList.add(tank);
@@ -50,45 +50,49 @@ class HistoryTest {
 
 	@Test
 	void constructing_shouldSetRequestedOxygenTanks() {
-		history = new History();
-		assertTrue(history.getRequestedOxygenTanks().size() == 0);
+		oxygenHistory = new OxygenHistory();
+
+		assertEquals(0, oxygenHistory.getRequestedOxygenTanks().size());
 	}
 
 	@Test
-	void constructing_shouldSetProducedOxygenTankss() {
-		history = new History();
-		assertTrue(history.getProducedOxygenTanks().size() == 0);
+	void constructing_shouldSetProducedOxygenTanks() {
+		oxygenHistory = new OxygenHistory();
+
+		assertEquals(0, oxygenHistory.getProducedOxygenTanks().size());
 	}
 
 	@Test
 	void getRequestedOxygenTank_shouldReturnMapForRequestedOxygenTanks() {
-		assertEquals(history.getRequestedOxygenTanks(), requestedOxygenTanks);
+		assertEquals(oxygenHistory.getRequestedOxygenTanks(), requestedOxygenTanks);
 	}
 
 	@Test
 	void getProducedOxygenTank_shouldReturnMapForProducedOxygenTanks() {
-		assertEquals(history.getProducedOxygenTanks(), producedOxygenTanks);
+		assertEquals(oxygenHistory.getProducedOxygenTanks(), producedOxygenTanks);
 	}
 
 	@Test
 	void getRequestedOxygenTanksForDate_shouldReturnListRequestedOxygenTanksForDate() {
-		assertEquals(history.getRequestedOxygenTanksForDate(aRequestDate), requestedOxygenTanks.get(aRequestDate));
+		assertEquals(oxygenHistory.getRequestedOxygenTanksForDate(aRequestDate), requestedOxygenTanks.get(aRequestDate));
 	}
 
 	@Test
 	void getProducedOxygenTanksForDate_shouldReturnListProducedOxygenTanksForDate() {
-		assertEquals(history.getProducedOxygenTanksForDate(aProducedDate), producedOxygenTanks.get(aProducedDate));
+		assertEquals(oxygenHistory.getProducedOxygenTanksForDate(aProducedDate), producedOxygenTanks.get(aProducedDate));
 	}
 
 	@Test
 	void addRequestedTankToHistory_shouldAddToResquestedTank() {
-		history.addRequestedTankToHistory(aProducedDate, aThirdOxygenTankList);
-		assertEquals(aThirdOxygenTankList, history.getRequestedOxygenTanksForDate(aProducedDate));
+		oxygenHistory.addRequestedTankToHistory(aProducedDate, aThirdOxygenTankList);
+
+		assertEquals(aThirdOxygenTankList, oxygenHistory.getRequestedOxygenTanksForDate(aProducedDate));
 	}
 
 	@Test
 	void addProducedTankToHistory_shouldAddToProducedTank() {
-		history.addProducedTankToHistory(aRequestDate, anOxygenTankList);
-		assertEquals(anOxygenTankList, history.getRequestedOxygenTanksForDate(aRequestDate));
+		oxygenHistory.addProducedTankToHistory(aRequestDate, anOxygenTankList);
+
+		assertEquals(anOxygenTankList, oxygenHistory.getRequestedOxygenTanksForDate(aRequestDate));
 	}
 }

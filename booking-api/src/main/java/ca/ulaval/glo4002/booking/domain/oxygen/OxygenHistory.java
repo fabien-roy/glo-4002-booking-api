@@ -5,17 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class History {
+public class OxygenHistory {
+
 	private Map<LocalDate, List<OxygenTank>> requestedOxygenTanks;
 	private Map<LocalDate, List<OxygenTank>> producedOxygenTanks;
 
-	public History() {
-		this.requestedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
-		this.producedOxygenTanks = new HashMap<LocalDate, List<OxygenTank>>();
+	public OxygenHistory() {
+		this.requestedOxygenTanks = new HashMap<>();
+		this.producedOxygenTanks = new HashMap<>();
 	}
 
-	public History(Map<LocalDate, List<OxygenTank>> requestedOxygenTanks,
-			Map<LocalDate, List<OxygenTank>> producedOxygenTanks) {
+	public OxygenHistory(Map<LocalDate, List<OxygenTank>> requestedOxygenTanks, Map<LocalDate, List<OxygenTank>> producedOxygenTanks) {
 		this.requestedOxygenTanks = requestedOxygenTanks;
 		this.producedOxygenTanks = producedOxygenTanks;
 	}

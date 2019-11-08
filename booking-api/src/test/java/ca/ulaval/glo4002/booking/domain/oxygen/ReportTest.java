@@ -9,20 +9,20 @@ import org.junit.jupiter.api.Test;
 class ReportTest {
 
 	Report report;
-	History mockHistory;
+	OxygenHistory mockOxygenHistory;
 	OxygenTankInventory mockOxygenTankInventory;
 
 	@BeforeEach
 	void setUpReport() {
-		mockHistory = mock(History.class);
+		mockOxygenHistory = mock(OxygenHistory.class);
 		mockOxygenTankInventory = mock(OxygenTankInventory.class);
-		report = new Report(mockHistory, mockOxygenTankInventory);
+		report = new Report(mockOxygenHistory, mockOxygenTankInventory);
 	}
 
 	@Test
 	void constructing_shouldSetHistory() {
 		report = new Report();
-		assertTrue(report.getHistory() instanceof History);
+		assertTrue(report.getOxygenHistory() instanceof OxygenHistory);
 	}
 
 	@Test
@@ -33,7 +33,7 @@ class ReportTest {
 
 	@Test
 	void getHistory_shouldReturnHistory() {
-		assertEquals(report.getHistory(), mockHistory);
+		assertEquals(report.getOxygenHistory(), mockOxygenHistory);
 	}
 
 	@Test

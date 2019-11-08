@@ -152,7 +152,7 @@ Si la commande n’existe pas
                         "quantity": 5
                     }
                ],
-  "history" : [
+  "oxygenHistory" : [
                  {
                      "value": "2050-03-10",
                      "qtyOxygenTankBought": 0,

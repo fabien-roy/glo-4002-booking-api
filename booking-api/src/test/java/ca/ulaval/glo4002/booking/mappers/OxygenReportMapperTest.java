@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.History;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
 import ca.ulaval.glo4002.booking.domain.oxygen.Report;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenReportDto;
@@ -24,7 +24,7 @@ class OxygenReportMapperTest {
     private OxygenTankHistoryMapper historyMapper;
     private Report report;
     private OxygenTankInventory inventory;
-    private History history;
+    private OxygenHistory oxygenHistory;
 
     @BeforeEach
     void setUpMapper() {
@@ -39,8 +39,8 @@ class OxygenReportMapperTest {
         report = mock(Report.class);
         inventory = mock(OxygenTankInventory.class);
         when(report.getOxygenTankInventory()).thenReturn(inventory);
-        history = mock(History.class);
-        when(report.getHistory()).thenReturn(history);
+        oxygenHistory = mock(OxygenHistory.class);
+        when(report.getOxygenHistory()).thenReturn(oxygenHistory);
     }
 
     @Test
@@ -54,7 +54,7 @@ class OxygenReportMapperTest {
     void toDto_shouldCallHistoryMapper_withOxygenTankHistory() {
         oxygenReportMapper.toDto(report);
 
-        verify(historyMapper).toDto(history);
+        verify(historyMapper).toDto(oxygenHistory);
     }
 
     @Test
@@ -82,7 +82,7 @@ class OxygenReportMapperTest {
     @Test
     void toDto_shouldReturnReportWithCorrectHistory() {
         HistoryItemDto expectedHistoryItemDto = mock(HistoryItemDto.class);
-        when(historyMapper.toDto(history)).thenReturn(Collections.singletonList(expectedHistoryItemDto));
+        when(historyMapper.toDto(oxygenHistory)).thenReturn(Collections.singletonList(expectedHistoryItemDto));
 
         OxygenReportDto reportDto = oxygenReportMapper.toDto(report);
 
@@ -93,7 +93,7 @@ class OxygenReportMapperTest {
     void toDto_shouldReturnReportWithCorrectHistory_whenThereAreMultipleHistoryItems() {
         HistoryItemDto expectedHistoryItemDto = mock(HistoryItemDto.class);
         HistoryItemDto expectedOtherHisotryItemDto = mock(HistoryItemDto.class);
-        when(historyMapper.toDto(history)).thenReturn(Arrays.asList(expectedHistoryItemDto, expectedOtherHisotryItemDto));
+        when(historyMapper.toDto(oxygenHistory)).thenReturn(Arrays.asList(expectedHistoryItemDto, expectedOtherHisotryItemDto));
 
         OxygenReportDto reportDto = oxygenReportMapper.toDto(report);
 
