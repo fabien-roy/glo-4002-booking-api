@@ -65,7 +65,17 @@ class HistoryItemMapperTest {
 		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
 
 		List<OxygenTank> tanks = mockedHistory.getProducedOxygenTanksForDate(date);
-		Integer expectedOxygenBought = OxygenTank.CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED;
+		// TODO not sure about this part
+		int nbTankE = 0;
+		for (int i = 0; i < tanks.size(); i++) {
+			if (tanks.get(i).getCategory() == OxygenCategories.E) {
+				nbTankE++;
+			}
+		}
+		int nbRessource = OxygenTank.CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED;
+		int nbTankCreated = OxygenTank.CATEGORY_E_NUMBER_OF_TANKS_CREATED;
+		// ---
+		Integer expectedOxygenBought = (nbRessource / nbTankCreated) * nbTankE;
 
 		assertEquals(expectedOxygenBought.longValue(), items.get(0).getQtyOxygenTankBought());
 	}
@@ -75,9 +85,18 @@ class HistoryItemMapperTest {
 		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
 
 		List<OxygenTank> tanks = mockedHistory.getProducedOxygenTanksForDate(date);
-		Integer expectedWater = OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED;
+		int nbTankB = 0;
+		for (int i = 0; i < tanks.size(); i++) {
+			if (tanks.get(i).getCategory() == OxygenCategories.B) {
+				nbTankB++;
+			}
+		}
+		int nbRessource = OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED;
+		int nbTankCreated = OxygenTank.CATEGORY_B_NUMBER_OF_TANKS_CREATED;
+		// ---
+		Integer expectedWater = (nbRessource / nbTankCreated) * nbTankB;
 
-		assertEquals(expectedWater, items.get(0).getQtyWaterUsed());
+		assertEquals(expectedWater.longValue(), items.get(0).getQtyWaterUsed());
 	}
 
 	@Test
@@ -85,9 +104,18 @@ class HistoryItemMapperTest {
 		List<HistoryItemDto> items = mapper.toDto(mockedHistory);
 
 		List<OxygenTank> tanks = mockedHistory.getProducedOxygenTanksForDate(date);
-		Integer expectedCandle = OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED;
+		int nbTankA = 0;
+		for (int i = 0; i < tanks.size(); i++) {
+			if (tanks.get(i).getCategory() == OxygenCategories.A) {
+				nbTankA++;
+			}
+		}
+		int nbRessource = OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED;
+		int nbTankCreated = OxygenTank.CATEGORY_A_NUMBER_OF_TANKS_CREATED;
+		// ---
+		Integer expectedCandle = (nbRessource / nbTankCreated) * nbTankA;
 
-		assertEquals(expectedCandle, items.get(0).getQtyCandlesUsed());
+		assertEquals(expectedCandle.longValue(), items.get(0).getQtyCandlesUsed());
 	}
 
 	@Test
