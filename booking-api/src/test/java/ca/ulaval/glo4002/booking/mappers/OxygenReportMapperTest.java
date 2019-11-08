@@ -12,31 +12,5 @@ import ca.ulaval.glo4002.booking.dto.oxygen.OxygenReportDto;
 
 class OxygenReportMapperTest {
 
-	OxygenReportMapper mapper;
-	Report mockedReport;
-
-	@BeforeEach
-	void setUpMapper() {
-		mapper = new OxygenReportMapper();
-	}
-
-	@BeforeEach
-	void setUpReport() {
-		mockedReport = mock(Report.class);
-		History mockedHistory = mock(History.class);
-		OxygenTankInventory mockedOxygenTankInventory = mock(OxygenTankInventory.class);
-		when(mockedReport.getHistory()).thenReturn(mockedHistory);
-		when(mockedReport.getOxygenTankInventory()).thenReturn(mockedOxygenTankInventory);
-	}
-
-	@Test
-	void dto_shouldBuildWithCorrectInventoryDtoList() {
-		OxygenReportDto reportDto = mapper.toDto(mockedReport);
-	}
-
-	@Test
-	void dto_shouldBuildWithCorrectHistoryDtoList() {
-		OxygenReportDto reportDto = mapper.toDto(mockedReport);
-	}
-
+    // TODO
 }
