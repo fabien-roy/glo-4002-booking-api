@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.dto.oxygen;
 
 public class HistoryItemDto {
-	public String date;
-	public Long qtyOxygenTankBought;
-	public Long qtyWaterUsed;
-	public Long qtyCandlesUsed;
-	public Long qtyOxygenTankMade;
+	private String date;
+	private Long qtyOxygenTankBought;
+	private Long qtyWaterUsed;
+	private Long qtyCandlesUsed;
+	private Long qtyOxygenTankMade;
 
 	public HistoryItemDto(String date, Long qtyOxygenTankBought, Long qtyWaterUsed, Long qtyCandlesUsed,
 			Long qtyOxygenTankMade) {
