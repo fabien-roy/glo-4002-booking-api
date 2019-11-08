@@ -101,7 +101,13 @@
             <version>1.0.2.Final</version>
             <scope>test</scope>
         </dependency>
+       <dependency>
+	        <artifactId>external-service-api</artifactId>
+	       	<groupId>ca.ulaval.glo4002</groupId>
+	        <scope>compile</scope>
+       </dependency> 
     </dependencies>
+    
 
     <build>
         <plugins>

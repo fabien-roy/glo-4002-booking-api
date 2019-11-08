@@ -1,12 +1,13 @@
 package ca.ulaval.glo4002.booking.services;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
 import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
 import ca.ulaval.glo4002.booking.factories.EventFactory;
 import ca.ulaval.glo4002.booking.repositories.EventRepository;
-
-import javax.inject.Inject;
-import java.util.List;
 
 public class ProgramService {
 
