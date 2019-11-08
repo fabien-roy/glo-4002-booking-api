@@ -17,14 +17,15 @@ public class InMemoryArtistRepository implements ArtistRepository {
 
     @Override
     public Artist getByName(String name) {
-        return artists.stream().
-        		filter(artist -> artist.getName().equals(name)).findAny().
-        		orElseThrow(InvalidProgramException::new);
+        return artists
+                .stream()
+        		.filter(artist -> artist.getName().equals(name))
+                .findAny()
+        		.orElseThrow(InvalidProgramException::new);
     }
 
     @Override
     public List<Artist> getAll() {
         return artists;
     }
-
 }
