@@ -6,9 +6,9 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ReportTest {
+class OxygenReportTest {
 
-	Report report;
+	OxygenReport oxygenReport;
 	OxygenHistory mockOxygenHistory;
 	OxygenInventory mockOxygenInventory;
 
@@ -16,28 +16,28 @@ class ReportTest {
 	void setUpReport() {
 		mockOxygenHistory = mock(OxygenHistory.class);
 		mockOxygenInventory = mock(OxygenInventory.class);
-		report = new Report(mockOxygenHistory, mockOxygenInventory);
+		oxygenReport = new OxygenReport(mockOxygenHistory, mockOxygenInventory);
 	}
 
 	@Test
 	void constructing_shouldSetHistory() {
-		report = new Report();
-		assertTrue(report.getOxygenHistory() instanceof OxygenHistory);
+		oxygenReport = new OxygenReport();
+		assertTrue(oxygenReport.getOxygenHistory() instanceof OxygenHistory);
 	}
 
 	@Test
 	void constructing_shouldSetOxygenTankInventory() {
-		report = new Report();
-		assertTrue(report.getOxygenInventory() instanceof OxygenInventory);
+		oxygenReport = new OxygenReport();
+		assertTrue(oxygenReport.getOxygenInventory() instanceof OxygenInventory);
 	}
 
 	@Test
 	void getHistory_shouldReturnHistory() {
-		assertEquals(report.getOxygenHistory(), mockOxygenHistory);
+		assertEquals(oxygenReport.getOxygenHistory(), mockOxygenHistory);
 	}
 
 	@Test
 	void getOxygenTankInventory_shouldReturnOxygenTankInventory() {
-		assertEquals(report.getOxygenInventory(), mockOxygenInventory);
+		assertEquals(oxygenReport.getOxygenInventory(), mockOxygenInventory);
 	}
 }

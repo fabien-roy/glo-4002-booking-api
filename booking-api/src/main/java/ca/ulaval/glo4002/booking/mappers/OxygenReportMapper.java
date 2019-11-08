@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.mappers;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.Report;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenReport;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenReportDto;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
@@ -20,9 +20,9 @@ public class OxygenReportMapper {
 		this.oxygenTankHistoryMapper = oxygenTankHistoryMapper;
 	}
 
-	public OxygenReportDto toDto(Report report) {
-		List<OxygenTankInventoryItemDto> inventory = oxygenTankInventoryMapper.toDto(report.getOxygenInventory());
-		List<HistoryItemDto> history = oxygenTankHistoryMapper.toDto(report.getOxygenHistory());
+	public OxygenReportDto toDto(OxygenReport oxygenReport) {
+		List<OxygenTankInventoryItemDto> inventory = oxygenTankInventoryMapper.toDto(oxygenReport.getOxygenInventory());
+		List<HistoryItemDto> history = oxygenTankHistoryMapper.toDto(oxygenReport.getOxygenHistory());
 
 		return new OxygenReportDto(inventory, history);
 	}

@@ -1,16 +1,16 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
-public class Report {
+public class OxygenReport {
 
 	private OxygenHistory oxygenHistory;
 	private OxygenInventory oxygenInventory;
 
-	public Report() {
+	public OxygenReport() {
 		oxygenHistory = new OxygenHistory();
 		oxygenInventory = new OxygenInventory();
 	}
 
-	public Report(OxygenHistory oxygenHistory, OxygenInventory oxygenInventory) {
+	public OxygenReport(OxygenHistory oxygenHistory, OxygenInventory oxygenInventory) {
 		this.oxygenHistory = oxygenHistory;
 		this.oxygenInventory = oxygenInventory;
 	}

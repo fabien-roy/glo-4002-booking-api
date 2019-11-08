@@ -5,24 +5,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenReport;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.domain.oxygen.Report;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenReportDto;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-class OxygenReportMapperTest {
+class OxygenOxygenReportMapperTest {
 
     private OxygenReportMapper oxygenReportMapper;
     private OxygenTankInventoryMapper inventoryMapper;
     private OxygenTankHistoryMapper historyMapper;
-    private Report report;
+    private OxygenReport oxygenReport;
     private OxygenInventory inventory;
     private OxygenHistory oxygenHistory;
 
@@ -36,23 +36,23 @@ class OxygenReportMapperTest {
 
     @BeforeEach
     void setUpReport() {
-        report = mock(Report.class);
+        oxygenReport = mock(OxygenReport.class);
         inventory = mock(OxygenInventory.class);
-        when(report.getOxygenInventory()).thenReturn(inventory);
+        when(oxygenReport.getOxygenInventory()).thenReturn(inventory);
         oxygenHistory = mock(OxygenHistory.class);
-        when(report.getOxygenHistory()).thenReturn(oxygenHistory);
+        when(oxygenReport.getOxygenHistory()).thenReturn(oxygenHistory);
     }
 
     @Test
     void toDto_shouldCallInventoryMapper_withOxygenTankInventory() {
-        oxygenReportMapper.toDto(report);
+        oxygenReportMapper.toDto(oxygenReport);
 
         verify(inventoryMapper).toDto(inventory);
     }
 
     @Test
     void toDto_shouldCallHistoryMapper_withOxygenTankHistory() {
-        oxygenReportMapper.toDto(report);
+        oxygenReportMapper.toDto(oxygenReport);
 
         verify(historyMapper).toDto(oxygenHistory);
     }
@@ -62,7 +62,7 @@ class OxygenReportMapperTest {
         OxygenTankInventoryItemDto expectedInventoryItemDto = mock(OxygenTankInventoryItemDto.class);
         when(inventoryMapper.toDto(inventory)).thenReturn(Collections.singletonList(expectedInventoryItemDto));
 
-        OxygenReportDto reportDto = oxygenReportMapper.toDto(report);
+        OxygenReportDto reportDto = oxygenReportMapper.toDto(oxygenReport);
 
         assertEquals(expectedInventoryItemDto, reportDto.getInventory().get(0));
     }
@@ -73,7 +73,7 @@ class OxygenReportMapperTest {
         OxygenTankInventoryItemDto expectedOtherInventoryItemDto = mock(OxygenTankInventoryItemDto.class);
         when(inventoryMapper.toDto(inventory)).thenReturn(Arrays.asList(expectedInventoryItemDto, expectedOtherInventoryItemDto));
 
-        OxygenReportDto reportDto = oxygenReportMapper.toDto(report);
+        OxygenReportDto reportDto = oxygenReportMapper.toDto(oxygenReport);
 
         assertTrue(reportDto.getInventory().stream().anyMatch(expectedInventoryItemDto::equals));
         assertTrue(reportDto.getInventory().stream().anyMatch(expectedOtherInventoryItemDto::equals));
@@ -84,7 +84,7 @@ class OxygenReportMapperTest {
         HistoryItemDto expectedHistoryItemDto = mock(HistoryItemDto.class);
         when(historyMapper.toDto(oxygenHistory)).thenReturn(Collections.singletonList(expectedHistoryItemDto));
 
-        OxygenReportDto reportDto = oxygenReportMapper.toDto(report);
+        OxygenReportDto reportDto = oxygenReportMapper.toDto(oxygenReport);
 
         assertEquals(expectedHistoryItemDto, reportDto.getHistory().get(0));
     }
@@ -95,7 +95,7 @@ class OxygenReportMapperTest {
         HistoryItemDto expectedOtherHisotryItemDto = mock(HistoryItemDto.class);
         when(historyMapper.toDto(oxygenHistory)).thenReturn(Arrays.asList(expectedHistoryItemDto, expectedOtherHisotryItemDto));
 
-        OxygenReportDto reportDto = oxygenReportMapper.toDto(report);
+        OxygenReportDto reportDto = oxygenReportMapper.toDto(oxygenReport);
 
         assertTrue(reportDto.getHistory().stream().anyMatch(expectedHistoryItemDto::equals));
         assertTrue(reportDto.getHistory().stream().anyMatch(expectedOtherHisotryItemDto::equals));

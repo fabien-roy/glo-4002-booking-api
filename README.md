@@ -138,7 +138,7 @@ Si la commande n’existe pas
 }
 ```
 
-### GET /report/o2
+### GET /oxygenReport/o2
 
 ```
 { 
