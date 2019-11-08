@@ -1,9 +1,7 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
@@ -19,7 +17,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class EventFactoryTest {
 
