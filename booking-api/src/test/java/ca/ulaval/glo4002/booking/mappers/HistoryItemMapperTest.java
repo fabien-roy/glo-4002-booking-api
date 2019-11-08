@@ -128,6 +128,6 @@ class HistoryItemMapperTest {
 	}
 
 	private void fillInventory(OxygenTankInventory mockedInventory) {
-
+//TODO test this (and implement it)
 	}
 }
