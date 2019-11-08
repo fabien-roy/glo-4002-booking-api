@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenInventoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-public class OxygenTankInventoryMapper {
+public class OxygenInventoryMapper {
 
 	public List<OxygenInventoryItemDto> toDto(OxygenInventory inventory) {
 		Long eOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.E).longValue();

@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 
-public class OxygenTankHistoryMapper {
+public class OxygenHistoryMapper {
 
 	public List<OxygenHistoryItemDto> toDto(OxygenHistory oxygenHistory) {
 		List<OxygenHistoryItemDto> historyList = new ArrayList<>();

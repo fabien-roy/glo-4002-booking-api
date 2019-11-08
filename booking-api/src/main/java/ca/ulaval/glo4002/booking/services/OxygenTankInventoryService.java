@@ -10,18 +10,18 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenInventoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
-import ca.ulaval.glo4002.booking.mappers.OxygenTankInventoryMapper;
+import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
 
 public class OxygenTankInventoryService {
 
 	private final OxygenTankInventoryRepository repository;
 	private final OxygenTankFactory factory;
-	private final OxygenTankInventoryMapper mapper;
+	private final OxygenInventoryMapper mapper;
 
 	@Inject
 	public OxygenTankInventoryService(OxygenTankInventoryRepository repository, OxygenTankFactory factory,
-			OxygenTankInventoryMapper mapper) {
+			OxygenInventoryMapper mapper) {
 		this.repository = repository;
 		this.factory = factory;
 		this.mapper = mapper;

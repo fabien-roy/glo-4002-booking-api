@@ -16,12 +16,12 @@ import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class OxygenInventoryMapperTest {
 
-	private OxygenTankInventoryMapper subject;
+	private OxygenInventoryMapper subject;
 	private OxygenInventory inventory;
 
 	@BeforeEach
 	void setUpSubject() {
-		subject = new OxygenTankInventoryMapper();
+		subject = new OxygenInventoryMapper();
 	}
 
 	@BeforeEach

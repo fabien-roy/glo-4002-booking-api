@@ -11,18 +11,18 @@ import javax.inject.Inject;
 
 public class OxygenReportMapper {
 
-    private final OxygenTankInventoryMapper oxygenTankInventoryMapper;
-    private final OxygenTankHistoryMapper oxygenTankHistoryMapper;
+    private final OxygenInventoryMapper oxygenInventoryMapper;
+    private final OxygenHistoryMapper oxygenHistoryMapper;
 
     @Inject
-	public OxygenReportMapper(OxygenTankInventoryMapper oxygenTankInventoryMapper, OxygenTankHistoryMapper oxygenTankHistoryMapper) {
-		this.oxygenTankInventoryMapper = oxygenTankInventoryMapper;
-		this.oxygenTankHistoryMapper = oxygenTankHistoryMapper;
+	public OxygenReportMapper(OxygenInventoryMapper oxygenInventoryMapper, OxygenHistoryMapper oxygenHistoryMapper) {
+		this.oxygenInventoryMapper = oxygenInventoryMapper;
+		this.oxygenHistoryMapper = oxygenHistoryMapper;
 	}
 
 	public OxygenReportDto toDto(OxygenReport oxygenReport) {
-		List<OxygenInventoryItemDto> inventory = oxygenTankInventoryMapper.toDto(oxygenReport.getOxygenInventory());
-		List<OxygenHistoryItemDto> history = oxygenTankHistoryMapper.toDto(oxygenReport.getOxygenHistory());
+		List<OxygenInventoryItemDto> inventory = oxygenInventoryMapper.toDto(oxygenReport.getOxygenInventory());
+		List<OxygenHistoryItemDto> history = oxygenHistoryMapper.toDto(oxygenReport.getOxygenHistory());
 
 		return new OxygenReportDto(inventory, history);
 	}

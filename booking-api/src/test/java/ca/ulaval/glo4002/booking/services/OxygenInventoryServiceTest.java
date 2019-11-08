@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
-import ca.ulaval.glo4002.booking.mappers.OxygenTankInventoryMapper;
+import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
 
 class OxygenInventoryServiceTest {
@@ -23,7 +23,7 @@ class OxygenInventoryServiceTest {
 	void setUpSubject() {
 		repository = mock(OxygenTankInventoryRepository.class);
 		OxygenTankFactory factory = mock(OxygenTankFactory.class);
-		OxygenTankInventoryMapper mapper = mock(OxygenTankInventoryMapper.class);
+		OxygenInventoryMapper mapper = mock(OxygenInventoryMapper.class);
 
 		oxygenTankInventoryService = new OxygenTankInventoryService(repository, factory, mapper);
 	}

@@ -23,14 +23,14 @@ class OxygenTankOxygenHistoryMapperTest {
 
 	// TODO : Refactor OxygenTankHistoryMapper tests
 
-	OxygenTankHistoryMapper mapper;
+	OxygenHistoryMapper mapper;
 	OxygenInventory mockedInventory;
 	OxygenHistory mockedOxygenHistory;
 	LocalDate date = LocalDate.of(2050, 7, 1);
 
 	@BeforeEach
 	void setUpMapper() {
-		mapper = new OxygenTankHistoryMapper();
+		mapper = new OxygenHistoryMapper();
 		mockedInventory = mock(OxygenInventory.class);
 	}
 

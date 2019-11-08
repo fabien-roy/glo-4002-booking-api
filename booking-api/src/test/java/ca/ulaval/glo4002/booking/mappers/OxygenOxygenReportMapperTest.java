@@ -20,16 +20,16 @@ import java.util.Collections;
 class OxygenOxygenReportMapperTest {
 
     private OxygenReportMapper oxygenReportMapper;
-    private OxygenTankInventoryMapper inventoryMapper;
-    private OxygenTankHistoryMapper historyMapper;
+    private OxygenInventoryMapper inventoryMapper;
+    private OxygenHistoryMapper historyMapper;
     private OxygenReport oxygenReport;
     private OxygenInventory inventory;
     private OxygenHistory oxygenHistory;
 
     @BeforeEach
     void setUpMapper() {
-        inventoryMapper = mock(OxygenTankInventoryMapper.class);
-        historyMapper = mock(OxygenTankHistoryMapper.class);
+        inventoryMapper = mock(OxygenInventoryMapper.class);
+        historyMapper = mock(OxygenHistoryMapper.class);
 
         oxygenReportMapper = new OxygenReportMapper(inventoryMapper, historyMapper);
     }
