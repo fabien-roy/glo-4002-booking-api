@@ -14,7 +14,7 @@ import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
 import ca.ulaval.glo4002.booking.mappers.OxygenTankInventoryMapper;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
 
-class OxygenTankInventoryServiceTest {
+class OxygenInventoryServiceTest {
 
 	private OxygenTankInventoryService oxygenTankInventoryService;
 	private OxygenTankInventoryRepository repository;

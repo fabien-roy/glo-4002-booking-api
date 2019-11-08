@@ -10,13 +10,13 @@ class ReportTest {
 
 	Report report;
 	OxygenHistory mockOxygenHistory;
-	OxygenTankInventory mockOxygenTankInventory;
+	OxygenInventory mockOxygenInventory;
 
 	@BeforeEach
 	void setUpReport() {
 		mockOxygenHistory = mock(OxygenHistory.class);
-		mockOxygenTankInventory = mock(OxygenTankInventory.class);
-		report = new Report(mockOxygenHistory, mockOxygenTankInventory);
+		mockOxygenInventory = mock(OxygenInventory.class);
+		report = new Report(mockOxygenHistory, mockOxygenInventory);
 	}
 
 	@Test
@@ -28,7 +28,7 @@ class ReportTest {
 	@Test
 	void constructing_shouldSetOxygenTankInventory() {
 		report = new Report();
-		assertTrue(report.getOxygenTankInventory() instanceof OxygenTankInventory);
+		assertTrue(report.getOxygenInventory() instanceof OxygenInventory);
 	}
 
 	@Test
@@ -38,6 +38,6 @@ class ReportTest {
 
 	@Test
 	void getOxygenTankInventory_shouldReturnOxygenTankInventory() {
-		assertEquals(report.getOxygenTankInventory(), mockOxygenTankInventory);
+		assertEquals(report.getOxygenInventory(), mockOxygenInventory);
 	}
 }

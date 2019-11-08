@@ -21,7 +21,7 @@ public class OxygenReportMapper {
 	}
 
 	public OxygenReportDto toDto(Report report) {
-		List<OxygenTankInventoryItemDto> inventory = oxygenTankInventoryMapper.toDto(report.getOxygenTankInventory());
+		List<OxygenTankInventoryItemDto> inventory = oxygenTankInventoryMapper.toDto(report.getOxygenInventory());
 		List<HistoryItemDto> history = oxygenTankHistoryMapper.toDto(report.getOxygenHistory());
 
 		return new OxygenReportDto(inventory, history);

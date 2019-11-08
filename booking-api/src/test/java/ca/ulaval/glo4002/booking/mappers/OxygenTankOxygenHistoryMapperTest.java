@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
@@ -24,14 +24,14 @@ class OxygenTankOxygenHistoryMapperTest {
 	// TODO : Refactor OxygenTankHistoryMapper tests
 
 	OxygenTankHistoryMapper mapper;
-	OxygenTankInventory mockedInventory;
+	OxygenInventory mockedInventory;
 	OxygenHistory mockedOxygenHistory;
 	LocalDate date = LocalDate.of(2050, 7, 1);
 
 	@BeforeEach
 	void setUpMapper() {
 		mapper = new OxygenTankHistoryMapper();
-		mockedInventory = mock(OxygenTankInventory.class);
+		mockedInventory = mock(OxygenInventory.class);
 	}
 
 	@BeforeEach
@@ -131,7 +131,7 @@ class OxygenTankOxygenHistoryMapperTest {
 		assertEquals(qtyOxygen.longValue(), items.get(0).getQtyOxygenTankMade());
 	}
 
-	private void fillInventory(OxygenTankInventory mockedInventory) {
+	private void fillInventory(OxygenInventory mockedInventory) {
 		// TODO test this (and implement it)
 	}
 }

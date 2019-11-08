@@ -6,7 +6,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
@@ -32,7 +32,7 @@ public class OxygenTankInventoryService {
                                                              Integer numberOfDays) {
 		List<OxygenTank> oxygenTank = factory.buildOxygenTank(category, requestDate, numberOfDays);
 		// TODO refactor, TDA. Not sure about this one :S.
-		OxygenTankInventory inventory = repository.getInventory();
+		OxygenInventory inventory = repository.getInventory();
 		// TODO Look why this line fail the test :
 		// inventory.addTanksToInventory(category, oxygenTank);
 		repository.setInventory(inventory);

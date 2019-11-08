@@ -6,7 +6,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenDate;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
@@ -15,13 +15,13 @@ public class OxygenTankFactory {
 
 	// TODO : OXY : Refactor this whole thing, it is way, way to massive. (how ?)
 
-	private OxygenTankInventory inventory;
+	private OxygenInventory inventory;
 
 	private static final Integer CATEGORY_A_CREATION_NUMBER = 5;
 	private static final Integer CATEGORY_B_CREATION_NUMBER = 3;
 	private static final Integer CATEGORY_E_CREATION_NUMBER = 1;
 
-	public OxygenTankFactory(OxygenTankInventory inventory) {
+	public OxygenTankFactory(OxygenInventory inventory) {
 		this.inventory = inventory;
 	}
 

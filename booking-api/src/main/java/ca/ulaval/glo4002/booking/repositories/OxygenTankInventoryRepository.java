@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 
 public interface OxygenTankInventoryRepository {
 
-	OxygenTankInventory getInventory();
+	OxygenInventory getInventory();
 
-	void setInventory(OxygenTankInventory inventory);
+	void setInventory(OxygenInventory inventory);
 }

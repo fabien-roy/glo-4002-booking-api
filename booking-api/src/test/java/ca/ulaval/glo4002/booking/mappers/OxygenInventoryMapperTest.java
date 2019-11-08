@@ -10,14 +10,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-public class OxygenTankInventoryMapperTest {
+public class OxygenInventoryMapperTest {
 
 	private OxygenTankInventoryMapper subject;
-	private OxygenTankInventory inventory;
+	private OxygenInventory inventory;
 
 	@BeforeEach
 	void setUpSubject() {
@@ -26,7 +26,7 @@ public class OxygenTankInventoryMapperTest {
 
 	@BeforeEach
 	void setUpInventory() {
-		inventory = mock(OxygenTankInventory.class);
+		inventory = mock(OxygenInventory.class);
 		OxygenTank tank = mock(OxygenTank.class);
 		when(tank.getCategory()).thenReturn(OxygenCategories.A);
 		List<OxygenTank> newTanks = new ArrayList<>();

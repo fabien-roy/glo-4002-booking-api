@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-public class OxygenTankInventory {
+public class OxygenInventory {
 
 	private Map<OxygenCategories, List<OxygenTank>> notInUseTanks;
 	private Map<OxygenCategories, List<OxygenTank>> inUseTanks;
 
-	public OxygenTankInventory() {
+	public OxygenInventory() {
 		this.notInUseTanks = new EnumMap<>(OxygenCategories.class);
 		this.inUseTanks = new EnumMap<>(OxygenCategories.class);
 
@@ -43,8 +42,9 @@ public class OxygenTankInventory {
 	}
 
 	public Integer getAllQuantityByCategory(OxygenCategories category) {
-		Integer used = this.getInUseQuantityByCategory(category);
-		Integer notUsed = this.getNotInUseQuantityByCategory(category);
+		Integer used = getInUseQuantityByCategory(category);
+		Integer notUsed = getNotInUseQuantityByCategory(category);
+
 		return used + notUsed;
 	}
 
@@ -65,10 +65,5 @@ public class OxygenTankInventory {
 		}
 
 		return quantityStillNeeded;
-	}
-
-	// TODO : OXY is it ok ?
-	public Set<OxygenCategories> getKeys() {
-		return inUseTanks.keySet();
 	}
 }

@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.dto.oxygen.OxygenTankInventoryItemDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTankInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.domain.oxygen.Report;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenReportDto;
 
@@ -23,7 +23,7 @@ class OxygenReportMapperTest {
     private OxygenTankInventoryMapper inventoryMapper;
     private OxygenTankHistoryMapper historyMapper;
     private Report report;
-    private OxygenTankInventory inventory;
+    private OxygenInventory inventory;
     private OxygenHistory oxygenHistory;
 
     @BeforeEach
@@ -37,8 +37,8 @@ class OxygenReportMapperTest {
     @BeforeEach
     void setUpReport() {
         report = mock(Report.class);
-        inventory = mock(OxygenTankInventory.class);
-        when(report.getOxygenTankInventory()).thenReturn(inventory);
+        inventory = mock(OxygenInventory.class);
+        when(report.getOxygenInventory()).thenReturn(inventory);
         oxygenHistory = mock(OxygenHistory.class);
         when(report.getOxygenHistory()).thenReturn(oxygenHistory);
     }
