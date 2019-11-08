@@ -44,12 +44,14 @@ public class OxygenTankFactory {
 			for (Integer i = 0; i < numberOfTanksByBundle; i++) {
 				newTanks.add(new OxygenTank(possibleCategory, requestedDate));
 			}
+
 			quantityToCover -= numberOfTanksByBundle;
 		}
 
 		// TODO : add in inventory from the factory or from somewhere else?
 		inventory.addTanksToInventory(possibleCategory, newTanks);
 		inventory.requestTankByCategory(possibleCategory, quantityOfTanksStillNeeded);
+
 		return newTanks;
 	}
 
@@ -81,9 +83,9 @@ public class OxygenTankFactory {
 
 	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Integer numberOfDays) {
 		if (category == OxygenCategories.E) {
-			return (int) (numberOfDays * 5);
+			return numberOfDays * 5;
 		} else {
-			return (int) (numberOfDays * 3);
+			return numberOfDays * 3;
 		}
 	}
 

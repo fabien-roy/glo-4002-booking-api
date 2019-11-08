@@ -178,38 +178,38 @@ public class OxygenTankFactoryTest {
 
     @Test
     void build_shouldReturnThreeCategoryBTank_whenCategoryIsNebulaButReserveForCategoryACanCoverOneTankAndStillMoreThen10DaysBeforeStart() {
+        Integer expectedNumberOfCreatedTanks = 3;
         when(inventory.requestTankByCategory(CATEGORY_A, 3)).thenReturn(2);
         when(inventory.requestTankByCategory(CATEGORY_B, 2)).thenReturn(2);
 
         createdTanks = factory.buildOxygenTank(CATEGORY_A, VALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
-        // TODO : OXY : magic number
-        assertEquals(3, createdTanks.size());
+        assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
         assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory());
     }
 
     @Test
     void build_shouldReturnOneCategoryETank_whenCategoryIsNebulaButReserveForCategoryAAndBCanCoverTwoTanksAndRequestDateIsLessThen10DaysBeforeStart() {
+        Integer expectedNumberOfCreatedTanks = 1;
         when(inventory.requestTankByCategory(CATEGORY_A, 3)).thenReturn(2);
         when(inventory.requestTankByCategory(CATEGORY_B, 2)).thenReturn(1);
         when(inventory.requestTankByCategory(CATEGORY_E, 1)).thenReturn(1);
 
         createdTanks = factory.buildOxygenTank(CATEGORY_A, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
-        // TODO : OXY : magic number
-        assertEquals(1, createdTanks.size());
+        assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
         assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory());
     }
 
     @Test
     void build_shouldReturnOneCategoryETank_whenCategoryIsSupergiantButReserveForCategoryBCanCoverTwoTanksAndRequestDateIsLessThen10DaysBeforeStart() {
+        Integer expectedNumberOfCreatedTanks = 1;
         when(inventory.requestTankByCategory(CATEGORY_B, 3)).thenReturn(1);
         when(inventory.requestTankByCategory(CATEGORY_E, 1)).thenReturn(1);
 
         createdTanks = factory.buildOxygenTank(CATEGORY_B, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
-        // TODO : OXY : magic number
-        assertEquals(1, createdTanks.size());
+        assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
         assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory());
     }
     
@@ -231,7 +231,7 @@ public class OxygenTankFactoryTest {
     	verify(inventory, times(2)).requestTankByCategory(CATEGORY_A, 3);
     }
     
-    Long getNumberCreated(Integer numberOfDays, Integer quantityNeededByDays, Long quantityByBundle) {
+    private Long getNumberCreated(Integer numberOfDays, Integer quantityNeededByDays, Long quantityByBundle) {
     	return (long) (Math.ceil((numberOfDays * quantityNeededByDays / (double) quantityByBundle)) * quantityByBundle);
     }
 }
