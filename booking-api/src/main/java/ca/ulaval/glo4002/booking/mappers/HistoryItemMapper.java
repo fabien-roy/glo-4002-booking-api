@@ -8,29 +8,13 @@ import java.util.Map;
 import ca.ulaval.glo4002.booking.domain.oxygen.History;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.oxygen.HistoryItemDto;
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class HistoryItemMapper {
 
 	public List<HistoryItemDto> toDto(History history) {
 		List<HistoryItemDto> historyList = new ArrayList<HistoryItemDto>();
 
-		/*
-		 * for (Map.Entry<LocalDate, List<OxygenTank>> entry :
-		 * history.getProducedOxygenTanks().entrySet()) {
-		 * 
-		 */
-		/*
-		 * LocalDate date = entry.getKey(); List<OxygenTank> tanks = entry.getValue();
-		 * Long qtyOxygenTankBought = 0L; Long qtyWaterUsed = 0L; Long qtyCandlesUsed =
-		 * 0L; Long qtyOxygenTankMade = new Long(tanks.size()); tanks.forEach(tank -> {
-		 * // Calculate number of ressources }); HistoryItemDto dto = new
-		 * HistoryItemDto(date, qtyOxygenTankBought, qtyWaterUsed, qtyCandlesUsed,
-		 * qtyOxygenTankMade);
-		 */
-
-		/*
-		 * }
-		 */
 		Map<LocalDate, List<OxygenTank>> requestedOxygenTanks = history.getRequestedOxygenTanks();
 		for (Map.Entry<LocalDate, List<OxygenTank>> entry : requestedOxygenTanks.entrySet()) {
 			LocalDate date = entry.getKey();
@@ -39,16 +23,26 @@ public class HistoryItemMapper {
 			Integer qtyCandlesUsed = 0;
 			List<OxygenTank> tanks = entry.getValue();
 			Integer qtyOxygenTankMade = tanks.size();
-			tanks.forEach(tank -> {
-				// calculate ressources
-			});
+			for (int i = 0; i < tanks.size(); i++) {
+				if (tanks.get(i).getCategory() == OxygenCategories.E) {
+					int nbRessource = OxygenTank.CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED;
+					int nbTank = OxygenTank.CATEGORY_E_NUMBER_OF_TANKS_CREATED;
+					qtyOxygenTankBought += nbRessource / nbTank;
+				} else if (tanks.get(i).getCategory() == OxygenCategories.B) {
+					int nbRessource = OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED;
+					int nbTank = OxygenTank.CATEGORY_B_NUMBER_OF_TANKS_CREATED;
+					qtyWaterUsed += nbRessource / nbTank;
+				} else if (tanks.get(i).getCategory() == OxygenCategories.A) {
+					int nbRessource = OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED;
+					int nbTank = OxygenTank.CATEGORY_A_NUMBER_OF_TANKS_CREATED;
+					qtyCandlesUsed += nbRessource / nbTank;
+				}
+			}
 
 			HistoryItemDto dto = new HistoryItemDto(date.toString(), qtyOxygenTankBought.longValue(),
 					qtyWaterUsed.longValue(), qtyCandlesUsed.longValue(), qtyOxygenTankMade.longValue());
 			historyList.add(dto);
 		}
-
-		Map<LocalDate, List<OxygenTank>> producedOxygenTanks = history.getProducedOxygenTanks();
 
 		return historyList;
 	}
