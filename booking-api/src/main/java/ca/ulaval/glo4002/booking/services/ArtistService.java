@@ -28,13 +28,20 @@ public class ArtistService {
         List<Artist> artists = artistRepository.findAll();
         List<BookingArtist> bookingArtists = artistFactory.buildAll(artists);
 
-        bookingArtists = orderByMostPopular(bookingArtists);
 
-        if (orderBy != null){
+        if (orderBy == null) {
+            bookingArtists = orderByMostPopular(bookingArtists);
+        } else {
             ArtistOrderings ordering = ArtistOrderings.get(orderBy);
 
-            if (ordering.equals(ArtistOrderings.LOW_COSTS)) {
-                bookingArtists = orderByLowCost(bookingArtists);
+            switch (ordering) {
+                case MOST_POPULAR:
+                    bookingArtists = orderByMostPopular(bookingArtists);
+                    break;
+                default:
+                case LOW_COSTS:
+                    bookingArtists = orderByLowCost(bookingArtists);
+                    break;
             }
         }
 
@@ -48,10 +55,16 @@ public class ArtistService {
     }
 
     private List<BookingArtist> orderByMostPopular(List<BookingArtist> artists) {
-        return artists.stream().sorted(Comparator.comparing(BookingArtist::getPopularityRank)).collect(Collectors.toList());
+        return artists
+                .stream()
+                .sorted(Comparator.comparing(BookingArtist::getPopularityRank))
+                .collect(Collectors.toList());
     }
 
     private List<BookingArtist> orderByLowCost(List<BookingArtist> artists) {
-        return Lists.reverse(artists.stream().sorted(Comparator.comparing(BookingArtist::getCost)).collect(Collectors.toList()));
+        return artists
+                   .stream()
+                   .sorted(Comparator.comparing(BookingArtist::getCost).reversed().thenComparing(BookingArtist::getPopularityRank))
+                   .collect(Collectors.toList());
     }
 }
