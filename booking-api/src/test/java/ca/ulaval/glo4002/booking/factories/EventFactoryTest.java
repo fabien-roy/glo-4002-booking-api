@@ -112,7 +112,7 @@ class EventFactoryTest {
 
         List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
 
-        assertEquals(aArtist.getName(), events.get(0).getArtistName());
+        assertEquals(aArtist.getName(), events.get(0).getArtist().getName());
     }
 
     @Test
@@ -123,8 +123,8 @@ class EventFactoryTest {
 
         List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
 
-        assertTrue(events.stream().anyMatch(event -> event.getArtistName().equals(aArtist.getName())));
-        assertTrue(events.stream().anyMatch(event -> event.getArtistName().equals(anotherArtist.getName())));
+        assertTrue(events.stream().anyMatch(event -> event.getArtist().getName().equals(aArtist.getName())));
+        assertTrue(events.stream().anyMatch(event -> event.getArtist().getName().equals(anotherArtist.getName())));
     }
 
     @Test
