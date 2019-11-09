@@ -13,6 +13,7 @@ public class ArtistFactory {
 
 	public BookingArtist build(Artist artist) {
 		return new BookingArtist(
+		        artist.getId(),
 				artist.getName(),
 				new Money(new BigDecimal(artist.getPrice())),
 				artist.getNbPeople(),

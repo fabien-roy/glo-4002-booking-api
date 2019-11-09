@@ -99,10 +99,11 @@ class ArtistServiceTest {
     }
 
     private BookingArtist buildArtist(String name, Integer price, Integer popularityRank) {
+        Integer aId = 1;
         Money cost = new Money(new BigDecimal(price));
         Integer aNumberOfPeople = 1;
         String aMusicStyle = "aMusicStyle";
 
-        return new BookingArtist(name, cost, aNumberOfPeople, aMusicStyle, popularityRank);
+        return new BookingArtist(aId, name, cost, aNumberOfPeople, aMusicStyle, popularityRank);
     }
 }
