@@ -19,10 +19,12 @@ import java.util.stream.Collectors;
 public class EventFactory {
 
     private final ArtistRepository artistRepository;
+    private final ArtistFactory artistFactory;
 
     @Inject
-    public EventFactory(ArtistRepository artistRepository) {
+    public EventFactory(ArtistRepository artistRepository, ArtistFactory artistFactory) {
         this.artistRepository = artistRepository;
+        this.artistFactory = artistFactory;
     }
 
     public List<Event> build(List<ProgramEventDto> eventDtos) {
@@ -31,10 +33,12 @@ public class EventFactory {
         validateEventDates(eventDtos);
         validateArtists(eventDtos);
 
+        List<Artist> possibleArtists = artistRepository.findAll();
+
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
-            BookingArtist bookingArtist = null;
+            BookingArtist bookingArtist = getArtistFromPossibleArtists(possibleArtists, eventDto.getPm());
 
             Event event = new Event(eventDate, activity, bookingArtist);
 
@@ -42,6 +46,16 @@ public class EventFactory {
         });
 
         return events;
+    }
+
+    private BookingArtist getArtistFromPossibleArtists(List<Artist> possibleArtists, String pm) {
+        Artist foundArtist = possibleArtists
+                .stream()
+                .filter(artist -> pm.equals(artist.getName()))
+                .findAny()
+                .orElseThrow(InvalidProgramException::new);
+
+        return artistFactory.build(foundArtist);
     }
 
     private void validateEventDates(List<ProgramEventDto> eventDtos) {
@@ -55,9 +69,9 @@ public class EventFactory {
 
         if (hasNull) throw new InvalidProgramException();
 
-        List<String> eventDates = eventDtos.stream().map(ProgramEventDto::getPm).collect(Collectors.toList());
+        List<String> artists = eventDtos.stream().map(ProgramEventDto::getPm).collect(Collectors.toList());
 
-        validateAllDifferent(eventDates);
+        validateAllDifferent(artists);
     }
 
     private void validateAllDifferent(List<String> elements) {
