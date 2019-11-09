@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
+import ca.ulaval.glo4002.organisation.domain.Artist;
 import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
 
 import javax.inject.Inject;
@@ -33,7 +34,7 @@ public class EventFactory {
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
-            BookingArtist bookingArtist = null; // TODO : Correctly add BookingArtist
+            BookingArtist bookingArtist = null;
 
             Event event = new Event(eventDate, activity, bookingArtist);
 
