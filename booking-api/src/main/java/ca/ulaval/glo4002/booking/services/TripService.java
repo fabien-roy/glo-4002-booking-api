@@ -22,6 +22,10 @@ public class TripService {
         this.factory = factory;
     }
 
+    public void order(ShuttleCategories shuttleCategory, EventDate tripDate, Number passengerNumber) {
+        // TODO
+    }
+
     void orderAll(PassCategories passCategory, List<Pass> passes) {
         ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
 

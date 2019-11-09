@@ -30,6 +30,8 @@ class TripServiceTest {
         service = new TripService(repository, factory);
     }
 
+    // TODO : order tests
+
     @Test
     void orderAll_shouldAddPassengerToDeparturesOnce_whenThereIsASinglePass() {
         PassCategories category = PassCategories.SUPERNOVA;
