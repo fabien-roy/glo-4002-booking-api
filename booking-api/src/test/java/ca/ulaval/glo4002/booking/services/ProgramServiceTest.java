@@ -33,4 +33,26 @@ class ProgramServiceTest {
 
         verify(eventRepository).addAll(any());
     }
+
+    @Test
+    void add_shouldOrderEtSpaceshipTripForArtist_whenThereIsASingleMember() {
+        // TODO
+    }
+
+    @Test
+    void add_shouldOrderMilleniumFalconTripForArtist_whenThereAreMultipleMembers() {
+        // TODO
+    }
+
+    @Test
+    void add_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
+        // TODO
+    }
+
+    @Test
+    void add_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
+        // TODO
+    }
+
+    // TODO : Oxygen tests
 }

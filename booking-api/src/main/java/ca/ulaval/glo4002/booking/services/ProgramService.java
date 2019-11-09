@@ -27,7 +27,9 @@ public class ProgramService {
     public void add(ProgramDto programDto) {
         List<Event> events = eventFactory.build(programDto.getProgram());
 
-        // TODO : Order shuttles and oxygenTanks
+        events.forEach(event -> {
+            // TODO : Order shuttles and oxygenTanks
+        });
 
         eventRepository.addAll(events);
     }
