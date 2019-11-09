@@ -12,6 +12,8 @@ import ca.ulaval.glo4002.booking.factories.EventFactory;
 import ca.ulaval.glo4002.booking.repositories.EventRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
 
@@ -44,8 +46,22 @@ class ProgramServiceTest {
         verify(eventRepository).addAll(any());
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void add_shouldOrderTripForArtistOnceForEveryEvent(int eventAmount) {
+        Integer memberAmount = 1;
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
+        Event aEvent = new Event(aEventDate, Activities.YOGA, aArtist);
+        doReturn(Collections.nCopies(eventAmount, aEvent)).when(eventFactory).build(any());
+
+        programService.add(mock(ProgramDto.class));
+
+        verify(tripService, times(eventAmount)).orderForArtist(any(), any());
+    }
+
     @Test
-    void add_shouldOrderTripForArtistAtCorrectDate_whenThereIsASingleMember() {
+    void add_shouldOrderTripForArtistForCorrectEventDate() {
         Integer memberAmount = 1;
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
         BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
@@ -54,57 +70,7 @@ class ProgramServiceTest {
 
         programService.add(mock(ProgramDto.class));
 
-        verify(tripService).order(any(), eq(aEventDate), any());
-    }
-
-    @Test
-    void add_shouldOrderEtSpaceshipTripForArtist_whenThereIsASingleMember() {
-        Integer memberAmount = 1;
-        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
-        Event aEvent = new Event(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
-        doReturn(Collections.singletonList(aEvent)).when(eventFactory).build(any());
-
-        programService.add(mock(ProgramDto.class));
-
-        verify(tripService).order(eq(ShuttleCategories.ET_SPACESHIP), any(), any());
-    }
-
-    @Test
-    void add_shouldOrderMillenniumFalconTripForArtist_whenThereAreMultipleMembers() {
-        Integer memberAmount = 2;
-        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
-        Event aEvent = new Event(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
-        doReturn(Collections.singletonList(aEvent)).when(eventFactory).build(any());
-
-        programService.add(mock(ProgramDto.class));
-
-        verify(tripService).order(eq(ShuttleCategories.MILLENNIUM_FALCON), any(), any());
-    }
-
-    @Test
-    void add_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
-        Number artistId = new Number(1L);
-        Integer memberAmount = 1;
-        BookingArtist aArtist = new BookingArtist(artistId, "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
-        Event aEvent = new Event(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
-        doReturn(Collections.singletonList(aEvent)).when(eventFactory).build(any());
-
-        programService.add(mock(ProgramDto.class));
-
-        verify(tripService).order(any(), any(), eq(Collections.singletonList(artistId)));
-    }
-
-    @Test
-    void add_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
-        Number artistId = new Number(1L);
-        Integer memberAmount = 2;
-        BookingArtist aArtist = new BookingArtist(artistId, "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
-        Event aEvent = new Event(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
-        doReturn(Collections.singletonList(aEvent)).when(eventFactory).build(any());
-
-        programService.add(mock(ProgramDto.class));
-
-        verify(tripService).order(any(), any(), eq(Collections.nCopies(memberAmount, artistId)));
+        verify(tripService).orderForArtist(any(), eq(aEventDate));
     }
 
     // TODO : Oxygen tests for artists

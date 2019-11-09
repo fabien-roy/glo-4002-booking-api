@@ -1,10 +1,16 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
+import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
+import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
+import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
+import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +36,65 @@ class TripServiceTest {
         service = new TripService(repository, factory);
     }
 
-    // TODO : order tests
+
+    @Test
+    void orderForArtist_shouldOrderTripForArtistAtCorrectDate_whenThereIsASingleMember() {
+        Integer memberAmount = 1;
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
+
+        service.orderForArtist(aArtist, aEventDate);
+
+        verify(repository).addPassengersToNewArrival(any(), any(), eq(new EventDate(EventDate.END_DATE)));
+    }
+
+    @Test
+    void orderForArtist_shouldOrderEtSpaceshipTripForArtist_whenThereIsASingleMember() {
+        Integer memberAmount = 1;
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
+
+        service.orderForArtist(aArtist, aEventDate);
+
+        verify(repository).addPassengersToNewArrival(any(), eq(ShuttleCategories.ET_SPACESHIP), any());
+    }
+
+    @Test
+    void orderForArtist_shouldOrderMillenniumFalconTripForArtist_whenThereAreMultipleMembers() {
+        Integer memberAmount = 2;
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
+
+        service.orderForArtist(aArtist, aEventDate);
+
+        verify(repository).addPassengersToNewArrival(any(), eq(ShuttleCategories.MILLENNIUM_FALCON), any());
+    }
+
+    @Test
+    void orderForArtist_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
+        Number artistId = new Number(1L);
+        Integer memberAmount = 1;
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
+        List<Passenger> expectedPassenger = Collections.singletonList(new Passenger(artistId));
+
+        service.orderForArtist(aArtist, aEventDate);
+
+        verify(repository).addPassengersToNewArrival(eq(expectedPassenger), any(), any());
+    }
+
+    @Test
+    void orderForArtist_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
+        Number artistId = new Number(1L);
+        Integer memberAmount = 2;
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
+        List<Passenger> expectedPassengers = Collections.nCopies(memberAmount, new Passenger(artistId));
+
+        service.orderForArtist(aArtist, aEventDate);
+
+        verify(repository).addPassengersToNewArrival(eq(expectedPassengers), any(), any());
+    }
 
     @Test
     void orderAll_shouldAddPassengerToDeparturesOnce_whenThereIsASinglePass() {
