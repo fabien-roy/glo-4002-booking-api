@@ -25,6 +25,46 @@ public class ArtistFactoryTest {
 		artistFactory = new ArtistFactory();
 	}
 
+	@Test
+	void build_shouldBuildArtistWithCorrectName() {
+		String expectedName = "aName";
+		Artist aArtist = mockArtist(expectedName, 100, 1, "aMusicStyle", 1);
+
+		BookingArtist bookingArtist = artistFactory.build(aArtist);
+
+		assertEquals(expectedName, bookingArtist.getName());
+	}
+
+	@Test
+	void build_shouldBuildArtistWithCorrectCost() {
+		Integer expectedCost = 100;
+		Artist aArtist = mockArtist("aName", expectedCost, 1, "aMusicStyle", 1);
+
+		BookingArtist bookingArtist = artistFactory.build(aArtist);
+
+		assertEquals(expectedCost, bookingArtist.getCost().getValue().intValue());
+	}
+
+	@Test
+	void build_shouldBuildArtistsWithCorrectNumberOfPeople() {
+		Integer expectedNumberOfPeople = 1;
+		Artist aArtist = mockArtist("aName", 100, expectedNumberOfPeople, "aMusicStyle", 1);
+
+		BookingArtist bookingArtist = artistFactory.build(aArtist);
+
+		assertEquals(expectedNumberOfPeople, bookingArtist.getNumberOfPeople());
+	}
+
+	@Test
+	void build_shouldBuildArtistsWithCorrectMusicStyle() {
+		String expectedMusicStyle = "aMusicStyle";
+		Artist aArtist = mockArtist("aName", 100, 1, expectedMusicStyle, 1);
+
+		BookingArtist bookingArtist = artistFactory.build(aArtist);
+
+		assertEquals(expectedMusicStyle, bookingArtist.getMusicStyle());
+	}
+
 	@ParameterizedTest
 	@ValueSource(ints = {1, 2, 3})
 	void buildAll_shouldCorrectAmountOfArtists(int artistAmount) {
@@ -36,18 +76,17 @@ public class ArtistFactoryTest {
 	}
 
 	@Test
-	void buildAll_shouldBuildArtistWithCorrectName() {
-		String expectedName = "aName";
-		Artist aArtist = mockArtist(expectedName, 100, 1, "aMusicStyle", 1);
+	void build_shouldBuildArtistsWithCorrectPopularityRank() {
+		Integer expectedPopularityRank = 1;
+		Artist aArtist = mockArtist("aName", 100, 1, "aMusicStyle", expectedPopularityRank);
 
-		List<BookingArtist> bookingArtists = artistFactory.buildAll(Collections.singletonList(aArtist));
-		BookingArtist bookingArtist = bookingArtists.get(0);
+		BookingArtist bookingArtist = artistFactory.build(aArtist);
 
-		assertEquals(expectedName, bookingArtist.getName());
+		assertEquals(expectedPopularityRank, bookingArtist.getPopularityRank());
 	}
 
 	@Test
-	void buildAll_shouldBuildArtistsWithCorrectName_whenThereAreMultipleArtists() {
+	void buildAll_shouldBuildArtistsWithCorrectName() {
 		String expectedName = "aName";
 		String expectedOtherName = "anotherName";
 		Artist aArtist = mockArtist(expectedName, 100, 1, "aMusicStyle", 1);
@@ -60,18 +99,7 @@ public class ArtistFactoryTest {
 	}
 
 	@Test
-	void buildAll_shouldBuildArtistWithCorrectCost() {
-		Integer expectedCost = 100;
-		Artist aArtist = mockArtist("aName", expectedCost, 1, "aMusicStyle", 1);
-
-		List<BookingArtist> bookingArtists = artistFactory.buildAll(Collections.singletonList(aArtist));
-		BookingArtist bookingArtist = bookingArtists.get(0);
-
-		assertEquals(expectedCost, bookingArtist.getCost().getValue().intValue());
-	}
-
-	@Test
-	void buildAll_shouldBuildArtistsWithCorrectCost_whenThereAreMultipleArtists() {
+	void buildAll_shouldBuildArtistsWithCorrectCost() {
 		Integer expectedCost = 100;
 		Integer expectedOtherCost = 200;
 		Artist aArtist = mockArtist("aName", expectedCost, 1, "aMusicStyle", 1);
@@ -86,17 +114,6 @@ public class ArtistFactoryTest {
 	@Test
 	void buildAll_shouldBuildArtistsWithCorrectNumberOfPeople() {
 		Integer expectedNumberOfPeople = 1;
-		Artist aArtist = mockArtist("aName", 100, expectedNumberOfPeople, "aMusicStyle", 1);
-
-		List<BookingArtist> bookingArtists = artistFactory.buildAll(Collections.singletonList(aArtist));
-		BookingArtist bookingArtist = bookingArtists.get(0);
-
-		assertEquals(expectedNumberOfPeople, bookingArtist.getNumberOfPeople());
-	}
-
-	@Test
-	void buildAll_shouldBuildArtistsWithCorrectNumberOfPeople_whenThereAreMultipleArtists() {
-		Integer expectedNumberOfPeople = 1;
 		Integer expectedOtherNumberOfPeople = 2;
 		Artist aArtist = mockArtist("aName", 100, expectedNumberOfPeople, "aMusicStyle", 1);
 		Artist anotherArtist = mockArtist("aName", 200, expectedOtherNumberOfPeople, "aMusicStyle", 1);
@@ -110,17 +127,6 @@ public class ArtistFactoryTest {
 	@Test
 	void buildAll_shouldBuildArtistsWithCorrectMusicStyle() {
 		String expectedMusicStyle = "aMusicStyle";
-		Artist aArtist = mockArtist("aName", 100, 1, expectedMusicStyle, 1);
-
-		List<BookingArtist> bookingArtists = artistFactory.buildAll(Collections.singletonList(aArtist));
-		BookingArtist bookingArtist = bookingArtists.get(0);
-
-		assertEquals(expectedMusicStyle, bookingArtist.getMusicStyle());
-	}
-
-	@Test
-	void buildAll_shouldBuildArtistsWithCorrectMusicStyle_whenThereAreMultipleArtists() {
-		String expectedMusicStyle = "aMusicStyle";
 		String expectedOtherMusicStyle = "anotherMusicStyle";
 		Artist aArtist = mockArtist("aName", 100, 1, expectedMusicStyle, 1);
 		Artist anotherArtist = mockArtist("aName", 100, 1, expectedOtherMusicStyle, 1);
@@ -133,17 +139,6 @@ public class ArtistFactoryTest {
 
 	@Test
 	void buildAll_shouldBuildArtistsWithCorrectPopularityRank() {
-		Integer expectedPopularityRank = 1;
-		Artist aArtist = mockArtist("aName", 100, 1, "aMusicStyle", expectedPopularityRank);
-
-		List<BookingArtist> bookingArtists = artistFactory.buildAll(Collections.singletonList(aArtist));
-		BookingArtist bookingArtist = bookingArtists.get(0);
-
-		assertEquals(expectedPopularityRank, bookingArtist.getPopularityRank());
-	}
-
-	@Test
-	void buildAll_shouldBuildArtistsWithCorrectPopularityRank_whenThereAreMultipleArtists() {
 		Integer expectedPopularityRank = 1;
 		Integer expectedOtherPopularityRank = 2;
 		Artist aArtist = mockArtist("aName", 100, 1, "aMusicStyle", expectedPopularityRank);
