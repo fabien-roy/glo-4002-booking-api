@@ -9,6 +9,7 @@ import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -98,7 +99,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToDepartures_shouldAddTripDate_toDepartureTrips() {
+	void addPassengerToDepartures_shouldAddTripDateToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate expectedTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
@@ -110,13 +111,26 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToDepartures_shouldAddPassenger_toDepartureTrips() {
+	void addPassengerToDepartures_shouldAddPassengerToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Number expectedPassNumber = new Number(1L);
 		Passenger aPassenger = new Passenger(expectedPassNumber);
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
+		Number passNumber = repository.getDeparturesForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
+
+		assertEquals(expectedPassNumber, passNumber);
+	}
+
+	@Test
+	void addPassengersToNewDeparture_shouldAddPassengerToNewDeparture() {
+		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
+		Number expectedPassNumber = new Number(1L);
+		List<Passenger> somePassengers = Collections.singletonList(new Passenger(expectedPassNumber));
+
+		repository.addPassengersToNewDeparture(somePassengers, aCategory, aTripDate);
 		Number passNumber = repository.getDeparturesForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
 
 		assertEquals(expectedPassNumber, passNumber);
@@ -174,7 +188,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddTripDate_toDepartureTrips() {
+	void addPassengerToArrivals_shouldAddTripDateToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate expectedTripDate = new EventDate(EventDate.START_DATE);
 		Passenger aPassenger = new Passenger(new Number(1L));
@@ -186,7 +200,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddPassenger_toDepartureTrips() {
+	void addPassengerToArrivals_shouldAddPassengerToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = new EventDate(EventDate.START_DATE);
 		Number expectedPassNumber = new Number(1L);
@@ -198,5 +212,16 @@ class InMemoryTripRepositoryTest {
 		assertEquals(expectedPassNumber, passNumber);
 	}
 
-	// TODO : Tests for add to new trip
+	@Test
+	void addPassengersToNewArrival_shouldAddPassengerToNewArrival() {
+		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
+		EventDate aTripDate = new EventDate(EventDate.START_DATE);
+		Number expectedPassNumber = new Number(1L);
+		List<Passenger> somePassengers = Collections.singletonList(new Passenger(expectedPassNumber));
+
+		repository.addPassengersToNewArrival(somePassengers, aCategory, aTripDate);
+		Number passNumber = repository.getArrivalsForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
+
+		assertEquals(expectedPassNumber, passNumber);
+	}
 }
