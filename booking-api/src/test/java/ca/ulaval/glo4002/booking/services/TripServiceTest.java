@@ -36,7 +36,6 @@ class TripServiceTest {
         service = new TripService(repository, factory);
     }
 
-
     @Test
     void orderForArtist_shouldOrderTripForArtistAtCorrectDate_whenThereIsASingleMember() {
         Integer memberAmount = 1;
@@ -45,7 +44,8 @@ class TripServiceTest {
 
         service.orderForArtist(aArtist, aEventDate);
 
-        verify(repository).addPassengersToNewArrival(any(), any(), eq(new EventDate(EventDate.END_DATE)));
+        verify(repository).addPassengersToNewArrival(any(), any(), eq(aEventDate));
+        verify(repository).addPassengersToNewDeparture(any(), any(), eq(aEventDate));
     }
 
     @Test
@@ -57,6 +57,7 @@ class TripServiceTest {
         service.orderForArtist(aArtist, aEventDate);
 
         verify(repository).addPassengersToNewArrival(any(), eq(ShuttleCategories.ET_SPACESHIP), any());
+        verify(repository).addPassengersToNewDeparture(any(), eq(ShuttleCategories.ET_SPACESHIP), any());
     }
 
     @Test
@@ -68,32 +69,37 @@ class TripServiceTest {
         service.orderForArtist(aArtist, aEventDate);
 
         verify(repository).addPassengersToNewArrival(any(), eq(ShuttleCategories.MILLENNIUM_FALCON), any());
+        verify(repository).addPassengersToNewDeparture(any(), eq(ShuttleCategories.MILLENNIUM_FALCON), any());
     }
 
     @Test
     void orderForArtist_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
-        Number artistId = new Number(1L);
+        Number expectedId = new Number(1L);
         Integer memberAmount = 1;
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
         BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
-        List<Passenger> expectedPassenger = Collections.singletonList(new Passenger(artistId));
 
         service.orderForArtist(aArtist, aEventDate);
 
-        verify(repository).addPassengersToNewArrival(eq(expectedPassenger), any(), any());
+        verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) ->
+                passengers.stream().allMatch(passenger -> expectedId.equals(passenger.getPassNumber()))), any(), any());
+        verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) ->
+                passengers.stream().allMatch(passenger -> expectedId.equals(passenger.getPassNumber()))), any(), any());
     }
 
     @Test
     void orderForArtist_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
-        Number artistId = new Number(1L);
+        Number expectedId = new Number(1L);
         Integer memberAmount = 2;
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
         BookingArtist aArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), memberAmount, "aMusicStyle", 1);
-        List<Passenger> expectedPassengers = Collections.nCopies(memberAmount, new Passenger(artistId));
 
         service.orderForArtist(aArtist, aEventDate);
 
-        verify(repository).addPassengersToNewArrival(eq(expectedPassengers), any(), any());
+        verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) ->
+                passengers.stream().allMatch(passenger -> expectedId.equals(passenger.getPassNumber()))), any(), any());
+        verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) ->
+                passengers.stream().allMatch(passenger -> expectedId.equals(passenger.getPassNumber()))), any(), any());
     }
 
     @Test
