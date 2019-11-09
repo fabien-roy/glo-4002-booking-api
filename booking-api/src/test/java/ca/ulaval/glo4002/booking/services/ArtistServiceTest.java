@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
@@ -99,7 +100,7 @@ class ArtistServiceTest {
     }
 
     private BookingArtist buildArtist(String name, Integer price, Integer popularityRank) {
-        Integer aId = 1;
+        Number aId = new Number(1L);
         Money cost = new Money(new BigDecimal(price));
         Integer aNumberOfPeople = 1;
         String aMusicStyle = "aMusicStyle";

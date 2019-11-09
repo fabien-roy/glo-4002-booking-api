@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.organisation.domain.Artist;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,8 +28,9 @@ public class ArtistFactoryTest {
 
 	@Test
 	void build_shouldBuildArtistWithCorrectId() {
-		Integer expectedId = 1;
-		Artist aArtist = mockArtist(expectedId, "aName", 100, 1, "aMusicStyle", 1);
+		Integer id = 1;
+		Number expectedId = new Number(id.longValue());
+		Artist aArtist = mockArtist(id, "aName", 100, 1, "aMusicStyle", 1);
 
 		BookingArtist bookingArtist = artistFactory.build(aArtist);
 
@@ -97,10 +99,12 @@ public class ArtistFactoryTest {
 
 	@Test
 	void buildAll_shouldBuildArtistsWithCorrectIds() {
-		Integer expectedId = 1;
-		Integer expectedOtherId = 2;
-		Artist aArtist = mockArtist(expectedId, "aName", 100, 1, "aMusicStyle", 1);
-		Artist anotherArtist = mockArtist(expectedOtherId, "aName", 100, 1, "aMusicStyle", 1);
+		Integer id = 1;
+		Integer otherId = 2;
+		Number expectedId = new Number(id.longValue());
+		Number expectedOtherId = new Number(otherId.longValue());
+		Artist aArtist = mockArtist(id, "aName", 100, 1, "aMusicStyle", 1);
+		Artist anotherArtist = mockArtist(otherId, "aName", 100, 1, "aMusicStyle", 1);
 
 		List<BookingArtist> bookingArtists = artistFactory.buildAll(Arrays.asList(aArtist, anotherArtist));
 

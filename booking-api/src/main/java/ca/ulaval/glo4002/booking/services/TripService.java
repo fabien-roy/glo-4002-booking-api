@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
@@ -22,7 +23,7 @@ public class TripService {
         this.factory = factory;
     }
 
-    public void order(ShuttleCategories shuttleCategory, EventDate tripDate, Number passengerNumber) {
+    public void order(ShuttleCategories shuttleCategory, EventDate tripDate, List<Number> passengerNumbers) {
         // TODO
     }
 

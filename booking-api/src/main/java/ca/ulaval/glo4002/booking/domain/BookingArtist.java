@@ -4,14 +4,14 @@ import ca.ulaval.glo4002.booking.domain.money.Money;
 
 public class BookingArtist {
 
-    private Integer id;
+    private Number id;
     private String name;
     private Money cost;
     private Integer numberOfPeople;
     private String musicStyle;
     private Integer popularityRank;
 
-    public BookingArtist(Integer id, String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank) {
+    public BookingArtist(Number id, String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank) {
         this.id = id;
 		this.name = name;
 		this.cost = cost;
@@ -20,7 +20,7 @@ public class BookingArtist {
 		this.popularityRank = popularityRank;
 	}
 
-    public Integer getId() {
+    public Number getId() {
         return id;
     }
 

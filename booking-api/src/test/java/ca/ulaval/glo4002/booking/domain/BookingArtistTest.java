@@ -14,7 +14,7 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotArtist() {
-        bookingArtist = new BookingArtist(1, "aArtist", mock(Money.class), 1, "aMusicStyle", 1);
+        bookingArtist = new BookingArtist(new Number(1L), "aArtist", mock(Money.class), 1, "aMusicStyle", 1);
         Object object = new Object();
 
         boolean result = bookingArtist.equals(object);
@@ -24,7 +24,7 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnTrue_whenArtistHasSameValues() {
-        Integer id = 1;
+        Number id = new Number(1L);
         String name = "aArtist";
         Money cost = new Money(new BigDecimal(100));
         Integer membersAmount = 1;
@@ -40,8 +40,8 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnFalse_whenArtistHasDifferentIds() {
-        Integer id = 1;
-        Integer otherId = 2;
+        Number id = new Number(1L);
+        Number otherId = new Number(2L);
         String name = "aArtist";
         Money cost = new Money(new BigDecimal(100));
         Integer membersAmount = 1;
@@ -57,7 +57,7 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnFalse_whenArtistHasDifferentNames() {
-        Integer id = 1;
+        Number id = new Number(1L);
         String name = "aArtist";
         String otherName = "anotherArtist";
         Money cost = new Money(new BigDecimal(100));
@@ -74,7 +74,7 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnFalse_whenArtistHasDifferentCosts() {
-        Integer id = 1;
+        Number id = new Number(1L);
         String name = "aArtist";
         Money cost = new Money(new BigDecimal(100));
         Money otherCost = new Money(new BigDecimal(200));
@@ -91,7 +91,7 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnFalse_whenArtistHasDifferentMembersAmounts() {
-        Integer id = 1;
+        Number id = new Number(1L);
         String name = "aArtist";
         Money cost = new Money(new BigDecimal(100));
         Integer membersAmount = 1;
@@ -108,7 +108,7 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnFalse_whenArtistHasDifferentMusicStyles() {
-        Integer id = 1;
+        Number id = new Number(1L);
         String name = "aArtist";
         Money cost = new Money(new BigDecimal(100));
         Integer membersAmount = 1;
@@ -125,7 +125,7 @@ class BookingArtistTest {
 
     @Test
     void equals_shouldReturnFalse_whenArtistHasDifferentPopularityRanks() {
-        Integer id = 1;
+        Number id = new Number(1L);
         String name = "aArtist";
         Money cost = new Money(new BigDecimal(100));
         Integer membersAmount = 1;
@@ -142,7 +142,7 @@ class BookingArtistTest {
 
     @Test
     void hashCode_shouldReturnValuesHashcode() {
-        Integer id = 1;
+        Number id = new Number(1L);
         String name = "aArtist";
         Money cost = new Money(new BigDecimal(100));
         Integer membersAmount = 1;
