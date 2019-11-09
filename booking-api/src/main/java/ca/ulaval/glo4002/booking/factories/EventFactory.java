@@ -33,7 +33,7 @@ public class EventFactory {
         validateEventDates(eventDtos);
         validateArtists(eventDtos);
 
-        List<Artist> possibleArtists = artistRepository.findAll();
+        List<Artist> possibleArtists = artistRepository.findAll(); // TODO : Should EventFactory know about artistRepository?
 
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());

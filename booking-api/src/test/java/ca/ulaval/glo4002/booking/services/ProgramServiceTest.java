@@ -19,8 +19,10 @@ class ProgramServiceTest {
     void setUpService() {
         eventRepository = mock(EventRepository.class);
         EventFactory eventFactory = mock(EventFactory.class);
+        TripService tripService = mock(TripService.class);
+        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
 
-        programService = new ProgramService(eventRepository, eventFactory);
+        programService = new ProgramService(eventRepository, eventFactory, tripService, oxygenTankInventoryService);
     }
 
     @Test

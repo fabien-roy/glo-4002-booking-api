@@ -13,11 +13,15 @@ public class ProgramService {
 
     private final EventRepository eventRepository;
     private final EventFactory eventFactory;
+    private final TripService tripService;
+    private final OxygenTankInventoryService oxygenTankInventoryService;
 
     @Inject
-    public ProgramService(EventRepository eventRepository, EventFactory eventFactory) {
+    public ProgramService(EventRepository eventRepository, EventFactory eventFactory, TripService tripService, OxygenTankInventoryService oxygenTankInventoryService) {
         this.eventRepository = eventRepository;
         this.eventFactory = eventFactory;
+        this.tripService = tripService;
+        this.oxygenTankInventoryService = oxygenTankInventoryService;
     }
 
     public void add(ProgramDto programDto) {
