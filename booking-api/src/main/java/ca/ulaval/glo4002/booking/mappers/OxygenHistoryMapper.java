@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.booking.mappers;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OxygenHistoryMapper {
 
@@ -22,6 +22,7 @@ public class OxygenHistoryMapper {
 		return history;
 	}
 
+	// TODO : OXY : Need refactoring RequestDate is good For production unit but not for Tank quantity (except for E)
 	private OxygenHistoryItemDto buildItemDto(LocalDate requestedDate, List<OxygenTank> oxygenTanks) {
 		Long qtyOxygenTankBought = 0L;
 		Long qtyWaterUsed = 0L;
