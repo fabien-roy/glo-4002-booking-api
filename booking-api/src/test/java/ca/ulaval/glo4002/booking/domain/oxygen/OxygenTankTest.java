@@ -42,30 +42,30 @@ class OxygenTankTest {
     }
 
     @Test
-    void getReadyDateOxygenCategoryA_shouldReturn20DaysLater() {
-        OxygenDate expectedDate = requestDate;
+    void getReadyDateOxygenCategoryA_shouldReturn20DaysLaterDate() {
+        OxygenDate expectedDate = new OxygenDate(requestDate.getValue().toLocalDate());
         expectedDate.addDays(20);
 
         oxygenTank = new OxygenTank(OxygenCategories.A, requestDate);
 
-        assertEquals(expectedDate, oxygenTank.getReadyDate());
+        assertEquals(expectedDate.toString(), oxygenTank.getReadyDate().toString());
     }
 
     @Test
     void getReadyDateOxygenCategoryB_shouldReturn10DaysLater() {
-        OxygenDate expectedDate = requestDate;
+        OxygenDate expectedDate = new OxygenDate(requestDate.getValue().toLocalDate());
         expectedDate.addDays(10);
 
         oxygenTank = new OxygenTank(OxygenCategories.B, requestDate);
 
-        assertEquals(expectedDate, oxygenTank.getReadyDate());
+        assertEquals(expectedDate.toString(), oxygenTank.getReadyDate().toString());
     }
 
     @Test
     void getReadyDateOxygenCategoryE_shouldReturnSameDay() {
         oxygenTank = new OxygenTank(OxygenCategories.E, requestDate);
 
-        assertEquals(requestDate, oxygenTank.getReadyDate());
+        assertEquals(requestDate.toString(), oxygenTank.getReadyDate().toString());
     }
 
     @Test

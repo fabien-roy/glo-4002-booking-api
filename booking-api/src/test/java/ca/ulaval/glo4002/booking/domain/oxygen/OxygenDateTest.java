@@ -42,7 +42,7 @@ class OxygenDateTest {
     }
 
     @Test
-    public void add10Days_shouldReturnDate10DaysLater() {
+    public void addDays_shouldReturnDateWithNumberDaysLater() {
         LocalDate beginningDate = LocalDate.of(2050, 7, 1);
         LocalDateTime expectedDate = beginningDate.atStartOfDay();
         expectedDate = expectedDate.plusDays(10);
