@@ -74,7 +74,7 @@ public class OxygenTank {
     }
 
     private void calculateReadyDate() {
-        OxygenDate readyDate = new OxygenDate(requestDate.getValue().toLocalDate());
+        OxygenDate readyDate = new OxygenDate(requestDate.getValue());
 
         if (this.category == OxygenCategories.A) {
             readyDate.addDays(20);

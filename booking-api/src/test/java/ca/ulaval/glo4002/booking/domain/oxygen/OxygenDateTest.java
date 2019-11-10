@@ -4,9 +4,6 @@ import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenDateFormatExcept
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -24,10 +21,9 @@ class OxygenDateTest {
 
     @Test
     public void constructingWithString_shouldCreateOxygenDate_whenOxygenIsValid() {
-        LocalDateTime expectedValue = LocalDateTime.of(2050, 7, 1, 0, 0);
-        ZonedDateTime expectedZonedValue = ZonedDateTime.of(expectedValue, ZoneId.systemDefault());
-
-        oxygenDate = new OxygenDate(expectedZonedValue.toString());
+        LocalDate expectedValue = LocalDate.of(2050, 7, 1);
+        
+        oxygenDate = new OxygenDate(expectedValue.toString());
 
         assertEquals(expectedValue, oxygenDate.getValue());
     }
@@ -38,13 +34,13 @@ class OxygenDateTest {
 
         oxygenDate = new OxygenDate(expectedValue);
 
-        assertEquals(expectedValue.atStartOfDay(), oxygenDate.getValue());
+        assertEquals(expectedValue, oxygenDate.getValue());
     }
 
     @Test
     public void addDays_shouldReturnDateWithNumberDaysLater() {
         LocalDate beginningDate = LocalDate.of(2050, 7, 1);
-        LocalDateTime expectedDate = beginningDate.atStartOfDay();
+        LocalDate expectedDate = beginningDate;
         expectedDate = expectedDate.plusDays(10);
 
         oxygenDate = new OxygenDate(beginningDate);

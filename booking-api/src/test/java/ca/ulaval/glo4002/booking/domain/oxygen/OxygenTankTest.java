@@ -43,7 +43,7 @@ class OxygenTankTest {
 
     @Test
     void getReadyDateOxygenCategoryA_shouldReturn20DaysLaterDate() {
-        OxygenDate expectedDate = new OxygenDate(requestDate.getValue().toLocalDate());
+        OxygenDate expectedDate = new OxygenDate(requestDate.getValue());
         expectedDate.addDays(20);
 
         oxygenTank = new OxygenTank(OxygenCategories.A, requestDate);
@@ -53,7 +53,7 @@ class OxygenTankTest {
 
     @Test
     void getReadyDateOxygenCategoryB_shouldReturn10DaysLater() {
-        OxygenDate expectedDate = new OxygenDate(requestDate.getValue().toLocalDate());
+        OxygenDate expectedDate = new OxygenDate(requestDate.getValue());
         expectedDate.addDays(10);
 
         oxygenTank = new OxygenTank(OxygenCategories.B, requestDate);
