@@ -35,6 +35,10 @@ public class OxygenTank {
         return this.category;
     }
 
+    public OxygenDate getRequestDate() {
+        return this.requestDate;
+    }
+
     public OxygenDate getReadyDate() {
         return this.readyDate;
     }
