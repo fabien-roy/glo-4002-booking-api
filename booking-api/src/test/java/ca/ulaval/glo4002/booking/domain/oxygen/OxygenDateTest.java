@@ -22,7 +22,7 @@ class OxygenDateTest {
     @Test
     public void constructingWithString_shouldCreateOxygenDate_whenOxygenIsValid() {
         LocalDate expectedValue = LocalDate.of(2050, 7, 1);
-        
+
         oxygenDate = new OxygenDate(expectedValue.toString());
 
         assertEquals(expectedValue, oxygenDate.getValue());

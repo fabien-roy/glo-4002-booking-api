@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // TODO  OXY : not sure if these kind of test are part of unit testing, for example if Repo where a BD we should'nt test this in unit testing
 
@@ -17,7 +15,7 @@ class InMemoryOxygenInventoryRepositoryTest {
     private OxygenInventory inventory;
 
     @BeforeEach
-    void initRepositoryTest() {
+    void setupRepositoryTest() {
         this.inMemoryRepository = new InMemoryOxygenTankInventoryRepository();
         inventory = new OxygenInventory();
         inMemoryRepository.setInventory(inventory);
@@ -31,11 +29,11 @@ class InMemoryOxygenInventoryRepositoryTest {
     }
 
     @Test
-    void getInventory_shouldReturnNewInventory_whenNoneWasCreated() {
-        OxygenInventory inventory = inMemoryRepository.getInventory();
+    void getInventory_shouldReturnInventory_whenOneWasPassedAtConstruction() {
+        OxygenInventory newInventory = new OxygenInventory();
+        InMemoryOxygenTankInventoryRepository newInMemoryOxygenTankInventoryRepository= new InMemoryOxygenTankInventoryRepository(newInventory);
 
-        assertNotNull(inventory);
-        assertTrue(inventory instanceof OxygenInventory);
+        assertEquals(newInventory, newInMemoryOxygenTankInventoryRepository.getInventory());
     }
 
     @Test

@@ -7,15 +7,15 @@ public class InMemoryOxygenTankInventoryRepository implements OxygenTankInventor
 	private OxygenInventory inventory;
 
 	public InMemoryOxygenTankInventoryRepository() {
-		inventory = new OxygenInventory();
+		this.inventory = new OxygenInventory();
+	}
+
+	public InMemoryOxygenTankInventoryRepository(OxygenInventory inventory) {
+		this.inventory = inventory;
 	}
 
 	@Override
 	public OxygenInventory getInventory() {
-		if (inventory == null) {
-			this.inventory = new OxygenInventory();
-		}
-
 		return inventory;
 	}
 
