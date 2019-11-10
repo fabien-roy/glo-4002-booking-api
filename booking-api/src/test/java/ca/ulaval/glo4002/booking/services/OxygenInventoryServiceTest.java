@@ -29,7 +29,7 @@ class OxygenInventoryServiceTest {
 		oxygenTankInventoryService = new OxygenTankInventoryService(repository, producer, mapper);
 	}
 
-	// TODO : OXY : not sure just changed so travis build is not in error 
+	// TODO : OXY : not sure just changed so travis build is not in error
 	@Test
 	void orderOxygenTank_shouldOrderOxygenTanks() {
 		OxygenCategories category = OxygenCategories.A;
