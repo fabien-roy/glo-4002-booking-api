@@ -25,7 +25,7 @@ public class OxygenTanksProducer {
 	}
 	
 	public List<OxygenTank> produceOxygenForOrder(OxygenCategories category, LocalDate requestDate, Integer numberOfDays) {
-		List<OxygenTank> newTanks = new ArrayList<OxygenTank>();
+		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
 		OxygenCategories possibleCategory = getCategoryForRequestDate(category, requestDate);
 		

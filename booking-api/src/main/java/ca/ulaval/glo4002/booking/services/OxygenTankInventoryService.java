@@ -1,41 +1,38 @@
 package ca.ulaval.glo4002.booking.services;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.inject.Inject;
-
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTanksProducer;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenInventoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
-import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
 import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
 import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
+
+import javax.inject.Inject;
+import java.time.LocalDate;
+import java.util.List;
 
 public class OxygenTankInventoryService {
 
 	private final OxygenTankInventoryRepository repository;
-	private final OxygenTankFactory factory;
+	private final OxygenTanksProducer producer;
 	private final OxygenInventoryMapper mapper;
 
 	@Inject
-	public OxygenTankInventoryService(OxygenTankInventoryRepository repository, OxygenTankFactory factory,
-			OxygenInventoryMapper mapper) {
+	public OxygenTankInventoryService(OxygenTankInventoryRepository repository, OxygenTanksProducer producer,
+									  OxygenInventoryMapper mapper) {
 		this.repository = repository;
-		this.factory = factory;
+		this.producer = producer;
 		this.mapper = mapper;
 	}
 
 	// TODO : orderOxygenTanks
+	// TODO : OXY : What is the point of this create tank or generate a JSON of the inventory, presently seem to do two things
 	public List<OxygenInventoryItemDto> orderOxygenTanks(OxygenCategories category, LocalDate requestDate,
 														 Integer numberOfDays) {
-		List<OxygenTank> oxygenTank = factory.buildOxygenTank(category, requestDate, numberOfDays);
-		// TODO refactor, TDA. Not sure about this one :S.
+		producer.produceOxygenForOrder(category, requestDate, numberOfDays);
+
 		OxygenInventory inventory = repository.getInventory();
-		// TODO Look why this line fail the test :
-		// inventory.addTanksToInventory(category, oxygenTank);
-		repository.setInventory(inventory);
+
 		return mapper.toDto(inventory);
 	}
 }
