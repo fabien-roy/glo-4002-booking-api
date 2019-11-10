@@ -5,13 +5,19 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class OxygenHistoryMapper {
 
+
+
 	public List<OxygenHistoryItemDto> toDto(OxygenHistory oxygenHistory) {
-		List<OxygenHistoryItemDto> history = new ArrayList<>();
+		Map<LocalDate, OxygenHistoryItemDto> oxygenHistoryItemDto = new TreeMap<>();
+
+		return null;
+		/*List<OxygenHistoryItemDto> history = new ArrayList<>();
 
 		oxygenHistory.getRequestedOxygenTanks().forEach((requestedDate, oxygenTanks) -> {
 			OxygenHistoryItemDto itemDto = buildItemDto(requestedDate, oxygenTanks);
@@ -19,7 +25,7 @@ public class OxygenHistoryMapper {
 			history.add(itemDto);
 		});
 
-		return history;
+		return history;*/
 	}
 
 	// TODO : OXY : Need refactoring RequestDate is good For production unit but not for Tank quantity (except for E)
