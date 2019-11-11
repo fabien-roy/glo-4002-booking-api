@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.mappers;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
@@ -10,8 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistoryItem;
+import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 class OxygenTankOxygenHistoryMapperTest {
@@ -21,7 +22,6 @@ class OxygenTankOxygenHistoryMapperTest {
 	private static final OxygenCategories CATEGORY_E = OxygenCategories.E;
 
 	private OxygenHistoryMapper mapper;
-	private OxygenInventory mockedInventory;
 	private OxygenHistory mockedOxygenHistory;
 	private LocalDate date = LocalDate.of(2050, 7, 1);
 
@@ -32,29 +32,28 @@ class OxygenTankOxygenHistoryMapperTest {
 
 	@BeforeEach
 	void setUpOxygenHistory() {
+		OxygenHistoryItem oxygenHistoryItem = setUpOxygenHistoryItem();
+		List<OxygenHistoryItem> historyItems = new ArrayList<>();
+		historyItems.add(oxygenHistoryItem);
 		mockedOxygenHistory = mock(OxygenHistory.class);
+		when(mockedOxygenHistory.returnSortedListByDate()).thenReturn(historyItems);
+	}
 
-		List<OxygenTank> tanks = new ArrayList<>();
-		OxygenTank tankA = mock(OxygenTank.class);
-		when(tankA.getCategory()).thenReturn(CATEGORY_A);
-		tanks.add(tankA);
-		OxygenTank tankB = mock(OxygenTank.class);
-		when(tankB.getCategory()).thenReturn(CATEGORY_B);
-		tanks.add(tankB);
-		OxygenTank tankE = mock(OxygenTank.class);
-		when(tankE.getCategory()).thenReturn(CATEGORY_E);
-		tanks.add(tankE);
-
-		// when(mockedOxygenHistory.getProducedOxygenTanksForDate(any())).thenReturn(tanks);
-		// Map<LocalDate, List<OxygenTank>> oxygenMap = new HashMap<>();
-		// oxygenMap.put(date, tanks);
-		// when(mockedOxygenHistory.getProducedOxygenTanks()).thenReturn(oxygenMap);
-		// when(mockedOxygenHistory.getRequestedOxygenTanks()).thenReturn(oxygenMap);
+	private OxygenHistoryItem setUpOxygenHistoryItem() {
+		OxygenHistoryItem mockedOxygenHistoryItem = mock(OxygenHistoryItem.class);
+		when(mockedOxygenHistoryItem.getDate()).thenReturn(date);
+		when(mockedOxygenHistoryItem.getQtyCandlesUsed()).thenReturn(15);
+		when(mockedOxygenHistoryItem.getQtyOxygenTankBought()).thenReturn(1);
+		when(mockedOxygenHistoryItem.getQtyOxygenTankMade()).thenReturn(9);
+		when(mockedOxygenHistoryItem.getQtyWaterUsed()).thenReturn(8);
+		return mockedOxygenHistoryItem;
 	}
 
 	@Test
 	void toDto_shouldBuildWithCorrectOxygenHistoryItemDtoList() {
+		List<OxygenHistoryItemDto> dtos = mapper.toDto(mockedOxygenHistory);
 
+		assertEquals(dtos.size(), mockedOxygenHistory.returnSortedListByDate().size());
 	}
 
 	@Test
