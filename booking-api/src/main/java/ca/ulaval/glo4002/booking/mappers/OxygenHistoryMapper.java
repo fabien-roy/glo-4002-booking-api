@@ -30,9 +30,9 @@ public class OxygenHistoryMapper {
 
 	// TODO : OXY : Need refactoring RequestDate is good For production unit but not for Tank quantity (except for E)
 	private OxygenHistoryItemDto buildItemDto(LocalDate requestedDate, List<OxygenTank> oxygenTanks) {
-		Long qtyOxygenTankBought = 0L;
-		Long qtyWaterUsed = 0L;
-		Long qtyCandlesUsed = 0L;
+		Integer qtyOxygenTankBought = 0;
+		Integer qtyWaterUsed = 0;
+		Integer qtyCandlesUsed = 0;
 		Integer qtyOxygenTankMade = oxygenTanks.size();
 
 		for(OxygenTank oxygenTank : oxygenTanks) {
@@ -67,7 +67,7 @@ public class OxygenHistoryMapper {
 				qtyOxygenTankBought,
 				qtyWaterUsed,
 				qtyCandlesUsed,
-				qtyOxygenTankMade.longValue()
+				qtyOxygenTankMade
 		);
 	}
 }
