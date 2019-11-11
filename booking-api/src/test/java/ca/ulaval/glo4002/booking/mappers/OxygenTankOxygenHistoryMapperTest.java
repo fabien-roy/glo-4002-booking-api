@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistoryItem;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
@@ -24,6 +25,7 @@ class OxygenTankOxygenHistoryMapperTest {
 	private OxygenHistoryMapper mapper;
 	private OxygenHistory mockedOxygenHistory;
 	private LocalDate date = LocalDate.of(2050, 7, 1);
+	private List<OxygenTank> oxygenTanksList;
 
 	@BeforeEach
 	void setUpMapper() {
@@ -37,6 +39,20 @@ class OxygenTankOxygenHistoryMapperTest {
 		historyItems.add(oxygenHistoryItem);
 		mockedOxygenHistory = mock(OxygenHistory.class);
 		when(mockedOxygenHistory.returnSortedListByDate()).thenReturn(historyItems);
+	}
+
+	@BeforeEach
+	void setUpOxygenTanksList() {
+		oxygenTanksList = new ArrayList<>();
+		OxygenTank tankA = mock(OxygenTank.class);
+		when(tankA.getCategory()).thenReturn(CATEGORY_A);
+		oxygenTanksList.add(tankA);
+		OxygenTank tankB = mock(OxygenTank.class);
+		when(tankB.getCategory()).thenReturn(CATEGORY_B);
+		oxygenTanksList.add(tankB);
+		OxygenTank tankE = mock(OxygenTank.class);
+		when(tankE.getCategory()).thenReturn(CATEGORY_E);
+		oxygenTanksList.add(tankE);
 	}
 
 	private OxygenHistoryItem setUpOxygenHistoryItem() {
@@ -56,28 +72,5 @@ class OxygenTankOxygenHistoryMapperTest {
 		assertEquals(dtos.size(), mockedOxygenHistory.returnSortedListByDate().size());
 	}
 
-	@Test
-	void buildItemDto_shouldBuildDtoWithCorrectDate() {
-
-	}
-
-	@Test
-	void buildItemDto_shouldBuildDtoWithCorrectQtyCandlesUsed() {
-
-	}
-
-	@Test
-	void buildItemDto_shouldBuildDtoWithCorrectQtyOxygenTankBought() {
-
-	}
-
-	@Test
-	void buildItemDto_shouldBuildDtoWithCorrectQtyOxygenTankMade() {
-
-	}
-
-	@Test
-	void buildItemDto_shouldBuildDtoWithCorrectQtyWaterUsed() {
-
-	}
+	// TODO if we delete OxygenHistoryItemMapper, we should test for buildItemDto
 }
