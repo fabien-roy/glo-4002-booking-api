@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 public class OxygenInventory {
 
@@ -31,6 +31,23 @@ public class OxygenInventory {
 
 	public List<OxygenTank> getInUseTanksByCategory(OxygenCategories category) {
 		return inUseTanks.get(category);
+	}
+
+	public List<OxygenTank> getAllTanksByCategory(OxygenCategories category) {
+		List<OxygenTank> tanks = new ArrayList<>();
+
+		tanks.addAll(getNotInUseTankByCategory(category));
+		tanks.addAll(getInUseTanksByCategory(category));
+
+		return tanks;
+	}
+
+	public List<OxygenTank> getAllTanks() {
+		List<OxygenTank> tanks = new ArrayList<>();
+
+		inUseTanks.keySet().forEach(key -> tanks.addAll(getAllTanksByCategory(key)));
+
+		return tanks;
 	}
 
 	public Integer getNotInUseQuantityByCategory(OxygenCategories category) {

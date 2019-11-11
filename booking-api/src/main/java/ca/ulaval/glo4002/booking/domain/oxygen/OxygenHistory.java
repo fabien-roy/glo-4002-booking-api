@@ -29,7 +29,7 @@ public class OxygenHistory {
 			OxygenHistoryItem item;
 
 			if(!historyItems.containsKey(requestDate)) {
-				item = new OxygenHistoryItem(readyDate);
+				item = new OxygenHistoryItem(requestDate);
 				historyItems.put(requestDate, item);
 			} else {
 				item = historyItems.get(requestDate);
@@ -40,9 +40,10 @@ public class OxygenHistory {
 					item.addTankBought(OxygenTank.CATEGORY_E_NUMBER_OF_TANKS_CREATED);
 					break;
 				case B:
-					// TODO OXY : Problem missing .6 period water hot fix with modulo not sure if working
+					// TODO OXY : Problem missing .6 period water hot fix with modulo not sure if working and seem to be domain logic
 					item.addWaterUsed(2);
-					if(item.getQtyWaterUsed() % 6 == 0) {
+
+					if(item.getQtyWaterUsed() % 6 == 0 && item.getQtyWaterUsed() != 0) {
 						item.addWaterUsed(2);
 					}
 					break;
