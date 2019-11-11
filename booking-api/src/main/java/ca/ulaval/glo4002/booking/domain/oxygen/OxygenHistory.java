@@ -3,16 +3,17 @@ package ca.ulaval.glo4002.booking.domain.oxygen;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class OxygenHistory {
 
 	private Map<LocalDate, OxygenHistoryItem> historyItems;
 
 	public OxygenHistory() {
-		this.historyItems = new HashMap<>();
+		this.historyItems = new TreeMap<>();
 	}
 
 	// TODO OXY : Not sure is usefull, maybe if we had persistance
@@ -36,10 +37,10 @@ public class OxygenHistory {
 
 			switch(tank.getCategory()) {
 				case E:
-					item.addTankBought(1);
+					item.addTankBought(OxygenTank.CATEGORY_E_NUMBER_OF_TANKS_CREATED);
 					break;
 				case B:
-					// TODO OXY : Problem missing .6 period water hoot fix with modulo not sure if working
+					// TODO OXY : Problem missing .6 period water hot fix with modulo not sure if working
 					item.addWaterUsed(2);
 					if(item.getQtyWaterUsed() % 6 == 0) {
 						item.addWaterUsed(2);
@@ -64,4 +65,7 @@ public class OxygenHistory {
 		});
 	}
 
+	public List<OxygenHistoryItem> returnSortedListByDate() {
+		return historyItems.values().stream().collect(Collectors.toList());
+	}
 }
