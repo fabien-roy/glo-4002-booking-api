@@ -15,12 +15,15 @@ public class OxygenTankProducer {
 	
 	private OxygenInventory inventory;
 	private OxygenTankFactory factory;
-	
+
+	// TODO : This constructor should not exist
 	public OxygenTankProducer() {
 		this.inventory = new OxygenInventory();
 		this.factory = new OxygenTankFactory();
 	}
-	
+
+	// TODO : Inventory should be gotten using a repo
+	// TODO : Factory should be injected
 	public OxygenTankProducer(OxygenInventory inventory, OxygenTankFactory factory) {
 		this.inventory = inventory;
 		this.factory = factory;
@@ -31,17 +34,15 @@ public class OxygenTankProducer {
 		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
 		OxygenCategories possibleCategory;
 
-		if(quantityToCover > inventory.getNotInUseQuantityByCategory(category)){
-
+		if (quantityToCover > inventory.getNotInUseQuantityByCategory(category)) {
 			possibleCategory = getCategoryForRequestDate(category, requestDate);
 			quantityToCover = inventory.requestTankByCategory(category, possibleCategory, quantityToCover);
-		}
-		else{
+		} else {
 			possibleCategory = category;
 			quantityToCover = inventory.requestTankByCategory(category,category,quantityToCover);
 		}
 
-		if(quantityToCover > 0) {
+		if (quantityToCover > 0) {
 			newTanks.addAll(factory.buildOxygenTank(possibleCategory, requestDate, quantityToCover));
 
 			inventory.addTanksToInventory(category, newTanks);
@@ -51,7 +52,7 @@ public class OxygenTankProducer {
 	}
 	
 	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Integer numberOfDays) {
-		if (category == OxygenCategories.E) {
+		if (category.equals(OxygenCategories.E)) {
 			return (numberOfDays * 5);
 		} else {
 			return (numberOfDays * 3);
@@ -63,7 +64,7 @@ public class OxygenTankProducer {
 
 		switch (category) {
             case A:
-                if(requestDate.plusDays(20).isBefore(readyBeforeDate)) {
+                if (requestDate.plusDays(20).isBefore(readyBeforeDate)) {
                     return OxygenCategories.A;
                 } else if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
                     return OxygenCategories.B;
@@ -71,7 +72,7 @@ public class OxygenTankProducer {
                     return OxygenCategories.E;
                 }
             case B:
-                if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
+                if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
                     return OxygenCategories.B;
                 } else {
                     return OxygenCategories.E;
