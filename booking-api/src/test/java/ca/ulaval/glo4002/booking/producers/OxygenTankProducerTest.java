@@ -38,7 +38,8 @@ public class OxygenTankProducerTest {
     @BeforeEach
     void setupFactory() {
         OxygenInventoryRepository inventoryRepository = mock(OxygenInventoryRepository.class);
-        when(inventoryRepository.getInventory()).thenReturn(mock(OxygenInventory.class));
+        inventory = mock(OxygenInventory.class);
+        when(inventoryRepository.getInventory()).thenReturn(inventory);
         OxygenFactory factory = new OxygenFactory();
         producer = new OxygenTankProducer(inventoryRepository, factory);
         createdTanks = new ArrayList<>();
