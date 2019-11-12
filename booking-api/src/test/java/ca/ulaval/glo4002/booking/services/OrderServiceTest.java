@@ -52,38 +52,20 @@ class OrderServiceTest {
     @Test
     void order_shouldAddOrder() {
         String aVendorCode = "aVendorCode";
-        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                "aOrderDate",
-                aVendorCode,
-                mock(PassBundleDto.class)
-        );
-        Order order = mock(Order.class);
-        when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
-        PassBundle passBundle = mock(PassBundle.class);
-        when(passBundle.getCategory()).thenReturn(PassCategories.SUPERNOVA);
-        when(order.getPassBundle()).thenReturn(passBundle);
-        when(factory.build(any())).thenReturn(order);
+        Order order = mockOrder(aVendorCode, PassCategories.SUPERNOVA);
+        OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
 
         service.order(orderDto);
 
-        verify(repository).addOrder(any());
+        verify(repository).addOrder(eq(order));
     }
 
     @Test
     void order_shouldOrderTripsWithCorrectPassCategory() {
         String aVendorCode = "aVendorCode";
-        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                "aOrderDate",
-                aVendorCode,
-                mock(PassBundleDto.class)
-        );
-        Order order = mock(Order.class);
-        when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
-        PassBundle passBundle = mock(PassBundle.class);
+        OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
         PassCategories expectedPassCategory = PassCategories.SUPERNOVA;
-        when(passBundle.getCategory()).thenReturn(expectedPassCategory);
-        when(order.getPassBundle()).thenReturn(passBundle);
-        when(factory.build(any())).thenReturn(order);
+        mockOrder(aVendorCode, expectedPassCategory);
 
         service.order(orderDto);
 
@@ -93,19 +75,9 @@ class OrderServiceTest {
     @Test
     void order_shouldOrderTripsWithCorrectPasses() {
         String aVendorCode = "aVendorCode";
-        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                "aOrderDate",
-                aVendorCode,
-                mock(PassBundleDto.class)
-        );
-        Order order = mock(Order.class);
-        when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
-        PassBundle passBundle = mock(PassBundle.class);
+        OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
         List<Pass> expectedPasses = new ArrayList<>();
-        when(passBundle.getCategory()).thenReturn(PassCategories.SUPERNOVA);
-        when(passBundle.getPasses()).thenReturn(expectedPasses);
-        when(order.getPassBundle()).thenReturn(passBundle);
-        when(factory.build(any())).thenReturn(order);
+        mockOrder(aVendorCode, PassCategories.SUPERNOVA, expectedPasses);
 
         service.order(orderDto);
 
@@ -131,5 +103,29 @@ class OrderServiceTest {
         OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(aOrderNumber.toString());
 
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
+    }
+
+    private Order mockOrder(String vendorCode, PassCategories passCategory) {
+        return mockOrder(vendorCode, passCategory, new ArrayList<>());
+    }
+
+    private Order mockOrder(String vendorCode, PassCategories passCategory, List<Pass> passes) {
+        Order order = mock(Order.class);
+        when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), vendorCode));
+        PassBundle passBundle = mock(PassBundle.class);
+        when(passBundle.getCategory()).thenReturn(passCategory);
+        when(passBundle.getPasses()).thenReturn(passes);
+        when(order.getPassBundle()).thenReturn(passBundle);
+        when(factory.build(any())).thenReturn(order);
+
+        return order;
+    }
+
+    private OrderWithPassesAsEventDatesDto mockOrderDto(String vendorCode) {
+        return new OrderWithPassesAsEventDatesDto(
+                "aOrderDate",
+                vendorCode,
+                mock(PassBundleDto.class)
+        );
     }
 }
