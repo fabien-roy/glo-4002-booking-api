@@ -18,17 +18,14 @@ public class OxygenTankInventoryService {
 	private final OxygenInventoryMapper mapper;
 
 	@Inject
-	public OxygenTankInventoryService(OxygenTankInventoryRepository repository, OxygenTanksProducer producer,
-									  OxygenInventoryMapper mapper) {
+	public OxygenTankInventoryService(OxygenTankInventoryRepository repository, OxygenTanksProducer producer, OxygenInventoryMapper mapper) {
 		this.repository = repository;
 		this.producer = producer;
 		this.mapper = mapper;
 	}
 
-	// TODO : orderOxygenTanks
-	// TODO : OXY : What is the point of this create tank or generate a JSON of the inventory, presently seem to do two things
-	public List<OxygenInventoryItemDto> orderOxygenTanks(OxygenCategories category, LocalDate requestDate,
-														 Integer numberOfDays) {
+	// TODO : OxygenTankInventoryService.order(...)
+	public List<OxygenInventoryItemDto> order(OxygenCategories category, LocalDate requestDate, Integer numberOfDays) {
 		producer.produceOxygenForOrder(category, requestDate, numberOfDays);
 
 		OxygenInventory inventory = repository.getInventory();

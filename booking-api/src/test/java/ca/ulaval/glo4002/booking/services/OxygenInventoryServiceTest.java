@@ -34,7 +34,7 @@ class OxygenInventoryServiceTest {
 	void orderOxygenTank_shouldOrderOxygenTanks() {
 		OxygenCategories category = OxygenCategories.A;
 		LocalDate requestDate = LocalDate.of(2050, 06, 17);
-		oxygenTankInventoryService.orderOxygenTanks(category, requestDate, numberOfDays);
+		oxygenTankInventoryService.order(category, requestDate, numberOfDays);
 
 		verify(producer).produceOxygenForOrder(any(), any(), any());
 	}
