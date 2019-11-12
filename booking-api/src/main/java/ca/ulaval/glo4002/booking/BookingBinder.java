@@ -10,6 +10,7 @@ import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.mappers.TripMapper;
+import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -23,6 +24,7 @@ public class BookingBinder extends AbstractBinder {
         bindGenerators();
         bindFactories();
         bindRepositories();
+        bindProducers();
         bindServices();
         bindMappers();
         bindControllers();
@@ -35,7 +37,7 @@ public class BookingBinder extends AbstractBinder {
     private void bindFactories() {
         bindAsContract(PassFactory.class);
         bindAsContract(PassBundleFactory.class);
-        bindAsContract(OxygenTankFactory.class);
+        bindAsContract(OxygenFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
         bindAsContract(EventFactory.class);
@@ -46,6 +48,10 @@ public class BookingBinder extends AbstractBinder {
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
         bind(InMemoryEventRepository.class).to(EventRepository.class).in(Singleton.class);
+    }
+
+    private void bindProducers() {
+        bindAsContract(OxygenTankProducer.class);
     }
 
     private void bindServices() {

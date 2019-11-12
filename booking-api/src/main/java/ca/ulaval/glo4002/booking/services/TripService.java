@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.BookingArtist;
-import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
@@ -11,7 +10,6 @@ import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,6 +45,7 @@ public class TripService {
         passes.forEach(pass -> {
             Passenger passenger = new Passenger(pass.getPassNumber());
 
+            // TODO : PassBundle could return a list of required dates (if null -> start and end dates)
             if (pass.getEventDate() == null) {
                 orderForFullFestival(passenger, shuttleCategory);
             } else {

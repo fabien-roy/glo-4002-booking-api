@@ -5,31 +5,27 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
-import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
+import ca.ulaval.glo4002.booking.factories.OxygenFactory;
+import ca.ulaval.glo4002.booking.repositories.OxygenInventoryRepository;
 
+import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OxygenTankProducer {
-	
-	private OxygenInventory inventory;
-	private OxygenTankFactory factory;
 
-	// TODO : This constructor should not exist
-	public OxygenTankProducer() {
-		this.inventory = new OxygenInventory();
-		this.factory = new OxygenTankFactory();
-	}
+    private OxygenInventoryRepository inventoryRepository;
+	private OxygenFactory factory;
 
-	// TODO : Inventory should be gotten using a repo
-	// TODO : Factory should be injected
-	public OxygenTankProducer(OxygenInventory inventory, OxygenTankFactory factory) {
-		this.inventory = inventory;
+	@Inject
+	public OxygenTankProducer(OxygenInventoryRepository inventoryRepository, OxygenFactory factory) {
+	    this.inventoryRepository = inventoryRepository;
 		this.factory = factory;
 	}
 	
 	public List<OxygenTank> produceOxygenForOrder(OxygenCategories category, LocalDate requestDate, Integer numberOfDays) {
+		OxygenInventory inventory = inventoryRepository.getInventory();
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
 		OxygenCategories possibleCategory;
@@ -39,7 +35,7 @@ public class OxygenTankProducer {
 			quantityToCover = inventory.requestTankByCategory(category, possibleCategory, quantityToCover);
 		} else {
 			possibleCategory = category;
-			quantityToCover = inventory.requestTankByCategory(category,category,quantityToCover);
+			quantityToCover = inventory.requestTankByCategory(category, category, quantityToCover);
 		}
 
 		if (quantityToCover > 0) {
@@ -47,6 +43,8 @@ public class OxygenTankProducer {
 
 			inventory.addTanksToInventory(category, newTanks);
 		}
+
+		inventoryRepository.setInventory(inventory); // TODO : Is there a better way than this? Could the inventory actually be the repository?
 		
 		return newTanks;
 	}

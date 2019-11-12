@@ -4,7 +4,8 @@ import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
-import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
+import ca.ulaval.glo4002.booking.factories.OxygenFactory;
+import ca.ulaval.glo4002.booking.repositories.OxygenInventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,11 +37,12 @@ public class OxygenTankProducerTest {
     
     @BeforeEach
     void setupFactory() {
-        inventory = mock(OxygenInventory.class);
-        OxygenTankFactory factory = new OxygenTankFactory();
-        producer = new OxygenTankProducer(inventory, factory);
+        OxygenInventoryRepository inventoryRepository = mock(OxygenInventoryRepository.class);
+        when(inventoryRepository.getInventory()).thenReturn(mock(OxygenInventory.class));
+        OxygenFactory factory = new OxygenFactory();
+        producer = new OxygenTankProducer(inventoryRepository, factory);
         createdTanks = new ArrayList<>();
-        numberOfDays = 1;
+        numberOfDays = 1; // TODO : Guess which parameter is useless?
     }
 
     @Test

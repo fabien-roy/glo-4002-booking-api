@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.factories.OxygenFactory;
 import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
@@ -15,27 +16,5 @@ import static org.mockito.Mockito.verify;
 
 class OxygenInventoryServiceTest {
 
-	private OxygenInventoryService oxygenInventoryService;
-	private OxygenTankProducer producer;
-	private Integer numberOfDays;
-
-	@BeforeEach
-	void setUpOxygenTankInventoryService() {
-		OxygenInventoryRepository repository = mock(OxygenInventoryRepository.class);
-		producer = mock(OxygenTankProducer.class);
-		OxygenInventoryMapper mapper = mock(OxygenInventoryMapper.class);
-
-		numberOfDays = 1;
-		oxygenInventoryService = new OxygenInventoryService(repository, producer, mapper);
-	}
-
-	// TODO : OXY : not sure just changed so travis build is not in error
-	@Test
-	void orderOxygenTank_shouldOrderOxygenTanks() {
-		OxygenCategories category = OxygenCategories.A;
-		LocalDate requestDate = LocalDate.of(2050, 06, 17);
-		oxygenInventoryService.order(category, requestDate, numberOfDays);
-
-		verify(producer).produceOxygenForOrder(any(), any(), any());
-	}
+    // TODO
 }

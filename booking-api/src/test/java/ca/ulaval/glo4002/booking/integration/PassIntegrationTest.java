@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
+import ca.ulaval.glo4002.booking.factories.*;
 import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.domain.passes.*;
 import ca.ulaval.glo4002.booking.dto.*;
@@ -18,10 +19,6 @@ import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
-import ca.ulaval.glo4002.booking.factories.OrderFactory;
-import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
-import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
@@ -58,20 +55,20 @@ public class PassIntegrationTest {
         PassFactory passFactory = new PassFactory(numberGenerator);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
+        OxygenFactory oxygenFactory = new OxygenFactory();
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
-
-        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer();
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
         orderRepository = new InMemoryOrderRepository();
 
+        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer(oxygenInventoryRepository, oxygenFactory);
+
         PassBundleMapper passBundleMapper = new PassBundleMapper();
-        OxygenInventoryMapper oxygenInventoryMapper = new OxygenInventoryMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
-        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenInventoryRepository, oxygenTankProducer, oxygenInventoryMapper);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         controller = new OrderController(orderService);

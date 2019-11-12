@@ -11,9 +11,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class OxygenTankFactoryTest {
+public class OxygenFactoryTest {
 
-    private OxygenTankFactory factory;
+    private OxygenFactory factory;
     private List<OxygenTank> createdTanks;
 
     private static final LocalDate START_OF_FESTIVAL_DATE = LocalDate.of(2050, 07, 17);
@@ -31,7 +31,7 @@ public class OxygenTankFactoryTest {
 
     @BeforeEach
     void setupFactory() {
-        factory = new OxygenTankFactory();
+        factory = new OxygenFactory();
         createdTanks = new ArrayList<>();
     }
 
