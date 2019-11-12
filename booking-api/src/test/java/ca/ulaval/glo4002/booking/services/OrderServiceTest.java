@@ -37,6 +37,7 @@ class OrderServiceTest {
     private OrderRepository repository;
     private OrderFactory factory;
     private TripService tripService;
+    private OxygenTankInventoryService oxygenTankInventoryService;
 
     @BeforeEach
     void setUpService() {
@@ -44,8 +45,9 @@ class OrderServiceTest {
         factory = mock(OrderFactory.class);
         OrderMapper mapper = new OrderMapper(new PassBundleMapper());
         tripService = mock(TripService.class);
+        oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
 
-        service = new OrderService(repository, factory, mapper, tripService);
+        service = new OrderService(repository, factory, mapper, tripService, oxygenTankInventoryService);
     }
 
     @Test
@@ -110,6 +112,8 @@ class OrderServiceTest {
 
         verify(tripService).orderAll(any(), eq(expectedPasses));
     }
+
+    // TODO : Call to OxygenTankInventoryService tests
 
     @Test
     void getByOrderNumber_shouldGetOrder() {
