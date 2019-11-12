@@ -49,7 +49,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindServices() {
-        bindAsContract(OxygenTankInventoryService.class);
+        bindAsContract(OxygenInventoryService.class);
         bindAsContract(TripService.class);
         bindAsContract(OrderService.class);
         bindAsContract(ShuttleManifestService.class);

@@ -23,7 +23,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -37,7 +36,7 @@ class OrderServiceTest {
     private OrderRepository repository;
     private OrderFactory factory;
     private TripService tripService;
-    private OxygenTankInventoryService oxygenTankInventoryService;
+    private OxygenInventoryService oxygenInventoryService;
 
     @BeforeEach
     void setUpService() {
@@ -45,9 +44,9 @@ class OrderServiceTest {
         factory = mock(OrderFactory.class);
         OrderMapper mapper = new OrderMapper(new PassBundleMapper());
         tripService = mock(TripService.class);
-        oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
+        oxygenInventoryService = mock(OxygenInventoryService.class);
 
-        service = new OrderService(repository, factory, mapper, tripService, oxygenTankInventoryService);
+        service = new OrderService(repository, factory, mapper, tripService, oxygenInventoryService);
     }
 
     @Test

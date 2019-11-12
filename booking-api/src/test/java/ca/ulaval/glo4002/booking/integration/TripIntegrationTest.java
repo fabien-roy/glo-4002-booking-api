@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTanksProducer;
+import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.domain.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
@@ -19,7 +19,7 @@ import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.mappers.*;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.OxygenTankInventoryService;
+import ca.ulaval.glo4002.booking.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +53,7 @@ class TripIntegrationTest {
         shuttleFactory = new ShuttleFactory();
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
-        OxygenTanksProducer oxygenTanksProducer = new OxygenTanksProducer();
+        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer();
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenTankInventoryRepository oxygenTankInventoryRepository = new InMemoryOxygenTankInventoryRepository();
@@ -66,9 +66,9 @@ class TripIntegrationTest {
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
-        OxygenTankInventoryService oxygenTankInventoryService = new OxygenTankInventoryService(oxygenTankInventoryRepository, oxygenTanksProducer, oxygenInventoryMapper);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenTankInventoryRepository, oxygenTankProducer, oxygenInventoryMapper);
         ShuttleManifestService shuttleManifestService = new ShuttleManifestService(tripRepository, shuttleManifestMapper);
-        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenTankInventoryService);
+        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         orderController = new OrderController(orderService);
         shuttleManifestController = new ShuttleManifestController(shuttleManifestService);

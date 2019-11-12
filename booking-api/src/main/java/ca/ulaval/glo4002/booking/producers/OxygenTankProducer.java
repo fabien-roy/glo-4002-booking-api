@@ -1,6 +1,8 @@
-package ca.ulaval.glo4002.booking.domain.oxygen;
+package ca.ulaval.glo4002.booking.producers;
 
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.exceptions.oxygen.InvalidOxygenCategoryException;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
@@ -9,17 +11,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OxygenTanksProducer {
+public class OxygenTankProducer {
 	
 	private OxygenInventory inventory;
 	private OxygenTankFactory factory;
 	
-	public OxygenTanksProducer() {
+	public OxygenTankProducer() {
 		this.inventory = new OxygenInventory();
 		this.factory = new OxygenTankFactory();
 	}
 	
-	public OxygenTanksProducer(OxygenInventory inventory, OxygenTankFactory factory) {
+	public OxygenTankProducer(OxygenInventory inventory, OxygenTankFactory factory) {
 		this.inventory = inventory;
 		this.factory = factory;
 	}
@@ -32,7 +34,6 @@ public class OxygenTanksProducer {
 		quantityToCover = checkInventory(category, possibleCategory, quantityToCover);
 
 		if(quantityToCover > 0) {
-
 			newTanks.addAll(factory.buildOxygenTank(possibleCategory, requestDate, quantityToCover));
 			
 			inventory.addTanksToInventory(category, newTanks);
@@ -103,5 +104,4 @@ public class OxygenTanksProducer {
                 throw new InvalidOxygenCategoryException(category);
         }
 	}
-
 }

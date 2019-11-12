@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.orders.Order;
 import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTanksProducer;
+import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
 import ca.ulaval.glo4002.booking.dto.ErrorDto;
 import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
@@ -25,7 +25,7 @@ import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.OxygenTankInventoryService;
+import ca.ulaval.glo4002.booking.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -58,7 +58,7 @@ public class OrderIntegrationTest {
         ShuttleFactory shuttleFactory = new ShuttleFactory();
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
-        OxygenTanksProducer oxygenTanksProducer = new OxygenTanksProducer();
+        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer();
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenTankInventoryRepository oxygenTankInventoryRepository = new InMemoryOxygenTankInventoryRepository();
@@ -69,8 +69,8 @@ public class OrderIntegrationTest {
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
-        OxygenTankInventoryService oxygenTankInventoryService = new OxygenTankInventoryService(oxygenTankInventoryRepository, oxygenTanksProducer, oxygenInventoryMapper);
-        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenTankInventoryService);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenTankInventoryRepository, oxygenTankProducer, oxygenInventoryMapper);
+        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         controller = new OrderController(orderService);
     }

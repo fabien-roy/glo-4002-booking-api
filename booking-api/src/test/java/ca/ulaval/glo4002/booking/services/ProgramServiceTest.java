@@ -7,7 +7,6 @@ import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
-import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import ca.ulaval.glo4002.booking.factories.EventFactory;
 import ca.ulaval.glo4002.booking.repositories.EventRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,9 +31,9 @@ class ProgramServiceTest {
         eventRepository = mock(EventRepository.class);
         eventFactory = mock(EventFactory.class);
         tripService = mock(TripService.class);
-        OxygenTankInventoryService oxygenTankInventoryService = mock(OxygenTankInventoryService.class);
+        OxygenInventoryService oxygenInventoryService = mock(OxygenInventoryService.class);
 
-        programService = new ProgramService(eventRepository, eventFactory, tripService, oxygenTankInventoryService);
+        programService = new ProgramService(eventRepository, eventFactory, tripService, oxygenInventoryService);
     }
 
     @Test
