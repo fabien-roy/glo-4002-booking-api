@@ -29,9 +29,17 @@ public class OxygenTankProducer {
 	public List<OxygenTank> produceOxygenForOrder(OxygenCategories category, LocalDate requestDate, Integer numberOfDays) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
-		OxygenCategories possibleCategory = getCategoryForRequestDate(category, requestDate);
-		
-		quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
+		OxygenCategories possibleCategory;
+
+		if(quantityToCover > inventory.getNotInUseQuantityByCategory(category)){
+
+			possibleCategory = getCategoryForRequestDate(category, requestDate);
+			quantityToCover = inventory.requestTankByCategory(category, possibleCategory, quantityToCover);
+		}
+		else{
+			possibleCategory = category;
+			quantityToCover = inventory.requestTankByCategory(category,category,quantityToCover);
+		}
 
 		if(quantityToCover > 0) {
 			newTanks.addAll(factory.buildOxygenTank(possibleCategory, requestDate, quantityToCover));

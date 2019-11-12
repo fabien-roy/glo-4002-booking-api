@@ -75,11 +75,12 @@ public class OxygenInventory {
 		notInUseTanks.get(category).addAll(newTanks);
 	}
 
-	public Integer requestTankByCategory(OxygenCategories category, Integer quantity) {
+	public Integer requestTankByCategory(OxygenCategories baseCategory, OxygenCategories maxCategory, Integer quantity) {
 		Integer quantityStillNeeded = quantity;
-		int position = categoriesOrder.indexOf(category);
+		int basePosition = categoriesOrder.indexOf(baseCategory);
+		int maxPosition = categoriesOrder.indexOf(maxCategory);
 
-		for(int i = position; i < categoriesOrder.size(); i++){
+		for(int i = basePosition; i <= maxPosition; i++){
 			OxygenCategories currentCategory = categoriesOrder.get(i);
 
 			List<OxygenTank> notInUseTanksForCategory = notInUseTanks.get(currentCategory);

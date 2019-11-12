@@ -73,18 +73,18 @@ public class OxygenInventoryTest {
 	void requestTankByCategory_shouldUpdateQuantityInUse() {
 		Integer requestQuantity = 10;
 
-		oxygenInventory.requestTankByCategory(OxygenCategories.B, requestQuantity);
+		oxygenInventory.requestTankByCategory(OxygenCategories.B, OxygenCategories.B, requestQuantity);
 		Integer currentQuantity = oxygenInventory.getInUseQuantityByCategory(OxygenCategories.B);
 
 		assertSame(requestQuantity, currentQuantity);
 	}
 
 	@Test
-	void requestCategoryATank_whenNotEnoughNotInUse_shouldUseCategoryB(){
+	void requestCategoryATank_withMaxCategoryB_shouldUseCategoryBAndA(){
 		Integer amountToGetFromB = 5;
 		Integer requestQuantity = CATEGORY_A_QUANTITY + amountToGetFromB;
 
-		oxygenInventory.requestTankByCategory(OxygenCategories.A, requestQuantity);
+		oxygenInventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.B, requestQuantity);
 		Integer currentQuantityA = oxygenInventory.getNotInUseQuantityByCategory(OxygenCategories.A);
 		Integer currentQuantityB = oxygenInventory.getNotInUseQuantityByCategory(OxygenCategories.B);
 
@@ -96,7 +96,7 @@ public class OxygenInventoryTest {
 	void requestTank_shouldUpdateQuantityNotInUse() {
 		Integer requestQuantity = 10;
 
-		oxygenInventory.requestTankByCategory(OxygenCategories.B, requestQuantity);
+		oxygenInventory.requestTankByCategory(OxygenCategories.B, OxygenCategories.B, requestQuantity);
 		Integer currentQuantity = oxygenInventory.getNotInUseQuantityByCategory(OxygenCategories.B);
 
 		assertEquals(CATEGORY_B_QUANTITY - requestQuantity, (int) currentQuantity);
@@ -106,18 +106,18 @@ public class OxygenInventoryTest {
 	void requestTank_shouldReturnNone_whenThereIsEnoughNotInUseTanks() {
 		Integer requestedQuantity = 5;
 
-		Integer quantityNeeded = oxygenInventory.requestTankByCategory(OxygenCategories.E, requestedQuantity);
+		Integer quantityNeeded = oxygenInventory.requestTankByCategory(OxygenCategories.E, OxygenCategories.E, requestedQuantity);
 
 		assertEquals(0, (int) quantityNeeded);
 	}
 
 	@Test
 	void requestTank_shouldReturnTheNumberStillNeededToProduce_whenNotEnoughNotInUseTank() {
-		Integer requestedQuantity = 30;
+		Integer requestedQuantity = 100;
 
-		Integer quantity = oxygenInventory.requestTankByCategory(OxygenCategories.E, requestedQuantity);
+		Integer quantity = oxygenInventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.B, requestedQuantity);
 
-		assertEquals(Math.abs(CATEGORY_E_QUANTITY - requestedQuantity), (int) quantity);
+		assertEquals(Math.abs((CATEGORY_A_QUANTITY + CATEGORY_B_QUANTITY) - requestedQuantity), (int) quantity);
 	}
 
 	@Test
