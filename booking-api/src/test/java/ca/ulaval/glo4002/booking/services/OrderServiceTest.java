@@ -84,7 +84,29 @@ class OrderServiceTest {
         verify(tripService).orderAll(any(), eq(expectedPasses));
     }
 
-    // TODO : Call to OxygenTankInventoryService tests
+    @Test
+    void order_shouldOrderOxygenWithCorrectPassCategory() {
+        String aVendorCode = "aVendorCode";
+        OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
+        PassCategories expectedPassCategory = PassCategories.SUPERNOVA;
+        mockOrder(aVendorCode, expectedPassCategory);
+
+        service.order(orderDto);
+
+        verify(oxygenInventoryService).orderForPasses(eq(expectedPassCategory), any());
+    }
+
+    @Test
+    void order_shouldOrderOxygenWithCorrectPasses() {
+        String aVendorCode = "aVendorCode";
+        OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
+        List<Pass> expectedPasses = new ArrayList<>();
+        mockOrder(aVendorCode, PassCategories.SUPERNOVA, expectedPasses);
+
+        service.order(orderDto);
+
+        verify(oxygenInventoryService).orderForPasses(any(), eq(expectedPasses));
+    }
 
     @Test
     void getByOrderNumber_shouldGetOrder() {
