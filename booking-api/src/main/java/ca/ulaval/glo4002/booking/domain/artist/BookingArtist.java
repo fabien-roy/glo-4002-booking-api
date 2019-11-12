@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.artist;
 
+import java.util.List;
+
 import ca.ulaval.glo4002.booking.domain.money.Money;
 
 public class BookingArtist {
@@ -9,13 +11,16 @@ public class BookingArtist {
     private Integer numberOfPeople;
     private String musicStyle;
     private Integer popularityRank;
+    private List<Availability> availabilities;
 
-    public BookingArtist(String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank) {
+    public BookingArtist(String name, Money cost, Integer numberOfPeople,
+    		String musicStyle, Integer popularityRank, List<Availability> availabilities) {
 		this.name = name;
 		this.cost = cost;
 		this.numberOfPeople = numberOfPeople;
 		this.musicStyle = musicStyle;
 		this.popularityRank = popularityRank;
+		this.availabilities = availabilities;
 	}
     
     public String getName() {
@@ -38,21 +43,8 @@ public class BookingArtist {
         return popularityRank;
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof BookingArtist)) return false;
+	public List<Availability> getAvailabilities() {
+		return availabilities;
+	}
 
-        BookingArtist otherBookingArtist = (BookingArtist) other;
-
-        return name.equals(otherBookingArtist.getName())
-                && cost.equals(otherBookingArtist.getCost())
-                && numberOfPeople.equals(otherBookingArtist.getNumberOfPeople())
-                && musicStyle.equals(otherBookingArtist.getMusicStyle())
-                && popularityRank.equals(otherBookingArtist.getPopularityRank());
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode() + cost.hashCode() + numberOfPeople.hashCode() + musicStyle.hashCode() + popularityRank.hashCode();
-    }
 }

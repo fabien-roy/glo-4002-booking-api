@@ -19,5 +19,8 @@ public class ExternalArtistAvailability {
     
     @JsonProperty("availability")
     private String date;
-
+    
+    public String getDate() {
+    	return date;
+    }
 }

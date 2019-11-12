@@ -4,12 +4,10 @@ import ca.ulaval.glo4002.booking.domain.events.EventDate;
 
 public class Availability {
 	
-	private BookingArtist artist;
 	private EventDate date;
 	
-	public Availability(BookingArtist artist, EventDate date) {
-		this.artist = artist;
-		this.date = date;
+	public Availability(EventDate eventDate) {
+		this.date = eventDate;
 	}
 
 	public EventDate getDate() {
