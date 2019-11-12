@@ -69,7 +69,7 @@ class OrderServiceTest {
 
         service.order(orderDto);
 
-        verify(tripService).orderAll(eq(expectedPassCategory), any());
+        verify(tripService).orderForPasses(eq(expectedPassCategory), any());
     }
 
     @Test
@@ -81,7 +81,7 @@ class OrderServiceTest {
 
         service.order(orderDto);
 
-        verify(tripService).orderAll(any(), eq(expectedPasses));
+        verify(tripService).orderForPasses(any(), eq(expectedPasses));
     }
 
     @Test

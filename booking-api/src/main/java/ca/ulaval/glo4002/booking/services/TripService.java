@@ -41,8 +41,7 @@ public class TripService {
         repository.addPassengersToNewDeparture(passengers, shuttleCategory, tripDate);
     }
 
-    // TODO : Rename orderAll to orderForPasses
-    void orderAll(PassCategories passCategory, List<Pass> passes) {
+    void orderForPasses(PassCategories passCategory, List<Pass> passes) {
         ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
 
         passes.forEach(pass -> {
