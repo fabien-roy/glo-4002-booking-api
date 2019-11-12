@@ -38,7 +38,11 @@ public class Trip {
 	public void addPassenger(Passenger passenger) {
 		passengers.add(passenger);
 	}
-	
+
+	public void addPassengers(List<Passenger> passengers) {
+		this.passengers.addAll(passengers);
+	}
+
 	public boolean isFull() {
 		return shuttle.getMaxCapacity() == passengers.size();
 	}

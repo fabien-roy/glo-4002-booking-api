@@ -20,4 +20,8 @@ public interface TripRepository {
 	void addPassengerToDepartures(Passenger passenger, ShuttleCategories category, EventDate tripDate);
 
     void addPassengerToArrivals(Passenger passenger, ShuttleCategories category, EventDate tripDate);
+
+    void addPassengersToNewArrival(List<Passenger> passengers, ShuttleCategories shuttleCategory, EventDate tripDate);
+
+    void addPassengersToNewDeparture(List<Passenger> passengers, ShuttleCategories shuttleCategory, EventDate tripDate);
 }

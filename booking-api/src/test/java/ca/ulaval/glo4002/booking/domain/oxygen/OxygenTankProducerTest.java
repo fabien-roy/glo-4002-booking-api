@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.domain.oxygen;
 
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
+import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +18,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-public class OxygenTanksProducerTest {
+public class OxygenTankProducerTest {
 	
-    private OxygenTanksProducer producer;
+    private OxygenTankProducer producer;
     private OxygenInventory inventory;
     private List<OxygenTank> createdTanks;
     private Integer numberOfDays;
@@ -42,7 +43,7 @@ public class OxygenTanksProducerTest {
     void setupFactory() {
         inventory = mock(OxygenInventory.class);
         OxygenTankFactory factory = new OxygenTankFactory();
-        producer = new OxygenTanksProducer(inventory, factory);
+        producer = new OxygenTankProducer(inventory, factory);
         createdTanks = new ArrayList<>();
         numberOfDays = 1;
     }

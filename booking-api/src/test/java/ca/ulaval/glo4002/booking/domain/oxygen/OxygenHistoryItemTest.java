@@ -1,12 +1,22 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OxygenHistoryItemTest {
 
-    private OxygenHistoryItem oxygenHistoryItem = new OxygenHistoryItem();
+    private OxygenHistoryItem oxygenHistoryItem;
+
+    private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 06, 20);
+
+    @BeforeEach
+    void setupOxygenHistoryItem() {
+        oxygenHistoryItem = new OxygenHistoryItem(A_VALID_DATE);
+    }
 
     @Test
     void addTankBought_shouldAddTankBough() {

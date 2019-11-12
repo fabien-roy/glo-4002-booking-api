@@ -1,13 +1,17 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 class OxygenHistoryTest {
@@ -44,6 +48,51 @@ class OxygenHistoryTest {
 		anOtherOxygenTankList.add(tank);
 		anOtherOxygenTankList.add(tank);
 		aThirdOxygenTankList.add(tank);
+	}
+
+	// TODO : To delete only used to map the process in my head
+	@Test
+	void randomTest() {
+		OxygenDate firstRequestDate = new OxygenDate(aRequestDate);
+		OxygenDate secondRequestDate = new OxygenDate(anOtherRequestDate);
+		OxygenDate thirdRequestDate = new OxygenDate(aProducedDate);
+
+		OxygenTank tankA1 = new OxygenTank(OxygenCategories.A, firstRequestDate);
+		OxygenTank tankB1 = new OxygenTank(OxygenCategories.B, firstRequestDate);
+		OxygenTank tankE1 = new OxygenTank(OxygenCategories.E, firstRequestDate);
+		OxygenTank tankA2 = new OxygenTank(OxygenCategories.A, secondRequestDate);
+		OxygenTank tankB2 = new OxygenTank(OxygenCategories.B, secondRequestDate);
+		OxygenTank tankE2 = new OxygenTank(OxygenCategories.E, secondRequestDate);
+		OxygenTank tankA3 = new OxygenTank(OxygenCategories.A, thirdRequestDate);
+		OxygenTank tankB3 = new OxygenTank(OxygenCategories.B, thirdRequestDate);
+		OxygenTank tankE3 = new OxygenTank(OxygenCategories.E, thirdRequestDate);
+
+		OxygenHistory history = new OxygenHistory();
+		OxygenInventory inventory = new OxygenInventory();
+
+		inventory.addTanksToInventory(OxygenCategories.A,
+				Collections.nCopies(10, tankA1));
+		inventory.addTanksToInventory(OxygenCategories.B,
+				Collections.nCopies(9, tankB1));
+		inventory.addTanksToInventory(OxygenCategories.E,
+				Collections.nCopies(30, tankE1));
+		inventory.addTanksToInventory(OxygenCategories.A,
+				Collections.nCopies(15, tankA2));
+		inventory.addTanksToInventory(OxygenCategories.B,
+				Collections.nCopies(6, tankB2));
+		inventory.addTanksToInventory(OxygenCategories.E,
+				Collections.nCopies(20, tankE2));
+		inventory.addTanksToInventory(OxygenCategories.A,
+				Collections.nCopies(25, tankA3));
+		inventory.addTanksToInventory(OxygenCategories.B,
+				Collections.nCopies(18, tankB3));
+		inventory.addTanksToInventory(OxygenCategories.E,
+				Collections.nCopies(5, tankE3));
+
+
+
+		history.buildHistoryItem(inventory.getAllTanks());
+		System.out.println(history);
 	}
 
 /*	@Test

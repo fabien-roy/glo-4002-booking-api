@@ -16,13 +16,15 @@ public class OrderService {
     private final OrderFactory factory;
     private final OrderMapper mapper;
     private final TripService tripService;
+    private final OxygenInventoryService oxygenInventoryService;
 
     @Inject
-    public OrderService(OrderRepository repository, OrderFactory factory, OrderMapper mapper, TripService tripService) {
+    public OrderService(OrderRepository repository, OrderFactory factory, OrderMapper mapper, TripService tripService, OxygenInventoryService oxygenInventoryService) {
         this.repository = repository;
         this.factory = factory;
         this.mapper = mapper;
         this.tripService = tripService;
+        this.oxygenInventoryService = oxygenInventoryService;
     }
 
     public String order(OrderWithPassesAsEventDatesDto orderDto) {

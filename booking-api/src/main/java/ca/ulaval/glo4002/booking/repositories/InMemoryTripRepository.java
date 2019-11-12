@@ -59,6 +59,23 @@ public class InMemoryTripRepository implements TripRepository {
 		addPassenger(passenger, arrivals, category, tripDate);
 	}
 
+	@Override
+	public void addPassengersToNewArrival(List<Passenger> passengers, ShuttleCategories shuttleCategory, EventDate tripDate) {
+		addPassengersToNewTrip(passengers, arrivals, shuttleCategory, tripDate);
+	}
+
+	@Override
+	public void addPassengersToNewDeparture(List<Passenger> passengers, ShuttleCategories shuttleCategory, EventDate tripDate) {
+		addPassengersToNewTrip(passengers, departures, shuttleCategory, tripDate);
+	}
+
+	private void addPassengersToNewTrip(List<Passenger> passengers, List<Trip> trips, ShuttleCategories shuttleCategory, EventDate tripDate) {
+		Shuttle departureShuttle = shuttleFactory.build(shuttleCategory);
+		Trip trip = new Trip(tripDate, departureShuttle);
+		trip.addPassengers(passengers);
+		trips.add(trip);
+	}
+
 	private void addPassenger(Passenger passenger, List<Trip> trips, ShuttleCategories shuttleCategory, EventDate tripDate) {
 		Trip trip = getNextAvailableTrip(trips, shuttleCategory, tripDate);
 

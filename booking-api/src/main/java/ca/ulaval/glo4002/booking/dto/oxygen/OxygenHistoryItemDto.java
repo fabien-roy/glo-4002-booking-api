@@ -3,13 +3,13 @@ package ca.ulaval.glo4002.booking.dto.oxygen;
 public class OxygenHistoryItemDto {
 
 	private String date;
-	private Long qtyOxygenTankBought;
-	private Long qtyWaterUsed;
-	private Long qtyCandlesUsed;
-	private Long qtyOxygenTankMade;
+	private Integer qtyOxygenTankBought;
+	private Integer qtyWaterUsed;
+	private Integer qtyCandlesUsed;
+	private Integer qtyOxygenTankMade;
 
-	public OxygenHistoryItemDto(String date, Long qtyOxygenTankBought, Long qtyWaterUsed, Long qtyCandlesUsed,
-								Long qtyOxygenTankMade) {
+	public OxygenHistoryItemDto(String date, Integer qtyOxygenTankBought, Integer qtyWaterUsed, Integer qtyCandlesUsed,
+								Integer qtyOxygenTankMade) {
 		this.date = date;
 		this.qtyOxygenTankBought = qtyOxygenTankBought;
 		this.qtyWaterUsed = qtyWaterUsed;
@@ -21,19 +21,19 @@ public class OxygenHistoryItemDto {
 		return date;
 	}
 
-	public Long getQtyOxygenTankBought() {
+	public Integer getQtyOxygenTankBought() {
 		return qtyOxygenTankBought;
 	}
 
-	public Long getQtyWaterUsed() {
+	public Integer getQtyWaterUsed() {
 		return qtyWaterUsed;
 	}
 
-	public Long getQtyCandlesUsed() {
+	public Integer getQtyCandlesUsed() {
 		return qtyCandlesUsed;
 	}
 
-	public Long getQtyOxygenTankMade() {
+	public Integer getQtyOxygenTankMade() {
 		return qtyOxygenTankMade;
 	}
 

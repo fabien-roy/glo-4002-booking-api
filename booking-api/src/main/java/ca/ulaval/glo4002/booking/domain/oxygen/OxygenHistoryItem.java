@@ -1,17 +1,25 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
+import java.time.LocalDate;
+
 public class OxygenHistoryItem {
 
+    private LocalDate date;
     private Integer qtyOxygenTankBought;
     private Integer qtyWaterUsed;
     private Integer qtyCandlesUsed;
     private Integer qtyOxygenTankMade;
 
-    public OxygenHistoryItem() {
+    public OxygenHistoryItem(LocalDate date) {
+        this.date = date;
         this.qtyOxygenTankBought = 0;
         this.qtyWaterUsed = 0;
         this.qtyCandlesUsed = 0;
         this.qtyOxygenTankMade = 0;
+    }
+
+    public LocalDate getDate() {
+        return  this.date;
     }
 
     public Integer getQtyOxygenTankBought() {
