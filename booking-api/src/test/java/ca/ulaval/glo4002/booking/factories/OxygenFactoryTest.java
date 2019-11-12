@@ -2,6 +2,8 @@ package ca.ulaval.glo4002.booking.factories;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+import ca.ulaval.glo4002.booking.enums.PassCategories;
+import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +40,7 @@ public class OxygenFactoryTest {
     @Test
     void build_shouldBuild5OxygenTankCategoryA_whenCategoryIsNebula() {
         createdTanks = factory.buildOxygenTank(CATEGORY_A, VALID_CATEGORY_A_BUILD_DATE, NUMBER_OF_TANK_A_BY_BUNDLE);
+
         assertEquals(NUMBER_OF_TANK_A_BY_BUNDLE, createdTanks.size());
         assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory());
     }
@@ -45,6 +48,7 @@ public class OxygenFactoryTest {
     @Test
     void build_shouldBuild3OxygenTankCategoryB_whenCategoryIsSupergiant() {
         createdTanks = factory.buildOxygenTank(CATEGORY_B, VALID_CATEGORY_B_BUILD_DATE, NUMBER_OF_TANK_B_BY_BUNDLE);
+
         assertEquals(NUMBER_OF_TANK_B_BY_BUNDLE, createdTanks.size());
         assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory());
     }
@@ -52,7 +56,35 @@ public class OxygenFactoryTest {
     @Test
     void build_shouldBuild1OxygenTankCategoryE_whenCategoryIsSupernova() {
         createdTanks = factory.buildOxygenTank(CATEGORY_E, VALID_CATEGORY_E_BUILD_DATE, NUMBER_OF_TANK_E_BY_BUNDLE);
+
         assertEquals(NUMBER_OF_TANK_E_BY_BUNDLE, createdTanks.size());
         assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory());
+    }
+
+    @Test
+    void buildCategory_shouldCategoryE_whenCategoryIsSupernova() {
+        PassCategories passCategory = PassCategories.SUPERNOVA;
+
+        OxygenCategories category = factory.buildCategory(passCategory);
+
+        assertEquals(OxygenCategories.E, category);
+    }
+
+    @Test
+    void buildCategory_shouldCategoryB_whenCategoryIsSupergiant() {
+        PassCategories passCategory = PassCategories.SUPERGIANT;
+
+        OxygenCategories category = factory.buildCategory(passCategory);
+
+        assertEquals(OxygenCategories.B, category);
+    }
+
+    @Test
+    void buildCategory_shouldCategoryA_whenCategoryIsNebula() {
+        PassCategories passCategory = PassCategories.NEBULA;
+
+        OxygenCategories category = factory.buildCategory(passCategory);
+
+        assertEquals(OxygenCategories.A, category);
     }
 }

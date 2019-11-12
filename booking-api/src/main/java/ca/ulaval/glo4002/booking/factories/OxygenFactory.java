@@ -12,6 +12,7 @@ import java.util.List;
 
 public class OxygenFactory {
 
+	// TODO : build is wack
 	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer numberOfTanksByBundle = getNumberOfTanksByCategoryForCreation(category);
@@ -28,9 +29,16 @@ public class OxygenFactory {
 		return newTanks;
 	}
 
-	public OxygenCategories buildCategory(PassCategories passCategory) {
-		// TODO
-		return null;
+	public OxygenCategories buildCategory(PassCategories category) {
+		switch(category) {
+			case SUPERNOVA:
+				return OxygenCategories.E;
+			case SUPERGIANT:
+				return OxygenCategories.B;
+			default:
+			case NEBULA:
+				return OxygenCategories.A;
+		}
 	}
 
 	private Integer getNumberOfTanksByCategoryForCreation(OxygenCategories category) {
