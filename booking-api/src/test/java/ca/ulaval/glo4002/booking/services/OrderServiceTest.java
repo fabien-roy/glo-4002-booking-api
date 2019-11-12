@@ -20,11 +20,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -67,7 +69,7 @@ class OrderServiceTest {
     }
 
     @Test
-    void order_shouldOrderTrips() {
+    void order_shouldOrderTripsWithCorrectPassCategory() {
         String aVendorCode = "aVendorCode";
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 "aOrderDate",
@@ -77,13 +79,36 @@ class OrderServiceTest {
         Order order = mock(Order.class);
         when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
         PassBundle passBundle = mock(PassBundle.class);
-        when(passBundle.getCategory()).thenReturn(PassCategories.SUPERNOVA);
+        PassCategories expectedPassCategory = PassCategories.SUPERNOVA;
+        when(passBundle.getCategory()).thenReturn(expectedPassCategory);
         when(order.getPassBundle()).thenReturn(passBundle);
         when(factory.build(any())).thenReturn(order);
 
         service.order(orderDto);
 
-        verify(tripService).orderAll(any(), any());
+        verify(tripService).orderAll(eq(expectedPassCategory), any());
+    }
+
+    @Test
+    void order_shouldOrderTripsWithCorrectPasses() {
+        String aVendorCode = "aVendorCode";
+        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+                "aOrderDate",
+                aVendorCode,
+                mock(PassBundleDto.class)
+        );
+        Order order = mock(Order.class);
+        when(order.getOrderNumber()).thenReturn(new OrderNumber(new Number(1L), aVendorCode));
+        PassBundle passBundle = mock(PassBundle.class);
+        List<Pass> expectedPasses = new ArrayList<>();
+        when(passBundle.getCategory()).thenReturn(PassCategories.SUPERNOVA);
+        when(passBundle.getPasses()).thenReturn(expectedPasses);
+        when(order.getPassBundle()).thenReturn(passBundle);
+        when(factory.build(any())).thenReturn(order);
+
+        service.order(orderDto);
+
+        verify(tripService).orderAll(any(), eq(expectedPasses));
     }
 
     @Test
