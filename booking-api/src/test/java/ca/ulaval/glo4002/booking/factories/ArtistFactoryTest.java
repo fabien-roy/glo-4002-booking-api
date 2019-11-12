@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.organisation.domain.Artist;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

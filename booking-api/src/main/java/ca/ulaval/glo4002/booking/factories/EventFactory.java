@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;

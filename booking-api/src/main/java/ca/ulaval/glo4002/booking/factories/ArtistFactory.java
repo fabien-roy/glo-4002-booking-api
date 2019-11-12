@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.organisation.domain.Artist;
 

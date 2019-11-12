@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domain;
 
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import org.junit.jupiter.api.Test;
 
