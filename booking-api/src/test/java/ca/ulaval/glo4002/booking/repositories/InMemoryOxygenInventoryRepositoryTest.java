@@ -11,12 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class InMemoryOxygenInventoryRepositoryTest {
 
-    private OxygenTankInventoryRepository inMemoryRepository;
+    private OxygenInventoryRepository inMemoryRepository;
     private OxygenInventory inventory;
 
     @BeforeEach
     void setupRepositoryTest() {
-        this.inMemoryRepository = new InMemoryOxygenTankInventoryRepository();
+        this.inMemoryRepository = new InMemoryOxygenInventoryRepository();
         inventory = new OxygenInventory();
         inMemoryRepository.setInventory(inventory);
     }
@@ -31,7 +31,7 @@ class InMemoryOxygenInventoryRepositoryTest {
     @Test
     void getInventory_shouldReturnInventory_whenOneWasPassedAtConstruction() {
         OxygenInventory newInventory = new OxygenInventory();
-        InMemoryOxygenTankInventoryRepository newInMemoryOxygenTankInventoryRepository= new InMemoryOxygenTankInventoryRepository(newInventory);
+        InMemoryOxygenInventoryRepository newInMemoryOxygenTankInventoryRepository= new InMemoryOxygenInventoryRepository(newInventory);
 
         assertEquals(newInventory, newInMemoryOxygenTankInventoryRepository.getInventory());
     }

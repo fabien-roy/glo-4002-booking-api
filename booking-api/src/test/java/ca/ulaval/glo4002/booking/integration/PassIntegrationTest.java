@@ -63,7 +63,7 @@ public class PassIntegrationTest {
         OxygenTankProducer oxygenTankProducer = new OxygenTankProducer();
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
-        OxygenTankInventoryRepository oxygenTankInventoryRepository = new InMemoryOxygenTankInventoryRepository();
+        OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
         orderRepository = new InMemoryOrderRepository();
 
         PassBundleMapper passBundleMapper = new PassBundleMapper();
@@ -71,7 +71,7 @@ public class PassIntegrationTest {
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
-        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenTankInventoryRepository, oxygenTankProducer, oxygenInventoryMapper);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenInventoryRepository, oxygenTankProducer, oxygenInventoryMapper);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         controller = new OrderController(orderService);

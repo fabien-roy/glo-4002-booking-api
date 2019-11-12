@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.services;
 import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
-import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
+import ca.ulaval.glo4002.booking.repositories.OxygenInventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +21,7 @@ class OxygenInventoryServiceTest {
 
 	@BeforeEach
 	void setUpOxygenTankInventoryService() {
-		OxygenTankInventoryRepository repository = mock(OxygenTankInventoryRepository.class);
+		OxygenInventoryRepository repository = mock(OxygenInventoryRepository.class);
 		producer = mock(OxygenTankProducer.class);
 		OxygenInventoryMapper mapper = mock(OxygenInventoryMapper.class);
 
