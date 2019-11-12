@@ -26,7 +26,6 @@ public class OxygenTanksProducerTest {
     
     private static final LocalDate START_OF_FESTIVAL_DATE = LocalDate.of(2050, 07, 17);
     private static final LocalDate VALID_CATEGORY_A_BUILD_DATE = START_OF_FESTIVAL_DATE.minusDays(21);
-    private static final LocalDate VALID_CATEGORY_B_BUILD_DATE = START_OF_FESTIVAL_DATE.minusDays(15);
     private static final LocalDate VALID_CATEGORY_E_BUILD_DATE = START_OF_FESTIVAL_DATE;
     private static final LocalDate INVALID_CATEGORY_A_BUILD_DATE = START_OF_FESTIVAL_DATE.minusDays(19);
     private static final LocalDate INVALID_CATEGORY_B_BUILD_DATE = START_OF_FESTIVAL_DATE.minusDays(9);
@@ -36,11 +35,8 @@ public class OxygenTanksProducerTest {
     private static final OxygenCategories CATEGORY_E = OxygenCategories.E;
 
     private static final Integer CATEGORY_A_TANKS_NEEDED_BY_DAYS = 3;
-    private static final Integer CATEGORY_B_TANKS_NEEDED_BY_DAYS = 3;
-    private static final Integer CATEGORY_E_TANKS_NEEDED_BY_DAYS = 5;
     private static final Integer NUMBER_OF_TANK_A_BY_BUNDLE = 5;
     private static final Integer NUMBER_OF_TANK_B_BY_BUNDLE = 3;
-    private static final Integer NUMBER_OF_TANK_E_BY_BUNDLE = 1;
     
     @BeforeEach
     void setupFactory() {
@@ -50,21 +46,10 @@ public class OxygenTanksProducerTest {
         createdTanks = new ArrayList<>();
         numberOfDays = 1;
     }
-    
+
     @Test
-    void build_shouldReturnEmptyList_whenCategoryIsNebulaButReserveCanCoverAllTanksNeeded() {
+    void build_shouldReturnAnEmptyList_whenReserveCanCover() {
         when(inventory.requestTankByCategory(eq(CATEGORY_A), anyInt())).thenReturn(0);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_A, VALID_CATEGORY_A_BUILD_DATE, numberOfDays);
-
-        assertTrue(createdTanks.isEmpty());
-    }
-
-    @Test
-    void build_shouldReturnAnEmptyList_whenCategoryIsNebulaButReserveForAAndBCanCoverAllTankNeeded_withNoTimeToCreateATanks() {
-        // TODO : OXY : If time refactor magic number
-        when(inventory.requestTankByCategory(eq(CATEGORY_A), anyInt())).thenReturn(2);
-        when(inventory.requestTankByCategory(eq(CATEGORY_B), anyInt())).thenReturn(0);
 
         createdTanks = producer.produceOxygenForOrder(CATEGORY_A, INVALID_CATEGORY_A_BUILD_DATE, numberOfDays);
 
@@ -72,19 +57,7 @@ public class OxygenTanksProducerTest {
     }
 
     @Test
-    void build_shouldReturnAnEmptyList_whenCategoryIsNebulaButReserveForABAndECanCoverAllTankNeeded_withNoTimeToCreateAOrBTanks() {
-        // TODO : OXY : If time refactor magic number
-        when(inventory.requestTankByCategory(eq(CATEGORY_A), anyInt())).thenReturn(2);
-        when(inventory.requestTankByCategory(eq(CATEGORY_B), anyInt())).thenReturn(1);
-        when(inventory.requestTankByCategory(eq(CATEGORY_E), anyInt())).thenReturn(0);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_A, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
-
-        assertTrue(createdTanks.isEmpty());
-    }
-
-    @Test
-    void build_shouldReturnTheCorrectAmountOfATanks_whenCategoryIsNebula() {
+    void build_shouldReturnTheCorrectAmountOfTanksNeededToCoverReserve() {
         Integer numberTanksCreated = getNumberCreated(numberOfDays, CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_A_BY_BUNDLE);
         when(inventory.requestTankByCategory(CATEGORY_A, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
@@ -95,10 +68,9 @@ public class OxygenTanksProducerTest {
     }
 
     @Test
-    void build_shouldReturnTheCorrectAmountOfBTanks_whenCategoryIsNebula_withNoTimeToCreateATanks() {
+    void build_shouldReturnTheCorrectAmountOfBTanks_withNoTimeToCreateATanks() {
         Integer numberOfTanksCreated = getNumberCreated(numberOfDays, CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_B_BY_BUNDLE);
         when(inventory.requestTankByCategory(CATEGORY_A, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
-        when(inventory.requestTankByCategory(CATEGORY_B, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
         createdTanks = producer.produceOxygenForOrder(CATEGORY_A, INVALID_CATEGORY_A_BUILD_DATE, numberOfDays);
 
@@ -107,11 +79,9 @@ public class OxygenTanksProducerTest {
     }
 
     @Test
-    void build_shouldReturnTheCorrectAmountOfETanks_whenCategoryIsNebula_withNoTimeToCreateCategoryAAndB() {
+    void build_shouldReturnTheCorrectAmountOfETanks_whenNoTimeToCreateCategoryAAndB() {
         Integer numberOfTanksCreated = getNumberCreated(numberOfDays, CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_B_BY_BUNDLE);
         when(inventory.requestTankByCategory(CATEGORY_A, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
-        when(inventory.requestTankByCategory(CATEGORY_B, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
-        when(inventory.requestTankByCategory(CATEGORY_E, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
         createdTanks = producer.produceOxygenForOrder(CATEGORY_A, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
 
@@ -120,7 +90,7 @@ public class OxygenTanksProducerTest {
     }
 
     @Test
-    void build_shouldReturnTheCorrectAmountOfATanks_whenCategoryIsNebula_withOrderForMoreThanOneDays() {
+    void build_shouldReturnTheCorrectAmountOfTanks_withOrderForMoreThanOneDays() {
         numberOfDays = 3;
         Integer numberOfTanksCreated = getNumberCreated(numberOfDays, CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_A_BY_BUNDLE);
         Integer numberOfTanksNeeded = CATEGORY_A_TANKS_NEEDED_BY_DAYS * numberOfDays;
@@ -133,91 +103,12 @@ public class OxygenTanksProducerTest {
     }
 
     @Test
-    void build_shouldReturnEmptyList_whenCategoryIsSuperGiantButReserveCanCoverAllTanksNeeded() {
-        when(inventory.requestTankByCategory(eq(CATEGORY_B), anyInt())).thenReturn(0);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_B, VALID_CATEGORY_B_BUILD_DATE, numberOfDays);
-
-        assertTrue(createdTanks.isEmpty());
-    }
-
-    @Test
-    void build_shouldReturnAnEmptyList_whenCategoryISuperGiantButReserveForBAndECanCoverAllTankNeeded_withNoTimeToCreateBTanks() {
-        when(inventory.requestTankByCategory(eq(CATEGORY_B), anyInt())).thenReturn(2);
-        when(inventory.requestTankByCategory(eq(CATEGORY_E), anyInt())).thenReturn(0);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_A, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
-
-        assertTrue(createdTanks.isEmpty());
-    }
-
-    @Test
-    void build_shouldReturnTheCorrectAmountOfBTanks_whenCategoryIsSuperGiant() {
-        Integer numberTanksCreated = getNumberCreated(numberOfDays, CATEGORY_B_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_B_BY_BUNDLE);
-        when(inventory.requestTankByCategory(CATEGORY_B, CATEGORY_B_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_B_TANKS_NEEDED_BY_DAYS);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_B, VALID_CATEGORY_B_BUILD_DATE, numberOfDays);
-
-        assertEquals(numberTanksCreated, createdTanks.size());
-        assertEquals(CATEGORY_B, createdTanks.get(0).getCategory());
-    }
-
-    @Test
-    void build_shouldReturnTheCorrectAmountOfETanks_whenCategoryIsSuperGiant_withNoTimeToCreateBTanks() {
-        Integer numberOfTanksCreated = getNumberCreated(numberOfDays, CATEGORY_B_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_E_BY_BUNDLE);
-        when(inventory.requestTankByCategory(CATEGORY_B, CATEGORY_B_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_B_TANKS_NEEDED_BY_DAYS);
-        when(inventory.requestTankByCategory(CATEGORY_E, CATEGORY_B_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_B_TANKS_NEEDED_BY_DAYS);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_B, INVALID_CATEGORY_B_BUILD_DATE, numberOfDays);
-
-        assertEquals(numberOfTanksCreated, createdTanks.size());
-        assertEquals(CATEGORY_E, createdTanks.get(0).getCategory());
-    }
-
-    @Test
-    void build_shouldReturnTheCorrectAmountOfBTanks_whenCategoryIsSuperGiant_withOrderForMoreThanOneDays() {
-        numberOfDays = 3;
-        Integer numberOfTanksCreated = getNumberCreated(numberOfDays, CATEGORY_B_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_B_BY_BUNDLE);
-        Integer numberOfTanksNeeded = CATEGORY_B_TANKS_NEEDED_BY_DAYS * numberOfDays;
-        when(inventory.requestTankByCategory(CATEGORY_B, numberOfTanksNeeded)).thenReturn(numberOfTanksNeeded);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_B, VALID_CATEGORY_B_BUILD_DATE, numberOfDays);
-
-        assertEquals(numberOfTanksCreated, createdTanks.size());
-        assertEquals(CATEGORY_B, createdTanks.get(0).getCategory());
-    }
-
-    @Test
     void build_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() {
         when(inventory.requestTankByCategory(eq(CATEGORY_E), anyInt())).thenReturn(0);
 
         createdTanks = producer.produceOxygenForOrder(CATEGORY_E, VALID_CATEGORY_E_BUILD_DATE, numberOfDays);
 
         assertTrue(createdTanks.isEmpty());
-    }
-
-    @Test
-    void build_shouldReturnTheCorrectAmountOfETanks_whenCategoryIsSupernova() {
-        Integer numberTanksCreated = getNumberCreated(numberOfDays, CATEGORY_E_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_E_BY_BUNDLE);
-        when(inventory.requestTankByCategory(CATEGORY_E, CATEGORY_E_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_E_TANKS_NEEDED_BY_DAYS);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_E, VALID_CATEGORY_E_BUILD_DATE, numberOfDays);
-
-        assertEquals(numberTanksCreated, createdTanks.size());
-        assertEquals(CATEGORY_E, createdTanks.get(0).getCategory());
-    }
-
-    @Test
-    void build_shouldReturnTheCorrectAmountOfETanks_whenCategoryIsSupernova_withOrderForMoreThanOneDays() {
-        numberOfDays = 3;
-        Integer numberOfTanksCreated = getNumberCreated(numberOfDays, CATEGORY_E_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_E_BY_BUNDLE);
-        Integer numberOfTanksNeeded = CATEGORY_E_TANKS_NEEDED_BY_DAYS * numberOfDays;
-        when(inventory.requestTankByCategory(CATEGORY_E, numberOfTanksNeeded)).thenReturn(numberOfTanksNeeded);
-
-        createdTanks = producer.produceOxygenForOrder(CATEGORY_E, VALID_CATEGORY_E_BUILD_DATE, numberOfDays);
-
-        assertEquals(numberOfTanksCreated, createdTanks.size());
-        assertEquals(CATEGORY_E, createdTanks.get(0).getCategory());
     }
 
     Integer getNumberCreated(Integer numberOfDays, Integer quantityNeededByDays, Integer quantityByBundle) {

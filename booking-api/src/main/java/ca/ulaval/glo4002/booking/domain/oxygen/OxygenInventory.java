@@ -11,10 +11,12 @@ public class OxygenInventory {
 
 	private Map<OxygenCategories, List<OxygenTank>> notInUseTanks;
 	private Map<OxygenCategories, List<OxygenTank>> inUseTanks;
+	private ArrayList<OxygenCategories> categoriesOrder;
 
 	public OxygenInventory() {
 		this.notInUseTanks = new EnumMap<>(OxygenCategories.class);
 		this.inUseTanks = new EnumMap<>(OxygenCategories.class);
+		this.categoriesOrder = new ArrayList<>();
 
 		notInUseTanks.put(OxygenCategories.A, new ArrayList<>());
 		notInUseTanks.put(OxygenCategories.B, new ArrayList<>());
@@ -23,6 +25,10 @@ public class OxygenInventory {
 		inUseTanks.put(OxygenCategories.A, new ArrayList<>());
 		inUseTanks.put(OxygenCategories.B, new ArrayList<>());
 		inUseTanks.put(OxygenCategories.E, new ArrayList<>());
+
+		categoriesOrder.add(OxygenCategories.A);
+		categoriesOrder.add(OxygenCategories.B);
+		categoriesOrder.add(OxygenCategories.E);
 	}
 
 	public List<OxygenTank> getNotInUseTankByCategory(OxygenCategories category) {
@@ -54,14 +60,20 @@ public class OxygenInventory {
 
 	public Integer requestTankByCategory(OxygenCategories category, Integer quantity) {
 		Integer quantityStillNeeded = quantity;
-		List<OxygenTank> notInUseTanksForCategory = notInUseTanks.get(category);
-		List<OxygenTank> inUseTanksForCategory = inUseTanks.get(category);
+		int position = categoriesOrder.indexOf(category);
 
-		while (!notInUseTanksForCategory.isEmpty() && quantityStillNeeded > 0) {
-			OxygenTank transferedTank = notInUseTanksForCategory.remove(notInUseTanksForCategory.size() - 1);
-			inUseTanksForCategory.add(transferedTank);
+		for(int i = position; i < categoriesOrder.size(); i++){
+			OxygenCategories currentCategory = categoriesOrder.get(i);
 
-			quantityStillNeeded--;
+			List<OxygenTank> notInUseTanksForCategory = notInUseTanks.get(currentCategory);
+			List<OxygenTank> inUseTanksForCategory = inUseTanks.get(currentCategory);
+
+			while (!notInUseTanksForCategory.isEmpty() && quantityStillNeeded > 0) {
+				OxygenTank transferredTank = notInUseTanksForCategory.remove(notInUseTanksForCategory.size() - 1);
+				inUseTanksForCategory.add(transferredTank);
+
+				quantityStillNeeded--;
+			}
 		}
 
 		return quantityStillNeeded;

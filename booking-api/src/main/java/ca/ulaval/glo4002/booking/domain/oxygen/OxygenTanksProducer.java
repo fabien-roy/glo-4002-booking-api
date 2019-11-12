@@ -29,14 +29,13 @@ public class OxygenTanksProducer {
 		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
 		OxygenCategories possibleCategory = getCategoryForRequestDate(category, requestDate);
 		
-		quantityToCover = checkInventory(category, possibleCategory, quantityToCover);
+		quantityToCover = inventory.requestTankByCategory(category, quantityToCover);
 
 		if(quantityToCover > 0) {
 
 			newTanks.addAll(factory.buildOxygenTank(possibleCategory, requestDate, quantityToCover));
-			
+
 			inventory.addTanksToInventory(category, newTanks);
-			inventory.requestTankByCategory(category, quantityToCover);
 		}
 		
 		return newTanks;
@@ -49,36 +48,7 @@ public class OxygenTanksProducer {
 			return (numberOfDays * 3);
 		}
 	}
-	
-	private Integer checkInventory(OxygenCategories category, OxygenCategories possibleCategory, Integer quantityToCover) {
-		if (category == OxygenCategories.A) {
-			if(possibleCategory == OxygenCategories.A) {
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.A, quantityToCover);
-			}
-			else if (possibleCategory == OxygenCategories.B) {
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.A, quantityToCover);
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.B, quantityToCover);
-				
-			} else if(possibleCategory == OxygenCategories.E) {
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.A, quantityToCover);
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.B, quantityToCover);
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.E, quantityToCover);
-			}
-		} else if(category == OxygenCategories.B) {
-			if(possibleCategory == OxygenCategories.B) {
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.B, quantityToCover);
-			}
-			else if(possibleCategory == OxygenCategories.E) {
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.B, quantityToCover);
-				quantityToCover = inventory.requestTankByCategory(OxygenCategories.E, quantityToCover);
-			}
-		} else if (category == OxygenCategories.E) {
-			quantityToCover = inventory.requestTankByCategory(OxygenCategories.E, quantityToCover);
-		}
 
-		return quantityToCover;
-	}
-	
 	private OxygenCategories getCategoryForRequestDate(OxygenCategories category, LocalDate requestDate) {
 		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
 
