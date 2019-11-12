@@ -5,11 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.Number;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.organisation.domain.Artist;
 
 
 public class ArtistFactory {
+
+	public BookingArtist build(Artist artist) {
+		return new BookingArtist(
+		        new Number(artist.getId().longValue()),
+				artist.getName(),
+				new Money(new BigDecimal(artist.getPrice())),
+				artist.getNbPeople(),
+				artist.getMusicStyle(),
+				artist.getPopularityRank()
+		);
+	}
 
 	public List<BookingArtist> buildAll(List<Artist> artists) {
 		List<BookingArtist> bookingArtists = new ArrayList<>();
@@ -21,15 +33,5 @@ public class ArtistFactory {
 		}
 
 		return bookingArtists;
-	}
-
-	private BookingArtist build(Artist artist) {
-		return new BookingArtist(
-				artist.getName(),
-				new Money(new BigDecimal(artist.getPrice())),
-				artist.getNbPeople(),
-				artist.getMusicStyle(),
-				artist.getPopularityRank()
-		);
 	}
 }

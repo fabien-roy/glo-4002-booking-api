@@ -12,8 +12,6 @@ import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.mappers.TripMapper;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
-import ca.ulaval.glo4002.organisation.OrganisationSpringApplication;
-import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.inject.Singleton;

@@ -12,6 +12,10 @@ public class Money implements Comparable<Money> {
         this.value = value;
     }
 
+    public Money(Money money) {
+        this.value = new BigDecimal(String.valueOf(money.value));
+    }
+
     public BigDecimal getValue() {
         return value;
     }
@@ -34,6 +38,24 @@ public class Money implements Comparable<Money> {
         value = value.multiply(factor);
 
         return this;
+    }
+
+    // TODO : add test
+    public Money add(Money money) {
+        BigDecimal amount = new BigDecimal(String.valueOf(money.value));
+
+        this.value = this.value.add(amount);
+
+        return new Money(this.value);
+    }
+
+    // TODO : add test
+    public Money subtract(Money money) {
+        BigDecimal amount = new BigDecimal(String.valueOf(money.value));
+
+        this.value = this.value.subtract(amount);
+
+        return new Money(this.value);
     }
 
     @Override
