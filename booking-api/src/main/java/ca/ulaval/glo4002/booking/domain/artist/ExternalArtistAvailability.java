@@ -1,18 +1,23 @@
 package ca.ulaval.glo4002.booking.domain.artist;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import ca.ulaval.glo4002.organisation.domain.Artist;
+
 public class ExternalArtistAvailability {
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonPropertyOrder({
+		"availability"
+	})
+	
+    private Integer id;
 
-    private ExternalArtist artist;
-
-    private String availability;
+    private Artist artist;
     
-	public ExternalArtistAvailability(ExternalArtist artist, String availability) {
-		this.artist = artist;
-		this.availability = availability;
-	}
+    @JsonProperty("availability")
+    private String date;
 
-    public String getAvailability() {
-        return availability;
-    }
-    
 }

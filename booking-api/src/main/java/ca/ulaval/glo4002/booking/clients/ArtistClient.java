@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
 
 public class ArtistClient {
 	
-	private static final String EXTERNAL_SERVICE_URL = "localhost:8080/artists";
+	private static final String EXTERNAL_SERVICE_URL = "http://localhost:8080/artists";
 	
 	public List<ExternalArtist> getArtists() {
 		

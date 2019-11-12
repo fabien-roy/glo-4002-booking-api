@@ -2,32 +2,41 @@ package ca.ulaval.glo4002.booking.domain.artist;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 public class ExternalArtist {
 
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@JsonPropertyOrder({
+		"id",
+		"name",
+		"nbPeople", 
+		"musicStyle",
+		"price",
+		"popularityRank"
+	})
+	
+	@JsonProperty("id")
 	private Integer id;
 	
+	@JsonProperty("name")
     private String name;
 
+	@JsonProperty("nbPeople")
     private Integer nbPeople;
 
+	@JsonProperty("musicStyle")
     private String musicStyle;
 
+	@JsonProperty("price")
     private Integer price;
 
+	@JsonProperty("popularityRank")
     private Integer popularityRank;
-
-    private List<ExternalArtistAvailability> artistAvailabilities;
-    
-    public ExternalArtist(Integer id,String name, Integer nbPeople, String musicStyle, Integer price,
-			Integer popularityRank, List<ExternalArtistAvailability> artistAvailabilities) {
-    	this.id = id;
-		this.name = name;
-		this.nbPeople = nbPeople;
-		this.musicStyle = musicStyle;
-		this.price = price;
-		this.popularityRank = popularityRank;
-		this.artistAvailabilities = artistAvailabilities;
-	}
+	
+	private List<ExternalArtistAvailability> availabilities;
 
     public Integer getId() {
     	return id;
@@ -50,10 +59,10 @@ public class ExternalArtist {
     }
 
     public Integer getPopularityRank() {
-    	return popularityRank; }
-
-    public List<ExternalArtistAvailability> getAvailabilities() {
-        return artistAvailabilities;
+    	return popularityRank;
     }
 
+    public List<ExternalArtistAvailability> getAvailabilities() {
+    	return availabilities;
+    }
 }
