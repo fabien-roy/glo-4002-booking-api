@@ -31,7 +31,8 @@ public class OrderService {
         Order order = factory.build(orderDto);
 
         repository.addOrder(order);
-        tripService.orderAll(order.getPassBundle().getCategory(), order.getPasses());
+        tripService.orderForPasses(order.getPassBundle().getCategory(), order.getPasses());
+        oxygenInventoryService.orderForPasses(order.getPassBundle().getCategory(), order.getPasses());
 
         return order.getOrderNumber().toString();
     }
