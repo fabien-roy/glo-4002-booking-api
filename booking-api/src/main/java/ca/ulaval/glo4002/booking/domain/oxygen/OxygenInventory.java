@@ -96,4 +96,11 @@ public class OxygenInventory {
 
 		return quantityStillNeeded;
 	}
+
+	// TODO : Test OxygenInventory.getHistory
+	public OxygenHistory getHistory() {
+		List<OxygenTank> allTanks = getAllTanks();
+
+		return new OxygenHistory(allTanks);
+	}
 }

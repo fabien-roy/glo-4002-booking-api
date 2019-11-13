@@ -20,6 +20,7 @@ public class OxygenReportMapper {
 		this.oxygenHistoryMapper = oxygenHistoryMapper;
 	}
 
+	// TODO : OxygenHistory should be built using the inventory
 	public OxygenReportDto toDto(OxygenReport oxygenReport) {
 		List<OxygenInventoryItemDto> inventory = oxygenInventoryMapper.toDto(oxygenReport.getOxygenInventory());
 		List<OxygenHistoryItemDto> history = oxygenHistoryMapper.toDto(oxygenReport.getOxygenHistory());

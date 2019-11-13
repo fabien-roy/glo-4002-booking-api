@@ -16,11 +16,11 @@ public class OxygenHistory {
 		this.historyItems = new TreeMap<>();
 	}
 
-	// TODO OXY : Not sure is usefull, maybe if we had persistance
-	public OxygenHistory(Map<LocalDate, OxygenHistoryItem> historyItems) {
-		this.historyItems = historyItems;
+	public OxygenHistory(List<OxygenTank> allTanks) {
+	    buildHistoryItem(allTanks);
 	}
 
+	// TODO : This should be private
 	public void buildHistoryItem(List<OxygenTank> allTanks) {
 		allTanks.forEach(tank -> {
 			// TODO OXY : Maybe not bother with OxygenDate not sure if usefull! anywhere
