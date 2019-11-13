@@ -3,6 +3,8 @@ package ca.ulaval.glo4002.booking.domain.events;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventDate {
 
@@ -19,6 +21,16 @@ public class EventDate {
 
     public LocalDate getValue() {
         return value;
+    }
+
+    public static List<EventDate> getFullFestivalEventDates() {
+        List<EventDate> fullFestivalEventDates = new ArrayList<>();
+
+        for (LocalDate date = START_DATE; date.isBefore(END_DATE); date = date.plusDays(1)) {
+            fullFestivalEventDates.add(new EventDate(date));
+        }
+
+        return fullFestivalEventDates;
     }
 
     @Override

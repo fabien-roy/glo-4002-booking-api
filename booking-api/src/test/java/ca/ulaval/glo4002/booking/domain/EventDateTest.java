@@ -1,10 +1,13 @@
 package ca.ulaval.glo4002.booking.domain;
 
+import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -67,5 +70,30 @@ class EventDateTest {
         int hashCode = eventDate.hashCode();
 
         assertEquals(expectedHashCode, hashCode);
+    }
+
+    @Test
+    void getFullFestivalEventDates_shouldReturnEventDatesAfterOrEqualToStartDate() {
+        EventDate startDate = new EventDate(EventDate.START_DATE);
+
+        List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
+
+        assertTrue(fullFestivalEventDate.stream().allMatch(eventDate -> eventDate.equals(startDate) || eventDate.getValue().isAfter(startDate.getValue())));
+    }
+
+    @Test
+    void getFullFestivalEventDates_shouldReturnEventDatesBeforeOrEqualToEndDate() {
+        EventDate endDate = new EventDate(EventDate.END_DATE);
+
+        List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
+
+        assertTrue(fullFestivalEventDate.stream().allMatch(eventDate -> eventDate.equals(endDate) || eventDate.getValue().isBefore(endDate.getValue())));
+    }
+
+    @Test
+    void getFullFestivalEventDates_shouldReturnUniqueEventDates() {
+        List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
+
+        assertTrue(fullFestivalEventDate.stream().allMatch(new HashSet<>()::add));
     }
 }
