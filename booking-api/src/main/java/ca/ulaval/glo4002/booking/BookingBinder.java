@@ -11,6 +11,7 @@ import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.converters.ArtistConverter;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.factories.EventFactory;
 import ca.ulaval.glo4002.booking.factories.OrderFactory;
 import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
 import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
@@ -20,7 +21,9 @@ import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.mappers.TripMapper;
+import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
 import ca.ulaval.glo4002.booking.repositories.EventRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryArtistRepository;
 import ca.ulaval.glo4002.booking.repositories.InMemoryEventRepository;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.repositories.InMemoryOxygenTankInventoryRepository;
@@ -32,6 +35,7 @@ import ca.ulaval.glo4002.booking.services.ArtistService;
 import ca.ulaval.glo4002.booking.services.OrderService;
 import ca.ulaval.glo4002.booking.services.OxygenTankInventoryService;
 import ca.ulaval.glo4002.booking.services.ProfitService;
+import ca.ulaval.glo4002.booking.services.ProgramService;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.services.TripService;
 
@@ -67,7 +71,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenTankFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
-        //bindAsContract(EventFactory.class);
+        bindAsContract(EventFactory.class);
     }
 
     private void bindRepositories() {
@@ -75,6 +79,7 @@ public class BookingBinder extends AbstractBinder {
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
         bind(InMemoryEventRepository.class).to(EventRepository.class).in(Singleton.class);
+        bind(InMemoryArtistRepository.class).to(ArtistRepository.class).in(Singleton.class);
     }
 
     private void bindServices() {
@@ -82,7 +87,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(TripService.class);
         bindAsContract(OrderService.class);
         bindAsContract(ShuttleManifestService.class);
-        //bindAsContract(ProgramService.class);
+        bindAsContract(ProgramService.class);
         bindAsContract(ArtistService.class);
         bindAsContract(ProfitService.class);
     }
