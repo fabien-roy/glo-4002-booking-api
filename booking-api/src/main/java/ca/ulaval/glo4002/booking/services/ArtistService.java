@@ -1,46 +1,39 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.factories.ArtistFactory;
-import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
-import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
-import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
-import ca.ulaval.glo4002.organisation.domain.Artist;
-import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
-import java.util.*;
-import java.util.stream.Collectors;
+
+import ca.ulaval.glo4002.booking.clients.ArtistClient;
+import ca.ulaval.glo4002.booking.converters.ArtistConverter;
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
+import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
+import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
 
 public class ArtistService {
 
-    private final ArtistRepository artistRepository;
-    private final ArtistFactory artistFactory;
+	private final ArtistClient artistClient;
+    private final ArtistConverter artistConverter;
 
     @Inject
-    public ArtistService(ArtistRepository artistRepository, ArtistFactory artistFactory) {
-        this.artistRepository = artistRepository;
-        this.artistFactory = artistFactory;
+    public ArtistService(ArtistConverter artistConverter, ArtistClient artistClient) {
+        this.artistConverter = artistConverter;
+        this.artistClient = artistClient;
     }
 
     public ArtistListDto getAll(String orderBy) {
-        List<Artist> artists = artistRepository.findAll();
-        List<BookingArtist> bookingArtists = artistFactory.buildAll(artists);
+        List<ExternalArtist> externalArtists = artistClient.getArtists();
+        
+        List<BookingArtist> bookingArtists = artistConverter.convert(externalArtists);
 
 
-        if (orderBy == null) {
-            bookingArtists = orderByMostPopular(bookingArtists);
-        } else {
-            ArtistOrderings ordering = ArtistOrderings.get(orderBy);
-
-            switch (ordering) {
-                case MOST_POPULAR:
-                    bookingArtists = orderByMostPopular(bookingArtists);
-                    break;
-                default:
-                case LOW_COSTS:
-                    bookingArtists = orderByLowCost(bookingArtists);
-                    break;
-            }
+        if(orderBy.equalsIgnoreCase(ArtistOrderings.LOW_COSTS.toString())) {
+        	orderByLowCost(bookingArtists);
+        } else if (orderBy.equalsIgnoreCase(ArtistOrderings.MOST_POPULAR.toString())) {
+        	orderByMostPopular(bookingArtists);
         }
 
         List<String> artistNames = getArtistNames(bookingArtists);
