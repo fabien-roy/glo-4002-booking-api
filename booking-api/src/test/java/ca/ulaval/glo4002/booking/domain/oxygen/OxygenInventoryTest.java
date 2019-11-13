@@ -32,12 +32,9 @@ public class OxygenInventoryTest {
 		mockedTankCategoryB = mock(OxygenTank.class);
 		mockedTankCategoryE = mock(OxygenTank.class);
 
-		oxygenInventory.addTanksToInventory(OxygenCategories.A,
-				Collections.nCopies(CATEGORY_A_QUANTITY, mockedTankCategoryA));
-		oxygenInventory.addTanksToInventory(OxygenCategories.B,
-				Collections.nCopies(CATEGORY_B_QUANTITY, mockedTankCategoryB));
-		oxygenInventory.addTanksToInventory(OxygenCategories.E,
-				Collections.nCopies(CATEGORY_E_QUANTITY, mockedTankCategoryE));
+		oxygenInventory.addTanksToInventory(OxygenCategories.A, Collections.nCopies(CATEGORY_A_QUANTITY, mockedTankCategoryA));
+		oxygenInventory.addTanksToInventory(OxygenCategories.B, Collections.nCopies(CATEGORY_B_QUANTITY, mockedTankCategoryB));
+		oxygenInventory.addTanksToInventory(OxygenCategories.E, Collections.nCopies(CATEGORY_E_QUANTITY, mockedTankCategoryE));
 	}
 
 	@Test
@@ -62,8 +59,7 @@ public class OxygenInventoryTest {
 	void addTankToInventory_shouldUpdateNumberOfTankInNotInUse() {
 		Integer addedQuantity = 5;
 
-		oxygenInventory.addTanksToInventory(OxygenCategories.A,
-				Collections.nCopies(addedQuantity, mockedTankCategoryA));
+		oxygenInventory.addTanksToInventory(OxygenCategories.A, Collections.nCopies(addedQuantity, mockedTankCategoryA));
 		Integer currentQuantity = oxygenInventory.getNotInUseQuantityByCategory(OxygenCategories.A);
 
 		assertEquals(CATEGORY_A_QUANTITY + addedQuantity, (int) currentQuantity);

@@ -24,10 +24,10 @@ public class OxygenTankProducer {
 		this.factory = factory;
 	}
 	
-	public List<OxygenTank> produceOxygenForOrder(OxygenCategories category, LocalDate requestDate, Integer numberOfDays) {
+	public List<OxygenTank> produce(OxygenCategories category, LocalDate requestDate) {
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		List<OxygenTank> newTanks = new ArrayList<>();
-		Integer quantityToCover = getQuantityToCoverForOrderCategory(category, numberOfDays);
+		Integer quantityToCover = getQuantityToCoverForCategory(category);
 		OxygenCategories possibleCategory;
 
 		if (quantityToCover > inventory.getNotInUseQuantityByCategory(category)) {
@@ -49,11 +49,11 @@ public class OxygenTankProducer {
 		return newTanks;
 	}
 	
-	private Integer getQuantityToCoverForOrderCategory(OxygenCategories category, Integer numberOfDays) {
+	private Integer getQuantityToCoverForCategory(OxygenCategories category) {
 		if (category.equals(OxygenCategories.E)) {
-			return (numberOfDays * 5);
+			return 5;
 		} else {
-			return (numberOfDays * 3);
+			return 3;
 		}
 	}
 
