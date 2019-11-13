@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
@@ -26,18 +27,18 @@ public class OxygenInventoryService {
 		passes.forEach(pass -> {
 		    // TODO : PassBundle could return a list of required dates (if null -> all festival dates)
 			if (pass.getEventDate() == null) {
-			    orderForFullFestival();
+			    orderForFullFestival(oxygenCategory);
 			} else {
-			    orderForEventDate();
+			    orderForEventDate(oxygenCategory, pass.getEventDate());
 			}
 		});
 	}
 
-	private void orderForFullFestival() {
-		// TODO
+	private void orderForFullFestival(OxygenCategories oxygenCategory) {
+		EventDate.getFullFestivalEventDates().forEach(eventDate -> orderForEventDate(oxygenCategory, eventDate));
 	}
 
-	private void orderForEventDate() {
-		// TODO
+	private void orderForEventDate(OxygenCategories oxygenCategory, EventDate eventDate) {
+		producer.produce(oxygenCategory, eventDate.getValue());
 	}
 }

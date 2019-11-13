@@ -63,7 +63,7 @@ class OxygenInventoryServiceTest {
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
         EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
         Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
-        Pass anotherPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
+        Pass anotherPass = new Pass(new Number(1L), mock(Money.class), anotherEventDate);
 
         service.orderForPasses(PassCategories.SUPERNOVA, Arrays.asList(aPass, anotherPass));
 
@@ -75,9 +75,10 @@ class OxygenInventoryServiceTest {
     @EnumSource(PassCategories.class)
     void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
         OxygenCategories expectedOxygenCategory = factory.buildCategory(passCategory);
-        Pass aPass = new Pass(new Number(1L), mock(Money.class));
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 
-        service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass));
+        service.orderForPasses(passCategory, Collections.singletonList(aPass));
 
         verify(producer).produce(eq(expectedOxygenCategory), any());
     }
