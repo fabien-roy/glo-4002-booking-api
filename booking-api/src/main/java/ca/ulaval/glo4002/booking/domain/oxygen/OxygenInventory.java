@@ -45,11 +45,11 @@ public class OxygenInventory {
 		return tanks;
 	}
 
-	// TODO : This does not work
 	public Map<OxygenCategories, List<OxygenTank>> getAllTanks() {
-		Map<OxygenCategories, List<OxygenTank>> allTanks = new EnumMap<>();
+		Map<OxygenCategories, List<OxygenTank>> allTanks = new EnumMap<>(OxygenCategories.class);
 
-		inUseTanks.keySet().forEach(category -> allTanks.put(category, allTanks.get(category)));
+		inUseTanks.keySet().forEach(category -> allTanks.put(category, inUseTanks.get(category)));
+		notInUseTanks.keySet().forEach(category -> allTanks.put(category, notInUseTanks.get(category)));
 
 		return allTanks;
 	}

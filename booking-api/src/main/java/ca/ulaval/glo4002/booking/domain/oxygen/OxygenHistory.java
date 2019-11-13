@@ -12,8 +12,11 @@ public class OxygenHistory {
 
 	private Map<LocalDate, OxygenHistoryItem> historyItems;
 
-	public OxygenHistory(List<OxygenTank> allTanks) {
-	    buildHistoryItems(allTanks);
+	public OxygenHistory(Map<OxygenCategories, List<OxygenTank>> allTanks) {
+		historyItems = new TreeMap<>();
+
+		// TODO : Refactor this call
+		allTanks.keySet().forEach(category -> buildHistoryItems(allTanks.get(category)));
 	}
 
 	public List<OxygenHistoryItem> getHistoryItems() {
@@ -22,8 +25,6 @@ public class OxygenHistory {
 
 	// TODO OXY : Maybe not bother with OxygenDate not sure if useful! anywhere
 	private void buildHistoryItems(List<OxygenTank> allTanks) {
-		historyItems = new TreeMap<>();
-
 		allTanks.forEach(tank -> {
 			LocalDate requestDate = tank.getRequestDate().getValue();
 			LocalDate readyDate = tank.getReadyDate().getValue();
