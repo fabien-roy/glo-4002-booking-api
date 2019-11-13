@@ -5,60 +5,62 @@ import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 public class OrderNumber {
 
-    private Number number;
-    private String vendorCode;
+	private Number orderNumber;
+	private String vendorCode;
 
-    public static final String SEPARATOR = "-";
+	public static final String SEPARATOR = "-";
 
-    public OrderNumber(Number number, String vendorCode) {
-        this.number = number;
-        this.vendorCode = vendorCode;
-    }
+	public OrderNumber(Number orderNumber, String vendorCode) {
+		this.orderNumber = orderNumber;
+		this.vendorCode = vendorCode;
+	}
 
-    public OrderNumber(String orderNumber) {
-        validateOrderNumber(orderNumber);
+	public OrderNumber(String orderNumber) {
+		validateOrderNumber(orderNumber);
 
-        int separatorIndex = orderNumber.indexOf(SEPARATOR);
+		int separatorIndex = orderNumber.indexOf(SEPARATOR);
 
-        String parsedVendorCode = orderNumber.substring(0, separatorIndex);
-        String parsedNumber = orderNumber.substring(separatorIndex + 1);
+		String parsedVendorCode = orderNumber.substring(0, separatorIndex);
+		String parsedNumber = orderNumber.substring(separatorIndex + 1);
 
-        this.number = new Number(parsedNumber);
-        this.vendorCode = parsedVendorCode;
-    }
+		this.orderNumber = new Number(parsedNumber);
+		this.vendorCode = parsedVendorCode;
+	}
 
-    public Number getNumber() {
-        return number;
-    }
+	public Number getOrderNumber() {
+		return orderNumber;
+	}
 
-    public String getVendorCode() {
-        return vendorCode;
-    }
+	public String getVendorCode() {
+		return vendorCode;
+	}
 
-    @Override
-    public String toString() {
-        return vendorCode + SEPARATOR + number.toString();
-    }
+	@Override
+	public String toString() {
+		return vendorCode + SEPARATOR + orderNumber.toString();
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof OrderNumber)) return false;
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof OrderNumber))
+			return false;
 
-        OrderNumber otherOrderNumber = (OrderNumber) other;
+		OrderNumber otherOrderNumber = (OrderNumber) other;
 
-        return number.equals(otherOrderNumber.getNumber()) && vendorCode.equals(otherOrderNumber.getVendorCode());
-    }
+		return orderNumber.equals(otherOrderNumber.getOrderNumber())
+				&& vendorCode.equals(otherOrderNumber.getVendorCode());
+	}
 
-    @Override
-    public int hashCode() {
-        return number.hashCode() + vendorCode.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return orderNumber.hashCode() + vendorCode.hashCode();
+	}
 
-    private void validateOrderNumber(String orderNumber) {
-        int numberOfSeparators = orderNumber.split(SEPARATOR).length - 1;
+	private void validateOrderNumber(String orderNumber) {
+		int numberOfSeparators = orderNumber.split(SEPARATOR).length - 1;
 
-        if (numberOfSeparators != 1) {
-            throw new InvalidFormatException();
-        }
-    }
+		if (numberOfSeparators != 1) {
+			throw new InvalidFormatException();
+		}
+	}
 }
