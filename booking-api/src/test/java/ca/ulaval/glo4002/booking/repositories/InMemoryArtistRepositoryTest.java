@@ -1,10 +1,11 @@
 package ca.ulaval.glo4002.booking.repositories;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +23,6 @@ public class InMemoryArtistRepositoryTest {
 	}
 	
 	@Test
-	@Ignore("WIP")
 	public void saveAll_shouldSaveAllArtists() {
 		List<BookingArtist> artists = new ArrayList<>();
 		String aName = "A name";
@@ -32,6 +32,12 @@ public class InMemoryArtistRepositoryTest {
 		Integer aPopularityRank = 1;
 		List<Availability> someAvailabilities = new ArrayList<>();
 		
-		BookingArtist aBookingArtist = new BookingArtist(aName, aCost, aNumberOfPeople, aMusicStyle, aPopularityRank, someAvailabilities);
+		artists.add(new BookingArtist(aName, aCost, aNumberOfPeople, aMusicStyle, aPopularityRank, someAvailabilities));
+		
+		repository.saveAll(artists);
+		
+		List<BookingArtist> returnedArtists = repository.findAll();
+		
+		assertEquals(artists.size(), returnedArtists.size());
 	}
 }

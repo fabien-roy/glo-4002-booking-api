@@ -33,7 +33,6 @@ class ProgramControllerTest {
     }
 
     @Test
-    @Ignore("WIP")
     void getArtists_shouldReturnOk() {
         String aDate = EventDate.START_DATE.toString();
         when(artistService.getAll(aDate)).thenReturn(mock(ArtistListDto.class));
@@ -44,7 +43,6 @@ class ProgramControllerTest {
     }
 
     @Test
-    @Ignore("WIP")
     void getArtists_shouldReturnBadRequest_whenBadRequest() {
         String aDate = "aDate";
         when(artistService.getAll(aDate)).thenThrow(new InvalidFormatException());

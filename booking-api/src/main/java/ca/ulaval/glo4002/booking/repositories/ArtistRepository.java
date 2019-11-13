@@ -9,9 +9,5 @@ public interface ArtistRepository {
 	public void saveAll(List<BookingArtist> bookingArtists);
 	
 	public List<BookingArtist> findAll();
-	
-	public boolean isEmpty();
-	
-	public boolean isPresent(BookingArtist bookingArtist);
 
 }

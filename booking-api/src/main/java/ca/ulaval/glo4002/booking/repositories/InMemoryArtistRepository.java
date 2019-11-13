@@ -29,13 +29,4 @@ public class InMemoryArtistRepository implements ArtistRepository {
 		return artists;
 	}
 
-	@Override
-	public boolean isEmpty() {
-		return artists.isEmpty();
-	}
-	
-	@Override
-	public boolean isPresent(BookingArtist bookingArtist) {
-		return artists.contains(bookingArtist);
-	}
 }
