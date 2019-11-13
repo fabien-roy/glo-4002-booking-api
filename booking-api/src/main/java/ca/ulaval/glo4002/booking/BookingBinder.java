@@ -1,9 +1,11 @@
 package ca.ulaval.glo4002.booking;
 
+import ca.ulaval.glo4002.booking.clients.ArtistClient;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.controllers.ProgramController;
 import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
+import ca.ulaval.glo4002.booking.converters.ArtistConverter;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.*;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
@@ -28,10 +30,20 @@ public class BookingBinder extends AbstractBinder {
         bindServices();
         bindMappers();
         bindControllers();
+        bindConverters();
+        bindClients();
     }
 
     private void bindGenerators() {
         bindAsContract(NumberGenerator.class);
+    }
+    
+    private void bindConverters() {
+    	bindAsContract(ArtistConverter.class);
+    }
+    
+    private void bindClients() {
+    	bindAsContract(ArtistClient.class);
     }
 
     private void bindFactories() {
