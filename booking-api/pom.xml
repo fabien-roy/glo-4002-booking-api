@@ -85,6 +85,12 @@
 	       	<groupId>ca.ulaval.glo4002</groupId>
 	        <scope>compile</scope>
        </dependency> 
+		<dependency>
+		    <groupId>com.github.tomakehurst</groupId>
+		    <artifactId>wiremock</artifactId>
+		    <version>1.18</version>
+		    <scope>test</scope>
+		</dependency>
     </dependencies>
     
 
