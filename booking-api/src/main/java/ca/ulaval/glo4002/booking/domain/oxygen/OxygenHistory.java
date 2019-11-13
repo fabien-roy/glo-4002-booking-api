@@ -16,6 +16,10 @@ public class OxygenHistory {
 	    buildHistoryItems(allTanks);
 	}
 
+	public List<OxygenHistoryItem> getHistoryItems() {
+		return new ArrayList<>(historyItems.values());
+	}
+
 	// TODO OXY : Maybe not bother with OxygenDate not sure if useful! anywhere
 	private void buildHistoryItems(List<OxygenTank> allTanks) {
 		historyItems = new TreeMap<>();
@@ -25,11 +29,11 @@ public class OxygenHistory {
 			LocalDate readyDate = tank.getReadyDate().getValue();
 			OxygenHistoryItem item;
 
-			if(!historyItems.containsKey(requestDate)) {
+			if (historyItems.containsKey(requestDate)) {
+				item = historyItems.get(requestDate);
+			} else {
 				item = new OxygenHistoryItem(requestDate);
 				historyItems.put(requestDate, item);
-			} else {
-				item = historyItems.get(requestDate);
 			}
 
 			switch(tank.getCategory()) {
@@ -40,29 +44,60 @@ public class OxygenHistory {
 					// TODO OXY : Problem missing .6 period water hot fix with modulo not sure if working and seem to be domain logic
 					item.addWaterUsed(2);
 
-					if(item.getQtyWaterUsed() % 6 == 0 && item.getQtyWaterUsed() != 0) {
+					if (item.getQtyWaterUsed() % 6 == 0 && item.getQtyWaterUsed() != 0) {
 						item.addWaterUsed(2);
 					}
+
 					break;
 				case A:
 					item.addCandleUsed(3);
 					break;
 			}
 
-			if(!historyItems.containsKey(readyDate)) {
+			if (historyItems.containsKey(readyDate)) {
+				item = historyItems.get(readyDate);
+			} else {
 				item = new OxygenHistoryItem(readyDate);
 				historyItems.put(readyDate, item);
-			} else {
-				item = historyItems.get(readyDate);
 			}
 
-			if(tank.getCategory() == OxygenCategories.A || tank.getCategory() == OxygenCategories.B){
+			if (tank.getCategory() == OxygenCategories.A || tank.getCategory() == OxygenCategories.B){
 				item.addTankMade(1);
 			}
 		});
 	}
 
-	public List<OxygenHistoryItem> returnSortedListByDate() {
-		return new ArrayList<>(historyItems.values());
+	private void addMaterialUsed(OxygenTank tank) {
+		LocalDate requestDate = tank.getRequestDate().getValue();
+		OxygenHistoryItem item;
+
+		if (historyItems.containsKey(requestDate)) {
+			item = historyItems.get(requestDate);
+		} else {
+			item = new OxygenHistoryItem(requestDate);
+			historyItems.put(requestDate, item);
+		}
+
+		switch(tank.getCategory()) {
+			case E:
+				item.addTankBought(OxygenTank.CATEGORY_E_NUMBER_OF_TANKS_CREATED);
+				break;
+			case B:
+				// TODO OXY : Problem missing .6 period water hot fix with modulo not sure if working and seem to be domain logic
+				item.addWaterUsed(2);
+
+				if (item.getQtyWaterUsed() % 6 == 0 && item.getQtyWaterUsed() != 0) {
+					item.addWaterUsed(2);
+				}
+
+				break;
+			case A:
+				item.addCandleUsed(3);
+				break;
+		}
+	}
+
+	private void addTanksCreated() {
+
 	}
 }

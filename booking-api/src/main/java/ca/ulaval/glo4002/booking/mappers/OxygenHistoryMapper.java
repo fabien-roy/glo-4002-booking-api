@@ -14,7 +14,7 @@ public class OxygenHistoryMapper {
 		OxygenHistoryItemMapper mapper = new OxygenHistoryItemMapper();
 		List<OxygenHistoryItemDto> historyDto = new ArrayList<>();
 
-		oxygenHistory.returnSortedListByDate()
+		oxygenHistory.getHistoryItems()
 				.forEach(oxygenHistoryItem -> historyDto.add(mapper.toDto(oxygenHistoryItem)));
 
 		return historyDto;

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class OxygenHistoryItem {
 
-    private LocalDate date;
+    private LocalDate date; // TODO : Is date really useful?
     private Integer qtyOxygenTankBought;
     private Integer qtyWaterUsed;
     private Integer qtyCandlesUsed;

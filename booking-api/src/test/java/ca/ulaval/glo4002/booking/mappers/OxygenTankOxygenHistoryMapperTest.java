@@ -36,7 +36,7 @@ class OxygenTankOxygenHistoryMapperTest {
 		List<OxygenHistoryItem> historyItems = new ArrayList<>();
 		historyItems.add(oxygenHistoryItem);
 		mockedOxygenHistory = mock(OxygenHistory.class);
-		when(mockedOxygenHistory.returnSortedListByDate()).thenReturn(historyItems);
+		when(mockedOxygenHistory.getHistoryItems()).thenReturn(historyItems);
 	}
 
 	private OxygenHistoryItem setUpOxygenHistoryItem() {
@@ -53,7 +53,7 @@ class OxygenTankOxygenHistoryMapperTest {
 	void toDto_shouldBuildWithCorrectOxygenHistoryItemDtoList() {
 		List<OxygenHistoryItemDto> dtos = mapper.toDto(mockedOxygenHistory);
 
-		assertEquals(dtos.size(), mockedOxygenHistory.returnSortedListByDate().size());
+		assertEquals(dtos.size(), mockedOxygenHistory.getHistoryItems().size());
 	}
 
 	// TODO if we delete OxygenHistoryItemMapper, we should test for buildItemDto
