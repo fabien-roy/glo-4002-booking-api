@@ -15,8 +15,13 @@ public class InMemoryArtistRepository implements ArtistRepository {
 
 	@Override
 	public void saveAll(List<BookingArtist> bookingArtists) {
-		artists.addAll(bookingArtists);
-		
+		List<String> artistNames = new ArrayList<>();
+		artists.stream().map(BookingArtist::getName).forEach(artistNames::add);
+		for(BookingArtist bookingArtist : bookingArtists) {
+			if (!artistNames.contains(bookingArtist.getName())) {
+				artists.add(bookingArtist);
+			}
+		}
 	}
 
 	@Override
@@ -24,5 +29,13 @@ public class InMemoryArtistRepository implements ArtistRepository {
 		return artists;
 	}
 
+	@Override
+	public boolean isEmpty() {
+		return artists.isEmpty();
+	}
 	
+	@Override
+	public boolean isPresent(BookingArtist bookingArtist) {
+		return artists.contains(bookingArtist);
+	}
 }

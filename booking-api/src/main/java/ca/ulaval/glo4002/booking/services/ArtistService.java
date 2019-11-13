@@ -1,40 +1,37 @@
 package ca.ulaval.glo4002.booking.services;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import ca.ulaval.glo4002.booking.clients.ArtistClient;
-import ca.ulaval.glo4002.booking.converters.ArtistConverter;
 import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
-import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
+import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
+import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
 
 public class ArtistService {
-
-	private final ArtistClient artistClient;
-    private final ArtistConverter artistConverter;
+	
+    private final ArtistRepository artistRepository;
 
     @Inject
-    public ArtistService(ArtistConverter artistConverter, ArtistClient artistClient) {
-        this.artistConverter = artistConverter;
-        this.artistClient = artistClient;
+    public ArtistService(ArtistRepository artistRepository) {
+        this.artistRepository = artistRepository;
     }
 
     public ArtistListDto getAll(String orderBy) {
-        List<ExternalArtist> externalArtists = artistClient.getArtists();
-        
-        List<BookingArtist> bookingArtists = artistConverter.convert(externalArtists);
 
-
+    	List<BookingArtist> bookingArtists = artistRepository.findAll();
+    	
         if(orderBy.equalsIgnoreCase(ArtistOrderings.LOW_COSTS.toString())) {
         	orderByLowCost(bookingArtists);
         } else if (orderBy.equalsIgnoreCase(ArtistOrderings.MOST_POPULAR.toString())) {
         	orderByMostPopular(bookingArtists);
-        }
+        } 
 
         List<String> artistNames = getArtistNames(bookingArtists);
 
@@ -46,16 +43,13 @@ public class ArtistService {
     }
 
     private List<BookingArtist> orderByMostPopular(List<BookingArtist> artists) {
-        return artists
-                .stream()
-                .sorted(Comparator.comparing(BookingArtist::getPopularityRank))
-                .collect(Collectors.toList());
+    	Collections.
+    	sort(artists, (artist1, artist2) -> artist1.getPopularityRank() - artist2.getPopularityRank());
+        return artists;
     }
 
     private List<BookingArtist> orderByLowCost(List<BookingArtist> artists) {
-        return artists
-                .stream()
-                .sorted(Comparator.comparing(BookingArtist::getCost).reversed().thenComparing(BookingArtist::getPopularityRank))
-                .collect(Collectors.toList());
+    	artists.sort(Comparator.comparing(((Function<BookingArtist, Money>)BookingArtist::getCost).andThen(Money::getValue)).reversed());
+        return artists;
     }
 }

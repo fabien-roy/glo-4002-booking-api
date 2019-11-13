@@ -11,10 +11,17 @@ import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
 import ca.ulaval.glo4002.booking.domain.artist.ExternalArtistAvailability;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
 
 public class ArtistConverter {
 	
-	public List<BookingArtist> convert(List<ExternalArtist> externalArtists) {
+	private final ArtistRepository artistRepository;
+	
+	public ArtistConverter(ArtistRepository artistRepository) {
+		this.artistRepository = artistRepository;
+	}
+	
+	public void convert(List<ExternalArtist> externalArtists) {
 		List<BookingArtist> bookingArtists = new ArrayList<>();
 		for (ExternalArtist externalArtist : externalArtists) {
 			Money cost = new Money(new BigDecimal(externalArtist.getPrice()));
@@ -29,7 +36,7 @@ public class ArtistConverter {
 			
 		}
 		
-		return bookingArtists;
+		artistRepository.saveAll(bookingArtists);
 	}
 	
 	private List<Availability> convertAvailabilities(List<ExternalArtistAvailability> externalAvailabilities) {

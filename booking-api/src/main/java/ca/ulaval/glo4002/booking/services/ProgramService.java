@@ -27,4 +27,4 @@ public class ProgramService {
 
         eventRepository.addAll(events);
     }
-}
+} 

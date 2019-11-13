@@ -13,7 +13,5 @@ public class Availability {
 	public EventDate getDate() {
 		return date;
 	}
-	
-	
 
 }

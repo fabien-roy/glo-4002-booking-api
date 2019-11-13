@@ -1,25 +1,28 @@
 package ca.ulaval.glo4002.booking.controllers;
 
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import org.springframework.http.ResponseEntity;
+
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.services.ArtistService;
-import ca.ulaval.glo4002.booking.services.ProgramService;
-import org.springframework.http.ResponseEntity;
-
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 
 @Path("/program")
 public class ProgramController {
 
-    private final ProgramService programService;
     private final ArtistService artistService;
 
     @Inject
-    public ProgramController(ProgramService programService, ArtistService artistService) {
-        this.programService = programService;
+    public ProgramController(ArtistService artistService) {
         this.artistService = artistService;
     }
 
@@ -39,7 +42,7 @@ public class ProgramController {
 
         return ResponseEntity.ok().body(artistListDto);
     }
-
+/*
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> add(ProgramDto programDto) {
@@ -52,5 +55,6 @@ public class ProgramController {
         }
 
         return ResponseEntity.ok().build();
-    }
+    } 
+    */
 }
