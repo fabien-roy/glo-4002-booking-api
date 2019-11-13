@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.services;
 
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.domain.events.Event;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
@@ -15,7 +17,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -28,8 +32,7 @@ class OxygenInventoryServiceTest {
 
     @BeforeEach
     void setUpService() {
-        factory = mock(OxygenFactory.class);
-        doReturn(OxygenCategories.E).when(factory).buildCategory(any());
+        factory = new OxygenFactory();
         producer = mock(OxygenTankProducer.class);
 
         service = new OxygenInventoryService(factory, producer);
@@ -38,25 +41,44 @@ class OxygenInventoryServiceTest {
     @Test
     void orderForPasses_shouldOrderForFullFestival_whenEventDatesIsNull() {
         Pass aFullFestivalPass = new Pass(new Number(1L), mock(Money.class));
+        List<EventDate> fullFestivalEventDates = EventDate.getFullFestivalEventDates();
 
         service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aFullFestivalPass));
 
-        // verify(producer).
+        fullFestivalEventDates.forEach(eventDate -> verify(producer).produce(any(), eq(eventDate.getValue())));
     }
 
     @Test
     void orderForPasses_shouldOrderForEventDate() {
-        // TODO
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
+
+        service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass));
+
+        verify(producer).produce(any(), eq(aEventDate.getValue()));
     }
 
     @Test
     void orderForPasses_shouldOrderForEventDates_whenThereAreMultiplePasses() {
-        // TODO
+        EventDate aEventDate = new EventDate(EventDate.START_DATE);
+        EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
+        Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
+        Pass anotherPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
+
+        service.orderForPasses(PassCategories.SUPERNOVA, Arrays.asList(aPass, anotherPass));
+
+        verify(producer).produce(any(), eq(aEventDate.getValue()));
+        verify(producer).produce(any(), eq(anotherEventDate.getValue()));
     }
 
     @ParameterizedTest
     @EnumSource(PassCategories.class)
     void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
-        // TODO
+        OxygenCategories expectedOxygenCategory = factory.buildCategory(passCategory);
+        Pass aPass = new Pass(new Number(1L), mock(Money.class));
+
+        service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass));
+
+        verify(producer).produce(eq(expectedOxygenCategory), any());
     }
 }
