@@ -5,11 +5,6 @@ public class OxygenReport {
 	private OxygenHistory oxygenHistory;
 	private OxygenInventory oxygenInventory;
 
-	public OxygenReport() {
-		oxygenHistory = new OxygenHistory();
-		oxygenInventory = new OxygenInventory();
-	}
-
 	public OxygenReport(OxygenHistory oxygenHistory, OxygenInventory oxygenInventory) {
 		this.oxygenHistory = oxygenHistory;
 		this.oxygenInventory = oxygenInventory;

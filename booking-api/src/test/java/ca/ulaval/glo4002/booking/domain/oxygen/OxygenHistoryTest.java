@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 class OxygenHistoryTest {
@@ -67,31 +66,20 @@ class OxygenHistoryTest {
 		OxygenTank tankB3 = new OxygenTank(OxygenCategories.B, thirdRequestDate);
 		OxygenTank tankE3 = new OxygenTank(OxygenCategories.E, thirdRequestDate);
 
-		OxygenHistory history = new OxygenHistory();
 		OxygenInventory inventory = new OxygenInventory();
 
-		inventory.addTanksToInventory(OxygenCategories.A,
-				Collections.nCopies(10, tankA1));
-		inventory.addTanksToInventory(OxygenCategories.B,
-				Collections.nCopies(9, tankB1));
-		inventory.addTanksToInventory(OxygenCategories.E,
-				Collections.nCopies(30, tankE1));
-		inventory.addTanksToInventory(OxygenCategories.A,
-				Collections.nCopies(15, tankA2));
-		inventory.addTanksToInventory(OxygenCategories.B,
-				Collections.nCopies(6, tankB2));
-		inventory.addTanksToInventory(OxygenCategories.E,
-				Collections.nCopies(20, tankE2));
-		inventory.addTanksToInventory(OxygenCategories.A,
-				Collections.nCopies(25, tankA3));
-		inventory.addTanksToInventory(OxygenCategories.B,
-				Collections.nCopies(18, tankB3));
-		inventory.addTanksToInventory(OxygenCategories.E,
-				Collections.nCopies(5, tankE3));
+		inventory.addTanksToInventory(OxygenCategories.A, Collections.nCopies(10, tankA1));
+		inventory.addTanksToInventory(OxygenCategories.B, Collections.nCopies(9, tankB1));
+		inventory.addTanksToInventory(OxygenCategories.E, Collections.nCopies(30, tankE1));
+		inventory.addTanksToInventory(OxygenCategories.A, Collections.nCopies(15, tankA2));
+		inventory.addTanksToInventory(OxygenCategories.B, Collections.nCopies(6, tankB2));
+		inventory.addTanksToInventory(OxygenCategories.E, Collections.nCopies(20, tankE2));
+		inventory.addTanksToInventory(OxygenCategories.A, Collections.nCopies(25, tankA3));
+		inventory.addTanksToInventory(OxygenCategories.B, Collections.nCopies(18, tankB3));
+		inventory.addTanksToInventory(OxygenCategories.E, Collections.nCopies(5, tankE3));
 
+		OxygenHistory history = new OxygenHistory(inventory.getAllTanks());
 
-
-		history.buildHistoryItem(inventory.getAllTanks());
 		System.out.println(history);
 	}
 

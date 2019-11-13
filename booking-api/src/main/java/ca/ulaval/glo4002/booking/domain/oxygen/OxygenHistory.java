@@ -3,27 +3,24 @@ package ca.ulaval.glo4002.booking.domain.oxygen;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 public class OxygenHistory {
 
 	private Map<LocalDate, OxygenHistoryItem> historyItems;
 
-	public OxygenHistory() {
-		this.historyItems = new TreeMap<>();
-	}
-
 	public OxygenHistory(List<OxygenTank> allTanks) {
-	    buildHistoryItem(allTanks);
+	    buildHistoryItems(allTanks);
 	}
 
-	// TODO : This should be private
-	public void buildHistoryItem(List<OxygenTank> allTanks) {
+	// TODO OXY : Maybe not bother with OxygenDate not sure if useful! anywhere
+	private void buildHistoryItems(List<OxygenTank> allTanks) {
+		historyItems = new TreeMap<>();
+
 		allTanks.forEach(tank -> {
-			// TODO OXY : Maybe not bother with OxygenDate not sure if usefull! anywhere
 			LocalDate requestDate = tank.getRequestDate().getValue();
 			LocalDate readyDate = tank.getReadyDate().getValue();
 			OxygenHistoryItem item;
@@ -62,11 +59,10 @@ public class OxygenHistory {
 			if(tank.getCategory() == OxygenCategories.A || tank.getCategory() == OxygenCategories.B){
 				item.addTankMade(1);
 			}
-
 		});
 	}
 
 	public List<OxygenHistoryItem> returnSortedListByDate() {
-		return historyItems.values().stream().collect(Collectors.toList());
+		return new ArrayList<>(historyItems.values());
 	}
 }
