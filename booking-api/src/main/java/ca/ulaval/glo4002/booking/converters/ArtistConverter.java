@@ -35,12 +35,17 @@ public class ArtistConverter {
 	private List<Availability> convertAvailabilities(List<ExternalArtistAvailability> externalAvailabilities) {
 		List<Availability> availabilities = new ArrayList<>();
 		for(ExternalArtistAvailability externalArtistAvailability : externalAvailabilities) {
-			if(externalArtistAvailability != null) {
+			LocalDate availabilityDate = LocalDate.parse(externalArtistAvailability.getDate());
+			if(availabilityDateIsDuringFestival(availabilityDate)) {
 				availabilities.add(new Availability
-						(new EventDate(LocalDate.parse(externalArtistAvailability.getDate()))));
+						(new EventDate(availabilityDate)));
 			}
 		}
 		return availabilities;
+	}
+	
+	private boolean availabilityDateIsDuringFestival(LocalDate date) {
+		return date.isAfter(EventDate.START_DATE) && date.isBefore(EventDate.END_DATE);
 	}
 
 }

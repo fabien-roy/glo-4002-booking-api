@@ -1,5 +1,9 @@
 package ca.ulaval.glo4002.booking;
 
+import javax.inject.Singleton;
+
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+
 import ca.ulaval.glo4002.booking.clients.ArtistClient;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.controllers.ProgramController;
@@ -7,18 +11,29 @@ import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.converters.ArtistConverter;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.factories.*;
+import ca.ulaval.glo4002.booking.factories.OrderFactory;
+import ca.ulaval.glo4002.booking.factories.OxygenTankFactory;
+import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
+import ca.ulaval.glo4002.booking.factories.PassFactory;
+import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.mappers.TripMapper;
-import ca.ulaval.glo4002.booking.repositories.*;
-import ca.ulaval.glo4002.booking.services.*;
-import ca.ulaval.glo4002.organisation.OrganisationSpringApplication;
-import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
-
-import javax.inject.Singleton;
+import ca.ulaval.glo4002.booking.repositories.EventRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryEventRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryOxygenTankInventoryRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
+import ca.ulaval.glo4002.booking.repositories.OrderRepository;
+import ca.ulaval.glo4002.booking.repositories.OxygenTankInventoryRepository;
+import ca.ulaval.glo4002.booking.repositories.TripRepository;
+import ca.ulaval.glo4002.booking.services.ArtistService;
+import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.services.OxygenTankInventoryService;
+import ca.ulaval.glo4002.booking.services.ProfitService;
+import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
+import ca.ulaval.glo4002.booking.services.TripService;
 
 public class BookingBinder extends AbstractBinder {
 
@@ -52,7 +67,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenTankFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
-        bindAsContract(EventFactory.class);
+        //bindAsContract(EventFactory.class);
     }
 
     private void bindRepositories() {
@@ -67,7 +82,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(TripService.class);
         bindAsContract(OrderService.class);
         bindAsContract(ShuttleManifestService.class);
-        bindAsContract(ProgramService.class);
+        //bindAsContract(ProgramService.class);
         bindAsContract(ArtistService.class);
         bindAsContract(ProfitService.class);
     }
