@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.converters;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
 import ca.ulaval.glo4002.booking.domain.artist.ExternalArtistAvailability;
+import ca.ulaval.glo4002.booking.domain.events.EventDate;
 
 public class ArtistConverterTest {
 	
@@ -58,17 +59,22 @@ public class ArtistConverterTest {
 	public void convert_convertedArtistsShouldHaveNoAvailabilitiesWhenExternalHasNone() {
 		List<BookingArtist> convertedArtists = artistConverter.convert(externalArtists);
 		
-		assertTrue(convertedArtists.get(0).getAvailabilities().isEmpty());
+		assertEquals(0, convertedArtists.get(0).getAvailabilities().size());
 	}
 	
 	@Test
 	public void convert_convertedArtistsShouldHaveAvailabilitiesWhenExternalHasSome() {
+		when(anExternalArtist.getAvailabilities()).thenReturn(new ArrayList<>());
 		ExternalArtistAvailability anExternalArtistAvailability = mock(ExternalArtistAvailability.class);
+		when(anExternalArtistAvailability.getDate()).thenReturn("2050-07-19");
+		EventDate anExternalDate = new EventDate(LocalDate.parse("2050-07-19"));
+		
 		anExternalArtist.getAvailabilities().add(anExternalArtistAvailability);
 		
 		List<BookingArtist> convertedArtists = artistConverter.convert(externalArtists);
 		
 		assertEquals(1, convertedArtists.get(0).getAvailabilities().size());
+		assertEquals(anExternalDate, convertedArtists.get(0).getAvailabilities().get(0).getDate());
 	}
 
 }
