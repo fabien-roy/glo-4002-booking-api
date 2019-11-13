@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.passes;
 
+import ca.ulaval.glo4002.booking.domain.Profit;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.PassCategories;
 import ca.ulaval.glo4002.booking.enums.PassOptions;
@@ -39,5 +40,9 @@ public class PassBundle {
 
     public Money getPricePerOption(PassOptions option) {
         return category.getPricePerOption(option);
+    }
+    
+    public void upateProfit(Profit profit) {
+    	profit.addRevenue(price);
     }
 }

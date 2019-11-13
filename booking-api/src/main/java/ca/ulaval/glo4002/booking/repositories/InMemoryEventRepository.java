@@ -17,4 +17,11 @@ public class InMemoryEventRepository implements EventRepository {
     public void addAll(List<Event> events) {
         this.events.addAll(events);
     }
+
+	@Override
+	public List<Event> findAll() {
+		return events;
+	}
+    
+    
 }

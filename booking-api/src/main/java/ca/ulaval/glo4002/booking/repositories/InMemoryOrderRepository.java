@@ -25,6 +25,10 @@ public class InMemoryOrderRepository implements OrderRepository {
 
         return foundOrder.get();
     }
+    
+    public List<Order> findAll() {
+    	return orders;
+    }
 
     public void addOrder(Order order) {
         orders.add(order);

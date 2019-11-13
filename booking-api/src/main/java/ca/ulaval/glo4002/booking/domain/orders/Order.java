@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.orders;
 
+import ca.ulaval.glo4002.booking.domain.Profit;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
@@ -42,4 +43,8 @@ public class Order {
     public List<Pass> getPasses() {
         return passBundle.getPasses();
     }
+
+	public void updateProfit(Profit profit) {
+		passBundle.upateProfit(profit);
+	}
 }

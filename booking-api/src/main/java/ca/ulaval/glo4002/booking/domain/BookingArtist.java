@@ -62,4 +62,8 @@ public class BookingArtist {
     public int hashCode() {
         return id.hashCode() + name.hashCode() + cost.hashCode() + numberOfPeople.hashCode() + musicStyle.hashCode() + popularityRank.hashCode();
     }
+
+	public void updateProfit(Profit profit) {
+		profit.addExpense(cost);
+	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.domain.Profit;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
 public class Trip {
@@ -45,5 +46,9 @@ public class Trip {
 
 	public boolean isFull() {
 		return shuttle.getMaxCapacity() == passengers.size();
+	}
+
+	public void updateProfit(Profit profit) {
+		shuttle.updateProfit(profit);
 	}
 }

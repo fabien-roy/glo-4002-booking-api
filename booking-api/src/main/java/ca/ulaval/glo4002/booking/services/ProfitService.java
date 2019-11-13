@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domain.Profit;
 import ca.ulaval.glo4002.booking.dto.ProfitsDto;
 import ca.ulaval.glo4002.booking.repositories.EventRepository;
 import ca.ulaval.glo4002.booking.repositories.OrderRepository;
@@ -14,6 +15,8 @@ public class ProfitService {
     private final OxygenTankInventoryRepository oxygenTankInventoryRepository;
     private final TripRepository tripRepository;
     private final EventRepository eventRepository;
+    
+    Profit profit;
 
     @Inject
     public ProfitService(OrderRepository orderRepository, OxygenTankInventoryRepository oxygenTankInventoryRepository, TripRepository tripRepository, EventRepository eventRepository) {
@@ -21,6 +24,15 @@ public class ProfitService {
         this.oxygenTankInventoryRepository = oxygenTankInventoryRepository;
         this.tripRepository = tripRepository;
         this.eventRepository = eventRepository;
+        profit = new Profit();
+    }
+    
+    public void calculateProfit() {
+    	orderRepository.findAll().forEach(order -> order.updateProfit(profit));
+    	tripRepository.getDepartures().forEach(trip -> trip.updateProfit(profit));
+    	eventRepository.findAll().forEach(event -> event.updateProfit(profit));
+    	// TODO : OXY
+    	profit.calculateProfit();
     }
 
     public ProfitsDto get() {

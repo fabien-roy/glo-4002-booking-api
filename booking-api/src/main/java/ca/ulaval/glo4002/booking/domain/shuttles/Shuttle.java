@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.shuttles;
 
+import ca.ulaval.glo4002.booking.domain.Profit;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
 
@@ -25,5 +26,9 @@ public class Shuttle {
 
 	public Money getPrice() {
 		return price;
+	}
+	
+	public void updateProfit(Profit profit) {
+		profit.addExpense(price);
 	}
 }
