@@ -44,7 +44,7 @@ public class OxygenTankProducer {
 			inventory.addTanksToInventory(category, newTanks);
 		}
 
-		inventoryRepository.setInventory(inventory); // TODO : Is there a better way than this? Could the inventory actually be the repository?
+		inventoryRepository.setInventory(inventory);
 		
 		return newTanks;
 	}
