@@ -52,7 +52,8 @@ public class ArtistConverter {
 	}
 	
 	private boolean availabilityDateIsDuringFestival(LocalDate date) {
-		return date.isAfter(EventDate.START_DATE) && date.isBefore(EventDate.END_DATE);
+		return date.isAfter(EventDate.START_DATE.minusDays(1)) &&
+				date.isBefore(EventDate.END_DATE.plusDays(1));
 	}
 
 }
