@@ -20,11 +20,13 @@ public class Profit {
     }
 
     public void addExpense(Money expense) {
-        this.expense = this.expense.add(expense);
+        this.expense.add(expense);
     }
 
     public void calculateProfit() {
-        this.profit = revenue.subtract(expense);
+        profit = new Money(revenue.getValue());
+        
+        profit.subtract(expense);
     }
 
     public Money getExpense() {

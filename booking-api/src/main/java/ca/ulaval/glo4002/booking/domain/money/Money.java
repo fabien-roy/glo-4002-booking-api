@@ -41,21 +41,13 @@ public class Money implements Comparable<Money> {
     }
 
     // TODO : add test
-    public Money add(Money money) {
-        BigDecimal amount = new BigDecimal(String.valueOf(money.value));
-
-        this.value = this.value.add(amount);
-
-        return new Money(this.value);
+    public void add(Money money) {
+        this.value = this.value.add(money.value);
     }
 
     // TODO : add test
-    public Money subtract(Money money) {
-        BigDecimal amount = new BigDecimal(String.valueOf(money.value));
-
-        this.value = this.value.subtract(amount);
-
-        return new Money(this.value);
+    public void subtract(Money money) {
+        this.value = this.value.subtract(money.value);
     }
 
     @Override
