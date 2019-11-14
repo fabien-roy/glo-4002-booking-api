@@ -1,65 +1,120 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
-import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.factories.ArtistFactory;
-import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
+
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
+import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
+import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryArtistRepository;
 
 class ArtistServiceTest {
 
+    // TODO : ArtistService test should mock ArtistClient
+
     private ArtistService service;
+    private ArtistRepository artistRepository;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
-    private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist ", 500, 2);
-    private BookingArtist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist ", 100, 3);
-    private BookingArtist fourthPopularAndSecondCostArtist = buildArtist("fourthPopularAndSecondCostArtist ", 300, 4);
-    private BookingArtist fifthPopularAndEqualFourthCostArtist = buildArtist("fifthPopularAndEqualFourthCostArtist ", 100, 5);
+    private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);
+    private BookingArtist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist", 100, 3);
+    private BookingArtist fourthPopularAndSecondCostArtist = buildArtist("fourthPopularAndSecondCostArtist", 300, 4);
+    private BookingArtist fifthPopularAndEqualFourthCostArtist = buildArtist("fifthPopularAndEqualFourthCostArtist", 100, 5);
+    private static WireMockServer wiremockServer;
+    private static String response = "[ {\n" + 
+			"  \"id\" : 2,\n" + 
+			"  \"name\" : \"secondPopularAndFirstCostArtist\",\n" + 
+			"  \"nbPeople\" : 4,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 500,\n" + 
+			"  \"popularityRank\" : 2,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 3,\n" + 
+			"  \"name\" : \"firstPopularAndThirdCostArtist\",\n" + 
+			"  \"nbPeople\" : 1,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 200,\n" + 
+			"  \"popularityRank\" : 1,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 4,\n" + 
+			"  \"name\" : \"thirdPopularAndEqualFourthCostArtist\",\n" + 
+			"  \"nbPeople\" : 4,\n" + 
+			"  \"musicStyle\" : \"folk\",\n" + 
+			"  \"price\" : 100,\n" + 
+			"  \"popularityRank\" : 3,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 5,\n" + 
+			"  \"name\" : \"fourthPopularAndSecondCostArtist\",\n" + 
+			"  \"nbPeople\" : 1,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 300,\n" + 
+			"  \"popularityRank\" : 4,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 6,\n" + 
+			"  \"name\" : \"fifthPopularAndEqualFourthCostArtist\",\n" + 
+			"  \"nbPeople\" : 1,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 100,\n" + 
+			"  \"popularityRank\" : 5,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"} ]";
+	
+	
+	@BeforeAll
+	public static void setUpServer() {
+		wiremockServer = new WireMockServer(8080);
+		wiremockServer.start();
+	}
 
     @BeforeEach
     void setUpService() {
-        List<BookingArtist> artists = mockArtists();
-        ArtistRepository artistRepository = mock(ArtistRepository.class);
-        ArtistFactory artistFactory = mock(ArtistFactory.class);
-        when(artistFactory.buildAll(any())).thenReturn(artists);
+		stubFor(get(urlEqualTo("/artists")).
+				willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").
+						withBody(response)));
+		
+    	artistRepository = new InMemoryArtistRepository();
+    	
+        service = new ArtistService(artistRepository);
 
-        service = new ArtistService(artistRepository, artistFactory);
     }
-
-    @Test
-    void getAll_shouldThrowInvalidFormatException_whenOrderByIsInvalid() {
-        String anInvalidOrderBy = "anInvalidOrderBy";
-
-        assertThrows(InvalidFormatException.class, () -> service.getAll(anInvalidOrderBy));
+    
+    @AfterAll
+    public static void stopServer() {
+    	wiremockServer.stop();
     }
 
     @Test
     void getAll_shouldReturnAllArtistNames_whenOrderByIsNull() {
-        ArtistListDto artistListDto = service.getAll(null);
+        ArtistListDto artistListDto = service.getAllUnordered();
 
         assertFalse(artistListDto.getArtists().isEmpty());
     }
 
-    // TODO : byPopularity and null should be a single test
     @Test
-    void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsNull() {
-        ArtistListDto artistListDto = service.getAll(null);
-
-        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(0));
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(1));
+    void getAll_shouldReturnAllArtistNamesUnordered_whenOrderByIsNull() {
+        ArtistListDto artistListDto = service.getAllUnordered();
+        
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(0));
+        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(1));
         assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(2));
         assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(3));
         assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(4));
@@ -67,7 +122,7 @@ class ArtistServiceTest {
 
     @Test
     void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsByMostPopular() {
-        ArtistListDto artistListDto = service.getAll(ArtistOrderings.MOST_POPULAR.toString());
+        ArtistListDto artistListDto = service.getAllOrdered(ArtistOrderings.MOST_POPULAR.toString());
 
         assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(0));
         assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(1));
@@ -78,33 +133,21 @@ class ArtistServiceTest {
 
     @Test
     void getAll_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsLowCosts() {
-        ArtistListDto artistListDto = service.getAll(ArtistOrderings.LOW_COSTS.toString());
+        ArtistListDto artistListDto = service.getAllOrdered(ArtistOrderings.LOW_COSTS.toString());
 
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(0));
-        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(1));
+        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(0));
+        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(1));
         assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(2));
-        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(3));
-        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(4));
+        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(3));
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(4));
     }
 
-    private List<BookingArtist> mockArtists() {
-        List<BookingArtist> artists = new ArrayList<>();
-
-        artists.add(secondPopularAndFirstCostArtist);
-        artists.add(firstPopularAndThirdCostArtist);
-        artists.add(thirdPopularAndEqualFourthCostArtist);
-        artists.add(fourthPopularAndSecondCostArtist);
-        artists.add(fifthPopularAndEqualFourthCostArtist);
-
-        return artists;
-    }
 
     private BookingArtist buildArtist(String name, Integer price, Integer popularityRank) {
-        Number aId = new Number(1L);
         Money cost = new Money(new BigDecimal(price));
         Integer aNumberOfPeople = 1;
         String aMusicStyle = "aMusicStyle";
 
-        return new BookingArtist(aId, name, cost, aNumberOfPeople, aMusicStyle, popularityRank);
+        return new BookingArtist(1, name, cost, aNumberOfPeople, aMusicStyle, popularityRank, new ArrayList<>());
     }
-}
+} 

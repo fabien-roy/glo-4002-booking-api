@@ -1,13 +1,12 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ProgramEventDto;
 import ca.ulaval.glo4002.booking.enums.Activities;
 import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
-import ca.ulaval.glo4002.organisation.domain.Artist;
-import ca.ulaval.glo4002.organisation.repositories.ArtistRepository;
+import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -19,12 +18,10 @@ import java.util.stream.Collectors;
 public class EventFactory {
 
     private final ArtistRepository artistRepository;
-    private final ArtistFactory artistFactory;
 
     @Inject
-    public EventFactory(ArtistRepository artistRepository, ArtistFactory artistFactory) {
+    public EventFactory(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
-        this.artistFactory = artistFactory;
     }
 
     public List<Event> build(List<ProgramEventDto> eventDtos) {
@@ -33,12 +30,10 @@ public class EventFactory {
         validateEventDates(eventDtos);
         validateArtists(eventDtos);
 
-        List<Artist> possibleArtists = artistRepository.findAll(); // TODO : Should EventFactory know about artistRepository?
-
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
-            BookingArtist bookingArtist = getArtistFromPossibleArtists(possibleArtists, eventDto.getPm());
+            BookingArtist bookingArtist = null; // TODO : Correctly add BookingArtist
 
             Event event = new Event(eventDate, activity, bookingArtist);
 
@@ -46,16 +41,6 @@ public class EventFactory {
         });
 
         return events;
-    }
-
-    private BookingArtist getArtistFromPossibleArtists(List<Artist> possibleArtists, String pm) {
-        Artist foundArtist = possibleArtists
-                .stream()
-                .filter(artist -> pm.equals(artist.getName()))
-                .findAny()
-                .orElseThrow(InvalidProgramException::new);
-
-        return artistFactory.build(foundArtist);
     }
 
     private void validateEventDates(List<ProgramEventDto> eventDtos) {
@@ -69,9 +54,9 @@ public class EventFactory {
 
         if (hasNull) throw new InvalidProgramException();
 
-        List<String> artists = eventDtos.stream().map(ProgramEventDto::getPm).collect(Collectors.toList());
+        List<String> eventDates = eventDtos.stream().map(ProgramEventDto::getPm).collect(Collectors.toList());
 
-        validateAllDifferent(artists);
+        validateAllDifferent(eventDates);
     }
 
     private void validateAllDifferent(List<String> elements) {

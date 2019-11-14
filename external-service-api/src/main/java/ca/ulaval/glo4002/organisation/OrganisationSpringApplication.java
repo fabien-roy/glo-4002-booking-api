@@ -22,32 +22,32 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @Import({SpringDataRestConfiguration.class})
 @EntityScan(
-        basePackageClasses = {OrganisationSpringApplication.class, Jsr310JpaConverters.class}
+       basePackageClasses = {OrganisationSpringApplication.class, Jsr310JpaConverters.class}
 )
 @EnableSwagger2
 public class OrganisationSpringApplication {
 
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("ca.ulaval.glo4002.organisation.controllers"))
-                .paths(documentedPaths())
-                .build()
-                .apiInfo(getApiInfo());
-    }
+   @Bean
+   public Docket api() {
+       return new Docket(DocumentationType.SWAGGER_2)
+               .select()
+               .apis(RequestHandlerSelectors.basePackage("ca.ulaval.glo4002.organisation.controllers"))
+               .paths(documentedPaths())
+               .build()
+               .apiInfo(getApiInfo());
+   }
 
-    private Predicate<String> documentedPaths() {
-        return Predicates.not(PathSelectors.regex("/(error|profile).*"));
-    }
+   private Predicate<String> documentedPaths() {
+       return Predicates.not(PathSelectors.regex("/(error|profile).*"));
+   }
 
-    private ApiInfo getApiInfo() {
-        return new ApiInfoBuilder()
-                .contact(new Contact("The GLO-4002 team", "http://projet2019.qualitelogicielle.ca",
-                        "aide@qualitelogicielle.ca"))
-                .title("External service API")
-                .description("External service API")
-                .version("1.0")
-                .build();
-    }
+   private ApiInfo getApiInfo() {
+       return new ApiInfoBuilder()
+               .contact(new Contact("The GLO-4002 team", "http://projet2019.qualitelogicielle.ca",
+                       "aide@qualitelogicielle.ca"))
+               .title("External service API")
+               .description("External service API")
+               .version("1.0")
+               .build();
+   }
 }

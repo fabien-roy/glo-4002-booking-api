@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.domain.events;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.enums.Activities;
 
 public class Event {
