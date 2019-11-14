@@ -1,16 +1,18 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 public class OxygenInventoryTest {
 
@@ -169,5 +171,56 @@ public class OxygenInventoryTest {
 		assertEquals(CATEGORY_A_QUANTITY, numberA);
 		assertEquals(CATEGORY_B_QUANTITY, numberB);
 		assertEquals(CATEGORY_E_QUANTITY, numberE);
+	}
+
+	@ParameterizedTest
+	@EnumSource(OxygenCategories.class)
+	void getAllTanks_shouldReturnNoTankForCategory_whenThereIsNoTank(OxygenCategories category) {
+		oxygenInventory = new OxygenInventory();
+
+		Map<OxygenCategories, List<OxygenTank>> allTanks = oxygenInventory.getAllTanks();
+		List<OxygenTank> categoryATanks = allTanks.get(category);
+
+		assertTrue(categoryATanks.isEmpty());
+	}
+
+	@Test
+	void getAllTanks_shouldReturnAllTanksForCategoryA_whenThereAreSomeNotInUseCategoryATanks() {
+		Integer expectedQuantity = CATEGORY_A_QUANTITY;
+
+		Map<OxygenCategories, List<OxygenTank>> allTanks = oxygenInventory.getAllTanks();
+		List<OxygenTank> categoryATanks = allTanks.get(OxygenCategories.A);
+
+		assertEquals(expectedQuantity, categoryATanks.size());
+	}
+
+	@Test
+	void getAllTanks_shouldReturnAllTanksForCategoryB_whenThereAreSomeNotInUseCategoryBTanks() {
+		Integer expectedQuantity = CATEGORY_B_QUANTITY;
+
+		Map<OxygenCategories, List<OxygenTank>> allTanks = oxygenInventory.getAllTanks();
+		List<OxygenTank> categoryATanks = allTanks.get(OxygenCategories.B);
+
+		assertEquals(expectedQuantity, categoryATanks.size());
+	}
+
+	@Test
+	void getAllTanks_shouldReturnAllTanksForCategoryE_whenThereAreSomeNotInUseCategoryETanks() {
+		Integer expectedQuantity = CATEGORY_E_QUANTITY;
+
+		Map<OxygenCategories, List<OxygenTank>> allTanks = oxygenInventory.getAllTanks();
+		List<OxygenTank> categoryATanks = allTanks.get(OxygenCategories.E);
+
+		assertEquals(expectedQuantity, categoryATanks.size());
+	}
+
+	@ParameterizedTest
+	@EnumSource(OxygenCategories.class)
+	void getAllTanks_shouldReturnAllTanksForCategory_whenThereAreSomeNotInUseAndSomeInUseTanks(OxygenCategories category) {
+		Map<OxygenCategories, List<OxygenTank>> allTanks = oxygenInventory.getAllTanks();
+		List<OxygenTank> categoryATanks = allTanks.get(category);
+		Integer expectedQuantity = oxygenInventory.getAllQuantityByCategory(category);
+
+		assertEquals(expectedQuantity, categoryATanks.size());
 	}
 }

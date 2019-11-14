@@ -2,10 +2,7 @@ package ca.ulaval.glo4002.booking.domain.oxygen;
 
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OxygenInventory {
 
@@ -39,21 +36,14 @@ public class OxygenInventory {
 		return inUseTanks.get(category);
 	}
 
-	public List<OxygenTank> getAllTanksByCategory(OxygenCategories category) {
-		List<OxygenTank> tanks = new ArrayList<>();
+	// TODO : Only used by tests
+	public Map<OxygenCategories, List<OxygenTank>> getAllTanks() {
+		Map<OxygenCategories, List<OxygenTank>> allTanks = new EnumMap<>(OxygenCategories.class);
 
-		tanks.addAll(getNotInUseTankByCategory(category));
-		tanks.addAll(getInUseTanksByCategory(category));
+		inUseTanks.keySet().forEach(category -> allTanks.put(category, inUseTanks.get(category)));
+		notInUseTanks.keySet().forEach(category -> allTanks.put(category, notInUseTanks.get(category)));
 
-		return tanks;
-	}
-
-	public List<OxygenTank> getAllTanks() {
-		List<OxygenTank> tanks = new ArrayList<>();
-
-		inUseTanks.keySet().forEach(key -> tanks.addAll(getAllTanksByCategory(key)));
-
-		return tanks;
+		return allTanks;
 	}
 
 	public Integer getNotInUseQuantityByCategory(OxygenCategories category) {
@@ -75,6 +65,7 @@ public class OxygenInventory {
 		notInUseTanks.get(category).addAll(newTanks);
 	}
 
+	// TODO : This does not take in account that having less than numberOfTanksPerDay for a category is useless for a day
 	public Integer requestTankByCategory(OxygenCategories baseCategory, OxygenCategories maxCategory, Integer quantity) {
 		Integer quantityStillNeeded = quantity;
 		int basePosition = categoriesOrder.indexOf(baseCategory);

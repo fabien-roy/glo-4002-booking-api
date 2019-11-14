@@ -1,10 +1,12 @@
 package ca.ulaval.glo4002.booking.producers;
 
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
+import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 import ca.ulaval.glo4002.booking.factories.OxygenFactory;
+import ca.ulaval.glo4002.booking.repositories.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.repositories.OxygenInventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,6 +26,7 @@ public class OxygenTankProducerTest {
 
     private OxygenTankProducer producer;
     private OxygenInventory inventory;
+    private OxygenHistory history;
 
     private static final LocalDate VALID_CATEGORY_A_BUILD_DATE = EventDate.START_DATE.minusDays(21);
     private static final LocalDate VALID_CATEGORY_E_BUILD_DATE = EventDate.START_DATE;
@@ -37,12 +40,15 @@ public class OxygenTankProducerTest {
     @BeforeEach
     void setUpProducer() {
         OxygenInventoryRepository inventoryRepository = mock(OxygenInventoryRepository.class);
+        OxygenHistoryRepository historyRepository = mock(OxygenHistoryRepository.class);
         inventory = mock(OxygenInventory.class);
+        history = mock(OxygenHistory.class);
         when(inventoryRepository.getInventory()).thenReturn(inventory);
+        when(historyRepository.getHistory()).thenReturn(history);
 
         OxygenFactory factory = new OxygenFactory();
 
-        producer = new OxygenTankProducer(inventoryRepository, factory);
+        producer = new OxygenTankProducer(inventoryRepository, historyRepository, factory);
     }
 
     @Test

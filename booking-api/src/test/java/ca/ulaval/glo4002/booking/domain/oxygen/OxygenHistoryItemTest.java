@@ -11,21 +11,18 @@ public class OxygenHistoryItemTest {
 
     private OxygenHistoryItem oxygenHistoryItem;
 
-    private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 06, 20);
-
     @BeforeEach
     void setupOxygenHistoryItem() {
-        oxygenHistoryItem = new OxygenHistoryItem(A_VALID_DATE);
+        oxygenHistoryItem = new OxygenHistoryItem();
     }
 
     @Test
     void addTankBought_shouldAddTankBough() {
         Integer numTanksBough = 5;
 
-        oxygenHistoryItem.addTankBought(numTanksBough);
-        oxygenHistoryItem.addTankBought(numTanksBough);
+        oxygenHistoryItem.addTanksBought(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyOxygenTankBought());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyOxygenTankBought());
     }
 
     @Test
@@ -33,9 +30,8 @@ public class OxygenHistoryItemTest {
         Integer numTanksBough = 5;
 
         oxygenHistoryItem.addWaterUsed(numTanksBough);
-        oxygenHistoryItem.addWaterUsed(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyWaterUsed());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyWaterUsed());
     }
 
     @Test
@@ -43,19 +39,16 @@ public class OxygenHistoryItemTest {
         Integer numTanksBough = 5;
 
         oxygenHistoryItem.addCandleUsed(numTanksBough);
-        oxygenHistoryItem.addCandleUsed(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyCandlesUsed());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyCandlesUsed());
     }
 
     @Test
     void addTankMade_shouldAddTankMade() {
         Integer numTanksBough = 5;
 
-        oxygenHistoryItem.addTankMade(numTanksBough);
-        oxygenHistoryItem.addTankMade(numTanksBough);
+        oxygenHistoryItem.addTanksMade(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyOxygenTankMade());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyOxygenTankMade());
     }
-
 }

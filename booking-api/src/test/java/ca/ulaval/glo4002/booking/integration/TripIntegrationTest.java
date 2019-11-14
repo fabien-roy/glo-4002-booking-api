@@ -19,6 +19,7 @@ import ca.ulaval.glo4002.booking.services.OrderService;
 import ca.ulaval.glo4002.booking.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.services.TripService;
+import io.swagger.models.auth.In;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -53,9 +54,10 @@ class TripIntegrationTest {
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
+        OxygenHistoryRepository oxygenHistoryRepository = new InMemoryOxygenHistoryRepository();
         OrderRepository orderRepository = new InMemoryOrderRepository();
 
-        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer(oxygenInventoryRepository, oxygenFactory);
+        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer(oxygenInventoryRepository, oxygenHistoryRepository, oxygenFactory);
 
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         TripMapper tripMapper = new TripMapper();

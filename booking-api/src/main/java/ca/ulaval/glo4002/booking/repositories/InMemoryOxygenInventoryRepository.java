@@ -12,10 +12,6 @@ public class InMemoryOxygenInventoryRepository implements OxygenInventoryReposit
 		this.inventory = new OxygenInventory();
 	}
 
-	public InMemoryOxygenInventoryRepository(OxygenInventory inventory) {
-		this.inventory = inventory;
-	}
-
 	@Override
 	public OxygenInventory getInventory() {
 		return inventory;

@@ -12,7 +12,6 @@ import java.util.List;
 
 public class OxygenFactory {
 
-    // TODO : It's kind of weird that factory knows about "quantity to cover"...
 	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer numberOfTanksByBundle = getNumberOfTanksByCategoryForCreation(category);

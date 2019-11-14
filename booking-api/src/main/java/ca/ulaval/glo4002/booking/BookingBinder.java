@@ -1,13 +1,5 @@
 package ca.ulaval.glo4002.booking;
 
-import javax.inject.Singleton;
-
-import ca.ulaval.glo4002.booking.factories.*;
-import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
-import ca.ulaval.glo4002.booking.repositories.*;
-import ca.ulaval.glo4002.booking.services.*;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
-
 import ca.ulaval.glo4002.booking.clients.ArtistClient;
 import ca.ulaval.glo4002.booking.controllers.OrderController;
 import ca.ulaval.glo4002.booking.controllers.ProgramController;
@@ -15,10 +7,14 @@ import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.converters.ArtistConverter;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
-import ca.ulaval.glo4002.booking.mappers.TripMapper;
+import ca.ulaval.glo4002.booking.factories.*;
+import ca.ulaval.glo4002.booking.mappers.*;
+import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
+import ca.ulaval.glo4002.booking.repositories.*;
+import ca.ulaval.glo4002.booking.services.*;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+
+import javax.inject.Singleton;
 
 public class BookingBinder extends AbstractBinder {
 
@@ -57,6 +53,7 @@ public class BookingBinder extends AbstractBinder {
 
     private void bindRepositories() {
         bind(InMemoryOxygenInventoryRepository.class).to(OxygenInventoryRepository.class).in(Singleton.class);
+        bind(InMemoryOxygenHistoryRepository.class).to(OxygenHistoryRepository.class).in(Singleton.class);
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
         bind(InMemoryArtistRepository.class).to(ArtistRepository.class).in(Singleton.class);
@@ -73,6 +70,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ShuttleManifestService.class);
         bindAsContract(ArtistService.class);
         bindAsContract(ProfitService.class);
+        bindAsContract(OxygenReportService.class);
     }
 
     private void bindMappers() {
@@ -80,6 +78,9 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OrderMapper.class);
         bindAsContract(TripMapper.class);
         bindAsContract(ShuttleManifestMapper.class);
+        bindAsContract(OxygenInventoryMapper.class);
+        bindAsContract(OxygenHistoryMapper.class);
+        bindAsContract(OxygenReportMapper.class);
     }
 
     private void bindControllers() {
