@@ -35,8 +35,7 @@ class OrderFactoryTest {
 		ZonedDateTime anOrderDate = ZonedDateTime.of(OrderFactory.START_DATE_TIME.plusDays(1), ZoneId.systemDefault());
 		PassBundleDto passBundleDto = mock(PassBundleDto.class);
 		when(passBundleDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
-		OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(anOrderDate.toString(), "TEAM",
-				passBundleDto);
+		OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(anOrderDate.toString(), "TEAM", passBundleDto);
 
 		Order order = factory.build(orderDto);
 

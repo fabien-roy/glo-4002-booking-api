@@ -1,10 +1,9 @@
 package ca.ulaval.glo4002.booking.enums;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.InvalidProgramException;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 public enum ArtistOrderings {
 

@@ -1,25 +1,25 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
-import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
-import ca.ulaval.glo4002.booking.exceptions.BookingException;
-import ca.ulaval.glo4002.booking.services.ArtistService;
-import ca.ulaval.glo4002.booking.services.ProgramService;
+import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.http.ResponseEntity;
 
-import javax.inject.Inject;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
+import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
+import ca.ulaval.glo4002.booking.exceptions.BookingException;
+import ca.ulaval.glo4002.booking.services.ArtistService;
 
 @Path("/program")
 public class ProgramController {
 
-    private final ProgramService programService;
     private final ArtistService artistService;
 
     @Inject
-    public ProgramController(ProgramService programService, ArtistService artistService) {
-        this.programService = programService;
+    public ProgramController(ArtistService artistService) {
         this.artistService = artistService;
     }
 
@@ -30,7 +30,11 @@ public class ProgramController {
         ArtistListDto artistListDto;
 
         try {
-            artistListDto = artistService.getAll(orderBy);
+        	if(orderBy == null) {
+        		artistListDto = artistService.getAllUnordered();
+        	} else {
+        		artistListDto = artistService.getAllOrdered(orderBy);
+        	}
         } catch (BookingException exception) {
             return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
         } catch (Exception exception) {
@@ -39,7 +43,7 @@ public class ProgramController {
 
         return ResponseEntity.ok().body(artistListDto);
     }
-
+/*
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> add(ProgramDto programDto) {
@@ -52,5 +56,6 @@ public class ProgramController {
         }
 
         return ResponseEntity.ok().build();
-    }
+    } 
+    */
 }

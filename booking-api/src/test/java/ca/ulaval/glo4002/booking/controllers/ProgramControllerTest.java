@@ -1,18 +1,21 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
-import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.services.ArtistService;
-import ca.ulaval.glo4002.booking.services.ProgramService;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
+import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
+import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.services.ArtistService;
+import ca.ulaval.glo4002.booking.services.ProgramService;
 
 class ProgramControllerTest {
 
@@ -25,46 +28,36 @@ class ProgramControllerTest {
         programService = mock(ProgramService.class);
         artistService = mock(ArtistService.class);
 
-        controller = new ProgramController(programService, artistService);
+        controller = new ProgramController(artistService);
     }
 
     @Test
-    void getArtists_shouldReturnOk() {
-        String aDate = EventDate.START_DATE.toString();
-        when(artistService.getAll(aDate)).thenReturn(mock(ArtistListDto.class));
+    void getArtistsOrderedValidOrdering_shouldReturnOk() {
+        String ordering = ArtistOrderings.MOST_POPULAR.toString();
+        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.getArtists(aDate);
+        ResponseEntity<?> response = controller.getArtists(ordering);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    void getArtists_shouldReturnBadRequest_whenBadRequest() {
-        String aDate = "aDate";
-        when(artistService.getAll(aDate)).thenThrow(new InvalidFormatException());
+    void getArtistsUnordered_shouldReturnOk() {
+        when(artistService.getAllUnordered()).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.getArtists(aDate);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    }
-
-
-    @Test
-    void add_shouldReturnOk() {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
-
-        ResponseEntity<?> response = controller.add(aProgramDto);
+        ResponseEntity<?> response = controller.getArtists(null);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    void add_shouldReturnBadRequest_whenBadRequest() {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
-        doThrow(new InvalidFormatException()).when(programService).add(aProgramDto);
+    void getArtistsOrderedInValidOrdering_shouldReturnOk() {
+        String ordering = "A string";
+        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.add(aProgramDto);
+        ResponseEntity<?> response = controller.getArtists(ordering);
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
+
 }

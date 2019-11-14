@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.factories;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 public class PassFactory {
 
@@ -27,13 +30,21 @@ public class PassFactory {
 			passes.add(new Pass(numberGenerator.generate(), passPrice));
 		} else {
 			eventDates.forEach(eventDate -> {
-				LocalDate date = LocalDate.parse(eventDate);
-				EventDate builtEventDate = new EventDate(date);
+				LocalDate parsedEventDate = parseLocalDate(eventDate);
+				EventDate builtEventDate = new EventDate(parsedEventDate);
 				Pass pass = new Pass(numberGenerator.generate(), passPrice, builtEventDate);
 				passes.add(pass);
 			});
 		}
 
 		return passes;
+	}
+
+	private LocalDate parseLocalDate(String textEventDate) {
+		try {
+			return LocalDate.parse(textEventDate);
+		} catch (Exception exception) {
+			throw new InvalidFormatException();
+		}
 	}
 }

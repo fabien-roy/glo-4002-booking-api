@@ -4,6 +4,9 @@ import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
+import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 class PassFactoryTest {
@@ -48,5 +52,12 @@ class PassFactoryTest {
         List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
 
         assertEquals(2, passes.size());
+    }
+
+    @Test
+    void buildAll_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
+        List<String> anInvalidEventDate = Collections.singletonList("anInvalidEventDate");
+
+        assertThrows(InvalidFormatException.class, () -> factory.buildAll(anInvalidEventDate, mock(Money.class)));
     }
 }
