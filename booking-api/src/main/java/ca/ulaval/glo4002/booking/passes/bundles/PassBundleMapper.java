@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PassBundleMapper {
 
-    List<PassDto> toDto(PassBundle passBundle) {
+    public List<PassDto> toDto(PassBundle passBundle) {
         String passCategory = passBundle.getCategory().toString();
         String passOption = passBundle.getOption().toString();
 

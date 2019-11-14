@@ -1,15 +1,14 @@
 package ca.ulaval.glo4002.booking.passes;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.profits.Money;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PassTest {
 
@@ -43,5 +42,4 @@ class PassTest {
 
 		assertEquals(pass.getEventDate(), eventDate);
 	}
-
 }

@@ -41,7 +41,7 @@ public class TripService {
 		repository.addPassengersToNewDeparture(passengers, shuttleCategory, tripDate);
 	}
 
-	void orderForPasses(PassCategories passCategory, List<Pass> passes) {
+	public void orderForPasses(PassCategories passCategory, List<Pass> passes) {
 		ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
 
 		passes.forEach(pass -> {

@@ -21,7 +21,7 @@ public class OxygenInventoryService {
 		this.producer = producer;
 	}
 
-	void orderForPasses(PassCategories passCategory, List<Pass> passes) {
+	public void orderForPasses(PassCategories passCategory, List<Pass> passes) {
 		OxygenCategories oxygenCategory = factory.buildCategory(passCategory);
 
 		passes.forEach(pass -> {
