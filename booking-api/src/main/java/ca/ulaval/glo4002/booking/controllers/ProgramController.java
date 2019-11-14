@@ -1,9 +1,7 @@
 package ca.ulaval.glo4002.booking.controllers;
 
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -12,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
-import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.services.ArtistService;
 
@@ -33,7 +30,11 @@ public class ProgramController {
         ArtistListDto artistListDto;
 
         try {
-            artistListDto = artistService.getAll(orderBy);
+        	if(orderBy == null) {
+        		artistListDto = artistService.getAllUnordered();
+        	} else {
+        		artistListDto = artistService.getAllOrdered(orderBy);
+        	}
         } catch (BookingException exception) {
             return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
         } catch (Exception exception) {

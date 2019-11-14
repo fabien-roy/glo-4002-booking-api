@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
+import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.services.ArtistService;
 import ca.ulaval.glo4002.booking.services.ProgramService;
@@ -33,25 +33,33 @@ class ProgramControllerTest {
     }
 
     @Test
-    void getArtists_shouldReturnOk() {
-        String aDate = EventDate.START_DATE.toString();
-        when(artistService.getAll(aDate)).thenReturn(mock(ArtistListDto.class));
+    void getArtistsOrderedValidOrdering_shouldReturnOk() {
+        String ordering = ArtistOrderings.MOST_POPULAR.toString();
+        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.getArtists(aDate);
+        ResponseEntity<?> response = controller.getArtists(ordering);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    void getArtists_shouldReturnBadRequest_whenBadRequest() {
-        String aDate = "aDate";
-        when(artistService.getAll(aDate)).thenThrow(new InvalidFormatException());
+    void getArtistsUnordered_shouldReturnOk() {
+        when(artistService.getAllUnordered()).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.getArtists(aDate);
+        ResponseEntity<?> response = controller.getArtists(null);
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    void getArtistsOrderedInValidOrdering_shouldReturnOk() {
+        String ordering = "A string";
+        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
+
+        ResponseEntity<?> response = controller.getArtists(ordering);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 
     @Test
     @Ignore("WIP")
