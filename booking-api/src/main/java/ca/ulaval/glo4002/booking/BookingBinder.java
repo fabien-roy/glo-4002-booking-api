@@ -45,6 +45,7 @@ public class BookingBinder extends AbstractBinder {
 
     private void bindRepositories() {
         bind(InMemoryOxygenInventoryRepository.class).to(OxygenInventoryRepository.class).in(Singleton.class);
+        bind(InMemoryOxygenHistoryRepository.class).to(OxygenHistoryRepository.class).in(Singleton.class);
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
         bind(InMemoryEventRepository.class).to(EventRepository.class).in(Singleton.class);
