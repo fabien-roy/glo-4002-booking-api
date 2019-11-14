@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -209,7 +208,6 @@ public class ArtistClientTest {
 	
 	
 	@Test
-	@Ignore("WIP")
 	public void getArtists_returnsAllArtists() {
 		List<ExternalArtist> externalArtists = artistClient.getArtists();
 
