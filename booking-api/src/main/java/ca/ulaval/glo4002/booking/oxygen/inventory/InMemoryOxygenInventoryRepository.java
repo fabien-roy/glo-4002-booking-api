@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.booking.oxygen.inventory;
 
 public class InMemoryOxygenInventoryRepository implements OxygenInventoryRepository {
 
-	// TODO : OxygenInventory should actually be a OxygenTankRepository
-
 	private OxygenInventory inventory;
 
 	public InMemoryOxygenInventoryRepository() {

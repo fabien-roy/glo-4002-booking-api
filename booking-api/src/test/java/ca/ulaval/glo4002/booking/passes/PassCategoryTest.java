@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.profits.Money;
 
-// TODO : Move to tests
 class PassCategoryTest {
 
 	PassCategory category;
