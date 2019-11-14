@@ -7,19 +7,18 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
 import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
 import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
+import ca.ulaval.glo4002.booking.repositories.InMemoryArtistRepository;
 
 class ArtistServiceTest {
-/*
+
     private ArtistService service;
     private ArtistRepository artistRepository;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
@@ -30,40 +29,35 @@ class ArtistServiceTest {
 
     @BeforeEach
     void setUpService() {
-    	artistRepository = Mockito.mock(ArtistRepository.class);
+    	artistRepository = new InMemoryArtistRepository();
     	
         service = new ArtistService(artistRepository);
         
         mockArtists();
-        
-        List<BookingArtist> artists = artistRepository.findAll();
+
     }
 
     @Test
-    @Ignore("WIP")
     void getAll_shouldReturnAllArtistNames_whenOrderByIsNull() {
-        ArtistListDto artistListDto = service.getAll(null);
+        ArtistListDto artistListDto = service.getAllUnordered();
 
         assertFalse(artistListDto.getArtists().isEmpty());
     }
 
-    // TODO : byPopularity and null should be a single test
     @Test
-    @Ignore("WIP")
-    void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsNull() {
-        ArtistListDto artistListDto = service.getAll(null);
-
-        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(0));
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(1));
+    void getAll_shouldReturnAllArtistNamesUnordered_whenOrderByIsNull() {
+        ArtistListDto artistListDto = service.getAllUnordered();
+        
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(0));
+        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(1));
         assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(2));
         assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(3));
         assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(4));
     }
 
     @Test
-    @Ignore("WIP")
     void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsByMostPopular() {
-        ArtistListDto artistListDto = service.getAll(ArtistOrderings.MOST_POPULAR.toString());
+        ArtistListDto artistListDto = service.getAllOrdered(ArtistOrderings.MOST_POPULAR.toString());
 
         assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(0));
         assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(1));
@@ -73,9 +67,8 @@ class ArtistServiceTest {
     }
 
     @Test
-    @Ignore("WIP")
     void getAll_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsLowCosts() {
-        ArtistListDto artistListDto = service.getAll(ArtistOrderings.LOW_COSTS.toString());
+        ArtistListDto artistListDto = service.getAllOrdered(ArtistOrderings.LOW_COSTS.toString());
 
         assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(0));
         assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(1));
@@ -103,5 +96,4 @@ class ArtistServiceTest {
 
         return new BookingArtist(name, cost, aNumberOfPeople, aMusicStyle, popularityRank, new ArrayList<>());
     }
-    */
 } 
