@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import ca.ulaval.glo4002.booking.converters.ArtistConverter;
 import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.money.Money;
 import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
@@ -18,14 +19,18 @@ import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
 public class ArtistService {
 	
     private final ArtistRepository artistRepository;
+    private final ArtistConverter artistConverter;
 
     @Inject
     public ArtistService(ArtistRepository artistRepository) {
         this.artistRepository = artistRepository;
+        this.artistConverter = new ArtistConverter(artistRepository);
+        artistConverter.convert();
+        
     }
 
     public ArtistListDto getAllOrdered(String orderBy) {
-
+    	
     	List<BookingArtist> bookingArtists = artistRepository.findAll();
     	List<String> artistNames = new ArrayList<>();
     	
@@ -43,6 +48,7 @@ public class ArtistService {
     }
     
     public ArtistListDto getAllUnordered() {
+    	
     	List<BookingArtist> bookingArtists = artistRepository.findAll();
     	return new ArtistListDto(getArtistNames(bookingArtists));
     	
@@ -59,7 +65,9 @@ public class ArtistService {
     }
 
     private List<BookingArtist> orderByLowCost(List<BookingArtist> artists) {
-    	artists.sort(Comparator.comparing(((Function<BookingArtist, Money>)BookingArtist::getCost).andThen(Money::getValue)).reversed());
+    	artists.sort(Comparator.comparing(((Function<BookingArtist, Money>)BookingArtist::getCost).
+    			andThen(Money::getValue)).
+    			thenComparing(BookingArtist::getPopularityRank));
         return artists;
     }
 }

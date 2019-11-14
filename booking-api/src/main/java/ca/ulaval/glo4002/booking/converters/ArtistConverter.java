@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.clients.ArtistClient;
 import ca.ulaval.glo4002.booking.domain.artist.Availability;
 import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
@@ -21,7 +22,8 @@ public class ArtistConverter {
 		this.artistRepository = artistRepository;
 	}
 	
-	public void convert(List<ExternalArtist> externalArtists) {
+	public void convert() {
+		List<ExternalArtist> externalArtists = ArtistClient.getArtists();
 		List<BookingArtist> bookingArtists = new ArrayList<>();
 		for (ExternalArtist externalArtist : externalArtists) {
 			Money cost = new Money(new BigDecimal(externalArtist.getPrice()));

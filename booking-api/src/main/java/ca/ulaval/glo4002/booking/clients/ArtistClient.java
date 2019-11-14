@@ -13,7 +13,11 @@ public class ArtistClient {
 	
 	private static final String EXTERNAL_SERVICE_URL = "http://localhost:8080/artists";
 	
-	public List<ExternalArtist> getArtists() {
+	private ArtistClient() {
+		
+	}
+	
+	public static List<ExternalArtist> getArtists() {
 		
 		Client restClient = ClientBuilder.newClient();
 	

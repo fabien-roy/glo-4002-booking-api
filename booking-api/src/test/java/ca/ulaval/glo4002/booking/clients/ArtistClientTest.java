@@ -19,7 +19,6 @@ import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
 
 public class ArtistClientTest {
 
-	private static ArtistClient artistClient;
 	private static WireMockServer wiremockServer;
 	private static final String response = "[ {\n" + 
 			"  \"id\" : 1,\n" + 
@@ -191,7 +190,6 @@ public class ArtistClientTest {
 	public static void setupClient() {
 		wiremockServer = new WireMockServer(8080);
 		wiremockServer.start();
-		artistClient = new ArtistClient();
 	}
 	
 	@BeforeEach
@@ -209,7 +207,7 @@ public class ArtistClientTest {
 	
 	@Test
 	public void getArtists_returnsAllArtists() {
-		List<ExternalArtist> externalArtists = artistClient.getArtists();
+		List<ExternalArtist> externalArtists = ArtistClient.getArtists();
 
 		assertFalse(externalArtists.isEmpty());
 	}

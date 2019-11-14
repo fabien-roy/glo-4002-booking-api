@@ -1,14 +1,21 @@
 package ca.ulaval.glo4002.booking.services;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
 
 import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.money.Money;
@@ -22,19 +29,75 @@ class ArtistServiceTest {
     private ArtistService service;
     private ArtistRepository artistRepository;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
-    private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist ", 500, 2);
-    private BookingArtist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist ", 100, 3);
-    private BookingArtist fourthPopularAndSecondCostArtist = buildArtist("fourthPopularAndSecondCostArtist ", 300, 4);
-    private BookingArtist fifthPopularAndEqualFourthCostArtist = buildArtist("fifthPopularAndEqualFourthCostArtist ", 100, 5);
+    private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);
+    private BookingArtist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist", 100, 3);
+    private BookingArtist fourthPopularAndSecondCostArtist = buildArtist("fourthPopularAndSecondCostArtist", 300, 4);
+    private BookingArtist fifthPopularAndEqualFourthCostArtist = buildArtist("fifthPopularAndEqualFourthCostArtist", 100, 5);
+    private static WireMockServer wiremockServer;
+    private static String response = "[ {\n" + 
+			"  \"id\" : 2,\n" + 
+			"  \"name\" : \"secondPopularAndFirstCostArtist\",\n" + 
+			"  \"nbPeople\" : 4,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 500,\n" + 
+			"  \"popularityRank\" : 2,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 3,\n" + 
+			"  \"name\" : \"firstPopularAndThirdCostArtist\",\n" + 
+			"  \"nbPeople\" : 1,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 200,\n" + 
+			"  \"popularityRank\" : 1,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 4,\n" + 
+			"  \"name\" : \"thirdPopularAndEqualFourthCostArtist\",\n" + 
+			"  \"nbPeople\" : 4,\n" + 
+			"  \"musicStyle\" : \"folk\",\n" + 
+			"  \"price\" : 100,\n" + 
+			"  \"popularityRank\" : 3,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 5,\n" + 
+			"  \"name\" : \"fourthPopularAndSecondCostArtist\",\n" + 
+			"  \"nbPeople\" : 1,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 300,\n" + 
+			"  \"popularityRank\" : 4,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"}, {\n" + 
+			"  \"id\" : 6,\n" + 
+			"  \"name\" : \"fifthPopularAndEqualFourthCostArtist\",\n" + 
+			"  \"nbPeople\" : 1,\n" + 
+			"  \"musicStyle\" : \"pop\",\n" + 
+			"  \"price\" : 100,\n" + 
+			"  \"popularityRank\" : 5,\n" + 
+			"  \"availabilities\" : [ ]\n" + 
+			"} ]";
+	
+	
+	@BeforeAll
+	public static void setUpServer() {
+		wiremockServer = new WireMockServer(8080);
+		wiremockServer.start();
+	}
 
     @BeforeEach
     void setUpService() {
+		stubFor(get(urlEqualTo("/artists")).
+				willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").
+						withBody(response)));
+		
     	artistRepository = new InMemoryArtistRepository();
     	
         service = new ArtistService(artistRepository);
-        
-        mockArtists();
 
+    }
+    
+    @AfterAll
+    public static void stopServer() {
+    	wiremockServer.stop();
     }
 
     @Test
@@ -70,24 +133,13 @@ class ArtistServiceTest {
     void getAll_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsLowCosts() {
         ArtistListDto artistListDto = service.getAllOrdered(ArtistOrderings.LOW_COSTS.toString());
 
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(0));
-        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(1));
+        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(0));
+        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(1));
         assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(2));
-        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(3));
-        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(4));
+        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(3));
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(4));
     }
 
-    private void mockArtists() {
-        List<BookingArtist> artists = new ArrayList<>();
-
-        artists.add(secondPopularAndFirstCostArtist);
-        artists.add(firstPopularAndThirdCostArtist);
-        artists.add(thirdPopularAndEqualFourthCostArtist);
-        artists.add(fourthPopularAndSecondCostArtist);
-        artists.add(fifthPopularAndEqualFourthCostArtist);
-
-        artistRepository.saveAll(artists);
-    }
 
     private BookingArtist buildArtist(String name, Integer price, Integer popularityRank) {
         Money cost = new Money(new BigDecimal(price));
