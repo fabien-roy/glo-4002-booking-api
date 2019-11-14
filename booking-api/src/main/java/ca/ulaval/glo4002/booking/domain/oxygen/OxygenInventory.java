@@ -65,6 +65,7 @@ public class OxygenInventory {
 		notInUseTanks.get(category).addAll(newTanks);
 	}
 
+	// TODO : This does not take in account that having less than numberOfTanksPerDay for a category is useless for a day
 	public Integer requestTankByCategory(OxygenCategories baseCategory, OxygenCategories maxCategory, Integer quantity) {
 		Integer quantityStillNeeded = quantity;
 		int basePosition = categoriesOrder.indexOf(baseCategory);
