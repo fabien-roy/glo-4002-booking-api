@@ -24,15 +24,27 @@ public class OxygenFactory {
 		return newTanks;
 	}
 
-	public OxygenCategories buildCategory(PassCategories category) {
+	public OxygenCategory buildCategory(PassCategories category) {
 		switch(category) {
 			case SUPERNOVA:
-				return OxygenCategories.E;
+				return new OxygenCategory(
+						OxygenCategories.E,
+						5,
+						0
+				);
 			case SUPERGIANT:
-				return OxygenCategories.B;
+				return new OxygenCategory(
+						OxygenCategories.B,
+						3,
+						10
+				);
 			default:
 			case NEBULA:
-				return OxygenCategories.A;
+				return new OxygenCategory(
+						OxygenCategories.A,
+						3,
+						20
+				);
 		}
 	}
 

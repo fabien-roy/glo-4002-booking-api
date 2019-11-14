@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.oxygen.inventory;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.oxygen.OxygenCategory;
 import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.passes.Pass;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
@@ -70,7 +71,7 @@ class OxygenInventoryServiceTest {
     @ParameterizedTest
     @EnumSource(PassCategories.class)
     void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
-        OxygenCategories expectedOxygenCategory = factory.buildCategory(passCategory);
+        OxygenCategories expectedOxygenCategory = factory.buildCategory(passCategory).getCategory();
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
         Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 

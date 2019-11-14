@@ -86,29 +86,29 @@ public class OxygenFactoryTest {
     }
 
     @Test
-    void buildCategory_shouldCategoryE_whenCategoryIsSupernova() {
+    void buildCategory_shouldReturnCategoryE_whenCategoryIsSupernova() {
         PassCategories passCategory = PassCategories.SUPERNOVA;
 
-        OxygenCategories category = factory.buildCategory(passCategory);
+        OxygenCategory category = factory.buildCategory(passCategory);
 
-        assertEquals(OxygenCategories.E, category);
+        assertEquals(OxygenCategories.E, category.getCategory());
     }
 
     @Test
-    void buildCategory_shouldCategoryB_whenCategoryIsSupergiant() {
+    void buildCategory_shouldReturnCategoryB_whenCategoryIsSupergiant() {
         PassCategories passCategory = PassCategories.SUPERGIANT;
 
-        OxygenCategories category = factory.buildCategory(passCategory);
+        OxygenCategory category = factory.buildCategory(passCategory);
 
-        assertEquals(OxygenCategories.B, category);
+        assertEquals(OxygenCategories.B, category.getCategory());
     }
 
     @Test
-    void buildCategory_shouldCategoryA_whenCategoryIsNebula() {
+    void buildCategory_shouldReturnCategoryA_whenCategoryIsNebula() {
         PassCategories passCategory = PassCategories.NEBULA;
 
-        OxygenCategories category = factory.buildCategory(passCategory);
+        OxygenCategory category = factory.buildCategory(passCategory);
 
-        assertEquals(OxygenCategories.A, category);
+        assertEquals(OxygenCategories.A, category.getCategory());
     }
 }
