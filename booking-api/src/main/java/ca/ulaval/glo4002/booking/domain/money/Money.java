@@ -5,61 +5,72 @@ import java.util.Comparator;
 
 public class Money implements Comparable<Money> {
 
-    private BigDecimal value;
-    private Comparator<Money> comparator = Comparator.comparing(Money::getValue);
+	private BigDecimal value;
+	private Comparator<Money> comparator = Comparator.comparing(Money::getValue);
 
-    public Money(BigDecimal value) {
-        this.value = value;
-    }
+	public Money(BigDecimal value) {
+		this.value = value;
+	}
 
-    public Money(Money money) {
-        this.value = new BigDecimal(String.valueOf(money.value));
-    }
+	public Money(Money money) {
+		this.value = new BigDecimal(String.valueOf(money.value));
+	}
 
-    public BigDecimal getValue() {
-        return value;
-    }
+	public BigDecimal getValue() {
+		return value;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
+	@Override
+	public boolean equals(Object object) {
+		if (object == null || getClass() != object.getClass())
+			return false;
 
-        Money money = (Money) object;
+		Money money = (Money) object;
 
-        return value.equals(money.getValue());
-    }
+		return value.equals(money.getValue());
+	}
 
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return value.hashCode();
+	}
 
-    public Money multiply(BigDecimal factor) {
-        value = value.multiply(factor);
+	public Money multiply(BigDecimal factor) {
+		value = value.multiply(factor);
 
-        return this;
-    }
+		return this;
+	}
 
-    // TODO : add test
-    public Money add(Money money) {
-        BigDecimal amount = new BigDecimal(String.valueOf(money.value));
+	// TODO : add test
+	public Money add(Money money) {
+		BigDecimal amount = new BigDecimal(String.valueOf(money.value));
 
-        this.value = this.value.add(amount);
+		this.value = this.value.add(amount);
 
-        return new Money(this.value);
-    }
+		return new Money(this.value);
+	}
 
-    // TODO : add test
-    public Money subtract(Money money) {
-        BigDecimal amount = new BigDecimal(String.valueOf(money.value));
+	// TODO : add test
+	public Money subtract(Money money) {
+		BigDecimal amount = new BigDecimal(String.valueOf(money.value));
 
-        this.value = this.value.subtract(amount);
+		this.value = this.value.subtract(amount);
 
-        return new Money(this.value);
-    }
+		return new Money(this.value);
+	}
 
-    @Override
-    public int compareTo(Money other) {
-        return comparator.compare(this, other);
-    }
+	@Override
+	public int compareTo(Money other) {
+		return comparator.compare(this, other);
+	}
+
+	public void applyAmountDiscount(BigDecimal discount) {
+		AmountDiscount amountDiscount = new AmountDiscount(discount);
+		this.value = amountDiscount.apply(this.value);
+	}
+
+	public void applyPercentageDiscount(BigDecimal discount) {
+		PercentageDiscount percentageDiscount = new PercentageDiscount(discount);
+		this.value = percentageDiscount.apply(this.value);
+	}
 }

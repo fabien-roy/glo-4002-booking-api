@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 
 public class AmountDiscount {
 
-    private BigDecimal amount;
+	private BigDecimal amount;
 
-    public AmountDiscount(BigDecimal amount) {
-        this.amount = amount;
-    }
+	public AmountDiscount(BigDecimal amount) {
+		this.amount = amount;
+	}
 
-    public BigDecimal apply(BigDecimal value) {
-        return value.subtract(amount);
-    }
+	public BigDecimal apply(BigDecimal value) {
+		return value.subtract(amount);
+	}
 }
