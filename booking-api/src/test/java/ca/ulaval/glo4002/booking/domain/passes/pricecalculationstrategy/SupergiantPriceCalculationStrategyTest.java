@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -16,33 +16,36 @@ import ca.ulaval.glo4002.booking.domain.passes.Pass;
 
 class SupergiantPriceCalculationStrategyTest {
 
-    private SupergiantPriceCalculationStrategy priceCalculationStrategy;
+	private SupergiantPriceCalculationStrategy priceCalculationStrategy;
 
-    @BeforeEach
-    void setUpPriceCalculationStrategy() {
-        priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
-    }
+	@BeforeEach
+	void setUpPriceCalculationStrategy() {
+		priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
+	}
 
-    @Test
-    void calculatePassPrice_shouldReturnPassPriceWithDiscount_whenPassQuantityIsOverThreshold() {
-        List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1, mock(Pass.class));
-        BigDecimal aAmount = BigDecimal.valueOf(100.0);
-        Money aPrice = new Money(aAmount);
-        Money expectedPrice = new Money(new AmountDiscount(SupergiantPriceCalculationStrategy.DISCOUNT_AMOUNT).apply(aAmount));
+	@Test
+	void calculatePassPrice_shouldReturnPassPriceWithDiscount_whenPassQuantityIsOverThreshold() {
+		List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1,
+				mock(Pass.class));
+		BigDecimal anAmount = BigDecimal.valueOf(100.0);
+		Money aPrice = new Money(anAmount);
+		Money expectedPrice = new Money(
+				new AmountDiscount(SupergiantPriceCalculationStrategy.DISCOUNT_AMOUNT).apply(anAmount));
 
-        Money price = priceCalculationStrategy.calculatePassPrice(passes.size(), aPrice);
+		Money passPrice = priceCalculationStrategy.calculatePassPrice(passes.size(), aPrice);
 
-        assertEquals(expectedPrice, price);
-    }
+		assertEquals(expectedPrice, passPrice);
+	}
 
-    @Test
-    void calculatePassPrice_shouldReturnPassPriceWithoutDiscount_whenPassQuantityIsNotOverThreshold() {
-        List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD - 1, mock(Pass.class));
-        BigDecimal aAmount = BigDecimal.valueOf(100.0);
-        Money expectedPrice = new Money(aAmount);
+	@Test
+	void calculatePassPrice_shouldReturnPassPriceWithoutDiscount_whenPassQuantityIsNotOverThreshold() {
+		List<Pass> passes = Collections.nCopies(SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD - 1,
+				mock(Pass.class));
+		BigDecimal anAmount = BigDecimal.valueOf(100.0);
+		Money expectedPrice = new Money(anAmount);
 
-        Money price = priceCalculationStrategy.calculatePassPrice(passes.size(), expectedPrice);
+		Money passPrice = priceCalculationStrategy.calculatePassPrice(passes.size(), expectedPrice);
 
-        assertEquals(expectedPrice, price);
-    }
+		assertEquals(expectedPrice, passPrice);
+	}
 }

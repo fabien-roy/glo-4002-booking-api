@@ -4,34 +4,33 @@ import java.util.List;
 
 public class PassBundleDto {
 
-    private String passCategory;
-    private String passOption;
-    private List<String> eventDates;
+	private String passCategory;
+	private String passOption;
+	private List<String> eventDates;
 
-    public PassBundleDto() {
-        // Empty constructor for parsing
-    }
+	public PassBundleDto() {
+	}
 
-    public PassBundleDto(String passCategory, String passOption) {
-        this.passCategory = passCategory;
-        this.passOption = passOption;
-    }
+	public PassBundleDto(String passCategory, String passOption) {
+		this.passCategory = passCategory;
+		this.passOption = passOption;
+	}
 
-    public PassBundleDto(String passCategory, String passOption, List<String> eventDates) {
-        this.passCategory = passCategory;
-        this.passOption = passOption;
-        this.eventDates = eventDates;
-    }
+	public PassBundleDto(String passCategory, String passOption, List<String> eventDates) {
+		this.passCategory = passCategory;
+		this.passOption = passOption;
+		this.eventDates = eventDates;
+	}
 
-    public String getPassCategory() {
-        return passCategory;
-    }
+	public String getPassCategory() {
+		return passCategory;
+	}
 
-    public String getPassOption() {
-        return passOption;
-    }
+	public String getPassOption() {
+		return passOption;
+	}
 
-    public List<String> getEventDates() {
-        return eventDates;
-    }
+	public List<String> getEventDates() {
+		return eventDates;
+	}
 }
