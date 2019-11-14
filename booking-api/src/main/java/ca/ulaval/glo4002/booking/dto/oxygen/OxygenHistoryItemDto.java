@@ -8,8 +8,7 @@ public class OxygenHistoryItemDto {
 	private Integer qtyCandlesUsed;
 	private Integer qtyOxygenTankMade;
 
-	public OxygenHistoryItemDto(String date, Integer qtyOxygenTankBought, Integer qtyWaterUsed, Integer qtyCandlesUsed,
-								Integer qtyOxygenTankMade) {
+	public OxygenHistoryItemDto(String date, Integer qtyOxygenTankBought, Integer qtyWaterUsed, Integer qtyCandlesUsed, Integer qtyOxygenTankMade) {
 		this.date = date;
 		this.qtyOxygenTankBought = qtyOxygenTankBought;
 		this.qtyWaterUsed = qtyWaterUsed;
