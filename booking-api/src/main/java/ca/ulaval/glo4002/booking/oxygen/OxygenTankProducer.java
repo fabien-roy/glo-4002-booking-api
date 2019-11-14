@@ -28,7 +28,7 @@ public class OxygenTankProducer {
 	
 	public List<OxygenTank> produce(OxygenCategories category, LocalDate requestDate) {
 		OxygenInventory inventory = inventoryRepository.getInventory();
-		OxygenHistory history = historyRepository.getHistory(); // TODO : Do things with history
+		OxygenHistory history = historyRepository.getHistory();
 
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = getQuantityToCoverForCategory(category);
