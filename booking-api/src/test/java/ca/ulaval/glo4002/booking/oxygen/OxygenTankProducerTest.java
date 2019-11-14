@@ -15,14 +15,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class OxygenTankProducerTest {
 
-    // TODO : OxygenTankProducerTest would need a little refactor (optional)
-
     private OxygenTankProducer producer;
+    private OxygenInventoryRepository inventoryRepository;
+    private OxygenHistoryRepository historyRepository;
     private OxygenInventory inventory;
     private OxygenHistory history;
 
@@ -37,8 +36,8 @@ public class OxygenTankProducerTest {
     
     @BeforeEach
     void setUpProducer() {
-        OxygenInventoryRepository inventoryRepository = mock(OxygenInventoryRepository.class);
-        OxygenHistoryRepository historyRepository = mock(OxygenHistoryRepository.class);
+        inventoryRepository = mock(OxygenInventoryRepository.class);
+        historyRepository = mock(OxygenHistoryRepository.class);
         inventory = mock(OxygenInventory.class);
         history = mock(OxygenHistory.class);
         when(inventoryRepository.getInventory()).thenReturn(inventory);
@@ -59,7 +58,6 @@ public class OxygenTankProducerTest {
         assertTrue(createdTanks.isEmpty());
     }
 
-    // TODO : Separated size and category tests
     @Test
     void produce_shouldReturnTheCorrectAmountOfTanksNeededToCoverReserve() {
         OxygenCategories aCategory = OxygenCategories.A;
@@ -102,6 +100,28 @@ public class OxygenTankProducerTest {
 
         assertTrue(createdTanks.isEmpty());
     }
+
+    @Test
+    void produce_shouldUpdateInventory() {
+        when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+
+        producer.produce(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
+
+        verify(inventoryRepository).setInventory(any(OxygenInventory.class));
+    }
+
+    @Test
+    void produce_shouldUpdateHistory() {
+        when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+
+        producer.produce(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
+
+        verify(inventoryRepository).setInventory(any(OxygenInventory.class));
+    }
+
+    // TODO : Tests for inventory calls (optionnal)
+
+    // TODO : Tests for history calls
 
     private Integer getNumberCreated(Integer quantityNeededByDays, Integer quantityByBundle) {
         return (int) (Math.ceil((quantityNeededByDays / (double) quantityByBundle)) * quantityByBundle);
