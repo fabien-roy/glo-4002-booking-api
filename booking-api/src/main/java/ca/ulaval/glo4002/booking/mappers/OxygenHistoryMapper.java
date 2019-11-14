@@ -1,18 +1,28 @@
 package ca.ulaval.glo4002.booking.mappers;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 
 public class OxygenHistoryMapper {
 
     public List<OxygenHistoryItemDto> toDto(OxygenHistory history) {
-        // TODO
+        List<OxygenHistoryItemDto> itemDtos = new ArrayList<>();
 
-        return new ArrayList<>();
+        history.getHistoryItems().forEach((date, item) -> {
+            OxygenHistoryItemDto itemDto = new OxygenHistoryItemDto(
+                    date.toString(),
+                    item.getQtyOxygenTankBought(),
+                    item.getQtyWaterUsed(),
+                    item.getQtyCandlesUsed(),
+                    item.getQtyOxygenTankMade()
+            );
+
+            itemDtos.add(itemDto);
+        });
+
+        return itemDtos;
     }
 }

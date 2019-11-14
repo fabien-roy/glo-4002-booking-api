@@ -19,46 +19,30 @@ class OxygenHistoryMapperTest {
 
     // TODO : OxygenHistoryMapperTest
 
-	/*
+    OxygenHistoryMapper mapper;
 
-	private static final OxygenCategories CATEGORY_A = OxygenCategories.A;
-	private static final OxygenCategories CATEGORY_B = OxygenCategories.B;
-	private static final OxygenCategories CATEGORY_E = OxygenCategories.E;
+    @BeforeEach
+    void setUpMapper() {
+        this.mapper = new OxygenHistoryMapper();
+    }
 
-	private OxygenHistoryMapper mapper;
-	private OxygenHistory mockedOxygenHistory;
-	private LocalDate date = LocalDate.of(2050, 7, 1);
+    @Test
+    void toDto_shouldReturnEmptyList_whenHistoryIsEmpty() {
+        // TODO
+    }
 
-	@BeforeEach
-	void setUpMapper() {
-		mapper = new OxygenHistoryMapper();
-	}
+    @Test
+    void toDto_shouldReturnASingleHistoryItem_whenHistoryHasASingleItem() {
+        // TODO
+    }
 
-	@BeforeEach
-	void setUpOxygenHistory() {
-		OxygenHistoryItem oxygenHistoryItem = setUpOxygenHistoryItem();
-		List<OxygenHistoryItem> historyItems = new ArrayList<>();
-		historyItems.add(oxygenHistoryItem);
-		mockedOxygenHistory = mock(OxygenHistory.class);
-		when(mockedOxygenHistory.getHistoryItems()).thenReturn(historyItems);
-	}
+    @Test
+    void toDto_shouldReturnMultipleHistoryItems_whenHistoryHasMultipleItems() {
+        // TODO
+    }
 
-	private OxygenHistoryItem setUpOxygenHistoryItem() {
-		OxygenHistoryItem mockedOxygenHistoryItem = mock(OxygenHistoryItem.class);
-		when(mockedOxygenHistoryItem.getDate()).thenReturn(date);
-		when(mockedOxygenHistoryItem.getQtyCandlesUsed()).thenReturn(15);
-		when(mockedOxygenHistoryItem.getQtyOxygenTankBought()).thenReturn(1);
-		when(mockedOxygenHistoryItem.getQtyOxygenTankMade()).thenReturn(9);
-		when(mockedOxygenHistoryItem.getQtyWaterUsed()).thenReturn(8);
-		return mockedOxygenHistoryItem;
-	}
-
-	@Test
-	void toDto_shouldBuildWithCorrectOxygenHistoryItemDtoList() {
-		List<OxygenHistoryItemDto> dtos = mapper.toDto(mockedOxygenHistory);
-
-		assertEquals(dtos.size(), mockedOxygenHistory.getHistoryItems().size());
-	}
-
-	*/
+    @Test
+    void toDto_shouldReturnHistoryItemsOrderedByDate() {
+        // TODO
+    }
 }

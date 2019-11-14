@@ -14,8 +14,8 @@ public class OxygenHistory {
 		historyItems = new TreeMap<>();
 	}
 
-	public List<OxygenHistoryItem> getHistoryItems() {
-		return new ArrayList<>(historyItems.values());
+	public Map<LocalDate, OxygenHistoryItem> getHistoryItems() {
+	    return historyItems;
 	}
 
 	public void addTanksBought(LocalDate date, Integer amountOfTanksBought) {
