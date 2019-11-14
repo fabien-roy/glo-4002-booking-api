@@ -6,10 +6,7 @@ import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
 import ca.ulaval.glo4002.booking.factories.*;
-import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
-import ca.ulaval.glo4002.booking.mappers.TripMapper;
+import ca.ulaval.glo4002.booking.mappers.*;
 import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
@@ -63,6 +60,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ProgramService.class);
         bindAsContract(ArtistService.class);
         bindAsContract(ProfitService.class);
+        bindAsContract(OxygenReportService.class);
     }
 
     private void bindMappers() {
@@ -70,6 +68,9 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OrderMapper.class);
         bindAsContract(TripMapper.class);
         bindAsContract(ShuttleManifestMapper.class);
+        bindAsContract(OxygenInventoryMapper.class);
+        bindAsContract(OxygenHistoryMapper.class);
+        bindAsContract(OxygenReportMapper.class);
     }
 
     private void bindControllers() {
