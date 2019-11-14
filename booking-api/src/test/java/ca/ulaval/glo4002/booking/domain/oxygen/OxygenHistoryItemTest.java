@@ -21,9 +21,8 @@ public class OxygenHistoryItemTest {
         Integer numTanksBough = 5;
 
         oxygenHistoryItem.addTanksBought(numTanksBough);
-        oxygenHistoryItem.addTanksBought(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyOxygenTankBought());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyOxygenTankBought());
     }
 
     @Test
@@ -31,9 +30,8 @@ public class OxygenHistoryItemTest {
         Integer numTanksBough = 5;
 
         oxygenHistoryItem.addWaterUsed(numTanksBough);
-        oxygenHistoryItem.addWaterUsed(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyWaterUsed());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyWaterUsed());
     }
 
     @Test
@@ -41,9 +39,8 @@ public class OxygenHistoryItemTest {
         Integer numTanksBough = 5;
 
         oxygenHistoryItem.addCandleUsed(numTanksBough);
-        oxygenHistoryItem.addCandleUsed(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyCandlesUsed());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyCandlesUsed());
     }
 
     @Test
@@ -51,8 +48,7 @@ public class OxygenHistoryItemTest {
         Integer numTanksBough = 5;
 
         oxygenHistoryItem.addTanksMade(numTanksBough);
-        oxygenHistoryItem.addTanksMade(numTanksBough);
 
-        assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyOxygenTankMade());
+        assertEquals(numTanksBough, oxygenHistoryItem.getQtyOxygenTankMade());
     }
 }
