@@ -10,5 +10,9 @@ import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 
 public class OxygenHistoryMapper {
 
-	// TODO : OxygenHistoryMapper
+    public List<OxygenHistoryItemDto> toDto(OxygenHistory history) {
+        // TODO
+
+        return new ArrayList<>();
+    }
 }
