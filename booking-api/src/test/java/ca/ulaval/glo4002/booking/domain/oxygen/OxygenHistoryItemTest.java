@@ -11,19 +11,17 @@ public class OxygenHistoryItemTest {
 
     private OxygenHistoryItem oxygenHistoryItem;
 
-    private static final LocalDate A_VALID_DATE = LocalDate.of(2050, 06, 20);
-
     @BeforeEach
     void setupOxygenHistoryItem() {
-        oxygenHistoryItem = new OxygenHistoryItem(A_VALID_DATE);
+        oxygenHistoryItem = new OxygenHistoryItem();
     }
 
     @Test
     void addTankBought_shouldAddTankBough() {
         Integer numTanksBough = 5;
 
-        oxygenHistoryItem.addTankBought(numTanksBough);
-        oxygenHistoryItem.addTankBought(numTanksBough);
+        oxygenHistoryItem.addTanksBought(numTanksBough);
+        oxygenHistoryItem.addTanksBought(numTanksBough);
 
         assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyOxygenTankBought());
     }
@@ -52,10 +50,9 @@ public class OxygenHistoryItemTest {
     void addTankMade_shouldAddTankMade() {
         Integer numTanksBough = 5;
 
-        oxygenHistoryItem.addTankMade(numTanksBough);
-        oxygenHistoryItem.addTankMade(numTanksBough);
+        oxygenHistoryItem.addTanksMade(numTanksBough);
+        oxygenHistoryItem.addTanksMade(numTanksBough);
 
         assertEquals(numTanksBough * 2, oxygenHistoryItem.getQtyOxygenTankMade());
     }
-
 }

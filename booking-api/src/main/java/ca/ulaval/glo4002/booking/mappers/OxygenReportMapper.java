@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.mappers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.domain.oxygen.OxygenReport;
@@ -20,10 +21,11 @@ public class OxygenReportMapper {
 		this.oxygenHistoryMapper = oxygenHistoryMapper;
 	}
 
-	// TODO : OxygenHistory should be built using the inventory
+	// TODO : OxygenHistory should be built using the inventory and history
 	public OxygenReportDto toDto(OxygenReport oxygenReport) {
 		List<OxygenInventoryItemDto> inventory = oxygenInventoryMapper.toDto(oxygenReport.getOxygenInventory());
-		List<OxygenHistoryItemDto> history = oxygenHistoryMapper.toDto(oxygenReport.getOxygenHistory());
+		List<OxygenHistoryItemDto> history = new ArrayList<>();
+		// List<OxygenHistoryItemDto> history = oxygenHistoryMapper.toDto(oxygenReport.getOxygenHistory());
 
 		return new OxygenReportDto(inventory, history);
 	}

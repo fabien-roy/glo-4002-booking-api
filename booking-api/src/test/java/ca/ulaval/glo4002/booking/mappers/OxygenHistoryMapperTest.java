@@ -15,7 +15,11 @@ import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistoryItem;
 import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
 import ca.ulaval.glo4002.booking.enums.OxygenCategories;
 
-class OxygenTankOxygenHistoryMapperTest {
+class OxygenHistoryMapperTest {
+
+    // TODO : OxygenHistoryMapperTest
+
+	/*
 
 	private static final OxygenCategories CATEGORY_A = OxygenCategories.A;
 	private static final OxygenCategories CATEGORY_B = OxygenCategories.B;
@@ -56,5 +60,5 @@ class OxygenTankOxygenHistoryMapperTest {
 		assertEquals(dtos.size(), mockedOxygenHistory.getHistoryItems().size());
 	}
 
-	// TODO if we delete OxygenHistoryItemMapper, we should test for buildItemDto
+	*/
 }
