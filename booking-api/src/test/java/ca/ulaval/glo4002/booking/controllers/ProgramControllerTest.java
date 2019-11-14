@@ -48,7 +48,6 @@ class ProgramControllerTest {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
 
-
     @Test
     void add_shouldReturnOk() {
         ProgramDto aProgramDto = mock(ProgramDto.class);
