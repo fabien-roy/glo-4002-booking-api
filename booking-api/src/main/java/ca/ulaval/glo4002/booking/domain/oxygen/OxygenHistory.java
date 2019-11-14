@@ -12,6 +12,11 @@ public class OxygenHistory {
 
 	private Map<LocalDate, OxygenHistoryItem> historyItems;
 
+	public OxygenHistory() {
+		historyItems = new TreeMap<>();
+	}
+
+	// TODO : Remove this type of usage of History
 	public OxygenHistory(Map<OxygenCategories, List<OxygenTank>> allTanks) {
 		historyItems = new TreeMap<>();
 

@@ -36,15 +36,7 @@ public class OxygenInventory {
 		return inUseTanks.get(category);
 	}
 
-	public List<OxygenTank> getAllTanksByCategory(OxygenCategories category) {
-		List<OxygenTank> tanks = new ArrayList<>();
-
-		tanks.addAll(getNotInUseTankByCategory(category));
-		tanks.addAll(getInUseTanksByCategory(category));
-
-		return tanks;
-	}
-
+	// TODO : Only used by tests
 	public Map<OxygenCategories, List<OxygenTank>> getAllTanks() {
 		Map<OxygenCategories, List<OxygenTank>> allTanks = new EnumMap<>(OxygenCategories.class);
 
@@ -93,12 +85,5 @@ public class OxygenInventory {
 		}
 
 		return quantityStillNeeded;
-	}
-
-	// TODO : Test OxygenInventory.getHistory
-	public OxygenHistory getHistory() {
-		Map<OxygenCategories, List<OxygenTank>> allTanks = getAllTanks();
-
-		return new OxygenHistory(allTanks);
 	}
 }
