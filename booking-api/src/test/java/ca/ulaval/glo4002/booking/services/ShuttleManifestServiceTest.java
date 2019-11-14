@@ -1,83 +1,84 @@
 package ca.ulaval.glo4002.booking.services;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 class ShuttleManifestServiceTest {
 
-    private ShuttleManifestService service;
-    private TripRepository tripRepository;
-    private ShuttleManifestMapper shuttleManifestMapper;
+	private ShuttleManifestService service;
+	private TripRepository tripRepository;
+	private ShuttleManifestMapper mapper;
 
-    @BeforeEach
-    void setUpService() {
-        tripRepository = mock(TripRepository.class);
+	@BeforeEach
+	void setUpService() {
+		tripRepository = mock(TripRepository.class);
 
-        shuttleManifestMapper = mock(ShuttleManifestMapper.class);
+		mapper = mock(ShuttleManifestMapper.class);
 
-        this.service = new ShuttleManifestService(tripRepository, shuttleManifestMapper);
-    }
+		this.service = new ShuttleManifestService(tripRepository, mapper);
+	}
 
-    @Test
-    void getWithDate_shouldCallMapper() {
-        String aDate = EventDate.START_DATE.toString();
+	@Test
+	void getWithDate_shouldCallMapper() {
+		String aDate = EventDate.START_DATE.toString();
 
-        service.getTripsForDate(aDate);
+		service.getTripsForDate(aDate);
 
-        verify(shuttleManifestMapper).toDto(any(), any());
-    }
+		verify(mapper).toDto(any(), any());
+	}
 
-    @Test
-    void getWithDate_shouldThrowInvalidFormatException_whenDateIsInvalid() {
-        String anInvalidDate = "anInvalidDate";
+	@Test
+	void getWithDate_shouldThrowInvalidFormatException_whenDateIsInvalid() {
+		String anInvalidDate = "anInvalidDate";
 
-        assertThrows(InvalidFormatException.class, () -> service.getTripsForDate(anInvalidDate));
-    }
+		assertThrows(InvalidFormatException.class, () -> service.getTripsForDate(anInvalidDate));
+	}
 
-    @Test
-    void getWithDate_shouldCallRepositoryForArrivals() {
-        EventDate aDate = new EventDate(EventDate.START_DATE);
+	@Test
+	void getWithDate_shouldCallRepositoryForArrivals() {
+		EventDate aDate = new EventDate(EventDate.START_DATE);
 
-        service.getTripsForDate(aDate.toString());
+		service.getTripsForDate(aDate.toString());
 
-        verify(tripRepository).getArrivalsForDate(aDate);
-    }
+		verify(tripRepository).getArrivalsForDate(aDate);
+	}
 
-    @Test
-    void getWithDate_shouldCallRepositoryForDepartures() {
-        EventDate aDate = new EventDate(EventDate.START_DATE);
+	@Test
+	void getWithDate_shouldCallRepositoryForDepartures() {
+		EventDate aDate = new EventDate(EventDate.START_DATE);
 
-        service.getTripsForDate(aDate.toString());
+		service.getTripsForDate(aDate.toString());
 
-        verify(tripRepository).getDeparturesForDate(aDate);
-    }
-    
-    @Test
-    void getWithoutDate_shouldCallMapper() {
-        service.getTrips();
+		verify(tripRepository).getDeparturesForDate(aDate);
+	}
 
-        verify(shuttleManifestMapper).toDto(any(), any());
-    }
+	@Test
+	void getWithoutDate_shouldCallMapper() {
+		service.getTrips();
 
-    @Test
-    void getWithoutDate_shouldCallRepositoryForArrivals() {
-        service.getTrips();
+		verify(mapper).toDto(any(), any());
+	}
 
-        verify(tripRepository).getArrivals();
-    }
+	@Test
+	void getWithoutDate_shouldCallRepositoryForArrivals() {
+		service.getTrips();
 
-    @Test
-    void getWithoutDate_shouldCallRepositoryForDepartures() {
-        service.getTrips();
+		verify(tripRepository).getArrivals();
+	}
 
-        verify(tripRepository).getDepartures();
-    }
+	@Test
+	void getWithoutDate_shouldCallRepositoryForDepartures() {
+		service.getTrips();
+
+		verify(tripRepository).getDepartures();
+	}
 }
