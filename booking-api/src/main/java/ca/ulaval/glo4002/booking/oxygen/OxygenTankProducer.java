@@ -60,6 +60,7 @@ public class OxygenTankProducer {
 		return newTanks;
 	}
 
+	// TODO : Refactor to use OxygenCategory.getTanksNeededPerDay()
 	private Integer getQuantityToCoverForCategory(OxygenCategories category) {
 		if (category.equals(OxygenCategories.E)) {
 			return 5;
@@ -68,7 +69,7 @@ public class OxygenTankProducer {
 		}
 	}
 
-	// TODO : Refactor to use readyDateForCategory
+	// TODO : Refactor to use OxygenCategory.getReadyDate(requestDate)
 	private OxygenCategories getCategoryForRequestDate(OxygenCategories category, LocalDate requestDate) {
 		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
 
@@ -93,6 +94,7 @@ public class OxygenTankProducer {
         }
 	}
 
+	// TODO : Refactor to use OxygenCategory.getReadyDate(requestDate)
 	private LocalDate getReadyDateForCategory(OxygenCategories category, LocalDate requestDate) {
 		switch (category) {
 			case A:

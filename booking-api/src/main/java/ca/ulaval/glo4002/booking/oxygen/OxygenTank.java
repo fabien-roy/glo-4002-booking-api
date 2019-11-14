@@ -61,13 +61,12 @@ public class OxygenTank {
                 nbResources = CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED;
                 resourcesPrice = CATEGORY_B_RESOURCE_PRICE;
                 break;
+            default:
             case E:
                 nbTankCreated = CATEGORY_E_NUMBER_OF_TANKS_CREATED;
                 nbResources = CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED;
                 resourcesPrice = CATEGORY_E_RESOURCE_PRICE;
                 break;
-            default:
-                throw new InvalidOxygenCategoryException(category);
         }
 
         BigDecimal tankPrice = new BigDecimal((nbResources * resourcesPrice) / nbTankCreated);
