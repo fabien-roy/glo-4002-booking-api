@@ -40,17 +40,17 @@ public class OrderFactory {
         return new Order(orderNumber, orderDate, passBundle);
     }
 
-    private LocalDateTime buildOrderDate(String sentOrderDate) {
-        LocalDateTime orderDate = parseLocalDateTime(sentOrderDate);
+    private LocalDateTime buildOrderDate(String textOrderDate) {
+        LocalDateTime orderDate = parseLocalDateTime(textOrderDate);
 
         validateOrderDate(orderDate);
 
         return orderDate;
     }
 
-    private LocalDateTime parseLocalDateTime(String orderDate) {
+    private LocalDateTime parseLocalDateTime(String textOrderDate) {
         try {
-            return ZonedDateTime.parse(orderDate, DATE_TIME_FORMATTER).toLocalDateTime();
+            return ZonedDateTime.parse(textOrderDate, DATE_TIME_FORMATTER).toLocalDateTime();
         } catch (Exception exception) {
             throw new InvalidFormatException();
         }

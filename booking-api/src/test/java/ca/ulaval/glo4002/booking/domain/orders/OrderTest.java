@@ -23,9 +23,10 @@ class OrderTest {
 	void setUpVariables() {
 		orderDate = LocalDateTime.of(2050, 7, 1, 0, 0);
 		passBundle = mock(PassBundle.class);
+		orderNumber = mock(OrderNumber.class);
+
 		when(passBundle.getPrice()).thenReturn(mock(Money.class));
 		when(passBundle.getPasses()).thenReturn(new ArrayList<>());
-		orderNumber = mock(OrderNumber.class);
 		when(orderNumber.getVendorCode()).thenReturn("VENDOR");
 	}
 
