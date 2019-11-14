@@ -71,14 +71,12 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenTankFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
-        bindAsContract(EventFactory.class);
     }
 
     private void bindRepositories() {
         bind(InMemoryOxygenTankInventoryRepository.class).to(OxygenTankInventoryRepository.class).in(Singleton.class);
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
-        bind(InMemoryEventRepository.class).to(EventRepository.class).in(Singleton.class);
         bind(InMemoryArtistRepository.class).to(ArtistRepository.class).in(Singleton.class);
     }
 
@@ -87,7 +85,6 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(TripService.class);
         bindAsContract(OrderService.class);
         bindAsContract(ShuttleManifestService.class);
-        bindAsContract(ProgramService.class);
         bindAsContract(ArtistService.class);
         bindAsContract(ProfitService.class);
     }

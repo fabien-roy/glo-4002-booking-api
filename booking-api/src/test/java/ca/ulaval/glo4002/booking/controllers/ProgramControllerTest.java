@@ -5,7 +5,6 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -61,19 +60,4 @@ class ProgramControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
-    @Ignore("WIP")
-    void add_shouldReturnOk() {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
-
-    }
-
-    @Test
-    @Ignore("WIP")
-    void add_shouldReturnBadRequest_whenBadRequest() {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
-        doThrow(new InvalidFormatException()).when(programService).add(aProgramDto);
-
-
-    }
 }
