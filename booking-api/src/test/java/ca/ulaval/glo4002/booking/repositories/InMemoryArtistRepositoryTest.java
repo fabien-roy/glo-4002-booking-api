@@ -25,17 +25,16 @@ public class InMemoryArtistRepositoryTest {
 	@Test
 	public void saveAll_shouldSaveAllArtists() {
 		List<BookingArtist> artists = new ArrayList<>();
+		Integer aId = 1;
 		String aName = "A name";
 		Money aCost = new Money(new BigDecimal(1));
 		Integer aNumberOfPeople = 3;
 		String aMusicStyle = "Rap";
 		Integer aPopularityRank = 1;
 		List<Availability> someAvailabilities = new ArrayList<>();
-		
-		artists.add(new BookingArtist(aName, aCost, aNumberOfPeople, aMusicStyle, aPopularityRank, someAvailabilities));
+		artists.add(new BookingArtist(aId, aName, aCost, aNumberOfPeople, aMusicStyle, aPopularityRank, someAvailabilities));
 		
 		repository.saveAll(artists);
-		
 		List<BookingArtist> returnedArtists = repository.findAll();
 		
 		assertEquals(artists.size(), returnedArtists.size());

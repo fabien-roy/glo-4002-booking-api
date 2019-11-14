@@ -26,6 +26,8 @@ import ca.ulaval.glo4002.booking.repositories.InMemoryArtistRepository;
 
 class ArtistServiceTest {
 
+    // TODO : ArtistService test should mock ArtistClient
+
     private ArtistService service;
     private ArtistRepository artistRepository;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
@@ -146,6 +148,6 @@ class ArtistServiceTest {
         Integer aNumberOfPeople = 1;
         String aMusicStyle = "aMusicStyle";
 
-        return new BookingArtist(name, cost, aNumberOfPeople, aMusicStyle, popularityRank, new ArrayList<>());
+        return new BookingArtist(1, name, cost, aNumberOfPeople, aMusicStyle, popularityRank, new ArrayList<>());
     }
 } 

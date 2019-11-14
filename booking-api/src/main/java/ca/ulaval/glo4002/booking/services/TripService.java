@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.domain.Number;
+import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
@@ -33,7 +34,8 @@ public class TripService {
             shuttleCategory = ShuttleCategories.ET_SPACESHIP;
         }
 
-        List<Passenger> passengers = Collections.nCopies(artist.getNumberOfPeople(), new Passenger(artist.getId()));
+        Number passengerNumber = new Number(artist.getId().longValue());
+        List<Passenger> passengers = Collections.nCopies(artist.getNumberOfPeople(), new Passenger(passengerNumber));
 
         repository.addPassengersToNewArrival(passengers, shuttleCategory, tripDate);
         repository.addPassengersToNewDeparture(passengers, shuttleCategory, tripDate);

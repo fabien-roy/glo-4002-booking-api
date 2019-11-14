@@ -203,13 +203,11 @@ public class ArtistClientTest {
 	public static void stopServer() {
 		wiremockServer.stop();
 	}
-	
-	
+
 	@Test
 	public void getArtists_returnsAllArtists() {
 		List<ExternalArtist> externalArtists = ArtistClient.getArtists();
 
 		assertFalse(externalArtists.isEmpty());
 	}
-
-} 
+}

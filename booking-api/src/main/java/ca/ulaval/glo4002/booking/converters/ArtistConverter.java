@@ -29,13 +29,15 @@ public class ArtistConverter {
 			Money cost = new Money(new BigDecimal(externalArtist.getPrice()));
 			
 			
-			bookingArtists.add(new BookingArtist(externalArtist.getName(),
+			bookingArtists.add(new BookingArtist(
+					externalArtist.getId(),
+					externalArtist.getName(),
 					cost,
 					externalArtist.getNbPeople(),
 					externalArtist.getMusicStyle(),
 					externalArtist.getPopularityRank(),
-					convertAvailabilities(externalArtist.getAvailabilities())));
-			
+					convertAvailabilities(externalArtist.getAvailabilities()))
+			);
 		}
 		
 		artistRepository.saveAll(bookingArtists);

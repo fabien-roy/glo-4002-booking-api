@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.domain.money.Money;
 
 public class BookingArtist {
 
+    private Integer id;
     private String name;
     private Money cost;
     private Integer numberOfPeople;
@@ -13,8 +14,8 @@ public class BookingArtist {
     private Integer popularityRank;
     private List<Availability> availabilities;
 
-    public BookingArtist(String name, Money cost, Integer numberOfPeople,
-    		String musicStyle, Integer popularityRank, List<Availability> availabilities) {
+    public BookingArtist(Integer id, String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank, List<Availability> availabilities) {
+    	this.id = id;
 		this.name = name;
 		this.cost = cost;
 		this.numberOfPeople = numberOfPeople;
@@ -22,7 +23,11 @@ public class BookingArtist {
 		this.popularityRank = popularityRank;
 		this.availabilities = availabilities;
 	}
-    
+
+	public Integer getId() {
+		return id;
+	}
+
     public String getName() {
 		return name;
 	}
@@ -46,5 +51,4 @@ public class BookingArtist {
 	public List<Availability> getAvailabilities() {
 		return availabilities;
 	}
-
 }

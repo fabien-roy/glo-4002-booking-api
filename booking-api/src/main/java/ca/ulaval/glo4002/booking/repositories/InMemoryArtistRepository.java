@@ -17,6 +17,7 @@ public class InMemoryArtistRepository implements ArtistRepository {
 	public void saveAll(List<BookingArtist> bookingArtists) {
 		List<String> artistNames = new ArrayList<>();
 		artists.stream().map(BookingArtist::getName).forEach(artistNames::add);
+
 		for(BookingArtist bookingArtist : bookingArtists) {
 			if (!artistNames.contains(bookingArtist.getName())) {
 				artists.add(bookingArtist);
@@ -28,5 +29,4 @@ public class InMemoryArtistRepository implements ArtistRepository {
 	public List<BookingArtist> findAll() {
 		return artists;
 	}
-
 }
