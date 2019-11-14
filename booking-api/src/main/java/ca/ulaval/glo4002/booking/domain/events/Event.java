@@ -23,7 +23,7 @@ public class Event {
         return activity;
     }
 
-    public String getArtistName() {
-        return bookingArtist.getName();
+    public BookingArtist getArtist() {
+        return bookingArtist;
     }
 }

@@ -10,18 +10,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShuttleFactoryTest {
 
-    private ShuttleFactory subject;
+    private ShuttleFactory factory;
 
     @BeforeEach
-    void setUpSubject() {
-        subject = new ShuttleFactory();
+    void setUpFactory() {
+        factory = new ShuttleFactory();
     }
 
     @Test
     void build_shouldBuildEtSpaceshipShuttle_whenCategoryIsEtSpaceship() {
         ShuttleCategories category = ShuttleCategories.ET_SPACESHIP;
 
-        Shuttle shuttle = subject.build(category);
+        Shuttle shuttle = factory.build(category);
 
         assertEquals(ShuttleCategories.ET_SPACESHIP, shuttle.getCategory());
         assertEquals(ShuttleFactory.ET_SPACESHIP_MAX_CAPACITY, shuttle.getMaxCapacity());
@@ -32,7 +32,7 @@ class ShuttleFactoryTest {
     void build_shouldBuildMillenniumFalconShuttle_whenCategoryIsMillenniumFalcon() {
         ShuttleCategories category = ShuttleCategories.MILLENNIUM_FALCON;
 
-        Shuttle shuttle = subject.build(category);
+        Shuttle shuttle = factory.build(category);
 
         assertEquals(ShuttleCategories.MILLENNIUM_FALCON, shuttle.getCategory());
         assertEquals(ShuttleFactory.MILLENNIUM_FALCON_MAX_CAPACITY, shuttle.getMaxCapacity());
@@ -43,7 +43,7 @@ class ShuttleFactoryTest {
     void build_shouldBuildSpaceXShuttle_whenCategoryIsSpaceX() {
         ShuttleCategories category = ShuttleCategories.SPACE_X;
 
-        Shuttle shuttle = subject.build(category);
+        Shuttle shuttle = factory.build(category);
 
         assertEquals(ShuttleCategories.SPACE_X, shuttle.getCategory());
         assertEquals(ShuttleFactory.SPACE_X_MAX_CAPACITY, shuttle.getMaxCapacity());
@@ -51,28 +51,28 @@ class ShuttleFactoryTest {
     }
 
     @Test
-    void build_shouldBuildEtSpaceship_whenCategoryIsSupernova() {
+    void buildCategory_shouldBuildEtSpaceship_whenCategoryIsSupernova() {
         PassCategories passCategory = PassCategories.SUPERNOVA;
 
-        ShuttleCategories category = subject.buildCategory(passCategory);
+        ShuttleCategories category = factory.buildCategory(passCategory);
 
         assertEquals(ShuttleCategories.ET_SPACESHIP, category);
     }
 
     @Test
-    void build_shouldBuildMillenniumFalcon_whenCategoryIsSupergiant() {
+    void buildCategory_shouldBuildMillenniumFalcon_whenCategoryIsSupergiant() {
         PassCategories passCategory = PassCategories.SUPERGIANT;
 
-        ShuttleCategories category = subject.buildCategory(passCategory);
+        ShuttleCategories category = factory.buildCategory(passCategory);
 
         assertEquals(ShuttleCategories.MILLENNIUM_FALCON, category);
     }
 
     @Test
-    void build_shouldBuildSpaceX_whenCategoryIsNebula() {
+    void buildCategory_shouldBuildSpaceX_whenCategoryIsNebula() {
         PassCategories passCategory = PassCategories.NEBULA;
 
-        ShuttleCategories category = subject.buildCategory(passCategory);
+        ShuttleCategories category = factory.buildCategory(passCategory);
 
         assertEquals(ShuttleCategories.SPACE_X, category);
     }

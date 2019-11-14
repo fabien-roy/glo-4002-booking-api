@@ -1,20 +1,22 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
-
 public class OxygenInventory {
 
 	private Map<OxygenCategories, List<OxygenTank>> notInUseTanks;
 	private Map<OxygenCategories, List<OxygenTank>> inUseTanks;
+	private ArrayList<OxygenCategories> categoriesOrder;
 
 	public OxygenInventory() {
 		this.notInUseTanks = new EnumMap<>(OxygenCategories.class);
 		this.inUseTanks = new EnumMap<>(OxygenCategories.class);
+		this.categoriesOrder = new ArrayList<>();
 
 		notInUseTanks.put(OxygenCategories.A, new ArrayList<>());
 		notInUseTanks.put(OxygenCategories.B, new ArrayList<>());
@@ -23,6 +25,10 @@ public class OxygenInventory {
 		inUseTanks.put(OxygenCategories.A, new ArrayList<>());
 		inUseTanks.put(OxygenCategories.B, new ArrayList<>());
 		inUseTanks.put(OxygenCategories.E, new ArrayList<>());
+
+		categoriesOrder.add(OxygenCategories.A);
+		categoriesOrder.add(OxygenCategories.B);
+		categoriesOrder.add(OxygenCategories.E);
 	}
 
 	public List<OxygenTank> getNotInUseTankByCategory(OxygenCategories category) {
@@ -31,6 +37,23 @@ public class OxygenInventory {
 
 	public List<OxygenTank> getInUseTanksByCategory(OxygenCategories category) {
 		return inUseTanks.get(category);
+	}
+
+	public List<OxygenTank> getAllTanksByCategory(OxygenCategories category) {
+		List<OxygenTank> tanks = new ArrayList<>();
+
+		tanks.addAll(getNotInUseTankByCategory(category));
+		tanks.addAll(getInUseTanksByCategory(category));
+
+		return tanks;
+	}
+
+	public List<OxygenTank> getAllTanks() {
+		List<OxygenTank> tanks = new ArrayList<>();
+
+		inUseTanks.keySet().forEach(key -> tanks.addAll(getAllTanksByCategory(key)));
+
+		return tanks;
 	}
 
 	public Integer getNotInUseQuantityByCategory(OxygenCategories category) {
@@ -52,16 +75,23 @@ public class OxygenInventory {
 		notInUseTanks.get(category).addAll(newTanks);
 	}
 
-	public Integer requestTankByCategory(OxygenCategories category, Integer quantity) {
+	public Integer requestTankByCategory(OxygenCategories baseCategory, OxygenCategories maxCategory, Integer quantity) {
 		Integer quantityStillNeeded = quantity;
-		List<OxygenTank> notInUseTanksForCategory = notInUseTanks.get(category);
-		List<OxygenTank> inUseTanksForCategory = inUseTanks.get(category);
+		int basePosition = categoriesOrder.indexOf(baseCategory);
+		int maxPosition = categoriesOrder.indexOf(maxCategory);
 
-		while (!notInUseTanksForCategory.isEmpty() && quantityStillNeeded > 0) {
-			OxygenTank transferedTank = notInUseTanksForCategory.remove(notInUseTanksForCategory.size() - 1);
-			inUseTanksForCategory.add(transferedTank);
+		for(int i = basePosition; i <= maxPosition; i++){
+			OxygenCategories currentCategory = categoriesOrder.get(i);
 
-			quantityStillNeeded--;
+			List<OxygenTank> notInUseTanksForCategory = notInUseTanks.get(currentCategory);
+			List<OxygenTank> inUseTanksForCategory = inUseTanks.get(currentCategory);
+
+			while (!notInUseTanksForCategory.isEmpty() && quantityStillNeeded > 0) {
+				OxygenTank transferredTank = notInUseTanksForCategory.remove(notInUseTanksForCategory.size() - 1);
+				inUseTanksForCategory.add(transferredTank);
+
+				quantityStillNeeded--;
+			}
 		}
 
 		return quantityStillNeeded;

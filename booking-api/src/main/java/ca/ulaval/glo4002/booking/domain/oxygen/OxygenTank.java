@@ -35,6 +35,10 @@ public class OxygenTank {
         return this.category;
     }
 
+    public OxygenDate getRequestDate() {
+        return this.requestDate;
+    }
+
     public OxygenDate getReadyDate() {
         return this.readyDate;
     }
@@ -74,7 +78,7 @@ public class OxygenTank {
     }
 
     private void calculateReadyDate() {
-        OxygenDate readyDate = this.requestDate;
+        OxygenDate readyDate = new OxygenDate(requestDate.getValue());
 
         if (this.category == OxygenCategories.A) {
             readyDate.addDays(20);

@@ -1,46 +1,72 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
+import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class OxygenHistory {
 
-	private Map<LocalDate, List<OxygenTank>> requestedOxygenTanks;
-	private Map<LocalDate, List<OxygenTank>> producedOxygenTanks;
+	private Map<LocalDate, OxygenHistoryItem> historyItems;
 
 	public OxygenHistory() {
-		this.requestedOxygenTanks = new HashMap<>();
-		this.producedOxygenTanks = new HashMap<>();
+		this.historyItems = new TreeMap<>();
 	}
 
-	public OxygenHistory(Map<LocalDate, List<OxygenTank>> requestedOxygenTanks, Map<LocalDate, List<OxygenTank>> producedOxygenTanks) {
-		this.requestedOxygenTanks = requestedOxygenTanks;
-		this.producedOxygenTanks = producedOxygenTanks;
+	// TODO OXY : Not sure is usefull, maybe if we had persistance
+	public OxygenHistory(Map<LocalDate, OxygenHistoryItem> historyItems) {
+		this.historyItems = historyItems;
 	}
 
-	public Map<LocalDate, List<OxygenTank>> getRequestedOxygenTanks() {
-		return requestedOxygenTanks;
+	public void buildHistoryItem(List<OxygenTank> allTanks) {
+		allTanks.forEach(tank -> {
+			// TODO OXY : Maybe not bother with OxygenDate not sure if usefull! anywhere
+			LocalDate requestDate = tank.getRequestDate().getValue();
+			LocalDate readyDate = tank.getReadyDate().getValue();
+			OxygenHistoryItem item;
+
+			if(!historyItems.containsKey(requestDate)) {
+				item = new OxygenHistoryItem(requestDate);
+				historyItems.put(requestDate, item);
+			} else {
+				item = historyItems.get(requestDate);
+			}
+
+			switch(tank.getCategory()) {
+				case E:
+					item.addTankBought(OxygenTank.CATEGORY_E_NUMBER_OF_TANKS_CREATED);
+					break;
+				case B:
+					// TODO OXY : Problem missing .6 period water hot fix with modulo not sure if working and seem to be domain logic
+					item.addWaterUsed(2);
+
+					if(item.getQtyWaterUsed() % 6 == 0 && item.getQtyWaterUsed() != 0) {
+						item.addWaterUsed(2);
+					}
+					break;
+				case A:
+					item.addCandleUsed(3);
+					break;
+			}
+
+			if(!historyItems.containsKey(readyDate)) {
+				item = new OxygenHistoryItem(readyDate);
+				historyItems.put(readyDate, item);
+			} else {
+				item = historyItems.get(readyDate);
+			}
+
+			if(tank.getCategory() == OxygenCategories.A || tank.getCategory() == OxygenCategories.B){
+				item.addTankMade(1);
+			}
+
+		});
 	}
 
-	public Map<LocalDate, List<OxygenTank>> getProducedOxygenTanks() {
-		return producedOxygenTanks;
-	}
-
-	public List<OxygenTank> getRequestedOxygenTanksForDate(LocalDate date) {
-		return requestedOxygenTanks.get(date);
-	}
-
-	public List<OxygenTank> getProducedOxygenTanksForDate(LocalDate date) {
-		return producedOxygenTanks.get(date);
-	}
-
-	public void addRequestedTankToHistory(LocalDate date, List<OxygenTank> oxygenTanks) {
-		requestedOxygenTanks.put(date, oxygenTanks);
-	}
-
-	public void addProducedTankToHistory(LocalDate date, List<OxygenTank> oxygenTanks) {
-		producedOxygenTanks.put(date, oxygenTanks);
+	public List<OxygenHistoryItem> returnSortedListByDate() {
+		return historyItems.values().stream().collect(Collectors.toList());
 	}
 }

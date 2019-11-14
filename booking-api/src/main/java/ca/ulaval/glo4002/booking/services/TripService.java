@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.services;
 
+import ca.ulaval.glo4002.booking.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.domain.events.EventDate;
 import ca.ulaval.glo4002.booking.domain.passes.Pass;
 import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
@@ -9,6 +10,7 @@ import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
 import ca.ulaval.glo4002.booking.repositories.TripRepository;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
 
 public class TripService {
@@ -22,12 +24,28 @@ public class TripService {
         this.factory = factory;
     }
 
-    void orderAll(PassCategories passCategory, List<Pass> passes) {
+    public void orderForArtist(BookingArtist artist, EventDate tripDate) {
+        ShuttleCategories shuttleCategory;
+
+        if (artist.getNumberOfPeople() > 1) {
+            shuttleCategory = ShuttleCategories.MILLENNIUM_FALCON;
+        } else {
+            shuttleCategory = ShuttleCategories.ET_SPACESHIP;
+        }
+
+        List<Passenger> passengers = Collections.nCopies(artist.getNumberOfPeople(), new Passenger(artist.getId()));
+
+        repository.addPassengersToNewArrival(passengers, shuttleCategory, tripDate);
+        repository.addPassengersToNewDeparture(passengers, shuttleCategory, tripDate);
+    }
+
+    void orderForPasses(PassCategories passCategory, List<Pass> passes) {
         ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
 
         passes.forEach(pass -> {
             Passenger passenger = new Passenger(pass.getPassNumber());
 
+            // TODO : PassBundle could return a list of required dates (if null -> start and end dates)
             if (pass.getEventDate() == null) {
                 orderForFullFestival(passenger, shuttleCategory);
             } else {
