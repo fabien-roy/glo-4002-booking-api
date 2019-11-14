@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.controllers.ReportController;
 import ca.ulaval.glo4002.booking.controllers.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.converters.ArtistConverter;
 import ca.ulaval.glo4002.booking.domain.NumberGenerator;
+import ca.ulaval.glo4002.booking.domain.events.Event;
 import ca.ulaval.glo4002.booking.factories.*;
 import ca.ulaval.glo4002.booking.mappers.*;
 import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
@@ -57,6 +58,7 @@ public class BookingBinder extends AbstractBinder {
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
         bind(InMemoryArtistRepository.class).to(ArtistRepository.class).in(Singleton.class);
+        bind(InMemoryEventRepository.class).to(EventRepository.class).in(Singleton.class);
     }
 
     private void bindProducers() {
