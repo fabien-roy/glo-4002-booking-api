@@ -1,29 +1,25 @@
 package ca.ulaval.glo4002.booking.domain.oxygen;
 
-import java.time.LocalDate;
-
 public class OxygenHistoryItem {
 
-    private LocalDate date;
     private Integer qtyOxygenTankBought;
+    private Integer qtyOxygenTankMade;
     private Integer qtyWaterUsed;
     private Integer qtyCandlesUsed;
-    private Integer qtyOxygenTankMade;
 
-    public OxygenHistoryItem(LocalDate date) {
-        this.date = date;
+    public OxygenHistoryItem() {
         this.qtyOxygenTankBought = 0;
+        this.qtyOxygenTankMade = 0;
         this.qtyWaterUsed = 0;
         this.qtyCandlesUsed = 0;
-        this.qtyOxygenTankMade = 0;
-    }
-
-    public LocalDate getDate() {
-        return  this.date;
     }
 
     public Integer getQtyOxygenTankBought() {
         return qtyOxygenTankBought;
+    }
+
+    public Integer getQtyOxygenTankMade() {
+        return qtyOxygenTankMade;
     }
 
     public Integer getQtyWaterUsed() {
@@ -34,12 +30,12 @@ public class OxygenHistoryItem {
         return qtyCandlesUsed;
     }
 
-    public Integer getQtyOxygenTankMade() {
-        return qtyOxygenTankMade;
+    public void addTanksBought(Integer qtyOxygenTankBought) {
+        this.qtyOxygenTankBought += qtyOxygenTankBought;
     }
 
-    public void addTankBought(Integer qtyOxygenTankBought) {
-        this.qtyOxygenTankBought += qtyOxygenTankBought;
+    public void addTanksMade(Integer qtyOxygenTankMade) {
+        this.qtyOxygenTankMade += qtyOxygenTankMade;
     }
 
     public void addWaterUsed(Integer qtyWaterUsed) {
@@ -49,9 +45,4 @@ public class OxygenHistoryItem {
     public void addCandleUsed(Integer qtyCandlesUsed) {
         this.qtyCandlesUsed += qtyCandlesUsed;
     }
-
-    public void addTankMade(Integer qtyOxygenTankMade) {
-        this.qtyOxygenTankMade += qtyOxygenTankMade;
-    }
-
 }
