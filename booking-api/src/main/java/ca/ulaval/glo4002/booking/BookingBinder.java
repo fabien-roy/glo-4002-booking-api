@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking;
 import javax.inject.Singleton;
 
 import ca.ulaval.glo4002.booking.factories.*;
+import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.repositories.*;
 import ca.ulaval.glo4002.booking.services.*;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -26,6 +27,7 @@ public class BookingBinder extends AbstractBinder {
         bindGenerators();
         bindFactories();
         bindRepositories();
+        bindProducers();
         bindServices();
         bindMappers();
         bindControllers();
@@ -58,6 +60,10 @@ public class BookingBinder extends AbstractBinder {
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
         bind(InMemoryArtistRepository.class).to(ArtistRepository.class).in(Singleton.class);
+    }
+
+    private void bindProducers() {
+        bindAsContract(OxygenTankProducer.class);
     }
 
     private void bindServices() {
