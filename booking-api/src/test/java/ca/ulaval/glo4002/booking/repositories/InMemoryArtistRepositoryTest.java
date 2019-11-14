@@ -6,12 +6,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.artists.ArtistRepository;
+import ca.ulaval.glo4002.booking.artists.InMemoryArtistRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.artist.Availability;
-import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
-import ca.ulaval.glo4002.booking.domain.money.Money;
+import ca.ulaval.glo4002.booking.artists.Availability;
+import ca.ulaval.glo4002.booking.artists.BookingArtist;
+import ca.ulaval.glo4002.booking.profits.Money;
 
 public class InMemoryArtistRepositoryTest {
 

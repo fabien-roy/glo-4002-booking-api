@@ -6,15 +6,12 @@ import static org.mockito.Mockito.mock;
 
 import java.time.LocalDateTime;
 
+import ca.ulaval.glo4002.booking.orders.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.factories.OrderFactory;
+import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
 
 class InMemoryOrderRepositoryTest {
 

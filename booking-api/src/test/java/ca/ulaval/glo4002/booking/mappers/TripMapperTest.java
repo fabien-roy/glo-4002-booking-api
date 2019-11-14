@@ -6,14 +6,15 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.shuttles.trips.TripMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
-import ca.ulaval.glo4002.booking.dto.shuttles.TripDto;
-import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.shuttles.trips.Trip;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripDto;
+import ca.ulaval.glo4002.booking.shuttles.ShuttleCategories;
 
 class TripMapperTest {
 

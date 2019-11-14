@@ -10,25 +10,24 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.passes.*;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.PriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.domain.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
-import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.PriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 
 class PassBundleFactoryTest {

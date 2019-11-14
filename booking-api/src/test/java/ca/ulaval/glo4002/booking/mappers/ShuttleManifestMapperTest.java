@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.mappers;
 
-import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
+import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestMapper;
+import ca.ulaval.glo4002.booking.shuttles.trips.Trip;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

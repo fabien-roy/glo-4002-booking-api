@@ -1,7 +1,8 @@
 package ca.ulaval.glo4002.booking.controllers;
 
-import ca.ulaval.glo4002.booking.services.OxygenReportService;
-import ca.ulaval.glo4002.booking.services.ProfitService;
+import ca.ulaval.glo4002.booking.report.ReportController;
+import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportService;
+import ca.ulaval.glo4002.booking.profits.ProfitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;

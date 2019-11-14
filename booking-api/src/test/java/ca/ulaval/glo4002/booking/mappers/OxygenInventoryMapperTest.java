@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.booking.mappers;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.dto.oxygen.OxygenInventoryItemDto;
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryItemDto;
+import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

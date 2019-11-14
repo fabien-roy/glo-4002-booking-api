@@ -5,17 +5,16 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo4002.booking.program.ProgramController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
-import ca.ulaval.glo4002.booking.dto.events.ProgramDto;
-import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.services.ArtistService;
-import ca.ulaval.glo4002.booking.services.ProgramService;
+import ca.ulaval.glo4002.booking.artists.ArtistListDto;
+import ca.ulaval.glo4002.booking.artists.ArtistOrderings;
+import ca.ulaval.glo4002.booking.artists.ArtistService;
+import ca.ulaval.glo4002.booking.program.ProgramService;
 
 class ProgramControllerTest {
 

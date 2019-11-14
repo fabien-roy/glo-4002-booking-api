@@ -1,9 +1,10 @@
 package ca.ulaval.glo4002.booking.factories;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.oxygen.OxygenFactory;
+import ca.ulaval.glo4002.booking.oxygen.OxygenTank;
+import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
+import ca.ulaval.glo4002.booking.passes.PassCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

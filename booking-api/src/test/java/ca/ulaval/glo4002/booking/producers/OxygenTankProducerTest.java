@@ -1,13 +1,11 @@
 package ca.ulaval.glo4002.booking.producers;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
-import ca.ulaval.glo4002.booking.factories.OxygenFactory;
-import ca.ulaval.glo4002.booking.repositories.OxygenHistoryRepository;
-import ca.ulaval.glo4002.booking.repositories.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.oxygen.*;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

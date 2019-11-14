@@ -2,20 +2,13 @@ package ca.ulaval.glo4002.booking.mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenReport;
-import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
-import ca.ulaval.glo4002.booking.dto.oxygen.OxygenInventoryItemDto;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
-import ca.ulaval.glo4002.booking.dto.oxygen.OxygenReportDto;
-
-import java.util.Arrays;
-import java.util.Collections;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryMapper;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryMapper;
+import ca.ulaval.glo4002.booking.oxygen.report.OxygenReport;
+import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportMapper;
 
 class OxygenReportMapperTest {
 

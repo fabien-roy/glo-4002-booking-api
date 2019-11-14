@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
+import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.mappers.ShuttleManifestMapper;
-import ca.ulaval.glo4002.booking.repositories.TripRepository;
+import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestMapper;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 
 class ShuttleManifestServiceTest {
 

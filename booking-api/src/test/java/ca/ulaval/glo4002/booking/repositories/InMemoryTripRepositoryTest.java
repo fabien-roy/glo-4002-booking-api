@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.shuttles.Passenger;
-import ca.ulaval.glo4002.booking.domain.shuttles.Trip;
-import ca.ulaval.glo4002.booking.enums.ShuttleCategories;
-import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.shuttles.*;
+import ca.ulaval.glo4002.booking.shuttles.trips.InMemoryTripRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.Trip;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

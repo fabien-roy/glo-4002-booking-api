@@ -1,7 +1,8 @@
 package ca.ulaval.glo4002.booking.repositories;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenInventory;
+import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

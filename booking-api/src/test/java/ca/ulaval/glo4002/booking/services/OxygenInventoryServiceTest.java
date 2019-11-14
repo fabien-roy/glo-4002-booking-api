@@ -1,22 +1,19 @@
 package ca.ulaval.glo4002.booking.services;
 
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.events.Event;
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.passes.Pass;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
-import ca.ulaval.glo4002.booking.factories.OxygenFactory;
-import ca.ulaval.glo4002.booking.producers.OxygenTankProducer;
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
-import ca.ulaval.glo4002.booking.mappers.OxygenInventoryMapper;
-import ca.ulaval.glo4002.booking.repositories.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.passes.Pass;
+import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.oxygen.OxygenFactory;
+import ca.ulaval.glo4002.booking.oxygen.OxygenTankProducer;
+import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

@@ -6,14 +6,16 @@ import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
 
+import ca.ulaval.glo4002.booking.orders.OrderMapper;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.orders.Order;
+import ca.ulaval.glo4002.booking.orders.OrderNumber;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.orders.OrderWithPassesAsPassesDto;
 
 class OrderMapperTest {
 

@@ -3,17 +3,18 @@ package ca.ulaval.glo4002.booking.controllers;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo4002.booking.orders.OrderController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.orders.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.orders.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.services.OrderService;
+import ca.ulaval.glo4002.booking.orders.OrderNotFoundException;
+import ca.ulaval.glo4002.booking.orders.OrderService;
 
 class OrderControllerTest {
 

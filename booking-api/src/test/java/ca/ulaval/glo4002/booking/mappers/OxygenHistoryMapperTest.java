@@ -1,20 +1,17 @@
 package ca.ulaval.glo4002.booking.mappers;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistory;
-import ca.ulaval.glo4002.booking.domain.oxygen.OxygenHistoryItem;
-import ca.ulaval.glo4002.booking.dto.oxygen.OxygenHistoryItemDto;
-import ca.ulaval.glo4002.booking.enums.OxygenCategories;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryItemDto;
 
 class OxygenHistoryMapperTest {
 

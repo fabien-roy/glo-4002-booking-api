@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import ca.ulaval.glo4002.booking.artists.*;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,12 +18,7 @@ import org.junit.jupiter.api.Test;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
-import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.dto.events.ArtistListDto;
-import ca.ulaval.glo4002.booking.enums.ArtistOrderings;
-import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
-import ca.ulaval.glo4002.booking.repositories.InMemoryArtistRepository;
+import ca.ulaval.glo4002.booking.profits.Money;
 
 class ArtistServiceTest {
 

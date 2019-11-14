@@ -1,0 +1,10 @@
+package ca.ulaval.glo4002.booking.events;
+
+import ca.ulaval.glo4002.booking.events.Event;
+
+import java.util.List;
+
+public interface EventRepository {
+
+    void addAll(List<Event> event);
+}

@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.dto.shuttles.ShuttleManifestDto;
-import ca.ulaval.glo4002.booking.services.ShuttleManifestService;
+import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestDto;
+import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestService;
 
 class ShuttleManifestControllerTest {
 

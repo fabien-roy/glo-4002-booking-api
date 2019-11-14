@@ -6,10 +6,10 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.artists.ArtistConverter;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,13 +18,11 @@ import org.junit.jupiter.api.Test;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
-import ca.ulaval.glo4002.booking.clients.ArtistClient;
-import ca.ulaval.glo4002.booking.domain.artist.BookingArtist;
-import ca.ulaval.glo4002.booking.domain.artist.ExternalArtist;
-import ca.ulaval.glo4002.booking.domain.artist.ExternalArtistAvailability;
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.repositories.ArtistRepository;
-import ca.ulaval.glo4002.booking.repositories.InMemoryArtistRepository;
+import ca.ulaval.glo4002.booking.artists.ArtistClient;
+import ca.ulaval.glo4002.booking.artists.BookingArtist;
+import ca.ulaval.glo4002.booking.artists.ExternalArtist;
+import ca.ulaval.glo4002.booking.artists.ArtistRepository;
+import ca.ulaval.glo4002.booking.artists.InMemoryArtistRepository;
 
 public class ArtistConverterTest {
 	
