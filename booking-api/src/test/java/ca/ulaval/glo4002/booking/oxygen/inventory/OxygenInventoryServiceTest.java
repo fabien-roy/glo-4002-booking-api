@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.oxygen.inventory;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.events.EventDate;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.passes.Pass;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
@@ -42,7 +41,7 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aFullFestivalPass));
 
-        fullFestivalEventDates.forEach(eventDate -> verify(producer).produce(any(), eq(eventDate.getValue())));
+        fullFestivalEventDates.forEach(eventDate -> verify(producer).produceForDay(any(), eq(eventDate.getValue())));
     }
 
     @Test
@@ -52,7 +51,7 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass));
 
-        verify(producer).produce(any(), eq(aEventDate.getValue()));
+        verify(producer).produceForDay(any(), eq(aEventDate.getValue()));
     }
 
     @Test
@@ -64,8 +63,8 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(PassCategories.SUPERNOVA, Arrays.asList(aPass, anotherPass));
 
-        verify(producer).produce(any(), eq(aEventDate.getValue()));
-        verify(producer).produce(any(), eq(anotherEventDate.getValue()));
+        verify(producer).produceForDay(any(), eq(aEventDate.getValue()));
+        verify(producer).produceForDay(any(), eq(anotherEventDate.getValue()));
     }
 
     @ParameterizedTest
@@ -77,6 +76,6 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(passCategory, Collections.singletonList(aPass));
 
-        verify(producer).produce(eq(expectedOxygenCategory), any());
+        verify(producer).produceForDay(eq(expectedOxygenCategory), any());
     }
 }

@@ -25,8 +25,8 @@ public class OxygenTankProducer {
 	    this.historyRepository = historyRepository;
 		this.factory = factory;
 	}
-	
-	public List<OxygenTank> produce(OxygenCategories category, LocalDate requestDate) {
+
+	public List<OxygenTank> produceForDay(OxygenCategories category, LocalDate requestDate) {
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		OxygenHistory history = historyRepository.getHistory();
 
@@ -59,7 +59,7 @@ public class OxygenTankProducer {
 
 		return newTanks;
 	}
-	
+
 	private Integer getQuantityToCoverForCategory(OxygenCategories category) {
 		if (category.equals(OxygenCategories.E)) {
 			return 5;
