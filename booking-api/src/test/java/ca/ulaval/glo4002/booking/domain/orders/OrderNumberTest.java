@@ -27,11 +27,11 @@ class OrderNumberTest {
 
 	@Test
 	void toString_shouldReturnCorrectFormat() {
-		Number aOrderNumber = new Number(1L);
+		Number anOrderNumber = new Number(1L);
 		String aVendor = "VENDOR";
-		String expectedOrderNumber = aVendor + OrderNumber.SEPARATOR + aOrderNumber.toString();
+		String expectedOrderNumber = aVendor + OrderNumber.SEPARATOR + anOrderNumber.toString();
 
-		orderNumber = new OrderNumber(aOrderNumber, aVendor);
+		orderNumber = new OrderNumber(anOrderNumber, aVendor);
 		String textOrderNumber = orderNumber.toString();
 
 		assertEquals(expectedOrderNumber, textOrderNumber);
@@ -40,9 +40,9 @@ class OrderNumberTest {
 	@Test
 	void equals_shouldReturnFalse_whenObjectIsNotNumber() {
 		orderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		Object object = new Object();
+		Object anObject = new Object();
 
-		boolean isSameObject = orderNumber.equals(object);
+		boolean isSameObject = orderNumber.equals(anObject);
 
 		assertFalse(isSameObject);
 	}

@@ -51,12 +51,12 @@ class OrderServiceTest {
 	@Test
 	void order_shouldAddOrder() {
 		String aVendorCode = "aVendorCode";
-		Order order = mockOrder(aVendorCode, PassCategories.SUPERNOVA);
+		Order anOrder = mockOrder(aVendorCode, PassCategories.SUPERNOVA);
 		OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
 
 		service.order(orderDto);
 
-		verify(repository).addOrder(eq(order));
+		verify(repository).addOrder(eq(anOrder));
 	}
 
 	@Test
@@ -109,16 +109,16 @@ class OrderServiceTest {
 
 	@Test
 	void getByOrderNumber_shouldGetOrder() {
-		OrderNumber aOrderNumber = new OrderNumber(new Number(1L), "Vendor");
-		Pass pass = mock(Pass.class);
-		when(pass.getPassNumber()).thenReturn(new Number(1L));
-		when(pass.getPrice()).thenReturn(new Money(new BigDecimal(0.0)));
-		PassBundle passBundle = new PassBundle(Collections.singletonList(pass),
+		OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "Vendor");
+		Pass aPass = mock(Pass.class);
+		when(aPass.getPassNumber()).thenReturn(new Number(1L));
+		when(aPass.getPrice()).thenReturn(new Money(new BigDecimal(0.0)));
+		PassBundle passBundle = new PassBundle(Collections.singletonList(aPass),
 				new PassCategory(PassCategories.SUPERNOVA, null), PassOptions.PACKAGE);
-		Order order = new Order(aOrderNumber, OrderFactory.START_DATE_TIME, passBundle);
-		when(repository.getByOrderNumber(aOrderNumber)).thenReturn(order);
+		Order order = new Order(anOrderNumber, OrderFactory.START_DATE_TIME, passBundle);
+		when(repository.getByOrderNumber(anOrderNumber)).thenReturn(order);
 
-		OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(aOrderNumber.toString());
+		OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(anOrderNumber.toString());
 
 		assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
 	}

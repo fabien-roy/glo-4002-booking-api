@@ -32,17 +32,17 @@ class OrderDateTest {
 
 	@Test
 	void constructing_shouldThrowInvalidOrderDateException_whenOrderDateIsUnderBounds() {
-		LocalDateTime aUnderBoundDate = OrderDate.START_DATE_TIME.minusDays(1);
-		ZonedDateTime aUnderBoundZonedDate = ZonedDateTime.of(aUnderBoundDate, ZoneId.systemDefault());
+		LocalDateTime anUnderBoundDate = OrderDate.START_DATE_TIME.minusDays(1);
+		ZonedDateTime anUnderBoundZonedDate = ZonedDateTime.of(anUnderBoundDate, ZoneId.systemDefault());
 
-		assertThrows(InvalidOrderDateException.class, () -> new OrderDate(aUnderBoundZonedDate.toString()));
+		assertThrows(InvalidOrderDateException.class, () -> new OrderDate(anUnderBoundZonedDate.toString()));
 	}
 
 	@Test
 	void constructing_shouldThrowInvalidOrderDateException_whenOrderDateIsOverBounds() {
-		LocalDateTime aOverBoundDate = OrderDate.END_DATE_TIME.plusDays(1);
-		ZonedDateTime aOverBoundZonedDate = ZonedDateTime.of(aOverBoundDate, ZoneId.systemDefault());
+		LocalDateTime anOverBoundDate = OrderDate.END_DATE_TIME.plusDays(1);
+		ZonedDateTime anOverBoundZonedDate = ZonedDateTime.of(anOverBoundDate, ZoneId.systemDefault());
 
-		assertThrows(InvalidOrderDateException.class, () -> new OrderDate(aOverBoundZonedDate.toString()));
+		assertThrows(InvalidOrderDateException.class, () -> new OrderDate(anOverBoundZonedDate.toString()));
 	}
 }

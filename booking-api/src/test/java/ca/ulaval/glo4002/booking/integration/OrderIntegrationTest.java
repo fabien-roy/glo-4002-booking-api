@@ -43,7 +43,7 @@ import static org.mockito.Mockito.mock;
 public class OrderIntegrationTest {
 
     private OrderController controller;
-    private OrderRepository orderRepository;
+    private OrderRepository repository;
     private PassBundleFactory passBundleFactory;
 
     @BeforeEach
@@ -59,7 +59,7 @@ public class OrderIntegrationTest {
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
-        orderRepository = new InMemoryOrderRepository();
+        repository = new InMemoryOrderRepository();
 
         OxygenTankProducer oxygenTankProducer = new OxygenTankProducer(oxygenInventoryRepository, oxygenFactory);
 
@@ -68,7 +68,7 @@ public class OrderIntegrationTest {
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
-        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
+        OrderService orderService = new OrderService(repository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         controller = new OrderController(orderService);
     }
@@ -84,7 +84,7 @@ public class OrderIntegrationTest {
                 OrderFactory.START_DATE_TIME,
                 passBundle
         );
-        orderRepository.addOrder(order);
+        repository.addOrder(order);
 
         ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
         OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
@@ -126,7 +126,7 @@ public class OrderIntegrationTest {
                 OrderFactory.START_DATE_TIME,
                 mock(PassBundle.class)
         );
-        orderRepository.addOrder(order);
+        repository.addOrder(order);
         Number aNonExistentOrderId = new Number(2L);
         OrderNumber aNonExistentOrderNumber = new OrderNumber(aNonExistentOrderId, "VENDOR");
         String expectedErrorDescription = OrderNotFoundException.DESCRIPTION.replace("{orderNumber}", aNonExistentOrderNumber.toString());
