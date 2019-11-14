@@ -69,7 +69,7 @@ public class OxygenTankProducer {
 		}
 	}
 
-	// TODO : Refactor to use OxygenCategory.getReadyDate(requestDate)
+	// TODO : Refactor to use OxygenFactory.buildCategoryForRequestDate(requestDate)
 	private OxygenCategories getCategoryForRequestDate(OxygenCategories category, LocalDate requestDate) {
 		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
 
