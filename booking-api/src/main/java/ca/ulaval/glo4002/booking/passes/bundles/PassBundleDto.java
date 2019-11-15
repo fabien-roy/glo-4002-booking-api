@@ -9,6 +9,7 @@ public class PassBundleDto {
 	private List<String> eventDates;
 
 	public PassBundleDto() {
+		// Empty constructor for parsing
 	}
 
 	public PassBundleDto(String passCategory, String passOption) {

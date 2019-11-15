@@ -11,6 +11,7 @@ public class InMemoryEventRepository implements EventRepository {
         events = new ArrayList<>();
     }
 
+    // TODO : We should always override events
     @Override
     public void addAll(List<Event> events) {
         this.events.addAll(events);
