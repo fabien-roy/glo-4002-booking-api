@@ -66,7 +66,7 @@ public class OxygenCategory {
         return readyDate;
     }
 
-    public void addProductionInformationsToHistory(LocalDate requestDate, OxygenHistory history) {
+    public void addCategoryProductionInformationToHistory(LocalDate requestDate, OxygenHistory history) {
         if(category == OxygenCategories.A) {
             history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle);
         } else if(category == OxygenCategories.B) {

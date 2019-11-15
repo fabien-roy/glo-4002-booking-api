@@ -44,7 +44,7 @@ public class OxygenTankProducer {
 
 			history.addMadeTanks(actualOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
 
-			actualOxygenCategory.addProductionInformationsToHistory(requestDate, history);
+			actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history);
 			inventory.addTanksToInventory(category, newTanks);
 		}
 
