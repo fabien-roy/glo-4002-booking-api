@@ -43,16 +43,8 @@ public class OxygenCategory {
         return tanksNeededPerDay;
     }
 
-    public Integer getProduceTimeInDays() {
-        return produceTimeInDays;
-    }
-
     public Integer getNumberOfTanksByBundle() {
         return numberOfTanksByBundle;
-    }
-
-    public Integer getNumberOfProductionItem() {
-        return numberOfProductionItem;
     }
 
     public Money calculatePriceForCategory() {
