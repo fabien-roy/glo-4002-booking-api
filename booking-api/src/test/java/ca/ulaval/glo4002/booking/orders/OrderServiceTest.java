@@ -1,28 +1,30 @@
 package ca.ulaval.glo4002.booking.orders;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.passes.Pass;
+import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.passes.PassCategory;
+import ca.ulaval.glo4002.booking.passes.PassOptions;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
+import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.orders.*;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.passes.Pass;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
-import ca.ulaval.glo4002.booking.passes.PassCategory;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
-import ca.ulaval.glo4002.booking.passes.PassOptions;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class OrderServiceTest {
 
@@ -31,6 +33,7 @@ class OrderServiceTest {
 	private OrderFactory factory;
 	private TripService tripService;
 	private OxygenInventoryService oxygenInventoryService;
+	private String anOrderDate = "2050-05-21";
 
 	@BeforeEach
 	void setUpService() {
@@ -87,7 +90,7 @@ class OrderServiceTest {
 
 		service.order(orderDto);
 
-		verify(oxygenInventoryService).orderForPasses(eq(expectedPassCategory), any());
+		verify(oxygenInventoryService).orderForPasses(eq(expectedPassCategory), any(), any());
 	}
 
 	@Test
@@ -99,7 +102,7 @@ class OrderServiceTest {
 
 		service.order(orderDto);
 
-		verify(oxygenInventoryService).orderForPasses(any(), eq(expectedPasses));
+		verify(oxygenInventoryService).orderForPasses(any(), eq(expectedPasses), any());
 	}
 
 	@Test

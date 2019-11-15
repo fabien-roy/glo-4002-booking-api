@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.oxygen.history;
 
-import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ public class OxygenHistoryItemTest {
 
     @Test
     void addWaterUsed_shouldAddWaterUsed() {
-        Integer numTanksBough = 5;
+        Double numTanksBough = 5D;
 
         oxygenHistoryItem.addWaterUsed(numTanksBough);
 

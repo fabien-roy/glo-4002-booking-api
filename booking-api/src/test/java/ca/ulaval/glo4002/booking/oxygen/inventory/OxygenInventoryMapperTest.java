@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryItemDto;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

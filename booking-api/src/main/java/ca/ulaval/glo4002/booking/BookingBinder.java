@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.artists.*;
+import ca.ulaval.glo4002.booking.events.Event;
+import ca.ulaval.glo4002.booking.events.EventFactory;
 import ca.ulaval.glo4002.booking.events.EventRepository;
 import ca.ulaval.glo4002.booking.events.InMemoryEventRepository;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -19,6 +21,7 @@ import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.PassFactory;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.program.ProgramController;
+import ca.ulaval.glo4002.booking.program.ProgramService;
 import ca.ulaval.glo4002.booking.report.ReportController;
 import ca.ulaval.glo4002.booking.shuttles.*;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
@@ -66,6 +69,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
+        bindAsContract(EventFactory.class);
     }
 
     private void bindRepositories() {
@@ -88,6 +92,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ShuttleManifestService.class);
         bindAsContract(ArtistService.class);
         bindAsContract(ProfitService.class);
+        bindAsContract(ProgramService.class);
         bindAsContract(OxygenReportService.class);
     }
 

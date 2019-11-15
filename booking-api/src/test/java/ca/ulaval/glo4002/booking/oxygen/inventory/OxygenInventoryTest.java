@@ -1,20 +1,20 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
+import ca.ulaval.glo4002.booking.oxygen.OxygenTank;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
-import ca.ulaval.glo4002.booking.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 
 public class OxygenInventoryTest {
 

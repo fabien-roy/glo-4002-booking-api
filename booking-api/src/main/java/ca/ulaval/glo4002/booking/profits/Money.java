@@ -41,6 +41,13 @@ public class Money implements Comparable<Money> {
 		return this;
 	}
 
+	// TODO : Test
+	public Money divide(BigDecimal divisor) {
+		value = value.divide(divisor);
+
+		return this;
+	}
+
 	public Money add(Money money) {
 		BigDecimal amount = new BigDecimal(money.value.doubleValue());
 

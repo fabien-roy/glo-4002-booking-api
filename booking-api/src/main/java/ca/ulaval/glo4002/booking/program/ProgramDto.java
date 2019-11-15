@@ -6,6 +6,10 @@ public class ProgramDto {
 
     private List<ProgramEventDto> program;
 
+    public ProgramDto() {
+        // Empty constructor for parsing
+    }
+
     public ProgramDto(List<ProgramEventDto> program) {
         this.program = program;
     }

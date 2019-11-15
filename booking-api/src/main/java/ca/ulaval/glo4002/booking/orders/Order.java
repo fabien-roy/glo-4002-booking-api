@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.orders;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.passes.Pass;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.profits.Money;
+
+import java.time.LocalDateTime;
+import java.util.List;
 import ca.ulaval.glo4002.booking.profits.Profit;
 
 public class Order {

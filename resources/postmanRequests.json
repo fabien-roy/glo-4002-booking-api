@@ -49,7 +49,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"orderDate\": \"2050-05-21T15:23:20.142Z\",\n  \"vendorCode\": \"TEAM\",\n  \"passes\": {\n              \"passCategory\":\"nebula\",\n              \"passOption\": \"singlePass\",\n              \"eventDates\": [\"2050-07-17\", \"2050-07-24\"]\n            }\n}"
+					"raw": "{\n  \"orderDate\": \"2050-05-21T15:23:20.142Z\",\n  \"vendorCode\": \"TEAM\",\n  \"passes\": {\n              \"passCategory\":\"nebula\",\n              \"passOption\": \"singlePass\",\n              \"eventDates\": [\"2050-07-17\"]\n            }\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8181/orders",
@@ -71,7 +71,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8181/orders/TEAM-1",
+					"raw": "http://localhost:8181/orders/TEAM-100000",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -79,26 +79,7 @@
 					"port": "8181",
 					"path": [
 						"orders",
-						"TEAM-1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET /orders",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8181/orders",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8181",
-					"path": [
-						"orders"
+						"TEAM-100000"
 					]
 				}
 			},
@@ -235,6 +216,41 @@
 							"key": "orderBy",
 							"value": "mostPopular"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /program",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"program\": [\r\n            {\r\n               \"eventDate\": \"2050-07-17\",\r\n               \"am\": \"yoga\",\r\n               \"pm\": \"Kid Rocket\"\r\n            },\r\n            {\r\n               \"eventDate\": \"2050-07-18\",\r\n               \"am\": \"yoga\",\r\n               \"pm\": \"Freddie Mercury\"\r\n            },\r\n            {\r\n               \"eventDate\": \"2050-07-19\",\r\n               \"am\": \"cardio\",\r\n               \"pm\": \"Kelvin Harris\"\r\n            },\r\n            {\r\n               \"eventDate\": \"2050-07-20\",\r\n               \"am\": \"cardio\",\r\n               \"pm\": \"Lady Gamma\"\r\n            },\r\n            {\r\n               \"eventDate\": \"2050-07-21\",\r\n               \"am\": \"yoga\",\r\n               \"pm\": \"30 Seconds to Mars\"\r\n            },\r\n            {\r\n               \"eventDate\": \"2050-07-22\",\r\n               \"am\": \"yoga\",\r\n               \"pm\": \"Coldray\"\r\n            },\r\n            {\r\n               \"eventDate\": \"2050-07-23\",\r\n               \"am\": \"cardio\",\r\n               \"pm\": \"Suns N’ Roses\"\r\n            },\r\n            {\r\n               \"eventDate\": \"2050-07-24\",\r\n               \"am\": \"yoga\",\r\n               \"pm\": \"Eclipse Presley\"\r\n            }\r\n       ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8181/program",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"program"
 					]
 				}
 			},

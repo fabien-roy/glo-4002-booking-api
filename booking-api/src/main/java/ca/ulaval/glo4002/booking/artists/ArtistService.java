@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.program.InvalidProgramException;
 
 public class ArtistService {
 
@@ -19,6 +20,16 @@ public class ArtistService {
 		this.repository = repository;
 		ArtistConverter converter = new ArtistConverter(repository);
 		converter.convert();
+	}
+
+	public BookingArtist getByName(String artistName) {
+		List<BookingArtist> bookingArtists = repository.findAll();
+
+		return bookingArtists
+				.stream()
+				.filter(artist -> artist.getName().equals(artistName))
+				.findAny()
+				.orElseThrow(InvalidProgramException::new);
 	}
 
 	public ArtistListDto getAllOrdered(String orderBy) {
