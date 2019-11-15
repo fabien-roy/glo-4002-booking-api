@@ -1,10 +1,10 @@
 package ca.ulaval.glo4002.booking.events;
 
-import ca.ulaval.glo4002.booking.artists.BookingArtist;
-import ca.ulaval.glo4002.booking.program.ProgramEventDto;
 import ca.ulaval.glo4002.booking.activities.Activities;
+import ca.ulaval.glo4002.booking.artists.ArtistService;
+import ca.ulaval.glo4002.booking.artists.BookingArtist;
 import ca.ulaval.glo4002.booking.program.InvalidProgramException;
-import ca.ulaval.glo4002.booking.artists.ArtistRepository;
+import ca.ulaval.glo4002.booking.program.ProgramEventDto;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 
 public class EventFactory {
 
-    private final ArtistRepository artistRepository; // TODO : Use ArtistClient to validate
+    private final ArtistService artistService;
 
     @Inject
-    public EventFactory(ArtistRepository artistRepository) {
-        this.artistRepository = artistRepository;
+    public EventFactory(ArtistService artistService) {
+        this.artistService = artistService;
     }
 
     public List<Event> build(List<ProgramEventDto> eventDtos) {
@@ -31,7 +31,7 @@ public class EventFactory {
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
-            BookingArtist bookingArtist = null; // TODO : Correctly add BookingArtist
+            BookingArtist bookingArtist = null; // TODO : Use ArtistService to get by name
 
             Event event = new Event(eventDate, activity, bookingArtist);
 
