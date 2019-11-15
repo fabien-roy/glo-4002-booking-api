@@ -37,6 +37,7 @@ public class OxygenTankProducer {
 		Integer quantityToCover = requestCategory.getTanksNeededPerDay();
 
 		quantityToCover = inventory.requestTankByCategory(category, actualOxygenCategory.getCategory(), quantityToCover);
+		Integer quantityToReserve = quantityToCover;
 
 		if (quantityToCover > 0) {
 		    List<OxygenTank> producedTanks = factory.buildOxygenTank(actualOxygenCategory, requestDate, quantityToCover);
@@ -46,10 +47,11 @@ public class OxygenTankProducer {
 				history.addTanksBought(requestDate, quantityToCover);
 			} else {
 				history.addMadeTanks(actualOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
+				actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
 			}
-
-			actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
+            OxygenCategories categoryToReserve = actualOxygenCategory.getCategory();
 			inventory.addTanksToInventory(category, newTanks);
+			inventory.requestTankByCategory(categoryToReserve, categoryToReserve, quantityToReserve);
 		}
 
 		inventoryRepository.setInventory(inventory);

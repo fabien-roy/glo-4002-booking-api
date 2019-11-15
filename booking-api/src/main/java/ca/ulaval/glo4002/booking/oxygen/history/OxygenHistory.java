@@ -17,7 +17,7 @@ public class OxygenHistory {
 	}
 
 	public void addTanksBought(LocalDate date, Integer amountOfTanksBought) {
-	    createHistoryItemIfAbsent(date);
+		createHistoryItemIfAbsent(date);
 
 		historyItems.get(date).addTanksBought(amountOfTanksBought);
 	}
