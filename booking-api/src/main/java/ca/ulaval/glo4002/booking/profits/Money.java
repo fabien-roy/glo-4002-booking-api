@@ -13,7 +13,7 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money(Money money) {
-		this.value = new BigDecimal(String.valueOf(money.value));
+		this.value = new BigDecimal(money.value.doubleValue());
 	}
 
 	public BigDecimal getValue() {
@@ -42,7 +42,7 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money add(Money money) {
-		BigDecimal amount = new BigDecimal(String.valueOf(money.value));
+		BigDecimal amount = new BigDecimal(money.value.doubleValue());
 
 		this.value = this.value.add(amount);
 
@@ -50,7 +50,7 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money subtract(Money money) {
-		BigDecimal amount = new BigDecimal(String.valueOf(money.value));
+		BigDecimal amount = new BigDecimal(money.value.doubleValue());
 
 		this.value = this.value.subtract(amount);
 
