@@ -18,22 +18,22 @@ class NumberTest {
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotNumber() {
         number = new Number(1L);
-        Object object = new Object();
+        Object anObject = new Object();
 
-        boolean result = number.equals(object);
+        boolean isSame = number.equals(anObject);
 
-        assertFalse(result);
+        assertFalse(isSame);
     }
 
     @Test
     void equals_shouldReturnTrue_whenNumberHasSameValue() {
         Long aValue = 1L;
         number = new Number(aValue);
-        Number other = new Number(aValue);
+        Number otherNumber = new Number(aValue);
 
-        boolean result = number.equals(other);
+        boolean isSame = number.equals(otherNumber);
 
-        assertTrue(result);
+        assertTrue(isSame);
     }
 
     @Test
