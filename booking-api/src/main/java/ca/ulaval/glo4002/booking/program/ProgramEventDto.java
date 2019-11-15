@@ -6,6 +6,10 @@ public class ProgramEventDto {
     private String am;
     private String pm;
 
+    public ProgramEventDto() {
+        // Empty constructor for parsing
+    }
+
     public ProgramEventDto(String eventDate, String am, String pm) {
         this.eventDate = eventDate;
         this.am = am;

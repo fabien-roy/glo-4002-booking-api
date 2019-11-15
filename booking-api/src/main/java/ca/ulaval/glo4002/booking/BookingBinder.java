@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.artists.*;
+import ca.ulaval.glo4002.booking.events.Event;
+import ca.ulaval.glo4002.booking.events.EventFactory;
 import ca.ulaval.glo4002.booking.events.EventRepository;
 import ca.ulaval.glo4002.booking.events.InMemoryEventRepository;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -67,6 +69,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
+        bindAsContract(EventFactory.class);
     }
 
     private void bindRepositories() {
