@@ -11,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -107,41 +106,46 @@ class EventFactoryTest {
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsInvalid() {
         String anInvalidDate = "anInvalidDate";
-        ProgramEventDto aEventDto = new ProgramEventDto(anInvalidDate, Activities.YOGA.toString(), "aArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(anInvalidDate, Activities.YOGA.toString(), "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsUnderBounds() {
         String anUnderBoundsEventDate = EventDate.START_DATE.minusDays(1).toString();
-        ProgramEventDto aEventDto = new ProgramEventDto(anUnderBoundsEventDate, Activities.YOGA.toString(), "aArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(anUnderBoundsEventDate, Activities.YOGA.toString(), "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsOverBounds() {
         String anOverBoundsEventDate = EventDate.END_DATE.plusDays(1).toString();
-        ProgramEventDto aEventDto = new ProgramEventDto(anOverBoundsEventDate, Activities.YOGA.toString(), "aArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(anOverBoundsEventDate, Activities.YOGA.toString(), "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsDuplicate() {
         EventDate aEventDate = new EventDate(EventDate.START_DATE);
-        ProgramEventDto aEventDto = buildEventDto(aEventDate, Activities.YOGA, "aArtist");
-        ProgramEventDto anotherEventDto = buildEventDto(aEventDate, Activities.YOGA, "anotherArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(aEventDate.toString(), Activities.YOGA.toString(), "aArtist"));
+        aProgramDto.set(1, new ProgramEventDto(aEventDate.toString(), Activities.YOGA.toString(), "anotherArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Arrays.asList(aEventDto, anotherEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
     void build_shouldThrowInvalidProgramException_whenEventDateIsAbsent() {
-        ProgramEventDto aEventDto = new ProgramEventDto(null, Activities.YOGA.toString(), "aArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(null, Activities.YOGA.toString(), "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
@@ -154,32 +158,36 @@ class EventFactoryTest {
     @Test
     void build_shouldThrowInvalidProgramException_whenActivityIsInvalid() {
         String anInvalidActivity = "anInvalidActivity";
-        ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), anInvalidActivity, "aArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(null, anInvalidActivity, "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
     void build_shouldThrowInvalidProgramException_whenAmIsAbsent() {
-        ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), null, "aArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(EventDate.START_DATE.toString(), null, "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
     void build_shouldThrowInvalidProgramException_whenPmIsAbsent() {
-        ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), Activities.YOGA.toString(), null);
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(EventDate.START_DATE.toString(), Activities.YOGA.toString(), null));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     @Test
     void build_shouldThrowInvalidProgramException_whenArtistIsDuplicate() {
         String aArtist = "aArtist";
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
-        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        aProgramDto.set(0, new ProgramEventDto(EventDate.START_DATE.toString(), Activities.YOGA.toString(), aArtist));
+        aProgramDto.set(1, new ProgramEventDto(EventDate.START_DATE.plusDays(1).toString(), Activities.YOGA.toString(), aArtist));
 
-        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Arrays.asList(aEventDto, anotherEventDto)));
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(aProgramDto));
     }
 
     private List<ProgramEventDto> buildProgramDto(Activities activity, String artist) {
