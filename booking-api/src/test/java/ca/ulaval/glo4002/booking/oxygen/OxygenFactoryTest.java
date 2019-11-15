@@ -58,39 +58,6 @@ public class OxygenFactoryTest {
     }
 
     @Test
-    void build_shouldBuild5OxygenTanks_whenCategoryIsNebula() {
-        LocalDate aValidRequestDate = EventDate.START_DATE.minusDays(21);
-        Integer aNumberOfTanks = 5;
-        Integer expectedNumberOfCreatedTanks = 5;
-
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryA, aValidRequestDate, aNumberOfTanks);
-
-        assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
-    }
-
-    @Test
-    void build_shouldBuild3OxygenTanks_whenCategoryIsSupergiant() {
-        LocalDate aValidRequestDate = EventDate.START_DATE.minusDays(15);
-        Integer aNumberOfTanks = 3;
-        Integer expectedNumberOfCreatedTanks = 3;
-
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryB, aValidRequestDate, aNumberOfTanks);
-
-        assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
-    }
-
-    @Test
-    void build_shouldBuild1OxygenTanks_whenCategoryIsSupernova() {
-        LocalDate aValidRequestDate = EventDate.START_DATE;
-        Integer aNumberOfTanks = 1;
-        Integer expectedNumberOfCreatedTanks = 1;
-
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryE, aValidRequestDate, aNumberOfTanks);
-
-        assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
-    }
-
-    @Test
     void buildCategory_shouldReturnCategoryE_whenCategoryIsSupernova() {
         PassCategories passCategory = PassCategories.SUPERNOVA;
 
