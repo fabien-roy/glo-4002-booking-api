@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking.orders;
 
-import javax.inject.Inject;
-
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
+
+import javax.inject.Inject;
 
 public class OrderService {
 
@@ -28,7 +28,7 @@ public class OrderService {
 
 		repository.addOrder(order);
 		tripService.orderForPasses(order.getPassBundle().getCategory(), order.getPasses());
-		oxygenInventoryService.orderForPasses(order.getPassBundle().getCategory(), order.getPasses());
+		oxygenInventoryService.orderForPasses(order.getPassBundle().getCategory(), order.getPasses(), order.getOrderDate());
 		OrderNumber orderNumber = order.getOrderNumber();
 
 		return orderNumber.toString();

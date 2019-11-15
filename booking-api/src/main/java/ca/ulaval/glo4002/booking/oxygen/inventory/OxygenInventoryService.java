@@ -1,14 +1,16 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
 import ca.ulaval.glo4002.booking.events.EventDate;
-import ca.ulaval.glo4002.booking.oxygen.OxygenCategory;
-import ca.ulaval.glo4002.booking.passes.Pass;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.oxygen.OxygenCategory;
 import ca.ulaval.glo4002.booking.oxygen.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.OxygenTankProducer;
+import ca.ulaval.glo4002.booking.passes.Pass;
+import ca.ulaval.glo4002.booking.passes.PassCategories;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OxygenInventoryService {
@@ -22,24 +24,24 @@ public class OxygenInventoryService {
 		this.producer = producer;
 	}
 
-	public void orderForPasses(PassCategories passCategory, List<Pass> passes) {
+	public void orderForPasses(PassCategories passCategory, List<Pass> passes, LocalDateTime orderDate) {
 		OxygenCategory oxygenCategory = factory.buildCategory(passCategory);
 
 		passes.forEach(pass -> {
 		    // TODO : PassBundle could return a list of required dates (if null -> all festival dates)
 			if (pass.getEventDate() == null) {
-			    orderForFullFestival(oxygenCategory.getCategory());
+			    orderForFullFestival(oxygenCategory.getCategory(), orderDate.toLocalDate());
 			} else {
-			    orderForEventDate(oxygenCategory.getCategory(), pass.getEventDate());
+			    orderForEventDate(oxygenCategory.getCategory(), orderDate.toLocalDate());
 			}
 		});
 	}
 
-	private void orderForFullFestival(OxygenCategories oxygenCategory) {
-		EventDate.getFullFestivalEventDates().forEach(eventDate -> orderForEventDate(oxygenCategory, eventDate));
+	private void orderForFullFestival(OxygenCategories oxygenCategory, LocalDate orderDate) {
+		EventDate.getFullFestivalEventDates().forEach(eventDate -> orderForEventDate(oxygenCategory, orderDate));
 	}
 
-	private void orderForEventDate(OxygenCategories oxygenCategory, EventDate eventDate) {
-		producer.produceForDay(oxygenCategory, eventDate.getValue());
+	private void orderForEventDate(OxygenCategories oxygenCategory, LocalDate orderDate) {
+		producer.produceForDay(oxygenCategory, orderDate);
 	}
 }
