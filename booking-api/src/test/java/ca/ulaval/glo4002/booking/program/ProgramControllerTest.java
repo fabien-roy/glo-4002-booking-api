@@ -19,12 +19,12 @@ import ca.ulaval.glo4002.booking.program.ProgramService;
 class ProgramControllerTest {
 
     private ProgramController controller;
-    private ProgramService programService;
+    private ProgramService service;
     private ArtistService artistService;
 
     @BeforeEach
     void setUpController() {
-        programService = mock(ProgramService.class);
+        service = mock(ProgramService.class);
         artistService = mock(ArtistService.class);
 
         controller = new ProgramController(artistService);

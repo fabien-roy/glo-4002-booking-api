@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.booking.numbers.Number;
 
 class PassengerTest {
 
-	Passenger passenger;
+	private Passenger passenger;
 
 	@Test
 	void constructing_shouldSetCorrectPassNumber() {
