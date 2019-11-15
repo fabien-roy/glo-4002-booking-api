@@ -1,34 +1,33 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.controllers.OrderController;
-import ca.ulaval.glo4002.booking.domain.events.EventDate;
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.money.Money;
-import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.*;
-import ca.ulaval.glo4002.booking.dto.*;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
-import ca.ulaval.glo4002.booking.dto.passes.PassDto;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
-import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.errors.ErrorDto;
+import ca.ulaval.glo4002.booking.orders.*;
+import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
+import ca.ulaval.glo4002.booking.oxygen.*;
+import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.InMemoryOxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
+import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.passes.*;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.PassDto;
+import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.passes.PassOptions;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.InvalidEventDateException;
-import ca.ulaval.glo4002.booking.factories.OrderFactory;
-import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
-import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
-import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
-import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
-import ca.ulaval.glo4002.booking.repositories.OrderRepository;
-import ca.ulaval.glo4002.booking.repositories.TripRepository;
-import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.TripService;
+import ca.ulaval.glo4002.booking.events.InvalidEventDateException;
+import ca.ulaval.glo4002.booking.orders.OrderMapper;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
+import ca.ulaval.glo4002.booking.orders.OrderService;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
+import ca.ulaval.glo4002.booking.shuttles.trips.InMemoryTripRepository;
+import ca.ulaval.glo4002.booking.shuttles.ShuttleFactory;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -58,16 +57,22 @@ public class PassIntegrationTest {
         PassFactory passFactory = new PassFactory(numberGenerator);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
+        OxygenFactory oxygenFactory = new OxygenFactory();
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
+        OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
+        OxygenHistoryRepository oxygenHistoryRepository = new InMemoryOxygenHistoryRepository();
         orderRepository = new InMemoryOrderRepository();
+
+        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer(oxygenInventoryRepository, oxygenHistoryRepository, oxygenFactory);
 
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
-        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
+        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         controller = new OrderController(orderService);
     }

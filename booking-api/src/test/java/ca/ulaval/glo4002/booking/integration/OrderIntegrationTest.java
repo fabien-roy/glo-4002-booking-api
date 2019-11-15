@@ -1,32 +1,27 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.controllers.OrderController;
-import ca.ulaval.glo4002.booking.domain.Number;
-import ca.ulaval.glo4002.booking.domain.NumberGenerator;
-import ca.ulaval.glo4002.booking.domain.orders.Order;
-import ca.ulaval.glo4002.booking.domain.orders.OrderNumber;
-import ca.ulaval.glo4002.booking.domain.passes.PassBundle;
-import ca.ulaval.glo4002.booking.dto.ErrorDto;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.dto.orders.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.dto.passes.PassBundleDto;
-import ca.ulaval.glo4002.booking.enums.PassCategories;
-import ca.ulaval.glo4002.booking.enums.PassOptions;
+import ca.ulaval.glo4002.booking.orders.*;
+import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
+import ca.ulaval.glo4002.booking.oxygen.*;
+import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.InMemoryOxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.passes.*;
+import ca.ulaval.glo4002.booking.errors.ErrorDto;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.exceptions.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.exceptions.InvalidOrderDateException;
-import ca.ulaval.glo4002.booking.factories.OrderFactory;
-import ca.ulaval.glo4002.booking.factories.PassFactory;
-import ca.ulaval.glo4002.booking.factories.PassBundleFactory;
-import ca.ulaval.glo4002.booking.factories.ShuttleFactory;
-import ca.ulaval.glo4002.booking.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.repositories.InMemoryOrderRepository;
-import ca.ulaval.glo4002.booking.repositories.InMemoryTripRepository;
-import ca.ulaval.glo4002.booking.repositories.OrderRepository;
-import ca.ulaval.glo4002.booking.repositories.TripRepository;
-import ca.ulaval.glo4002.booking.services.OrderService;
-import ca.ulaval.glo4002.booking.services.TripService;
+import ca.ulaval.glo4002.booking.orders.OrderMapper;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
+import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
+import ca.ulaval.glo4002.booking.orders.OrderService;
+import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
+import ca.ulaval.glo4002.booking.shuttles.trips.InMemoryTripRepository;
+import ca.ulaval.glo4002.booking.shuttles.ShuttleFactory;
+import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -46,7 +41,7 @@ import static org.mockito.Mockito.mock;
 public class OrderIntegrationTest {
 
     private OrderController controller;
-    private OrderRepository orderRepository;
+    private OrderRepository repository;
     private PassBundleFactory passBundleFactory;
 
     @BeforeEach
@@ -56,16 +51,23 @@ public class OrderIntegrationTest {
         PassFactory passFactory = new PassFactory(numberGenerator);
         passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
+        OxygenFactory oxygenFactory = new OxygenFactory();
+
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
-        orderRepository = new InMemoryOrderRepository();
+        OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
+        OxygenHistoryRepository oxygenHistoryRepository = new InMemoryOxygenHistoryRepository();
+        repository = new InMemoryOrderRepository();
+
+        OxygenTankProducer oxygenTankProducer = new OxygenTankProducer(oxygenInventoryRepository, oxygenHistoryRepository, oxygenFactory);
 
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(tripRepository, shuttleFactory);
-        OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
+        OrderService orderService = new OrderService(repository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         controller = new OrderController(orderService);
     }
@@ -81,7 +83,7 @@ public class OrderIntegrationTest {
                 OrderFactory.START_DATE_TIME,
                 passBundle
         );
-        orderRepository.addOrder(order);
+        repository.addOrder(order);
 
         ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
         OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
@@ -123,7 +125,7 @@ public class OrderIntegrationTest {
                 OrderFactory.START_DATE_TIME,
                 mock(PassBundle.class)
         );
-        orderRepository.addOrder(order);
+        repository.addOrder(order);
         Number aNonExistentOrderId = new Number(2L);
         OrderNumber aNonExistentOrderNumber = new OrderNumber(aNonExistentOrderId, "VENDOR");
         String expectedErrorDescription = OrderNotFoundException.DESCRIPTION.replace("{orderNumber}", aNonExistentOrderNumber.toString());

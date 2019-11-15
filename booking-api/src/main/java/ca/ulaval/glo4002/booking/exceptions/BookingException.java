@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.exceptions;
 
-import ca.ulaval.glo4002.booking.dto.ErrorDto;
+import ca.ulaval.glo4002.booking.errors.ErrorDto;
 import org.springframework.http.HttpStatus;
 
 public abstract class BookingException extends RuntimeException {
