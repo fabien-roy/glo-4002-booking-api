@@ -22,7 +22,6 @@ public class ArtistService {
 		converter.convert();
 	}
 
-	// TODO : Tests
 	public BookingArtist getByName(String artistName) {
 		List<BookingArtist> bookingArtists = repository.findAll();
 

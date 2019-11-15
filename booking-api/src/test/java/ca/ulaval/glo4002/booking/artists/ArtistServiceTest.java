@@ -3,13 +3,13 @@ package ca.ulaval.glo4002.booking.artists;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import ca.ulaval.glo4002.booking.artists.*;
+import ca.ulaval.glo4002.booking.program.InvalidProgramException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,6 @@ class ArtistServiceTest {
     // TODO : ArtistService test should mock ArtistClient
 
     private ArtistService service;
-    private ArtistRepository repository;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
     private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);
     private BookingArtist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist", 100, 3);
@@ -86,8 +85,8 @@ class ArtistServiceTest {
 		stubFor(get(urlEqualTo("/artists")).
 				willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").
 						withBody(response)));
-		
-    	repository = new InMemoryArtistRepository();
+
+        ArtistRepository repository = new InMemoryArtistRepository();
     	
         service = new ArtistService(repository);
 
@@ -96,6 +95,22 @@ class ArtistServiceTest {
     @AfterAll
     public static void stopServer() {
     	wiremockServer.stop();
+    }
+
+    @Test
+    void getByName_shouldReturnArtist() {
+	    String artistName = firstPopularAndThirdCostArtist.getName();
+
+	    BookingArtist artist = service.getByName(artistName);
+
+	    assertEquals(firstPopularAndThirdCostArtist.getName(), artist.getName());
+    }
+
+    @Test
+    void getByName_shouldThrowInvalidProgramException_whenArtistNameDoesNotExist() {
+	    String anInvalidArtistName = "anInvalidArtistName";
+
+	    assertThrows(InvalidProgramException.class, () -> service.getByName(anInvalidArtistName));
     }
 
     @Test
