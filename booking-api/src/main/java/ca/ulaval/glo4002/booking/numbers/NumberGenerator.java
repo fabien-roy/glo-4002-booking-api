@@ -5,7 +5,7 @@ public class NumberGenerator {
     private Number nextNumber;
 
     public NumberGenerator() {
-        this.nextNumber = new Number(1L);
+        this.nextNumber = new Number(100000L);
     }
 
     public Number generate() {
