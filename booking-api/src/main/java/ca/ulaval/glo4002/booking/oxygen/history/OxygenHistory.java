@@ -28,7 +28,7 @@ public class OxygenHistory {
 		historyItems.get(date).addTanksMade(amountOfTanksMade);
 	}
 
-	public void addWaterUsed(LocalDate date, Integer amountWaterUsed) {
+	public void addWaterUsed(LocalDate date, Double amountWaterUsed) {
 		createHistoryItemIfAbsent(date);
 
 		historyItems.get(date).addWaterUsed(amountWaterUsed);

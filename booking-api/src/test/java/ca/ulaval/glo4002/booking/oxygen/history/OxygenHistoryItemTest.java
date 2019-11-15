@@ -25,7 +25,7 @@ public class OxygenHistoryItemTest {
 
     @Test
     void addWaterUsed_shouldAddWaterUsed() {
-        Integer numTanksBough = 5;
+        Double numTanksBough = 5D;
 
         oxygenHistoryItem.addWaterUsed(numTanksBough);
 

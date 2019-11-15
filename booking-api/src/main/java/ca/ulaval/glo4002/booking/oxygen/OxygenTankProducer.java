@@ -31,21 +31,20 @@ public class OxygenTankProducer {
 		OxygenHistory history = historyRepository.getHistory();
 		PassCategories passCategories = convertOxygenCategoryToPassCategories(category);
 		OxygenCategory requestCategory = factory.buildCategory(passCategories);
-		OxygenCategory possibleOxygenCategory = factory.buildCategoryForRequestDate(requestDate, category);
+		OxygenCategory actucalOxygenCategory = factory.buildCategoryForRequestDate(requestDate, category);
 
 		List<OxygenTank> newTanks = new ArrayList<>();
-		// TODO not TDA
 		Integer quantityToCover = requestCategory.getTanksNeededPerDay();
 
-		quantityToCover = inventory.requestTankByCategory(category, possibleOxygenCategory.getCategory(), quantityToCover);
+		quantityToCover = inventory.requestTankByCategory(category, actucalOxygenCategory.getCategory(), quantityToCover);
 
 		if (quantityToCover > 0) {
-		    // TODO : Add water and candles used to history
-
-		    List<OxygenTank> producedTanks = factory.buildOxygenTank(possibleOxygenCategory, requestDate, quantityToCover);
+		    List<OxygenTank> producedTanks = factory.buildOxygenTank(actucalOxygenCategory, requestDate, quantityToCover);
 			newTanks.addAll(producedTanks);
 
-			history.addMadeTanks(possibleOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
+			history.addMadeTanks(actucalOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
+
+			actucalOxygenCategory.addProductionInformationsToHistory(requestDate, history);
 			inventory.addTanksToInventory(category, newTanks);
 		}
 

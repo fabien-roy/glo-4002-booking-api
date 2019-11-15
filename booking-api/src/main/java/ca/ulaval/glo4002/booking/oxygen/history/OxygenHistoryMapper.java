@@ -12,7 +12,7 @@ public class OxygenHistoryMapper {
             OxygenHistoryItemDto itemDto = new OxygenHistoryItemDto(
                     date.toString(),
                     item.getQtyOxygenTankBought(),
-                    item.getQtyWaterUsed(),
+                    item.getQtyWaterUsed().intValue(),
                     item.getQtyCandlesUsed(),
                     item.getQtyOxygenTankMade()
             );

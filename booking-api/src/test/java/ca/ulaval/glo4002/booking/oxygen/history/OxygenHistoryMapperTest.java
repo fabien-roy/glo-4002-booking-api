@@ -52,13 +52,13 @@ class OxygenHistoryMapperTest {
 
     @Test
     void toDto_shouldReturnHistoryItemWithCorrectWaterUsed() {
-        Integer amountOfWaterUsed = 1;
+        Double amountOfWaterUsed = 1D;
         LocalDate date = EventDate.START_DATE;
         history.addWaterUsed(date, amountOfWaterUsed);
 
         List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
 
-        assertEquals(amountOfWaterUsed, itemDtos.get(0).getQtyWaterUsed());
+        assertEquals(amountOfWaterUsed.intValue(), itemDtos.get(0).getQtyWaterUsed());
     }
 
     @Test

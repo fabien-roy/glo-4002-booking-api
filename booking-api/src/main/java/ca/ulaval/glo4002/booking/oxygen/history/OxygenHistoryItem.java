@@ -4,13 +4,13 @@ public class OxygenHistoryItem {
 
     private Integer qtyOxygenTankBought;
     private Integer qtyOxygenTankMade;
-    private Integer qtyWaterUsed;
+    private Double qtyWaterUsed;
     private Integer qtyCandlesUsed;
 
     public OxygenHistoryItem() {
         this.qtyOxygenTankBought = 0;
         this.qtyOxygenTankMade = 0;
-        this.qtyWaterUsed = 0;
+        this.qtyWaterUsed = 0D;
         this.qtyCandlesUsed = 0;
     }
 
@@ -22,7 +22,7 @@ public class OxygenHistoryItem {
         return qtyOxygenTankMade;
     }
 
-    public Integer getQtyWaterUsed() {
+    public Double getQtyWaterUsed() {
         return qtyWaterUsed;
     }
 
@@ -38,7 +38,7 @@ public class OxygenHistoryItem {
         this.qtyOxygenTankMade += qtyOxygenTankMade;
     }
 
-    public void addWaterUsed(Integer qtyWaterUsed) {
+    public void addWaterUsed(Double qtyWaterUsed) {
         this.qtyWaterUsed += qtyWaterUsed;
     }
 

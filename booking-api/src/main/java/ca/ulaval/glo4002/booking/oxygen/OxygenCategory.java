@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
+import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
 import ca.ulaval.glo4002.booking.profits.Money;
 
 import java.math.BigDecimal;
@@ -79,6 +80,14 @@ public class OxygenCategory {
         }
 
         return readyDate;
+    }
+
+    public void addProductionInformationsToHistory(LocalDate requestDate, OxygenHistory history) {
+        if(category == OxygenCategories.A) {
+            history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle);
+        } else if(category == OxygenCategories.B) {
+            history.addWaterUsed(requestDate, (double) numberOfProductionItem / numberOfTanksByBundle);
+        }
     }
 
 }
