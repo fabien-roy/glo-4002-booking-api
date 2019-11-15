@@ -52,7 +52,7 @@ public class OxygenTankProducerTest {
         OxygenCategories aCategory = OxygenCategories.A;
         when(inventory.requestTankByCategory(eq(aCategory), eq(aCategory), anyInt())).thenReturn(0);
 
-        List<OxygenTank> createdTanks = producer.produceForDay(aCategory, INVALID_CATEGORY_A_BUILD_DATE);
+        List<OxygenTank> createdTanks = producer.produceOxygenForOrder(aCategory, INVALID_CATEGORY_A_BUILD_DATE);
 
         assertTrue(createdTanks.isEmpty());
     }
@@ -63,7 +63,7 @@ public class OxygenTankProducerTest {
         Integer numberTanksCreated = getNumberCreated(CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_A_BY_BUNDLE);
         when(inventory.requestTankByCategory(aCategory, aCategory, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
-        List<OxygenTank> createdTanks = producer.produceForDay(aCategory, VALID_CATEGORY_A_BUILD_DATE);
+        List<OxygenTank> createdTanks = producer.produceOxygenForOrder(aCategory, VALID_CATEGORY_A_BUILD_DATE);
 
         assertEquals(numberTanksCreated, createdTanks.size());
         assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory().getCategory());
@@ -74,7 +74,7 @@ public class OxygenTankProducerTest {
         Integer numberOfTanksCreated = getNumberCreated(CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_B_BY_BUNDLE);
         when(inventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.B, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
-        List<OxygenTank> createdTanks = producer.produceForDay(OxygenCategories.A, INVALID_CATEGORY_A_BUILD_DATE);
+        List<OxygenTank> createdTanks = producer.produceOxygenForOrder(OxygenCategories.A, INVALID_CATEGORY_A_BUILD_DATE);
 
         assertEquals(numberOfTanksCreated, createdTanks.size());
         assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory().getCategory());
@@ -85,7 +85,7 @@ public class OxygenTankProducerTest {
         Integer numberOfTanksCreated = getNumberCreated(CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_B_BY_BUNDLE);
         when(inventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.E, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
-        List<OxygenTank> createdTanks = producer.produceForDay(OxygenCategories.A, INVALID_CATEGORY_B_BUILD_DATE);
+        List<OxygenTank> createdTanks = producer.produceOxygenForOrder(OxygenCategories.A, INVALID_CATEGORY_B_BUILD_DATE);
 
         assertEquals(numberOfTanksCreated, createdTanks.size());
         assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory().getCategory());
@@ -95,7 +95,7 @@ public class OxygenTankProducerTest {
     void produceForDay_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() {
         when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
-        List<OxygenTank> createdTanks = producer.produceForDay(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
+        List<OxygenTank> createdTanks = producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
         assertTrue(createdTanks.isEmpty());
     }
@@ -104,7 +104,7 @@ public class OxygenTankProducerTest {
     void produceForDay_shouldUpdateInventory() {
         when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
-        producer.produceForDay(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
+        producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
         verify(inventoryRepository).setInventory(any(OxygenInventory.class));
     }
@@ -113,7 +113,7 @@ public class OxygenTankProducerTest {
     void produceForDay_shouldUpdateHistory() {
         when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
-        producer.produceForDay(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
+        producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
         verify(inventoryRepository).setInventory(any(OxygenInventory.class));
     }

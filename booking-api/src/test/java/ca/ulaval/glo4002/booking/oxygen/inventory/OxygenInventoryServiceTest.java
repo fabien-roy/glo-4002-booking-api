@@ -46,7 +46,7 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aFullFestivalPass), AN_ORDER_DATE);
 
-        verify(producer, times(numberOfFestivalDays)).produceForDay(any(), any());
+        verify(producer, times(numberOfFestivalDays)).produceOxygenForOrder(any(), any());
     }
 
     @Test
@@ -56,7 +56,7 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass), AN_ORDER_DATE);
 
-        verify(producer).produceForDay(any(), any());
+        verify(producer).produceOxygenForOrder(any(), any());
     }
 
     @Test
@@ -68,7 +68,7 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(PassCategories.SUPERNOVA, Arrays.asList(aPass, anotherPass), AN_ORDER_DATE);
 
-        verify(producer, times(2)).produceForDay(any(), any());
+        verify(producer, times(2)).produceOxygenForOrder(any(), any());
     }
 
     @ParameterizedTest
@@ -80,6 +80,6 @@ class OxygenInventoryServiceTest {
 
         service.orderForPasses(passCategory, Collections.singletonList(aPass), AN_ORDER_DATE);
 
-        verify(producer).produceForDay(eq(expectedOxygenCategory), any());
+        verify(producer).produceOxygenForOrder(eq(expectedOxygenCategory), any());
     }
 }

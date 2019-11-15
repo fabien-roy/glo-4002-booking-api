@@ -26,32 +26,32 @@ public class OxygenTankProducer {
 		this.factory = factory;
 	}
 
-	public List<OxygenTank> produceForDay(OxygenCategories category, LocalDate requestDate) {
+	public List<OxygenTank> produceOxygenForOrder(OxygenCategories requestedCategory, LocalDate requestDate) {
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		OxygenHistory history = historyRepository.getHistory();
-		PassCategories passCategories = convertOxygenCategoryToPassCategories(category);
+		PassCategories passCategories = convertOxygenCategoryToPassCategories(requestedCategory);
 		OxygenCategory requestCategory = factory.buildCategory(passCategories);
-		OxygenCategory actualOxygenCategory = factory.buildCategoryForRequestDate(requestDate, category);
+		OxygenCategory actualOxygenCategory = factory.buildCategoryForRequestDate(requestDate, requestedCategory);
+        OxygenCategories category = actualOxygenCategory.getCategory();
 
-		List<OxygenTank> newTanks = new ArrayList<>();
-		Integer quantityToCover = requestCategory.getTanksNeededPerDay();
+        List<OxygenTank> newTanks = new ArrayList<>();
+        Integer quantityToCover = requestCategory.getTanksNeededPerDay();
 
-		quantityToCover = inventory.requestTankByCategory(category, actualOxygenCategory.getCategory(), quantityToCover);
-		Integer quantityToReserve = quantityToCover;
+        quantityToCover = inventory.requestTankByCategory(requestedCategory, actualOxygenCategory.getCategory(), quantityToCover);
 
-		if (quantityToCover > 0) {
-		    List<OxygenTank> producedTanks = factory.buildOxygenTank(actualOxygenCategory, requestDate, quantityToCover);
-			newTanks.addAll(producedTanks);
+        if (quantityToCover > 0) {
+            List<OxygenTank> producedTanks = factory.buildOxygenTank(actualOxygenCategory, requestDate, quantityToCover);
+            newTanks.addAll(producedTanks);
 
-			if(actualOxygenCategory.getCategory() == OxygenCategories.E) {
+			if(category == OxygenCategories.E) {
 				history.addTanksBought(requestDate, quantityToCover);
 			} else {
 				history.addMadeTanks(actualOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
 				actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
 			}
-            OxygenCategories categoryToReserve = actualOxygenCategory.getCategory();
+
 			inventory.addTanksToInventory(category, newTanks);
-			inventory.requestTankByCategory(categoryToReserve, categoryToReserve, quantityToReserve);
+			inventory.requestTankByCategory(category, category, quantityToCover);
 		}
 
 		inventoryRepository.setInventory(inventory);
@@ -59,6 +59,34 @@ public class OxygenTankProducer {
 
 		return newTanks;
 	}
+
+	public List<OxygenTank> produceOxygenByQuantity(OxygenCategory oxygenCategory, LocalDate requestDate, Integer numberOfTanks) {
+        OxygenInventory inventory = inventoryRepository.getInventory();
+        OxygenHistory history = historyRepository.getHistory();;
+        List<OxygenTank> newTanks = new ArrayList<>();
+        OxygenCategories category = oxygenCategory.getCategory();
+
+        Integer quantityToCover = inventory.requestTankByCategory(category, category, numberOfTanks);
+
+        if(quantityToCover > 0) {
+            LocalDate readyDate = oxygenCategory.calculateReadyDateForCategory(requestDate).getValue();
+            newTanks = factory.buildOxygenTank(oxygenCategory, requestDate, quantityToCover);
+
+            if(category == OxygenCategories.E) {
+                history.addTanksBought(readyDate, quantityToCover);
+            } else {
+                history.addMadeTanks(readyDate, quantityToCover);
+                oxygenCategory.addCategoryProductionInformationToHistory(requestDate, history, quantityToCover);
+            }
+
+            inventory.requestTankByCategory(category, category, quantityToCover);
+        }
+
+        inventoryRepository.setInventory(inventory);
+        historyRepository.setHistory(history);
+
+        return newTanks;
+    }
 
 	// TODO Move somewhere else
 	private PassCategories convertOxygenCategoryToPassCategories(OxygenCategories oxygenCategories) {
