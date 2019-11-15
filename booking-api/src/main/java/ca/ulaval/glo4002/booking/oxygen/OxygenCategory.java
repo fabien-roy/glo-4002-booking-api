@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.oxygen;
 import ca.ulaval.glo4002.booking.profits.Money;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class OxygenCategory {
 
@@ -68,8 +69,8 @@ public class OxygenCategory {
         return new Money(tankPrice);
     }
 
-    public OxygenDate calculateReadyDateForCategory(OxygenDate requestDate) {
-        OxygenDate readyDate = new OxygenDate(requestDate.getValue());
+    public OxygenDate calculateReadyDateForCategory(LocalDate requestDate) {
+        OxygenDate readyDate = new OxygenDate(requestDate);
 
         if (this.category == OxygenCategories.A) {
             readyDate.addDays(20);

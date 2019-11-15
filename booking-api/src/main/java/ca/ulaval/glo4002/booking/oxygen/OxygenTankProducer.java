@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
@@ -30,29 +29,23 @@ public class OxygenTankProducer {
 	public List<OxygenTank> produceForDay(OxygenCategories category, LocalDate requestDate) {
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		OxygenHistory history = historyRepository.getHistory();
+		PassCategories passCategories = convertOxygenCategoryToPassCategories(category);
+		OxygenCategory requestCategory = factory.buildCategory(passCategories);
+		OxygenCategory possibleOxygenCategory = factory.buildCategoryForRequestDate(requestDate, category);
 
 		List<OxygenTank> newTanks = new ArrayList<>();
-		Integer quantityToCover = getQuantityToCoverForCategory(category);
-		OxygenCategories possibleCategory;
+		// TODO not TDA
+		Integer quantityToCover = requestCategory.getTanksNeededPerDay();
 
-		if (quantityToCover > inventory.getNotInUseQuantityByCategory(category)) {
-			possibleCategory = getCategoryForRequestDate(category, requestDate);
-			quantityToCover = inventory.requestTankByCategory(category, possibleCategory, quantityToCover);
-		} else {
-			possibleCategory = category;
-			quantityToCover = inventory.requestTankByCategory(category, category, quantityToCover);
-		}
+		quantityToCover = inventory.requestTankByCategory(category, possibleOxygenCategory.getCategory(), quantityToCover);
 
 		if (quantityToCover > 0) {
 		    // TODO : Add water and candles used to history
-			PassCategories passCategories = convertOxygenCategoryToPassCategories(possibleCategory);
 
-			OxygenCategory oxygenCategory =  factory.buildCategory(passCategories);
-
-		    List<OxygenTank> producedTanks = factory.buildOxygenTank(oxygenCategory, requestDate, quantityToCover);
+		    List<OxygenTank> producedTanks = factory.buildOxygenTank(possibleOxygenCategory, requestDate, quantityToCover);
 			newTanks.addAll(producedTanks);
 
-			history.addMadeTanks(getReadyDateForCategory(possibleCategory, requestDate), producedTanks.size());
+			history.addMadeTanks(possibleOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
 			inventory.addTanksToInventory(category, newTanks);
 		}
 
@@ -66,7 +59,7 @@ public class OxygenTankProducer {
 
 	// TODO Move somewhere else
 	private PassCategories convertOxygenCategoryToPassCategories(OxygenCategories oxygenCategories) {
-		PassCategories passCategories;
+		PassCategories passCategories = PassCategories.SUPERNOVA;
 
 		switch (oxygenCategories) {
 			case E:
@@ -79,56 +72,10 @@ public class OxygenTankProducer {
 				passCategories = PassCategories.NEBULA;
 				break;
 			default:
-				passCategories = PassCategories.SUPERNOVA;
+				break;
 		}
 
 		return passCategories;
 	}
 
-	// TODO : Refactor to use OxygenCategory.getTanksNeededPerDay()
-	private Integer getQuantityToCoverForCategory(OxygenCategories category) {
-		if (category.equals(OxygenCategories.E)) {
-			return 5;
-		} else {
-			return 3;
-		}
-	}
-
-	// TODO : Refactor to use OxygenFactory.buildCategoryForRequestDate(requestDate)
-	private OxygenCategories getCategoryForRequestDate(OxygenCategories category, LocalDate requestDate) {
-		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
-
-		switch (category) {
-            case A:
-                if (requestDate.plusDays(20).isBefore(readyBeforeDate)) {
-                    return OxygenCategories.A;
-                } else if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-                    return OxygenCategories.B;
-                } else {
-                    return OxygenCategories.E;
-                }
-            case B:
-                if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-                    return OxygenCategories.B;
-                } else {
-                    return OxygenCategories.E;
-                }
-			default:
-			case E:
-                return OxygenCategories.E;
-        }
-	}
-
-	// TODO : Refactor to use OxygenCategory.getReadyDate(requestDate)
-	private LocalDate getReadyDateForCategory(OxygenCategories category, LocalDate requestDate) {
-		switch (category) {
-			case A:
-				return requestDate.plusDays(20);
-			case B:
-				return requestDate.plusDays(10);
-			default:
-			case E:
-				return requestDate;
-		}
-	}
 }

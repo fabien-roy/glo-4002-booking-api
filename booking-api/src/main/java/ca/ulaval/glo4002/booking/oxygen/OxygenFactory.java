@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
+import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 import ca.ulaval.glo4002.booking.profits.Money;
 
@@ -54,6 +55,28 @@ public class OxygenFactory {
 						15,
 						new Money(BigDecimal.valueOf(650))
 				);
+		}
+	}
+
+	public OxygenCategory buildCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
+		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
+
+		if(oxygenCategories == OxygenCategories.A) {
+			if(requestDate.plusDays(20).isBefore(readyBeforeDate)){
+				return buildCategory(PassCategories.NEBULA);
+			} else if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
+				return buildCategory(PassCategories.SUPERGIANT);
+			} else {
+				return buildCategory(PassCategories.SUPERNOVA);
+			}
+		} else if(oxygenCategories == OxygenCategories.B) {
+			if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
+				return buildCategory(PassCategories.SUPERGIANT);
+			} else {
+				return buildCategory(PassCategories.SUPERNOVA);
+			}
+		} else {
+			return buildCategory(PassCategories.SUPERNOVA);
 		}
 	}
 

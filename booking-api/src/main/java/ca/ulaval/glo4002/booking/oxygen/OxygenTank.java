@@ -24,7 +24,7 @@ public class OxygenTank {
         this.requestDate = requestDate;
 
         this.price = category.calculatePriceForCategory();
-        this.readyDate = category.calculateReadyDateForCategory(requestDate);
+        this.readyDate = category.calculateReadyDateForCategory(requestDate.getValue());
     }
 
     public OxygenCategory getCategory() {
