@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.exceptions.BookingException;
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 
 // TODO : Use ExceptionMapper for ErrorDto and HttpStatus
 
@@ -32,13 +32,11 @@ public class OrderController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber) {
 		OrderWithPassesAsPassesDto orderDto;
-
+		ExceptionMapper exceptionMapper = new ExceptionMapper();
 		try {
 			orderDto = service.getByOrderNumber(requestedOrderNumber);
-		} catch (BookingException exception) {
-			return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
 		} catch (Exception exception) {
-			return ResponseEntity.badRequest().build();
+			return exceptionMapper.mapError(exception);
 		}
 
 		return ResponseEntity.ok().body(orderDto);
@@ -48,13 +46,12 @@ public class OrderController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto requestedOrderDto) {
 		String orderNumber;
+		ExceptionMapper exceptionMapper = new ExceptionMapper();
 
 		try {
 			orderNumber = service.order(requestedOrderDto);
-		} catch (BookingException exception) {
-			return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
 		} catch (Exception exception) {
-			return ResponseEntity.badRequest().build();
+			return exceptionMapper.mapError(exception);
 		}
 
 		HttpHeaders headers = new HttpHeaders();
