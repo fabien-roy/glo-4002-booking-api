@@ -116,4 +116,26 @@ public class OxygenFactoryTest {
 
         assertEquals(OxygenCategories.A, category.getCategory());
     }
+
+    @Test
+    void buildCategoryForRequestDate_shouldReturnNewCategoryA_whenDateIsInRange() {
+        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 6, 27), OxygenCategories.A);
+
+        assertEquals(OxygenCategories.A, category.getCategory());
+    }
+
+    @Test
+    void buildCategoryForRequestDate_shouldReturnNewCategoryB_whenDateIsNotInRangeForAButOkForB() {
+        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 7, 7), OxygenCategories.A);
+
+        assertEquals(OxygenCategories.B, category.getCategory());
+    }
+
+    @Test
+    void buildCategoryForRequestDate_shouldReturnNewCategoryB_whenDateIsNotInRangeForAButOkForE() {
+        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 7, 10), OxygenCategories.A);
+
+        assertEquals(OxygenCategories.E, category.getCategory());
+    }
+
 }

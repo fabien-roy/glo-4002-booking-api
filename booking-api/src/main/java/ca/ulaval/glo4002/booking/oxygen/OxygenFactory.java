@@ -15,8 +15,8 @@ public class OxygenFactory {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		OxygenDate requestedDate = new OxygenDate(requestDate);
 
-		// TODO : category.getNumberOfTanksByBundle() != TDA
 		while (quantityToCover > 0) {
+			// TODO : category.getNumberOfTanksByBundle() != TDA
 			for (Integer i = 0; i < category.getNumberOfTanksByBundle(); i++) {
 				newTanks.add(new OxygenTank(category, requestedDate));
 			}
