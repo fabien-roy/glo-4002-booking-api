@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class EventFactory {
 
-    private final ArtistRepository artistRepository;
+    private final ArtistRepository artistRepository; // TODO : Use ArtistClient to validate
 
     @Inject
     public EventFactory(ArtistRepository artistRepository) {
@@ -45,6 +45,7 @@ public class EventFactory {
         List<String> eventDates = eventDtos.stream().map(ProgramEventDto::getEventDate).collect(Collectors.toList());
 
         validateAllDifferent(eventDates);
+        validateAllPresent(eventDates);
     }
 
     private void validateArtists(List<ProgramEventDto> eventDtos) {
@@ -61,6 +62,10 @@ public class EventFactory {
         boolean hasDuplicates = elements.stream().anyMatch(element -> Collections.frequency(elements, element) > 1);
 
         if (hasDuplicates) throw new InvalidProgramException();
+    }
+
+    private void validateAllPresent(List<String> eventDates) {
+        // TODO : Validate all event dates for festival are in program
     }
 
     private EventDate buildEventDate(String eventDate) {
