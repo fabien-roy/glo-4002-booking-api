@@ -8,6 +8,7 @@ import ca.ulaval.glo4002.booking.passes.PassCategories;
 import ca.ulaval.glo4002.booking.passes.PassCategory;
 import ca.ulaval.glo4002.booking.passes.PassOptions;
 import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.Profit;
 
 public class PassBundle {
 
@@ -43,5 +44,9 @@ public class PassBundle {
 
 	public Money getPricePerOption(PassOptions option) {
 		return category.getPricePerOption(option);
+	}
+
+	public void updateProfit(Profit profit) {
+		profit.addRevenue(price);
 	}
 }

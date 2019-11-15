@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.artists;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.Profit;
 
 public class BookingArtist {
 
@@ -50,5 +51,9 @@ public class BookingArtist {
 
 	public List<Availability> getAvailabilities() {
 		return availabilities;
+	}
+
+	public void updateProfit(Profit profit) {
+		profit.addExpense(cost);
 	}
 }

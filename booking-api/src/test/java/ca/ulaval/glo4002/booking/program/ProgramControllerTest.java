@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.program;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,12 +18,12 @@ import ca.ulaval.glo4002.booking.program.ProgramService;
 class ProgramControllerTest {
 
     private ProgramController controller;
-    private ProgramService programService;
+    private ProgramService service;
     private ArtistService artistService;
 
     @BeforeEach
     void setUpController() {
-        programService = mock(ProgramService.class);
+        service = mock(ProgramService.class);
         artistService = mock(ArtistService.class);
 
         controller = new ProgramController(artistService);

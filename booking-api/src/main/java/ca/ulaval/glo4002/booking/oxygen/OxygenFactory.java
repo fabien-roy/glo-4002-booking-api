@@ -80,5 +80,4 @@ public class OxygenFactory {
 			return buildCategory(PassCategories.SUPERNOVA);
 		}
 	}
-
 }

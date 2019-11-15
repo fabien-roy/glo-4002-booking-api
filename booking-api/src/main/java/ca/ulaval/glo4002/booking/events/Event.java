@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.events;
 
 import ca.ulaval.glo4002.booking.artists.BookingArtist;
 import ca.ulaval.glo4002.booking.activities.Activities;
+import ca.ulaval.glo4002.booking.profits.Profit;
 
 public class Event {
 
@@ -26,4 +27,8 @@ public class Event {
     public BookingArtist getArtist() {
         return bookingArtist;
     }
+
+	public void updateProfit(Profit profit) {
+		bookingArtist.updateProfit(profit);
+	}
 }

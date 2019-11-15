@@ -13,7 +13,6 @@ import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import ca.ulaval.glo4002.booking.shuttles.*;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.orders.OrderService;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestController;
 import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestDto;
@@ -37,7 +36,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
 
 class TripIntegrationTest {
 

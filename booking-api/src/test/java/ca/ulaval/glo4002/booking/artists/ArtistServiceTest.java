@@ -25,7 +25,7 @@ class ArtistServiceTest {
     // TODO : ArtistService test should mock ArtistClient
 
     private ArtistService service;
-    private ArtistRepository artistRepository;
+    private ArtistRepository repository;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
     private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);
     private BookingArtist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist", 100, 3);
@@ -87,9 +87,9 @@ class ArtistServiceTest {
 				willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").
 						withBody(response)));
 		
-    	artistRepository = new InMemoryArtistRepository();
+    	repository = new InMemoryArtistRepository();
     	
-        service = new ArtistService(artistRepository);
+        service = new ArtistService(repository);
 
     }
     

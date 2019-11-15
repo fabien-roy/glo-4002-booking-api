@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.profits.Money;
 
 class ShuttleTest {
 
-	Shuttle shuttle;
+	private Shuttle shuttle;
 
 	@Test
 	void constructing_shouldCreateCorrectCategory() {

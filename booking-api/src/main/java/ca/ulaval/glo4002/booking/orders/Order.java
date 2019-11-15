@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.profits.Money;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import ca.ulaval.glo4002.booking.profits.Profit;
 
 public class Order {
 
@@ -41,5 +42,9 @@ public class Order {
 
 	public List<Pass> getPasses() {
 		return passBundle.getPasses();
+	}
+
+	public void updateProfit(Profit profit) {
+		passBundle.updateProfit(profit);
 	}
 }

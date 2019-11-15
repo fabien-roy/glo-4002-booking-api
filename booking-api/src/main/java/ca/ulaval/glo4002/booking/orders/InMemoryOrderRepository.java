@@ -12,6 +12,7 @@ public class InMemoryOrderRepository implements OrderRepository {
 		orders = new ArrayList<>();
 	}
 
+	@Override
 	public Order getByOrderNumber(OrderNumber orderNumber) {
 		Optional<Order> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber))
 				.findAny();
@@ -23,7 +24,13 @@ public class InMemoryOrderRepository implements OrderRepository {
 		return foundOrder.get();
 	}
 
+	@Override
 	public void addOrder(Order order) {
 		orders.add(order);
+	}
+
+	@Override
+	public List<Order> findAll() {
+	    return orders;
 	}
 }
