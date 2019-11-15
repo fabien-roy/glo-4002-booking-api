@@ -10,11 +10,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.AdditionalMatchers.not;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,97 +34,74 @@ class EventFactoryTest {
     }
 
     @Test
-    void build_shouldBuildCorrectAmountOfEvents_whenThereIsOneEvent() {
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, "aArtist");
+    void build_shouldBuildCorrectAmountOfEvents() {
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        Integer expectedSize = aProgramDto.size();
 
-        List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
+        List<Event> events = eventFactory.build(aProgramDto);
 
-        assertEquals(1, events.size());
+        assertEquals(expectedSize, events.size());
     }
 
     @Test
-    void build_shouldBuildCorrectAmountOfEvents_whenThereAreMultipleEvents() {
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, "aArtist");
-        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), Activities.YOGA, "anotherArtist");
+    void build_shouldBuildCorrectEventDates() {
+        List<EventDate> expectedEventDates = EventDate.getFullFestivalEventDates();
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
 
-        List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
+        List<Event> events = eventFactory.build(aProgramDto);
 
-        assertEquals(2, events.size());
-    }
-
-    @Test
-    void build_shouldBuildCorrectEventDate() {
-        EventDate aEventDate = new EventDate(EventDate.START_DATE);
-        ProgramEventDto aEventDto = buildEventDto(aEventDate, Activities.YOGA, "aArtist");
-
-        List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
-
-        assertEquals(aEventDate, events.get(0).getEventDate());
-    }
-
-    @Test
-    void build_shouldBuildCorrectEventDates_whenThereAreMultipleEvents() {
-        EventDate aEventDate = new EventDate(EventDate.START_DATE);
-        EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
-        ProgramEventDto aEventDto = buildEventDto(aEventDate, Activities.YOGA, "aArtist");
-        ProgramEventDto anotherEventDto = buildEventDto(anotherEventDate, Activities.YOGA, "anotherArtist");
-
-        List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
-
-        assertTrue(events.stream().anyMatch(event -> event.getEventDate().equals(aEventDate)));
-        assertTrue(events.stream().anyMatch(event -> event.getEventDate().equals(anotherEventDate)));
+        assertTrue(events.stream().allMatch(event -> expectedEventDates.contains(event.getEventDate())));
     }
 
     @ParameterizedTest
     @EnumSource(Activities.class)
     void build_shouldBuildCorrectActivity(Activities activity) {
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), activity, "aArtist");
+        List<ProgramEventDto> aProgramDto = buildProgramDto(activity, "aArtist");
 
-        List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
+        List<Event> events = eventFactory.build(aProgramDto);
 
         assertEquals(activity, events.get(0).getActivity());
     }
 
     @Test
     void build_shouldBuildCorrectActivities_whenThereAreMultipleEvents() {
-        Activities aActivity = Activities.YOGA;
-        Activities anotherActivity = Activities.CARDIO;
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), aActivity, "aArtist");
-        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), anotherActivity, "anotherArtist");
+        Activities firstEventActivity = Activities.YOGA;
+        Activities otherEventsActivity = Activities.CARDIO;
+        List<ProgramEventDto> aProgramDto = buildProgramDto(otherEventsActivity, "aArtist");
+        aProgramDto.set(0, buildEventDto(new EventDate(EventDate.START_DATE), firstEventActivity, "aArtist"));
 
-        List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
+        List<Event> events = eventFactory.build(aProgramDto);
 
-        assertTrue(events.stream().anyMatch(event -> event.getActivity().equals(aActivity)));
-        assertTrue(events.stream().anyMatch(event -> event.getActivity().equals(anotherActivity)));
+        assertEquals(firstEventActivity, events.get(0).getActivity());
+        assertTrue(events.subList(1, events.size() - 1).stream().allMatch(event -> event.getActivity().equals(otherEventsActivity)));
     }
 
     @Test
     void build_shouldBuildCorrectArtist() {
-        String aArtistName = "aArtist";
+        String artistName = "aArtist";
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, artistName);
         BookingArtist expectedArtist = mock(BookingArtist.class);
-        when(artistService.getByName(aArtistName)).thenReturn(expectedArtist);
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtistName);
+        when(artistService.getByName(artistName + 0)).thenReturn(expectedArtist);
 
-        List<Event> events = eventFactory.build(Collections.singletonList(aEventDto));
+        List<Event> events = eventFactory.build(aProgramDto);
 
         assertEquals(expectedArtist, events.get(0).getArtist());
     }
 
     @Test
     void build_shouldBuildCorrectArtists_whenThereAreMultipleEvents() {
-        String aArtistName = "aArtist";
-        String anotherArtistName = "anotherArtist";
-        BookingArtist expectedArtist = mock(BookingArtist.class);
+        String firstArtistName = "aFirstArtist";
+        List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, firstArtistName);
+        BookingArtist expectedFirstArtist = mock(BookingArtist.class);
         BookingArtist expectedOtherArtist = mock(BookingArtist.class);
-        when(artistService.getByName(aArtistName)).thenReturn(expectedArtist);
-        when(artistService.getByName(anotherArtistName)).thenReturn(expectedOtherArtist);
-        ProgramEventDto aEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtistName);
-        ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE.plusDays(1)), Activities.YOGA, anotherArtistName);
+        when(artistService.getByName(firstArtistName)).thenReturn(expectedFirstArtist);
+        when(artistService.getByName(not(eq(firstArtistName)))).thenReturn(expectedOtherArtist);
+        aProgramDto.set(0, buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, firstArtistName));
 
-        List<Event> events = eventFactory.build(Arrays.asList(aEventDto, anotherEventDto));
+        List<Event> events = eventFactory.build(aProgramDto);
 
-        assertTrue(events.stream().anyMatch(event -> event.getArtist().equals(expectedArtist)));
-        assertTrue(events.stream().anyMatch(event -> event.getArtist().equals(expectedOtherArtist)));
+        assertEquals(expectedFirstArtist, events.get(0).getArtist());
+        assertTrue(events.subList(1, events.size() - 1).stream().allMatch(event -> event.getArtist().equals(expectedOtherArtist)));
     }
 
     @Test
@@ -165,6 +145,13 @@ class EventFactoryTest {
     }
 
     @Test
+    void build_shouldThrowInvalidProgramException_whenProgramDoesNotIncludeAllFestivalDates() {
+        ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), Activities.YOGA.toString(), "aArtist");
+
+        assertThrows(InvalidProgramException.class, () -> eventFactory.build(Collections.singletonList(aEventDto)));
+    }
+
+    @Test
     void build_shouldThrowInvalidProgramException_whenActivityIsInvalid() {
         String anInvalidActivity = "anInvalidActivity";
         ProgramEventDto aEventDto = new ProgramEventDto(EventDate.START_DATE.toString(), anInvalidActivity, "aArtist");
@@ -193,6 +180,17 @@ class EventFactoryTest {
         ProgramEventDto anotherEventDto = buildEventDto(new EventDate(EventDate.START_DATE), Activities.YOGA, aArtist);
 
         assertThrows(InvalidProgramException.class, () -> eventFactory.build(Arrays.asList(aEventDto, anotherEventDto)));
+    }
+
+    private List<ProgramEventDto> buildProgramDto(Activities activity, String artist) {
+        List<ProgramEventDto> eventDtos = new ArrayList<>();
+        List<EventDate> eventDates = EventDate.getFullFestivalEventDates();
+
+        for (int i = 0; i < eventDates.size(); i++) {
+            eventDtos.add(buildEventDto(eventDates.get(i), activity, artist + i));
+        }
+
+        return eventDtos;
     }
 
     private ProgramEventDto buildEventDto(EventDate eventDate, Activities activity, String artist) {

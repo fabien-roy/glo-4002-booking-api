@@ -65,7 +65,11 @@ public class EventFactory {
     }
 
     private void validateAllPresent(List<String> eventDates) {
-        // TODO : Validate all event dates for festival are in program
+        List<String> festivalEventDates = EventDate.getFullFestivalEventDates().stream().map(EventDate::toString).collect(Collectors.toList());
+
+        boolean hasAllFestivalEventDates = eventDates.containsAll(festivalEventDates);
+
+        if (!hasAllFestivalEventDates) throw new InvalidProgramException();
     }
 
     private EventDate buildEventDate(String eventDate) {
