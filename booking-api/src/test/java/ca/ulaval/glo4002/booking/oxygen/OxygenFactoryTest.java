@@ -132,8 +132,29 @@ public class OxygenFactoryTest {
     }
 
     @Test
-    void buildCategoryForRequestDate_shouldReturnNewCategoryB_whenDateIsNotInRangeForAButOkForE() {
-        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 7, 10), OxygenCategories.A);
+    void buildCategoryForRequestDate_shouldReturnNewCategoryE_whenDateIsNotInRangeForAOrBButOkForE() {
+        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.A);
+
+        assertEquals(OxygenCategories.E, category.getCategory());
+    }
+
+    @Test
+    void buildCategoryForRequestDate_shouldReturnNewCategoryB_whenDateIsInRange() {
+        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 7, 7), OxygenCategories.B);
+
+        assertEquals(OxygenCategories.B, category.getCategory());
+    }
+
+    @Test
+    void buildCategoryForRequestDate_shouldReturnNewCategoryE_whenDateIsNotInRangeFoBButOkForE() {
+        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.B);
+
+        assertEquals(OxygenCategories.E, category.getCategory());
+    }
+
+    @Test
+    void buildCategoryForRequestDate_shouldReturnNewCategoryE_whenDateIsInRange() {
+        OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.E);
 
         assertEquals(OxygenCategories.E, category.getCategory());
     }
