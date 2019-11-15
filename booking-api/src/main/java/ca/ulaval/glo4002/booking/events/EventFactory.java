@@ -31,7 +31,7 @@ public class EventFactory {
         eventDtos.forEach(eventDto -> {
             EventDate eventDate = buildEventDate(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
-            BookingArtist bookingArtist = null; // TODO : Use ArtistService to get by name
+            BookingArtist bookingArtist = artistService.getByName(eventDto.getPm());
 
             Event event = new Event(eventDate, activity, bookingArtist);
 
