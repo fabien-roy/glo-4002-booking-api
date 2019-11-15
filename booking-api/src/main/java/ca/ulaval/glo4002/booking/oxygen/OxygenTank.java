@@ -2,8 +2,6 @@ package ca.ulaval.glo4002.booking.oxygen;
 
 import ca.ulaval.glo4002.booking.profits.Money;
 
-import java.math.BigDecimal;
-
 public class OxygenTank {
 
     public static final int CATEGORY_A_NUMBER_OF_TANKS_CREATED = 5;
@@ -16,20 +14,20 @@ public class OxygenTank {
     public static final int CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED = 1;
     public static final int CATEGORY_E_RESOURCE_PRICE = 5000;
 
-    private OxygenCategories category;
+    private OxygenCategory category;
     private OxygenDate requestDate;
     private OxygenDate readyDate;
     private Money price;
 
-    public OxygenTank(OxygenCategories category, OxygenDate requestDate) {
+    public OxygenTank(OxygenCategory category, OxygenDate requestDate) {
         this.category = category;
         this.requestDate = requestDate;
 
-        calculatePrice();
-        calculateReadyDate();
+        this.price = category.calculatePriceForCategory();
+        this.readyDate = category.calculateReadyDateForCategory(requestDate);
     }
 
-    public OxygenCategories getCategory() {
+    public OxygenCategory getCategory() {
         return this.category;
     }
 
@@ -45,44 +43,4 @@ public class OxygenTank {
         return this.price;
     }
 
-    private void calculatePrice() {
-        int nbTankCreated;
-        int nbResources;
-        int resourcesPrice;
-
-        switch (this.category) {
-            case A:
-                nbTankCreated = CATEGORY_A_NUMBER_OF_TANKS_CREATED;
-                nbResources = CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED;
-                resourcesPrice = CATEGORY_A_RESOURCE_PRICE;
-                break;
-            case B:
-                nbTankCreated = CATEGORY_B_NUMBER_OF_TANKS_CREATED;
-                nbResources = CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED;
-                resourcesPrice = CATEGORY_B_RESOURCE_PRICE;
-                break;
-            default:
-            case E:
-                nbTankCreated = CATEGORY_E_NUMBER_OF_TANKS_CREATED;
-                nbResources = CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED;
-                resourcesPrice = CATEGORY_E_RESOURCE_PRICE;
-                break;
-        }
-
-        BigDecimal tankPrice = new BigDecimal((nbResources * resourcesPrice) / nbTankCreated);
-
-        this.price = new Money(tankPrice);
-    }
-
-    private void calculateReadyDate() {
-        OxygenDate readyDate = new OxygenDate(requestDate.getValue());
-
-        if (this.category == OxygenCategories.A) {
-            readyDate.addDays(20);
-        } else if (this.category == OxygenCategories.B) {
-            readyDate.addDays(10);
-        }
-
-        this.readyDate = readyDate;
-    }
 }

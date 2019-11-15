@@ -66,7 +66,7 @@ public class OxygenTankProducerTest {
         List<OxygenTank> createdTanks = producer.produceForDay(aCategory, VALID_CATEGORY_A_BUILD_DATE);
 
         assertEquals(numberTanksCreated, createdTanks.size());
-        assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory());
+        assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory().getCategory());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class OxygenTankProducerTest {
         List<OxygenTank> createdTanks = producer.produceForDay(OxygenCategories.A, INVALID_CATEGORY_A_BUILD_DATE);
 
         assertEquals(numberOfTanksCreated, createdTanks.size());
-        assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory());
+        assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory().getCategory());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class OxygenTankProducerTest {
         List<OxygenTank> createdTanks = producer.produceForDay(OxygenCategories.A, INVALID_CATEGORY_B_BUILD_DATE);
 
         assertEquals(numberOfTanksCreated, createdTanks.size());
-        assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory());
+        assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory().getCategory());
     }
 
     @Test

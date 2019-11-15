@@ -1,24 +1,26 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
 import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.profits.Money;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OxygenFactory {
 
-	public List<OxygenTank> buildOxygenTank(OxygenCategories category, LocalDate requestDate, Integer quantityToCover) {
+	public List<OxygenTank> buildOxygenTank(OxygenCategory category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
-		Integer numberOfTanksByBundle = getNumberOfTanksByCategoryForCreation(category);
 		OxygenDate requestedDate = new OxygenDate(requestDate);
 
+		// TODO : category.getNumberOfTanksByBundle() != TDA
 		while (quantityToCover > 0) {
-			for (Integer i = 0; i < numberOfTanksByBundle; i++) {
+			for (Integer i = 0; i < category.getNumberOfTanksByBundle(); i++) {
 				newTanks.add(new OxygenTank(category, requestedDate));
 			}
 
-			quantityToCover -= numberOfTanksByBundle;
+			quantityToCover -= category.getNumberOfTanksByBundle();
 		}
 
 		return newTanks;
@@ -30,33 +32,29 @@ public class OxygenFactory {
 				return new OxygenCategory(
 						OxygenCategories.E,
 						5,
-						0
+						0,
+						1
 				);
 			case SUPERGIANT:
 				return new OxygenCategory(
 						OxygenCategories.B,
 						3,
-						10
+						10,
+						3,
+						8,
+						new Money(BigDecimal.valueOf(600))
 				);
 			default:
 			case NEBULA:
 				return new OxygenCategory(
 						OxygenCategories.A,
 						3,
-						20
+						20,
+						5,
+						15,
+						new Money(BigDecimal.valueOf(650))
 				);
 		}
 	}
 
-	private Integer getNumberOfTanksByCategoryForCreation(OxygenCategories category) {
-		switch (category) {
-			case A:
-				return 5;
-			case B:
-				return 3;
-			default:
-			case E:
-				return 1;
-		}
-	}
 }

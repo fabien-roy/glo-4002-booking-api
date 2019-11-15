@@ -1,10 +1,8 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
 import ca.ulaval.glo4002.booking.events.EventDate;
-import ca.ulaval.glo4002.booking.oxygen.OxygenFactory;
-import ca.ulaval.glo4002.booking.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +15,16 @@ public class OxygenFactoryTest {
 
     private OxygenFactory factory;
 
+    private OxygenCategory categoryA;
+    private OxygenCategory categoryB;
+    private OxygenCategory categoryE;
+
     @BeforeEach
     void setupFactory() {
         factory = new OxygenFactory();
+        categoryA = factory.buildCategory(PassCategories.NEBULA);
+        categoryB = factory.buildCategory(PassCategories.SUPERGIANT);
+        categoryE = factory.buildCategory(PassCategories.SUPERNOVA);
     }
 
     @Test
@@ -27,9 +32,9 @@ public class OxygenFactoryTest {
         LocalDate aValidRequestDate = EventDate.START_DATE.minusDays(21);
         Integer aNumberOfTanks = 5;
 
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(OxygenCategories.A, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryA, aValidRequestDate, aNumberOfTanks);
 
-        assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory());
+        assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory().getCategory());
     }
 
     @Test
@@ -37,9 +42,9 @@ public class OxygenFactoryTest {
         LocalDate aValidRequestDate = EventDate.START_DATE.minusDays(15);
         Integer aNumberOfTanks = 3;
 
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(OxygenCategories.B, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryB, aValidRequestDate, aNumberOfTanks);
 
-        assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory());
+        assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory().getCategory());
     }
 
     @Test
@@ -47,9 +52,9 @@ public class OxygenFactoryTest {
         LocalDate aValidRequestDate = EventDate.START_DATE;
         Integer aNumberOfTanks = 1;
 
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(OxygenCategories.E, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryE, aValidRequestDate, aNumberOfTanks);
 
-        assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory());
+        assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory().getCategory());
     }
 
     @Test
@@ -58,7 +63,7 @@ public class OxygenFactoryTest {
         Integer aNumberOfTanks = 5;
         Integer expectedNumberOfCreatedTanks = 5;
 
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(OxygenCategories.A, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryA, aValidRequestDate, aNumberOfTanks);
 
         assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
     }
@@ -69,7 +74,7 @@ public class OxygenFactoryTest {
         Integer aNumberOfTanks = 3;
         Integer expectedNumberOfCreatedTanks = 3;
 
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(OxygenCategories.B, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryB, aValidRequestDate, aNumberOfTanks);
 
         assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
     }
@@ -80,7 +85,7 @@ public class OxygenFactoryTest {
         Integer aNumberOfTanks = 1;
         Integer expectedNumberOfCreatedTanks = 1;
 
-        List<OxygenTank> createdTanks = factory.buildOxygenTank(OxygenCategories.E, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryE, aValidRequestDate, aNumberOfTanks);
 
         assertEquals(expectedNumberOfCreatedTanks, createdTanks.size());
     }

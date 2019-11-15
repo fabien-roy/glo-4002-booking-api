@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.passes.PassCategories;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -44,8 +45,11 @@ public class OxygenTankProducer {
 
 		if (quantityToCover > 0) {
 		    // TODO : Add water and candles used to history
+			PassCategories passCategories = convertOxygenCategoryToPassCategories(possibleCategory);
 
-		    List<OxygenTank> producedTanks = factory.buildOxygenTank(possibleCategory, requestDate, quantityToCover);
+			OxygenCategory oxygenCategory =  factory.buildCategory(passCategories);
+
+		    List<OxygenTank> producedTanks = factory.buildOxygenTank(oxygenCategory, requestDate, quantityToCover);
 			newTanks.addAll(producedTanks);
 
 			history.addMadeTanks(getReadyDateForCategory(possibleCategory, requestDate), producedTanks.size());
@@ -58,6 +62,27 @@ public class OxygenTankProducer {
 		historyRepository.setHistory(history);
 
 		return newTanks;
+	}
+
+	// TODO Move somewhere else
+	private PassCategories convertOxygenCategoryToPassCategories(OxygenCategories oxygenCategories) {
+		PassCategories passCategories;
+
+		switch (oxygenCategories) {
+			case E:
+				passCategories = PassCategories.SUPERNOVA;
+				break;
+			case B:
+				passCategories = PassCategories.SUPERGIANT;
+				break;
+			case A:
+				passCategories = PassCategories.NEBULA;
+				break;
+			default:
+				passCategories = PassCategories.SUPERNOVA;
+		}
+
+		return passCategories;
 	}
 
 	// TODO : Refactor to use OxygenCategory.getTanksNeededPerDay()
