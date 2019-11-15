@@ -1,12 +1,11 @@
 package ca.ulaval.glo4002.booking.orders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import ca.ulaval.glo4002.booking.orders.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +22,13 @@ class InMemoryOrderRepositoryTest {
 	}
 
 	@Test
+	void constructing_shouldBuildEmptyOrderList() {
+		List<Order> orders = repository.findAll();
+
+		assertTrue(orders.size() == 0);
+	}
+
+	@Test
 	void getOrderNumber_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
 		OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
 
@@ -36,7 +42,6 @@ class InMemoryOrderRepositoryTest {
 		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
-
 		repository.addOrder(anOrder);
 
 		assertThrows(OrderNotFoundException.class, () -> repository.getByOrderNumber(aNonExistentOrderNumber));
@@ -72,4 +77,28 @@ class InMemoryOrderRepositoryTest {
 		assertEquals(anOrderNumber, foundOrder.getOrderNumber());
 		assertEquals(anotherOrderNumber, otherFoundOrder.getOrderNumber());
 	}
+
+	@Test
+	void addOrder_shouldAddOrder() {
+		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
+		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+		PassBundle aPassBundle = mock(PassBundle.class);
+		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
+
+		repository.addOrder(anOrder);
+
+		assertTrue(repository.findAll().contains(anOrder));
+	}
+
+	@Test
+	void findAll_shouldReturnEveryOrder() {
+		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
+		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+		PassBundle aPassBundle = mock(PassBundle.class);
+		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
+		repository.addOrder(anOrder);
+
+		assertTrue(repository.findAll().size() == 1);
+	}
+
 }
