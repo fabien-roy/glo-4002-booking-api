@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo4002.booking.program.ProgramController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -13,20 +12,19 @@ import org.springframework.http.ResponseEntity;
 import ca.ulaval.glo4002.booking.artists.ArtistListDto;
 import ca.ulaval.glo4002.booking.artists.ArtistOrderings;
 import ca.ulaval.glo4002.booking.artists.ArtistService;
-import ca.ulaval.glo4002.booking.program.ProgramService;
 
 class ProgramControllerTest {
 
     private ProgramController controller;
-    private ProgramService service;
+    private ProgramService programService;
     private ArtistService artistService;
 
     @BeforeEach
     void setUpController() {
-        service = mock(ProgramService.class);
         artistService = mock(ArtistService.class);
+        programService = mock(ProgramService.class);
 
-        controller = new ProgramController(artistService);
+        controller = new ProgramController(artistService, programService);
     }
 
     @Test
@@ -58,4 +56,10 @@ class ProgramControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    void addProgram_shouldReturnOk() {
+        ResponseEntity<?> response = controller.add(mock(ProgramDto.class));
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
 }

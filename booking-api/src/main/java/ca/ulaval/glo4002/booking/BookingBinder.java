@@ -19,6 +19,7 @@ import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.PassFactory;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.program.ProgramController;
+import ca.ulaval.glo4002.booking.program.ProgramService;
 import ca.ulaval.glo4002.booking.report.ReportController;
 import ca.ulaval.glo4002.booking.shuttles.*;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
@@ -88,6 +89,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ShuttleManifestService.class);
         bindAsContract(ArtistService.class);
         bindAsContract(ProfitService.class);
+        bindAsContract(ProgramService.class);
         bindAsContract(OxygenReportService.class);
     }
 
