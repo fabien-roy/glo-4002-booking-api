@@ -1,10 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
-import ca.ulaval.glo4002.booking.oxygen.OxygenDate;
-import ca.ulaval.glo4002.booking.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
-import ca.ulaval.glo4002.booking.oxygen.InvalidOxygenCategoryException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

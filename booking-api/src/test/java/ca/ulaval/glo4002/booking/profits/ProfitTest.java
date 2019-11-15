@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.profits;
 
-import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.profits.Profit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,6 +51,6 @@ public class ProfitTest {
         profit.addExpense(expense);
         profit.calculateProfit();
 
-        assertEquals(amountRevenue.subtract(amountExpense), profit.getProfit().getValue());
+        assertEquals(amountRevenue.subtract(amountExpense), profit.getTotalProfit().getValue());
     }
 }

@@ -6,7 +6,7 @@ public class Profit {
 
     private Money expense;
     private Money revenue;
-    private Money profit;
+    private Money totalProfit;
 
     public Profit() {
         this.expense = new Money(new BigDecimal(0));
@@ -22,9 +22,9 @@ public class Profit {
     }
 
     public void calculateProfit() {
-        profit = new Money(revenue.getValue());
+        totalProfit = new Money(revenue.getValue());
         
-        profit.subtract(expense);
+        totalProfit.subtract(expense);
     }
 
     public Money getExpense() {
@@ -35,7 +35,7 @@ public class Profit {
         return this.revenue;
     }
 
-    public Money getProfit() {
-        return this.profit;
+    public Money getTotalProfit() {
+        return this.totalProfit;
     }
 }

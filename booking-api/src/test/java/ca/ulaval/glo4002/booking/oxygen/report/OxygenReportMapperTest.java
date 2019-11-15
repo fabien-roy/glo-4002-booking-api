@@ -1,8 +1,5 @@
 package ca.ulaval.glo4002.booking.oxygen.report;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;

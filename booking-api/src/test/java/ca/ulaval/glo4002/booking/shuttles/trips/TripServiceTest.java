@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.shuttles.trips;
 
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
