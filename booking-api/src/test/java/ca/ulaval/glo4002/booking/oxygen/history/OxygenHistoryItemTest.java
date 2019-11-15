@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.oxygen.history;
 
-import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

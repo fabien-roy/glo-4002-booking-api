@@ -1,13 +1,9 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
-import ca.ulaval.glo4002.booking.oxygen.inventory.InMemoryOxygenInventoryRepository;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class InMemoryOxygenInventoryRepositoryTest {
 

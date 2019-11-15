@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.history;
 
 import ca.ulaval.glo4002.booking.oxygen.OxygenTank;
-import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

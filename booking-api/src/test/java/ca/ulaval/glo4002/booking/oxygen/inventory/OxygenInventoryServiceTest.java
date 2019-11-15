@@ -2,13 +2,13 @@ package ca.ulaval.glo4002.booking.oxygen.inventory;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.events.EventDate;
-import ca.ulaval.glo4002.booking.oxygen.OxygenCategory;
 import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.passes.Pass;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 import ca.ulaval.glo4002.booking.oxygen.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
