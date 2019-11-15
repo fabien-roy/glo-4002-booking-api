@@ -14,18 +14,15 @@ import ca.ulaval.glo4002.booking.profits.Money;
 public class ArtistService {
 
 	private final ArtistRepository repository;
-	private final ArtistConverter converter;
 
 	@Inject
 	public ArtistService(ArtistRepository repository) {
 		this.repository = repository;
-		this.converter = new ArtistConverter(repository);
+		ArtistConverter converter = new ArtistConverter(repository);
 		converter.convert();
-
 	}
 
 	public ArtistListDto getAllOrdered(String orderBy) {
-
 		List<BookingArtist> bookingArtists = repository.findAll();
 		List<String> artistNames = new ArrayList<>();
 
@@ -43,7 +40,6 @@ public class ArtistService {
 	}
 
 	public ArtistListDto getAllUnordered() {
-
 		List<BookingArtist> bookingArtists = repository.findAll();
 		List<String> artistNames = getArtistNames(bookingArtists);
 		return new ArtistListDto(artistNames);
@@ -55,7 +51,8 @@ public class ArtistService {
 	}
 
 	private List<BookingArtist> orderByMostPopular(List<BookingArtist> artists) {
-		Collections.sort(artists, (artist1, artist2) -> artist1.getPopularityRank() - artist2.getPopularityRank());
+		artists.sort(Comparator.comparingInt(BookingArtist::getPopularityRank));
+
 		return artists;
 	}
 

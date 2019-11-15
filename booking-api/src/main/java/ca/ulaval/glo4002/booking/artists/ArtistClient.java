@@ -7,6 +7,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
+// TODO : If there is a God, ArtistClient can be made non-static
 public class ArtistClient {
 	
 	private static final String EXTERNAL_SERVICE_URL = "http://localhost:8080/artists";
