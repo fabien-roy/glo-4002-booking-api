@@ -15,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 
-// TODO : Use ExceptionMapper for ErrorDto and HttpStatus
-
 @Path("/orders")
 public class OrderController {
 
