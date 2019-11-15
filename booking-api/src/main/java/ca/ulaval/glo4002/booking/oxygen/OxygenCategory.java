@@ -26,13 +26,13 @@ public class OxygenCategory {
     }
 
     public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays,
-                          Integer numberOfTanksByBundle) {
+                          Integer numberOfTanksByBundle, Money productionItemPrice) {
         this.category = category;
         this.tanksNeededPerDay = tanksNeededPerDay;
         this.produceTimeInDays = produceTimeInDays;
         this.numberOfTanksByBundle = numberOfTanksByBundle;
         this.numberOfProductionItem = 0;
-        this.productionItemPrice = null;
+        this.productionItemPrice = productionItemPrice;
     }
 
     public OxygenCategories getCategory() {
@@ -48,13 +48,9 @@ public class OxygenCategory {
     }
 
     public Money calculatePriceForCategory() {
-        BigDecimal tankPrice;
+        BigDecimal tankPrice = new BigDecimal(String.valueOf(productionItemPrice.getValue()));;
 
-        if(category == OxygenCategories.E) {
-            tankPrice = new BigDecimal(5000);
-        } else {
-            tankPrice = new BigDecimal(String.valueOf(productionItemPrice.getValue()));
-
+        if(category != OxygenCategories.E) {
             tankPrice = tankPrice.multiply(BigDecimal.valueOf(numberOfProductionItem));
             tankPrice = tankPrice.divide(BigDecimal.valueOf(numberOfTanksByBundle));
         }
@@ -65,11 +61,7 @@ public class OxygenCategory {
     public OxygenDate calculateReadyDateForCategory(LocalDate requestDate) {
         OxygenDate readyDate = new OxygenDate(requestDate);
 
-        if (this.category == OxygenCategories.A) {
-            readyDate.addDays(20);
-        } else if (this.category == OxygenCategories.B) {
-            readyDate.addDays(10);
-        }
+        readyDate.addDays(produceTimeInDays);
 
         return readyDate;
     }

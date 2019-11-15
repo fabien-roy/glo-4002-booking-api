@@ -34,7 +34,8 @@ public class OxygenFactory {
 						OxygenCategories.E,
 						5,
 						0,
-						1
+						1,
+						new Money(BigDecimal.valueOf(5000))
 				);
 			case SUPERGIANT:
 				return new OxygenCategory(
