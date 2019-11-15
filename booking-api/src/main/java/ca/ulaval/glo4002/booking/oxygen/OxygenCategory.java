@@ -66,11 +66,11 @@ public class OxygenCategory {
         return readyDate;
     }
 
-    public void addCategoryProductionInformationToHistory(LocalDate requestDate, OxygenHistory history) {
+    public void addCategoryProductionInformationToHistory(LocalDate requestDate, OxygenHistory history, Integer numberOfTanks) {
         if(category == OxygenCategories.A) {
-            history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle);
+            history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);
         } else if(category == OxygenCategories.B) {
-            history.addWaterUsed(requestDate, (double) numberOfProductionItem / numberOfTanksByBundle);
+            history.addWaterUsed(requestDate, (double) numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);
         }
     }
 

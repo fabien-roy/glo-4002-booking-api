@@ -42,13 +42,15 @@ public class OxygenTankProducer {
 		    List<OxygenTank> producedTanks = factory.buildOxygenTank(actualOxygenCategory, requestDate, quantityToCover);
 			newTanks.addAll(producedTanks);
 
-			history.addMadeTanks(actualOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
+			if(actualOxygenCategory.getCategory() == OxygenCategories.E) {
+				history.addTanksBought(requestDate, quantityToCover);
+			} else {
+				history.addMadeTanks(actualOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
+			}
 
-			actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history);
+			actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
 			inventory.addTanksToInventory(category, newTanks);
 		}
-
-		history.addTanksBought(requestDate, quantityToCover);
 
 		inventoryRepository.setInventory(inventory);
 		historyRepository.setHistory(history);
