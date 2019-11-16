@@ -32,9 +32,7 @@ public class ProgramService {
 
         events.forEach(event -> {
             tripService.orderForArtist(event.getArtist(), event.getEventDate());
-
-            oxygenInventoryService.orderForArtist(event.getArtist(), orderDate);
-            oxygenInventoryService.orderForActivity(); // TODO : Send correct values to oxygenTankInventoryService.orderForActivity()
+            oxygenInventoryService.orderForArtist(event.getArtist(), event.getEventDate());
         });
 
         eventRepository.addAll(events);
