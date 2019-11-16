@@ -1,50 +1,33 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.Test;
 
 class OxygenDateTest {
 
-    private OxygenDate oxygenDate;
+	private OxygenDate oxygenDate;
 
-    @Test
-    public void constructing_shouldThrowInvalidOxygenDateException_whenOxygenDateIsInvalid() {
-        String anInvalidOxygenDate = "anInvalidDate";
+	@Test
+	public void constructingWithDate_shouldCreateOxygenDate_whenOxygenIsValid() {
+		LocalDate expectedValue = LocalDate.of(2050, 7, 1);
 
-        assertThrows(InvalidOxygenDateFormatException.class, () -> new OxygenDate(anInvalidOxygenDate));
-    }
+		oxygenDate = new OxygenDate(expectedValue);
 
-    @Test
-    public void constructingWithString_shouldCreateOxygenDate_whenOxygenIsValid() {
-        LocalDate expectedValue = LocalDate.of(2050, 7, 1);
+		assertEquals(expectedValue, oxygenDate.getValue());
+	}
 
-        oxygenDate = new OxygenDate(expectedValue.toString());
+	@Test
+	public void addDays_shouldReturnDateWithNumberDaysLater() {
+		LocalDate beginningDate = LocalDate.of(2050, 7, 1);
+		LocalDate expectedDate = beginningDate;
+		expectedDate = expectedDate.plusDays(10);
 
-        assertEquals(expectedValue, oxygenDate.getValue());
-    }
+		oxygenDate = new OxygenDate(beginningDate);
+		oxygenDate.addDays(10);
 
-    @Test
-    public void constructingWithDate_shouldCreateOxygenDate_whenOxygenIsValid() {
-        LocalDate expectedValue = LocalDate.of(2050, 7, 1);
-
-        oxygenDate = new OxygenDate(expectedValue);
-
-        assertEquals(expectedValue, oxygenDate.getValue());
-    }
-
-    @Test
-    public void addDays_shouldReturnDateWithNumberDaysLater() {
-        LocalDate beginningDate = LocalDate.of(2050, 7, 1);
-        LocalDate expectedDate = beginningDate;
-        expectedDate = expectedDate.plusDays(10);
-
-        oxygenDate = new OxygenDate(beginningDate);
-        oxygenDate.addDays(10);
-
-        assertEquals(expectedDate, oxygenDate.getValue());
-    }
+		assertEquals(expectedDate, oxygenDate.getValue());
+	}
 }
