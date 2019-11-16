@@ -1,52 +1,72 @@
 package ca.ulaval.glo4002.booking.oxygen.history;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 public class OxygenHistoryItemTest {
 
-    private OxygenHistoryItem oxygenHistoryItem;
+	private OxygenHistoryItem oxygenHistoryItem;
 
-    @BeforeEach
-    void setupOxygenHistoryItem() {
-        oxygenHistoryItem = new OxygenHistoryItem();
-    }
+	@BeforeEach
+	void setupOxygenHistoryItem() {
+		oxygenHistoryItem = new OxygenHistoryItem();
+	}
 
-    @Test
-    void addTankBought_shouldAddTankBough() {
-        Integer numTanksBough = 5;
+	@Test
+	void constructing_setQtyOxygenTankBoughtTo0() {
+		assertEquals(0, oxygenHistoryItem.getQtyOxygenTankBought());
+	}
 
-        oxygenHistoryItem.addTanksBought(numTanksBough);
+	@Test
+	void constructing_setQtyOxygenTankMadeTo0() {
+		assertEquals(0, oxygenHistoryItem.getQtyOxygenTankMade());
+	}
 
-        assertEquals(numTanksBough, oxygenHistoryItem.getQtyOxygenTankBought());
-    }
+	@Test
+	void constructing_setQtyWaterUsedTo0() {
+		assertEquals(0D, oxygenHistoryItem.getQtyWaterUsed());
+	}
 
-    @Test
-    void addWaterUsed_shouldAddWaterUsed() {
-        Double numTanksBough = 5D;
+	@Test
+	void constructing_setQtyCandlesUsedTo0() {
+		assertEquals(0, oxygenHistoryItem.getQtyCandlesUsed());
+	}
 
-        oxygenHistoryItem.addWaterUsed(numTanksBough);
+	@Test
+	void addTankBought_shouldAddTankBough() {
+		Integer nbTanksBought = 5;
 
-        assertEquals(numTanksBough, oxygenHistoryItem.getQtyWaterUsed());
-    }
+		oxygenHistoryItem.addTanksBought(nbTanksBought);
 
-    @Test
-    void addCandleUsed_shouldAddCandleUsed() {
-        Integer numTanksBough = 5;
+		assertEquals(nbTanksBought, oxygenHistoryItem.getQtyOxygenTankBought());
+	}
 
-        oxygenHistoryItem.addCandleUsed(numTanksBough);
+	@Test
+	void addWaterUsed_shouldAddWaterUsed() {
+		Double nbTanksBought = 5D;
 
-        assertEquals(numTanksBough, oxygenHistoryItem.getQtyCandlesUsed());
-    }
+		oxygenHistoryItem.addWaterUsed(nbTanksBought);
 
-    @Test
-    void addTankMade_shouldAddTankMade() {
-        Integer numTanksBough = 5;
+		assertEquals(nbTanksBought, oxygenHistoryItem.getQtyWaterUsed());
+	}
 
-        oxygenHistoryItem.addTanksMade(numTanksBough);
+	@Test
+	void addCandleUsed_shouldAddCandleUsed() {
+		Integer nbTanksBought = 5;
 
-        assertEquals(numTanksBough, oxygenHistoryItem.getQtyOxygenTankMade());
-    }
+		oxygenHistoryItem.addCandleUsed(nbTanksBought);
+
+		assertEquals(nbTanksBought, oxygenHistoryItem.getQtyCandlesUsed());
+	}
+
+	@Test
+	void addTankMade_shouldAddTankMade() {
+		Integer nbTanksBought = 5;
+
+		oxygenHistoryItem.addTanksMade(nbTanksBought);
+
+		assertEquals(nbTanksBought, oxygenHistoryItem.getQtyOxygenTankMade());
+	}
 }
