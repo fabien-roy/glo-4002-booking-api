@@ -18,7 +18,11 @@ public class ProfitService {
     private Profit profit;
 
     @Inject
-    public ProfitService(OrderRepository orderRepository, OxygenInventoryRepository oxygenTankInventoryRepository, TripRepository tripRepository, EventRepository eventRepository, ProfitMapper mapper) {
+    public ProfitService(OrderRepository orderRepository,
+                         OxygenInventoryRepository oxygenTankInventoryRepository,
+                         TripRepository tripRepository,
+                         EventRepository eventRepository,
+                         ProfitMapper mapper) {
         this.orderRepository = orderRepository;
         this.oxygenTankInventoryRepository = oxygenTankInventoryRepository;
         this.tripRepository = tripRepository;
