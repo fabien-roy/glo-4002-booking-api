@@ -22,12 +22,12 @@ Start and end event dates are instances LocalDate. They should be instanced of E
 
 ExceptionMapper should be the one to create ErrorDto and get the correct HttpStatus. Those are currently done by the exceptions.
 
-## Integration tests
-
-Our integration tests are not excluded by maven. They should be.
-
 ## Tests
 
 ### Missing tests
 
 OXY and CALC were slightly rushed at the end of the project. Because of this, their tests are not perfect.
+
+### Integration tests
+
+Our integration tests are not excluded by maven. They should be.
