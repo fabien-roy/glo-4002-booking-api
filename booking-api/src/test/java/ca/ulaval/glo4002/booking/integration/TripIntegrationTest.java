@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.oxygen.*;
 import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;
@@ -70,8 +71,9 @@ class TripIntegrationTest {
         ShuttleManifestService shuttleManifestService = new ShuttleManifestService(tripRepository, shuttleManifestMapper);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
-        orderController = new OrderController(orderService);
-        shuttleManifestController = new ShuttleManifestController(shuttleManifestService);
+        ExceptionMapper exceptionMapper = new ExceptionMapper();
+        orderController = new OrderController(exceptionMapper, orderService);
+        shuttleManifestController = new ShuttleManifestController(exceptionMapper, shuttleManifestService);
     }
 
     @Test

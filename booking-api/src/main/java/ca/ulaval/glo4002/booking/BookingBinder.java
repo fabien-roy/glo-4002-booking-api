@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.events.Event;
 import ca.ulaval.glo4002.booking.events.EventFactory;
 import ca.ulaval.glo4002.booking.events.EventRepository;
 import ca.ulaval.glo4002.booking.events.InMemoryEventRepository;
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.oxygen.*;
 import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;
@@ -97,6 +98,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindMappers() {
+        bindAsContract(ExceptionMapper.class);
         bindAsContract(PassBundleMapper.class);
         bindAsContract(OrderMapper.class);
         bindAsContract(TripMapper.class);

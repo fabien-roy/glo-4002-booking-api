@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.report;
 
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.oxygen.report.OxygenReport;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.profits.ProfitsDto;
 import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportDto;
@@ -13,11 +15,13 @@ import javax.ws.rs.core.MediaType;
 @Path("/report")
 public class ReportController {
 
+    private final ExceptionMapper exceptionMapper;
     private final OxygenReportService oxygenReportService;
     private final ProfitService profitService;
 
     @Inject
-    public ReportController(OxygenReportService oxygenReportService, ProfitService profitService) {
+    public ReportController(ExceptionMapper exceptionMapper, OxygenReportService oxygenReportService, ProfitService profitService) {
+        this.exceptionMapper = exceptionMapper;
         this.oxygenReportService = oxygenReportService;
         this.profitService = profitService;
     }
@@ -26,7 +30,13 @@ public class ReportController {
     @Path("/o2")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getOxygenReport() {
-        OxygenReportDto oxygenReportDto = oxygenReportService.getOxygenReport();
+        OxygenReportDto oxygenReportDto = null;
+
+        try {
+            oxygenReportDto = oxygenReportService.getOxygenReport();
+        } catch (Exception exception) {
+            exceptionMapper.mapError(exception);
+        }
 
         return ResponseEntity.ok().body(oxygenReportDto);
     }
@@ -35,7 +45,13 @@ public class ReportController {
     @Path("/profits")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getProfits() {
-        ProfitsDto profitsDto = profitService.get();
+        ProfitsDto profitsDto = null;
+
+        try {
+            profitsDto = profitService.get();
+        } catch (Exception exception) {
+            exceptionMapper.mapError(exception);
+        }
 
         return ResponseEntity.ok().body(profitsDto);
     }

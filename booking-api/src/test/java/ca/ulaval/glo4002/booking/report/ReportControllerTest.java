@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.report;
 
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportService;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +17,11 @@ class ReportControllerTest {
 
     @BeforeEach
     void setUpController() {
+        ExceptionMapper exceptionMapper = new ExceptionMapper();
         OxygenReportService oxygenReportService = mock(OxygenReportService.class);
         ProfitService profitService = mock(ProfitService.class);
 
-        controller = new ReportController(oxygenReportService, profitService);
+        controller = new ReportController(exceptionMapper, oxygenReportService, profitService);
     }
 
     @Test

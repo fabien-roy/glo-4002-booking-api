@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.errors.ErrorDto;
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
@@ -69,7 +70,8 @@ public class PassIntegrationTest {
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
-        controller = new OrderController(orderService);
+        ExceptionMapper exceptionMapper = new ExceptionMapper();
+        controller = new OrderController(exceptionMapper, orderService);
     }
 
     @Test
