@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.program;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -27,11 +28,12 @@ public class ProgramService {
 
     public void add(ProgramDto programDto) {
         List<Event> events = eventFactory.build(programDto.getProgram());
+        LocalDate orderDate = LocalDate.now();
 
         events.forEach(event -> {
             tripService.orderForArtist(event.getArtist(), event.getEventDate());
 
-            oxygenInventoryService.orderForArtist(); // TODO : Send correct values to oxygenTankInventoryService.orderForArtist()
+            oxygenInventoryService.orderForArtist(event.getArtist(), orderDate);
             oxygenInventoryService.orderForActivity(); // TODO : Send correct values to oxygenTankInventoryService.orderForActivity()
         });
 

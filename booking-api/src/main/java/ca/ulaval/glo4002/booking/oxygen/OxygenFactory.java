@@ -30,6 +30,19 @@ public class OxygenFactory {
 	public OxygenCategory buildCategory(PassCategories category) {
 		switch(category) {
 			case SUPERNOVA:
+			    return buildCategory(OxygenCategories.E);
+			case SUPERGIANT:
+				return buildCategory(OxygenCategories.B);
+			default:
+			case NEBULA:
+				return buildCategory(OxygenCategories.A);
+		}
+	}
+
+	// TODO : Test
+	public OxygenCategory buildCategory(OxygenCategories category) {
+		switch(category) {
+			case E:
 				return new OxygenCategory(
 						OxygenCategories.E,
 						5,
@@ -37,7 +50,7 @@ public class OxygenFactory {
 						1,
 						new Money(BigDecimal.valueOf(5000))
 				);
-			case SUPERGIANT:
+			case B:
 				return new OxygenCategory(
 						OxygenCategories.B,
 						3,
@@ -47,7 +60,7 @@ public class OxygenFactory {
 						new Money(BigDecimal.valueOf(600))
 				);
 			default:
-			case NEBULA:
+			case A:
 				return new OxygenCategory(
 						OxygenCategories.A,
 						3,

@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
+import ca.ulaval.glo4002.booking.artists.BookingArtist;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategory;
@@ -14,6 +15,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class OxygenInventoryService {
+
+	private static final OxygenCategories OXYGEN_CATEGORY_FOR_ARTIST = OxygenCategories.E;
+	private static final Integer OXYGEN_TANKS_NEEDED_PER_ARTIST = 6;
 
     private final OxygenFactory factory;
 	private final OxygenTankProducer producer;
@@ -45,8 +49,12 @@ public class OxygenInventoryService {
 		producer.produceOxygenForOrder(oxygenCategory, orderDate);
 	}
 
-    public void orderForArtist() {
-		// TODO : OxygenInventoryService.orderForArtist
+	// TODO : orderForArtist tests
+    public void orderForArtist(BookingArtist artist, LocalDate orderDate) {
+		OxygenCategory category = factory.buildCategory(OXYGEN_CATEGORY_FOR_ARTIST);
+		Integer amountOfOxygenTanksNeeded = artist.getNumberOfPeople() * OXYGEN_TANKS_NEEDED_PER_ARTIST;
+
+	    producer.produceOxygenByQuantity(category, orderDate, amountOfOxygenTanksNeeded);
     }
 
 	public void orderForActivity() {
