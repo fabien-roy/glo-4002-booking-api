@@ -2,6 +2,10 @@
 
 We aren't perfect. Here's what we know.
 
+## DEV
+
+DEV is the only use-case we have not finished. The only missing thing is ordering oxygen tanks for activities.
+
 ## EventRepository
 
 InMemoryEventRepository should always override the list events. This was not done.
@@ -21,3 +25,9 @@ ExceptionMapper should be the one to create ErrorDto and get the correct HttpSta
 ## Integration tests
 
 Our integration tests are not excluded by maven. They should be.
+
+## Tests
+
+### Missing tests
+
+OXY and CALC were slightly rushed at the end of the project. Because of this, their tests are not perfect.
