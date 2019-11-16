@@ -37,12 +37,20 @@ public class OxygenInventory {
 		return inUseTanks.get(category);
 	}
 
-	// TODO : Only used by tests
-	public Map<OxygenCategories, List<OxygenTank>> getAllTanks() {
-		Map<OxygenCategories, List<OxygenTank>> allTanks = new EnumMap<>(OxygenCategories.class);
+	public List<OxygenTank> getAllTanksForCategory(OxygenCategories category) {
+		List<OxygenTank> categoryList = new ArrayList<>();
 
-		inUseTanks.keySet().forEach(category -> allTanks.put(category, inUseTanks.get(category)));
-		notInUseTanks.keySet().forEach(category -> allTanks.put(category, notInUseTanks.get(category)));
+		categoryList.addAll(inUseTanks.get(category));
+		categoryList.addAll(notInUseTanks.get(category));
+
+		return categoryList;
+	}
+
+	public List<OxygenTank> getAllTanks() {
+		List<OxygenTank> allTanks = new ArrayList<>();
+
+		inUseTanks.keySet().forEach(category -> allTanks.addAll(inUseTanks.get(category)));
+		notInUseTanks.keySet().forEach(category -> allTanks.addAll(notInUseTanks.get(category)));
 
 		return allTanks;
 	}

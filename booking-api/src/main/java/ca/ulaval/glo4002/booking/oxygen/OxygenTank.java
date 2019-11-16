@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
 import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.Profit;
 
 public class OxygenTank {
 
@@ -43,4 +44,7 @@ public class OxygenTank {
         return this.price;
     }
 
+    public void updateProfit(Profit profit) {
+        profit.addExpense(price);
+    }
 }
