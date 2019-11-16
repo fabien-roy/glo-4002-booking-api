@@ -9,7 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class ProgramServiceTest {
 
@@ -31,7 +33,11 @@ class ProgramServiceTest {
 
     @Test
     void add_shouldSaveEventsToRepository() {
-        // TODO
+        ProgramDto aProgramDto = mock(ProgramDto.class);
+
+        service.add(aProgramDto);
+
+        verify(eventRepository).addAll(any());
     }
 
     @ParameterizedTest
