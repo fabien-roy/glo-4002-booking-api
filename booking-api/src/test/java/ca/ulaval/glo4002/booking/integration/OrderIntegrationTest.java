@@ -34,9 +34,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
-// TODO : Integration tests should boot server on another port and use BookingResourceConfig to inject dependencies
-// TODO : Exclude integration tests in maven
-
 public class OrderIntegrationTest {
 
     private OrderController controller;
@@ -138,7 +135,6 @@ public class OrderIntegrationTest {
         assertEquals(expectedErrorDescription, errorDto.getDescription());
     }
 
-    // TODO : ACP : This also tests pass when there is only one pass. Is that wrong?
     @Test
     public void addOrder_shouldAddOrder() {
         PassBundleDto passBundleDto = new PassBundleDto(

@@ -33,12 +33,8 @@ class ProfitServiceTest {
 	private static final Integer NUMBER_OF_ORDER = 200;
 	private static final Integer NUMBER_OF_TANK = 50;
 
-	
-	private static final Money tripPrice = new Money(new BigDecimal(10));
-
 	ProfitService profitService;
 
-	// TODO : ADD OXY, and finish setup
     @BeforeEach
     void setupProfitService() {
     	ProfitMapper mapper = new ProfitMapper();

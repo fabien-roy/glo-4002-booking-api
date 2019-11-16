@@ -16,7 +16,6 @@ public class OxygenFactory {
 		OxygenDate requestedDate = new OxygenDate(requestDate);
 
 		while (quantityToCover > 0) {
-			// TODO : category.getNumberOfTanksByBundle() != TDA
 			for (Integer i = 0; i < category.getNumberOfTanksByBundle(); i++) {
 				newTanks.add(new OxygenTank(category, requestedDate));
 			}
@@ -39,7 +38,6 @@ public class OxygenFactory {
 		}
 	}
 
-	// TODO : Test
 	public OxygenCategory buildCategory(OxygenCategories category) {
 		switch(category) {
 			case E:

@@ -14,8 +14,7 @@ public class OrderService {
 	private final OxygenInventoryService oxygenInventoryService;
 
 	@Inject
-	public OrderService(OrderRepository repository, OrderFactory factory, OrderMapper mapper, TripService tripService,
-			OxygenInventoryService oxygenInventoryService) {
+	public OrderService(OrderRepository repository, OrderFactory factory, OrderMapper mapper, TripService tripService, OxygenInventoryService oxygenInventoryService) {
 		this.repository = repository;
 		this.factory = factory;
 		this.mapper = mapper;

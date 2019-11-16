@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 class ProgramServiceTest {
 
-    ProgramService service;
+    private ProgramService service;
     private EventRepository eventRepository;
     private EventFactory eventFactory;
     private TripService tripService;
@@ -67,24 +67,13 @@ class ProgramServiceTest {
         ProgramDto aProgramDto = mock(ProgramDto.class);
         Event aEvent = mock(Event.class);
         BookingArtist expectedArtist = mock(BookingArtist.class);
-        LocalDate expectedOrderDate = LocalDate.now();
+        EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
+        when(aEvent.getEventDate()).thenReturn(expectedEventDate);
         when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
 
         service.add(aProgramDto);
 
-        verify(oxygenInventoryService, times(eventQuantity)).orderForArtist(eq(expectedArtist), eq(expectedOrderDate));
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
-    void add_shouldOrderOxygenTanksForEachActivity(int eventQuantity) {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
-        Event aEvent = mock(Event.class);
-        when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
-
-        service.add(aProgramDto);
-
-        verify(oxygenInventoryService, times(eventQuantity)).orderForActivity();
+        verify(oxygenInventoryService, times(eventQuantity)).orderForArtist(eq(expectedArtist), eq(expectedEventDate));
     }
 }

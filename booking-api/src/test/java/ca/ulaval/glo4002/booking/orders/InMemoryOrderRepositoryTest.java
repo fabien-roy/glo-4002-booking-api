@@ -100,5 +100,4 @@ class InMemoryOrderRepositoryTest {
 
 		assertTrue(repository.findAll().size() == 1);
 	}
-
 }

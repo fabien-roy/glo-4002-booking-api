@@ -47,8 +47,6 @@ public class TripService {
 		passes.forEach(pass -> {
 			Passenger passenger = new Passenger(pass.getPassNumber());
 
-			// TODO : PassBundle could return a list of required dates (if null -> start and
-			// end dates)
 			if (pass.getEventDate() == null) {
 				orderForFullFestival(passenger, shuttleCategory);
 			} else {
