@@ -28,42 +28,54 @@ public class OxygenCategoryTest {
 
 	@Test
 	void calculatePriceForCategory_shouldReturnTheCorrectPrice_whenCategoryIsE() {
-		Money price = new Money(BigDecimal.valueOf(5000));
+		Money expectedPrice = new Money(BigDecimal.valueOf(5000));
 
-		assertEquals(price, oxygenCategoryE.calculatePriceForCategory());
+		Money price = oxygenCategoryE.calculatePriceForCategory();
+
+		assertEquals(expectedPrice, price);
 	}
 
 	@Test
 	void calculatePriceForCategory_shouldReturnTheCorrectPrice_whenCategoryIsB() {
-		Money price = new Money(BigDecimal.valueOf(600 * 8 / 3));
+		Money expectedPrice = new Money(BigDecimal.valueOf(600 * 8 / 3));
 
-		assertEquals(price.getValue(), oxygenCategoryB.calculatePriceForCategory().getValue());
+		Money price = oxygenCategoryB.calculatePriceForCategory();
+
+		assertEquals(expectedPrice, price);
 	}
 
 	@Test
 	void calculatePriceForCategory_shouldReturnTheCorrectPrice_whenCategoryIsA() {
-		Money price = new Money(BigDecimal.valueOf(650 * 15 / 5));
+		Money expectedPrice = new Money(BigDecimal.valueOf(650 * 15 / 5));
 
-		assertEquals(price.getValue(), oxygenCategoryA.calculatePriceForCategory().getValue());
+		Money price = oxygenCategoryA.calculatePriceForCategory();
+
+		assertEquals(expectedPrice, price);
 	}
 
 	@Test
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsE() {
-		assertTrue(requestDate.isEqual(oxygenCategoryE.calculateReadyDateForCategory(requestDate).getValue()));
+		LocalDate ReadyDate = oxygenCategoryE.calculateReadyDateForCategory(requestDate).getValue();
+
+		assertTrue(requestDate.isEqual(ReadyDate));
 	}
 
 	@Test
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsB() {
-		LocalDate readyDate = requestDate.plusDays(10);
+		LocalDate expectedReadyDate = requestDate.plusDays(10);
 
-		assertTrue(readyDate.isEqual(oxygenCategoryB.calculateReadyDateForCategory(requestDate).getValue()));
+		LocalDate ReadyDate = oxygenCategoryB.calculateReadyDateForCategory(requestDate).getValue();
+
+		assertTrue(expectedReadyDate.isEqual(ReadyDate));
 	}
 
 	@Test
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsA() {
-		LocalDate readyDate = requestDate.plusDays(20);
+		LocalDate expectedReadyDate = requestDate.plusDays(20);
 
-		assertTrue(readyDate.isEqual(oxygenCategoryA.calculateReadyDateForCategory(requestDate).getValue()));
+		LocalDate ReadyDate = oxygenCategoryA.calculateReadyDateForCategory(requestDate).getValue();
+
+		assertTrue(expectedReadyDate.isEqual(ReadyDate));
 	}
 
 	@Test
