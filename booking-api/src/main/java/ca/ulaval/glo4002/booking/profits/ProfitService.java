@@ -13,15 +13,17 @@ public class ProfitService {
     private final OxygenInventoryRepository oxygenTankInventoryRepository;
     private final TripRepository tripRepository;
     private final EventRepository eventRepository;
+    private final ProfitMapper mapper;
     
     private Profit profit;
 
     @Inject
-    public ProfitService(OrderRepository orderRepository, OxygenInventoryRepository oxygenTankInventoryRepository, TripRepository tripRepository, EventRepository eventRepository) {
+    public ProfitService(OrderRepository orderRepository, OxygenInventoryRepository oxygenTankInventoryRepository, TripRepository tripRepository, EventRepository eventRepository, ProfitMapper mapper) {
         this.orderRepository = orderRepository;
         this.oxygenTankInventoryRepository = oxygenTankInventoryRepository;
         this.tripRepository = tripRepository;
         this.eventRepository = eventRepository;
+        this.mapper = mapper;
 
         profit = new Profit();
     }
@@ -36,8 +38,6 @@ public class ProfitService {
     }
 
     public ProfitsDto get() {
-        // TODO
-
-        return null;
+        return mapper.toDto(profit);
     }
 }
