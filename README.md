@@ -4,6 +4,10 @@
 
 Cette application à été développée par Random Pogo. Elle permet aux festivaliers de réserver leur place pour GLOW-4002. Après la réservation de billet(s), les transport et les bombonne d'oxygène nécessaire pour chaque festivalier sont gérer par l'application. Les organisateurs peuvent également accéder à une liste d'artistes qu'ils peuvent réserver pour faire partie de la programmation. Ils peuvent également planifier des activités, et recevront l'oxygène en conséquence. Les organisateurs ont aussi accès aux statistiques financières du festival.
 
+## Known technical debts
+
+See `/docs/KnownTechnicalDebts.md` to know what is not perfect in this app.
+
 ## Appels possibles
 
 Voici la liste de tous les appels possible dans l'application. Les appels sont classés en fonction des demandes du client. L'addresse actuelle de l'application est "http://localhost:8080"
