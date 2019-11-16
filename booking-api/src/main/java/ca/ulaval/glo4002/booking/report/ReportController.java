@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.report;
 
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
-import ca.ulaval.glo4002.booking.oxygen.report.OxygenReport;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.profits.ProfitsDto;
 import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportDto;
@@ -48,6 +47,7 @@ public class ReportController {
         ProfitsDto profitsDto = null;
 
         try {
+            profitService.calculateProfit();
             profitsDto = profitService.get();
         } catch (Exception exception) {
             exceptionMapper.mapError(exception);
