@@ -134,31 +134,6 @@ public class OxygenTankProducerTest {
 		assertTrue(createdTanks.isEmpty());
 	}
 
-	void produceOxygenByQuantity_shouldReturnTheCorrectAmountOfTanksNeededToCoverReserve() {
-		OxygenCategories aCategory = OxygenCategories.A;
-		OxygenCategory category = mock(OxygenCategory.class);
-		Integer numberTanksCreated = getNumberCreated(CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_A_BY_BUNDLE);
-		when(inventory.requestTankByCategory(aCategory, aCategory, CATEGORY_A_TANKS_NEEDED_BY_DAYS))
-				.thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
-
-		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, VALID_CATEGORY_A_BUILD_DATE, 1);
-
-		assertEquals(numberTanksCreated, createdTanks.size());
-		assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory().getCategory());
-	}
-
-	void produceOxygenByQuantity_shouldReturnTheCorrectAmountOfBTanks_withNoTimeToCreateATanks() {
-		Integer numberOfTanksCreated = getNumberCreated(CATEGORY_A_TANKS_NEEDED_BY_DAYS, NUMBER_OF_TANK_B_BY_BUNDLE);
-		OxygenCategory category = mock(OxygenCategory.class);
-		when(inventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.B, CATEGORY_A_TANKS_NEEDED_BY_DAYS))
-				.thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
-
-		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, INVALID_CATEGORY_A_BUILD_DATE, 1);
-
-		assertEquals(numberOfTanksCreated, createdTanks.size());
-		assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory().getCategory());
-	}
-
 	@Test
 	void produceOxygenByQuantity_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() {
 		OxygenCategory category = mock(OxygenCategory.class);
@@ -190,8 +165,6 @@ public class OxygenTankProducerTest {
 	}
 
 	@Test
-	// TODO : Tests for history calls
-
 	private Integer getNumberCreated(Integer quantityNeededByDays, Integer quantityByBundle) {
 		return (int) (Math.ceil((quantityNeededByDays / (double) quantityByBundle)) * quantityByBundle);
 	}

@@ -94,7 +94,6 @@ public class OxygenTankProducer {
 		return newTanks;
 	}
 
-	// TODO Move somewhere else
 	private PassCategories convertOxygenCategoryToPassCategories(OxygenCategories oxygenCategories) {
 		PassCategories passCategories = PassCategories.SUPERNOVA;
 

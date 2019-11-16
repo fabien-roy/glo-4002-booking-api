@@ -11,8 +11,6 @@ public class ProfitTest {
 
     private Profit profit;
 
-    // TODO : test need refactoring
-
     @BeforeEach
     void setupProfit() {
         profit = new Profit();

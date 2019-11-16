@@ -40,7 +40,7 @@ class ProfitServiceTest {
     	when(mockedEventRepository.findAll()).thenReturn(eventList);
     	when(mockedOrderRepository.findAll()).thenReturn(orderList);
     }
-    
+
     void calculateProfit_shouldCalculateTheRevenueExpenseAndProfit() {
     	// TODO
     }
