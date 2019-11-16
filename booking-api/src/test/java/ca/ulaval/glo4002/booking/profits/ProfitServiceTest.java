@@ -66,7 +66,7 @@ class ProfitServiceTest {
     }
 
     @Test
-    void calculateProfit_shouldCalculateTheRevenueExpenseAndProfit() {
+    void calculateProfit_shouldUpdateProfitValueForEachObjectThatHaveAPrice() {
 		profitService.calculateProfit();
 
 		tripList.forEach(trip -> verify(trip, times(NUMBER_OF_TRIP)).updateProfit(any()));
