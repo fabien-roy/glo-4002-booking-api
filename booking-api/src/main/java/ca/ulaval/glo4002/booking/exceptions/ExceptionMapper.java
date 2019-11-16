@@ -10,8 +10,9 @@ public class ExceptionMapper {
 	public ResponseEntity mapError(Exception exception) {
 		if (exception instanceof BookingException) {
 			BookingException bookingException = (BookingException) exception;
-			ErrorDto errorDto = bookingException.toErrorDto();
-			HttpStatus status = bookingException.getStatus();
+			ErrorDto errorDto = bookingException.toErrorDto(); // TODO : OPT : ErrorDto should be built by ExceptionMapper
+			HttpStatus status = bookingException.getStatus(); // TODO : OPT : Status should be handled by ExceptionMapper, not Exception
+
 			return ResponseEntity.status(status).body(errorDto);
 		} else {
 			return ResponseEntity.badRequest().build();
