@@ -1,26 +1,28 @@
 # Projet 2019 - Équipe 5 : Random Pogo
 
-**README à mettre à jour pour la MEP 2.0**
+## MEP 2.0
 
-Cette application à été développer par Random Pogo. Elle permet aux festivalier de réserver leur place pour GLOW-4002. Après la réservation de billet(s), les transport et les bombonne d'oxygène nécessaire pour chaque festivalier sont gérer par l'application.
+Cette application à été développée par Random Pogo. Elle permet aux festivaliers de réserver leur place pour GLOW-4002. Après la réservation de billet(s), les transport et les bombonne d'oxygène nécessaire pour chaque festivalier sont gérer par l'application. Les organisateurs peuvent également accéder à une liste d'artistes qu'ils peuvent réserver pour faire partie de la programmation. Ils peuvent également planifier des activités, et recevront l'oxygène en conséquence. Les organisateurs ont aussi accès aux statistiques financières du festival.
 
 ## Appels possibles
 
-Voici la liste de tout les appels possible dans l'application. Les appels sont classé par user story.
+Voici la liste de tous les appels possible dans l'application. Les appels sont classés en fonction des demandes du client. L'addresse actuelle de l'application est "http://localhost:8080"
  
 ### POST /orders
 
+
 #### Requête
+
+Permet de créer une nouvelle commande. Exemple : 
 
 ```
 {
-   "orderDate": "2050-05-21T15:23:20.142Z"::string,
-   "vendorCode": "TEAM"::string,
-   "passes": {
-               "passCategory": "supernova" || "supergiant" || "nebula" ::string,
-               "passOption": "package" || "singlePass" ::string,
-               "eventDates": []::string[] 
-             }
+  "orderDate": "2050-05-21T15:23:20.142Z",
+  "vendorCode": "TEAM",
+  "passes": {
+              "passCategory":"supergiant",
+              "passOption": "package"
+            }
 }
 ```
 Permet de passer une commande au serveur pour un nombre illimité de passe quotidienne ou un seul package.
@@ -30,11 +32,11 @@ Permet de passer une commande au serveur pour un nombre illimité de passe quoti
 
 HTTP 201 CREATED
 
-Une réponse contenant toutes les informations sur la commande effectuée est retournée par le serveur. Celle-ci prend cette forme par exemple :
+Une réponse contenant toutes les informations sur la commande effectuée est retournée par le serveur. Dans la dernière version du programme, l'orderNumber est maintenant préfixé du vendorCode. Exemple de réponse :
 
 ```
 {
-   "orderNumber": 1,
+   "orderNumber": TEAM-1,
    "orderPrice": 500000.00,
    "orderDate": "2050-05-21T15:23:20.142Z",
    "vendorCode": "TEAM",
@@ -54,8 +56,8 @@ HTTP 404 NOT FOUND
 Si la value d’achat est en dehors de la période d’achat (1er janvier 2050 au 16 juillet 2050 inclusivement).
 ```
    {
-     "error": "ORDER_NOT_FOUND"::string,
-     "description" : "order value should be between January 1 2050 and July 16 2050"::string
+     "error": "ORDER_NOT_FOUND",
+     "description" : "order value should be between January 1 2050 and July 16 2050"
    } 
 ```
 
@@ -65,8 +67,8 @@ Si une value (dans eventDates) pour laquelle on veut acheter une passe est en de
 
    ```
    {
-     "error": "INVALID_PASS_DATE"::string,
-     "description" : "event value should be between July 17 2050 and July 24 2050"::string
+     "error": "INVALID_PASS_DATE",
+     "description" : "event value should be between July 17 2050 and July 24 2050"
    }  
 ```
 HTTP 400 Bad request
@@ -74,23 +76,24 @@ HTTP 400 Bad request
 Pour les autres erreurs (ex. passCategory qui est invalide, si le champ eventDates est présent alors qu’un package est acheté, etc.)
 ```
 {
-  "error": "INVALID_FORMAT"::string,
-  "description": "invalid format"::string
+  "error": "INVALID_FORMAT",
+  "description": "invalid format"
 } 
 ```
 ### GET /orders/{order-id}
 
+Retourne un résumé de la commande portant l'id indiqué. Exemple : 
+
 #### Réponses
 ```
 {
-    "orderPrice": 0.00::float,
+    "orderPrice": 500000.00,
     "passes": [
                   {
-                    "passNumber": 0::long,
-                    "passCategory": "supernova" || "supergiant" || "nebula" ::string,
-                    "passOption": "package" || "singlePass" ::string,
-                    "eventDate": "2017-07-01" ::string
-                  }, ...
+                    "passNumber": 345678912,
+                    "passCategory": "supergiant",
+                    "passOption": "package",
+                  }
               ]
 }
 ```
@@ -100,12 +103,14 @@ HTTP 404 Not found
 Si la commande n’existe pas
 ```
 {
-  "error": "ORDER NOT FOUND"::string,
-  "description": "order with number XX not found"::string
+  "error": "ORDER NOT FOUND",
+  "description": "order with number XX not found":
 } 
 ```
 
-### GET /shuttle-manifests?value="value"
+### GET /shuttle-manifests?date="value"
+
+Retourne les départs et arrivées, ainsi que leur nom de navette et les passagers présents. Si une date est inscrite en paramètre, retourne les voyages de la date. Sinon, retourne tous les voyages pour la durée du festival. Exemple : 
 
 (value est optionnel)
 	
@@ -138,7 +143,10 @@ Si la commande n’existe pas
 }
 ```
 
-### GET /oxygenReport/o2
+### GET /report/o2
+
+Retourne un rapport lié à l'inventaire et l'utilisation de l'oxygène. Exemple : 
+
 
 ```
 { 
@@ -185,11 +193,113 @@ Si la commande n’existe pas
 } 
 ```
 
+### GET /program/artists?orderBy={ordering}
+
+Ordering peut être soit "lowCosts" pour classer en ordre croissant de coût, "mostPopular" pour class par côte de popularité (décroissant) ou rien, si le champ est vide, ils seront retournés selon l'ordre qu'ils ont été ajoutés. Exemple de réponse : 
+
+```
+{
+        "artists": [
+            "Cyndi Dauppler",
+            "Lady Gamma",
+            "Sun 41",
+            "Bruno Mars",
+            "Suns N’ Roses",
+            "XRay Charles",
+            "Megadearth",
+            "30 Seconds to Mars",
+            "Mumford and Suns",
+            "Black Earth Peas",
+            "Simple Planet",
+            "Kelvin Harris",
+            "Freddie Mercury",
+            "Eclipse Presley",
+            "Kid Rocket",
+            "David Glowie",
+            "Novana",
+            "Rolling Stars",
+            "Coldray"
+        ]
+    }
+```
+
+
+### POST /program
+
+Permet de créer la programmation du festival. Exemple : 
+
+```
+{
+   "program": [
+            {
+               "eventDate": "2050-07-17",
+               "am": "yoga",
+               "pm": "Kid Rocket"
+            },
+            {
+               "eventDate": "2050-07-18",
+               "am": "yoga",
+               "pm": "Freddie Mercury"
+            },
+            {
+               "eventDate": "2050-07-19",
+               "am": "cardio",
+               "pm": "Kelvin Harris"
+            },
+            {
+               "eventDate": "2050-07-20",
+               "am": "cardio",
+               "pm": "Lady Gamma"
+            },
+            {
+               "eventDate": "2050-07-21",
+               "am": "yoga",
+               "pm": "30 Seconds to Mars"
+            },
+            {
+               "eventDate": "2050-07-22",
+               "am": "yoga",
+               "pm": "Coldray"
+            },
+            {
+               "eventDate": "2050-07-23",
+               "am": "cardio",
+               "pm": "Suns N’ Roses"
+            },
+            {
+               "eventDate": "2050-07-24",
+               "am": "yoga",
+               "pm": "Eclipse Presley"
+            }
+       ]
+}
+```
+
+
+Un program valide ne doit pas contenir deux fois la même date, ne peut pas avoir un artiste en am ou une activité en pm et ne doit pas avoir deux fois le même artiste. En cas de program invalide, l'organisateur recevra l'erreur suivante : 
+
+```
+{
+  "error": "INVALID_PROGRAM",
+  "description" : "the program is invalid"
+} 
+```
+
+### GET /report/profits
+
+Retourne les profits / pertes du festival. Exemple : 
+
+```
+{
+  "in": 100.0
+  "out": 50.0
+  "profit": 50.0, => profit
+}
+```
+
 ## Équipe
 
-- Alexandre Boily
 - Brian Cloutier
 - Fabien Roy
 - Guillaume Bégin
-- Louis-Philippe Paquet
 - Marie-Claude Gauthier
