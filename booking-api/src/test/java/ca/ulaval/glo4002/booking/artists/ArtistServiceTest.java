@@ -22,8 +22,6 @@ import ca.ulaval.glo4002.booking.profits.Money;
 
 class ArtistServiceTest {
 
-    // TODO : ArtistService test should mock ArtistClient
-
     private ArtistService service;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
     private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);

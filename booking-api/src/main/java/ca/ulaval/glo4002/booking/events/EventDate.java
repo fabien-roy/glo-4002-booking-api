@@ -6,7 +6,6 @@ import java.util.List;
 
 public class EventDate {
 
-    // TODO : ACP : Those should be EventDate
     public static final LocalDate START_DATE = LocalDate.of(2050, 7, 17);
     public static final LocalDate END_DATE = LocalDate.of(2050, 7, 24);
     private LocalDate value;
