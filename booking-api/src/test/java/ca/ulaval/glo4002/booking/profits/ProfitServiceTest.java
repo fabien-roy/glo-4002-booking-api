@@ -11,7 +11,6 @@ import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,21 +26,25 @@ class ProfitServiceTest {
 	private List<Event> eventList;
 	private List<Order> orderList;
 	private List<OxygenTank> tanksList;
+	private ProfitService profitService;
+	private Trip mockedTrip;
+	private Event mockedEvent;
+	private Order mockedOrder;
+	private OxygenTank mockedTank;
+
 
 	private static final Integer NUMBER_OF_TRIP = 10;
 	private static final Integer NUMBER_OF_EVENT = 8;
 	private static final Integer NUMBER_OF_ORDER = 200;
 	private static final Integer NUMBER_OF_TANK = 50;
 
-	ProfitService profitService;
-
     @BeforeEach
     void setupProfitService() {
     	ProfitMapper mapper = new ProfitMapper();
-    	Trip mockedTrip = mock(Trip.class);
-    	Event mockedEvent = mock(Event.class);
-    	Order mockedOrder = mock(Order.class);
-    	OxygenTank mockedTank = mock(OxygenTank.class);
+    	mockedTrip = mock(Trip.class);
+    	mockedEvent = mock(Event.class);
+    	mockedOrder = mock(Order.class);
+    	mockedTank = mock(OxygenTank.class);
     	
     	tripList = Collections.nCopies(NUMBER_OF_TRIP, mockedTrip);
     	eventList = Collections.nCopies(NUMBER_OF_EVENT, mockedEvent);
@@ -65,9 +68,9 @@ class ProfitServiceTest {
     void calculateProfit_shouldUpdateProfitValueForEachObjectThatHaveAPrice() {
 		profitService.calculateProfit();
 
-		tripList.forEach(trip -> verify(trip, times(NUMBER_OF_TRIP)).updateProfit(any()));
-		eventList.forEach(event -> verify(event, times(NUMBER_OF_EVENT)).updateProfit(any()));
-		orderList.forEach(order -> verify(order, times(NUMBER_OF_ORDER)).updateProfit(any()));
-		tanksList.forEach(tank -> verify(tank, times(NUMBER_OF_TANK)).updateProfit(any()));
+		verify(mockedTrip, times(NUMBER_OF_TRIP)).updateProfit(any());
+		verify(mockedEvent, times(NUMBER_OF_EVENT)).updateProfit(any());
+		verify(mockedOrder, times(NUMBER_OF_ORDER)).updateProfit(any());
+		verify(mockedTank, times(NUMBER_OF_TANK)).updateProfit(any());
     }
 }
