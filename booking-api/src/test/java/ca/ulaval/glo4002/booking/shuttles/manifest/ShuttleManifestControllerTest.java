@@ -4,14 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestController;
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestDto;
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestService;
 
 class ShuttleManifestControllerTest {
 
@@ -20,9 +17,10 @@ class ShuttleManifestControllerTest {
 
     @BeforeEach
     void setUpController() {
+        ExceptionMapper exceptionMapper = new ExceptionMapper();
         service = mock(ShuttleManifestService.class);
 
-        controller = new ShuttleManifestController(service);
+        controller = new ShuttleManifestController(exceptionMapper, service);
     }
 
     @Test

@@ -9,16 +9,17 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 
 @Path("/shuttle-manifests")
 public class ShuttleManifestController {
 
+    private final ExceptionMapper exceptionMapper;
 	private final ShuttleManifestService service;
 
 	@Inject
-	public ShuttleManifestController(ShuttleManifestService service) {
+	public ShuttleManifestController(ExceptionMapper exceptionMapper, ShuttleManifestService service) {
+		this.exceptionMapper = exceptionMapper;
 		this.service = service;
 	}
 
@@ -26,23 +27,21 @@ public class ShuttleManifestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> get(@QueryParam("date") String date) {
 		ShuttleManifestDto shuttleManifestDto;
-		ExceptionMapper exceptionMapper = new ExceptionMapper();
 
-		if (date != null) {
+		if (date == null) {
 			try {
-				shuttleManifestDto = service.getTripsForDate(date);
+				shuttleManifestDto = service.getTrips();
 			} catch (Exception exception) {
 				return exceptionMapper.mapError(exception);
 			}
 		} else {
 			try {
-				shuttleManifestDto = service.getTrips();
-			} catch (BookingException exception) {
-				return ResponseEntity.status(exception.getStatus()).body(exception.toErrorDto());
+				shuttleManifestDto = service.getTripsForDate(date);
 			} catch (Exception exception) {
-				return ResponseEntity.badRequest().build();
+				return exceptionMapper.mapError(exception);
 			}
 		}
+
 		return ResponseEntity.ok().body(shuttleManifestDto);
 	}
 }

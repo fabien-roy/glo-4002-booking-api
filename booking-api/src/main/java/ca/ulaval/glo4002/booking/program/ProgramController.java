@@ -18,11 +18,13 @@ import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 @Path("/program")
 public class ProgramController {
 
+    private final ExceptionMapper exceptionMapper;
 	private final ArtistService artistService;
 	private final ProgramService programService;
 
 	@Inject
-	public ProgramController(ArtistService artistService, ProgramService programService) {
+	public ProgramController(ExceptionMapper exceptionMapper, ArtistService artistService, ProgramService programService) {
+		this.exceptionMapper = exceptionMapper;
 		this.artistService = artistService;
 		this.programService = programService;
 	}
@@ -32,7 +34,6 @@ public class ProgramController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getArtists(@QueryParam("orderBy") String orderBy) {
 		ArtistListDto artistListDto;
-		ExceptionMapper exceptionMapper = new ExceptionMapper();
 
 		try {
 			if (orderBy == null) {
@@ -50,8 +51,6 @@ public class ProgramController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> add(ProgramDto programDto) {
-		ExceptionMapper exceptionMapper = new ExceptionMapper();
-
 		try {
 			programService.add(programDto);
 		} catch (Exception exception) {

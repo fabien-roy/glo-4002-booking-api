@@ -18,10 +18,12 @@ import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 @Path("/orders")
 public class OrderController {
 
+	private final ExceptionMapper exceptionMapper;
 	private final OrderService service;
 
 	@Inject
-	public OrderController(OrderService service) {
+	public OrderController(ExceptionMapper exceptionMapper, OrderService service) {
+		this.exceptionMapper = exceptionMapper;
 		this.service = service;
 	}
 
@@ -30,7 +32,7 @@ public class OrderController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber) {
 		OrderWithPassesAsPassesDto orderDto;
-		ExceptionMapper exceptionMapper = new ExceptionMapper();
+
 		try {
 			orderDto = service.getByOrderNumber(requestedOrderNumber);
 		} catch (Exception exception) {
@@ -44,7 +46,6 @@ public class OrderController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto requestedOrderDto) {
 		String orderNumber;
-		ExceptionMapper exceptionMapper = new ExceptionMapper();
 
 		try {
 			orderNumber = service.order(requestedOrderDto);

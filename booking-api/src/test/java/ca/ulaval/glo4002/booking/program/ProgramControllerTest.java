@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -21,10 +22,11 @@ class ProgramControllerTest {
 
     @BeforeEach
     void setUpController() {
+        ExceptionMapper exceptionMapper = new ExceptionMapper();
         artistService = mock(ArtistService.class);
         programService = mock(ProgramService.class);
 
-        controller = new ProgramController(artistService, programService);
+        controller = new ProgramController(exceptionMapper, artistService, programService);
     }
 
     @Test
