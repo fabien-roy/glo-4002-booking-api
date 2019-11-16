@@ -20,6 +20,7 @@ import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportService;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.PassFactory;
+import ca.ulaval.glo4002.booking.profits.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.program.ProgramController;
 import ca.ulaval.glo4002.booking.program.ProgramService;
@@ -106,6 +107,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenInventoryMapper.class);
         bindAsContract(OxygenHistoryMapper.class);
         bindAsContract(OxygenReportMapper.class);
+        bindAsContract(ProfitMapper.class);
     }
 
     private void bindControllers() {
