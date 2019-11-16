@@ -2,9 +2,9 @@ package ca.ulaval.glo4002.booking.profits;
 
 public class ProfitsDto {
 
-    private float in;
-    private float out;
-    private float profit;
+    private Float in;
+    private Float out;
+    private Float profit;
 
     public ProfitsDto(float in, float out, float profit) {
         this.in = in;
