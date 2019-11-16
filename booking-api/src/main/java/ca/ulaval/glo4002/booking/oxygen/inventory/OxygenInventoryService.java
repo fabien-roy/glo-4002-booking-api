@@ -44,4 +44,12 @@ public class OxygenInventoryService {
 	private void orderForEventDate(OxygenCategories oxygenCategory, LocalDate orderDate) {
 		producer.produceOxygenForOrder(oxygenCategory, orderDate);
 	}
+
+    public void orderForArtist() {
+		// TODO : OxygenInventoryService.orderForArtist
+    }
+
+	public void orderForActivity() {
+		// TODO : OxygenInventoryService.orderForActivity
+	}
 }

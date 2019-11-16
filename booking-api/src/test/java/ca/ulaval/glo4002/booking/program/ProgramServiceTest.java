@@ -1,5 +1,8 @@
 package ca.ulaval.glo4002.booking.program;
 
+import ca.ulaval.glo4002.booking.artists.BookingArtist;
+import ca.ulaval.glo4002.booking.events.Event;
+import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.events.EventFactory;
 import ca.ulaval.glo4002.booking.events.EventRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
@@ -9,9 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Collections;
+
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class ProgramServiceTest {
 
@@ -43,18 +47,42 @@ class ProgramServiceTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void add_shouldOrderTripsForEachArtist(int eventQuantity) {
-        // TODO
+        ProgramDto aProgramDto = mock(ProgramDto.class);
+        Event aEvent = mock(Event.class);
+        BookingArtist expectedArtist = mock(BookingArtist.class);
+        EventDate expectedEventDate = mock(EventDate.class);
+        when(aEvent.getArtist()).thenReturn(expectedArtist);
+        when(aEvent.getEventDate()).thenReturn(expectedEventDate);
+        when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
+
+        service.add(aProgramDto);
+
+        verify(tripService, times(eventQuantity)).orderForArtist(eq(expectedArtist), eq(expectedEventDate));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void add_shouldOrderOxygenTanksForEachArtist(int eventQuantity) {
-        // TODO
+        ProgramDto aProgramDto = mock(ProgramDto.class);
+        Event aEvent = mock(Event.class);
+        when(aProgramDto.getProgram()).thenReturn(Collections.nCopies(eventQuantity, mock(ProgramEventDto.class)));
+        when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
+
+        service.add(aProgramDto);
+
+        verify(oxygenInventoryService, times(eventQuantity)).orderForArtist();
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void add_shouldOrderOxygenTanksForEachActivity(int eventQuantity) {
-        // TODO
+        ProgramDto aProgramDto = mock(ProgramDto.class);
+        Event aEvent = mock(Event.class);
+        when(aProgramDto.getProgram()).thenReturn(Collections.nCopies(eventQuantity, mock(ProgramEventDto.class)));
+        when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
+
+        service.add(aProgramDto);
+
+        verify(oxygenInventoryService, times(eventQuantity)).orderForActivity();
     }
 }
