@@ -16,8 +16,8 @@ import java.util.List;
 
 public class OxygenInventoryService {
 
-	private static final OxygenCategories OXYGEN_CATEGORY_FOR_ARTIST = OxygenCategories.E;
-	private static final Integer OXYGEN_TANKS_NEEDED_PER_ARTIST = 6;
+	static final OxygenCategories OXYGEN_CATEGORY_FOR_ARTIST = OxygenCategories.E;
+	static final Integer OXYGEN_TANKS_NEEDED_PER_ARTIST = 6;
 
     private final OxygenFactory factory;
 	private final OxygenTankProducer producer;
@@ -50,7 +50,6 @@ public class OxygenInventoryService {
 		// TODO : Order for activity
 	}
 
-	// TODO : orderForArtist tests
     public void orderForArtist(BookingArtist artist, EventDate orderDate) {
 		OxygenCategory category = factory.buildCategory(OXYGEN_CATEGORY_FOR_ARTIST);
 		Integer amountOfOxygenTanksNeeded = artist.getNumberOfPeople() * OXYGEN_TANKS_NEEDED_PER_ARTIST;

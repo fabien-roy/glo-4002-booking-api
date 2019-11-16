@@ -39,7 +39,6 @@ public class OxygenFactory {
 		}
 	}
 
-	// TODO : Test
 	public OxygenCategory buildCategory(OxygenCategories category) {
 		switch(category) {
 			case E:
