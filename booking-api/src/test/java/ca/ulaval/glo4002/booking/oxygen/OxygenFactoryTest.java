@@ -85,6 +85,33 @@ public class OxygenFactoryTest {
     }
 
     @Test
+    void buildCategory_shouldReturnCategoryE_whenCategoryIsE() {
+        OxygenCategories oxygenCategory = OxygenCategories.E;
+
+        OxygenCategory category = factory.buildCategory(oxygenCategory);
+
+        assertEquals(OxygenCategories.E, category.getCategory());
+    }
+
+    @Test
+    void buildCategory_shouldReturnCategoryB_whenCategoryIsB() {
+        OxygenCategories oxygenCategory = OxygenCategories.B;
+
+        OxygenCategory category = factory.buildCategory(oxygenCategory);
+
+        assertEquals(OxygenCategories.B, category.getCategory());
+    }
+
+    @Test
+    void buildCategory_shouldReturnCategoryA_whenCategoryIsA() {
+        OxygenCategories oxygenCategory = OxygenCategories.A;
+
+        OxygenCategory category = factory.buildCategory(oxygenCategory);
+
+        assertEquals(OxygenCategories.A, category.getCategory());
+    }
+
+    @Test
     void buildCategoryForRequestDate_shouldReturnNewCategoryA_whenDateIsInRange() {
         OxygenCategory category = factory.buildCategoryForRequestDate(LocalDate.of(2050, 6, 27), OxygenCategories.A);
 
