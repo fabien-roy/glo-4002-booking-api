@@ -6,6 +6,7 @@ import java.util.List;
 
 public class EventDate {
 
+    // TODO : Change START_DATE and EVENT_DATE to EventDate
     public static final LocalDate START_DATE = LocalDate.of(2050, 7, 17);
     public static final LocalDate END_DATE = LocalDate.of(2050, 7, 24);
     private LocalDate value;
@@ -53,5 +54,15 @@ public class EventDate {
         if (value.isBefore(START_DATE) || value.isAfter(END_DATE)) {
             throw new InvalidEventDateException();
         }
+    }
+
+    // TODO : Delete temporary method EventDate.getStartEventDate
+    public static EventDate getStartEventDate() {
+        return new EventDate(START_DATE);
+    }
+
+    // TODO : Delete temporary method EventDate.getEndEventDate
+    public static EventDate getEndEventDate() {
+        return new EventDate(END_DATE);
     }
 }
