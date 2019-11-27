@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.artists.BookingArtist;
 import ca.ulaval.glo4002.booking.events.EventDate;
@@ -17,13 +17,13 @@ import ca.ulaval.glo4002.booking.shuttles.ShuttleFactory;
 
 public class TripService {
 
-	private final BookingConfiguration bookingConfiguration;
+	private final Configuration configuration;
 	private final TripRepository repository;
 	private final ShuttleFactory factory;
 
 	@Inject
-	public TripService(BookingConfiguration bookingConfiguration, TripRepository repository, ShuttleFactory factory) {
-		this.bookingConfiguration = bookingConfiguration;
+	public TripService(Configuration configuration, TripRepository repository, ShuttleFactory factory) {
+		this.configuration = configuration;
 		this.repository = repository;
 		this.factory = factory;
 	}
@@ -64,8 +64,8 @@ public class TripService {
 	}
 
 	private void orderForFullFestival(Passenger passenger, ShuttleCategories category) {
-		EventDate startDate = bookingConfiguration.getStartEventDate();
-		EventDate endDate = bookingConfiguration.getEndEventDate();
+		EventDate startDate = configuration.getStartEventDate();
+		EventDate endDate = configuration.getEndEventDate();
 
 		repository.addPassengerToArrivals(passenger, category, startDate);
 		repository.addPassengerToDepartures(passenger, category, endDate);

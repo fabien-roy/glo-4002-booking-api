@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.artists.*;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.events.*;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -52,7 +53,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindConfiguration() {
-        bindAsContract(BookingConfiguration.class).in(Singleton.class);
+        bindAsContract(Configuration.class).in(Singleton.class);
     }
 
     private void bindGenerators() {

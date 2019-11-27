@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.artists.BookingArtist;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
-import ca.ulaval.glo4002.booking.events.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,7 +31,7 @@ import static ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService.
 class OxygenInventoryServiceTest {
 
 	private OxygenInventoryService service;
-	private BookingConfiguration configuration;
+	private Configuration configuration;
 	private OxygenFactory factory;
 	private OxygenTankProducer producer;
 
@@ -48,7 +47,7 @@ class OxygenInventoryServiceTest {
 
 	@BeforeEach
 	void setUpConfiguration() {
-		configuration = mock(BookingConfiguration.class);
+		configuration = mock(Configuration.class);
 
 		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
 		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());

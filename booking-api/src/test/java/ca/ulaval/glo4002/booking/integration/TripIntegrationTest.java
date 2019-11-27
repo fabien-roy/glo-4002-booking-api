@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -48,15 +48,15 @@ class TripIntegrationTest {
 
     @BeforeEach
     void setUpController() {
-        BookingConfiguration bookingConfiguration = new BookingConfiguration();
+        Configuration configuration = new Configuration();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        EventDateFactory eventDateFactory = new EventDateFactory(bookingConfiguration);
+        EventDateFactory eventDateFactory = new EventDateFactory(configuration);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory(bookingConfiguration);
+        OxygenFactory oxygenFactory = new OxygenFactory(configuration);
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
@@ -71,7 +71,7 @@ class TripIntegrationTest {
         ShuttleManifestMapper shuttleManifestMapper = new ShuttleManifestMapper(tripMapper);
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(bookingConfiguration, tripRepository, shuttleFactory);
+        TripService tripService = new TripService(configuration, tripRepository, shuttleFactory);
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
         ShuttleManifestService shuttleManifestService = new ShuttleManifestService(tripRepository, shuttleManifestMapper);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);

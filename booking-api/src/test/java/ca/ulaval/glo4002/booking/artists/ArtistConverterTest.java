@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,7 +24,7 @@ public class ArtistConverterTest {
 	// TODO : Mock ArtistRepository in ArtistConverter tests
 
 	private ArtistConverter artistConverter;
-	private BookingConfiguration configuration;
+	private Configuration configuration;
 	private ArtistRepository artistRepository;
 	private List<ExternalArtist> externalArtists;
 	private static WireMockServer wiremockServer;
@@ -210,7 +210,7 @@ public class ArtistConverterTest {
 
 	@BeforeEach
 	void setUpConfiguration() {
-		configuration = mock(BookingConfiguration.class);
+		configuration = mock(Configuration.class);
 
 		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
 		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());

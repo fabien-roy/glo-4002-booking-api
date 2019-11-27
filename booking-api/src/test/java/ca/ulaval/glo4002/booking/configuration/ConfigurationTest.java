@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking;
+package ca.ulaval.glo4002.booking.configuration;
 
 import ca.ulaval.glo4002.booking.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BookingConfigurationTest {
+class ConfigurationTest {
 
-    private BookingConfiguration configuration;
+    private Configuration configuration;
 
     @BeforeEach
     void setUpConfiguration() {
-        this.configuration = new BookingConfiguration();
+        this.configuration = new Configuration();
     }
 
     @Test

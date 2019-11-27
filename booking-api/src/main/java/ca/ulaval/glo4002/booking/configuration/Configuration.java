@@ -1,13 +1,13 @@
-package ca.ulaval.glo4002.booking;
+package ca.ulaval.glo4002.booking.configuration;
 
 import ca.ulaval.glo4002.booking.events.EventDate;
 
-public class BookingConfiguration {
+public class Configuration {
 
     private EventDate startEventDate;
     private EventDate endEventDate;
 
-    public BookingConfiguration() {
+    public Configuration() {
         startEventDate = EventDate.getStartEventDate();
         endEventDate = EventDate.getEndEventDate();
     }

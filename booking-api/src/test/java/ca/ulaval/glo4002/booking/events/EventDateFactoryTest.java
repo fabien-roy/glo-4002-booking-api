@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.events;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 class EventDateFactoryTest {
 
     EventDateFactory factory;
-    private BookingConfiguration configuration;
+    private Configuration configuration;
 
     @BeforeEach
     void setUpFactory() {
@@ -21,7 +21,7 @@ class EventDateFactoryTest {
 
     @BeforeEach
     void setUpConfiguration() {
-        configuration = mock(BookingConfiguration.class);
+        configuration = mock(Configuration.class);
 
         when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
         when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());

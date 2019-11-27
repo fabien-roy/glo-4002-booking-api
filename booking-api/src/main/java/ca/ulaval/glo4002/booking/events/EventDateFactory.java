@@ -1,30 +1,29 @@
 package ca.ulaval.glo4002.booking.events;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.program.InvalidProgramException;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
 
 public class EventDateFactory {
 
-    private final BookingConfiguration configuration;
+    private final Configuration configuration;
 
     @Inject
-    public EventDateFactory(BookingConfiguration configuration) {
+    public EventDateFactory(Configuration configuration) {
         this.configuration = configuration;
     }
 
     public EventDate build(String eventDate) {
-        EventDate parsedEventDate = parseEventDate(eventDate);
+        EventDate parsedEventDate = parse(eventDate);
 
         validateEventDate(parsedEventDate);
 
         return parsedEventDate;
     }
 
-    private EventDate parseEventDate(String eventDate) {
+    public EventDate parse(String eventDate) {
         EventDate parsedEventDate;
 
         try {

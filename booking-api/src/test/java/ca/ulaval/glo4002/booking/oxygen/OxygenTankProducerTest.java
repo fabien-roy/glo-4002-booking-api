@@ -7,7 +7,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class OxygenTankProducerTest {
 	// TODO : Mock OxygenFactory in OxygenTankProducer tests
 
 	private OxygenTankProducer producer;
-	private BookingConfiguration configuration;
+	private Configuration configuration;
 	private OxygenInventoryRepository inventoryRepository;
 	private OxygenHistoryRepository historyRepository;
 	private OxygenInventory inventory;
@@ -53,7 +53,7 @@ public class OxygenTankProducerTest {
 
 	@BeforeEach
 	void setUpConfiguration() {
-		configuration = mock(BookingConfiguration.class);
+		configuration = mock(Configuration.class);
 
 		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
 		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());

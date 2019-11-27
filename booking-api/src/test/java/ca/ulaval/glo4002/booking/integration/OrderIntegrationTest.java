@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -44,15 +44,15 @@ public class OrderIntegrationTest {
 
     @BeforeEach
     public void setUpController() {
-        BookingConfiguration bookingConfiguration = new BookingConfiguration();
+        Configuration configuration = new Configuration();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        EventDateFactory eventDateFactory = new EventDateFactory(bookingConfiguration);
+        EventDateFactory eventDateFactory = new EventDateFactory(configuration);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory(bookingConfiguration);
+        OxygenFactory oxygenFactory = new OxygenFactory(configuration);
 
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
@@ -66,7 +66,7 @@ public class OrderIntegrationTest {
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(bookingConfiguration, tripRepository, shuttleFactory);
+        TripService tripService = new TripService(configuration, tripRepository, shuttleFactory);
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(repository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 

@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
-import ca.ulaval.glo4002.booking.BookingConfiguration;
-import ca.ulaval.glo4002.booking.events.Event;
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 
@@ -18,7 +17,7 @@ import static org.mockito.Mockito.when;
 public class OxygenFactoryTest {
 
     private OxygenFactory factory;
-    private BookingConfiguration configuration;
+    private Configuration configuration;
 
     private OxygenCategory categoryA;
     private OxygenCategory categoryB;
@@ -35,7 +34,7 @@ public class OxygenFactoryTest {
 
     @BeforeEach
     void setUpConfiguration() {
-        configuration = mock(BookingConfiguration.class);
+        configuration = mock(Configuration.class);
 
         when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
         when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
