@@ -42,6 +42,7 @@ public class BookingBinder extends AbstractBinder {
 
     @Override
     protected void configure() {
+        bindConfiguration();
         bindGenerators();
         bindFactories();
         bindRepositories();
@@ -51,6 +52,10 @@ public class BookingBinder extends AbstractBinder {
         bindControllers();
         bindConverters();
         bindClients();
+    }
+
+    private void bindConfiguration() {
+        bindAsContract(BookingConfiguration.class).in(Singleton.class);
     }
 
     private void bindGenerators() {
