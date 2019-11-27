@@ -14,20 +14,6 @@ class EventDateTest {
 
     private EventDate eventDate;
 
-    @Test
-    void constructing_shouldThrowInvalidEventDateException_whenEventDateIsUnderBounds() {
-        LocalDate aUnderBoundEventDate  = EventDate.getStartEventDate().minusDays(1).getValue();
-
-        assertThrows(InvalidEventDateException.class, () -> new EventDate(aUnderBoundEventDate));
-    }
-
-    @Test
-    void constructing_shouldThrowInvalidEventDateException_whenEventDateIsOverBounds() {
-        LocalDate aOverBoundEventDate  = EventDate.getEndEventDate().plusDays(1).getValue();
-
-        assertThrows(InvalidEventDateException.class, () -> new EventDate(aOverBoundEventDate));
-    }
-
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void plusDays_shouldAddCorrectNumberOfDays(int days) {

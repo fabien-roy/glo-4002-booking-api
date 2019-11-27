@@ -12,8 +12,6 @@ public class EventDate {
     private LocalDate value;
 
     public EventDate(LocalDate value) {
-        validateEventDate(value);
-
         this.value = value;
     }
 
@@ -68,15 +66,6 @@ public class EventDate {
     @Override
     public int hashCode() {
         return value.hashCode();
-    }
-
-    // TODO : Move EventDate validation in factories, since it is now configurable
-    private void validateEventDate(LocalDate value) {
-        /*
-        if (value.isBefore(START_DATE) || value.isAfter(END_DATE)) {
-            throw new InvalidEventDateException();
-        }
-       */
     }
 
     // TODO : Delete temporary method EventDate.getStartEventDate
