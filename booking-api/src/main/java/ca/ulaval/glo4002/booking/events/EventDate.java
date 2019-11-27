@@ -31,6 +31,20 @@ public class EventDate {
         return fullFestivalEventDates;
     }
 
+    // TODO : Use EventDate.plusDays where necessary
+    public EventDate plusDays(int days) {
+        this.value = this.value.plusDays(days);
+
+        return this;
+    }
+
+    // TODO : Use EventDate.minusDays where necessary
+    public EventDate minusDays(int days) {
+        this.value = this.value.minusDays(days);
+
+        return this;
+    }
+
     @Override
     public String toString() {
         return value.toString();

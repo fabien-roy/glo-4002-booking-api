@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.events;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
-import ca.ulaval.glo4002.booking.events.InvalidEventDateException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -26,6 +26,30 @@ class EventDateTest {
         LocalDate aOverBoundEventDate  = EventDate.END_DATE.plusDays(1);
 
         assertThrows(InvalidEventDateException.class, () -> new EventDate(aOverBoundEventDate));
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void plusDays_shouldAddCorrectNumberOfDays(int days) {
+        LocalDate originalValue = EventDate.START_DATE;
+        eventDate = new EventDate(originalValue);
+        LocalDate expectedValue = originalValue.plusDays(days);
+
+        eventDate.plusDays(days);
+
+        assertEquals(expectedValue, eventDate.getValue());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3})
+    void minusDays_shouldSubtractCorrectNumberOfDays(int days) {
+        LocalDate originalValue = EventDate.END_DATE;
+        eventDate = new EventDate(originalValue);
+        LocalDate expectedValue = originalValue.minusDays(days);
+
+        eventDate.minusDays(days);
+
+        assertEquals(expectedValue, eventDate.getValue());
     }
 
     @Test
