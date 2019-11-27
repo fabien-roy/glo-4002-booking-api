@@ -72,9 +72,11 @@ public class EventDate {
 
     // TODO : Move EventDate validation in factories, since it is now configurable
     private void validateEventDate(LocalDate value) {
+        /*
         if (value.isBefore(START_DATE) || value.isAfter(END_DATE)) {
             throw new InvalidEventDateException();
         }
+       */
     }
 
     // TODO : Delete temporary method EventDate.getStartEventDate
