@@ -34,7 +34,6 @@ import ca.ulaval.glo4002.booking.shuttles.trips.TripMapper;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
-import org.graalvm.compiler.nodes.memory.MemoryCheckpoint;
 
 import javax.inject.Singleton;
 

@@ -16,6 +16,10 @@ public class EventDateService {
 	}
 
 	public void setConfiguration(EventDatesDto eventDatesDto) {
-	    // TODO
+	    EventDate startEventDate = eventDateFactory.parse(eventDatesDto.getBeginDate());
+		EventDate endEventDate = eventDateFactory.parse(eventDatesDto.getEndDate());
+
+		configuration.setStartEventDate(startEventDate);
+		configuration.setEndEventDate(endEventDate);
 	}
 }
