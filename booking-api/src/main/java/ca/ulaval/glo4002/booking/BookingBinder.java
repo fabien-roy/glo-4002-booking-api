@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.artists.*;
 import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.configuration.ConfigurationController;
 import ca.ulaval.glo4002.booking.events.*;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -33,6 +34,7 @@ import ca.ulaval.glo4002.booking.shuttles.trips.TripMapper;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.graalvm.compiler.nodes.memory.MemoryCheckpoint;
 
 import javax.inject.Singleton;
 
@@ -100,6 +102,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ProfitService.class);
         bindAsContract(ProgramService.class);
         bindAsContract(OxygenReportService.class);
+        bindAsContract(EventDateService.class);
     }
 
     private void bindMappers() {
@@ -119,5 +122,6 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OrderController.class).in(Singleton.class);
         bindAsContract(ShuttleManifestController.class).in(Singleton.class);
         bindAsContract(ReportController.class).in(Singleton.class);
+        bindAsContract(ConfigurationController.class).in(Singleton.class);
     }
 }
