@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.events;
 
 import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.program.InvalidProgramException;
 
 import javax.inject.Inject;
@@ -30,7 +31,7 @@ public class EventDateFactory {
             LocalDate localDate = LocalDate.parse(eventDate);
             parsedEventDate = new EventDate(localDate);
         } catch (Exception exception) {
-            throw new InvalidProgramException();
+            throw new InvalidFormatException(); // TODO : If EventDate is invalid in DEV, it should throw InvalidProgramException
         }
 
         return parsedEventDate;

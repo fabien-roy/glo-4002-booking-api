@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.events;
 
 import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,5 +41,10 @@ class EventDateFactoryTest {
         assertThrows(InvalidEventDateException.class, () -> factory.build(aOverBoundEventDate.toString()));
     }
 
-    // TODO : Add parse tests
+    @Test
+    void build_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
+        String anInvalidDate = "anInvalidDate";
+
+        assertThrows(InvalidFormatException.class, () -> factory.build(anInvalidDate));
+    }
 }

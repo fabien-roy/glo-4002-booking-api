@@ -16,10 +16,12 @@ import java.util.stream.Collectors;
 public class EventFactory {
 
     private final ArtistService artistService;
+    private final EventDateFactory eventDateFactory;
 
     @Inject
-    public EventFactory(ArtistService artistService) {
+    public EventFactory(ArtistService artistService, EventDateFactory eventDateFactory) {
         this.artistService = artistService;
+        this.eventDateFactory = eventDateFactory;
     }
 
     public List<Event> build(List<ProgramEventDto> eventDtos) {
@@ -29,7 +31,7 @@ public class EventFactory {
         validateArtists(eventDtos);
 
         eventDtos.forEach(eventDto -> {
-            EventDate eventDate = buildEventDate(eventDto.getEventDate());
+            EventDate eventDate = eventDateFactory.build(eventDto.getEventDate());
             Activities activity = Activities.get(eventDto.getAm());
             BookingArtist bookingArtist = artistService.getByName(eventDto.getPm());
 
@@ -70,18 +72,5 @@ public class EventFactory {
         boolean hasAllFestivalEventDates = eventDates.containsAll(festivalEventDates);
 
         if (!hasAllFestivalEventDates) throw new InvalidProgramException();
-    }
-
-    private EventDate buildEventDate(String eventDate) {
-        EventDate parsedEventDate;
-
-        try {
-            LocalDate localDate = LocalDate.parse(eventDate);
-            parsedEventDate = new EventDate(localDate);
-        } catch (Exception exception) {
-            throw new InvalidProgramException();
-        }
-
-        return parsedEventDate;
     }
 }
