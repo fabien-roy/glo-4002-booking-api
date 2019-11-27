@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.BookingConfiguration;
 import ca.ulaval.glo4002.booking.errors.ErrorDto;
-import ca.ulaval.glo4002.booking.events.Event;
+import ca.ulaval.glo4002.booking.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.events.EventDate;
@@ -54,7 +54,8 @@ public class PassIntegrationTest {
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        PassFactory passFactory = new PassFactory(numberGenerator);
+        EventDateFactory eventDateFactory = new EventDateFactory(bookingConfiguration);
+        PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
         OxygenFactory oxygenFactory = new OxygenFactory(bookingConfiguration);
