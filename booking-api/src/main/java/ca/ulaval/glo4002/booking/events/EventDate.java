@@ -37,11 +37,11 @@ public class EventDate {
         return new EventDate(this.value.minusDays(days));
     }
 
-    public boolean isBefore(EventDate eventDate) {
+    boolean isBefore(EventDate eventDate) {
         return this.value.isBefore(eventDate.getValue());
     }
 
-    public boolean isAfter(EventDate eventDate) {
+    boolean isAfter(EventDate eventDate) {
         return this.value.isAfter(eventDate.getValue());
     }
 
