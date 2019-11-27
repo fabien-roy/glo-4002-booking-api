@@ -67,7 +67,7 @@ public class OrderIntegrationTest {
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
         TripService tripService = new TripService(configuration, tripRepository, shuttleFactory);
-        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(configuration, oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(repository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         ExceptionMapper exceptionMapper = new ExceptionMapper();

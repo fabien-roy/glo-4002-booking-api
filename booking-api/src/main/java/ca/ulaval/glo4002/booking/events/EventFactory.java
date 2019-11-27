@@ -66,6 +66,7 @@ public class EventFactory {
     }
 
     private void validateAllPresent(List<String> eventDates) {
+        // TODO : Use Configuration
         List<String> festivalEventDates = EventDate.getFullFestivalEventDates().stream().map(EventDate::toString).collect(Collectors.toList());
 
         boolean hasAllFestivalEventDates = eventDates.containsAll(festivalEventDates);

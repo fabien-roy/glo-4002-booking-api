@@ -42,7 +42,7 @@ class OxygenInventoryServiceTest {
 		factory = new OxygenFactory(configuration);
 		producer = mock(OxygenTankProducer.class);
 
-		service = new OxygenInventoryService(factory, producer);
+		service = new OxygenInventoryService(configuration, factory, producer);
 	}
 
 	@BeforeEach
@@ -51,12 +51,16 @@ class OxygenInventoryServiceTest {
 
 		when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
 		when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+		when(configuration.getAllEventDates()).thenReturn(Arrays.asList(
+				EventDate.getDefaultStartEventDate(),
+				EventDate.getDefaultEndEventDate())
+		);
 	}
 
 	@Test
 	void orderForPasses_shouldOrderForFullFestival_whenEventDatesIsNull() {
 		Pass aFullFestivalPass = new Pass(new Number(1L), mock(Money.class));
-		Integer numberOfFestivalDays = EventDate.getFullFestivalEventDates().size();
+		int numberOfFestivalDays = configuration.getAllEventDates().size();
 
 		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aFullFestivalPass), AN_ORDER_DATE);
 
