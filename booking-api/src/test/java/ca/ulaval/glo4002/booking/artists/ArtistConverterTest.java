@@ -212,8 +212,8 @@ public class ArtistConverterTest {
 	void setUpConfiguration() {
 		configuration = mock(Configuration.class);
 
-		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
-		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
+		when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@AfterAll

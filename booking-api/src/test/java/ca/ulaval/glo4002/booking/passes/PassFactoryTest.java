@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +36,7 @@ class PassFactoryTest {
 
     @Test
     void buildAll_shouldBuildASinglePass_whenThereIsOnlyOneEventDate() {
-        List<String> aEventDate = Collections.singletonList(EventDate.getStartEventDate().toString());
+        List<String> aEventDate = Collections.singletonList(EventDate.getDefaultStartEventDate().toString());
 
         List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
 
@@ -46,7 +45,7 @@ class PassFactoryTest {
 
     @Test
     void buildAll_shouldBuildMultiplePasses_whenThereAreMultipleEventDates() {
-        List<String> aEventDate = Arrays.asList(EventDate.getStartEventDate().toString(), EventDate.getStartEventDate().plusDays(1).toString());
+        List<String> aEventDate = Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString());
 
         List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
 

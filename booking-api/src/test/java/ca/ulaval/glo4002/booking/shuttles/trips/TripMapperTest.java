@@ -6,15 +6,11 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.events.Event;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.events.EventDate;
-import ca.ulaval.glo4002.booking.shuttles.trips.Trip;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripDto;
 import ca.ulaval.glo4002.booking.shuttles.ShuttleCategories;
 
 class TripMapperTest {
@@ -30,8 +26,8 @@ class TripMapperTest {
 	@BeforeAll
 	public static void setUpMapper() {
 		mapper = new TripMapper();
-		aTripDate = EventDate.getStartEventDate();
-		anotherTripDate = EventDate.getStartEventDate().plusDays(1);
+		aTripDate = EventDate.getDefaultStartEventDate();
+		anotherTripDate = EventDate.getDefaultStartEventDate().plusDays(1);
 		aShuttleCategory = ShuttleCategories.ET_SPACESHIP;
 	}
 

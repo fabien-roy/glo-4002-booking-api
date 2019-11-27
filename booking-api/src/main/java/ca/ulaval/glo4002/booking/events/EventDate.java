@@ -6,9 +6,8 @@ import java.util.List;
 
 public class EventDate {
 
-    // TODO : Change START_DATE and EVENT_DATE to EventDate
-    private static final LocalDate START_DATE = LocalDate.of(2050, 7, 17);
-    private static final LocalDate END_DATE = LocalDate.of(2050, 7, 24);
+    private static final LocalDate DEFAULT_START_DATE_VALUE = LocalDate.of(2050, 7, 17);
+    private static final LocalDate DEFAULT_END_DATE_VALUE = LocalDate.of(2050, 7, 24);
     private LocalDate value;
 
     public EventDate(LocalDate value) {
@@ -19,32 +18,29 @@ public class EventDate {
         return value;
     }
 
+    // TODO : Move to Configuration
     public static List<EventDate> getFullFestivalEventDates() {
         List<EventDate> fullFestivalEventDates = new ArrayList<>();
 
-        for (LocalDate date = START_DATE; date.isBefore(END_DATE); date = date.plusDays(1)) {
+        for (LocalDate date = DEFAULT_START_DATE_VALUE; date.isBefore(DEFAULT_END_DATE_VALUE); date = date.plusDays(1)) {
             fullFestivalEventDates.add(new EventDate(date));
         }
 
         return fullFestivalEventDates;
     }
 
-    // TODO : Use EventDate.plusDays where necessary
     public EventDate plusDays(int days) {
         return new EventDate(this.value.plusDays(days));
     }
 
-    // TODO : Use EventDate.minusDays where necessary
     public EventDate minusDays(int days) {
         return new EventDate(this.value.minusDays(days));
     }
 
-    // TODO : Use EventDate.isBefore where necessary
     public boolean isBefore(EventDate eventDate) {
         return this.value.isBefore(eventDate.getValue());
     }
 
-    // TODO : Use EventDate.isAfter where necessary
     public boolean isAfter(EventDate eventDate) {
         return this.value.isAfter(eventDate.getValue());
     }
@@ -68,13 +64,11 @@ public class EventDate {
         return value.hashCode();
     }
 
-    // TODO : Delete temporary method EventDate.getStartEventDate
-    public static EventDate getStartEventDate() {
-        return new EventDate(START_DATE);
+    public static EventDate getDefaultStartEventDate() {
+        return new EventDate(DEFAULT_START_DATE_VALUE);
     }
 
-    // TODO : Delete temporary method EventDate.getEndEventDate
-    public static EventDate getEndEventDate() {
-        return new EventDate(END_DATE);
+    public static EventDate getDefaultEndEventDate() {
+        return new EventDate(DEFAULT_END_DATE_VALUE);
     }
 }

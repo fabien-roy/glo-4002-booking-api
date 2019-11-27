@@ -17,7 +17,7 @@ class EventDateTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void plusDays_shouldAddCorrectNumberOfDays(int days) {
-        LocalDate originalValue = EventDate.getStartEventDate().getValue();
+        LocalDate originalValue = EventDate.getDefaultStartEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.plusDays(days);
 
@@ -29,7 +29,7 @@ class EventDateTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void minusDays_shouldSubtractCorrectNumberOfDays(int days) {
-        LocalDate originalValue = EventDate.getEndEventDate().getValue();
+        LocalDate originalValue = EventDate.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.minusDays(days);
 
@@ -40,7 +40,7 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotEventDate() {
-        eventDate = EventDate.getStartEventDate();
+        eventDate = EventDate.getDefaultStartEventDate();
         Object object = new Object();
 
         boolean result = eventDate.equals(object);
@@ -50,7 +50,7 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnTrue_whenEventDateHasSameValue() {
-        LocalDate aValue = EventDate.getStartEventDate().getValue();
+        LocalDate aValue = EventDate.getDefaultStartEventDate().getValue();
         eventDate = new EventDate(aValue);
         EventDate other = new EventDate(aValue);
 
@@ -61,7 +61,7 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnFalse_whenEventDateHasDifferentValue() {
-        eventDate = EventDate.getStartEventDate();
+        eventDate = EventDate.getDefaultStartEventDate();
         EventDate other = eventDate.plusDays(1);
 
         boolean result = eventDate.equals(other);
@@ -71,7 +71,7 @@ class EventDateTest {
 
     @Test
     void hashCode_shouldReturnValueHashCode() {
-        LocalDate aValue = EventDate.getStartEventDate().getValue();
+        LocalDate aValue = EventDate.getDefaultStartEventDate().getValue();
         int expectedHashCode = aValue.hashCode();
         eventDate = new EventDate(aValue);
 
@@ -82,7 +82,7 @@ class EventDateTest {
 
     @Test
     void getFullFestivalEventDates_shouldReturnEventDatesAfterOrEqualToStartDate() {
-        EventDate startDate = EventDate.getStartEventDate();
+        EventDate startDate = EventDate.getDefaultStartEventDate();
 
         List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
 
@@ -91,7 +91,7 @@ class EventDateTest {
 
     @Test
     void getFullFestivalEventDates_shouldReturnEventDatesBeforeOrEqualToEndDate() {
-        EventDate endDate = EventDate.getEndEventDate();
+        EventDate endDate = EventDate.getDefaultEndEventDate();
 
         List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
 

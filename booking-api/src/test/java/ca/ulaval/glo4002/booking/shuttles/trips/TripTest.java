@@ -4,12 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo4002.booking.events.Event;
 import ca.ulaval.glo4002.booking.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.shuttles.ShuttleCategories;
 import ca.ulaval.glo4002.booking.shuttles.ShuttleFactory;
-import ca.ulaval.glo4002.booking.shuttles.trips.Trip;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +35,7 @@ class TripTest {
 	
 	@Test
 	void addPassenger_whenShuttleHasPlacesEmpty_passengerShouldBeAdded() {
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Trip trip = new Trip(aTripDate, aShuttle);
 
 		trip.addPassenger(aPassenger);

@@ -1,9 +1,7 @@
 package ca.ulaval.glo4002.booking.passes;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
-import ca.ulaval.glo4002.booking.events.Event;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.profits.Money;
@@ -36,7 +34,7 @@ class PassTest {
 
 	@Test
 	void constructing_shouldSetCorrectEventDate() {
-		EventDate eventDate = EventDate.getStartEventDate().plusDays(2);
+		EventDate eventDate = EventDate.getDefaultStartEventDate().plusDays(2);
 
 		pass = new Pass(null, null, eventDate);
 

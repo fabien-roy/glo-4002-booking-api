@@ -28,10 +28,10 @@ public class OxygenTankProducerTest {
 	private OxygenInventory inventory;
 	private OxygenHistory history;
 
-	private static final LocalDate VALID_CATEGORY_A_BUILD_DATE = EventDate.getStartEventDate().minusDays(21).getValue();
-	private static final LocalDate VALID_CATEGORY_E_BUILD_DATE = EventDate.getStartEventDate().getValue();
-	private static final LocalDate INVALID_CATEGORY_A_BUILD_DATE = EventDate.getStartEventDate().minusDays(19).getValue();
-	private static final LocalDate INVALID_CATEGORY_B_BUILD_DATE = EventDate.getStartEventDate().minusDays(9).getValue();
+	private static final LocalDate VALID_CATEGORY_A_BUILD_DATE = EventDate.getDefaultStartEventDate().minusDays(21).getValue();
+	private static final LocalDate VALID_CATEGORY_E_BUILD_DATE = EventDate.getDefaultStartEventDate().getValue();
+	private static final LocalDate INVALID_CATEGORY_A_BUILD_DATE = EventDate.getDefaultStartEventDate().minusDays(19).getValue();
+	private static final LocalDate INVALID_CATEGORY_B_BUILD_DATE = EventDate.getDefaultStartEventDate().minusDays(9).getValue();
 
 	private static final Integer CATEGORY_A_TANKS_NEEDED_BY_DAYS = 3;
 	private static final Integer NUMBER_OF_TANK_A_BY_BUNDLE = 5;
@@ -55,8 +55,8 @@ public class OxygenTankProducerTest {
 	void setUpConfiguration() {
 		configuration = mock(Configuration.class);
 
-		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
-		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
+		when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@Test

@@ -3,13 +3,11 @@ package ca.ulaval.glo4002.booking.shuttles.manifest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 
 class ShuttleManifestServiceTest {
@@ -29,7 +27,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallMapper() {
-		String aDate = EventDate.getStartEventDate().toString();
+		String aDate = EventDate.getDefaultStartEventDate().toString();
 
 		service.getTripsForDate(aDate);
 
@@ -45,7 +43,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallRepositoryForArrivals() {
-		EventDate aDate = EventDate.getStartEventDate();
+		EventDate aDate = EventDate.getDefaultStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
 
@@ -54,7 +52,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallRepositoryForDepartures() {
-		EventDate aDate = EventDate.getStartEventDate();
+		EventDate aDate = EventDate.getDefaultStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
 

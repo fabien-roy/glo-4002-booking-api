@@ -3,9 +3,6 @@ package ca.ulaval.glo4002.booking.shuttles.trips;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.shuttles.*;
-import ca.ulaval.glo4002.booking.shuttles.trips.InMemoryTripRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.Trip;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +23,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void getDeparturesForDate_shouldReturnDeparturesForDate() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate expectedTripDate = EventDate.getStartEventDate();
+		EventDate expectedTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
 
@@ -38,7 +35,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void getArrivalsForDate_shouldReturnArrivalsForDate() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate expectedTripDate = EventDate.getStartEventDate();
+		EventDate expectedTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
 
@@ -50,7 +47,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 	    repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
@@ -61,7 +58,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
@@ -74,7 +71,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -88,7 +85,7 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -101,7 +98,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddTripDateToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate expectedTripDate = EventDate.getStartEventDate();
+		EventDate expectedTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
@@ -113,7 +110,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToDepartures_shouldAddPassengerToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Number expectedPassNumber = new Number(1L);
 		Passenger aPassenger = new Passenger(expectedPassNumber);
 
@@ -126,7 +123,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengersToNewDeparture_shouldAddPassengerToNewDeparture() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Number expectedPassNumber = new Number(1L);
 		List<Passenger> somePassengers = Collections.singletonList(new Passenger(expectedPassNumber));
 
@@ -139,7 +136,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
@@ -150,7 +147,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
@@ -163,7 +160,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -177,7 +174,7 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 		Passenger anotherPassenger = new Passenger(new Number(2L));
 
@@ -190,7 +187,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddTripDateToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate expectedTripDate = EventDate.getStartEventDate();
+		EventDate expectedTripDate = EventDate.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(new Number(1L));
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
@@ -202,7 +199,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengerToArrivals_shouldAddPassengerToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Number expectedPassNumber = new Number(1L);
 		Passenger aPassenger = new Passenger(expectedPassNumber);
 
@@ -215,7 +212,7 @@ class InMemoryTripRepositoryTest {
 	@Test
 	void addPassengersToNewArrival_shouldAddPassengerToNewArrival() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
-		EventDate aTripDate = EventDate.getStartEventDate();
+		EventDate aTripDate = EventDate.getDefaultStartEventDate();
 		Number expectedPassNumber = new Number(1L);
 		List<Passenger> somePassengers = Collections.singletonList(new Passenger(expectedPassNumber));
 

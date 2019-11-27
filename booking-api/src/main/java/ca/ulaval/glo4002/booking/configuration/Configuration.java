@@ -8,8 +8,8 @@ public class Configuration {
     private EventDate endEventDate;
 
     public Configuration() {
-        startEventDate = EventDate.getStartEventDate();
-        endEventDate = EventDate.getEndEventDate();
+        startEventDate = EventDate.getDefaultStartEventDate();
+        endEventDate = EventDate.getDefaultEndEventDate();
     }
 
     public EventDate getStartEventDate() {

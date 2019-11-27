@@ -12,9 +12,9 @@ public class InvalidEventDateException extends BookingException {
     public static final String MESSAGE = "INVALID_EVENT_DATE";
     // TODO : Use EventDate from BookingConfiguration in InvalidEventDateException (or ExceptionMapper?)
     public static final String DESCRIPTION = "Event date should be between" +
-            EventDate.getStartEventDate().getValue().format(MESSAGE_DATE_TIME_FORMATTER) +
+            EventDate.getDefaultStartEventDate().getValue().format(MESSAGE_DATE_TIME_FORMATTER) +
             " and " +
-            EventDate.getEndEventDate().getValue().format(MESSAGE_DATE_TIME_FORMATTER);
+            EventDate.getDefaultEndEventDate().getValue().format(MESSAGE_DATE_TIME_FORMATTER);
 
     public InvalidEventDateException() {
         super(MESSAGE);

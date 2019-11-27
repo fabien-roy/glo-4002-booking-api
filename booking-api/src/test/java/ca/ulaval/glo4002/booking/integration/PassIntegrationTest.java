@@ -108,7 +108,7 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass pass = new Pass(new Number(1L), passPrice, EventDate.getStartEventDate());
+        Pass pass = new Pass(new Number(1L), passPrice, EventDate.getDefaultStartEventDate());
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA, null),
@@ -134,11 +134,11 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass aPass = new Pass(new Number(1L), passPrice, EventDate.getStartEventDate());
+        Pass aPass = new Pass(new Number(1L), passPrice, EventDate.getDefaultStartEventDate());
         Pass anotherPass = new Pass(
                 new Number(2L),
                 mock(Money.class),
-               EventDate.getStartEventDate().plusDays(1)
+               EventDate.getDefaultStartEventDate().plusDays(1)
         );
         PassBundle passBundle = new PassBundle(
                 Arrays.asList(aPass, anotherPass),
@@ -172,7 +172,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
-                Arrays.asList(EventDate.getStartEventDate().toString(), EventDate.getStartEventDate().plusDays(1).toString())
+                Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
@@ -191,7 +191,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString(),
-                Collections.singletonList(EventDate.getStartEventDate().toString())
+                Collections.singletonList(EventDate.getDefaultStartEventDate().toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
@@ -293,7 +293,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
-                Collections.singletonList(EventDate.getStartEventDate().minusDays(1).toString())
+                Collections.singletonList(EventDate.getDefaultStartEventDate().minusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
@@ -314,7 +314,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
-                Collections.singletonList(EventDate.getEndEventDate().plusDays(1).toString())
+                Collections.singletonList(EventDate.getDefaultEndEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),

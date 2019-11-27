@@ -23,7 +23,7 @@ class EventDateServiceTest {
 
     @Test
     void setConfiguration_shouldSetStartEventDate() {
-        EventDate expectedStartEventDate = EventDate.getStartEventDate().plusDays(1);
+        EventDate expectedStartEventDate = EventDate.getDefaultStartEventDate().plusDays(1);
         EventDatesDto eventDatesDto = mock(EventDatesDto.class);
         when(eventDatesDto.getBeginDate()).thenReturn(expectedStartEventDate.toString());
         when(eventDateFactory.parse(expectedStartEventDate.toString())).thenReturn(expectedStartEventDate);
@@ -35,7 +35,7 @@ class EventDateServiceTest {
 
     @Test
     void setConfiguration_shouldSetEndEventDate() {
-        EventDate expectedEndEventDate = EventDate.getEndEventDate().minusDays(1);
+        EventDate expectedEndEventDate = EventDate.getDefaultEndEventDate().minusDays(1);
         EventDatesDto eventDatesDto = mock(EventDatesDto.class);
         when(eventDatesDto.getEndDate()).thenReturn(expectedEndEventDate.toString());
         when(eventDateFactory.parse(expectedEndEventDate.toString())).thenReturn(expectedEndEventDate);

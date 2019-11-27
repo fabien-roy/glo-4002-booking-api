@@ -37,14 +37,14 @@ class TripServiceTest {
 	void setUpConfiguration() {
 		configuration = mock(Configuration.class);
 
-		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
-		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
+		when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@Test
 	void orderForArtist_shouldOrderTripForArtistAtCorrectDate_whenThereIsASingleMember() {
 		Integer memberAmount = 1;
-		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -58,7 +58,7 @@ class TripServiceTest {
 	@Test
 	void orderForArtist_shouldOrderEtSpaceshipTripForArtist_whenThereIsASingleMember() {
 		Integer memberAmount = 1;
-		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -72,7 +72,7 @@ class TripServiceTest {
 	@Test
 	void orderForArtist_shouldOrderMillenniumFalconTripForArtist_whenThereAreMultipleMembers() {
 		Integer memberAmount = 2;
-		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -87,7 +87,7 @@ class TripServiceTest {
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
 		Number expectedId = new Number(1L);
 		Integer memberAmount = 1;
-		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -104,7 +104,7 @@ class TripServiceTest {
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
 		Number expectedId = new Number(1L);
 		Integer memberAmount = 2;
-		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -120,7 +120,7 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToDeparturesOnce_whenThereIsASinglePass() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		Pass aPass = new Pass(mock(Number.class), money, anEventDate);
 		List<Pass> somePasses = Collections.singletonList(aPass);
@@ -133,7 +133,7 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToArrivalsOnce_whenThereIsASinglePass() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		Pass aPass = new Pass(mock(Number.class), money, anEventDate);
 		List<Pass> somePasses = Collections.singletonList(aPass);
@@ -146,8 +146,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToCorrectDeparturesDates_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = EventDate.getStartEventDate();
-		EventDate anotherEventDate = EventDate.getEndEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
+		EventDate anotherEventDate = EventDate.getDefaultEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -163,8 +163,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToCorrectArrivalsDates_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = EventDate.getStartEventDate();
-		EventDate anotherEventDate = EventDate.getEndEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
+		EventDate anotherEventDate = EventDate.getDefaultEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -180,8 +180,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToDeparturesMultipleTimes_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = EventDate.getStartEventDate();
-		EventDate anotherEventDate = EventDate.getEndEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
+		EventDate anotherEventDate = EventDate.getDefaultEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -196,8 +196,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToArrivalsMultipleTimes_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = EventDate.getStartEventDate();
-		EventDate anotherEventDate = EventDate.getEndEventDate();
+		EventDate anEventDate = EventDate.getDefaultStartEventDate();
+		EventDate anotherEventDate = EventDate.getDefaultEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -219,7 +219,7 @@ class TripServiceTest {
 
 		service.orderForPasses(category, somePasses);
 
-		verify(repository).addPassengerToDepartures(any(), any(), eq(EventDate.getEndEventDate()));
+		verify(repository).addPassengerToDepartures(any(), any(), eq(EventDate.getDefaultEndEventDate()));
 	}
 
 	@Test
@@ -232,6 +232,6 @@ class TripServiceTest {
 
 		service.orderForPasses(category, somePasses);
 
-		verify(repository).addPassengerToArrivals(any(), any(), eq(EventDate.getStartEventDate()));
+		verify(repository).addPassengerToArrivals(any(), any(), eq(EventDate.getDefaultStartEventDate()));
 	}
 }

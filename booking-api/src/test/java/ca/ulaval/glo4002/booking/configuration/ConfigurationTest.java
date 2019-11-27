@@ -17,7 +17,7 @@ class ConfigurationTest {
 
     @Test
     void getStartEventDate_shouldReturnDefaultStartEventDate_whenNoneIsSet() {
-        EventDate expectedEventDate = EventDate.getStartEventDate();
+        EventDate expectedEventDate = EventDate.getDefaultStartEventDate();
 
         EventDate eventDate = configuration.getStartEventDate();
 
@@ -26,7 +26,7 @@ class ConfigurationTest {
 
     @Test
     void getEndEventDate_shouldReturnDefaultEndEventDate_whenNoneIsSet() {
-        EventDate expectedEventDate = EventDate.getEndEventDate();
+        EventDate expectedEventDate = EventDate.getDefaultEndEventDate();
 
         EventDate eventDate = configuration.getEndEventDate();
 
@@ -35,7 +35,7 @@ class ConfigurationTest {
 
     @Test
     void setStartEventDate_shouldSetStartEventDate() {
-        EventDate expectedEventDate = EventDate.getStartEventDate().plusDays(1);
+        EventDate expectedEventDate = EventDate.getDefaultStartEventDate().plusDays(1);
 
         configuration.setStartEventDate(expectedEventDate);
         EventDate eventDate = configuration.getStartEventDate();
@@ -45,7 +45,7 @@ class ConfigurationTest {
 
     @Test
     void setEndEventDate_shouldSetEndEventDate() {
-        EventDate expectedEventDate = EventDate.getEndEventDate().minusDays(1);
+        EventDate expectedEventDate = EventDate.getDefaultEndEventDate().minusDays(1);
 
         configuration.setEndEventDate(expectedEventDate);
         EventDate eventDate = configuration.getEndEventDate();
