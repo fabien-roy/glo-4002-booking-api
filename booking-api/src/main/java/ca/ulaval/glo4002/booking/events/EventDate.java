@@ -7,8 +7,8 @@ import java.util.List;
 public class EventDate {
 
     // TODO : Change START_DATE and EVENT_DATE to EventDate
-    public static final LocalDate START_DATE = LocalDate.of(2050, 7, 17);
-    public static final LocalDate END_DATE = LocalDate.of(2050, 7, 24);
+    private static final LocalDate START_DATE = LocalDate.of(2050, 7, 17);
+    private static final LocalDate END_DATE = LocalDate.of(2050, 7, 24);
     private LocalDate value;
 
     public EventDate(LocalDate value) {
@@ -33,16 +33,22 @@ public class EventDate {
 
     // TODO : Use EventDate.plusDays where necessary
     public EventDate plusDays(int days) {
-        this.value = this.value.plusDays(days);
-
-        return this;
+        return new EventDate(this.value.plusDays(days));
     }
 
     // TODO : Use EventDate.minusDays where necessary
     public EventDate minusDays(int days) {
-        this.value = this.value.minusDays(days);
+        return new EventDate(this.value.minusDays(days));
+    }
 
-        return this;
+    // TODO : Use EventDate.isBefore where necessary
+    public boolean isBefore(EventDate eventDate) {
+        return this.value.isBefore(eventDate.getValue());
+    }
+
+    // TODO : Use EventDate.isAfter where necessary
+    public boolean isAfter(EventDate eventDate) {
+        return this.value.isAfter(eventDate.getValue());
     }
 
     @Override
@@ -64,6 +70,7 @@ public class EventDate {
         return value.hashCode();
     }
 
+    // TODO : Move EventDate validation in factories, since it is now configurable
     private void validateEventDate(LocalDate value) {
         if (value.isBefore(START_DATE) || value.isAfter(END_DATE)) {
             throw new InvalidEventDateException();

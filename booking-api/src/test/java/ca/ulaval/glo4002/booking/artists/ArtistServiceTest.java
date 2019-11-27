@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
+import ca.ulaval.glo4002.booking.BookingConfiguration;
 import ca.ulaval.glo4002.booking.artists.*;
 import ca.ulaval.glo4002.booking.program.InvalidProgramException;
 import org.junit.jupiter.api.AfterAll;
@@ -21,6 +22,8 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import ca.ulaval.glo4002.booking.profits.Money;
 
 class ArtistServiceTest {
+
+    // TODO : ArtistService should mock repository and converter
 
     private ArtistService service;
     private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
@@ -80,13 +83,13 @@ class ArtistServiceTest {
 
     @BeforeEach
     void setUpService() {
-		stubFor(get(urlEqualTo("/artists")).
-				willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").
-						withBody(response)));
+		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
 
+        BookingConfiguration configuration = new BookingConfiguration();
         ArtistRepository repository = new InMemoryArtistRepository();
+        ArtistConverter converter = new ArtistConverter(configuration, repository);
     	
-        service = new ArtistService(repository);
+        service = new ArtistService(repository, converter);
 
     }
     

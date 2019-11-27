@@ -29,7 +29,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallMapper() {
-		String aDate = EventDate.START_DATE.toString();
+		String aDate = EventDate.getStartEventDate().toString();
 
 		service.getTripsForDate(aDate);
 
@@ -45,7 +45,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallRepositoryForArrivals() {
-		EventDate aDate = new EventDate(EventDate.START_DATE);
+		EventDate aDate = EventDate.getStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
 
@@ -54,7 +54,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallRepositoryForDepartures() {
-		EventDate aDate = new EventDate(EventDate.START_DATE);
+		EventDate aDate = EventDate.getStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
 

@@ -37,7 +37,7 @@ class PassFactoryTest {
 
     @Test
     void buildAll_shouldBuildASinglePass_whenThereIsOnlyOneEventDate() {
-        List<String> aEventDate = Collections.singletonList(EventDate.START_DATE.toString());
+        List<String> aEventDate = Collections.singletonList(EventDate.getStartEventDate().toString());
 
         List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
 
@@ -46,7 +46,7 @@ class PassFactoryTest {
 
     @Test
     void buildAll_shouldBuildMultiplePasses_whenThereAreMultipleEventDates() {
-        List<String> aEventDate = Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString());
+        List<String> aEventDate = Arrays.asList(EventDate.getStartEventDate().toString(), EventDate.getStartEventDate().plusDays(1).toString());
 
         List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
 

@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.BookingConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,16 +19,19 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
 
 public class OxygenTankProducerTest {
 
+	// TODO : Mock OxygenFactory in OxygenTankProducer tests
+
 	private OxygenTankProducer producer;
+	private BookingConfiguration configuration;
 	private OxygenInventoryRepository inventoryRepository;
 	private OxygenHistoryRepository historyRepository;
 	private OxygenInventory inventory;
 	private OxygenHistory history;
 
-	private static final LocalDate VALID_CATEGORY_A_BUILD_DATE = EventDate.START_DATE.minusDays(21);
-	private static final LocalDate VALID_CATEGORY_E_BUILD_DATE = EventDate.START_DATE;
-	private static final LocalDate INVALID_CATEGORY_A_BUILD_DATE = EventDate.START_DATE.minusDays(19);
-	private static final LocalDate INVALID_CATEGORY_B_BUILD_DATE = EventDate.START_DATE.minusDays(9);
+	private static final LocalDate VALID_CATEGORY_A_BUILD_DATE = EventDate.getStartEventDate().minusDays(21).getValue();
+	private static final LocalDate VALID_CATEGORY_E_BUILD_DATE = EventDate.getStartEventDate().getValue();
+	private static final LocalDate INVALID_CATEGORY_A_BUILD_DATE = EventDate.getStartEventDate().minusDays(19).getValue();
+	private static final LocalDate INVALID_CATEGORY_B_BUILD_DATE = EventDate.getStartEventDate().minusDays(9).getValue();
 
 	private static final Integer CATEGORY_A_TANKS_NEEDED_BY_DAYS = 3;
 	private static final Integer NUMBER_OF_TANK_A_BY_BUNDLE = 5;
@@ -42,9 +46,17 @@ public class OxygenTankProducerTest {
 		when(inventoryRepository.getInventory()).thenReturn(inventory);
 		when(historyRepository.getHistory()).thenReturn(history);
 
-		OxygenFactory factory = new OxygenFactory();
+		OxygenFactory factory = new OxygenFactory(configuration);
 
 		producer = new OxygenTankProducer(inventoryRepository, historyRepository, factory);
+	}
+
+	@BeforeEach
+	void setUpConfiguration() {
+		configuration = mock(BookingConfiguration.class);
+
+		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
+		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
 	}
 
 	@Test

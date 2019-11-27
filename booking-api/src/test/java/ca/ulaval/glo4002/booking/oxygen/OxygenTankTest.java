@@ -1,10 +1,14 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +16,7 @@ import ca.ulaval.glo4002.booking.passes.PassCategories;
 import ca.ulaval.glo4002.booking.profits.Money;
 
 class OxygenTankTest {
+
 
 	private OxygenTank oxygenTank;
 	private OxygenDate requestDate;
@@ -22,7 +27,9 @@ class OxygenTankTest {
 	@BeforeEach
 	void setUpRequestDate() {
 		requestDate = new OxygenDate(LocalDate.of(2050, 7, 1));
-		OxygenFactory factory = new OxygenFactory();
+
+		BookingConfiguration configuration = mock(BookingConfiguration.class);
+		OxygenFactory factory = new OxygenFactory(configuration);
 
 		categoryA = factory.buildCategory(PassCategories.NEBULA);
 		categoryB = factory.buildCategory(PassCategories.SUPERGIANT);

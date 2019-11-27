@@ -4,10 +4,13 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.artists.ArtistConverter;
+import ca.ulaval.glo4002.booking.BookingConfiguration;
+import ca.ulaval.glo4002.booking.events.EventDate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,15 +19,12 @@ import org.junit.jupiter.api.Test;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
-import ca.ulaval.glo4002.booking.artists.ArtistClient;
-import ca.ulaval.glo4002.booking.artists.BookingArtist;
-import ca.ulaval.glo4002.booking.artists.ExternalArtist;
-import ca.ulaval.glo4002.booking.artists.ArtistRepository;
-import ca.ulaval.glo4002.booking.artists.InMemoryArtistRepository;
-
 public class ArtistConverterTest {
-	
+
+	// TODO : Mock ArtistRepository in ArtistConverter tests
+
 	private ArtistConverter artistConverter;
+	private BookingConfiguration configuration;
 	private ArtistRepository artistRepository;
 	private List<ExternalArtist> externalArtists;
 	private static WireMockServer wiremockServer;
@@ -195,21 +195,27 @@ public class ArtistConverterTest {
 			"} ]";
 
 	@BeforeAll
-	public static void artistsSetUp() {
+	public static void setUpArtists() {
 		wiremockServer = new WireMockServer(8080);
 		wiremockServer.start();
 	}
 	
 	@BeforeEach
 	public void converterSetUp() {
-		stubFor(get(urlEqualTo("/artists")).
-				willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").
-						withBody(response)));
+		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
 		artistRepository = new InMemoryArtistRepository();
-		artistConverter = new ArtistConverter(artistRepository);
+		artistConverter = new ArtistConverter(configuration, artistRepository);
 		externalArtists = ArtistClient.getArtists();
 	}
-	
+
+	@BeforeEach
+	void setUpConfiguration() {
+		configuration = mock(BookingConfiguration.class);
+
+		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
+		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
+	}
+
 	@AfterAll
 	public static void stopServer() {
 		wiremockServer.stop();

@@ -16,14 +16,14 @@ class EventDateTest {
 
     @Test
     void constructing_shouldThrowInvalidEventDateException_whenEventDateIsUnderBounds() {
-        LocalDate aUnderBoundEventDate  = EventDate.START_DATE.minusDays(1);
+        LocalDate aUnderBoundEventDate  = EventDate.getStartEventDate().minusDays(1).getValue();
 
         assertThrows(InvalidEventDateException.class, () -> new EventDate(aUnderBoundEventDate));
     }
 
     @Test
     void constructing_shouldThrowInvalidEventDateException_whenEventDateIsOverBounds() {
-        LocalDate aOverBoundEventDate  = EventDate.END_DATE.plusDays(1);
+        LocalDate aOverBoundEventDate  = EventDate.getEndEventDate().plusDays(1).getValue();
 
         assertThrows(InvalidEventDateException.class, () -> new EventDate(aOverBoundEventDate));
     }
@@ -31,30 +31,30 @@ class EventDateTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void plusDays_shouldAddCorrectNumberOfDays(int days) {
-        LocalDate originalValue = EventDate.START_DATE;
+        LocalDate originalValue = EventDate.getStartEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.plusDays(days);
 
-        eventDate.plusDays(days);
+        EventDate newEventDate = eventDate.plusDays(days);
 
-        assertEquals(expectedValue, eventDate.getValue());
+        assertEquals(expectedValue, newEventDate.getValue());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void minusDays_shouldSubtractCorrectNumberOfDays(int days) {
-        LocalDate originalValue = EventDate.END_DATE;
+        LocalDate originalValue = EventDate.getEndEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.minusDays(days);
 
-        eventDate.minusDays(days);
+        EventDate newEventDate = eventDate.minusDays(days);
 
-        assertEquals(expectedValue, eventDate.getValue());
+        assertEquals(expectedValue, newEventDate.getValue());
     }
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotEventDate() {
-        eventDate = new EventDate(EventDate.START_DATE);
+        eventDate = EventDate.getStartEventDate();
         Object object = new Object();
 
         boolean result = eventDate.equals(object);
@@ -64,7 +64,7 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnTrue_whenEventDateHasSameValue() {
-        LocalDate aValue = EventDate.START_DATE;
+        LocalDate aValue = EventDate.getStartEventDate().getValue();
         eventDate = new EventDate(aValue);
         EventDate other = new EventDate(aValue);
 
@@ -75,8 +75,8 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnFalse_whenEventDateHasDifferentValue() {
-        eventDate = new EventDate(EventDate.START_DATE);
-        EventDate other = new EventDate(EventDate.START_DATE.plusDays(1));
+        eventDate = EventDate.getStartEventDate();
+        EventDate other = eventDate.plusDays(1);
 
         boolean result = eventDate.equals(other);
 
@@ -85,7 +85,7 @@ class EventDateTest {
 
     @Test
     void hashCode_shouldReturnValueHashCode() {
-        LocalDate aValue = EventDate.START_DATE;
+        LocalDate aValue = EventDate.getStartEventDate().getValue();
         int expectedHashCode = aValue.hashCode();
         eventDate = new EventDate(aValue);
 
@@ -96,7 +96,7 @@ class EventDateTest {
 
     @Test
     void getFullFestivalEventDates_shouldReturnEventDatesAfterOrEqualToStartDate() {
-        EventDate startDate = new EventDate(EventDate.START_DATE);
+        EventDate startDate = EventDate.getStartEventDate();
 
         List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
 
@@ -105,7 +105,7 @@ class EventDateTest {
 
     @Test
     void getFullFestivalEventDates_shouldReturnEventDatesBeforeOrEqualToEndDate() {
-        EventDate endDate = new EventDate(EventDate.END_DATE);
+        EventDate endDate = EventDate.getEndEventDate();
 
         List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
 

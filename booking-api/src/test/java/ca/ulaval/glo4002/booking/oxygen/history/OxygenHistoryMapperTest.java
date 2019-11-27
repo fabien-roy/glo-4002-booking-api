@@ -31,7 +31,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toDto_shouldReturnHistoryItemWithCorrectMadeTanks() {
         Integer amountOfTanksMade = 1;
-        LocalDate date = EventDate.START_DATE;
+        LocalDate date = EventDate.getStartEventDate().getValue();
         history.addMadeTanks(date, amountOfTanksMade);
 
         List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
@@ -42,7 +42,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toDto_shouldReturnHistoryItemWithCorrectBoughtTanks() {
         Integer amountOfTanksBought = 1;
-        LocalDate date = EventDate.START_DATE;
+        LocalDate date = EventDate.getStartEventDate().getValue();
         history.addTanksBought(date, amountOfTanksBought);
 
         List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
@@ -53,7 +53,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toDto_shouldReturnHistoryItemWithCorrectWaterUsed() {
         Double amountOfWaterUsed = 1D;
-        LocalDate date = EventDate.START_DATE;
+        LocalDate date = EventDate.getStartEventDate().getValue();
         history.addWaterUsed(date, amountOfWaterUsed);
 
         List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
@@ -64,7 +64,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toDto_shouldReturnHistoryItemWithCorrectCandlesUsed() {
         Integer amountOfCandlesUsed = 1;
-        LocalDate date = EventDate.START_DATE;
+        LocalDate date = EventDate.getStartEventDate().getValue();
         history.addCandlesUsed(date, amountOfCandlesUsed);
 
         List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
@@ -74,7 +74,7 @@ class OxygenHistoryMapperTest {
 
     @Test
     void toDto_shouldReturnMultipleHistoryItems_whenHistoryHasMultipleItems() {
-        LocalDate date = EventDate.START_DATE;
+        LocalDate date = EventDate.getStartEventDate().getValue();
         LocalDate anotherDate = date.plusDays(1);
         history.addMadeTanks(date, 1);
         history.addTanksBought(anotherDate, 1);
@@ -86,7 +86,7 @@ class OxygenHistoryMapperTest {
 
     @Test
     void toDto_shouldReturnHistoryItemsOrderedByDate() {
-        LocalDate firstDate = EventDate.START_DATE;
+        LocalDate firstDate = EventDate.getStartEventDate().getValue();
         LocalDate secondDate = firstDate.plusDays(1);
         history.addMadeTanks(firstDate, 1);
         history.addMadeTanks(secondDate, 1);

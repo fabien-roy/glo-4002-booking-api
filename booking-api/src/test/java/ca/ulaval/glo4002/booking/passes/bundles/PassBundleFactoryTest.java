@@ -48,7 +48,7 @@ class PassBundleFactoryTest {
 		Number aNumber = new Number(1L);
 		BigDecimal aBigDecimal = new BigDecimal(100.0);
 		Money aPrice = new Money(aBigDecimal);
-		EventDate aEventDate = new EventDate(EventDate.START_DATE);
+		EventDate aEventDate = EventDate.getStartEventDate();
 		Pass pass = new Pass(aNumber, aPrice, aEventDate);
 		PassFactory passFactory = mock(PassFactory.class);
 		when(passFactory.buildAll(any(), any())).thenReturn(Collections.singletonList(pass));
@@ -134,8 +134,10 @@ class PassBundleFactoryTest {
 	void build_shouldBuildOption_whenOptionIsSinglePass() {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		List<String> someEventDates = Arrays.asList(EventDate.START_DATE.toString(),
-				EventDate.START_DATE.plusDays(1).toString());
+		List<String> someEventDates = Arrays.asList(
+				EventDate.getStartEventDate().toString(),
+				EventDate.getStartEventDate().plusDays(1).toString()
+		);
 		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, singlePassOption, someEventDates);
 
 		PassBundle passBundle = passBundleFactory.build(passBundleDto);
@@ -160,7 +162,7 @@ class PassBundleFactoryTest {
 			int passQuantity) {
 		String supernovaCategory = PassCategories.SUPERNOVA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.START_DATE.toString());
+		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getStartEventDate().toString());
 		PassBundleDto passBundleDto = new PassBundleDto(supernovaCategory, singlePassOption, someEventDates);
 		PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
 
@@ -177,7 +179,7 @@ class PassBundleFactoryTest {
 			int passQuantity) {
 		String supergiantCategory = PassCategories.SUPERGIANT.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.START_DATE.toString());
+		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getStartEventDate().toString());
 		PassBundleDto passBundleDto = new PassBundleDto(supergiantCategory, singlePassOption, someEventDates);
 		PriceCalculationStrategy priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
 		Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity,
@@ -195,7 +197,7 @@ class PassBundleFactoryTest {
 			int passQuantity) {
 		String nebulaCategory = PassCategories.NEBULA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.START_DATE.toString());
+		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getStartEventDate().toString());
 		PassBundleDto passBundleDto = new PassBundleDto(nebulaCategory, singlePassOption, someEventDates);
 		PriceCalculationStrategy priceCalculationStrategy = new NebulaPriceCalculationStrategy();
 		Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity,
@@ -226,7 +228,7 @@ class PassBundleFactoryTest {
 	void build_shouldThrowInvalidFormatException_whenEventDateIsNotNullAndPassOptionIsPackage() {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String packageOption = PassOptions.PACKAGE.toString();
-		List<String> someEventDates = Collections.singletonList(EventDate.START_DATE.toString());
+		List<String> someEventDates = Collections.singletonList(EventDate.getStartEventDate().toString());
 		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, packageOption, someEventDates);
 
 		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleDto));

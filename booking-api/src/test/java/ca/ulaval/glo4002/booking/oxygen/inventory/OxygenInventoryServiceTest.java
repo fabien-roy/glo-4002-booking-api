@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
+import ca.ulaval.glo4002.booking.BookingConfiguration;
 import ca.ulaval.glo4002.booking.artists.BookingArtist;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -31,6 +32,7 @@ import static ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService.
 class OxygenInventoryServiceTest {
 
 	private OxygenInventoryService service;
+	private BookingConfiguration configuration;
 	private OxygenFactory factory;
 	private OxygenTankProducer producer;
 
@@ -38,10 +40,18 @@ class OxygenInventoryServiceTest {
 
 	@BeforeEach
 	void setUpService() {
-		factory = new OxygenFactory();
+		factory = new OxygenFactory(configuration);
 		producer = mock(OxygenTankProducer.class);
 
 		service = new OxygenInventoryService(factory, producer);
+	}
+
+	@BeforeEach
+	void setUpConfiguration() {
+		configuration = mock(BookingConfiguration.class);
+
+		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
+		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
 	}
 
 	@Test
@@ -56,7 +66,7 @@ class OxygenInventoryServiceTest {
 
 	@Test
 	void orderForPasses_shouldOrderForEventDate() {
-		EventDate aEventDate = new EventDate(EventDate.START_DATE);
+		EventDate aEventDate = EventDate.getStartEventDate();
 		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 
 		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass), AN_ORDER_DATE);
@@ -66,8 +76,8 @@ class OxygenInventoryServiceTest {
 
 	@Test
 	void orderForPasses_shouldOrderForEventDates_whenThereAreMultiplePasses() {
-		EventDate aEventDate = new EventDate(EventDate.START_DATE);
-		EventDate anotherEventDate = new EventDate(EventDate.START_DATE.plusDays(1));
+		EventDate aEventDate = EventDate.getStartEventDate();
+		EventDate anotherEventDate = EventDate.getStartEventDate().plusDays(1);
 		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 		Pass anotherPass = new Pass(new Number(1L), mock(Money.class), anotherEventDate);
 
@@ -80,7 +90,7 @@ class OxygenInventoryServiceTest {
 	@EnumSource(PassCategories.class)
 	void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
 		OxygenCategories expectedOxygenCategory = factory.buildCategory(passCategory).getCategory();
-		EventDate aEventDate = new EventDate(EventDate.START_DATE);
+		EventDate aEventDate = EventDate.getStartEventDate();
 		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 
 		service.orderForPasses(passCategory, Collections.singletonList(aPass), AN_ORDER_DATE);
@@ -103,7 +113,7 @@ class OxygenInventoryServiceTest {
     void orderForArtist_shouldProduceWithCorrectOrderDate() {
         BookingArtist artist = mock(BookingArtist.class);
         EventDate orderDate = mock(EventDate.class);
-        LocalDate expectedOrderDateValue = EventDate.START_DATE;
+        LocalDate expectedOrderDateValue = EventDate.getStartEventDate().getValue();
         when(orderDate.getValue()).thenReturn(expectedOrderDateValue);
 
         service.orderForArtist(artist, orderDate);

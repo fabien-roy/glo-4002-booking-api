@@ -1,15 +1,24 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.BookingConfiguration;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 import ca.ulaval.glo4002.booking.profits.Money;
 
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OxygenFactory {
+
+	private final BookingConfiguration bookingConfiguration;
+
+	@Inject
+	public OxygenFactory(BookingConfiguration bookingConfiguration) {
+		this.bookingConfiguration = bookingConfiguration;
+	}
+
 
 	public List<OxygenTank> buildOxygenTank(OxygenCategory category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
@@ -71,7 +80,8 @@ public class OxygenFactory {
 	}
 
 	public OxygenCategory buildCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
-		LocalDate readyBeforeDate = EventDate.START_DATE.plusDays(1);
+	    // TODO : This comparison should use a date class from domain
+		LocalDate readyBeforeDate = bookingConfiguration.getStartEventDate().plusDays(1).getValue();
 
 		if(oxygenCategories == OxygenCategories.A) {
 			if(requestDate.plusDays(20).isBefore(readyBeforeDate)){

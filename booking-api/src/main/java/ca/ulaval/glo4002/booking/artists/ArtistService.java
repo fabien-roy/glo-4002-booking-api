@@ -16,9 +16,9 @@ public class ArtistService {
 	private final ArtistRepository repository;
 
 	@Inject
-	public ArtistService(ArtistRepository repository) {
+	public ArtistService(ArtistRepository repository, ArtistConverter converter) {
 		this.repository = repository;
-		ArtistConverter converter = new ArtistConverter(repository);
+
 		converter.convert();
 	}
 

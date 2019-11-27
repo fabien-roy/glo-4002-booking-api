@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.integration;
 
+import ca.ulaval.glo4002.booking.BookingConfiguration;
 import ca.ulaval.glo4002.booking.errors.ErrorDto;
+import ca.ulaval.glo4002.booking.events.Event;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.events.EventDate;
@@ -48,12 +50,14 @@ public class PassIntegrationTest {
 
     @BeforeEach
     public void setUpController() {
+        BookingConfiguration bookingConfiguration = new BookingConfiguration();
+
         NumberGenerator numberGenerator = new NumberGenerator();
 
         PassFactory passFactory = new PassFactory(numberGenerator);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory();
+        OxygenFactory oxygenFactory = new OxygenFactory(bookingConfiguration);
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
@@ -66,7 +70,7 @@ public class PassIntegrationTest {
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(tripRepository, shuttleFactory);
+        TripService tripService = new TripService(bookingConfiguration, tripRepository, shuttleFactory);
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
@@ -103,7 +107,7 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass pass = new Pass(new Number(1L), passPrice, new EventDate(EventDate.START_DATE));
+        Pass pass = new Pass(new Number(1L), passPrice, EventDate.getStartEventDate());
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA, null),
@@ -129,10 +133,11 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass aPass = new Pass(new Number(1L), passPrice, new EventDate(EventDate.START_DATE));
+        Pass aPass = new Pass(new Number(1L), passPrice, EventDate.getStartEventDate());
         Pass anotherPass = new Pass(
                 new Number(2L),
-                mock(Money.class), new EventDate(EventDate.START_DATE.plusDays(1))
+                mock(Money.class),
+               EventDate.getStartEventDate().plusDays(1)
         );
         PassBundle passBundle = new PassBundle(
                 Arrays.asList(aPass, anotherPass),
@@ -166,7 +171,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
-                Arrays.asList(EventDate.START_DATE.toString(), EventDate.START_DATE.plusDays(1).toString())
+                Arrays.asList(EventDate.getStartEventDate().toString(), EventDate.getStartEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
@@ -185,7 +190,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString(),
-                Collections.singletonList(EventDate.START_DATE.toString())
+                Collections.singletonList(EventDate.getStartEventDate().toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
@@ -287,7 +292,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
-                Collections.singletonList(EventDate.START_DATE.minusDays(1).toString())
+                Collections.singletonList(EventDate.getStartEventDate().minusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
@@ -308,7 +313,7 @@ public class PassIntegrationTest {
         PassBundleDto passBundleDto = new PassBundleDto(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
-                Collections.singletonList(EventDate.END_DATE.plusDays(1).toString())
+                Collections.singletonList(EventDate.getEndEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
                 ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),

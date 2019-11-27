@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
+import ca.ulaval.glo4002.booking.BookingConfiguration;
 import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.oxygen.*;
@@ -46,12 +47,14 @@ class TripIntegrationTest {
 
     @BeforeEach
     void setUpController() {
+        BookingConfiguration bookingConfiguration = new BookingConfiguration();
+
         NumberGenerator numberGenerator = new NumberGenerator();
 
         PassFactory passFactory = new PassFactory(numberGenerator);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory();
+        OxygenFactory oxygenFactory = new OxygenFactory(bookingConfiguration);
         OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
@@ -66,7 +69,7 @@ class TripIntegrationTest {
         ShuttleManifestMapper shuttleManifestMapper = new ShuttleManifestMapper(tripMapper);
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(tripRepository, shuttleFactory);
+        TripService tripService = new TripService(bookingConfiguration, tripRepository, shuttleFactory);
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(oxygenFactory, oxygenTankProducer);
         ShuttleManifestService shuttleManifestService = new ShuttleManifestService(tripRepository, shuttleManifestMapper);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
@@ -78,7 +81,7 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddArrivalTrip() {
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
         orderController.addOrder(orderDto);
@@ -91,7 +94,7 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddDepartureTrip() {
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
         orderController.addOrder(orderDto);
@@ -104,8 +107,8 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddMultipleArrivalTrips_whenThereAreManyPasses() {
-        String aDate = EventDate.START_DATE.toString();
-        String anotherDate = EventDate.START_DATE.plusDays(1).toString();
+        String aDate = EventDate.getStartEventDate().toString();
+        String anotherDate = EventDate.getStartEventDate().plusDays(1).toString();
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
         orderController.addOrder(orderDto);
@@ -119,8 +122,8 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddMultipleDepartureTrips_whenThereAreManyPasses() {
-        String aDate = EventDate.START_DATE.toString();
-        String anotherDate = EventDate.START_DATE.plusDays(1).toString();
+        String aDate = EventDate.getStartEventDate().toString();
+        String anotherDate = EventDate.getStartEventDate().plusDays(1).toString();
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
         orderController.addOrder(orderDto);
@@ -141,7 +144,7 @@ class TripIntegrationTest {
         ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
 
         assertEquals(1, shuttleManifestDto.getArrivals().size());
-        assertEquals(EventDate.START_DATE.toString(), shuttleManifestDto.getArrivals().get(0).getDate());
+        assertEquals(EventDate.getStartEventDate().toString(), shuttleManifestDto.getArrivals().get(0).getDate());
     }
 
     @Test
@@ -153,13 +156,13 @@ class TripIntegrationTest {
         ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
 
         assertEquals(1, shuttleManifestDto.getDepartures().size());
-        assertEquals(EventDate.END_DATE.toString(), shuttleManifestDto.getDepartures().get(0).getDate());
+        assertEquals(EventDate.getEndEventDate().toString(), shuttleManifestDto.getDepartures().get(0).getDate());
     }
 
     @ParameterizedTest
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddArrivalTripsWithCorrectName(PassCategories passCategory) {
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
         ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
 
@@ -173,7 +176,7 @@ class TripIntegrationTest {
     @ParameterizedTest
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddDepartureTripsWithCorrectName(PassCategories passCategory) {
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
         ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
 
@@ -188,7 +191,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToNewArrivalTrip_whenTripIsFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
@@ -203,7 +206,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToNewDepartureTrip_whenTripIsFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
@@ -218,7 +221,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToExistingArrivalTrip_whenTripIsNotFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity, aDate);
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
@@ -233,7 +236,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToExistingDepartureTrip_whenTripIsNotFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.START_DATE.toString();
+        String aDate = EventDate.getStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity, aDate);
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 

@@ -7,9 +7,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.BookingConfiguration;
 import ca.ulaval.glo4002.booking.shuttles.*;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +22,7 @@ import ca.ulaval.glo4002.booking.passes.PassCategories;
 class TripServiceTest {
 
 	private TripService service;
+	private BookingConfiguration configuration;
 	private TripRepository repository;
 
 	@BeforeEach
@@ -30,13 +30,21 @@ class TripServiceTest {
 		repository = mock(TripRepository.class);
 		ShuttleFactory shuttleFactory = new ShuttleFactory();
 
-		service = new TripService(repository, shuttleFactory);
+		service = new TripService(configuration, repository, shuttleFactory);
+	}
+
+	@BeforeEach
+	void setUpConfiguration() {
+		configuration = mock(BookingConfiguration.class);
+
+		when(configuration.getStartEventDate()).thenReturn(EventDate.getStartEventDate());
+		when(configuration.getEndEventDate()).thenReturn(EventDate.getEndEventDate());
 	}
 
 	@Test
 	void orderForArtist_shouldOrderTripForArtistAtCorrectDate_whenThereIsASingleMember() {
 		Integer memberAmount = 1;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -50,7 +58,7 @@ class TripServiceTest {
 	@Test
 	void orderForArtist_shouldOrderEtSpaceshipTripForArtist_whenThereIsASingleMember() {
 		Integer memberAmount = 1;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -64,7 +72,7 @@ class TripServiceTest {
 	@Test
 	void orderForArtist_shouldOrderMillenniumFalconTripForArtist_whenThereAreMultipleMembers() {
 		Integer memberAmount = 2;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -79,7 +87,7 @@ class TripServiceTest {
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
 		Number expectedId = new Number(1L);
 		Integer memberAmount = 1;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -96,7 +104,7 @@ class TripServiceTest {
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
 		Number expectedId = new Number(1L);
 		Integer memberAmount = 2;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
 		Money money = mock(Money.class);
 		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
@@ -112,7 +120,7 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToDeparturesOnce_whenThereIsASinglePass() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
 		Money money = mock(Money.class);
 		Pass aPass = new Pass(mock(Number.class), money, anEventDate);
 		List<Pass> somePasses = Collections.singletonList(aPass);
@@ -125,7 +133,7 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToArrivalsOnce_whenThereIsASinglePass() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
 		Money money = mock(Money.class);
 		Pass aPass = new Pass(mock(Number.class), money, anEventDate);
 		List<Pass> somePasses = Collections.singletonList(aPass);
@@ -138,8 +146,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToCorrectDeparturesDates_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
-		EventDate anotherEventDate = new EventDate(EventDate.END_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anotherEventDate = EventDate.getEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -155,8 +163,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToCorrectArrivalsDates_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
-		EventDate anotherEventDate = new EventDate(EventDate.END_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anotherEventDate = EventDate.getEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -172,8 +180,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToDeparturesMultipleTimes_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
-		EventDate anotherEventDate = new EventDate(EventDate.END_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anotherEventDate = EventDate.getEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -188,8 +196,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToArrivalsMultipleTimes_whenThereAreMultiplePasses() {
 		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = new EventDate(EventDate.START_DATE);
-		EventDate anotherEventDate = new EventDate(EventDate.END_DATE);
+		EventDate anEventDate = EventDate.getStartEventDate();
+		EventDate anotherEventDate = EventDate.getEndEventDate();
 		Money money = mock(Money.class);
 		Number number = mock(Number.class);
 		Pass aPass = new Pass(number, money, anEventDate);
@@ -211,7 +219,7 @@ class TripServiceTest {
 
 		service.orderForPasses(category, somePasses);
 
-		verify(repository).addPassengerToDepartures(any(), any(), eq(new EventDate(EventDate.END_DATE)));
+		verify(repository).addPassengerToDepartures(any(), any(), eq(EventDate.getEndEventDate()));
 	}
 
 	@Test
@@ -224,6 +232,6 @@ class TripServiceTest {
 
 		service.orderForPasses(category, somePasses);
 
-		verify(repository).addPassengerToArrivals(any(), any(), eq(new EventDate(EventDate.START_DATE)));
+		verify(repository).addPassengerToArrivals(any(), any(), eq(EventDate.getStartEventDate()));
 	}
 }
