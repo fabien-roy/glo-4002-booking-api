@@ -53,6 +53,8 @@ public class OrderFactory {
         }
     }
 
+    // TODO : REP : Check if orderdate over or equal to 180 days before festival start date
+    // TODO : REP : Check if orderdate under or equal to festival start date
     private void validateOrderDate(LocalDateTime orderDate) {
         if (orderDate.isBefore(START_DATE_TIME) || orderDate.isAfter(END_DATE_TIME)) {
             throw new InvalidOrderDateException();

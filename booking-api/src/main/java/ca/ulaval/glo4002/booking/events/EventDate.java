@@ -8,12 +8,14 @@ public class EventDate {
 
     private static final LocalDate DEFAULT_START_DATE_VALUE = LocalDate.of(2050, 7, 17);
     private static final LocalDate DEFAULT_END_DATE_VALUE = LocalDate.of(2050, 7, 24);
+
     private LocalDate value;
 
     public EventDate(LocalDate value) {
         this.value = value;
     }
 
+    // TODO : Check where this is used and if we could use direct methods
     public LocalDate getValue() {
         return value;
     }
