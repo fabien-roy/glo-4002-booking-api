@@ -4,6 +4,9 @@ import ca.ulaval.glo4002.booking.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConfigurationTest {
@@ -51,5 +54,30 @@ class ConfigurationTest {
         EventDate eventDate = configuration.getEndEventDate();
 
         assertEquals(expectedEventDate, eventDate);
+    }
+
+    @Test
+    void getAllEventDates_shouldReturnEventDatesAfterOrEqualToStartDate() {
+        EventDate startDate = EventDate.getDefaultStartEventDate();
+
+        List<EventDate> allEventDates = configuration.getAllEventDates();
+
+        assertTrue(allEventDates.stream().allMatch(eventDate -> eventDate.equals(startDate) || eventDate.isAfter(startDate)));
+    }
+
+    @Test
+    void getAllEventDates_shouldReturnEventDatesBeforeOrEqualToEndDate() {
+        EventDate endDate = EventDate.getDefaultEndEventDate();
+
+        List<EventDate> allEventDates = configuration.getAllEventDates();
+
+        assertTrue(allEventDates.stream().allMatch(eventDate -> eventDate.equals(endDate) || eventDate.isBefore(endDate)));
+    }
+
+    @Test
+    void getAllEventDates_shouldReturnUniqueEventDates() {
+        List<EventDate> allEventDates = configuration.getAllEventDates();
+
+        assertTrue(allEventDates.stream().allMatch(new HashSet<>()::add));
     }
 }

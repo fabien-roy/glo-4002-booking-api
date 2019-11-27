@@ -79,29 +79,4 @@ class EventDateTest {
 
         assertEquals(expectedHashCode, hashCode);
     }
-
-    @Test
-    void getFullFestivalEventDates_shouldReturnEventDatesAfterOrEqualToStartDate() {
-        EventDate startDate = EventDate.getDefaultStartEventDate();
-
-        List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
-
-        assertTrue(fullFestivalEventDate.stream().allMatch(eventDate -> eventDate.equals(startDate) || eventDate.getValue().isAfter(startDate.getValue())));
-    }
-
-    @Test
-    void getFullFestivalEventDates_shouldReturnEventDatesBeforeOrEqualToEndDate() {
-        EventDate endDate = EventDate.getDefaultEndEventDate();
-
-        List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
-
-        assertTrue(fullFestivalEventDate.stream().allMatch(eventDate -> eventDate.equals(endDate) || eventDate.getValue().isBefore(endDate.getValue())));
-    }
-
-    @Test
-    void getFullFestivalEventDates_shouldReturnUniqueEventDates() {
-        List<EventDate> fullFestivalEventDate = EventDate.getFullFestivalEventDates();
-
-        assertTrue(fullFestivalEventDate.stream().allMatch(new HashSet<>()::add));
-    }
 }

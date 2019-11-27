@@ -7,7 +7,6 @@ import ca.ulaval.glo4002.booking.program.InvalidProgramException;
 import ca.ulaval.glo4002.booking.program.ProgramEventDto;
 
 import javax.inject.Inject;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

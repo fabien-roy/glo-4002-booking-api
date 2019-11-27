@@ -18,7 +18,7 @@ public class EventDate {
         return value;
     }
 
-    // TODO : Move to Configuration
+    // TODO : Delete since used in Configuration
     public static List<EventDate> getFullFestivalEventDates() {
         List<EventDate> fullFestivalEventDates = new ArrayList<>();
 
@@ -37,11 +37,11 @@ public class EventDate {
         return new EventDate(this.value.minusDays(days));
     }
 
-    boolean isBefore(EventDate eventDate) {
+    public boolean isBefore(EventDate eventDate) {
         return this.value.isBefore(eventDate.getValue());
     }
 
-    boolean isAfter(EventDate eventDate) {
+    public boolean isAfter(EventDate eventDate) {
         return this.value.isAfter(eventDate.getValue());
     }
 
