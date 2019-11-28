@@ -39,7 +39,6 @@ public class EventDate {
         return !this.isBefore(lowerDate) && !this.isAfter(higherDate);
     }
 
-    // TODO : Test EventDate.toLocalDateTime
     public LocalDateTime toLocalDateTime() {
         return LocalDateTime.of(value, LocalTime.MIDNIGHT);
     }

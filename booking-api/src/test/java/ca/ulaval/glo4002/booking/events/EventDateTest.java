@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -94,6 +96,17 @@ class EventDateTest {
         boolean result = eventDate.isBetweenOrEquals(lowerDate, higherDate);
 
         assertTrue(result);
+    }
+
+    @Test
+    void toLocalDateTime_shouldReturnValueAsLocalDate() {
+        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        LocalDateTime expectedLocalDateTime = LocalDateTime.of(value, LocalTime.MIDNIGHT);
+        eventDate = new EventDate(value);
+
+        LocalDateTime localDateTime = eventDate.toLocalDateTime();
+
+        assertEquals(expectedLocalDateTime, localDateTime);
     }
 
     @Test
