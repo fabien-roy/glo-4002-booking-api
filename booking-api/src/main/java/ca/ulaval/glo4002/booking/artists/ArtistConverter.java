@@ -51,12 +51,11 @@ public class ArtistConverter {
 		List<Availability> availabilities = new ArrayList<>();
 
 		for (ExternalArtistAvailability externalArtistAvailability : externalAvailabilities) {
-			String textDate = externalArtistAvailability.getDate();
-			LocalDate availabilityDate = LocalDate.parse(textDate);
+			LocalDate parsedAvailabilityDate = LocalDate.parse(externalArtistAvailability.getDate());
+			EventDate availabilityDate = new EventDate(parsedAvailabilityDate);
 
-			if (availabilityDateIsDuringFestival(availabilityDate)) {
-				EventDate eventAvailabilityDate = new EventDate(availabilityDate);
-				Availability availability = new Availability(eventAvailabilityDate);
+			if (isAvailabilityDateDuringFestival(availabilityDate)) {
+				Availability availability = new Availability(availabilityDate);
 
 				availabilities.add(availability);
 			}
@@ -65,10 +64,9 @@ public class ArtistConverter {
 		return availabilities;
 	}
 
-	// TODO : Use EventDate in availabilityDateIsDuringFestival
-	private boolean availabilityDateIsDuringFestival(LocalDate date) {
-		LocalDate startMinusOneDay = configuration.getStartEventDate().minusDays(1).getValue();
-		LocalDate endPlusOneDay = configuration.getEndEventDate().plusDays(1).getValue();
+	private boolean isAvailabilityDateDuringFestival(EventDate date) {
+		EventDate startMinusOneDay = configuration.getStartEventDate().minusDays(1);
+		EventDate endPlusOneDay = configuration.getEndEventDate().plusDays(1);
 
 		return date.isAfter(startMinusOneDay) && date.isBefore(endPlusOneDay);
 	}

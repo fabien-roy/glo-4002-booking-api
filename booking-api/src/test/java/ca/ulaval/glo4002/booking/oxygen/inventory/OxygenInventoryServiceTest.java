@@ -49,8 +49,6 @@ class OxygenInventoryServiceTest {
 	void setUpConfiguration() {
 		configuration = mock(Configuration.class);
 
-		when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-		when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 		when(configuration.getAllEventDates()).thenReturn(Arrays.asList(
 				EventDate.getDefaultStartEventDate(),
 				EventDate.getDefaultEndEventDate())

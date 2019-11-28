@@ -20,17 +20,6 @@ public class EventDate {
         return value;
     }
 
-    // TODO : Delete since used in Configuration
-    public static List<EventDate> getFullFestivalEventDates() {
-        List<EventDate> fullFestivalEventDates = new ArrayList<>();
-
-        for (LocalDate date = DEFAULT_START_DATE_VALUE; date.isBefore(DEFAULT_END_DATE_VALUE); date = date.plusDays(1)) {
-            fullFestivalEventDates.add(new EventDate(date));
-        }
-
-        return fullFestivalEventDates;
-    }
-
     public EventDate plusDays(int days) {
         return new EventDate(this.value.plusDays(days));
     }
