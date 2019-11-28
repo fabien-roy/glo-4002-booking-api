@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.passes.bundles;
 
+import ca.ulaval.glo4002.booking.events.Event;
 import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
@@ -123,8 +124,8 @@ class PassBundleMapperTest {
         Number anotherPassNumber = new Number(2L);
         EventDate aEventDate = mock(EventDate.class);
         EventDate anotherEventDate = mock(EventDate.class);
-        when(aEventDate.toString()).thenReturn(OrderFactory.START_DATE_TIME.toString());
-        when(anotherEventDate.toString()).thenReturn(OrderFactory.END_DATE_TIME.toString());
+        when(aEventDate.toString()).thenReturn(EventDate.getDefaultStartEventDate().toLocalDateTime().toString());
+        when(anotherEventDate.toString()).thenReturn(EventDate.getDefaultEndEventDate().toLocalDateTime().toString());
         Pass aPass = new Pass(aPassNumber, mock(Money.class), aEventDate);
         Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), anotherEventDate);
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));

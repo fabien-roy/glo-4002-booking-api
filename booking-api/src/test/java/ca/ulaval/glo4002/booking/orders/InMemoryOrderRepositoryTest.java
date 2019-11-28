@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +40,7 @@ class InMemoryOrderRepositoryTest {
 	void getOrderNumber_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
 		OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
 		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+		LocalDateTime anOrderDate = EventDate.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		repository.addOrder(anOrder);
@@ -50,7 +51,7 @@ class InMemoryOrderRepositoryTest {
 	@Test
 	void getByOrderNumber_shouldReturnOrder() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+		LocalDateTime anOrderDate = EventDate.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		repository.addOrder(anOrder);
@@ -64,7 +65,7 @@ class InMemoryOrderRepositoryTest {
 	void getByOrderNumber_shouldReturnOrders_whenThereAreMultipleOrders() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
 		OrderNumber anotherOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+		LocalDateTime anOrderDate = EventDate.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		Order anotherOrder = new Order(anotherOrderNumber, anOrderDate, aPassBundle);
@@ -81,7 +82,7 @@ class InMemoryOrderRepositoryTest {
 	@Test
 	void addOrder_shouldAddOrder() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+		LocalDateTime anOrderDate = EventDate.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 
@@ -93,7 +94,7 @@ class InMemoryOrderRepositoryTest {
 	@Test
 	void findAll_shouldReturnEveryOrder() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = OrderFactory.START_DATE_TIME.plusDays(1);
+		LocalDateTime anOrderDate = EventDate.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		repository.addOrder(anOrder);

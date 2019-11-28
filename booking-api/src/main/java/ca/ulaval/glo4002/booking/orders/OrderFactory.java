@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.orders;
 
+import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
@@ -13,14 +14,14 @@ import java.time.format.DateTimeFormatter;
 public class OrderFactory {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
-    public static final LocalDateTime START_DATE_TIME = LocalDateTime.of(2050, 1, 1, 0, 0);
-    public static final LocalDateTime END_DATE_TIME = LocalDateTime.of(2050, 7, 17, 0, 0);
 
+    private final Configuration configuration;
     private final NumberGenerator numberGenerator;
     private final PassBundleFactory passBundleFactory;
 
     @Inject
-    public OrderFactory(NumberGenerator numberGenerator, PassBundleFactory passBundleFactory) {
+    public OrderFactory(Configuration configuration, NumberGenerator numberGenerator, PassBundleFactory passBundleFactory) {
+        this.configuration = configuration;
         this.numberGenerator = numberGenerator;
         this.passBundleFactory = passBundleFactory;
     }
@@ -53,10 +54,12 @@ public class OrderFactory {
         }
     }
 
-    // TODO : REP : Check if orderdate over or equal to 180 days before festival start date
-    // TODO : REP : Check if orderdate under or equal to festival start date
     private void validateOrderDate(LocalDateTime orderDate) {
-        if (orderDate.isBefore(START_DATE_TIME) || orderDate.isAfter(END_DATE_TIME)) {
+        LocalDateTime minimalOrderDate = configuration.getMinimumEventDateToOrder().toLocalDateTime();
+        LocalDateTime maximalOrderDate = configuration.getMaximumEventDateToOrder().toLocalDateTime();
+
+        // TODO : Could use EventDate.isBetweenOrEquals if OrderDate made sense as an EventDate
+        if (orderDate.isBefore(minimalOrderDate) || orderDate.isAfter(maximalOrderDate)) {
             throw new InvalidOrderDateException();
         }
     }

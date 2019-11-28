@@ -43,12 +43,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TripIntegrationTest {
 
     private OrderController orderController;
+    private Configuration configuration;
     private ShuttleManifestController shuttleManifestController;
     private ShuttleFactory shuttleFactory;
 
     @BeforeEach
     void setUpController() {
-        Configuration configuration = new Configuration();
+        configuration = new Configuration();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
@@ -57,7 +58,7 @@ class TripIntegrationTest {
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         shuttleFactory = new ShuttleFactory();
         OxygenFactory oxygenFactory = new OxygenFactory(configuration);
-        OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
+        OrderFactory orderFactory = new OrderFactory(configuration, numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -257,7 +258,7 @@ class TripIntegrationTest {
         );
 
         return new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );

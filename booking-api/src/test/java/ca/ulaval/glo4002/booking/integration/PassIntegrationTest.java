@@ -46,11 +46,12 @@ import static org.mockito.Mockito.mock;
 public class PassIntegrationTest {
 
     private OrderController controller;
+    private Configuration configuration;
     private OrderRepository orderRepository;
 
     @BeforeEach
     public void setUpController() {
-        Configuration configuration = new Configuration();
+        configuration = new Configuration();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
@@ -59,7 +60,7 @@ public class PassIntegrationTest {
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
         OxygenFactory oxygenFactory = new OxygenFactory(configuration);
-        OrderFactory orderFactory = new OrderFactory(numberGenerator, passBundleFactory);
+        OrderFactory orderFactory = new OrderFactory(configuration, numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -90,7 +91,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                OrderFactory.START_DATE_TIME,
+                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -116,7 +117,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                OrderFactory.START_DATE_TIME,
+                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -147,7 +148,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                OrderFactory.START_DATE_TIME,
+                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -175,7 +176,7 @@ public class PassIntegrationTest {
                 Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -194,7 +195,7 @@ public class PassIntegrationTest {
                 Collections.singletonList(EventDate.getDefaultStartEventDate().toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -214,7 +215,7 @@ public class PassIntegrationTest {
                 PassOptions.SINGLE_PASS.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -234,7 +235,7 @@ public class PassIntegrationTest {
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -254,7 +255,7 @@ public class PassIntegrationTest {
                 "anInvalidPassOption"
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -275,7 +276,7 @@ public class PassIntegrationTest {
                 Collections.singletonList("anInvalidOrderDate")
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -296,7 +297,7 @@ public class PassIntegrationTest {
                 Collections.singletonList(EventDate.getDefaultStartEventDate().minusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -317,7 +318,7 @@ public class PassIntegrationTest {
                 Collections.singletonList(EventDate.getDefaultEndEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(OrderFactory.START_DATE_TIME, ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );

@@ -10,10 +10,8 @@ public class InvalidOrderDateException extends BookingException {
 
     private static final DateTimeFormatter MESSAGE_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMMM d y").withLocale(Locale.ENGLISH);
     public static final String MESSAGE = "INVALID_ORDER_DATE";
-    public static final String DESCRIPTION = "Order date should be between" +
-            OrderFactory.START_DATE_TIME.format(MESSAGE_DATE_TIME_FORMATTER) +
-            " and " +
-            OrderFactory.END_DATE_TIME.format(MESSAGE_DATE_TIME_FORMATTER);
+    // TODO : Use EventDate from BookingConfiguration in InvalidEventDateException (or ExceptionMapper?)
+    public static final String DESCRIPTION = "Order date should be between x and x";
 
     public InvalidOrderDateException() {
         super(MESSAGE);

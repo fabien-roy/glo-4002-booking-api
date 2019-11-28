@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.events;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class EventDate {
 
@@ -35,6 +37,11 @@ public class EventDate {
 
     public boolean isBetweenOrEquals(EventDate lowerDate, EventDate higherDate) {
         return !this.isBefore(lowerDate) && !this.isAfter(higherDate);
+    }
+
+    // TODO : Test EventDate.toLocalDateTime
+    public LocalDateTime toLocalDateTime() {
+        return LocalDateTime.of(value, LocalTime.MIDNIGHT);
     }
 
     @Override

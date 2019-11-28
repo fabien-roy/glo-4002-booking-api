@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.orders;
 
+import ca.ulaval.glo4002.booking.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.passes.Pass;
@@ -113,7 +114,7 @@ class OrderServiceTest {
 		when(aPass.getPrice()).thenReturn(new Money(new BigDecimal(0.0)));
 		PassBundle passBundle = new PassBundle(Collections.singletonList(aPass),
 				new PassCategory(PassCategories.SUPERNOVA, null), PassOptions.PACKAGE);
-		Order order = new Order(anOrderNumber, OrderFactory.START_DATE_TIME, passBundle);
+		Order order = new Order(anOrderNumber, EventDate.getDefaultStartEventDate().minusDays(1).toLocalDateTime(), passBundle);
 		when(repository.getByOrderNumber(anOrderNumber)).thenReturn(order);
 
 		OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(anOrderNumber.toString());
