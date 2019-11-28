@@ -3,17 +3,13 @@ package ca.ulaval.glo4002.booking.events;
 import ca.ulaval.glo4002.booking.exceptions.BookingException;
 import org.springframework.http.HttpStatus;
 
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-
 public class InvalidEventDateException extends BookingException {
 
-    private static final DateTimeFormatter MESSAGE_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMMM d y").withLocale(Locale.ENGLISH);
     public static final String MESSAGE = "INVALID_EVENT_DATE";
-    // TODO : Use EventDate from BookingConfiguration in InvalidEventDateException (or ExceptionMapper?)
-    public static final String DESCRIPTION = "Event date should be between x and x";
+    // The following start and end event dates are default. This is as required.
+    public static final String DESCRIPTION = "Event date should be between July 17 2050 and July 24 2050";
 
-    public InvalidEventDateException() {
+    InvalidEventDateException() {
         super(MESSAGE);
 
         description = DESCRIPTION;
