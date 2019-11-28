@@ -37,6 +37,66 @@ class EventDateTest {
     }
 
     @Test
+    void isBetweenOrEquals_shouldReturnFalse_whenEventDateIsBeforeLowerDate() {
+        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        eventDate = new EventDate(value);
+        EventDate lowerDate = eventDate.plusDays(1);
+        EventDate higherDate = eventDate.plusDays(2);
+
+        boolean result = eventDate.isBetweenOrEquals(lowerDate, higherDate);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void isBetweenOrEquals_shouldReturnFalse_whenEventDateIsAfterHigherDate() {
+        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        eventDate = new EventDate(value);
+        EventDate lowerDate = eventDate.minusDays(2);
+        EventDate higherDate = eventDate.minusDays(1);
+
+        boolean result = eventDate.isBetweenOrEquals(lowerDate, higherDate);
+
+        assertFalse(result);
+    }
+
+    @Test
+    void isBetweenOrEquals_shouldReturnTrue_whenEventDateEqualsLowerDate() {
+        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        eventDate = new EventDate(value);
+        EventDate lowerDate = eventDate;
+        EventDate higherDate = eventDate.plusDays(1);
+
+        boolean result = eventDate.isBetweenOrEquals(lowerDate, higherDate);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void isBetweenOrEquals_shouldReturnTrue_whenEventDateEqualsHigherDate() {
+        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        eventDate = new EventDate(value);
+        EventDate lowerDate = eventDate.minusDays(1);
+        EventDate higherDate = eventDate;
+
+        boolean result = eventDate.isBetweenOrEquals(lowerDate, higherDate);
+
+        assertTrue(result);
+    }
+
+    @Test
+    void isBetweenOrEquals_shouldReturnTrue_whenEventDateIsBetweenLowerDateAndHigherDate() {
+        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        eventDate = new EventDate(value);
+        EventDate lowerDate = eventDate.minusDays(1);
+        EventDate higherDate = eventDate.plusDays(1);
+
+        boolean result = eventDate.isBetweenOrEquals(lowerDate, higherDate);
+
+        assertTrue(result);
+    }
+
+    @Test
     void equals_shouldReturnFalse_whenObjectIsNotEventDate() {
         eventDate = EventDate.getDefaultStartEventDate();
         Object object = new Object();
