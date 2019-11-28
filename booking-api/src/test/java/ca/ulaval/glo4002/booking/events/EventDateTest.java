@@ -37,19 +37,6 @@ class EventDateTest {
     }
 
     @Test
-    void addDays_shouldAddDaysToValue() {
-        int numberOfDaysAdded = 1;
-        LocalDate originalValue = EventDate.getDefaultEndEventDate().getValue();
-        eventDate = new EventDate(originalValue);
-        LocalDate expectedValue = originalValue.plusDays(numberOfDaysAdded);
-        EventDate expectedDate = new EventDate(expectedValue);
-
-        eventDate.addDays(numberOfDaysAdded);
-
-        assertEquals(expectedDate, eventDate);
-    }
-
-    @Test
     void equals_shouldReturnFalse_whenObjectIsNotEventDate() {
         eventDate = EventDate.getDefaultStartEventDate();
         Object object = new Object();

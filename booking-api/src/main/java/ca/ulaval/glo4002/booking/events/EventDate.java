@@ -1,8 +1,6 @@
 package ca.ulaval.glo4002.booking.events;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventDate {
 
@@ -15,7 +13,6 @@ public class EventDate {
         this.value = value;
     }
 
-    // TODO : Check where this is used and if we could use direct methods
     public LocalDate getValue() {
         return value;
     }
@@ -26,10 +23,6 @@ public class EventDate {
 
     public EventDate minusDays(int days) {
         return new EventDate(this.value.minusDays(days));
-    }
-
-    public void addDays(int numberOfDays) {
-        this.value = value.plusDays(numberOfDays);
     }
 
     public boolean isBefore(EventDate eventDate) {
