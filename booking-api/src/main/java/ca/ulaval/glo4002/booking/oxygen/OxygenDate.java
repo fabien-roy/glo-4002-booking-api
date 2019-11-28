@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.oxygen;
 
 import java.time.LocalDate;
 
-// TODO : Remove OxygenDate, use EventDate
+// TODO : Review usage of OxygenDate
 public class OxygenDate {
 
 	private LocalDate date;
