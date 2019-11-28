@@ -28,6 +28,10 @@ public class EventDate {
         return new EventDate(this.value.minusDays(days));
     }
 
+    public void addDays(int numberOfDays) {
+        this.value = value.plusDays(numberOfDays);
+    }
+
     public boolean isBefore(EventDate eventDate) {
         return this.value.isBefore(eventDate.getValue());
     }

@@ -80,7 +80,7 @@ public class OxygenFactory {
 	}
 
 	public OxygenCategory buildCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
-	    // TODO : This comparison should use a date class from domain
+		// TODO : Use EventDate in OxygenFactory when OxygenDate is removed
 		LocalDate readyBeforeDate = configuration.getStartEventDate().plusDays(1).getValue();
 
 		if(oxygenCategories == OxygenCategories.A) {

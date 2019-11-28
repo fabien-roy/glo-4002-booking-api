@@ -5,6 +5,7 @@ import ca.ulaval.glo4002.booking.profits.Profit;
 
 public class OxygenTank {
 
+    // TODO : Those numbers should not be here...
     public static final int CATEGORY_A_NUMBER_OF_TANKS_CREATED = 5;
     public static final int CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED = 15;
     public static final int CATEGORY_A_RESOURCE_PRICE = 650;

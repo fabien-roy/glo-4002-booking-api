@@ -11,7 +11,7 @@ public class InvalidEventDateException extends BookingException {
     private static final DateTimeFormatter MESSAGE_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("MMMM d y").withLocale(Locale.ENGLISH);
     public static final String MESSAGE = "INVALID_EVENT_DATE";
     // TODO : Use EventDate from BookingConfiguration in InvalidEventDateException (or ExceptionMapper?)
-    public static final String DESCRIPTION = "Event date should be between" +
+    public static final String DESCRIPTION = "Event date should be between " +
             EventDate.getDefaultStartEventDate().getValue().format(MESSAGE_DATE_TIME_FORMATTER) +
             " and " +
             EventDate.getDefaultEndEventDate().getValue().format(MESSAGE_DATE_TIME_FORMATTER);
