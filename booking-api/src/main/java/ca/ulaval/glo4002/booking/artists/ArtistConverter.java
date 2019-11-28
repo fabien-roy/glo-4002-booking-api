@@ -64,10 +64,11 @@ public class ArtistConverter {
 		return availabilities;
 	}
 
+	// TODO : Test ArtistConverter.isAvailabilityDateDuringFestival
 	private boolean isAvailabilityDateDuringFestival(EventDate date) {
-		EventDate startMinusOneDay = configuration.getStartEventDate().minusDays(1);
-		EventDate endPlusOneDay = configuration.getEndEventDate().plusDays(1);
+		EventDate startDate = configuration.getStartEventDate();
+		EventDate endDate = configuration.getEndEventDate();
 
-		return date.isAfter(startMinusOneDay) && date.isBefore(endPlusOneDay);
+		return date.isBetweenOrEquals(startDate, endDate);
 	}
 }

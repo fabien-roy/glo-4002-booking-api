@@ -240,5 +240,4 @@ public class ArtistConverterTest {
 		assertEquals(externalArtists.get(0).getName(), artists.get(0).getName());
 		assertEquals(externalArtists.get(1).getName(), artists.get(1).getName());
 	}
-
 }

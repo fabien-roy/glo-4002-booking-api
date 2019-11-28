@@ -2,11 +2,13 @@ package ca.ulaval.glo4002.booking.configuration;
 
 import ca.ulaval.glo4002.booking.events.EventDate;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Configuration {
+
+    static final Integer MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 180;
+    static final Integer MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 1;
 
     private EventDate startEventDate;
     private EventDate endEventDate;
@@ -40,5 +42,13 @@ public class Configuration {
         }
 
         return allEventDates;
+    }
+
+    public EventDate getMinimumEventDateToOrder() {
+        return startEventDate.minusDays(MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+    }
+
+    public EventDate getMaximumEventDateToOrder() {
+        return startEventDate.minusDays(MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
     }
 }

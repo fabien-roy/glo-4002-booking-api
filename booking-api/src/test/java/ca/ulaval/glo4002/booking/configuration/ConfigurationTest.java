@@ -80,4 +80,22 @@ class ConfigurationTest {
 
         assertTrue(allEventDates.stream().allMatch(new HashSet<>()::add));
     }
+
+    @Test
+    void getMinimumEventDateToOrder_shouldReturnStartEventDateMinusMaximumDaysToOrderBeforeStartEventDate() {
+        EventDate expectedEventDate = configuration.getStartEventDate().minusDays(Configuration.MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+
+        EventDate eventDate = configuration.getMinimumEventDateToOrder();
+
+        assertEquals(expectedEventDate, eventDate);
+    }
+
+    @Test
+    void getMaximumEventDateToOrder_shouldReturnStartEventDateMinusMinimumDaysToOrderBeforeStartEventDate() {
+        EventDate expectedEventDate = configuration.getStartEventDate().minusDays(Configuration.MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+
+        EventDate eventDate = configuration.getMaximumEventDateToOrder();
+
+        assertEquals(expectedEventDate, eventDate);
+    }
 }

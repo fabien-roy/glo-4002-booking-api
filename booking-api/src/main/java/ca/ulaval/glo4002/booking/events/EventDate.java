@@ -33,6 +33,10 @@ public class EventDate {
         return this.value.isAfter(eventDate.getValue());
     }
 
+    public boolean isBetweenOrEquals(EventDate lowerDate, EventDate higherDate) {
+        return !this.isBefore(lowerDate) && !this.isAfter(higherDate);
+    }
+
     @Override
     public String toString() {
         return value.toString();

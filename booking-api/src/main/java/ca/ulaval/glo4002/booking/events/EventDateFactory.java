@@ -40,7 +40,7 @@ public class EventDateFactory {
         EventDate startEventDate = configuration.getStartEventDate();
         EventDate endEventDate = configuration.getEndEventDate();
 
-        if (eventDate.isBefore(startEventDate) || eventDate.isAfter(endEventDate)) {
+        if (!eventDate.isBetweenOrEquals(startEventDate, endEventDate)) {
             throw new InvalidEventDateException();
         }
     }
