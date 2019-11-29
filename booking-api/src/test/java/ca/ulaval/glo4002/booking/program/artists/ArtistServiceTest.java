@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 class ArtistServiceTest {
 

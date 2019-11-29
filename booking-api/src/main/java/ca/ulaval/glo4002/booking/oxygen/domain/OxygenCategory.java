@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -5,7 +5,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.profits.Profit;
+import ca.ulaval.glo4002.booking.profits.domain.Profit;
 import ca.ulaval.glo4002.booking.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.Shuttle;
 import ca.ulaval.glo4002.booking.shuttles.ShuttleCategories;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.profits.Profit;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Profit;
 
 public class OxygenTank {
 

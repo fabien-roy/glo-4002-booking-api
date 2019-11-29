@@ -7,7 +7,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 import javax.inject.Inject;
 

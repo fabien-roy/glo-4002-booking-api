@@ -1,9 +1,10 @@
-package ca.ulaval.glo4002.booking.profits;
+package ca.ulaval.glo4002.booking.profits.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 
+import ca.ulaval.glo4002.booking.profits.domain.PercentageDiscount;
 import org.junit.jupiter.api.Test;
 
 class PercentageDiscountTest {

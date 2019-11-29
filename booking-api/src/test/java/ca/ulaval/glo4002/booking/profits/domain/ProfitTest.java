@@ -1,5 +1,7 @@
-package ca.ulaval.glo4002.booking.profits;
+package ca.ulaval.glo4002.booking.profits.domain;
 
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Profit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

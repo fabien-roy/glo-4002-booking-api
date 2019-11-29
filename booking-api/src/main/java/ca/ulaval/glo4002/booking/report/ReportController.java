@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.report;
 
-import ca.ulaval.glo4002.booking.profits.ProfitService;
-import ca.ulaval.glo4002.booking.profits.ProfitsDto;
+import ca.ulaval.glo4002.booking.profits.services.ProfitService;
+import ca.ulaval.glo4002.booking.profits.rest.ProfitsDto;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportDto;
 import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
 

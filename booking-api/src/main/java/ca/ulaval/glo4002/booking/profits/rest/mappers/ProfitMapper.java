@@ -1,4 +1,7 @@
-package ca.ulaval.glo4002.booking.profits;
+package ca.ulaval.glo4002.booking.profits.rest.mappers;
+
+import ca.ulaval.glo4002.booking.profits.domain.Profit;
+import ca.ulaval.glo4002.booking.profits.rest.ProfitsDto;
 
 public class ProfitMapper {
 

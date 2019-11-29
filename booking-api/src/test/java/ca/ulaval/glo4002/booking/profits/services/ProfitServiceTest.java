@@ -1,5 +1,7 @@
-package ca.ulaval.glo4002.booking.profits;
+package ca.ulaval.glo4002.booking.profits.services;
 
+import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
+import ca.ulaval.glo4002.booking.profits.services.ProfitService;
 import ca.ulaval.glo4002.booking.program.events.Event;
 import ca.ulaval.glo4002.booking.program.events.EventRepository;
 import ca.ulaval.glo4002.booking.orders.domain.Order;

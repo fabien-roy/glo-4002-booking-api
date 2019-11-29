@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.passes.domain;
 
 import ca.ulaval.glo4002.booking.program.events.EventDate;
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.numbers.Number;
 
 public class Pass {

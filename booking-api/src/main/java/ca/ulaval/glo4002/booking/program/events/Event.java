@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.program.events;
 
 import ca.ulaval.glo4002.booking.program.artists.BookingArtist;
 import ca.ulaval.glo4002.booking.program.activities.Activities;
-import ca.ulaval.glo4002.booking.profits.Profit;
+import ca.ulaval.glo4002.booking.profits.domain.Profit;
 
 public class Event {
 

@@ -22,7 +22,7 @@ import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService.OXYGEN_CATEGORY_FOR_ARTIST;

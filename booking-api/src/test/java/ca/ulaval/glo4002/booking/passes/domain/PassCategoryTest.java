@@ -6,12 +6,9 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.passes.domain.PassCategory;
-import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 class PassCategoryTest {
 

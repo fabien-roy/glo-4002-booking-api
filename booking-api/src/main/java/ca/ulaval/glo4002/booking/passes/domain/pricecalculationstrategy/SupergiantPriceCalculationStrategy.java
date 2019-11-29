@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy;
 
 import java.math.BigDecimal;
 
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 public class SupergiantPriceCalculationStrategy implements PriceCalculationStrategy {
 

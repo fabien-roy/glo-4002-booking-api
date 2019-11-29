@@ -7,11 +7,10 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.passes.domain.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ca.ulaval.glo4002.booking.profits.Money;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 class PassBundleTest {
 

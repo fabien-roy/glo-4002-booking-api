@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.profits;
+package ca.ulaval.glo4002.booking.profits.rest;
 
 public class ProfitsDto {
 
