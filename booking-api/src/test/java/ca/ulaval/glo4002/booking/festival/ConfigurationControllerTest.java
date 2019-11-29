@@ -3,8 +3,8 @@ package ca.ulaval.glo4002.booking.festival;
 import ca.ulaval.glo4002.booking.program.events.EventDatesDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -22,8 +22,8 @@ class ConfigurationControllerTest {
 
     @Test
     void addProgram_shouldReturnOk() {
-        ResponseEntity<?> response = controller.setConfiguration(mock(EventDatesDto.class));
+        Response response = controller.setConfiguration(mock(EventDatesDto.class));
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 }

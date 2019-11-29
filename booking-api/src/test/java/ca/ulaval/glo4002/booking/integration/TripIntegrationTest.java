@@ -30,6 +30,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.springframework.http.ResponseEntity;
 
+import javax.ws.rs.core.Response;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Arrays;
@@ -86,8 +87,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(1, shuttleManifestDto.getArrivals().size());
         assertEquals(aDate, shuttleManifestDto.getArrivals().get(0).getDate());
@@ -99,8 +100,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(1, shuttleManifestDto.getDepartures().size());
         assertEquals(aDate, shuttleManifestDto.getDepartures().get(0).getDate());
@@ -113,8 +114,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(null);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(2, shuttleManifestDto.getArrivals().size());
         assertTrue(shuttleManifestDto.getArrivals().stream().anyMatch(arrival -> arrival.getDate().equals(aDate)));
@@ -128,8 +129,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(null);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(2, shuttleManifestDto.getArrivals().size());
         assertTrue(shuttleManifestDto.getDepartures().stream().anyMatch(departure -> departure.getDate().equals(aDate)));
@@ -141,8 +142,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(null);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(1, shuttleManifestDto.getArrivals().size());
         assertEquals(EventDate.getDefaultStartEventDate().toString(), shuttleManifestDto.getArrivals().get(0).getDate());
@@ -153,8 +154,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(null);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(null);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(1, shuttleManifestDto.getDepartures().size());
         assertEquals(EventDate.getDefaultEndEventDate().toString(), shuttleManifestDto.getDepartures().get(0).getDate());
@@ -168,8 +169,8 @@ class TripIntegrationTest {
         ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(expectedShuttleCategory.toString(), shuttleManifestDto.getArrivals().get(0).getShuttleName());
     }
@@ -182,8 +183,8 @@ class TripIntegrationTest {
         ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(expectedShuttleCategory.toString(), shuttleManifestDto.getDepartures().get(0).getShuttleName());
     }
@@ -197,8 +198,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(2, shuttleManifestDto.getArrivals().size());
     }
@@ -212,8 +213,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(2, shuttleManifestDto.getDepartures().size());
     }
@@ -227,8 +228,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(1, shuttleManifestDto.getArrivals().size());
     }
@@ -242,8 +243,8 @@ class TripIntegrationTest {
         OrderWithPassesAsEventDatesDto orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
 
         orderController.addOrder(orderDto);
-        ResponseEntity<?> response = shuttleManifestController.get(aDate);
-        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getBody();
+        Response response = shuttleManifestController.get(aDate);
+        ShuttleManifestDto shuttleManifestDto = (ShuttleManifestDto) response.getEntity();
 
         assertEquals(1, shuttleManifestDto.getDepartures().size());
     }

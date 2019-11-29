@@ -6,8 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
-import org.springframework.http.ResponseEntity;
+import javax.ws.rs.core.Response;
 
 @Path("/shuttle-manifests")
 public class ShuttleManifestController {
@@ -21,7 +20,7 @@ public class ShuttleManifestController {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public ResponseEntity<?> get(@QueryParam("date") String date) {
+	public Response get(@QueryParam("date") String date) {
 		ShuttleManifestDto shuttleManifestDto;
 
 		if (date == null) {
@@ -30,6 +29,6 @@ public class ShuttleManifestController {
 			shuttleManifestDto = service.getTripsForDate(date);
 		}
 
-		return ResponseEntity.ok().body(shuttleManifestDto);
+		return Response.ok().entity(shuttleManifestDto).build();
 	}
 }

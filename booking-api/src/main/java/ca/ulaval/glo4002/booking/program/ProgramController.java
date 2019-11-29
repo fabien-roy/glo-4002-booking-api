@@ -8,8 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
-import org.springframework.http.ResponseEntity;
+import javax.ws.rs.core.Response;
 
 import ca.ulaval.glo4002.booking.program.artists.ArtistListDto;
 import ca.ulaval.glo4002.booking.program.artists.ArtistService;
@@ -29,7 +28,7 @@ public class ProgramController {
 	@GET
 	@Path("/artists")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ResponseEntity<?> getArtists(@QueryParam("orderBy") String orderBy) {
+	public Response getArtists(@QueryParam("orderBy") String orderBy) {
 		ArtistListDto artistListDto;
 
 		// Make orderBy nullable in artist service
@@ -39,14 +38,14 @@ public class ProgramController {
 			artistListDto = artistService.getAllOrdered(orderBy);
 		}
 
-		return ResponseEntity.ok().body(artistListDto);
+		return Response.ok().entity(artistListDto).build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResponseEntity<?> add(ProgramDto programDto) {
+	public Response add(ProgramDto programDto) {
 		programService.add(programDto);
 
-		return ResponseEntity.ok().build();
+		return Response.ok().build();
 	}
 }

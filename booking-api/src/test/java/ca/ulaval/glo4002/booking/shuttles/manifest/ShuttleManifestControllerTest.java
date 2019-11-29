@@ -6,8 +6,8 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import javax.ws.rs.core.Response;
 
 class ShuttleManifestControllerTest {
 
@@ -26,17 +26,17 @@ class ShuttleManifestControllerTest {
         String aDate = "aDate";
         when(service.getTripsForDate(aDate)).thenReturn(mock(ShuttleManifestDto.class));
 
-        ResponseEntity<?> response = controller.get(aDate);
+        Response response = controller.get(aDate);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
     
     @Test
     void getWithoutDate_shouldReturnOk() {
         when(service.getTrips()).thenReturn(mock(ShuttleManifestDto.class));
 
-        ResponseEntity<?> response = controller.get(null);
+        Response response = controller.get(null);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 }

@@ -1,14 +1,13 @@
 package ca.ulaval.glo4002.booking.festival;
 
 import ca.ulaval.glo4002.booking.program.events.EventDatesDto;
-import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 // TODO : Rename Controllers Resource
-// TODO : Use ResponseEntity in Controllers
 
 @Path("/configuration")
 public class ConfigurationController {
@@ -22,9 +21,9 @@ public class ConfigurationController {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResponseEntity<?> setConfiguration(EventDatesDto eventDatesDto) {
+	public Response setConfiguration(EventDatesDto eventDatesDto) {
 		festivalService.setEventDates(eventDatesDto);
 
-		return ResponseEntity.ok().build();
+		return Response.ok().build();
 	}
 }

@@ -29,6 +29,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -92,10 +93,10 @@ public class PassIntegrationTest {
         );
         orderRepository.addOrder(order);
 
-        ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(0);
+        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(0);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
         assertEquals(passBundle.getCategory().toString(), passDto.getPassCategory());
         assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
@@ -118,10 +119,10 @@ public class PassIntegrationTest {
         );
         orderRepository.addOrder(order);
 
-        ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(0);
+        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(0);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
         assertEquals(passBundle.getCategory().toString(), passDto.getPassCategory());
         assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
@@ -149,11 +150,11 @@ public class PassIntegrationTest {
         );
         orderRepository.addOrder(order);
 
-        ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto aPassDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(0);
-        PassDto anotherPassDto = ((OrderWithPassesAsPassesDto) response.getBody()).getPasses().get(1);
+        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        PassDto aPassDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(0);
+        PassDto anotherPassDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(1);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(aPass.getPassNumber().getValue(), aPassDto.getPassNumber());
         assertEquals(passBundle.getCategory().toString(), aPassDto.getPassCategory());
         assertEquals(passBundle.getOption().toString(), aPassDto.getPassOption());
@@ -177,9 +178,9 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
+        Response response = controller.addOrder(orderDto);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));
     }
 
@@ -197,7 +198,7 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
+        Response response = controller.addOrder(orderDto);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -214,8 +215,8 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
-        ErrorDto errorDto = (ErrorDto) response.getBody();
+        Response response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getEntity();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -232,8 +233,8 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
-        ErrorDto errorDto = (ErrorDto) response.getBody();
+        Response response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getEntity();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -250,8 +251,8 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
-        ErrorDto errorDto = (ErrorDto) response.getBody();
+        Response response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getEntity();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -269,8 +270,8 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
-        ErrorDto errorDto = (ErrorDto) response.getBody();
+        Response response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getEntity();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -288,8 +289,8 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
-        ErrorDto errorDto = (ErrorDto) response.getBody();
+        Response response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getEntity();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
@@ -307,8 +308,8 @@ public class PassIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
-        ErrorDto errorDto = (ErrorDto) response.getBody();
+        Response response = controller.addOrder(orderDto);
+        ErrorDto errorDto = (ErrorDto) response.getEntity();
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }

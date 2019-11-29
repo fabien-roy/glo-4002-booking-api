@@ -13,6 +13,8 @@ import ca.ulaval.glo4002.booking.program.artists.ArtistListDto;
 import ca.ulaval.glo4002.booking.program.artists.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.ArtistService;
 
+import javax.ws.rs.core.Response;
+
 class ProgramControllerTest {
 
     private ProgramController controller;
@@ -32,18 +34,18 @@ class ProgramControllerTest {
         String ordering = ArtistOrderings.MOST_POPULAR.toString();
         when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.getArtists(ordering);
+        Response response = controller.getArtists(ordering);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 
     @Test
     void getArtistsUnordered_shouldReturnOk() {
         when(artistService.getAllUnordered()).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.getArtists(null);
+        Response response = controller.getArtists(null);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 
     @Test
@@ -51,15 +53,15 @@ class ProgramControllerTest {
         String ordering = "A string";
         when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
 
-        ResponseEntity<?> response = controller.getArtists(ordering);
+        Response response = controller.getArtists(ordering);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 
     @Test
     void addProgram_shouldReturnOk() {
-        ResponseEntity<?> response = controller.add(mock(ProgramDto.class));
+        Response response = controller.add(mock(ProgramDto.class));
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 }

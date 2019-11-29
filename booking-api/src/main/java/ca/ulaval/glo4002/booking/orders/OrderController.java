@@ -10,8 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+import java.net.URI;
 
 @Path("/orders")
 public class OrderController {
@@ -26,20 +25,19 @@ public class OrderController {
 	@GET
 	@Path("/{requestedOrderNumber}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ResponseEntity<?> getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber) {
+	public Response getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber) {
 		OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(requestedOrderNumber);
 
-		return ResponseEntity.ok().body(orderDto);
+		return Response.ok().entity(orderDto).build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto requestedOrderDto) {
+	public Response addOrder(OrderWithPassesAsEventDatesDto requestedOrderDto) {
 		String orderNumber = service.order(requestedOrderDto);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.add(HttpHeaders.LOCATION, "/orders/" + orderNumber);
+		URI location = URI.create("/orders/" + orderNumber);
 
-		return ResponseEntity.status(Response.Status.CREATED.getStatusCode()).headers(headers).build();
+		return Response.created(location).build();
 	}
 }

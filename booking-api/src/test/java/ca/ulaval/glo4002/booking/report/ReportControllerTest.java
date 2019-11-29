@@ -5,7 +5,8 @@ import ca.ulaval.glo4002.booking.profits.ProfitService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -24,15 +25,15 @@ class ReportControllerTest {
 
     @Test
     void getOxygenReport_shouldReturnOk() {
-        ResponseEntity<?> response = controller.getOxygenReport();
+        Response response = controller.getOxygenReport();
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 
     @Test
     void getProfits_shouldReturnOk() {
-        ResponseEntity<?> response = controller.getProfits();
+        Response response = controller.getProfits();
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 }

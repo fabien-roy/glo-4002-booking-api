@@ -27,6 +27,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import javax.ws.rs.core.Response;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -87,10 +88,10 @@ public class OrderIntegrationTest {
         );
         repository.addOrder(order);
 
-        ResponseEntity<?> response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getBody();
+        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        OrderWithPassesAsPassesDto orderDto = (OrderWithPassesAsPassesDto) response.getEntity();
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
     }
 
@@ -146,9 +147,9 @@ public class OrderIntegrationTest {
                 passBundleDto
         );
 
-        ResponseEntity<?> response = controller.addOrder(orderDto);
+        Response response = controller.addOrder(orderDto);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));
     }
 
