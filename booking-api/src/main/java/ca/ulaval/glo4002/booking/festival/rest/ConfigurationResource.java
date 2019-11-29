@@ -8,15 +8,14 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-// TODO : Rename Controllers Resource
-
 @Path("/configuration")
-public class ConfigurationController {
+@Produces(MediaType.APPLICATION_JSON)
+public class ConfigurationResource {
 
     private final FestivalService festivalService;
 
 	@Inject
-	public ConfigurationController(FestivalService festivalService) {
+	public ConfigurationResource(FestivalService festivalService) {
 		this.festivalService = festivalService;
 	}
 

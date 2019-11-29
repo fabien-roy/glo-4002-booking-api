@@ -10,15 +10,15 @@ import javax.ws.rs.core.Response;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-class ConfigurationControllerTest {
+class ConfigurationResourceTest {
 
-    private ConfigurationController controller;
+    private ConfigurationResource controller;
 
     @BeforeEach
-    void setUpController() {
+    void setUpResource() {
         FestivalService festivalService = mock(FestivalService.class);
 
-        controller = new ConfigurationController(festivalService);
+        controller = new ConfigurationResource(festivalService);
     }
 
     @Test

@@ -12,7 +12,6 @@ public class FestivalService {
     private final Festival festival;
     private final EventDateFactory eventDateFactory;
 
-    // TODO : Remove @Injection from domain
     @Inject
     public FestivalService(Festival festival, EventDateFactory eventDateFactory) {
         this.festival = festival;

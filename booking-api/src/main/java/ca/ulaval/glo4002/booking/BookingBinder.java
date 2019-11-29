@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.orders.services.OrderService;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
-import ca.ulaval.glo4002.booking.festival.rest.ConfigurationController;
+import ca.ulaval.glo4002.booking.festival.rest.ConfigurationResource;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.InMemoryOxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.mappers.OxygenHistoryMapper;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
@@ -66,6 +66,7 @@ public class BookingBinder extends AbstractBinder {
         bindClients();
     }
 
+    // TODO : Rename bindConfiguration
     private void bindConfiguration() {
         bindAsContract(Festival.class).in(Singleton.class);
     }
@@ -128,11 +129,12 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ProfitMapper.class);
     }
 
+    // TODO : Rename Controllers Resources
     private void bindControllers() {
         bindAsContract(ProgramController.class).in(Singleton.class);
         bindAsContract(OrderController.class).in(Singleton.class);
         bindAsContract(ShuttleManifestController.class).in(Singleton.class);
         bindAsContract(ReportController.class).in(Singleton.class);
-        bindAsContract(ConfigurationController.class).in(Singleton.class);
+        bindAsContract(ConfigurationResource.class).in(Singleton.class);
     }
 }
