@@ -2,13 +2,13 @@ package ca.ulaval.glo4002.booking.profits.domain;
 
 import java.math.BigDecimal;
 
-public class Profit {
+public class ProfitReport {
 
     private Money expense;
     private Money revenue;
     private Money totalProfit;
 
-    public Profit() {
+    public ProfitReport() {
         this.expense = new Money(new BigDecimal(0));
         this.revenue = new Money(new BigDecimal(0));
     }

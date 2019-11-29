@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.report.rest;
 
 import ca.ulaval.glo4002.booking.profits.services.ProfitService;
-import ca.ulaval.glo4002.booking.profits.rest.ProfitsDto;
+import ca.ulaval.glo4002.booking.profits.rest.ProfitResponse;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportDto;
 import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
 
@@ -37,9 +37,8 @@ public class ReportController {
     @Path("/profits")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProfits() {
-        profitService.calculateProfit();
-        ProfitsDto profitsDto = profitService.get();
+        ProfitResponse profitResponse = profitService.getReport();
 
-        return Response.ok().entity(profitsDto).build();
+        return Response.ok().entity(profitResponse).build();
     }
 }

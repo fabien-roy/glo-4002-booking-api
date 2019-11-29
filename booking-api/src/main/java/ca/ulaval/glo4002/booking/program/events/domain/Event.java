@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.program.events.domain;
 
+import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
-import ca.ulaval.glo4002.booking.profits.domain.Profit;
 
 public class Event {
 
@@ -28,7 +28,7 @@ public class Event {
         return bookingArtist;
     }
 
-	public void updateProfit(Profit profit) {
-		bookingArtist.updateProfit(profit);
+	public void updateProfit(ProfitReport profitReport) {
+		bookingArtist.updateProfit(profitReport);
 	}
 }

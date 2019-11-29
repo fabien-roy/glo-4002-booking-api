@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.profits.domain;
 
-import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.profits.domain.Profit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,15 +7,15 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ProfitTest {
+public class ProfitReportTest {
 
-    private Profit profit;
+    private ProfitReport profitReport;
 
     @BeforeEach
     void setupProfit() {
-        profit = new Profit();
-        profit.addExpense(new Money(new BigDecimal(1)));
-        profit.addRevenue(new Money(new BigDecimal(1)));
+        profitReport = new ProfitReport();
+        profitReport.addExpense(new Money(new BigDecimal(1)));
+        profitReport.addRevenue(new Money(new BigDecimal(1)));
     }
 
     @Test
@@ -25,9 +23,9 @@ public class ProfitTest {
         BigDecimal amount = new BigDecimal(2000);
         Money expense = new Money(amount);
 
-        profit.addExpense(expense);
+        profitReport.addExpense(expense);
 
-        assertEquals(amount.add(BigDecimal.valueOf(1)), profit.getExpense().getValue());
+        assertEquals(amount.add(BigDecimal.valueOf(1)), profitReport.getExpense().getValue());
     }
 
     @Test
@@ -35,9 +33,9 @@ public class ProfitTest {
         BigDecimal amount = new BigDecimal(2000);
         Money revenue = new Money(amount);
 
-        profit.addRevenue(revenue);
+        profitReport.addRevenue(revenue);
 
-        assertEquals(amount.add(BigDecimal.valueOf(1)), profit.getRevenue().getValue());
+        assertEquals(amount.add(BigDecimal.valueOf(1)), profitReport.getRevenue().getValue());
     }
 
     @Test
@@ -47,10 +45,10 @@ public class ProfitTest {
         Money revenue = new Money(amountRevenue);
         Money expense = new Money(amountExpense);
 
-        profit.addRevenue(revenue);
-        profit.addExpense(expense);
-        profit.calculateProfit();
+        profitReport.addRevenue(revenue);
+        profitReport.addExpense(expense);
+        profitReport.calculateProfit();
 
-        assertEquals(amountRevenue.subtract(amountExpense), profit.getTotalProfit().getValue());
+        assertEquals(amountRevenue.subtract(amountExpense), profitReport.getTotalProfit().getValue());
     }
 }

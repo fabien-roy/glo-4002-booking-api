@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.booking.profits.rest;
 
-public class ProfitsDto {
+public class ProfitResponse {
 
     private Float in;
     private Float out;
     private Float profit;
 
-    public ProfitsDto(float in, float out, float profit) {
+    public ProfitResponse(float in, float out, float profit) {
         this.in = in;
         this.out = out;
         this.profit = profit;

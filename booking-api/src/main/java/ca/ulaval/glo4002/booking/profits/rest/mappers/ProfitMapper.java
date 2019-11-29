@@ -1,15 +1,15 @@
 package ca.ulaval.glo4002.booking.profits.rest.mappers;
 
-import ca.ulaval.glo4002.booking.profits.domain.Profit;
-import ca.ulaval.glo4002.booking.profits.rest.ProfitsDto;
+import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
+import ca.ulaval.glo4002.booking.profits.rest.ProfitResponse;
 
 public class ProfitMapper {
 
-    public ProfitsDto toDto(Profit profitReport) {
+    public ProfitResponse toResponse(ProfitReport profitReport) {
         Float in = profitReport.getRevenue().getValue().floatValue();
         Float out = profitReport.getExpense().getValue().floatValue();
         Float profit = profitReport.getTotalProfit().getValue().floatValue();
 
-        return new ProfitsDto(in, out, profit);
+        return new ProfitResponse(in, out, profit);
     }
 }

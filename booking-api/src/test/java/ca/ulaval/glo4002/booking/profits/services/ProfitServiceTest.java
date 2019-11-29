@@ -23,6 +23,8 @@ import static org.mockito.Mockito.when;
 
 class ProfitServiceTest {
 
+	// TODO : ProfitService is missing a lot of tests
+
 	private List<Trip> tripList;
 	private List<Event> eventList;
 	private List<Order> orderList;
@@ -36,7 +38,7 @@ class ProfitServiceTest {
 	ProfitService profitService;
 
     @BeforeEach
-    void setupProfitService() {
+    void setUpService() {
     	ProfitMapper mapper = new ProfitMapper();
     	Trip mockedTrip = mock(Trip.class);
     	Event mockedEvent = mock(Event.class);
@@ -63,7 +65,7 @@ class ProfitServiceTest {
 
     @Test
     void calculateProfit_shouldUpdateProfitValueForEachObjectThatHaveAPrice() {
-		profitService.calculateProfit();
+		profitService.getReport();
 
 		tripList.forEach(trip -> verify(trip, times(NUMBER_OF_TRIP)).updateProfit(any()));
 		eventList.forEach(event -> verify(event, times(NUMBER_OF_EVENT)).updateProfit(any()));

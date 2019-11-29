@@ -297,7 +297,7 @@ Retourne les profits / pertes du festival. Exemple :
 {
   "in": 100.0
   "out": 50.0
-  "profit": 50.0, => profit
+  "profitReport": 50.0, => profitReport
 }
 ```
 

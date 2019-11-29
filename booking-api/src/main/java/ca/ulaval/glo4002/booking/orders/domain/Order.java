@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import ca.ulaval.glo4002.booking.profits.domain.Profit;
+import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
 public class Order {
 
@@ -44,7 +44,7 @@ public class Order {
 		return passBundle.getPasses();
 	}
 
-	public void updateProfit(Profit profit) {
-		passBundle.updateProfit(profit);
+	public void updateProfit(ProfitReport profitReport) {
+		passBundle.updateProfit(profitReport);
 	}
 }

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.profits.domain.Profit;
+import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
 // TODO : Find a new name for pass bundles
 public class PassBundle {
@@ -45,7 +45,7 @@ public class PassBundle {
 		return category.getPricePerOption(option);
 	}
 
-	public void updateProfit(Profit profit) {
-		profit.addRevenue(price);
+	public void updateProfit(ProfitReport profitReport) {
+		profitReport.addRevenue(price);
 	}
 }

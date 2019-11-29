@@ -3,9 +3,9 @@ package ca.ulaval.glo4002.booking.shuttles.trips.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.profits.domain.Profit;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
@@ -50,7 +50,7 @@ public class Trip {
 		return shuttle.getMaxCapacity() == passengers.size();
 	}
 
-	public void updateProfit(Profit profit) {
-		shuttle.updateProfit(profit);
+	public void updateProfit(ProfitReport profitReport) {
+		shuttle.updateProfit(profitReport);
 	}
 }
