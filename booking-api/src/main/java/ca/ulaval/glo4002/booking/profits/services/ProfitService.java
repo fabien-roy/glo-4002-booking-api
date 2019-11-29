@@ -32,7 +32,7 @@ public class ProfitService {
 
         orderRepository.findAll().forEach(order -> order.updateProfit(profitReport));
         tripRepository.getDepartures().forEach(trip -> trip.updateProfit(profitReport));
-        oxygenTankInventoryRepository.findall().forEach(tank -> tank.updateProfit(profitReport));
+        oxygenTankInventoryRepository.findAll().forEach(tank -> tank.updateProfit(profitReport));
         eventRepository.findAll().forEach(event -> event.updateProfit(profitReport));
 
         profitReport.calculateProfit();

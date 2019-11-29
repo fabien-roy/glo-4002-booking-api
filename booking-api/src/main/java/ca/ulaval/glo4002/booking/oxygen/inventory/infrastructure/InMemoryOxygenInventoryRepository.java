@@ -24,7 +24,7 @@ public class InMemoryOxygenInventoryRepository implements OxygenInventoryReposit
 	}
 
 	@Override
-	public List<OxygenTank> findall() {
+	public List<OxygenTank> findAll() {
 		return inventory.getAllTanks();
 	}
 }

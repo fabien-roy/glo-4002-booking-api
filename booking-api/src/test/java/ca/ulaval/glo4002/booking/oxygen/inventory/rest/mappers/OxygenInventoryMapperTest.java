@@ -2,8 +2,7 @@ package ca.ulaval.glo4002.booking.oxygen.inventory.rest.mappers;
 
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
-import ca.ulaval.glo4002.booking.oxygen.inventory.rest.OxygenInventoryItemDto;
-import ca.ulaval.glo4002.booking.oxygen.inventory.rest.mappers.OxygenInventoryMapper;
+import ca.ulaval.glo4002.booking.oxygen.inventory.rest.OxygenInventoryItemResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,34 +39,34 @@ public class OxygenInventoryMapperTest {
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectOxygenCategoriesOrder() {
-        List<OxygenInventoryItemDto> oxygenInventoryItemDto = oxygenInventoryMapper.toDto(inventory);
+    void toResponse_shouldBuildResponseWithCorrectOxygenCategoriesOrder() {
+        List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
 
-        assertEquals(OxygenCategories.E.toString(), oxygenInventoryItemDto.get(0).getGradeTankOxygen());
-        assertEquals(OxygenCategories.B.toString(), oxygenInventoryItemDto.get(1).getGradeTankOxygen());
-        assertEquals(OxygenCategories.A.toString(), oxygenInventoryItemDto.get(2).getGradeTankOxygen());
+        assertEquals(OxygenCategories.E.toString(), oxygenInventoryItemResponse.get(0).getGradeTankOxygen());
+        assertEquals(OxygenCategories.B.toString(), oxygenInventoryItemResponse.get(1).getGradeTankOxygen());
+        assertEquals(OxygenCategories.A.toString(), oxygenInventoryItemResponse.get(2).getGradeTankOxygen());
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectTanksQuantityE() {
-        List<OxygenInventoryItemDto> oxygenInventoryItemDto = oxygenInventoryMapper.toDto(inventory);
-        Integer quantityE = Math.toIntExact(oxygenInventoryItemDto.get(0).getQuantity());
+    void toResponse_shouldBuildResponseWithCorrectTanksQuantityE() {
+        List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
+        Integer quantityE = Math.toIntExact(oxygenInventoryItemResponse.get(0).getQuantity());
 
         assertEquals(CATEGORY_E_NUMBER, quantityE);
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectTanksQuantityB() {
-        List<OxygenInventoryItemDto> oxygenInventoryItemDto = oxygenInventoryMapper.toDto(inventory);
-        Integer quantityB = Math.toIntExact(oxygenInventoryItemDto.get(1).getQuantity());
+    void toResponse_shouldBuildResponseWithCorrectTanksQuantityB() {
+        List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
+        Integer quantityB = Math.toIntExact(oxygenInventoryItemResponse.get(1).getQuantity());
 
         assertEquals(CATEGORY_B_NUMBER, quantityB);
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectTanksQuantityA() {
-        List<OxygenInventoryItemDto> oxygenInventoryItemDto = oxygenInventoryMapper.toDto(inventory);
-        Integer quantityA = Math.toIntExact(oxygenInventoryItemDto.get(2).getQuantity());
+    void toResponse_shouldBuildResponseWithCorrectTanksQuantityA() {
+        List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
+        Integer quantityA = Math.toIntExact(oxygenInventoryItemResponse.get(2).getQuantity());
 
         assertEquals(CATEGORY_A_NUMBER, quantityA);
     }

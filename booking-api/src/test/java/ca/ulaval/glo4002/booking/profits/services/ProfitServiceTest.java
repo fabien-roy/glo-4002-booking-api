@@ -58,7 +58,7 @@ class ProfitServiceTest {
     	when(mockedTripRepository.getDepartures()).thenReturn(tripList);
     	when(mockedEventRepository.findAll()).thenReturn(eventList);
     	when(mockedOrderRepository.findAll()).thenReturn(orderList);
-    	when(mockedInventoryRepository.findall()).thenReturn(tanksList);
+    	when(mockedInventoryRepository.findAll()).thenReturn(tanksList);
 
     	profitService = new ProfitService(mockedOrderRepository, mockedInventoryRepository, mockedTripRepository, mockedEventRepository, mapper);
     }

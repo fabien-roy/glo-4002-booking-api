@@ -11,5 +11,5 @@ public interface OxygenInventoryRepository {
 
 	void setInventory(OxygenInventory inventory);
 
-    List<OxygenTank> findall();
+    List<OxygenTank> findAll();
 }

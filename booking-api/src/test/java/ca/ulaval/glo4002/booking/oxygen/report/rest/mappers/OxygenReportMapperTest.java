@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemResponse;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.mappers.OxygenHistoryMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
-import ca.ulaval.glo4002.booking.oxygen.inventory.rest.OxygenInventoryItemDto;
+import ca.ulaval.glo4002.booking.oxygen.inventory.rest.OxygenInventoryItemResponse;
 import ca.ulaval.glo4002.booking.oxygen.inventory.rest.mappers.OxygenInventoryMapper;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +37,7 @@ class OxygenReportMapperTest {
 
         oxygenReportMapper.toResponse(inventory, mock(OxygenHistory.class));
 
-        verify(inventoryMapper).toDto(eq(inventory));
+        verify(inventoryMapper).toResponse(eq(inventory));
     }
 
     @Test
@@ -51,8 +51,8 @@ class OxygenReportMapperTest {
 
     @Test
     void toResponse_shouldReturnReportWithInventory() {
-        List<OxygenInventoryItemDto> expectedInventoryResponse = Collections.singletonList(mock(OxygenInventoryItemDto.class));
-        when(inventoryMapper.toDto(any())).thenReturn(expectedInventoryResponse);
+        List<OxygenInventoryItemResponse> expectedInventoryResponse = Collections.singletonList(mock(OxygenInventoryItemResponse.class));
+        when(inventoryMapper.toResponse(any())).thenReturn(expectedInventoryResponse);
 
         OxygenReportResponse response = oxygenReportMapper.toResponse(mock(OxygenInventory.class), mock(OxygenHistory.class));
 
