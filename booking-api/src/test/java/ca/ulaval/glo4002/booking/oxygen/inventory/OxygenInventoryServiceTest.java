@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
 import ca.ulaval.glo4002.booking.configuration.Configuration;
-import ca.ulaval.glo4002.booking.artists.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.BookingArtist;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.OxygenFactory;

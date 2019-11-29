@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.configuration;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

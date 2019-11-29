@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.booking.configuration.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;

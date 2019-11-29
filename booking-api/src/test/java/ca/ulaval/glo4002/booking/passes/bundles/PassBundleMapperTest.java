@@ -1,13 +1,9 @@
 package ca.ulaval.glo4002.booking.passes.bundles;
 
-import ca.ulaval.glo4002.booking.events.Event;
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.passes.*;
-import ca.ulaval.glo4002.booking.orders.OrderFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

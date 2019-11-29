@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.profits;
 
-import ca.ulaval.glo4002.booking.events.Event;
-import ca.ulaval.glo4002.booking.events.EventRepository;
+import ca.ulaval.glo4002.booking.program.events.Event;
+import ca.ulaval.glo4002.booking.program.events.EventRepository;
 import ca.ulaval.glo4002.booking.orders.Order;
 import ca.ulaval.glo4002.booking.orders.OrderRepository;
 import ca.ulaval.glo4002.booking.oxygen.OxygenTank;
@@ -11,7 +11,6 @@ import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 

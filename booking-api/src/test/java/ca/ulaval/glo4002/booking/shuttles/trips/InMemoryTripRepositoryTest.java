@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.trips;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.shuttles.*;
 import org.junit.jupiter.api.BeforeEach;

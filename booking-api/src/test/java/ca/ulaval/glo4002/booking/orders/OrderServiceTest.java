@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders;
 
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.passes.Pass;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
 import ca.ulaval.glo4002.booking.configuration.Configuration;
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 
 import org.junit.jupiter.api.BeforeEach;

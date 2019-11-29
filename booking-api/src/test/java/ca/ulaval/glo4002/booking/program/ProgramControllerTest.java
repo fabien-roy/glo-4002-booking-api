@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.artists.ArtistListDto;
-import ca.ulaval.glo4002.booking.artists.ArtistOrderings;
-import ca.ulaval.glo4002.booking.artists.ArtistService;
+import ca.ulaval.glo4002.booking.program.artists.ArtistListDto;
+import ca.ulaval.glo4002.booking.program.artists.ArtistOrderings;
+import ca.ulaval.glo4002.booking.program.artists.ArtistService;
 
 class ProgramControllerTest {
 

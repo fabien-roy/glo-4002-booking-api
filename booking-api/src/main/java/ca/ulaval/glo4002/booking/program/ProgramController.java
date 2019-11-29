@@ -11,8 +11,8 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.artists.ArtistListDto;
-import ca.ulaval.glo4002.booking.artists.ArtistService;
+import ca.ulaval.glo4002.booking.program.artists.ArtistListDto;
+import ca.ulaval.glo4002.booking.program.artists.ArtistService;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 
 @Path("/program")

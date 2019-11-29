@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.configuration;
 
-import ca.ulaval.glo4002.booking.events.EventDateService;
-import ca.ulaval.glo4002.booking.events.EventDatesDto;
+import ca.ulaval.glo4002.booking.program.events.EventDateService;
+import ca.ulaval.glo4002.booking.program.events.EventDatesDto;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

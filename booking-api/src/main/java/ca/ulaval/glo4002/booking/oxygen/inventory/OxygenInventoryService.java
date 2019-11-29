@@ -6,9 +6,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ca.ulaval.glo4002.booking.artists.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.BookingArtist;
 import ca.ulaval.glo4002.booking.configuration.Configuration;
-import ca.ulaval.glo4002.booking.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.OxygenCategory;
 import ca.ulaval.glo4002.booking.oxygen.OxygenFactory;
