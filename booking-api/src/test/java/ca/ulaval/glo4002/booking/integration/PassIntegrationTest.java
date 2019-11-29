@@ -19,7 +19,7 @@ import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.passes.*;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.program.events.InvalidEventDateException;
+import ca.ulaval.glo4002.booking.program.events.rest.exceptions.InvalidEventDateException;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
