@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
-import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 import ca.ulaval.glo4002.booking.profits.Money;
 

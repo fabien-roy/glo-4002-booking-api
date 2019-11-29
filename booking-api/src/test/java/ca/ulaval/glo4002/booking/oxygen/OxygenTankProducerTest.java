@@ -7,7 +7,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

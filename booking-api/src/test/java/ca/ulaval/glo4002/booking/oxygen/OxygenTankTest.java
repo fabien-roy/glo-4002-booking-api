@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,5 +1,6 @@
-package ca.ulaval.glo4002.booking.festival;
+package ca.ulaval.glo4002.booking.festival.domain;
 
+import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

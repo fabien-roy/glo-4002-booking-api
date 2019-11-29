@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.numbers.Number;
@@ -11,7 +11,6 @@ import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.InMemoryOxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.passes.*;
-import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
@@ -24,8 +23,6 @@ import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import javax.ws.rs.core.Response;
 import java.time.ZoneId;

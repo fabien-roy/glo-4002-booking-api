@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking;
 
-import ca.ulaval.glo4002.booking.festival.FestivalService;
+import ca.ulaval.glo4002.booking.festival.services.FestivalService;
 import ca.ulaval.glo4002.booking.program.artists.*;
-import ca.ulaval.glo4002.booking.festival.Festival;
-import ca.ulaval.glo4002.booking.festival.ConfigurationController;
+import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.rest.ConfigurationController;
 import ca.ulaval.glo4002.booking.program.events.*;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.oxygen.*;

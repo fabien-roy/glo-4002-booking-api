@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.events;
 
-import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.program.events.rest.exceptions.InvalidEventDateException;
 
