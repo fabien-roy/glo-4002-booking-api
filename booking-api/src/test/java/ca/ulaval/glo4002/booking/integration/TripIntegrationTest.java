@@ -18,7 +18,7 @@ import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.InMemoryOxygenHis
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.InMemoryOxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -260,7 +260,7 @@ class TripIntegrationTest {
     }
 
     private OrderRequest buildDto(PassCategories passCategory, PassOptions passOptions, List<String> eventDates) {
-        PassBundleDto passBundleDto = new PassBundleDto(
+        PassBundleRequest passBundleRequest = new PassBundleRequest(
                 passCategory.toString(),
                 passOptions.toString(),
                 eventDates
@@ -269,7 +269,7 @@ class TripIntegrationTest {
         return new OrderRequest(
                 ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passBundleDto
+                passBundleRequest
         );
     }
 

@@ -73,6 +73,6 @@ class OrderMapperTest {
 	void toResponse_shouldCallPassListMapper() {
 		orderMapper.toResponse(order);
 
-		verify(passBundleMapper).toDto(any());
+		verify(passBundleMapper).toResponse(any());
 	}
 }

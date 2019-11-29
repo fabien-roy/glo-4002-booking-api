@@ -15,7 +15,7 @@ import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategory;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
@@ -149,6 +149,6 @@ class OrderServiceTest {
 	}
 
 	private OrderRequest mockOrderRequest(String vendorCode) {
-		return new OrderRequest("aOrderDate", vendorCode, mock(PassBundleDto.class));
+		return new OrderRequest("aOrderDate", vendorCode, mock(PassBundleRequest.class));
 	}
 }

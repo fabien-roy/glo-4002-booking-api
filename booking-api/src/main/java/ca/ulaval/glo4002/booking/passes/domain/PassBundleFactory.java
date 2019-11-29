@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.passes.domain;
 
+import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NebulaPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
@@ -28,19 +29,19 @@ public class PassBundleFactory {
         this.passFactory = passFactory;
     }
 
-    public PassBundle build(PassBundleDto passBundleDto) {
-        PassCategories parsedPassCategory = parsePassCategory(passBundleDto);
-        PassOptions parsedPassOption = parsePassOption(passBundleDto);
+    public PassBundle build(PassBundleRequest passBundleRequest) {
+        PassCategories parsedPassCategory = parsePassCategory(passBundleRequest);
+        PassOptions parsedPassOption = parsePassOption(passBundleRequest);
 
-        validateEventDates(passBundleDto.getEventDates(), parsedPassOption);
+        validateEventDates(passBundleRequest.getEventDates(), parsedPassOption);
 
         PassCategory passCategory = buildCategory(parsedPassCategory, parsedPassOption);
         PriceCalculationStrategy priceCalculationStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
 
         Money passPrice = passCategory.getPricePerOption(parsedPassOption);
-        passPrice = calculatePassPrice(passBundleDto.getEventDates(), passPrice, priceCalculationStrategy);
+        passPrice = calculatePassPrice(passBundleRequest.getEventDates(), passPrice, priceCalculationStrategy);
 
-        List<Pass> passes = passFactory.buildAll(passBundleDto.getEventDates(), passPrice);
+        List<Pass> passes = passFactory.buildAll(passBundleRequest.getEventDates(), passPrice);
 
         return new PassBundle(passes, passCategory, parsedPassOption);
     }
@@ -56,12 +57,12 @@ public class PassBundleFactory {
         return priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
     }
 
-    private PassOptions parsePassOption(PassBundleDto passBundleDto) {
-        return PassOptions.get(passBundleDto.getPassOption());
+    private PassOptions parsePassOption(PassBundleRequest passBundleRequest) {
+        return PassOptions.get(passBundleRequest.getPassOption());
     }
 
-    private PassCategories parsePassCategory(PassBundleDto passBundleDto) {
-        return PassCategories.get(passBundleDto.getPassCategory());
+    private PassCategories parsePassCategory(PassBundleRequest passBundleRequest) {
+        return PassCategories.get(passBundleRequest.getPassCategory());
     }
 
     private void validateEventDates(List<String> eventDates, PassOptions passOption) {

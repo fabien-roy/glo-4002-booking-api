@@ -14,7 +14,7 @@ import ca.ulaval.glo4002.booking.orders.services.OrderService;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.*;
-import ca.ulaval.glo4002.booking.passes.rest.PassDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
@@ -26,7 +26,7 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventory
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
@@ -102,13 +102,13 @@ public class PassIntegrationTest {
         orderRepository.addOrder(order);
 
         Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto passDto = ((OrderResponse) response.getEntity()).getPasses().get(0);
+        PassResponse passResponse = ((OrderResponse) response.getEntity()).getPasses().get(0);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-        assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
-        assertEquals(passBundle.getCategory().toString(), passDto.getPassCategory());
-        assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
-        assertNull(passDto.getEventDate());
+        assertEquals(pass.getPassNumber().getValue(), passResponse.getPassNumber());
+        assertEquals(passBundle.getCategory().toString(), passResponse.getPassCategory());
+        assertEquals(passBundle.getOption().toString(), passResponse.getPassOption());
+        assertNull(passResponse.getEventDate());
     }
 
     @Test
@@ -128,13 +128,13 @@ public class PassIntegrationTest {
         orderRepository.addOrder(order);
 
         Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto passDto = ((OrderResponse) response.getEntity()).getPasses().get(0);
+        PassResponse passResponse = ((OrderResponse) response.getEntity()).getPasses().get(0);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-        assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
-        assertEquals(passBundle.getCategory().toString(), passDto.getPassCategory());
-        assertEquals(passBundle.getOption().toString(), passDto.getPassOption());
-        assertEquals(pass.getEventDate().toString(), passDto.getEventDate());
+        assertEquals(pass.getPassNumber().getValue(), passResponse.getPassNumber());
+        assertEquals(passBundle.getCategory().toString(), passResponse.getPassCategory());
+        assertEquals(passBundle.getOption().toString(), passResponse.getPassOption());
+        assertEquals(pass.getEventDate().toString(), passResponse.getEventDate());
     }
 
     @Test
@@ -159,23 +159,23 @@ public class PassIntegrationTest {
         orderRepository.addOrder(order);
 
         Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto aPassDto = ((OrderResponse) response.getEntity()).getPasses().get(0);
-        PassDto anotherPassDto = ((OrderResponse) response.getEntity()).getPasses().get(1);
+        PassResponse aPassResponse = ((OrderResponse) response.getEntity()).getPasses().get(0);
+        PassResponse anotherPassResponse = ((OrderResponse) response.getEntity()).getPasses().get(1);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-        assertEquals(aPass.getPassNumber().getValue(), aPassDto.getPassNumber());
-        assertEquals(passBundle.getCategory().toString(), aPassDto.getPassCategory());
-        assertEquals(passBundle.getOption().toString(), aPassDto.getPassOption());
-        assertEquals(aPass.getEventDate().toString(), aPassDto.getEventDate());
-        assertEquals(anotherPass.getPassNumber().getValue(), anotherPassDto.getPassNumber());
-        assertEquals(passBundle.getCategory().toString(), anotherPassDto.getPassCategory());
-        assertEquals(passBundle.getOption().toString(), anotherPassDto.getPassOption());
-        assertEquals(anotherPass.getEventDate().toString(), anotherPassDto.getEventDate());
+        assertEquals(aPass.getPassNumber().getValue(), aPassResponse.getPassNumber());
+        assertEquals(passBundle.getCategory().toString(), aPassResponse.getPassCategory());
+        assertEquals(passBundle.getOption().toString(), aPassResponse.getPassOption());
+        assertEquals(aPass.getEventDate().toString(), aPassResponse.getEventDate());
+        assertEquals(anotherPass.getPassNumber().getValue(), anotherPassResponse.getPassNumber());
+        assertEquals(passBundle.getCategory().toString(), anotherPassResponse.getPassCategory());
+        assertEquals(passBundle.getOption().toString(), anotherPassResponse.getPassOption());
+        assertEquals(anotherPass.getEventDate().toString(), anotherPassResponse.getEventDate());
     }
 
     @Test
     public void addOrder_shouldAddPasses_whenPassesAreSinglePass() {
-        PassBundleDto passBundleDto = new PassBundleDto(
+        PassBundleRequest passBundleRequest = new PassBundleRequest(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
                 Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString())
@@ -183,7 +183,7 @@ public class PassIntegrationTest {
         OrderRequest orderDto = new OrderRequest(
                 ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passBundleDto
+                passBundleRequest
         );
 
         Response response = controller.addOrder(orderDto);

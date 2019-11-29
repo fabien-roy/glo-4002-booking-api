@@ -24,7 +24,7 @@ import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepo
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.InMemoryOxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
@@ -86,7 +86,7 @@ public class OrderIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrder() {
-        PassBundle passBundle = passBundleFactory.build(new PassBundleDto(
+        PassBundle passBundle = passBundleFactory.build(new PassBundleRequest(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         ));
@@ -146,14 +146,14 @@ public class OrderIntegrationTest {
 
     @Test
     public void addOrder_shouldAddOrder() {
-        PassBundleDto passBundleDto = new PassBundleDto(
+        PassBundleRequest passBundleRequest = new PassBundleRequest(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         );
         OrderRequest orderDto = new OrderRequest(
                 ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
-                passBundleDto
+                passBundleRequest
         );
 
         Response response = controller.addOrder(orderDto);

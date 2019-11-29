@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,7 +43,7 @@ class PassBundleFactoryTest {
 	void buildWithDto_shouldBuildAPassList() {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String aPassOption = PassOptions.SINGLE_PASS.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, new ArrayList<>());
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, aPassOption, new ArrayList<>());
 		Number aNumber = new Number(1L);
 		BigDecimal aBigDecimal = new BigDecimal(100.0);
 		Money aPrice = new Money(aBigDecimal);
@@ -52,7 +53,7 @@ class PassBundleFactoryTest {
 		when(passFactory.buildAll(any(), any())).thenReturn(Collections.singletonList(pass));
 		passBundleFactory = new PassBundleFactory(passFactory);
 
-		passBundleFactory.build(passBundleDto);
+		passBundleFactory.build(passBundleRequest);
 
 		verify(passFactory).buildAll(any(), any());
 	}
@@ -61,9 +62,9 @@ class PassBundleFactoryTest {
 	void build_shouldBuildCategory_whenCategoryIsSupernova() {
 		String supernovaCategory = PassCategories.SUPERNOVA.toString();
 		String aPassOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(supernovaCategory, aPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(supernovaCategory, aPassOption, null);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(PassCategories.SUPERNOVA, passBundle.getCategory());
 	}
@@ -72,9 +73,9 @@ class PassBundleFactoryTest {
 	void build_shouldBuildCategory_whenCategoryIsSupergiant() {
 		String supergiantCategory = PassCategories.SUPERGIANT.toString();
 		String aPassOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(supergiantCategory, aPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(supergiantCategory, aPassOption, null);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(PassCategories.SUPERGIANT, passBundle.getCategory());
 	}
@@ -83,9 +84,9 @@ class PassBundleFactoryTest {
 	void build_shouldBuildCategory_whenCategoryIsNebula() {
 		String nebulaPassCategory = PassCategories.NEBULA.toString();
 		String aPassOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(nebulaPassCategory, aPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(nebulaPassCategory, aPassOption, null);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(PassCategories.NEBULA, passBundle.getCategory());
 	}
@@ -94,9 +95,9 @@ class PassBundleFactoryTest {
 	void build_shouldBuildCategoryPricePerOption_whenCategoryIsSupernova() {
 		String supernovaCategory = PassCategories.SUPERNOVA.toString();
 		String aPassOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(supernovaCategory, aPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(supernovaCategory, aPassOption, null);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(PassBundleFactory.SUPERNOVA_PACKAGE_PRICE, passBundle.getPricePerOption(PassOptions.PACKAGE));
 		assertEquals(PassBundleFactory.SUPERNOVA_SINGLE_PASS_PRICE,
@@ -107,9 +108,9 @@ class PassBundleFactoryTest {
 	void build_shouldBuildCategoryPricePerOption_whenCategoryIsSupergiant() {
 		String supergiantCategory = PassCategories.SUPERGIANT.toString();
 		String aPassOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(supergiantCategory, aPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(supergiantCategory, aPassOption, null);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(PassBundleFactory.SUPERGIANT_PACKAGE_PRICE, passBundle.getPricePerOption(PassOptions.PACKAGE));
 		assertEquals(PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE,
@@ -120,9 +121,9 @@ class PassBundleFactoryTest {
 	void build_shouldBuildCategoryPricePerOption_whenCategoryIsNebula() {
 		String nebulaCategory = PassCategories.NEBULA.toString();
 		String aPassOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(nebulaCategory, aPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(nebulaCategory, aPassOption, null);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(PassBundleFactory.NEBULA_PACKAGE_PRICE, passBundle.getPricePerOption(PassOptions.PACKAGE));
 		assertEquals(PassBundleFactory.NEBULA_SINGLE_PASS_PRICE, passBundle.getPricePerOption(PassOptions.SINGLE_PASS));
@@ -136,9 +137,9 @@ class PassBundleFactoryTest {
 				EventDate.getDefaultStartEventDate().toString(),
 				EventDate.getDefaultStartEventDate().plusDays(1).toString()
 		);
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, singlePassOption, someEventDates);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, singlePassOption, someEventDates);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(passBundle.getOption().toString(), PassOptions.SINGLE_PASS.toString());
 	}
@@ -147,9 +148,9 @@ class PassBundleFactoryTest {
 	void build_shouldBuildOption_whenOptionIsPackage() {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String packageOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, packageOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, packageOption, null);
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(passBundle.getOption().toString(), PassOptions.PACKAGE.toString());
 	}
@@ -161,10 +162,10 @@ class PassBundleFactoryTest {
 		String supernovaCategory = PassCategories.SUPERNOVA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
 		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
-		PassBundleDto passBundleDto = new PassBundleDto(supernovaCategory, singlePassOption, someEventDates);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(supernovaCategory, singlePassOption, someEventDates);
 		PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 		Money passPrice = passBundle.getPasses().get(0).getPrice();
 		Money expectedPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
 
@@ -178,13 +179,13 @@ class PassBundleFactoryTest {
 		String supergiantCategory = PassCategories.SUPERGIANT.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
 		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
-		PassBundleDto passBundleDto = new PassBundleDto(supergiantCategory, singlePassOption, someEventDates);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(supergiantCategory, singlePassOption, someEventDates);
 		PriceCalculationStrategy priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
 		Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity,
 				PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE);
 		Money expectedPrice = passPrice.multiply(new BigDecimal(passQuantity));
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(expectedPrice, passBundle.getPrice());
 	}
@@ -196,13 +197,13 @@ class PassBundleFactoryTest {
 		String nebulaCategory = PassCategories.NEBULA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
 		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
-		PassBundleDto passBundleDto = new PassBundleDto(nebulaCategory, singlePassOption, someEventDates);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(nebulaCategory, singlePassOption, someEventDates);
 		PriceCalculationStrategy priceCalculationStrategy = new NebulaPriceCalculationStrategy();
 		Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity,
 				PassBundleFactory.NEBULA_SINGLE_PASS_PRICE);
 		Money expectedPrice = passPrice.multiply(new BigDecimal(passQuantity));
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 
 		assertEquals(expectedPrice, passBundle.getPrice());
 	}
@@ -212,10 +213,10 @@ class PassBundleFactoryTest {
 	void build_shouldBuildNoDiscountPriceCalculationStrategy_whenPassOptionIsPackage(PassCategories category) {
 		String aPassCategory = category.toString();
 		String packageOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, packageOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, packageOption, null);
 		PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
 
-		PassBundle passBundle = passBundleFactory.build(passBundleDto);
+		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 		Money passPrice = passBundle.getPasses().get(0).getPrice();
 		Money expectedPrice = priceCalculationStrategy.calculatePassPrice(1, passPrice);
 
@@ -227,36 +228,36 @@ class PassBundleFactoryTest {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String packageOption = PassOptions.PACKAGE.toString();
 		List<String> someEventDates = Collections.singletonList(EventDate.getDefaultStartEventDate().toString());
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, packageOption, someEventDates);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, packageOption, someEventDates);
 
-		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleDto));
+		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleRequest));
 	}
 
 	@Test
 	void build_shouldThrowSinglePassWithoutEventDateException_whenEventDateIsNullAndPassOptionIsSinglePass() {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, singlePassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, singlePassOption, null);
 
-		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleDto));
+		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleRequest));
 	}
 
 	@Test
 	void build_shouldThrowInvalidFormatException_whenPassCategoryDoesNotExist() {
 		String anInvalidPassCategory = "anInvalidPassCategory";
 		String aPassOption = PassOptions.PACKAGE.toString();
-		PassBundleDto passBundleDto = new PassBundleDto(anInvalidPassCategory, aPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(anInvalidPassCategory, aPassOption, null);
 
-		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleDto));
+		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleRequest));
 	}
 
 	@Test
 	void build_shouldThrowInvalidFormatException_whenPassOptionDoesNotExist() {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String anInvalidPassOption = "anInvalidPassOption";
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, anInvalidPassOption, null);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, anInvalidPassOption, null);
 
-		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleDto));
+		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleRequest));
 	}
 
 	@Test
@@ -264,8 +265,8 @@ class PassBundleFactoryTest {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String aPassOption = PassOptions.PACKAGE.toString();
 		List<String> anInvalidEventDate = Collections.singletonList("anInvalidEventDate");
-		PassBundleDto passBundleDto = new PassBundleDto(aPassCategory, aPassOption, anInvalidEventDate);
+		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, aPassOption, anInvalidEventDate);
 
-		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleDto));
+		assertThrows(InvalidFormatException.class, () -> passBundleFactory.build(passBundleRequest));
 	}
 }

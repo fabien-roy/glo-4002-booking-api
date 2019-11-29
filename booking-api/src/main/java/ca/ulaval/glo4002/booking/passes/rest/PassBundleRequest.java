@@ -1,23 +1,23 @@
-package ca.ulaval.glo4002.booking.passes.domain;
+package ca.ulaval.glo4002.booking.passes.rest;
 
 import java.util.List;
 
-public class PassBundleDto {
+public class PassBundleRequest {
 
 	private String passCategory;
 	private String passOption;
 	private List<String> eventDates;
 
-	public PassBundleDto() {
+	public PassBundleRequest() {
 		// Empty constructor for parsing
 	}
 
-	public PassBundleDto(String passCategory, String passOption) {
+	public PassBundleRequest(String passCategory, String passOption) {
 		this.passCategory = passCategory;
 		this.passOption = passOption;
 	}
 
-	public PassBundleDto(String passCategory, String passOption, List<String> eventDates) {
+	public PassBundleRequest(String passCategory, String passOption, List<String> eventDates) {
 		this.passCategory = passCategory;
 		this.passOption = passOption;
 		this.eventDates = eventDates;

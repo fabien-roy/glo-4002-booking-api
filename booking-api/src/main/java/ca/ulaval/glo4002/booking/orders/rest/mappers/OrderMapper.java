@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.passes.rest.PassDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 
 public class OrderMapper {
 
@@ -21,7 +21,7 @@ public class OrderMapper {
     }
 
     public OrderResponse toResponse(Order order) {
-        List<PassDto> passes = passBundleMapper.toDto(order.getPassBundle());
+        List<PassResponse> passes = passBundleMapper.toResponse(order.getPassBundle());
 
         double fullOrderPrice = order.getPrice().getValue().doubleValue();
         double orderPrice = formatOrderPrice(fullOrderPrice);

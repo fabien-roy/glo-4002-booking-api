@@ -1,24 +1,24 @@
 package ca.ulaval.glo4002.booking.passes.rest.mappers;
 
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
-import ca.ulaval.glo4002.booking.passes.rest.PassDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PassBundleMapper {
 
-    public List<PassDto> toDto(PassBundle passBundle) {
+    public List<PassResponse> toResponse(PassBundle passBundle) {
         String passCategory = passBundle.getCategory().toString();
         String passOption = passBundle.getOption().toString();
 
-        List<PassDto> passDtos = new ArrayList<>();
+        List<PassResponse> passResponses = new ArrayList<>();
         passBundle.getPasses().forEach(pass -> {
                 String eventDate = null;
 
                 if (pass.getEventDate() != null) eventDate = pass.getEventDate().toString();
 
-                passDtos.add(new PassDto(
+                passResponses.add(new PassResponse(
                     pass.getPassNumber().getValue(),
                     passCategory,
                     passOption,
@@ -27,6 +27,6 @@ public class PassBundleMapper {
             }
         );
 
-        return passDtos;
+        return passResponses;
     }
 }

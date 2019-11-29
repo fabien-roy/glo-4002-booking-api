@@ -1,18 +1,18 @@
 package ca.ulaval.glo4002.booking.orders.rest;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 
 public class OrderRequest {
 
 	private String orderDate;
 	private String vendorCode;
-	private PassBundleDto passes;
+	private PassBundleRequest passes;
 
 	public OrderRequest() {
 		// Empty constructor for parsing
 	}
 
-	public OrderRequest(String orderDate, String vendorCode, PassBundleDto passes) {
+	public OrderRequest(String orderDate, String vendorCode, PassBundleRequest passes) {
 		this.orderDate = orderDate;
 		this.vendorCode = vendorCode;
 		this.passes = passes;
@@ -26,11 +26,11 @@ public class OrderRequest {
 		return vendorCode;
 	}
 
-	public PassBundleDto getPasses() {
+	public PassBundleRequest getPasses() {
 		return passes;
 	}
 
-	public void setPasses(PassBundleDto passes) {
+	public void setPasses(PassBundleRequest passes) {
 		this.passes = passes;
 	}
 }

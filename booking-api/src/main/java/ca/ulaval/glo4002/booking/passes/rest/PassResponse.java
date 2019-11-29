@@ -1,13 +1,13 @@
 package ca.ulaval.glo4002.booking.passes.rest;
 
-public class PassDto {
+public class PassResponse {
 
     private Long passNumber;
     private String passCategory;
     private String passOption;
     private String eventDate;
 
-    public PassDto(Long passNumber, String passCategory, String passOption, String eventDate) {
+    public PassResponse(Long passNumber, String passCategory, String passOption, String eventDate) {
         this.passNumber = passNumber;
         this.passCategory = passCategory;
         this.passOption = passOption;

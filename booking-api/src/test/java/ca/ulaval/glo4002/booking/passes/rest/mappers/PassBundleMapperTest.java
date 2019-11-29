@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.passes.rest.mappers;
 
 import ca.ulaval.glo4002.booking.passes.domain.*;
-import ca.ulaval.glo4002.booking.passes.rest.PassDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
@@ -27,20 +27,20 @@ class PassBundleMapperTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
-    void toDto_shouldBuildCorrectQuantityOfDtos(int expectedSize) {
+    void toResponse_shouldBuildCorrectQuantityOfResponses(int expectedSize) {
         Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
         PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, aPassCategory, PassOptions.SINGLE_PASS);
 
-        List<PassDto> passDtos = mapper.toDto(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertEquals(expectedSize, passDtos.size());
+        assertEquals(expectedSize, passResponses.size());
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectPassNumbers() {
+    void toResponse_shouldBuildResponseWithCorrectPassNumbers() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
         Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
@@ -49,27 +49,27 @@ class PassBundleMapperTest {
         PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, aPassCategory, PassOptions.SINGLE_PASS);
 
-        List<PassDto> passDtos = mapper.toDto(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(aPassNumber.getValue())));
-        assertTrue(passDtos.stream().anyMatch(pass -> pass.getPassNumber().equals(anotherPassNumber.getValue())));
+        assertTrue(passResponses.stream().anyMatch(pass -> pass.getPassNumber().equals(aPassNumber.getValue())));
+        assertTrue(passResponses.stream().anyMatch(pass -> pass.getPassNumber().equals(anotherPassNumber.getValue())));
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectCategory() {
+    void toResponse_shouldBuildResponseWithCorrectCategory() {
         Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassCategory passCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, passCategory, PassOptions.SINGLE_PASS);
 
-        List<PassDto> passDtos = mapper.toDto(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertEquals(passCategory.getCategory().toString(), passDtos.get(0).getPassCategory());
+        assertEquals(passCategory.getCategory().toString(), passResponses.get(0).getPassCategory());
     }
 
     @Test
-    void toDto_shouldSetSameCategoryForAllPasses() {
+    void toResponse_shouldSetSameCategoryForAllPasses() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
         Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
@@ -78,13 +78,13 @@ class PassBundleMapperTest {
         PassCategory passCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, passCategory, PassOptions.SINGLE_PASS);
 
-        List<PassDto> passDtos = mapper.toDto(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertTrue(passDtos.stream().allMatch(pass -> pass.getPassCategory().equals(passCategory.getCategory().toString())));
+        assertTrue(passResponses.stream().allMatch(pass -> pass.getPassCategory().equals(passCategory.getCategory().toString())));
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectOption() {
+    void toResponse_shouldBuildResponseWithCorrectOption() {
         Number aPassNumber = new Number(1L);
         Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
@@ -93,13 +93,13 @@ class PassBundleMapperTest {
         PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, aPassCategory, passOption);
 
-        List<PassDto> passDtos = mapper.toDto(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertEquals(expectedPassOptionName, passDtos.get(0).getPassOption());
+        assertEquals(expectedPassOptionName, passResponses.get(0).getPassOption());
     }
 
     @Test
-    void toDto_shouldSetSameOptionForAllPasses() {
+    void toResponse_shouldSetSameOptionForAllPasses() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
         Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
@@ -110,13 +110,13 @@ class PassBundleMapperTest {
         String expectedPassOptionName = passOption.toString();
         PassBundle passBundle = new PassBundle(passes, aPassCategory, passOption);
 
-        List<PassDto> passDtos = mapper.toDto(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertTrue(passDtos.stream().allMatch(pass -> pass.getPassOption().equals(expectedPassOptionName)));
+        assertTrue(passResponses.stream().allMatch(pass -> pass.getPassOption().equals(expectedPassOptionName)));
     }
 
     @Test
-    void toDto_shouldBuildDtoWithCorrectEventDates() {
+    void toResponse_shouldBuildDtoWithCorrectEventDates() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
         EventDate aEventDate = mock(EventDate.class);
@@ -129,9 +129,9 @@ class PassBundleMapperTest {
         PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, aPassCategory, PassOptions.SINGLE_PASS);
 
-        List<PassDto> passDtos = mapper.toDto(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertTrue(passDtos.stream().anyMatch(pass -> aEventDate.toString().equals(pass.getEventDate())));
-        assertTrue(passDtos.stream().anyMatch(pass -> anotherEventDate.toString().equals(pass.getEventDate())));
+        assertTrue(passResponses.stream().anyMatch(pass -> aEventDate.toString().equals(pass.getEventDate())));
+        assertTrue(passResponses.stream().anyMatch(pass -> anotherEventDate.toString().equals(pass.getEventDate())));
     }
 }
