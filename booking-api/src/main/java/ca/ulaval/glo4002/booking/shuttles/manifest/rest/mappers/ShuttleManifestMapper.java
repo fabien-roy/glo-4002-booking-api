@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers;
 
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestResponse;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
-import ca.ulaval.glo4002.booking.shuttles.trips.rest.TripDto;
+import ca.ulaval.glo4002.booking.shuttles.trips.rest.TripResponse;
 import ca.ulaval.glo4002.booking.shuttles.trips.rest.mappers.TripMapper;
 
 import java.util.List;
@@ -19,8 +19,8 @@ public class ShuttleManifestMapper {
 	}
 	
 	public ShuttleManifestResponse toResponse(List<Trip> arrivals, List<Trip> departures) {
-		List<TripDto> arrivalDtos = tripMapper.toDto(arrivals);
-		List<TripDto> departureDtos = tripMapper.toDto(departures);
+		List<TripResponse> arrivalDtos = tripMapper.toResponse(arrivals);
+		List<TripResponse> departureDtos = tripMapper.toResponse(departures);
 		
 		return new ShuttleManifestResponse(arrivalDtos, departureDtos);
 	}

@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class InMemoryTripRepository implements TripRepository {
-	
+
+	// TODO : Rethink TripRepository : should return last trip for category, service handles creation if full
+
 	private List<Trip> departures;
 	private List<Trip> arrivals;
 	private final ShuttleFactory shuttleFactory;

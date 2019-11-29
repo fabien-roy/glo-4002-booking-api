@@ -2,13 +2,13 @@ package ca.ulaval.glo4002.booking.shuttles.trips.rest;
 
 import java.util.List;
 
-public class TripDto {
+public class TripResponse {
 
 	private String date;
 	private String shuttleName;
 	private List<Long> passengers;
 	
-	public TripDto(String date, String shuttleName, List<Long> passengers) {
+	public TripResponse(String date, String shuttleName, List<Long> passengers) {
 		this.date = date;
 		this.shuttleName = shuttleName;
 		this.passengers = passengers;

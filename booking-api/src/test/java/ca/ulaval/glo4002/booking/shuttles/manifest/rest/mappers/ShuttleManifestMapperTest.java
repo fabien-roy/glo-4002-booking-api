@@ -29,6 +29,6 @@ class ShuttleManifestMapperTest {
 
         shuttleManifestMapper.toResponse(arrivals, departures);
 
-        verify(tripMapper, times(2)).toDto(any());
+        verify(tripMapper, times(2)).toResponse(any());
     }
 }
