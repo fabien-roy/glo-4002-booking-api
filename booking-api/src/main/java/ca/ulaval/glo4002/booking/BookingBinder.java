@@ -40,7 +40,7 @@ import ca.ulaval.glo4002.booking.program.rest.ProgramResource;
 import ca.ulaval.glo4002.booking.program.services.ProgramService;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
-import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestController;
+import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestResource;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.shuttles.manifest.services.ShuttleManifestService;
 import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.InMemoryTripRepository;
@@ -62,7 +62,7 @@ public class BookingBinder extends AbstractBinder {
         bindProducers();
         bindServices();
         bindMappers();
-        bindControllers();
+        bindResources();
         bindConverters();
         bindClients();
     }
@@ -130,11 +130,10 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ProfitMapper.class);
     }
 
-    // TODO : Rename Controllers Resources
-    private void bindControllers() {
+    private void bindResources() {
         bindAsContract(ProgramResource.class).in(Singleton.class);
         bindAsContract(OrderResource.class).in(Singleton.class);
-        bindAsContract(ShuttleManifestController.class).in(Singleton.class);
+        bindAsContract(ShuttleManifestResource.class).in(Singleton.class);
         bindAsContract(OxygenReportResource.class).in(Singleton.class);
         bindAsContract(ProfitReportResource.class).in(Singleton.class);
         bindAsContract(ConfigurationResource.class).in(Singleton.class);

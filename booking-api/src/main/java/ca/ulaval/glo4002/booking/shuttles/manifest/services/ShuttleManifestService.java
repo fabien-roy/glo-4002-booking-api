@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.shuttles.manifest.services;
 
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestDto;
+import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestResponse;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
@@ -22,20 +22,20 @@ public class ShuttleManifestService {
         this.shuttleManifestMapper = shuttleManifestMapper;
     }
 
-    public ShuttleManifestDto getTrips() {
+    public ShuttleManifestResponse getTrips() {
         List<Trip> arrivals = tripRepository.getArrivals();
         List<Trip> departures = tripRepository.getDepartures();
 
-        return shuttleManifestMapper.toDto(arrivals, departures);
+        return shuttleManifestMapper.toResponse(arrivals, departures);
     }
 
-    public ShuttleManifestDto getTripsForDate(String date) {
+    public ShuttleManifestResponse getTripsForDate(String date) {
         EventDate tripDate = buildTripDate(date);
 
         List<Trip> arrivalsForDate = tripRepository.getArrivalsForDate(tripDate);
         List<Trip> departuresForDate = tripRepository.getDeparturesForDate(tripDate);
 
-        return shuttleManifestMapper.toDto(arrivalsForDate, departuresForDate);
+        return shuttleManifestMapper.toResponse(arrivalsForDate, departuresForDate);
     }
 
     private EventDate buildTripDate(String tripDate) {

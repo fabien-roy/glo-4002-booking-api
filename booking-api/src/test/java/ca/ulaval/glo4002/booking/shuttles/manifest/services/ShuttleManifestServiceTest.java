@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
-import ca.ulaval.glo4002.booking.shuttles.manifest.services.ShuttleManifestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,7 +32,7 @@ class ShuttleManifestServiceTest {
 
 		service.getTripsForDate(aDate);
 
-		verify(mapper).toDto(any(), any());
+		verify(mapper).toResponse(any(), any());
 	}
 
 	@Test
@@ -65,7 +64,7 @@ class ShuttleManifestServiceTest {
 	void getWithoutDate_shouldCallMapper() {
 		service.getTrips();
 
-		verify(mapper).toDto(any(), any());
+		verify(mapper).toResponse(any(), any());
 	}
 
 	@Test

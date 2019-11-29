@@ -11,26 +11,26 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/shuttle-manifests")
-public class ShuttleManifestController {
+@Produces(MediaType.APPLICATION_JSON)
+public class ShuttleManifestResource {
 
 	private final ShuttleManifestService service;
 
 	@Inject
-	public ShuttleManifestController(ShuttleManifestService service) {
+	public ShuttleManifestResource(ShuttleManifestService service) {
 		this.service = service;
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response get(@QueryParam("date") String date) {
-		ShuttleManifestDto shuttleManifestDto;
+		ShuttleManifestResponse shuttleManifestResponse;
 
 		if (date == null) {
-			shuttleManifestDto = service.getTrips();
+			shuttleManifestResponse = service.getTrips();
 		} else {
-			shuttleManifestDto = service.getTripsForDate(date);
+			shuttleManifestResponse = service.getTripsForDate(date);
 		}
 
-		return Response.ok().entity(shuttleManifestDto).build();
+		return Response.ok().entity(shuttleManifestResponse).build();
 	}
 }

@@ -4,12 +4,12 @@ import ca.ulaval.glo4002.booking.shuttles.trips.rest.TripDto;
 
 import java.util.List;
 
-public class ShuttleManifestDto {
+public class ShuttleManifestResponse {
 
 	private List<TripDto> arrivals;
 	private List<TripDto> departures;
 	
-	public ShuttleManifestDto(List<TripDto> arrivals, List<TripDto> departures) {
+	public ShuttleManifestResponse(List<TripDto> arrivals, List<TripDto> departures) {
 		this.arrivals = arrivals;
 		this.departures = departures;
 	}

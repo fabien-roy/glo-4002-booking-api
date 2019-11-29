@@ -4,30 +4,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestController;
-import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestDto;
 import ca.ulaval.glo4002.booking.shuttles.manifest.services.ShuttleManifestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.core.Response;
 
-class ShuttleManifestControllerTest {
+class ShuttleManifestResourceTest {
 
-    private ShuttleManifestController controller;
+    private ShuttleManifestResource controller;
     private ShuttleManifestService service;
 
     @BeforeEach
     void setUpController() {
         service = mock(ShuttleManifestService.class);
 
-        controller = new ShuttleManifestController(service);
+        controller = new ShuttleManifestResource(service);
     }
 
     @Test
     void getWithADate_shouldReturnOk() {
         String aDate = "aDate";
-        when(service.getTripsForDate(aDate)).thenReturn(mock(ShuttleManifestDto.class));
+        when(service.getTripsForDate(aDate)).thenReturn(mock(ShuttleManifestResponse.class));
 
         Response response = controller.get(aDate);
 
@@ -36,7 +34,7 @@ class ShuttleManifestControllerTest {
     
     @Test
     void getWithoutDate_shouldReturnOk() {
-        when(service.getTrips()).thenReturn(mock(ShuttleManifestDto.class));
+        when(service.getTrips()).thenReturn(mock(ShuttleManifestResponse.class));
 
         Response response = controller.get(null);
 
