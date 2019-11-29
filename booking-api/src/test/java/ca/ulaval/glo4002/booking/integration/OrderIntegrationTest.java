@@ -1,6 +1,8 @@
 package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
+import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;

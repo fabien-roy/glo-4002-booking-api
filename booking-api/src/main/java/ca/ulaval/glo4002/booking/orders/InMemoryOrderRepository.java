@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.orders;
 
+import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.orders;
+package ca.ulaval.glo4002.booking.orders.rest.exceptions;
 
 import ca.ulaval.glo4002.booking.errors.BookingException;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ public class InvalidOrderDateException extends BookingException {
     // The following start and end order dates are default. This is as required.
     public static final String DESCRIPTION = "Order date should be between January 1 2050 and July 16 2050";
 
-    InvalidOrderDateException() {
+    public InvalidOrderDateException() {
         super(MESSAGE);
 
         description = DESCRIPTION;

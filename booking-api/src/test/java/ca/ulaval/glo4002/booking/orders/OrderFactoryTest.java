@@ -8,6 +8,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

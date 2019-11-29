@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

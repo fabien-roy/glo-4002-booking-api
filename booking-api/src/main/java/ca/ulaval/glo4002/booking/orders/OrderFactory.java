@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.orders;
 
 import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;

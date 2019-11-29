@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
