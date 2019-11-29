@@ -22,6 +22,22 @@ public class OrderDate {
 		return value.toString();
 	}
 
+	// TODO : Test OrderDate.equals
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof OrderDate)) return false;
+
+		OrderDate otherOrderDate = (OrderDate) other;
+
+		return this.value.equals(otherOrderDate.getValue());
+	}
+
+	// TODO : Test OrderDate.hashCode
+	@Override
+	public int hashCode() {
+		return value.hashCode();
+	}
+
 	public boolean isBefore(OrderDate orderDate) {
 		return this.value.isBefore(orderDate.getValue());
 	}
