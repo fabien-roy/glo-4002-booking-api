@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.program.events.Event;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.program.events.EventFactory;
 import ca.ulaval.glo4002.booking.program.events.EventRepository;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripService;

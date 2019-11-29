@@ -5,13 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategory;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
+import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.profits.Money;
 
 public class OxygenCategoryTest {

@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
 
 import javax.inject.Inject;

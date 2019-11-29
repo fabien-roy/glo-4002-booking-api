@@ -2,8 +2,8 @@ package ca.ulaval.glo4002.booking.report;
 
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.profits.ProfitsDto;
-import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportDto;
-import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportService;
+import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportDto;
+import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

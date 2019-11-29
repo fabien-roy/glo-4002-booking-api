@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.program.events.Event;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.program.events.EventFactory;
 import ca.ulaval.glo4002.booking.program.events.EventRepository;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

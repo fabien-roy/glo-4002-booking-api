@@ -6,10 +6,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistory;
-import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventory;
-import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
+import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
+import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 
 public class OxygenTankProducer {
