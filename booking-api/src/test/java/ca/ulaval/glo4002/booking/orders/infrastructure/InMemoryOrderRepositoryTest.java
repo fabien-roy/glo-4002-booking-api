@@ -8,15 +8,13 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
-import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
-import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 
 class InMemoryOrderRepositoryTest {
 

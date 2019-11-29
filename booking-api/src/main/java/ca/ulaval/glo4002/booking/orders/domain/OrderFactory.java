@@ -3,9 +3,9 @@ package ca.ulaval.glo4002.booking.orders.domain;
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 import javax.inject.Inject;

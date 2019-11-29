@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.rest;
 
-import ca.ulaval.glo4002.booking.passes.PassDto;
+import ca.ulaval.glo4002.booking.passes.rest.PassDto;
 
 import java.util.List;
 

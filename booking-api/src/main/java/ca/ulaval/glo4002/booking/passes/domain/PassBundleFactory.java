@@ -1,11 +1,10 @@
-package ca.ulaval.glo4002.booking.passes.bundles;
+package ca.ulaval.glo4002.booking.passes.domain;
 
-import ca.ulaval.glo4002.booking.passes.*;
 import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.PriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NebulaPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.PriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 import javax.inject.Inject;

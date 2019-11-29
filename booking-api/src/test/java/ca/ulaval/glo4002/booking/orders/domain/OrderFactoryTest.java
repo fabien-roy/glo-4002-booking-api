@@ -8,17 +8,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
-import ca.ulaval.glo4002.booking.orders.domain.Order;
-import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
-import ca.ulaval.glo4002.booking.passes.PassOptions;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 class OrderFactoryTest {

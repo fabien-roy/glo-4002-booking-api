@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.passes.bundles;
+package ca.ulaval.glo4002.booking.passes.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.passes.domain.*;
 import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
-import ca.ulaval.glo4002.booking.passes.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,10 +21,10 @@ import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NebulaPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.PriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NebulaPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.PriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 class PassBundleFactoryTest {

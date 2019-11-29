@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
-import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.program.artists.BookingArtist;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -21,8 +20,8 @@ import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
-import ca.ulaval.glo4002.booking.passes.Pass;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.profits.Money;
 import org.junit.jupiter.params.provider.ValueSource;
 

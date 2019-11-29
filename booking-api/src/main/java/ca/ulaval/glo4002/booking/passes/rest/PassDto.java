@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.passes;
+package ca.ulaval.glo4002.booking.passes.rest;
 
 public class PassDto {
 

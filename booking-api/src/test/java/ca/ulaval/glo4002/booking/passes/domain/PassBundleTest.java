@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.passes.bundles;
+package ca.ulaval.glo4002.booking.passes.domain;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -7,11 +7,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.passes.Pass;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
-import ca.ulaval.glo4002.booking.passes.PassCategory;
-import ca.ulaval.glo4002.booking.passes.PassOptions;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

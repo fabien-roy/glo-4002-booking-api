@@ -13,8 +13,8 @@ import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
-import ca.ulaval.glo4002.booking.passes.Pass;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 
 public class OxygenInventoryService {
 

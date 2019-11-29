@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.rest;
 
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
 
 public class OrderWithPassesAsEventDatesDto {
 

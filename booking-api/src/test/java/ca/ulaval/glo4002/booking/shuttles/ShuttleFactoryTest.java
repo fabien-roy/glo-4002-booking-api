@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles;
 
-import ca.ulaval.glo4002.booking.shuttles.Shuttle;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
-import ca.ulaval.glo4002.booking.shuttles.ShuttleCategories;
-import ca.ulaval.glo4002.booking.shuttles.ShuttleFactory;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

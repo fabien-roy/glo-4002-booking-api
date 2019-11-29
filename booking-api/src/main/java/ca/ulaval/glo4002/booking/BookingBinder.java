@@ -22,9 +22,9 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventory
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.mappers.OxygenReportMapper;
 import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
-import ca.ulaval.glo4002.booking.passes.PassFactory;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
+import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
+import ca.ulaval.glo4002.booking.passes.domain.PassFactory;
 import ca.ulaval.glo4002.booking.profits.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.program.ProgramController;

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.passes.bundles;
+package ca.ulaval.glo4002.booking.passes.domain;
 
 import java.util.List;
 

@@ -8,13 +8,12 @@ import java.math.BigDecimal;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
+import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 
 class OrderMapperTest {
 

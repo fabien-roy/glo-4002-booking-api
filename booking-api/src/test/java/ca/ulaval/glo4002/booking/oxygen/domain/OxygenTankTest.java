@@ -7,14 +7,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategory;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenDate;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.profits.Money;
 
 class OxygenTankTest {

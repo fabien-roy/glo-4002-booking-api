@@ -1,6 +1,7 @@
-package ca.ulaval.glo4002.booking.passes.bundles;
+package ca.ulaval.glo4002.booking.passes.rest.mappers;
 
-import ca.ulaval.glo4002.booking.passes.PassDto;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
+import ca.ulaval.glo4002.booking.passes.rest.PassDto;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,12 +1,8 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategory;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

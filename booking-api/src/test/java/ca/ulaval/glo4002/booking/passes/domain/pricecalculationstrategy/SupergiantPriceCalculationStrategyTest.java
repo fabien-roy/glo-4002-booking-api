@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.passes.pricecalculationstrategy;
+package ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.profits.AmountDiscount;
 import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.passes.Pass;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 
 class SupergiantPriceCalculationStrategyTest {
 

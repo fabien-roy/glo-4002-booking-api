@@ -1,15 +1,16 @@
-package ca.ulaval.glo4002.booking.passes.bundles;
+package ca.ulaval.glo4002.booking.passes.domain;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.passes.Pass;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
-import ca.ulaval.glo4002.booking.passes.PassCategory;
-import ca.ulaval.glo4002.booking.passes.PassOptions;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategory;
+import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.profits.Profit;
 
+// TODO : Find a new name for pass bundles
 public class PassBundle {
 
 	private List<Pass> passes;

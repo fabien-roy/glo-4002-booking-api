@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
-import ca.ulaval.glo4002.booking.passes.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 
 public class OxygenTankProducer {
 

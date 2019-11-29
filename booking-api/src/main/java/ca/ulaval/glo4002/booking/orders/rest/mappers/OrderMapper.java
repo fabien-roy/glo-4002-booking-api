@@ -8,8 +8,8 @@ import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsPassesDto;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
-import ca.ulaval.glo4002.booking.passes.PassDto;
+import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
+import ca.ulaval.glo4002.booking.passes.rest.PassDto;
 
 public class OrderMapper {
 

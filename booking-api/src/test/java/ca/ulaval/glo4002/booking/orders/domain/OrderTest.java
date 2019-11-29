@@ -6,13 +6,11 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import ca.ulaval.glo4002.booking.orders.domain.Order;
-import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 
 class OrderTest {
 

@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.passes.pricecalculationstrategy;
+package ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy;
 
 import java.math.BigDecimal;
 

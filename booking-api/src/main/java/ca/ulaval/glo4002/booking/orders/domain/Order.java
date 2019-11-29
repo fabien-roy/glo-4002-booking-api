@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.Pass;
-import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.profits.Money;
 
 import java.time.LocalDateTime;
