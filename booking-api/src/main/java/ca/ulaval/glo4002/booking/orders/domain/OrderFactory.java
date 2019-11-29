@@ -36,7 +36,7 @@ public class OrderFactory {
 
         OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderRequest.getVendorCode());
         LocalDateTime orderDate = createOrderDate(orderRequest.getOrderDate());
-        PassBundle passBundle = passBundleFactory.build(orderRequest.getPasses());
+        PassBundle passBundle = passBundleFactory.create(orderRequest.getPasses());
 
         return new Order(orderNumber, orderDate, passBundle);
     }

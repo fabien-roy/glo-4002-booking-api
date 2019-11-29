@@ -86,7 +86,7 @@ public class OrderIntegrationTest {
 
     @Test
     public void getByOrderNumber_shouldReturnOrder() {
-        PassBundle passBundle = passBundleFactory.build(new PassBundleRequest(
+        PassBundle passBundle = passBundleFactory.create(new PassBundleRequest(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         ));

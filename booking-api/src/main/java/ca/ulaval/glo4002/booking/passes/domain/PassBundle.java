@@ -18,6 +18,8 @@ public class PassBundle {
 		this.passes = passes;
 		this.category = category;
 		this.option = option;
+
+		// TODO : Handle price calculation for PassBundle elsewhere than constructor
 		BigDecimal passesSize = new BigDecimal(passes.size());
 		Money passesPrice = passes.get(0).getPrice();
 		this.price = passesPrice.multiply(passesSize);

@@ -29,14 +29,15 @@ public class PassBundleFactory {
         this.passFactory = passFactory;
     }
 
-    public PassBundle build(PassBundleRequest passBundleRequest) {
+    // TODO : Review price calculation for passes
+    public PassBundle create(PassBundleRequest passBundleRequest) {
         PassCategories parsedPassCategory = parsePassCategory(passBundleRequest);
         PassOptions parsedPassOption = parsePassOption(passBundleRequest);
 
         validateEventDates(passBundleRequest.getEventDates(), parsedPassOption);
 
-        PassCategory passCategory = buildCategory(parsedPassCategory, parsedPassOption);
-        PriceDiscountStrategy priceDiscountStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
+        PassCategory passCategory = createCategory(parsedPassCategory);
+        PriceDiscountStrategy priceDiscountStrategy = createPriceDiscountStrategy(parsedPassCategory, parsedPassOption);
 
         Money passPrice = passCategory.getPricePerOption(parsedPassOption);
         passPrice = calculatePassPrice(passBundleRequest.getEventDates(), passPrice, priceDiscountStrategy);
@@ -77,7 +78,7 @@ public class PassBundleFactory {
         }
     }
 
-    private PassCategory buildCategory(PassCategories category, PassOptions option) {
+    private PassCategory createCategory(PassCategories category) {
         PassCategory passCategory;
         EnumMap<PassOptions, Money> pricePerOption = new EnumMap<>(PassOptions.class);
 
@@ -103,7 +104,7 @@ public class PassBundleFactory {
         return passCategory;
     }
 
-    private PriceDiscountStrategy buildPriceCalculationStrategy(PassCategories category, PassOptions option) {
+    private PriceDiscountStrategy createPriceDiscountStrategy(PassCategories category, PassOptions option) {
         switch (option) {
             case PACKAGE:
                 return new NoPriceDiscountStrategy();
