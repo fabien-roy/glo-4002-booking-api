@@ -19,9 +19,9 @@ public class ShuttleManifestMapper {
 	}
 	
 	public ShuttleManifestResponse toResponse(List<Trip> arrivals, List<Trip> departures) {
-		List<TripResponse> arrivalDtos = tripMapper.toResponse(arrivals);
-		List<TripResponse> departureDtos = tripMapper.toResponse(departures);
+		List<TripResponse> arrivalResponses = tripMapper.toResponse(arrivals);
+		List<TripResponse> departureResponses = tripMapper.toResponse(departures);
 		
-		return new ShuttleManifestResponse(arrivalDtos, departureDtos);
+		return new ShuttleManifestResponse(arrivalResponses,  departureResponses);
 	}
 }

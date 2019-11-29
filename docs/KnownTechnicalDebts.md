@@ -1,5 +1,7 @@
 # Known technical debts
 
+**This file must be updated before MEP 3.0.**
+
 We aren't perfect. Here's what we know.
 
 ## DEV

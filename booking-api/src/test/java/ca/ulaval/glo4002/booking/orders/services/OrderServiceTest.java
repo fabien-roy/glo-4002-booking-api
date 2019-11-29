@@ -126,9 +126,9 @@ class OrderServiceTest {
 		Order order = new Order(anOrderNumber, EventDate.getDefaultStartEventDate().minusDays(1).toLocalDateTime(), passBundle);
 		when(repository.getByOrderNumber(anOrderNumber)).thenReturn(order);
 
-		OrderResponse orderDto = service.getByOrderNumber(anOrderNumber.toString());
+		OrderResponse orderResponse = service.getByOrderNumber(anOrderNumber.toString());
 
-		assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
+		assertEquals(order.getPrice().getValue().doubleValue(), orderResponse.getOrderPrice());
 	}
 
 	private Order mockOrder(String vendorCode, PassCategories passCategory) {

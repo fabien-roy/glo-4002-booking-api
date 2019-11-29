@@ -39,10 +39,10 @@ class OrderMapperTest {
 
 	@Test
 	void toResponse_shouldBuildResponseWithCorrectOrderPrice() {
-		OrderResponse orderDto = orderMapper.toResponse(order);
+		OrderResponse orderResponse = orderMapper.toResponse(order);
 		BigDecimal priceValue = order.getPrice().getValue();
 
-		assertEquals(priceValue.doubleValue(), orderDto.getOrderPrice());
+		assertEquals(priceValue.doubleValue(), orderResponse.getOrderPrice());
 	}
 
 	@Test

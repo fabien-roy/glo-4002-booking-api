@@ -12,7 +12,7 @@ public class OxygenHistoryMapper {
         List<OxygenHistoryItemResponse> itemResponses = new ArrayList<>();
 
         history.getHistoryItems().forEach((date, item) -> {
-            OxygenHistoryItemResponse itemDto = new OxygenHistoryItemResponse(
+            OxygenHistoryItemResponse itemResponse = new OxygenHistoryItemResponse(
                     date.toString(),
                     item.getQtyOxygenTankBought(),
                     item.getQtyWaterUsed().intValue(),
@@ -20,7 +20,7 @@ public class OxygenHistoryMapper {
                     item.getQtyOxygenTankMade()
             );
 
-            itemResponses.add(itemDto);
+            itemResponses.add(itemResponse);
         });
 
         return itemResponses;

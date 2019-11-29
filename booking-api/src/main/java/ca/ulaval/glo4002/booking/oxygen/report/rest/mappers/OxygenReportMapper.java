@@ -24,9 +24,9 @@ public class OxygenReportMapper {
 	}
 
 	public OxygenReportResponse toResponse(OxygenInventory inventory, OxygenHistory history) {
-		List<OxygenInventoryItemResponse> inventoryDto = oxygenInventoryMapper.toResponse(inventory);
-		List<OxygenHistoryItemResponse> historyDto = oxygenHistoryMapper.toResponse(history);
+		List<OxygenInventoryItemResponse> inventoryResponses = oxygenInventoryMapper.toResponse(inventory);
+		List<OxygenHistoryItemResponse> historyResponses = oxygenHistoryMapper.toResponse(history);
 
-		return new OxygenReportResponse(inventoryDto, historyDto);
+		return new OxygenReportResponse(inventoryResponses, historyResponses);
 	}
 }

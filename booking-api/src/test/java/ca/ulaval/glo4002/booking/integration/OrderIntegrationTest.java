@@ -98,10 +98,10 @@ public class OrderIntegrationTest {
         repository.addOrder(order);
 
         Response response = resource.getByOrderNumber(order.getOrderNumber().toString());
-        OrderResponse orderDto = (OrderResponse) response.getEntity();
+        OrderResponse orderResponse = (OrderResponse) response.getEntity();
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
-        assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
+        assertEquals(order.getPrice().getValue().doubleValue(), orderResponse.getOrderPrice());
     }
 
     /*
@@ -150,13 +150,13 @@ public class OrderIntegrationTest {
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.PACKAGE.toString()
         );
-        OrderRequest orderDto = new OrderRequest(
+        OrderRequest orderRequest = new OrderRequest(
                 ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleRequest
         );
 
-        Response response = resource.addOrder(orderDto);
+        Response response = resource.addOrder(orderRequest);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));

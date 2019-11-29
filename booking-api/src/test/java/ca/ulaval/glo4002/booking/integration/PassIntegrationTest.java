@@ -180,13 +180,13 @@ public class PassIntegrationTest {
                 PassOptions.SINGLE_PASS.toString(),
                 Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString())
         );
-        OrderRequest orderDto = new OrderRequest(
+        OrderRequest orderRequest = new OrderRequest(
                 ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleRequest
         );
 
-        Response response = resource.addOrder(orderDto);
+        Response response = resource.addOrder(orderRequest);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));

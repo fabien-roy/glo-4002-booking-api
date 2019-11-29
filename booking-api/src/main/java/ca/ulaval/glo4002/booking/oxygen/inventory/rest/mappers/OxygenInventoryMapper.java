@@ -15,10 +15,10 @@ public class OxygenInventoryMapper {
 		Long bOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.B).longValue();
 		Long aOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.A).longValue();
 
-		OxygenInventoryItemResponse eGradeDto = new OxygenInventoryItemResponse(OxygenCategories.E.toString(), eOxygenTankQuantity);
-		OxygenInventoryItemResponse bGradeDto = new OxygenInventoryItemResponse(OxygenCategories.B.toString(), bOxygenTankQuantity);
-		OxygenInventoryItemResponse aGradeDto = new OxygenInventoryItemResponse(OxygenCategories.A.toString(), aOxygenTankQuantity);
+		OxygenInventoryItemResponse eGradeResponse = new OxygenInventoryItemResponse(OxygenCategories.E.toString(), eOxygenTankQuantity);
+		OxygenInventoryItemResponse bGradeResponse = new OxygenInventoryItemResponse(OxygenCategories.B.toString(), bOxygenTankQuantity);
+		OxygenInventoryItemResponse aGradeResponse = new OxygenInventoryItemResponse(OxygenCategories.A.toString(), aOxygenTankQuantity);
 
-		return new ArrayList<>(Arrays.asList(eGradeDto, bGradeDto, aGradeDto));
+		return new ArrayList<>(Arrays.asList(eGradeResponse, bGradeResponse, aGradeResponse));
 	}
 }

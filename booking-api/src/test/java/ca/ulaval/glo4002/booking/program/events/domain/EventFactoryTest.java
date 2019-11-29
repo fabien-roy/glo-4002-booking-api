@@ -138,9 +138,9 @@ class EventFactoryTest {
 
     @Test
     void create_shouldThrowInvalidProgramException_whenProgramDoesNotIncludeAllFestivalDates() {
-        ProgramEventRequest aEventDto = new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), "aArtist");
+        ProgramEventRequest aEventRequest = new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), "aArtist");
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> factory.create(Collections.singletonList(aEventRequest)));
     }
 
     @Test

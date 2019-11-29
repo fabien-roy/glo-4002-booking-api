@@ -116,7 +116,7 @@ class PassBundleMapperTest {
     }
 
     @Test
-    void toResponse_shouldBuildDtoWithCorrectEventDates() {
+    void toResponse_shouldBuildResponseWithCorrectEventDates() {
         Number aPassNumber = new Number(1L);
         Number anotherPassNumber = new Number(2L);
         EventDate aEventDate = mock(EventDate.class);

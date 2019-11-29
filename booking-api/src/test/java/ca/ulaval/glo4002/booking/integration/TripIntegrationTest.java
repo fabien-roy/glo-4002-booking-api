@@ -94,9 +94,9 @@ class TripIntegrationTest {
     @Test
     void addOrder_shouldAddArrivalTrip() {
         String aDate = EventDate.getDefaultStartEventDate().toString();
-        OrderRequest orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+        OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -107,9 +107,9 @@ class TripIntegrationTest {
     @Test
     void addOrder_shouldAddDepartureTrip() {
         String aDate = EventDate.getDefaultStartEventDate().toString();
-        OrderRequest orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+        OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -121,9 +121,9 @@ class TripIntegrationTest {
     void addOrder_shouldAddMultipleArrivalTrips_whenThereAreManyPasses() {
         String aDate = EventDate.getDefaultStartEventDate().toString();
         String anotherDate = EventDate.getDefaultStartEventDate().plusDays(1).toString();
-        OrderRequest orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
+        OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(null);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -136,9 +136,9 @@ class TripIntegrationTest {
     void addOrder_shouldAddMultipleDepartureTrips_whenThereAreManyPasses() {
         String aDate = EventDate.getDefaultStartEventDate().toString();
         String anotherDate = EventDate.getDefaultStartEventDate().plusDays(1).toString();
-        OrderRequest orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
+        OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(null);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -149,9 +149,9 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddArrivalTripOnStartDate_whenPassIsPackage() {
-        OrderRequest orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
+        OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(null);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -161,9 +161,9 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddDepartureTripOnEndDate_whenPassIsPackage() {
-        OrderRequest orderDto = buildDto(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
+        OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.PACKAGE, null);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(null);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -175,10 +175,10 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddArrivalTripsWithCorrectName(PassCategories passCategory) {
         String aDate = EventDate.getDefaultStartEventDate().toString();
-        OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+        OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
         ShuttleCategories expectedShuttleCategory = shuttleFactory.createCategory(passCategory);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -189,10 +189,10 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddDepartureTripsWithCorrectName(PassCategories passCategory) {
         String aDate = EventDate.getDefaultStartEventDate().toString();
-        OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
+        OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
         ShuttleCategories expectedShuttleCategory = shuttleFactory.createCategory(passCategory);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -205,9 +205,9 @@ class TripIntegrationTest {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
         String aDate = EventDate.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
-        OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
+        OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -220,9 +220,9 @@ class TripIntegrationTest {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
         String aDate = EventDate.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
-        OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
+        OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -235,9 +235,9 @@ class TripIntegrationTest {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
         String aDate = EventDate.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity, aDate);
-        OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
+        OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
@@ -250,16 +250,16 @@ class TripIntegrationTest {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
         String aDate = EventDate.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity, aDate);
-        OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, someDates);
+        OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 
-        orderResource.addOrder(orderDto);
+        orderResource.addOrder(orderRequest);
         Response response = shuttleManifestResource.get(aDate);
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
         assertEquals(1, shuttleManifestResponse.getDepartures().size());
     }
 
-    private OrderRequest buildDto(PassCategories passCategory, PassOptions passOptions, List<String> eventDates) {
+    private OrderRequest buildRequest(PassCategories passCategory, PassOptions passOptions, List<String> eventDates) {
         PassBundleRequest passBundleRequest = new PassBundleRequest(
                 passCategory.toString(),
                 passOptions.toString(),

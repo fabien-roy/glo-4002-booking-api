@@ -28,15 +28,15 @@ public class OrderResource {
 	@GET
 	@Path("/{orderNumber}")
 	public Response getByOrderNumber(@PathParam("orderNumber") String orderNumber) {
-		OrderResponse orderDto = service.getByOrderNumber(orderNumber);
+		OrderResponse orderResponse = service.getByOrderNumber(orderNumber);
 
-		return Response.ok().entity(orderDto).build();
+		return Response.ok().entity(orderResponse).build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addOrder(OrderRequest requestedOrderDto) {
-		String orderNumber = service.order(requestedOrderDto);
+	public Response addOrder(OrderRequest orderRequest) {
+		String orderNumber = service.order(orderRequest);
 
 		URI location = URI.create("/orders/" + orderNumber);
 

@@ -29,7 +29,7 @@ public class OrderFactory {
     }
 
     public Order create(OrderRequest orderRequest) {
-        // TODO : Make passes nonNullable in Dto
+        // TODO : Make passes nonNullable in Requests
         if (orderRequest.getPasses() == null) {
             throw new InvalidFormatException();
         }
