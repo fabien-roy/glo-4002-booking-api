@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 
 class ProgramResourceTest {
 
-    private ProgramResource controller;
+    private ProgramResource resource;
     private ProgramService programService;
     private ArtistService artistService;
 
@@ -25,7 +25,7 @@ class ProgramResourceTest {
         artistService = mock(ArtistService.class);
         programService = mock(ProgramService.class);
 
-        controller = new ProgramResource(artistService, programService);
+        resource = new ProgramResource(artistService, programService);
     }
 
     @Test
@@ -33,7 +33,7 @@ class ProgramResourceTest {
         String ordering = ArtistOrderings.MOST_POPULAR.toString();
         when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListResponse.class));
 
-        Response response = controller.getArtists(ordering);
+        Response response = resource.getArtists(ordering);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
@@ -42,7 +42,7 @@ class ProgramResourceTest {
     void getArtistsUnordered_shouldReturnOk() {
         when(artistService.getAllUnordered()).thenReturn(mock(ArtistListResponse.class));
 
-        Response response = controller.getArtists(null);
+        Response response = resource.getArtists(null);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
@@ -52,14 +52,14 @@ class ProgramResourceTest {
         String ordering = "A string";
         when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListResponse.class));
 
-        Response response = controller.getArtists(ordering);
+        Response response = resource.getArtists(ordering);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
 
     @Test
     void addProgram_shouldReturnOk() {
-        Response response = controller.add(mock(ProgramRequest.class));
+        Response response = resource.add(mock(ProgramRequest.class));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }

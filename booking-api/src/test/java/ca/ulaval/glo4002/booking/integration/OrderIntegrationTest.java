@@ -48,13 +48,13 @@ import static org.mockito.Mockito.mock;
 
 public class OrderIntegrationTest {
 
-    private OrderResource controller;
+    private OrderResource resource;
     private Festival festival;
     private OrderRepository repository;
     private PassBundleFactory passBundleFactory;
 
     @BeforeEach
-    public void setUpController() {
+    public void setUpResource() {
         festival = new Festival();
 
         NumberGenerator numberGenerator = new NumberGenerator();
@@ -81,7 +81,7 @@ public class OrderIntegrationTest {
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festival, oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(repository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
-        controller = new OrderResource(orderService);
+        resource = new OrderResource(orderService);
     }
 
     @Test
@@ -97,7 +97,7 @@ public class OrderIntegrationTest {
         );
         repository.addOrder(order);
 
-        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        Response response = resource.getByOrderNumber(order.getOrderNumber().toString());
         OrderResponse orderDto = (OrderResponse) response.getEntity();
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -156,7 +156,7 @@ public class OrderIntegrationTest {
                 passBundleRequest
         );
 
-        Response response = controller.addOrder(orderDto);
+        Response response = resource.addOrder(orderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));

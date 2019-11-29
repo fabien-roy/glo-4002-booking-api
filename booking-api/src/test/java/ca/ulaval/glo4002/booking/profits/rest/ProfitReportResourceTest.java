@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-class ProfitReportControllerTest {
+class ProfitReportResourceTest {
 
     private ProfitReportResource resource;
 

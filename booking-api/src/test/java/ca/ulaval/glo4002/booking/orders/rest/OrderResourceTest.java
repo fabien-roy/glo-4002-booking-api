@@ -13,14 +13,14 @@ import javax.ws.rs.core.Response;
 
 class OrderResourceTest {
 
-	private OrderResource controller;
+	private OrderResource resource;
 	private OrderService service;
 
 	@BeforeEach
 	void setUpResource() {
 		service = mock(OrderService.class);
 
-		controller = new OrderResource(service);
+		resource = new OrderResource(service);
 	}
 
 	@Test
@@ -28,7 +28,7 @@ class OrderResourceTest {
 		String anOrderNumber = "VENDOR-123";
 		when(service.getByOrderNumber(anOrderNumber)).thenReturn(mock(OrderResponse.class));
 
-		Response response = controller.getByOrderNumber(anOrderNumber);
+		Response response = resource.getByOrderNumber(anOrderNumber);
 
 		assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
 	}
@@ -38,7 +38,7 @@ class OrderResourceTest {
 		OrderRequest anOrderRequest = mock(OrderRequest.class);
 		when(service.order(anOrderRequest)).thenReturn("anOrderNumber");
 
-		Response response = controller.addOrder(anOrderRequest);
+		Response response = resource.addOrder(anOrderRequest);
 
 		assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
@@ -49,7 +49,7 @@ class OrderResourceTest {
 		String expectedOrderNumber = "expectedOrderNumber";
 		when(service.order(anOrderRequest)).thenReturn(expectedOrderNumber);
 
-		Response response = controller.addOrder(anOrderRequest);
+		Response response = resource.addOrder(anOrderRequest);
 
 		assertNotNull(response.getHeaders());
 		assertEquals(1, response.getHeaders().get(HttpHeaders.LOCATION).size());

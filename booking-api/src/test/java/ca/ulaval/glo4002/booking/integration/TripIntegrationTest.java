@@ -58,7 +58,7 @@ class TripIntegrationTest {
     private ShuttleFactory shuttleFactory;
 
     @BeforeEach
-    void setUpController() {
+    void setUpResource() {
         festival = new Festival();
 
         NumberGenerator numberGenerator = new NumberGenerator();

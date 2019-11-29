@@ -12,14 +12,14 @@ import javax.ws.rs.core.Response;
 
 class ShuttleManifestResourceTest {
 
-    private ShuttleManifestResource controller;
+    private ShuttleManifestResource resource;
     private ShuttleManifestService service;
 
     @BeforeEach
-    void setUpController() {
+    void setUpResource() {
         service = mock(ShuttleManifestService.class);
 
-        controller = new ShuttleManifestResource(service);
+        resource = new ShuttleManifestResource(service);
     }
 
     @Test
@@ -27,7 +27,7 @@ class ShuttleManifestResourceTest {
         String aDate = "aDate";
         when(service.getTripsForDate(aDate)).thenReturn(mock(ShuttleManifestResponse.class));
 
-        Response response = controller.get(aDate);
+        Response response = resource.get(aDate);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
@@ -36,7 +36,7 @@ class ShuttleManifestResourceTest {
     void getWithoutDate_shouldReturnOk() {
         when(service.getTrips()).thenReturn(mock(ShuttleManifestResponse.class));
 
-        Response response = controller.get(null);
+        Response response = resource.get(null);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }

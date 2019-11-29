@@ -51,12 +51,12 @@ import static org.mockito.Mockito.mock;
 
 public class PassIntegrationTest {
 
-    private OrderResource controller;
+    private OrderResource resource;
     private Festival festival;
     private OrderRepository orderRepository;
 
     @BeforeEach
-    public void setUpController() {
+    public void setUpResource() {
         festival = new Festival();
 
         NumberGenerator numberGenerator = new NumberGenerator();
@@ -82,7 +82,7 @@ public class PassIntegrationTest {
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festival, oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
-        controller = new OrderResource(orderService);
+        resource = new OrderResource(orderService);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class PassIntegrationTest {
         );
         orderRepository.addOrder(order);
 
-        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        Response response = resource.getByOrderNumber(order.getOrderNumber().toString());
         PassResponse passResponse = ((OrderResponse) response.getEntity()).getPasses().get(0);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -127,7 +127,7 @@ public class PassIntegrationTest {
         );
         orderRepository.addOrder(order);
 
-        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        Response response = resource.getByOrderNumber(order.getOrderNumber().toString());
         PassResponse passResponse = ((OrderResponse) response.getEntity()).getPasses().get(0);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
@@ -158,7 +158,7 @@ public class PassIntegrationTest {
         );
         orderRepository.addOrder(order);
 
-        Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
+        Response response = resource.getByOrderNumber(order.getOrderNumber().toString());
         PassResponse aPassResponse = ((OrderResponse) response.getEntity()).getPasses().get(0);
         PassResponse anotherPassResponse = ((OrderResponse) response.getEntity()).getPasses().get(1);
 
@@ -186,7 +186,7 @@ public class PassIntegrationTest {
                 passBundleRequest
         );
 
-        Response response = controller.addOrder(orderDto);
+        Response response = resource.addOrder(orderDto);
 
         assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertNotNull(response.getHeaders().get(HttpHeaders.LOCATION));

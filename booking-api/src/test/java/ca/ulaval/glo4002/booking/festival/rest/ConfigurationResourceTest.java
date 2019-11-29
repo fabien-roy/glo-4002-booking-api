@@ -11,18 +11,18 @@ import static org.mockito.Mockito.mock;
 
 class ConfigurationResourceTest {
 
-    private ConfigurationResource controller;
+    private ConfigurationResource resource;
 
     @BeforeEach
     void setUpResource() {
         FestivalService festivalService = mock(FestivalService.class);
 
-        controller = new ConfigurationResource(festivalService);
+        resource = new ConfigurationResource(festivalService);
     }
 
     @Test
     void addProgram_shouldReturnOk() {
-        Response response = controller.setConfiguration(mock(EventDatesRequest.class));
+        Response response = resource.setConfiguration(mock(EventDatesRequest.class));
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
     }
