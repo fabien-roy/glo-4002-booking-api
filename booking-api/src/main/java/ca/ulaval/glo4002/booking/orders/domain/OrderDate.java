@@ -17,6 +17,33 @@ public class OrderDate {
 		return value;
 	}
 
+	// TODO : Test
+	public OrderDate plusDays(int days) {
+		return new OrderDate(this.value.plusDays(days));
+	}
+
+	// TODO : Test
+	public OrderDate minusDays(int days) {
+		return new OrderDate(this.value.minusDays(days));
+	}
+
+	public boolean isBefore(OrderDate orderDate) {
+		return this.value.isBefore(orderDate.getValue());
+	}
+
+	public boolean isAfter(OrderDate orderDate) {
+		return this.value.isAfter(orderDate.getValue());
+	}
+
+	public boolean isBetweenOrEquals(OrderDate lowerDate, OrderDate higherDate) {
+		return !this.isBefore(lowerDate) && !this.isAfter(higherDate);
+	}
+
+	// TODO : Test
+	public LocalDate toLocalDate() {
+		return value.toLocalDate();
+	}
+
 	@Override
 	public String toString() {
 		return value.toString();
@@ -36,22 +63,5 @@ public class OrderDate {
 	@Override
 	public int hashCode() {
 		return value.hashCode();
-	}
-
-	public boolean isBefore(OrderDate orderDate) {
-		return this.value.isBefore(orderDate.getValue());
-	}
-
-	public boolean isAfter(OrderDate orderDate) {
-		return this.value.isAfter(orderDate.getValue());
-	}
-
-	public boolean isBetweenOrEquals(OrderDate lowerDate, OrderDate higherDate) {
-		return !this.isBefore(lowerDate) && !this.isAfter(higherDate);
-	}
-
-	// TODO : Test
-	public LocalDate toLocalDate() {
-		return value.toLocalDate();
 	}
 }

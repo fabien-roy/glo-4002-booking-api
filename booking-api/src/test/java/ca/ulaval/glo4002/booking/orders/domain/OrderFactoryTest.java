@@ -35,24 +35,11 @@ class OrderFactoryTest {
 	}
 
 	@Test
-	void build_shouldParseRequestWithCorrectAnOrderDate() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
-		PassBundleRequest passBundleRequest = mock(PassBundleRequest.class);
-		when(passBundleRequest.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
-		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM", passBundleRequest);
-
-		Order order = factory.create(orderRequest);
-
-		assertEquals(anOrderDate.toLocalDateTime(), order.getOrderDate());
-	}
-
-	@Test
 	void build_shouldParseRequestWithCorrectVendorCode() {
 		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
 		PassBundleRequest passBundleRequest = mock(PassBundleRequest.class);
 		when(passBundleRequest.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
-		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM",
-				passBundleRequest);
+		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM", passBundleRequest);
 
 		Order order = factory.create(orderRequest);
 
@@ -62,38 +49,8 @@ class OrderFactoryTest {
 	@Test
 	void build_shouldThrowInvalidFormatException_whenThereIsNoPass() {
 		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
-		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM",
-				null);
+		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM", null);
 
 		assertThrows(InvalidFormatException.class, () -> factory.create(orderRequest));
-	}
-
-	@Test
-	void build_shouldThrowInvalidFormatException_whenanOrderDateIsInvalid() {
-		String anInvalidOrderDate = "anInvalidDate";
-		OrderRequest orderRequest = new OrderRequest(anInvalidOrderDate, "TEAM",
-				mock(PassBundleRequest.class));
-
-		assertThrows(InvalidFormatException.class, () -> factory.create(orderRequest));
-	}
-
-	@Test
-	void build_shouldThrowInvalidanOrderDateException_whenAnOrderDateIsUnderBounds() {
-		LocalDateTime anUnderBoundValue = festivalConfiguration.getStartOrderDate().getValue().minusDays(1);
-		ZonedDateTime anUnderBoundZonedValue = ZonedDateTime.of(anUnderBoundValue, ZoneId.systemDefault());
-		OrderRequest orderRequest = new OrderRequest(anUnderBoundZonedValue.toString(),
-				"TEAM", mock(PassBundleRequest.class));
-
-		assertThrows(InvalidOrderDateException.class, () -> factory.create(orderRequest));
-	}
-
-	@Test
-	void build_shouldThrowInvalidanOrderDateException_whenAnOrderDateIsOverBounds() {
-		LocalDateTime anOverBoundValue = festivalConfiguration.getEndOrderDate().getValue().plusDays(1);
-		ZonedDateTime anOverBoundZonedValue = ZonedDateTime.of(anOverBoundValue, ZoneId.systemDefault());
-		OrderRequest orderRequest = new OrderRequest(anOverBoundZonedValue.toString(),
-				"TEAM", mock(PassBundleRequest.class));
-
-		assertThrows(InvalidOrderDateException.class, () -> factory.create(orderRequest));
 	}
 }
