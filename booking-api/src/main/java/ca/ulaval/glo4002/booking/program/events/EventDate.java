@@ -62,6 +62,7 @@ public class EventDate {
         return value.hashCode();
     }
 
+    // TODO : Move to Festival
     public static EventDate getDefaultStartEventDate() {
         return new EventDate(DEFAULT_START_DATE_VALUE);
     }

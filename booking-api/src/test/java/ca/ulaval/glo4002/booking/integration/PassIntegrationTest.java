@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.errors.ErrorDto;
 import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
@@ -46,21 +46,21 @@ import static org.mockito.Mockito.mock;
 public class PassIntegrationTest {
 
     private OrderController controller;
-    private Configuration configuration;
+    private Festival festival;
     private OrderRepository orderRepository;
 
     @BeforeEach
     public void setUpController() {
-        configuration = new Configuration();
+        festival = new Festival();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        EventDateFactory eventDateFactory = new EventDateFactory(configuration);
+        EventDateFactory eventDateFactory = new EventDateFactory(festival);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory(configuration);
-        OrderFactory orderFactory = new OrderFactory(configuration, numberGenerator, passBundleFactory);
+        OxygenFactory oxygenFactory = new OxygenFactory(festival);
+        OrderFactory orderFactory = new OrderFactory(festival, numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -72,8 +72,8 @@ public class PassIntegrationTest {
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(configuration, tripRepository, shuttleFactory);
-        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(configuration, oxygenFactory, oxygenTankProducer);
+        TripService tripService = new TripService(festival, tripRepository, shuttleFactory);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festival, oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         ExceptionMapper exceptionMapper = new ExceptionMapper();
@@ -91,7 +91,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festival.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -117,7 +117,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festival.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -148,7 +148,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festival.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -176,7 +176,7 @@ public class PassIntegrationTest {
                 Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -195,7 +195,7 @@ public class PassIntegrationTest {
                 Collections.singletonList(EventDate.getDefaultStartEventDate().toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -215,7 +215,7 @@ public class PassIntegrationTest {
                 PassOptions.SINGLE_PASS.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -235,7 +235,7 @@ public class PassIntegrationTest {
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -255,7 +255,7 @@ public class PassIntegrationTest {
                 "anInvalidPassOption"
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -276,7 +276,7 @@ public class PassIntegrationTest {
                 Collections.singletonList("anInvalidOrderDate")
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -297,7 +297,7 @@ public class PassIntegrationTest {
                 Collections.singletonList(EventDate.getDefaultStartEventDate().minusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -318,7 +318,7 @@ public class PassIntegrationTest {
                 Collections.singletonList(EventDate.getDefaultEndEventDate().plusDays(1).toString())
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );

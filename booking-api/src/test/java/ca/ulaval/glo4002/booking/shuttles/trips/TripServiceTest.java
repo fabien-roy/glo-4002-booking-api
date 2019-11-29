@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.shuttles.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ import ca.ulaval.glo4002.booking.passes.PassCategories;
 class TripServiceTest {
 
 	private TripService service;
-	private Configuration configuration;
+	private Festival festival;
 	private TripRepository repository;
 
 	@BeforeEach
@@ -30,15 +30,15 @@ class TripServiceTest {
 		repository = mock(TripRepository.class);
 		ShuttleFactory shuttleFactory = new ShuttleFactory();
 
-		service = new TripService(configuration, repository, shuttleFactory);
+		service = new TripService(festival, repository, shuttleFactory);
 	}
 
 	@BeforeEach
 	void setUpConfiguration() {
-		configuration = mock(Configuration.class);
+		festival = mock(Festival.class);
 
-		when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-		when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+		when(festival.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(festival.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@Test

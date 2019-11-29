@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.booking;
 
+import ca.ulaval.glo4002.booking.festival.FestivalService;
 import ca.ulaval.glo4002.booking.program.artists.*;
-import ca.ulaval.glo4002.booking.configuration.Configuration;
-import ca.ulaval.glo4002.booking.configuration.ConfigurationController;
+import ca.ulaval.glo4002.booking.festival.Festival;
+import ca.ulaval.glo4002.booking.festival.ConfigurationController;
 import ca.ulaval.glo4002.booking.program.events.*;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -54,7 +55,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindConfiguration() {
-        bindAsContract(Configuration.class).in(Singleton.class);
+        bindAsContract(Festival.class).in(Singleton.class);
     }
 
     private void bindGenerators() {
@@ -101,7 +102,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ProfitService.class);
         bindAsContract(ProgramService.class);
         bindAsContract(OxygenReportService.class);
-        bindAsContract(EventDateService.class);
+        bindAsContract(FestivalService.class);
     }
 
     private void bindMappers() {

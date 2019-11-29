@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.profits.Money;
 
@@ -13,12 +13,12 @@ import javax.inject.Inject;
 
 public class ArtistConverter {
 
-	private final Configuration configuration;
+	private final Festival festival;
 	private final ArtistRepository artistRepository;
 
 	@Inject
-	public ArtistConverter(Configuration configuration, ArtistRepository artistRepository) {
-		this.configuration = configuration;
+	public ArtistConverter(Festival festival, ArtistRepository artistRepository) {
+		this.festival = festival;
 		this.artistRepository = artistRepository;
 	}
 
@@ -66,8 +66,8 @@ public class ArtistConverter {
 
 	// TODO : Test ArtistConverter.isAvailabilityDateDuringFestival
 	private boolean isAvailabilityDateDuringFestival(EventDate date) {
-		EventDate startDate = configuration.getStartEventDate();
-		EventDate endDate = configuration.getEndEventDate();
+		EventDate startDate = festival.getStartEventDate();
+		EventDate endDate = festival.getEndEventDate();
 
 		return date.isBetweenOrEquals(startDate, endDate);
 	}

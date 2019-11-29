@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -39,23 +39,23 @@ import static org.mockito.Mockito.mock;
 public class OrderIntegrationTest {
 
     private OrderController controller;
-    private Configuration configuration;
+    private Festival festival;
     private OrderRepository repository;
     private PassBundleFactory passBundleFactory;
 
     @BeforeEach
     public void setUpController() {
-        configuration = new Configuration();
+        festival = new Festival();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        EventDateFactory eventDateFactory = new EventDateFactory(configuration);
+        EventDateFactory eventDateFactory = new EventDateFactory(festival);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory(configuration);
+        OxygenFactory oxygenFactory = new OxygenFactory(festival);
 
-        OrderFactory orderFactory = new OrderFactory(configuration, numberGenerator, passBundleFactory);
+        OrderFactory orderFactory = new OrderFactory(festival, numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -67,8 +67,8 @@ public class OrderIntegrationTest {
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(configuration, tripRepository, shuttleFactory);
-        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(configuration, oxygenFactory, oxygenTankProducer);
+        TripService tripService = new TripService(festival, tripRepository, shuttleFactory);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festival, oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(repository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         ExceptionMapper exceptionMapper = new ExceptionMapper();
@@ -83,7 +83,7 @@ public class OrderIntegrationTest {
         ));
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festival.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         repository.addOrder(order);
@@ -125,7 +125,7 @@ public class OrderIntegrationTest {
     public void getByOrderNumber_shouldReturnNotFound_whenOrderDoesNotExist() {
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                configuration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festival.getMinimumEventDateToOrder().toLocalDateTime(),
                 mock(PassBundle.class)
         );
         repository.addOrder(order);
@@ -148,7 +148,7 @@ public class OrderIntegrationTest {
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -166,7 +166,7 @@ public class OrderIntegrationTest {
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime().minusDays(1), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime().minusDays(1), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );
@@ -186,7 +186,7 @@ public class OrderIntegrationTest {
                 PassOptions.PACKAGE.toString()
         );
         OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMaximumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMaximumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );

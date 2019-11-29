@@ -1,6 +1,5 @@
-package ca.ulaval.glo4002.booking.configuration;
+package ca.ulaval.glo4002.booking.festival;
 
-import ca.ulaval.glo4002.booking.program.events.EventDateService;
 import ca.ulaval.glo4002.booking.program.events.EventDatesDto;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,9 +17,9 @@ class ConfigurationControllerTest {
     @BeforeEach
     void setUpController() {
         ExceptionMapper exceptionMapper = new ExceptionMapper();
-        EventDateService eventDateService = mock(EventDateService.class);
+        FestivalService festivalService = mock(FestivalService.class);
 
-        controller = new ConfigurationController(exceptionMapper, eventDateService);
+        controller = new ConfigurationController(exceptionMapper, festivalService);
     }
 
     @Test

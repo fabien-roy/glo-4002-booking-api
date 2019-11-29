@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import ca.ulaval.glo4002.booking.passes.PassCategories;
 
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 public class OxygenFactoryTest {
 
     private OxygenFactory factory;
-    private Configuration configuration;
+    private Festival festival;
 
     private OxygenCategory categoryA;
     private OxygenCategory categoryB;
@@ -25,7 +25,7 @@ public class OxygenFactoryTest {
 
     @BeforeEach
     void setupFactory() {
-        factory = new OxygenFactory(configuration);
+        factory = new OxygenFactory(festival);
 
         categoryA = factory.buildCategory(PassCategories.NEBULA);
         categoryB = factory.buildCategory(PassCategories.SUPERGIANT);
@@ -34,15 +34,15 @@ public class OxygenFactoryTest {
 
     @BeforeEach
     void setUpConfiguration() {
-        configuration = mock(Configuration.class);
+        festival = mock(Festival.class);
 
-        when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-        when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+        when(festival.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+        when(festival.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
     }
 
     @Test
     void build_shouldBuildOxygenCategoryA_whenCategoryIsNebula() {
-        LocalDate aValidRequestDate = configuration.getStartEventDate().minusDays(21).getValue();
+        LocalDate aValidRequestDate = festival.getStartEventDate().minusDays(21).getValue();
         Integer aNumberOfTanks = 5;
 
         List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryA, aValidRequestDate, aNumberOfTanks);
@@ -52,7 +52,7 @@ public class OxygenFactoryTest {
 
     @Test
     void build_shouldBuildOxygenCategoryB_whenCategoryIsSupergiant() {
-        LocalDate aValidRequestDate = configuration.getStartEventDate().minusDays(15).getValue();
+        LocalDate aValidRequestDate = festival.getStartEventDate().minusDays(15).getValue();
         Integer aNumberOfTanks = 3;
 
         List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryB, aValidRequestDate, aNumberOfTanks);
@@ -62,7 +62,7 @@ public class OxygenFactoryTest {
 
     @Test
     void build_shouldBuildOxygenCategoryE_whenCategoryIsSupernova() {
-        LocalDate aValidRequestDate = configuration.getStartEventDate().getValue();
+        LocalDate aValidRequestDate = festival.getStartEventDate().getValue();
         Integer aNumberOfTanks = 1;
 
         List<OxygenTank> createdTanks = factory.buildOxygenTank(categoryE, aValidRequestDate, aNumberOfTanks);

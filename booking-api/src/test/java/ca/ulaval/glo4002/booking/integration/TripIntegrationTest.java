@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
 import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
@@ -43,22 +43,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class TripIntegrationTest {
 
     private OrderController orderController;
-    private Configuration configuration;
+    private Festival festival;
     private ShuttleManifestController shuttleManifestController;
     private ShuttleFactory shuttleFactory;
 
     @BeforeEach
     void setUpController() {
-        configuration = new Configuration();
+        festival = new Festival();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        EventDateFactory eventDateFactory = new EventDateFactory(configuration);
+        EventDateFactory eventDateFactory = new EventDateFactory(festival);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory(configuration);
-        OrderFactory orderFactory = new OrderFactory(configuration, numberGenerator, passBundleFactory);
+        OxygenFactory oxygenFactory = new OxygenFactory(festival);
+        OrderFactory orderFactory = new OrderFactory(festival, numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -72,8 +72,8 @@ class TripIntegrationTest {
         ShuttleManifestMapper shuttleManifestMapper = new ShuttleManifestMapper(tripMapper);
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(configuration, tripRepository, shuttleFactory);
-        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(configuration, oxygenFactory, oxygenTankProducer);
+        TripService tripService = new TripService(festival, tripRepository, shuttleFactory);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festival, oxygenFactory, oxygenTankProducer);
         ShuttleManifestService shuttleManifestService = new ShuttleManifestService(tripRepository, shuttleManifestMapper);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
@@ -258,7 +258,7 @@ class TripIntegrationTest {
         );
 
         return new OrderWithPassesAsEventDatesDto(
-                ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto
         );

@@ -1,11 +1,11 @@
-package ca.ulaval.glo4002.booking.configuration;
+package ca.ulaval.glo4002.booking.festival;
 
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Configuration {
+public class Festival {
 
     static final Integer MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 180;
     static final Integer MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 1;
@@ -13,7 +13,7 @@ public class Configuration {
     private EventDate startEventDate;
     private EventDate endEventDate;
 
-    public Configuration() {
+    public Festival() {
         startEventDate = EventDate.getDefaultStartEventDate();
         endEventDate = EventDate.getDefaultEndEventDate();
     }
@@ -35,7 +35,7 @@ public class Configuration {
     }
 
     public List<EventDate> getAllEventDates() {
-        List<EventDate> allEventDates = new ArrayList<>();
+        List<EventDate> allEventDates = new ArrayList<EventDate>();
 
         for (EventDate date = startEventDate; date.isBefore(endEventDate); date = date.plusDays(1)) {
             allEventDates.add(date);

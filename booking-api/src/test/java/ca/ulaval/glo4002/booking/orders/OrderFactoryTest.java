@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,20 +20,20 @@ import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
 class OrderFactoryTest {
 
 	private OrderFactory factory;
-	private Configuration configuration;
+	private Festival festival;
 
 	@BeforeEach
 	void setUpFactory() {
-	    configuration = new Configuration(); // TODO : Should Configuration be mocked in OrderFactoryTest?
+	    festival = new Festival(); // TODO : Should Configuration be mocked in OrderFactoryTest?
 		NumberGenerator numberGenerator = new NumberGenerator();
 		PassBundleFactory passBundleFactory = mock(PassBundleFactory.class);
 
-		this.factory = new OrderFactory(configuration, numberGenerator, passBundleFactory);
+		this.factory = new OrderFactory(festival, numberGenerator, passBundleFactory);
 	}
 
 	@Test
 	void build_shouldParseDtoWithCorrectanOrderDate() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
 		PassBundleDto passBundleDto = mock(PassBundleDto.class);
 		when(passBundleDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
 		OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(anOrderDate.toString(), "TEAM", passBundleDto);
@@ -45,7 +45,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldParseDtoWithCorrectVendorCode() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
 		PassBundleDto passBundleDto = mock(PassBundleDto.class);
 		when(passBundleDto.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
 		OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(anOrderDate.toString(), "TEAM",
@@ -58,7 +58,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldThrowInvalidFormatException_whenThereIsNoPass() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(configuration.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
 		OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(anOrderDate.toString(), "TEAM",
 				null);
 
@@ -76,7 +76,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldThrowInvalidanOrderDateException_whenAnOrderDateIsUnderBounds() {
-		LocalDateTime anUnderBoundValue = configuration.getMinimumEventDateToOrder().toLocalDateTime().minusDays(1);
+		LocalDateTime anUnderBoundValue = festival.getMinimumEventDateToOrder().toLocalDateTime().minusDays(1);
 		ZonedDateTime anUnderBoundZonedValue = ZonedDateTime.of(anUnderBoundValue, ZoneId.systemDefault());
 		OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(anUnderBoundZonedValue.toString(),
 				"TEAM", mock(PassBundleDto.class));
@@ -86,7 +86,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldThrowInvalidanOrderDateException_whenAnOrderDateIsOverBounds() {
-		LocalDateTime anOverBoundValue = configuration.getMaximumEventDateToOrder().toLocalDateTime().plusDays(1);
+		LocalDateTime anOverBoundValue = festival.getMaximumEventDateToOrder().toLocalDateTime().plusDays(1);
 		ZonedDateTime anOverBoundZonedValue = ZonedDateTime.of(anOverBoundValue, ZoneId.systemDefault());
 		OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(anOverBoundZonedValue.toString(),
 				"TEAM", mock(PassBundleDto.class));

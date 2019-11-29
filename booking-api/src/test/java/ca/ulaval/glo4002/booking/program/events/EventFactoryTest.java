@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking.program.events;
 
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.program.activities.Activities;
 import ca.ulaval.glo4002.booking.program.artists.ArtistService;
 import ca.ulaval.glo4002.booking.program.artists.BookingArtist;
-import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.program.InvalidProgramException;
 import ca.ulaval.glo4002.booking.program.ProgramEventDto;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 class EventFactoryTest {
 
     private EventFactory factory;
-    private Configuration configuration;
+    private Festival festival;
     private ArtistService artistService;
     private EventDateFactory eventDateFactory;
 
@@ -34,14 +34,14 @@ class EventFactoryTest {
         artistService = mock(ArtistService.class);
         eventDateFactory = mock(EventDateFactory.class);
 
-        this.factory = new EventFactory(configuration, artistService, eventDateFactory);
+        this.factory = new EventFactory(festival, artistService, eventDateFactory);
     }
 
     @BeforeEach
     void setUpConfiguration() {
-        configuration = mock(Configuration.class);
+        festival = mock(Festival.class);
 
-        when(configuration.getAllEventDates()).thenReturn(Arrays.asList(
+        when(festival.getAllEventDates()).thenReturn(Arrays.asList(
                 EventDate.getDefaultStartEventDate(),
                 EventDate.getDefaultEndEventDate())
         );
@@ -59,7 +59,7 @@ class EventFactoryTest {
 
     @Test
     void build_shouldBuildCorrectEventDates() {
-        List<EventDate> expectedEventDates = configuration.getAllEventDates();
+        List<EventDate> expectedEventDates = festival.getAllEventDates();
         List<ProgramEventDto> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
 
         List<Event> events = factory.build(aProgramDto);
@@ -180,7 +180,7 @@ class EventFactoryTest {
 
     private List<ProgramEventDto> buildProgramDto(Activities activity, String artist) {
         List<ProgramEventDto> eventDtos = new ArrayList<>();
-        List<EventDate> eventDates = configuration.getAllEventDates();
+        List<EventDate> eventDates = festival.getAllEventDates();
 
         for (int i = 0; i < eventDates.size(); i++) {
             eventDtos.add(buildEventDto(eventDates.get(i), activity, artist + i));

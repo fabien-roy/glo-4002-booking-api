@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.configuration.Configuration;
+import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.program.events.EventDate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,7 +24,7 @@ public class ArtistConverterTest {
 	// TODO : Mock ArtistRepository in ArtistConverter tests
 
 	private ArtistConverter artistConverter;
-	private Configuration configuration;
+	private Festival festival;
 	private ArtistRepository artistRepository;
 	private List<ExternalArtist> externalArtists;
 	private static WireMockServer wiremockServer;
@@ -204,16 +204,16 @@ public class ArtistConverterTest {
 	public void converterSetUp() {
 		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
 		artistRepository = new InMemoryArtistRepository();
-		artistConverter = new ArtistConverter(configuration, artistRepository);
+		artistConverter = new ArtistConverter(festival, artistRepository);
 		externalArtists = ArtistClient.getArtists();
 	}
 
 	@BeforeEach
 	void setUpConfiguration() {
-		configuration = mock(Configuration.class);
+		festival = mock(Festival.class);
 
-		when(configuration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-		when(configuration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+		when(festival.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(festival.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@AfterAll
