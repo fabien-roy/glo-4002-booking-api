@@ -1,11 +1,11 @@
-package ca.ulaval.glo4002.booking.program.events.rest;
+package ca.ulaval.glo4002.booking.festival.rest;
 
-public class EventDatesDto {
+public class EventDatesRequest {
 
     private String beginDate;
     private String endDate;
 
-    public EventDatesDto() {
+    public EventDatesRequest() {
         // Empty constructor for parsing
     }
 

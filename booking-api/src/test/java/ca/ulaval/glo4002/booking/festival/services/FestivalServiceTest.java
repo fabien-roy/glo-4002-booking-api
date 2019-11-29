@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.festival.services;
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
-import ca.ulaval.glo4002.booking.program.events.rest.EventDatesDto;
+import ca.ulaval.glo4002.booking.festival.rest.EventDatesRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,11 +27,11 @@ class FestivalServiceTest {
     @Test
     void setConfiguration_shouldSetStartEventDate() {
         EventDate expectedStartEventDate = EventDate.getDefaultStartEventDate().plusDays(1);
-        EventDatesDto eventDatesDto = mock(EventDatesDto.class);
-        when(eventDatesDto.getBeginDate()).thenReturn(expectedStartEventDate.toString());
+        EventDatesRequest eventDatesRequest = mock(EventDatesRequest.class);
+        when(eventDatesRequest.getBeginDate()).thenReturn(expectedStartEventDate.toString());
         when(eventDateFactory.parse(expectedStartEventDate.toString())).thenReturn(expectedStartEventDate);
 
-        service.setEventDates(eventDatesDto);
+        service.setEventDates(eventDatesRequest);
 
         verify(festival).setStartEventDate(eq(expectedStartEventDate));
     }
@@ -39,11 +39,11 @@ class FestivalServiceTest {
     @Test
     void setConfiguration_shouldSetEndEventDate() {
         EventDate expectedEndEventDate = EventDate.getDefaultEndEventDate().minusDays(1);
-        EventDatesDto eventDatesDto = mock(EventDatesDto.class);
-        when(eventDatesDto.getEndDate()).thenReturn(expectedEndEventDate.toString());
+        EventDatesRequest eventDatesRequest = mock(EventDatesRequest.class);
+        when(eventDatesRequest.getEndDate()).thenReturn(expectedEndEventDate.toString());
         when(eventDateFactory.parse(expectedEndEventDate.toString())).thenReturn(expectedEndEventDate);
 
-        service.setEventDates(eventDatesDto);
+        service.setEventDates(eventDatesRequest);
 
         verify(festival).setEndEventDate(eq(expectedEndEventDate));
     }

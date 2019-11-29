@@ -27,7 +27,7 @@ public class ProgramService {
     }
 
     public void add(ProgramRequest programRequest) {
-        List<Event> events = eventFactory.build(programRequest.getProgram());
+        List<Event> events = eventFactory.create(programRequest.getProgram());
 
         events.forEach(event -> {
             tripService.orderForArtist(event.getArtist(), event.getEventDate());

@@ -54,7 +54,7 @@ class ProgramServiceTest {
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
-        when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
+        when(eventFactory.create(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
 
         service.add(aProgramRequest);
 
@@ -70,7 +70,7 @@ class ProgramServiceTest {
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
-        when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
+        when(eventFactory.create(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
 
         service.add(aProgramRequest);
 

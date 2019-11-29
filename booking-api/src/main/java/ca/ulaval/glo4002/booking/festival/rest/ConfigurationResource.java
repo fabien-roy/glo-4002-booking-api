@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.festival.rest;
 
 import ca.ulaval.glo4002.booking.festival.services.FestivalService;
-import ca.ulaval.glo4002.booking.program.events.rest.EventDatesDto;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -21,8 +20,8 @@ public class ConfigurationResource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response setConfiguration(EventDatesDto eventDatesDto) {
-		festivalService.setEventDates(eventDatesDto);
+	public Response setConfiguration(EventDatesRequest eventDatesRequest) {
+		festivalService.setEventDates(eventDatesRequest);
 
 		return Response.ok().build();
 	}

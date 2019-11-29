@@ -2,12 +2,11 @@ package ca.ulaval.glo4002.booking.program.events.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.program.events.rest.exceptions.InvalidEventDateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,23 +30,32 @@ class EventDateFactoryTest {
     }
 
     @Test
-    void build_shouldThrowInvalidEventDateException_whenEventDateIsUnderBounds() {
+    void create_shouldCreateEventDate() {
+        EventDate expectedEventDate  = festival.getStartEventDate();
+
+        EventDate eventDate = factory.create(expectedEventDate.toString());
+
+        assertEquals(expectedEventDate, eventDate);
+    }
+
+    @Test
+    void create_shouldThrowInvalidEventDateException_whenEventDateIsUnderBounds() {
         EventDate aUnderBoundEventDate  = festival.getStartEventDate().minusDays(1);
 
-        assertThrows(InvalidEventDateException.class, () -> factory.build(aUnderBoundEventDate.toString()));
+        assertThrows(InvalidEventDateException.class, () -> factory.create(aUnderBoundEventDate.toString()));
     }
 
     @Test
-    void build_shouldThrowInvalidEventDateException_whenEventDateIsOverBounds() {
+    void create_shouldThrowInvalidEventDateException_whenEventDateIsOverBounds() {
         EventDate aOverBoundEventDate  = festival.getEndEventDate().plusDays(1);
 
-        assertThrows(InvalidEventDateException.class, () -> factory.build(aOverBoundEventDate.toString()));
+        assertThrows(InvalidEventDateException.class, () -> factory.create(aOverBoundEventDate.toString()));
     }
 
     @Test
-    void build_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
+    void create_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
         String anInvalidDate = "anInvalidDate";
 
-        assertThrows(InvalidFormatException.class, () -> factory.build(anInvalidDate));
+        assertThrows(InvalidFormatException.class, () -> factory.create(anInvalidDate));
     }
 }

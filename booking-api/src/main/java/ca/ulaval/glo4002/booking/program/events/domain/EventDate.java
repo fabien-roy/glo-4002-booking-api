@@ -6,6 +6,7 @@ import java.time.LocalTime;
 
 public class EventDate {
 
+    // TODO : Move default EventDates to Festival
     private static final LocalDate DEFAULT_START_DATE_VALUE = LocalDate.of(2050, 7, 17);
     private static final LocalDate DEFAULT_END_DATE_VALUE = LocalDate.of(2050, 7, 24);
 
@@ -62,7 +63,6 @@ public class EventDate {
         return value.hashCode();
     }
 
-    // TODO : Move to Festival
     public static EventDate getDefaultStartEventDate() {
         return new EventDate(DEFAULT_START_DATE_VALUE);
     }

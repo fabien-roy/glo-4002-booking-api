@@ -26,16 +26,16 @@ public class EventFactory {
         this.eventDateFactory = eventDateFactory;
     }
 
-    public List<Event> build(List<ProgramEventRequest> eventDtos) {
+    public List<Event> create(List<ProgramEventRequest> eventRequests) {
         List<Event> events = new ArrayList<>();
 
-        validateEventDates(eventDtos);
-        validateArtists(eventDtos);
+        validateEventDates(eventRequests);
+        validateArtists(eventRequests);
 
-        eventDtos.forEach(eventDto -> {
-            EventDate eventDate = eventDateFactory.build(eventDto.getEventDate());
-            Activities activity = Activities.get(eventDto.getAm());
-            BookingArtist bookingArtist = artistService.getByName(eventDto.getPm());
+        eventRequests.forEach(eventRequest -> {
+            EventDate eventDate = eventDateFactory.create(eventRequest.getEventDate());
+            Activities activity = Activities.get(eventRequest.getAm());
+            BookingArtist bookingArtist = artistService.getByName(eventRequest.getPm());
 
             Event event = new Event(eventDate, activity, bookingArtist);
 
@@ -45,19 +45,19 @@ public class EventFactory {
         return events;
     }
 
-    private void validateEventDates(List<ProgramEventRequest> eventDtos) {
-        List<String> eventDates = eventDtos.stream().map(ProgramEventRequest::getEventDate).collect(Collectors.toList());
+    private void validateEventDates(List<ProgramEventRequest> eventRequests) {
+        List<String> eventDates = eventRequests.stream().map(ProgramEventRequest::getEventDate).collect(Collectors.toList());
 
         validateAllDifferent(eventDates);
         validateAllPresent(eventDates);
     }
 
-    private void validateArtists(List<ProgramEventRequest> eventDtos) {
-        boolean hasNull = eventDtos.stream().anyMatch(eventDto -> eventDto.getPm() == null);
+    private void validateArtists(List<ProgramEventRequest> eventRequests) {
+        boolean hasNull = eventRequests.stream().anyMatch(eventRequest -> eventRequest.getPm() == null);
 
         if (hasNull) throw new InvalidProgramException();
 
-        List<String> eventDates = eventDtos.stream().map(ProgramEventRequest::getPm).collect(Collectors.toList());
+        List<String> eventDates = eventRequests.stream().map(ProgramEventRequest::getPm).collect(Collectors.toList());
 
         validateAllDifferent(eventDates);
     }

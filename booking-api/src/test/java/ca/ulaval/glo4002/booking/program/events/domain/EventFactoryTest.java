@@ -48,149 +48,149 @@ class EventFactoryTest {
     }
 
     @Test
-    void build_shouldBuildCorrectAmountOfEvents() {
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
-        Integer expectedSize = aProgramDto.size();
+    void create_shouldCreateCorrectAmountOfEvents() {
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
+        Integer expectedSize = aProgramRequest.size();
 
-        List<Event> events = factory.build(aProgramDto);
+        List<Event> events = factory.create(aProgramRequest);
 
         assertEquals(expectedSize, events.size());
     }
 
     @Test
-    void build_shouldBuildCorrectEventDates() {
+    void create_shouldCreateEventDates() {
         List<EventDate> expectedEventDates = festival.getAllEventDates();
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
 
-        List<Event> events = factory.build(aProgramDto);
+        List<Event> events = factory.create(aProgramRequest);
 
         assertTrue(events.stream().allMatch(event -> expectedEventDates.contains(event.getEventDate())));
     }
 
     @ParameterizedTest
     @EnumSource(Activities.class)
-    void build_shouldBuildCorrectActivity(Activities activity) {
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(activity, "aArtist");
+    void create_shouldCreateActivity(Activities activity) {
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(activity, "aArtist");
 
-        List<Event> events = factory.build(aProgramDto);
+        List<Event> events = factory.create(aProgramRequest);
 
         assertEquals(activity, events.get(0).getActivity());
     }
 
     @Test
-    void build_shouldBuildCorrectActivities_whenThereAreMultipleEvents() {
+    void create_shouldCreateActivities_whenThereAreMultipleEvents() {
         Activities firstEventActivity = Activities.YOGA;
         Activities otherEventsActivity = Activities.CARDIO;
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(otherEventsActivity, "aArtist");
-        aProgramDto.set(0, buildEventDto(EventDate.getDefaultStartEventDate(), firstEventActivity, "aArtist"));
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(otherEventsActivity, "aArtist");
+        aProgramRequest.set(0, buildEventRequest(EventDate.getDefaultStartEventDate(), firstEventActivity, "aArtist"));
 
-        List<Event> events = factory.build(aProgramDto);
+        List<Event> events = factory.create(aProgramRequest);
 
         assertEquals(firstEventActivity, events.get(0).getActivity());
         assertTrue(events.subList(1, events.size() - 1).stream().allMatch(event -> event.getActivity().equals(otherEventsActivity)));
     }
 
     @Test
-    void build_shouldBuildCorrectArtist() {
+    void create_shouldCreateArtist() {
         String artistName = "aArtist";
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, artistName);
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, artistName);
         BookingArtist expectedArtist = mock(BookingArtist.class);
         when(artistService.getByName(artistName + 0)).thenReturn(expectedArtist);
 
-        List<Event> events = factory.build(aProgramDto);
+        List<Event> events = factory.create(aProgramRequest);
 
         assertEquals(expectedArtist, events.get(0).getArtist());
     }
 
     @Test
-    void build_shouldBuildCorrectArtists_whenThereAreMultipleEvents() {
+    void create_shouldCreateArtists_whenThereAreMultipleEvents() {
         String firstArtistName = "aFirstArtist";
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, firstArtistName);
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, firstArtistName);
         BookingArtist expectedFirstArtist = mock(BookingArtist.class);
         BookingArtist expectedOtherArtist = mock(BookingArtist.class);
         when(artistService.getByName(firstArtistName)).thenReturn(expectedFirstArtist);
         when(artistService.getByName(not(eq(firstArtistName)))).thenReturn(expectedOtherArtist);
-        aProgramDto.set(0, buildEventDto(EventDate.getDefaultStartEventDate(), Activities.YOGA, firstArtistName));
+        aProgramRequest.set(0, buildEventRequest(EventDate.getDefaultStartEventDate(), Activities.YOGA, firstArtistName));
 
-        List<Event> events = factory.build(aProgramDto);
+        List<Event> events = factory.create(aProgramRequest);
 
         assertEquals(expectedFirstArtist, events.get(0).getArtist());
         assertTrue(events.subList(1, events.size() - 1).stream().allMatch(event -> event.getArtist().equals(expectedOtherArtist)));
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenEventDateIsDuplicate() {
+    void create_shouldThrowInvalidProgramException_whenEventDateIsDuplicate() {
         EventDate aEventDate = EventDate.getDefaultStartEventDate();
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
-        aProgramDto.set(0, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "aArtist"));
-        aProgramDto.set(1, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "anotherArtist"));
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
+        aProgramRequest.set(0, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "aArtist"));
+        aProgramRequest.set(1, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "anotherArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.build(aProgramDto));
+        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenEventDateIsAbsent() {
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
-        aProgramDto.set(0, new ProgramEventRequest(null, Activities.YOGA.toString(), "aArtist"));
+    void create_shouldThrowInvalidProgramException_whenEventDateIsAbsent() {
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
+        aProgramRequest.set(0, new ProgramEventRequest(null, Activities.YOGA.toString(), "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.build(aProgramDto));
+        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenProgramDoesNotIncludeAllFestivalDates() {
+    void create_shouldThrowInvalidProgramException_whenProgramDoesNotIncludeAllFestivalDates() {
         ProgramEventRequest aEventDto = new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), "aArtist");
 
-        assertThrows(InvalidProgramException.class, () -> factory.build(Collections.singletonList(aEventDto)));
+        assertThrows(InvalidProgramException.class, () -> factory.create(Collections.singletonList(aEventDto)));
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenActivityIsInvalid() {
+    void create_shouldThrowInvalidProgramException_whenActivityIsInvalid() {
         String anInvalidActivity = "anInvalidActivity";
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
-        aProgramDto.set(0, new ProgramEventRequest(null, anInvalidActivity, "aArtist"));
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
+        aProgramRequest.set(0, new ProgramEventRequest(null, anInvalidActivity, "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.build(aProgramDto));
+        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenAmIsAbsent() {
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
-        aProgramDto.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), null, "aArtist"));
+    void create_shouldThrowInvalidProgramException_whenAmIsAbsent() {
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
+        aProgramRequest.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), null, "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.build(aProgramDto));
+        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenPmIsAbsent() {
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
-        aProgramDto.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), null));
+    void create_shouldThrowInvalidProgramException_whenPmIsAbsent() {
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
+        aProgramRequest.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), null));
 
-        assertThrows(InvalidProgramException.class, () -> factory.build(aProgramDto));
+        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
 
     @Test
-    void build_shouldThrowInvalidProgramException_whenArtistIsDuplicate() {
+    void create_shouldThrowInvalidProgramException_whenArtistIsDuplicate() {
         String aArtist = "aArtist";
-        List<ProgramEventRequest> aProgramDto = buildProgramDto(Activities.YOGA, "aArtist");
-        aProgramDto.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), aArtist));
-        aProgramDto.set(1, new ProgramEventRequest(EventDate.getDefaultStartEventDate().plusDays(1).toString(), Activities.YOGA.toString(), aArtist));
+        List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
+        aProgramRequest.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), aArtist));
+        aProgramRequest.set(1, new ProgramEventRequest(EventDate.getDefaultStartEventDate().plusDays(1).toString(), Activities.YOGA.toString(), aArtist));
 
-        assertThrows(InvalidProgramException.class, () -> factory.build(aProgramDto));
+        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
 
-    private List<ProgramEventRequest> buildProgramDto(Activities activity, String artist) {
-        List<ProgramEventRequest> eventDtos = new ArrayList<>();
+    private List<ProgramEventRequest> buildProgramRequest(Activities activity, String artist) {
+        List<ProgramEventRequest> eventRequests = new ArrayList<>();
         List<EventDate> eventDates = festival.getAllEventDates();
 
         for (int i = 0; i < eventDates.size(); i++) {
-            eventDtos.add(buildEventDto(eventDates.get(i), activity, artist + i));
+            eventRequests.add(buildEventRequest(eventDates.get(i), activity, artist + i));
         }
 
-        return eventDtos;
+        return eventRequests;
     }
 
-    private ProgramEventRequest buildEventDto(EventDate eventDate, Activities activity, String artist) {
-        when(eventDateFactory.build(eq(eventDate.toString()))).thenReturn(eventDate);
+    private ProgramEventRequest buildEventRequest(EventDate eventDate, Activities activity, String artist) {
+        when(eventDateFactory.create(eq(eventDate.toString()))).thenReturn(eventDate);
 
         return new ProgramEventRequest(eventDate.toString(), activity.toString(), artist);
     }

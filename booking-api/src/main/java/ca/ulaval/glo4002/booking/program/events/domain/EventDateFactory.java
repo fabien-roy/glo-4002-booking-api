@@ -16,7 +16,7 @@ public class EventDateFactory {
         this.festival = festival;
     }
 
-    public EventDate build(String eventDate) {
+    public EventDate create(String eventDate) {
         EventDate parsedEventDate = parse(eventDate);
 
         validateEventDate(parsedEventDate);
