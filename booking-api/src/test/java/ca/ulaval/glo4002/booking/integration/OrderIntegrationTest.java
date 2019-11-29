@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.InMemoryOxygenInventoryReposit
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.passes.*;
 import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
-import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;

@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 class OrderDateTest {
 

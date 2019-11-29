@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/configuration")
 public class ConfigurationController {
 
+	// TODO : Remove ExceptionMapper in Controllers
     private final ExceptionMapper exceptionMapper;
     private final FestivalService festivalService;
 

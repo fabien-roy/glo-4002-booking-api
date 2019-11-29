@@ -10,7 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 class OrderControllerTest {
 

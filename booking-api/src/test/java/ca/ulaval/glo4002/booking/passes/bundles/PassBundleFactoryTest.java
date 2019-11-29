@@ -25,7 +25,7 @@ import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NebulaPriceCalc
 import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.PriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.passes.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 class PassBundleFactoryTest {
 

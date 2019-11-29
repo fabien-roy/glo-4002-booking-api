@@ -18,7 +18,7 @@ import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import ca.ulaval.glo4002.booking.profits.Money;
 import ca.ulaval.glo4002.booking.passes.*;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
-import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.program.events.InvalidEventDateException;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryService;
