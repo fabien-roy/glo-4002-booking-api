@@ -19,7 +19,7 @@ class MoneyTest {
     private static final BigDecimal anotherAmount = new BigDecimal(25);
 
     @BeforeEach
-    void setupMoney() {
+    void setUpMoney() {
     	aMoney = new Money(anAmount);
     	anotherMoney = new Money(anotherAmount);
     }
@@ -66,7 +66,7 @@ class MoneyTest {
     }
     
     @Test
-    void substract_shouldSubtractTheMoney() {
+    void subtract_shouldSubtractTheMoney() {
     	aMoney.subtract(anotherMoney);
     	
     	assertEquals(anAmount.subtract(anotherAmount), aMoney.getValue());

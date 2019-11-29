@@ -6,14 +6,14 @@ import java.util.Comparator;
 public class Money implements Comparable<Money> {
 
 	private BigDecimal value;
-	private Comparator<Money> comparator = Comparator.comparing(Money::getValue);
+	private final Comparator<Money> comparator = Comparator.comparing(Money::getValue);
 
 	public Money(BigDecimal value) {
 		this.value = value;
 	}
 
 	public Money(Money money) {
-		this.value = new BigDecimal(money.value.doubleValue());
+		this.value = money.getValue();
 	}
 
 	public BigDecimal getValue() {
@@ -43,17 +43,13 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money add(Money money) {
-		BigDecimal amount = new BigDecimal(money.value.doubleValue());
-
-		this.value = this.value.add(amount);
+		this.value = this.value.add(money.getValue());
 
 		return new Money(this.value);
 	}
 
 	public Money subtract(Money money) {
-		BigDecimal amount = new BigDecimal(money.value.doubleValue());
-
-		this.value = this.value.subtract(amount);
+		this.value = this.value.subtract(money.getValue());
 
 		return new Money(this.value);
 	}

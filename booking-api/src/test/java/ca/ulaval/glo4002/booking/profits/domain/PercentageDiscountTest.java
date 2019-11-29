@@ -9,18 +9,16 @@ import org.junit.jupiter.api.Test;
 
 class PercentageDiscountTest {
 
-	private PercentageDiscount discount;
-
 	@Test
 	void apply_shouldApply() {
-		BigDecimal percentage = new BigDecimal(.1);
-		discount = new PercentageDiscount(percentage);
-		BigDecimal value = new BigDecimal(100.0);
-		BigDecimal valueToSubtract = value.multiply(percentage);
-		BigDecimal expectedValue = value.subtract(valueToSubtract);
+		BigDecimal percentage = BigDecimal.valueOf(.1);
+		PercentageDiscount discount = new PercentageDiscount(percentage);
+		BigDecimal value = BigDecimal.valueOf(100.0);
+		BigDecimal expectedValue = BigDecimal.valueOf(90.0);
 
 		BigDecimal actualValue = discount.apply(value);
 
-		assertEquals(expectedValue, actualValue);
+		// Using BigDecimal.compareTo since "0.0 != 0.00"
+		assertEquals(0, expectedValue.compareTo(actualValue));
 	}
 }
