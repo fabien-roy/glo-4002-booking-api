@@ -20,7 +20,7 @@ class FestivalConfigurationTest {
 
     @Test
     void getStartEventDate_shouldReturnDefaultStartEventDate_whenNoneIsSet() {
-        EventDate expectedEventDate = EventDate.getDefaultStartEventDate();
+        EventDate expectedEventDate = FestivalConfiguration.getDefaultStartEventDate();
 
         EventDate eventDate = festivalConfiguration.getStartEventDate();
 
@@ -29,7 +29,7 @@ class FestivalConfigurationTest {
 
     @Test
     void getEndEventDate_shouldReturnDefaultEndEventDate_whenNoneIsSet() {
-        EventDate expectedEventDate = EventDate.getDefaultEndEventDate();
+        EventDate expectedEventDate = FestivalConfiguration.getDefaultEndEventDate();
 
         EventDate eventDate = festivalConfiguration.getEndEventDate();
 
@@ -38,7 +38,7 @@ class FestivalConfigurationTest {
 
     @Test
     void setStartEventDate_shouldSetStartEventDate() {
-        EventDate expectedEventDate = EventDate.getDefaultStartEventDate().plusDays(1);
+        EventDate expectedEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
 
         festivalConfiguration.setStartEventDate(expectedEventDate);
         EventDate eventDate = festivalConfiguration.getStartEventDate();
@@ -48,7 +48,7 @@ class FestivalConfigurationTest {
 
     @Test
     void setEndEventDate_shouldSetEndEventDate() {
-        EventDate expectedEventDate = EventDate.getDefaultEndEventDate().minusDays(1);
+        EventDate expectedEventDate = FestivalConfiguration.getDefaultEndEventDate().minusDays(1);
 
         festivalConfiguration.setEndEventDate(expectedEventDate);
         EventDate eventDate = festivalConfiguration.getEndEventDate();
@@ -58,7 +58,7 @@ class FestivalConfigurationTest {
 
     @Test
     void getAllEventDates_shouldReturnEventDatesAfterOrEqualToStartDate() {
-        EventDate startDate = EventDate.getDefaultStartEventDate();
+        EventDate startDate = FestivalConfiguration.getDefaultStartEventDate();
 
         List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
@@ -67,7 +67,7 @@ class FestivalConfigurationTest {
 
     @Test
     void getAllEventDates_shouldReturnEventDatesBeforeOrEqualToEndDate() {
-        EventDate endDate = EventDate.getDefaultEndEventDate();
+        EventDate endDate = FestivalConfiguration.getDefaultEndEventDate();
 
         List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 

@@ -50,8 +50,8 @@ class OxygenInventoryServiceTest {
 		festivalConfiguration = mock(FestivalConfiguration.class);
 
 		when(festivalConfiguration.getAllEventDates()).thenReturn(Arrays.asList(
-				EventDate.getDefaultStartEventDate(),
-				EventDate.getDefaultEndEventDate())
+				FestivalConfiguration.getDefaultStartEventDate(),
+				FestivalConfiguration.getDefaultEndEventDate())
 		);
 	}
 
@@ -67,7 +67,7 @@ class OxygenInventoryServiceTest {
 
 	@Test
 	void orderForPasses_shouldOrderForEventDate() {
-		EventDate aEventDate = EventDate.getDefaultStartEventDate();
+		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 
 		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass), AN_ORDER_DATE);
@@ -77,8 +77,8 @@ class OxygenInventoryServiceTest {
 
 	@Test
 	void orderForPasses_shouldOrderForEventDates_whenThereAreMultiplePasses() {
-		EventDate aEventDate = EventDate.getDefaultStartEventDate();
-		EventDate anotherEventDate = EventDate.getDefaultStartEventDate().plusDays(1);
+		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
+		EventDate anotherEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
 		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 		Pass anotherPass = new Pass(new Number(1L), mock(Money.class), anotherEventDate);
 
@@ -91,7 +91,7 @@ class OxygenInventoryServiceTest {
 	@EnumSource(PassCategories.class)
 	void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
 		OxygenCategories expectedOxygenCategory = factory.createCategory(passCategory).getCategory();
-		EventDate aEventDate = EventDate.getDefaultStartEventDate();
+		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 
 		service.orderForPasses(passCategory, Collections.singletonList(aPass), AN_ORDER_DATE);
@@ -114,7 +114,7 @@ class OxygenInventoryServiceTest {
     void orderForArtist_shouldProduceWithCorrectOrderDate() {
         BookingArtist artist = mock(BookingArtist.class);
         EventDate orderDate = mock(EventDate.class);
-        LocalDate expectedOrderDateValue = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate expectedOrderDateValue = FestivalConfiguration.getDefaultStartEventDate().getValue();
         when(orderDate.getValue()).thenReturn(expectedOrderDateValue);
 
         service.orderForArtist(artist, orderDate);

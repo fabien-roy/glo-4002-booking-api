@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.passes.domain;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
@@ -36,7 +37,7 @@ class PassFactoryTest {
 
     @Test
     void createAll_shouldCreateASinglePass_whenThereIsOnlyOneEventDate() {
-        List<String> aEventDate = Collections.singletonList(EventDate.getDefaultStartEventDate().toString());
+        List<String> aEventDate = Collections.singletonList(FestivalConfiguration.getDefaultStartEventDate().toString());
 
         List<Pass> passes = factory.createAll(aEventDate, mock(Money.class));
 
@@ -45,7 +46,10 @@ class PassFactoryTest {
 
     @Test
     void createAll_shouldCreateMultiplePasses_whenThereAreMultipleEventDates() {
-        List<String> aEventDate = Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString());
+        List<String> aEventDate = Arrays.asList(
+                FestivalConfiguration.getDefaultStartEventDate().toString(),
+                FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toString()
+        );
 
         List<Pass> passes = factory.createAll(aEventDate, mock(Money.class));
 

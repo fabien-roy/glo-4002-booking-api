@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.program.events.domain;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +19,7 @@ class EventDateTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void plusDays_shouldAddCorrectNumberOfDays(int days) {
-        LocalDate originalValue = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate originalValue = FestivalConfiguration.getDefaultStartEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.plusDays(days);
 
@@ -30,7 +31,7 @@ class EventDateTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void minusDays_shouldSubtractCorrectNumberOfDays(int days) {
-        LocalDate originalValue = EventDate.getDefaultEndEventDate().getValue();
+        LocalDate originalValue = FestivalConfiguration.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.minusDays(days);
 
@@ -41,7 +42,7 @@ class EventDateTest {
 
     @Test
     void isBetweenOrEquals_shouldReturnFalse_whenEventDateIsBeforeLowerDate() {
-        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        LocalDate value = FestivalConfiguration.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(value);
         EventDate lowerDate = eventDate.plusDays(1);
         EventDate higherDate = eventDate.plusDays(2);
@@ -53,7 +54,7 @@ class EventDateTest {
 
     @Test
     void isBetweenOrEquals_shouldReturnFalse_whenEventDateIsAfterHigherDate() {
-        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        LocalDate value = FestivalConfiguration.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(value);
         EventDate lowerDate = eventDate.minusDays(2);
         EventDate higherDate = eventDate.minusDays(1);
@@ -65,7 +66,7 @@ class EventDateTest {
 
     @Test
     void isBetweenOrEquals_shouldReturnTrue_whenEventDateEqualsLowerDate() {
-        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        LocalDate value = FestivalConfiguration.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(value);
         EventDate lowerDate = eventDate;
         EventDate higherDate = eventDate.plusDays(1);
@@ -77,7 +78,7 @@ class EventDateTest {
 
     @Test
     void isBetweenOrEquals_shouldReturnTrue_whenEventDateEqualsHigherDate() {
-        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        LocalDate value = FestivalConfiguration.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(value);
         EventDate lowerDate = eventDate.minusDays(1);
         EventDate higherDate = eventDate;
@@ -89,7 +90,7 @@ class EventDateTest {
 
     @Test
     void isBetweenOrEquals_shouldReturnTrue_whenEventDateIsBetweenLowerDateAndHigherDate() {
-        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        LocalDate value = FestivalConfiguration.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(value);
         EventDate lowerDate = eventDate.minusDays(1);
         EventDate higherDate = eventDate.plusDays(1);
@@ -101,7 +102,7 @@ class EventDateTest {
 
     @Test
     void toLocalDateTime_shouldReturnValueAsLocalDate() {
-        LocalDate value = EventDate.getDefaultEndEventDate().getValue();
+        LocalDate value = FestivalConfiguration.getDefaultEndEventDate().getValue();
         LocalDateTime expectedLocalDateTime = LocalDateTime.of(value, LocalTime.MIDNIGHT);
         eventDate = new EventDate(value);
 
@@ -112,7 +113,7 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnFalse_whenObjectIsNotEventDate() {
-        eventDate = EventDate.getDefaultStartEventDate();
+        eventDate = FestivalConfiguration.getDefaultStartEventDate();
         Object object = new Object();
 
         boolean result = eventDate.equals(object);
@@ -122,7 +123,7 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnTrue_whenEventDateHasSameValue() {
-        LocalDate aValue = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate aValue = FestivalConfiguration.getDefaultStartEventDate().getValue();
         eventDate = new EventDate(aValue);
         EventDate other = new EventDate(aValue);
 
@@ -133,7 +134,7 @@ class EventDateTest {
 
     @Test
     void equals_shouldReturnFalse_whenEventDateHasDifferentValue() {
-        eventDate = EventDate.getDefaultStartEventDate();
+        eventDate = FestivalConfiguration.getDefaultStartEventDate();
         EventDate other = eventDate.plusDays(1);
 
         boolean result = eventDate.equals(other);
@@ -143,7 +144,7 @@ class EventDateTest {
 
     @Test
     void hashCode_shouldReturnValueHashCode() {
-        LocalDate aValue = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate aValue = FestivalConfiguration.getDefaultStartEventDate().getValue();
         int expectedHashCode = aValue.hashCode();
         eventDate = new EventDate(aValue);
 

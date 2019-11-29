@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +48,7 @@ class PassBundleFactoryTest {
 		Number aNumber = new Number(1L);
 		BigDecimal aBigDecimal = new BigDecimal(100.0);
 		Money aPrice = new Money(aBigDecimal);
-		EventDate aEventDate = EventDate.getDefaultStartEventDate();
+		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Pass pass = new Pass(aNumber, aPrice, aEventDate);
 		PassFactory passFactory = mock(PassFactory.class);
 		when(passFactory.createAll(any(), any())).thenReturn(Collections.singletonList(pass));
@@ -132,8 +133,8 @@ class PassBundleFactoryTest {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
 		List<String> someEventDates = Arrays.asList(
-				EventDate.getDefaultStartEventDate().toString(),
-				EventDate.getDefaultStartEventDate().plusDays(1).toString()
+				FestivalConfiguration.getDefaultStartEventDate().toString(),
+				FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toString()
 		);
 		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, singlePassOption, someEventDates);
 
@@ -158,7 +159,7 @@ class PassBundleFactoryTest {
 	void create_shouldCreateNoPriceDiscountStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupernova(int passQuantity) {
 		String supernovaCategory = PassCategories.SUPERNOVA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
+		List<String> someEventDates = Collections.nCopies(passQuantity, FestivalConfiguration.getDefaultStartEventDate().toString());
 		PassBundleRequest passBundleRequest = new PassBundleRequest(supernovaCategory, singlePassOption, someEventDates);
 		PriceDiscountStrategy priceDiscountStrategy = new NoPriceDiscountStrategy();
 
@@ -174,7 +175,7 @@ class PassBundleFactoryTest {
 	void create_shouldCreateSupergiantPriceDiscountStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupergiant(int passQuantity) {
 		String supergiantCategory = PassCategories.SUPERGIANT.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
+		List<String> someEventDates = Collections.nCopies(passQuantity, FestivalConfiguration.getDefaultStartEventDate().toString());
 		PassBundleRequest passBundleRequest = new PassBundleRequest(supergiantCategory, singlePassOption, someEventDates);
 		PriceDiscountStrategy priceDiscountStrategy = new SupergiantPriceDiscountStrategy();
 		Money passPrice = priceDiscountStrategy.calculateDiscount(passQuantity, PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE);
@@ -190,7 +191,7 @@ class PassBundleFactoryTest {
 	void create_shouldCreateNebulaPriceDiscountStrategy_whenPassOptionIsSinglePassAndPassCategoryIsNebula(int passQuantity) {
 		String nebulaCategory = PassCategories.NEBULA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
-		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
+		List<String> someEventDates = Collections.nCopies(passQuantity, FestivalConfiguration.getDefaultStartEventDate().toString());
 		PassBundleRequest passBundleRequest = new PassBundleRequest(nebulaCategory, singlePassOption, someEventDates);
 		PriceDiscountStrategy priceDiscountStrategy = new NebulaPriceDiscountStrategy();
 		Money passPrice = priceDiscountStrategy.calculateDiscount(passQuantity, PassBundleFactory.NEBULA_SINGLE_PASS_PRICE);
@@ -220,7 +221,7 @@ class PassBundleFactoryTest {
 	void create_shouldThrowInvalidFormatException_whenEventDateIsNotNullAndPassOptionIsPackage() {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String packageOption = PassOptions.PACKAGE.toString();
-		List<String> someEventDates = Collections.singletonList(EventDate.getDefaultStartEventDate().toString());
+		List<String> someEventDates = Collections.singletonList(FestivalConfiguration.getDefaultStartEventDate().toString());
 		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, packageOption, someEventDates);
 
 		assertThrows(InvalidFormatException.class, () -> passBundleFactory.create(passBundleRequest));

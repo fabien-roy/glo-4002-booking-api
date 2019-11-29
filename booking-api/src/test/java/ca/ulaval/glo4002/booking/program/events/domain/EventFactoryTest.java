@@ -42,8 +42,8 @@ class EventFactoryTest {
         festivalConfiguration = mock(FestivalConfiguration.class);
 
         when(festivalConfiguration.getAllEventDates()).thenReturn(Arrays.asList(
-                EventDate.getDefaultStartEventDate(),
-                EventDate.getDefaultEndEventDate())
+                FestivalConfiguration.getDefaultStartEventDate(),
+                FestivalConfiguration.getDefaultEndEventDate())
         );
     }
 
@@ -82,7 +82,7 @@ class EventFactoryTest {
         Activities firstEventActivity = Activities.YOGA;
         Activities otherEventsActivity = Activities.CARDIO;
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(otherEventsActivity, "aArtist");
-        aProgramRequest.set(0, buildEventRequest(EventDate.getDefaultStartEventDate(), firstEventActivity, "aArtist"));
+        aProgramRequest.set(0, buildEventRequest(FestivalConfiguration.getDefaultStartEventDate(), firstEventActivity, "aArtist"));
 
         List<Event> events = factory.create(aProgramRequest);
 
@@ -110,7 +110,7 @@ class EventFactoryTest {
         BookingArtist expectedOtherArtist = mock(BookingArtist.class);
         when(artistService.getByName(firstArtistName)).thenReturn(expectedFirstArtist);
         when(artistService.getByName(not(eq(firstArtistName)))).thenReturn(expectedOtherArtist);
-        aProgramRequest.set(0, buildEventRequest(EventDate.getDefaultStartEventDate(), Activities.YOGA, firstArtistName));
+        aProgramRequest.set(0, buildEventRequest(FestivalConfiguration.getDefaultStartEventDate(), Activities.YOGA, firstArtistName));
 
         List<Event> events = factory.create(aProgramRequest);
 
@@ -120,7 +120,7 @@ class EventFactoryTest {
 
     @Test
     void create_shouldThrowInvalidProgramException_whenEventDateIsDuplicate() {
-        EventDate aEventDate = EventDate.getDefaultStartEventDate();
+        EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
         aProgramRequest.set(0, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "aArtist"));
         aProgramRequest.set(1, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "anotherArtist"));
@@ -138,7 +138,7 @@ class EventFactoryTest {
 
     @Test
     void create_shouldThrowInvalidProgramException_whenProgramDoesNotIncludeAllFestivalDates() {
-        ProgramEventRequest aEventRequest = new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), "aArtist");
+        ProgramEventRequest aEventRequest = new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(), Activities.YOGA.toString(),"aArtist");
 
         assertThrows(InvalidProgramException.class, () -> factory.create(Collections.singletonList(aEventRequest)));
     }
@@ -155,7 +155,7 @@ class EventFactoryTest {
     @Test
     void create_shouldThrowInvalidProgramException_whenAmIsAbsent() {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
-        aProgramRequest.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), null, "aArtist"));
+        aProgramRequest.set(0, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(),null,"aArtist"));
 
         assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
@@ -163,7 +163,7 @@ class EventFactoryTest {
     @Test
     void create_shouldThrowInvalidProgramException_whenPmIsAbsent() {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
-        aProgramRequest.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), null));
+        aProgramRequest.set(0, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), null));
 
         assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }
@@ -172,8 +172,8 @@ class EventFactoryTest {
     void create_shouldThrowInvalidProgramException_whenArtistIsDuplicate() {
         String aArtist = "aArtist";
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
-        aProgramRequest.set(0, new ProgramEventRequest(EventDate.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), aArtist));
-        aProgramRequest.set(1, new ProgramEventRequest(EventDate.getDefaultStartEventDate().plusDays(1).toString(), Activities.YOGA.toString(), aArtist));
+        aProgramRequest.set(0, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), aArtist));
+        aProgramRequest.set(1, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toString(), Activities.YOGA.toString(), aArtist));
 
         assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
     }

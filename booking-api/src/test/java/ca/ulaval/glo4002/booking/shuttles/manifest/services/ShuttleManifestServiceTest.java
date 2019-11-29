@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.shuttles.manifest.services;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +29,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallMapper() {
-		String aDate = EventDate.getDefaultStartEventDate().toString();
+		String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
 
 		service.getTripsForDate(aDate);
 
@@ -44,7 +45,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallRepositoryForArrivals() {
-		EventDate aDate = EventDate.getDefaultStartEventDate();
+		EventDate aDate = FestivalConfiguration.getDefaultStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
 
@@ -53,7 +54,7 @@ class ShuttleManifestServiceTest {
 
 	@Test
 	void getWithDate_shouldCallRepositoryForDepartures() {
-		EventDate aDate = EventDate.getDefaultStartEventDate();
+		EventDate aDate = FestivalConfiguration.getDefaultStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
 

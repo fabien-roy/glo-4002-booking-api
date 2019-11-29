@@ -26,7 +26,7 @@ class FestivalServiceTest {
 
     @Test
     void setConfiguration_shouldSetStartEventDate() {
-        EventDate expectedStartEventDate = EventDate.getDefaultStartEventDate().plusDays(1);
+        EventDate expectedStartEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
         EventDatesRequest eventDatesRequest = mock(EventDatesRequest.class);
         when(eventDatesRequest.getBeginDate()).thenReturn(expectedStartEventDate.toString());
         when(eventDateFactory.parse(expectedStartEventDate.toString())).thenReturn(expectedStartEventDate);
@@ -38,7 +38,7 @@ class FestivalServiceTest {
 
     @Test
     void setConfiguration_shouldSetEndEventDate() {
-        EventDate expectedEndEventDate = EventDate.getDefaultEndEventDate().minusDays(1);
+        EventDate expectedEndEventDate = FestivalConfiguration.getDefaultEndEventDate().minusDays(1);
         EventDatesRequest eventDatesRequest = mock(EventDatesRequest.class);
         when(eventDatesRequest.getEndDate()).thenReturn(expectedEndEventDate.toString());
         when(eventDateFactory.parse(expectedEndEventDate.toString())).thenReturn(expectedEndEventDate);

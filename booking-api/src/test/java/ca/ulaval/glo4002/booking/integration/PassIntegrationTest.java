@@ -114,7 +114,7 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPass_whenPassIsSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass pass = new Pass(new Number(1L), passPrice, EventDate.getDefaultStartEventDate());
+        Pass pass = new Pass(new Number(1L), passPrice, FestivalConfiguration.getDefaultStartEventDate());
         PassBundle passBundle = new PassBundle(
                 Collections.singletonList(pass),
                 new PassCategory(PassCategories.SUPERNOVA, null),
@@ -140,11 +140,11 @@ public class PassIntegrationTest {
     @Test
     public void getByOrderNumber_shouldReturnOrderWithPasses_whenPassesAreSinglePass() {
         Money passPrice = new Money(new BigDecimal(100.0));
-        Pass aPass = new Pass(new Number(1L), passPrice, EventDate.getDefaultStartEventDate());
+        Pass aPass = new Pass(new Number(1L), passPrice, FestivalConfiguration.getDefaultStartEventDate());
         Pass anotherPass = new Pass(
                 new Number(2L),
                 mock(Money.class),
-               EventDate.getDefaultStartEventDate().plusDays(1)
+                FestivalConfiguration.getDefaultStartEventDate().plusDays(1)
         );
         PassBundle passBundle = new PassBundle(
                 Arrays.asList(aPass, anotherPass),
@@ -178,7 +178,10 @@ public class PassIntegrationTest {
         PassBundleRequest passBundleRequest = new PassBundleRequest(
                 PassCategories.SUPERNOVA.toString(),
                 PassOptions.SINGLE_PASS.toString(),
-                Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString())
+                Arrays.asList(
+                        FestivalConfiguration.getDefaultStartEventDate().toString(),
+                        FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toString()
+                )
         );
         OrderRequest orderRequest = new OrderRequest(
                 ZonedDateTime.of(festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),

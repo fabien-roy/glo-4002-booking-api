@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.history.rest.mappers;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemResponse;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -33,7 +34,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toResponse_shouldReturnHistoryItemWithCorrectMadeTanks() {
         Integer amountOfTanksMade = 1;
-        LocalDate date = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate date = FestivalConfiguration.getDefaultStartEventDate().getValue();
         history.addMadeTanks(date, amountOfTanksMade);
 
         List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
@@ -44,7 +45,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toResponse_shouldReturnHistoryItemWithCorrectBoughtTanks() {
         Integer amountOfTanksBought = 1;
-        LocalDate date = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate date = FestivalConfiguration.getDefaultStartEventDate().getValue();
         history.addTanksBought(date, amountOfTanksBought);
 
         List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
@@ -55,7 +56,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toResponse_shouldReturnHistoryItemWithCorrectWaterUsed() {
         Double amountOfWaterUsed = 1D;
-        LocalDate date = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate date = FestivalConfiguration.getDefaultStartEventDate().getValue();
         history.addWaterUsed(date, amountOfWaterUsed);
 
         List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
@@ -66,7 +67,7 @@ class OxygenHistoryMapperTest {
     @Test
     void toResponse_shouldReturnHistoryItemWithCorrectCandlesUsed() {
         Integer amountOfCandlesUsed = 1;
-        LocalDate date = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate date = FestivalConfiguration.getDefaultStartEventDate().getValue();
         history.addCandlesUsed(date, amountOfCandlesUsed);
 
         List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
@@ -76,7 +77,7 @@ class OxygenHistoryMapperTest {
 
     @Test
     void toResponse_shouldReturnMultipleHistoryItems_whenHistoryHasMultipleItems() {
-        LocalDate date = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate date = FestivalConfiguration.getDefaultStartEventDate().getValue();
         LocalDate anotherDate = date.plusDays(1);
         history.addMadeTanks(date, 1);
         history.addTanksBought(anotherDate, 1);
@@ -88,7 +89,7 @@ class OxygenHistoryMapperTest {
 
     @Test
     void toResponse_shouldReturnHistoryItemsOrderedByDate() {
-        LocalDate firstDate = EventDate.getDefaultStartEventDate().getValue();
+        LocalDate firstDate = FestivalConfiguration.getDefaultStartEventDate().getValue();
         LocalDate secondDate = firstDate.plusDays(1);
         history.addMadeTanks(firstDate, 1);
         history.addMadeTanks(secondDate, 1);

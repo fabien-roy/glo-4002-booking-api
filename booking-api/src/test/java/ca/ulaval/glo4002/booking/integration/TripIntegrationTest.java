@@ -93,7 +93,7 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddArrivalTrip() {
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
         orderResource.addOrder(orderRequest);
@@ -106,7 +106,7 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddDepartureTrip() {
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
 
         orderResource.addOrder(orderRequest);
@@ -119,8 +119,8 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddMultipleArrivalTrips_whenThereAreManyPasses() {
-        String aDate = EventDate.getDefaultStartEventDate().toString();
-        String anotherDate = EventDate.getDefaultStartEventDate().plusDays(1).toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
+        String anotherDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toString();
         OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
         orderResource.addOrder(orderRequest);
@@ -134,8 +134,8 @@ class TripIntegrationTest {
 
     @Test
     void addOrder_shouldAddMultipleDepartureTrips_whenThereAreManyPasses() {
-        String aDate = EventDate.getDefaultStartEventDate().toString();
-        String anotherDate = EventDate.getDefaultStartEventDate().plusDays(1).toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
+        String anotherDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toString();
         OrderRequest orderRequest = buildRequest(PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, Arrays.asList(aDate, anotherDate));
 
         orderResource.addOrder(orderRequest);
@@ -156,7 +156,7 @@ class TripIntegrationTest {
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
         assertEquals(1, shuttleManifestResponse.getArrivals().size());
-        assertEquals(EventDate.getDefaultStartEventDate().toString(), shuttleManifestResponse.getArrivals().get(0).getDate());
+        assertEquals(FestivalConfiguration.getDefaultStartEventDate().toString(), shuttleManifestResponse.getArrivals().get(0).getDate());
     }
 
     @Test
@@ -168,13 +168,13 @@ class TripIntegrationTest {
         ShuttleManifestResponse shuttleManifestResponse = (ShuttleManifestResponse) response.getEntity();
 
         assertEquals(1, shuttleManifestResponse.getDepartures().size());
-        assertEquals(EventDate.getDefaultEndEventDate().toString(), shuttleManifestResponse.getDepartures().get(0).getDate());
+        assertEquals(FestivalConfiguration.getDefaultEndEventDate().toString(), shuttleManifestResponse.getDepartures().get(0).getDate());
     }
 
     @ParameterizedTest
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddArrivalTripsWithCorrectName(PassCategories passCategory) {
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
         ShuttleCategories expectedShuttleCategory = shuttleFactory.createCategory(passCategory);
 
@@ -188,7 +188,7 @@ class TripIntegrationTest {
     @ParameterizedTest
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddDepartureTripsWithCorrectName(PassCategories passCategory) {
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
         ShuttleCategories expectedShuttleCategory = shuttleFactory.createCategory(passCategory);
 
@@ -203,7 +203,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToNewArrivalTrip_whenTripIsFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
         OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 
@@ -218,7 +218,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToNewDepartureTrip_whenTripIsFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity + 1, aDate);
         OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 
@@ -233,7 +233,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToExistingArrivalTrip_whenTripIsNotFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity, aDate);
         OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 
@@ -248,7 +248,7 @@ class TripIntegrationTest {
     @EnumSource(PassCategories.class)
     void addOrder_shouldAddToExistingDepartureTrip_whenTripIsNotFull(PassCategories passCategory) {
         int maxCapacity = getMaxCapacityForPassCategory(passCategory);
-        String aDate = EventDate.getDefaultStartEventDate().toString();
+        String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
         List<String> someDates = Collections.nCopies(maxCapacity, aDate);
         OrderRequest orderRequest = buildRequest(passCategory, PassOptions.SINGLE_PASS, someDates);
 

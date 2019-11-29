@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.services;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
@@ -123,7 +124,7 @@ class OrderServiceTest {
 				new PassCategory(PassCategories.SUPERNOVA, null),
 				PassOptions.PACKAGE
 		);
-		Order order = new Order(anOrderNumber, EventDate.getDefaultStartEventDate().minusDays(1).toLocalDateTime(), passBundle);
+		Order order = new Order(anOrderNumber, FestivalConfiguration.getDefaultStartEventDate().minusDays(1).toLocalDateTime(), passBundle);
 		when(repository.getByOrderNumber(anOrderNumber)).thenReturn(order);
 
 		OrderResponse orderResponse = service.getByOrderNumber(anOrderNumber.toString());
