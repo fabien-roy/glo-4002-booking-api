@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import ca.ulaval.glo4002.booking.festival.Festival;
-import ca.ulaval.glo4002.booking.program.InvalidProgramException;
+import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

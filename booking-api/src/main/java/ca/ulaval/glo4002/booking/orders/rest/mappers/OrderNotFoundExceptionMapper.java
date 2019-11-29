@@ -12,6 +12,7 @@ public class OrderNotFoundExceptionMapper implements ExceptionMapper<OrderNotFou
 
     @Override
     public Response toResponse(OrderNotFoundException exception) {
+        // TODO : Write correct order number in ErrorDto
         ErrorDto errorDto = new ErrorDto("ORDER_NOT_FOUND", "Order with number {orderNumber} not found");
 
         return Response.status(Response.Status.NOT_FOUND).entity(errorDto).build();

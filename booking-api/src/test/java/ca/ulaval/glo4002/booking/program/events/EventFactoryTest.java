@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.program.activities.Activities;
 import ca.ulaval.glo4002.booking.program.artists.ArtistService;
 import ca.ulaval.glo4002.booking.program.artists.BookingArtist;
-import ca.ulaval.glo4002.booking.program.InvalidProgramException;
+import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import ca.ulaval.glo4002.booking.program.ProgramEventDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

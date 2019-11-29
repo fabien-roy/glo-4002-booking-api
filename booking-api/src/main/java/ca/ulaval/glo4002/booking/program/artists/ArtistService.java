@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.profits.Money;
-import ca.ulaval.glo4002.booking.program.InvalidProgramException;
+import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 
 public class ArtistService {
 

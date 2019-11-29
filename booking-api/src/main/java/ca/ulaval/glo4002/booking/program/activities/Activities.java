@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.activities;
 
-import ca.ulaval.glo4002.booking.program.InvalidProgramException;
+import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 
 import java.util.HashMap;
 import java.util.Map;
