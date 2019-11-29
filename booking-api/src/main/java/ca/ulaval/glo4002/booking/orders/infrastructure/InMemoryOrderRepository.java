@@ -21,7 +21,7 @@ public class InMemoryOrderRepository implements OrderRepository {
 		Optional<Order> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber)).findAny();
 
 		if (!foundOrder.isPresent()) {
-			throw new OrderNotFoundException();
+			throw new OrderNotFoundException(orderNumber.toString());
 		}
 
 		return foundOrder.get();

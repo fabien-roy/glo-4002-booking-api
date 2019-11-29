@@ -12,8 +12,7 @@ public class OrderNotFoundExceptionMapper implements ExceptionMapper<OrderNotFou
 
     @Override
     public Response toResponse(OrderNotFoundException exception) {
-        // TODO : Write correct order number in ErrorDto
-        ErrorResponse errorResponse = new ErrorResponse("ORDER_NOT_FOUND", "Order with number {orderNumber} not found");
+        ErrorResponse errorResponse = new ErrorResponse("ORDER_NOT_FOUND", "Order with number {orderNumber} not found".replace("{orderNumber}", exception.getOrderNumber()));
 
         return Response.status(Response.Status.NOT_FOUND).entity(errorResponse).build();
     }
