@@ -21,10 +21,10 @@ import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NebulaPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.PriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.SupergiantPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 class PassBundleFactoryTest {
@@ -163,25 +163,25 @@ class PassBundleFactoryTest {
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
 		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
 		PassBundleRequest passBundleRequest = new PassBundleRequest(supernovaCategory, singlePassOption, someEventDates);
-		PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
+		PriceDiscountStrategy priceDiscountStrategy = new NoPriceDiscountStrategy();
 
 		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 		Money passPrice = passBundle.getPasses().get(0).getPrice();
-		Money expectedPrice = priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
+		Money expectedPrice = priceDiscountStrategy.calculateDiscount(passQuantity, passPrice);
 
 		assertEquals(expectedPrice, passBundle.getPrice());
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { 1, 2, SupergiantPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1 })
+	@ValueSource(ints = { 1, 2, SupergiantPriceDiscountStrategy.PASS_QUANTITY_THRESHOLD + 1 })
 	void build_shouldBuildSupergiantPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsSupergiant(
 			int passQuantity) {
 		String supergiantCategory = PassCategories.SUPERGIANT.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
 		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
 		PassBundleRequest passBundleRequest = new PassBundleRequest(supergiantCategory, singlePassOption, someEventDates);
-		PriceCalculationStrategy priceCalculationStrategy = new SupergiantPriceCalculationStrategy();
-		Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity,
+		PriceDiscountStrategy priceDiscountStrategy = new SupergiantPriceDiscountStrategy();
+		Money passPrice = priceDiscountStrategy.calculateDiscount(passQuantity,
 				PassBundleFactory.SUPERGIANT_SINGLE_PASS_PRICE);
 		Money expectedPrice = passPrice.multiply(new BigDecimal(passQuantity));
 
@@ -191,15 +191,15 @@ class PassBundleFactoryTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(ints = { 1, 2, NebulaPriceCalculationStrategy.PASS_QUANTITY_THRESHOLD + 1 })
+	@ValueSource(ints = { 1, 2, NebulaPriceDiscountStrategy.PASS_QUANTITY_THRESHOLD + 1 })
 	void build_shouldBuildNebulaPriceCalculationStrategy_whenPassOptionIsSinglePassAndPassCategoryIsNebula(
 			int passQuantity) {
 		String nebulaCategory = PassCategories.NEBULA.toString();
 		String singlePassOption = PassOptions.SINGLE_PASS.toString();
 		List<String> someEventDates = Collections.nCopies(passQuantity, EventDate.getDefaultStartEventDate().toString());
 		PassBundleRequest passBundleRequest = new PassBundleRequest(nebulaCategory, singlePassOption, someEventDates);
-		PriceCalculationStrategy priceCalculationStrategy = new NebulaPriceCalculationStrategy();
-		Money passPrice = priceCalculationStrategy.calculatePassPrice(passQuantity,
+		PriceDiscountStrategy priceDiscountStrategy = new NebulaPriceDiscountStrategy();
+		Money passPrice = priceDiscountStrategy.calculateDiscount(passQuantity,
 				PassBundleFactory.NEBULA_SINGLE_PASS_PRICE);
 		Money expectedPrice = passPrice.multiply(new BigDecimal(passQuantity));
 
@@ -214,11 +214,11 @@ class PassBundleFactoryTest {
 		String aPassCategory = category.toString();
 		String packageOption = PassOptions.PACKAGE.toString();
 		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, packageOption, null);
-		PriceCalculationStrategy priceCalculationStrategy = new NoDiscountPriceCalculationStrategy();
+		PriceDiscountStrategy priceDiscountStrategy = new NoPriceDiscountStrategy();
 
 		PassBundle passBundle = passBundleFactory.build(passBundleRequest);
 		Money passPrice = passBundle.getPasses().get(0).getPrice();
-		Money expectedPrice = priceCalculationStrategy.calculatePassPrice(1, passPrice);
+		Money expectedPrice = priceDiscountStrategy.calculateDiscount(1, passPrice);
 
 		assertEquals(expectedPrice, passBundle.getPrice());
 	}

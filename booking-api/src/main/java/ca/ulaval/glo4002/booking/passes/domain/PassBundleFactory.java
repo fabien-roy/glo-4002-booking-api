@@ -2,10 +2,10 @@ package ca.ulaval.glo4002.booking.passes.domain;
 
 import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NebulaPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.PriceCalculationStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.SupergiantPriceCalculationStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.SupergiantPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 import javax.inject.Inject;
@@ -36,17 +36,17 @@ public class PassBundleFactory {
         validateEventDates(passBundleRequest.getEventDates(), parsedPassOption);
 
         PassCategory passCategory = buildCategory(parsedPassCategory, parsedPassOption);
-        PriceCalculationStrategy priceCalculationStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
+        PriceDiscountStrategy priceDiscountStrategy = buildPriceCalculationStrategy(parsedPassCategory, parsedPassOption);
 
         Money passPrice = passCategory.getPricePerOption(parsedPassOption);
-        passPrice = calculatePassPrice(passBundleRequest.getEventDates(), passPrice, priceCalculationStrategy);
+        passPrice = calculatePassPrice(passBundleRequest.getEventDates(), passPrice, priceDiscountStrategy);
 
         List<Pass> passes = passFactory.buildAll(passBundleRequest.getEventDates(), passPrice);
 
         return new PassBundle(passes, passCategory, parsedPassOption);
     }
 
-    private Money calculatePassPrice(List<String> eventDates, Money passPrice, PriceCalculationStrategy priceCalculationStrategy) {
+    private Money calculatePassPrice(List<String> eventDates, Money passPrice, PriceDiscountStrategy priceDiscountStrategy) {
         int passQuantity;
         if (eventDates == null) {
             passQuantity = 1;
@@ -54,7 +54,7 @@ public class PassBundleFactory {
             passQuantity = eventDates.size();
         }
 
-        return priceCalculationStrategy.calculatePassPrice(passQuantity, passPrice);
+        return priceDiscountStrategy.calculateDiscount(passQuantity, passPrice);
     }
 
     private PassOptions parsePassOption(PassBundleRequest passBundleRequest) {
@@ -103,20 +103,20 @@ public class PassBundleFactory {
         return passCategory;
     }
 
-    private PriceCalculationStrategy buildPriceCalculationStrategy(PassCategories category, PassOptions option) {
+    private PriceDiscountStrategy buildPriceCalculationStrategy(PassCategories category, PassOptions option) {
         switch (option) {
             case PACKAGE:
-                return new NoDiscountPriceCalculationStrategy();
+                return new NoPriceDiscountStrategy();
             default:
             case SINGLE_PASS:
                 switch(category) {
                     case SUPERNOVA:
-                        return new NoDiscountPriceCalculationStrategy();
+                        return new NoPriceDiscountStrategy();
                     case SUPERGIANT:
-                        return new SupergiantPriceCalculationStrategy();
+                        return new SupergiantPriceDiscountStrategy();
                     default:
                     case NEBULA:
-                        return new NebulaPriceCalculationStrategy();
+                        return new NebulaPriceDiscountStrategy();
                 }
         }
     }

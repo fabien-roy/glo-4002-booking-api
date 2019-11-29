@@ -27,7 +27,8 @@ public class Money implements Comparable<Money> {
 
 		Money money = (Money) object;
 
-		return value.equals(money.getValue());
+		// Using compareTo since BigDecimal.equals gives "0.0 != 0.00"
+		return value.compareTo(money.getValue()) == 0;
 	}
 
 	@Override
