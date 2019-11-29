@@ -23,8 +23,8 @@ public class OxygenReportResource {
     @GET
     @Path("/o2")
     public Response getOxygenReport() {
-        OxygenReportDto oxygenReportDto = oxygenReportService.getOxygenReport();
+        OxygenReportResponse oxygenReportResponse = oxygenReportService.getOxygenReport();
 
-        return Response.ok().entity(oxygenReportDto).build();
+        return Response.ok().entity(oxygenReportResponse).build();
     }
 }

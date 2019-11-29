@@ -15,7 +15,6 @@ import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 class OxygenTankTest {
 
-
 	private OxygenTank oxygenTank;
 	private OxygenDate requestDate;
 	private OxygenCategory categoryA;
