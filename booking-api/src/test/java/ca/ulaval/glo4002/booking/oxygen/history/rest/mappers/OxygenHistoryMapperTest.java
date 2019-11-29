@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen.history.rest.mappers;
 
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
-import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemDto;
+import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemResponse;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,78 +24,78 @@ class OxygenHistoryMapperTest {
     }
 
     @Test
-    void toDto_shouldReturnEmptyList_whenHistoryIsEmpty() {
-        List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
+    void toResponse_shouldReturnEmptyList_whenHistoryIsEmpty() {
+        List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertTrue(itemDtos.isEmpty());
+        assertTrue(itemResponses.isEmpty());
     }
 
     @Test
-    void toDto_shouldReturnHistoryItemWithCorrectMadeTanks() {
+    void toResponse_shouldReturnHistoryItemWithCorrectMadeTanks() {
         Integer amountOfTanksMade = 1;
         LocalDate date = EventDate.getDefaultStartEventDate().getValue();
         history.addMadeTanks(date, amountOfTanksMade);
 
-        List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
+        List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertEquals(amountOfTanksMade, itemDtos.get(0).getQtyOxygenTankMade());
+        assertEquals(amountOfTanksMade, itemResponses.get(0).getQtyOxygenTankMade());
     }
 
     @Test
-    void toDto_shouldReturnHistoryItemWithCorrectBoughtTanks() {
+    void toResponse_shouldReturnHistoryItemWithCorrectBoughtTanks() {
         Integer amountOfTanksBought = 1;
         LocalDate date = EventDate.getDefaultStartEventDate().getValue();
         history.addTanksBought(date, amountOfTanksBought);
 
-        List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
+        List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertEquals(amountOfTanksBought, itemDtos.get(0).getQtyOxygenTankBought());
+        assertEquals(amountOfTanksBought, itemResponses.get(0).getQtyOxygenTankBought());
     }
 
     @Test
-    void toDto_shouldReturnHistoryItemWithCorrectWaterUsed() {
+    void toResponse_shouldReturnHistoryItemWithCorrectWaterUsed() {
         Double amountOfWaterUsed = 1D;
         LocalDate date = EventDate.getDefaultStartEventDate().getValue();
         history.addWaterUsed(date, amountOfWaterUsed);
 
-        List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
+        List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertEquals(amountOfWaterUsed.intValue(), itemDtos.get(0).getQtyWaterUsed());
+        assertEquals(amountOfWaterUsed.intValue(), itemResponses.get(0).getQtyWaterUsed());
     }
 
     @Test
-    void toDto_shouldReturnHistoryItemWithCorrectCandlesUsed() {
+    void toResponse_shouldReturnHistoryItemWithCorrectCandlesUsed() {
         Integer amountOfCandlesUsed = 1;
         LocalDate date = EventDate.getDefaultStartEventDate().getValue();
         history.addCandlesUsed(date, amountOfCandlesUsed);
 
-        List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
+        List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertEquals(amountOfCandlesUsed, itemDtos.get(0).getQtyCandlesUsed());
+        assertEquals(amountOfCandlesUsed, itemResponses.get(0).getQtyCandlesUsed());
     }
 
     @Test
-    void toDto_shouldReturnMultipleHistoryItems_whenHistoryHasMultipleItems() {
+    void toResponse_shouldReturnMultipleHistoryItems_whenHistoryHasMultipleItems() {
         LocalDate date = EventDate.getDefaultStartEventDate().getValue();
         LocalDate anotherDate = date.plusDays(1);
         history.addMadeTanks(date, 1);
         history.addTanksBought(anotherDate, 1);
 
-        List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
+        List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertEquals(2, itemDtos.size());
+        assertEquals(2, itemResponses.size());
     }
 
     @Test
-    void toDto_shouldReturnHistoryItemsOrderedByDate() {
+    void toResponse_shouldReturnHistoryItemsOrderedByDate() {
         LocalDate firstDate = EventDate.getDefaultStartEventDate().getValue();
         LocalDate secondDate = firstDate.plusDays(1);
         history.addMadeTanks(firstDate, 1);
         history.addMadeTanks(secondDate, 1);
 
-        List<OxygenHistoryItemDto> itemDtos = mapper.toDto(history);
+        List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertEquals(firstDate.toString(), itemDtos.get(0).getDate());
-        assertEquals(secondDate.toString(), itemDtos.get(1).getDate());
+        assertEquals(firstDate.toString(), itemResponses.get(0).getDate());
+        assertEquals(secondDate.toString(), itemResponses.get(1).getDate());
     }
 }

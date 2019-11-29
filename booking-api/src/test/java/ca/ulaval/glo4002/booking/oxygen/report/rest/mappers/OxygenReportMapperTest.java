@@ -1,14 +1,12 @@
 package ca.ulaval.glo4002.booking.oxygen.report.rest.mappers;
 
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
-import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemDto;
+import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemResponse;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.mappers.OxygenHistoryMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
 import ca.ulaval.glo4002.booking.oxygen.inventory.rest.OxygenInventoryItemDto;
 import ca.ulaval.glo4002.booking.oxygen.inventory.rest.mappers.OxygenInventoryMapper;
-import ca.ulaval.glo4002.booking.oxygen.report.domain.OxygenReport;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportResponse;
-import ca.ulaval.glo4002.booking.oxygen.report.rest.mappers.OxygenReportMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -48,7 +46,7 @@ class OxygenReportMapperTest {
 
         oxygenReportMapper.toResponse(mock(OxygenInventory.class), history);
 
-        verify(historyMapper).toDto(eq(history));
+        verify(historyMapper).toResponse(eq(history));
     }
 
     @Test
@@ -63,8 +61,8 @@ class OxygenReportMapperTest {
 
     @Test
     void toResponse_shouldReturnReportWithHistory() {
-        List<OxygenHistoryItemDto> expectedHistoryResponse = Collections.singletonList(mock(OxygenHistoryItemDto.class));
-        when(historyMapper.toDto(any())).thenReturn(expectedHistoryResponse);
+        List<OxygenHistoryItemResponse> expectedHistoryResponse = Collections.singletonList(mock(OxygenHistoryItemResponse.class));
+        when(historyMapper.toResponse(any())).thenReturn(expectedHistoryResponse);
 
         OxygenReportResponse response = oxygenReportMapper.toResponse(mock(OxygenInventory.class), mock(OxygenHistory.class));
 

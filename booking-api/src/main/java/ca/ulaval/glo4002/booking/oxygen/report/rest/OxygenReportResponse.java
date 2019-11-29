@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.report.rest;
 
-import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemDto;
+import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemResponse;
 import ca.ulaval.glo4002.booking.oxygen.inventory.rest.OxygenInventoryItemDto;
 
 import java.util.List;
@@ -8,9 +8,9 @@ import java.util.List;
 public class OxygenReportResponse {
 
 	private List<OxygenInventoryItemDto> inventory;
-	private List<OxygenHistoryItemDto> history;
+	private List<OxygenHistoryItemResponse> history;
 
-	public OxygenReportResponse(List<OxygenInventoryItemDto> inventory, List<OxygenHistoryItemDto> history) {
+	public OxygenReportResponse(List<OxygenInventoryItemDto> inventory, List<OxygenHistoryItemResponse> history) {
 		this.inventory = inventory;
 		this.history = history;
 	}
@@ -19,7 +19,7 @@ public class OxygenReportResponse {
 		return inventory;
 	}
 
-	public List<OxygenHistoryItemDto> getHistory() {
+	public List<OxygenHistoryItemResponse> getHistory() {
 		return history;
 	}
 }

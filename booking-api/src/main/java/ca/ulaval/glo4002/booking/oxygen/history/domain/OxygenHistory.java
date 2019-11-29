@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 public class OxygenHistory {
 
+	// TODO : Use OxygenDate in OxygenHistory
 	private Map<LocalDate, OxygenHistoryItem> historyItems;
 
 	public OxygenHistory() {

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.history.rest;
 
-public class OxygenHistoryItemDto {
+public class OxygenHistoryItemResponse {
 
 	private String date;
 	private Integer qtyOxygenTankBought;
@@ -8,7 +8,7 @@ public class OxygenHistoryItemDto {
 	private Integer qtyCandlesUsed;
 	private Integer qtyOxygenTankMade;
 
-	public OxygenHistoryItemDto(String date, Integer qtyOxygenTankBought, Integer qtyWaterUsed, Integer qtyCandlesUsed, Integer qtyOxygenTankMade) {
+	public OxygenHistoryItemResponse(String date, Integer qtyOxygenTankBought, Integer qtyWaterUsed, Integer qtyCandlesUsed, Integer qtyOxygenTankMade) {
 		this.date = date;
 		this.qtyOxygenTankBought = qtyOxygenTankBought;
 		this.qtyWaterUsed = qtyWaterUsed;
