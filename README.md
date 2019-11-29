@@ -2,7 +2,7 @@
 
 ## MEP 2.0
 
-Cette application à été développée par Random Pogo. Elle permet aux festivaliers de réserver leur place pour GLOW-4002. Après la réservation de billet(s), les transport et les bombonne d'oxygène nécessaire pour chaque festivalier sont gérer par l'application. Les organisateurs peuvent également accéder à une liste d'artistes qu'ils peuvent réserver pour faire partie de la programmation. Ils peuvent également planifier des activités, et recevront l'oxygène en conséquence. Les organisateurs ont aussi accès aux statistiques financières du festival.
+Cette application à été développée par Random Pogo. Elle permet aux festivaliers de réserver leur place pour GLOW-4002. Après la réservation de billet(s), les transport et les bombonne d'oxygène nécessaire pour chaque festivalier sont gérer par l'application. Les organisateurs peuvent également accéder à une liste d'artistes qu'ils peuvent réserver pour faire partie de la programmation. Ils peuvent également planifier des activités, et recevront l'oxygène en conséquence. Les organisateurs ont aussi accès aux statistiques financières du festivalConfiguration.
 
 ## Known technical debts
 
@@ -67,7 +67,7 @@ Si la value d’achat est en dehors de la période d’achat (1er janvier 2050 a
 
 HTTP 400 Bad Request
 
-Si une value (dans eventDates) pour laquelle on veut acheter une passe est en dehors de la durée du festival (17 juillet 2050 au 24 juillet 2050 inclusivement).
+Si une value (dans eventDates) pour laquelle on veut acheter une passe est en dehors de la durée du festivalConfiguration (17 juillet 2050 au 24 juillet 2050 inclusivement).
 
    ```
    {
@@ -114,7 +114,7 @@ Si la commande n’existe pas
 
 ### GET /shuttle-manifests?date="value"
 
-Retourne les départs et arrivées, ainsi que leur nom de navette et les passagers présents. Si une date est inscrite en paramètre, retourne les voyages de la date. Sinon, retourne tous les voyages pour la durée du festival. Exemple : 
+Retourne les départs et arrivées, ainsi que leur nom de navette et les passagers présents. Si une date est inscrite en paramètre, retourne les voyages de la date. Sinon, retourne tous les voyages pour la durée du festivalConfiguration. Exemple : 
 
 (value est optionnel)
 	
@@ -230,7 +230,7 @@ Ordering peut être soit "lowCosts" pour classer en ordre croissant de coût, "m
 
 ### POST /program
 
-Permet de créer la programmation du festival. Exemple : 
+Permet de créer la programmation du festivalConfiguration. Exemple : 
 
 ```
 {
@@ -291,7 +291,7 @@ Un program valide ne doit pas contenir deux fois la même date, ne peut pas avoi
 
 ### GET /report/profits
 
-Retourne les profits / pertes du festival. Exemple : 
+Retourne les profits / pertes du festivalConfiguration. Exemple : 
 
 ```
 {

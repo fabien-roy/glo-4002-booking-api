@@ -7,12 +7,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 class TripServiceTest {
 
 	private TripService service;
-	private Festival festival;
+	private FestivalConfiguration festivalConfiguration;
 	private TripRepository repository;
 
 	@BeforeEach
@@ -34,15 +33,15 @@ class TripServiceTest {
 		repository = mock(TripRepository.class);
 		ShuttleFactory shuttleFactory = new ShuttleFactory();
 
-		service = new TripService(festival, repository, shuttleFactory);
+		service = new TripService(festivalConfiguration, repository, shuttleFactory);
 	}
 
 	@BeforeEach
 	void setUpConfiguration() {
-		festival = mock(Festival.class);
+		festivalConfiguration = mock(FestivalConfiguration.class);
 
-		when(festival.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-		when(festival.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+		when(festivalConfiguration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(festivalConfiguration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@Test

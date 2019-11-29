@@ -9,20 +9,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FestivalTest {
+class FestivalConfigurationTest {
 
-    private Festival festival;
+    private FestivalConfiguration festivalConfiguration;
 
     @BeforeEach
     void setUpConfiguration() {
-        this.festival = new Festival();
+        this.festivalConfiguration = new FestivalConfiguration();
     }
 
     @Test
     void getStartEventDate_shouldReturnDefaultStartEventDate_whenNoneIsSet() {
         EventDate expectedEventDate = EventDate.getDefaultStartEventDate();
 
-        EventDate eventDate = festival.getStartEventDate();
+        EventDate eventDate = festivalConfiguration.getStartEventDate();
 
         assertEquals(expectedEventDate, eventDate);
     }
@@ -31,7 +31,7 @@ class FestivalTest {
     void getEndEventDate_shouldReturnDefaultEndEventDate_whenNoneIsSet() {
         EventDate expectedEventDate = EventDate.getDefaultEndEventDate();
 
-        EventDate eventDate = festival.getEndEventDate();
+        EventDate eventDate = festivalConfiguration.getEndEventDate();
 
         assertEquals(expectedEventDate, eventDate);
     }
@@ -40,8 +40,8 @@ class FestivalTest {
     void setStartEventDate_shouldSetStartEventDate() {
         EventDate expectedEventDate = EventDate.getDefaultStartEventDate().plusDays(1);
 
-        festival.setStartEventDate(expectedEventDate);
-        EventDate eventDate = festival.getStartEventDate();
+        festivalConfiguration.setStartEventDate(expectedEventDate);
+        EventDate eventDate = festivalConfiguration.getStartEventDate();
 
         assertEquals(expectedEventDate, eventDate);
     }
@@ -50,8 +50,8 @@ class FestivalTest {
     void setEndEventDate_shouldSetEndEventDate() {
         EventDate expectedEventDate = EventDate.getDefaultEndEventDate().minusDays(1);
 
-        festival.setEndEventDate(expectedEventDate);
-        EventDate eventDate = festival.getEndEventDate();
+        festivalConfiguration.setEndEventDate(expectedEventDate);
+        EventDate eventDate = festivalConfiguration.getEndEventDate();
 
         assertEquals(expectedEventDate, eventDate);
     }
@@ -60,7 +60,7 @@ class FestivalTest {
     void getAllEventDates_shouldReturnEventDatesAfterOrEqualToStartDate() {
         EventDate startDate = EventDate.getDefaultStartEventDate();
 
-        List<EventDate> allEventDates = festival.getAllEventDates();
+        List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
         assertTrue(allEventDates.stream().allMatch(eventDate -> eventDate.equals(startDate) || eventDate.isAfter(startDate)));
     }
@@ -69,32 +69,32 @@ class FestivalTest {
     void getAllEventDates_shouldReturnEventDatesBeforeOrEqualToEndDate() {
         EventDate endDate = EventDate.getDefaultEndEventDate();
 
-        List<EventDate> allEventDates = festival.getAllEventDates();
+        List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
         assertTrue(allEventDates.stream().allMatch(eventDate -> eventDate.equals(endDate) || eventDate.isBefore(endDate)));
     }
 
     @Test
     void getAllEventDates_shouldReturnUniqueEventDates() {
-        List<EventDate> allEventDates = festival.getAllEventDates();
+        List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
         assertTrue(allEventDates.stream().allMatch(new HashSet<>()::add));
     }
 
     @Test
     void getMinimumEventDateToOrder_shouldReturnStartEventDateMinusMaximumDaysToOrderBeforeStartEventDate() {
-        EventDate expectedEventDate = festival.getStartEventDate().minusDays(Festival.MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        EventDate expectedEventDate = festivalConfiguration.getStartEventDate().minusDays(FestivalConfiguration.MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
 
-        EventDate eventDate = festival.getMinimumEventDateToOrder();
+        EventDate eventDate = festivalConfiguration.getMinimumEventDateToOrder();
 
         assertEquals(expectedEventDate, eventDate);
     }
 
     @Test
     void getMaximumEventDateToOrder_shouldReturnStartEventDateMinusMinimumDaysToOrderBeforeStartEventDate() {
-        EventDate expectedEventDate = festival.getStartEventDate().minusDays(Festival.MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        EventDate expectedEventDate = festivalConfiguration.getStartEventDate().minusDays(FestivalConfiguration.MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
 
-        EventDate eventDate = festival.getMaximumEventDateToOrder();
+        EventDate eventDate = festivalConfiguration.getMaximumEventDateToOrder();
 
         assertEquals(expectedEventDate, eventDate);
     }

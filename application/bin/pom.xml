@@ -36,9 +36,9 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${exec-maven-plugin.version}</version>
-                <festival>
+                <festivalConfiguration>
                     <mainClass>ca.ulaval.glo4002.application.ApplicationServer</mainClass>
-                </festival>
+                </festivalConfiguration>
             </plugin>
         </plugins>
     </build>

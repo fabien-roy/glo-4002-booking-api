@@ -7,7 +7,7 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class OxygenTankProducerTest {
 	// TODO : Mock OxygenFactory in OxygenTankProducer tests
 
 	private OxygenTankProducer producer;
-	private Festival festival;
+	private FestivalConfiguration festivalConfiguration;
 	private OxygenInventoryRepository inventoryRepository;
 	private OxygenHistoryRepository historyRepository;
 	private OxygenInventory inventory;
@@ -46,17 +46,17 @@ public class OxygenTankProducerTest {
 		when(inventoryRepository.getInventory()).thenReturn(inventory);
 		when(historyRepository.getHistory()).thenReturn(history);
 
-		OxygenFactory factory = new OxygenFactory(festival);
+		OxygenFactory factory = new OxygenFactory(festivalConfiguration);
 
 		producer = new OxygenTankProducer(inventoryRepository, historyRepository, factory);
 	}
 
 	@BeforeEach
 	void setUpConfiguration() {
-		festival = mock(Festival.class);
+		festivalConfiguration = mock(FestivalConfiguration.class);
 
-		when(festival.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-		when(festival.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+		when(festivalConfiguration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(festivalConfiguration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@Test

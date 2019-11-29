@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Festival {
+public class FestivalConfiguration {
 
     static final Integer MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 180;
     static final Integer MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 1;
@@ -13,7 +13,7 @@ public class Festival {
     private EventDate startEventDate;
     private EventDate endEventDate;
 
-    public Festival() {
+    public FestivalConfiguration() {
         startEventDate = EventDate.getDefaultStartEventDate();
         endEventDate = EventDate.getDefaultEndEventDate();
     }
@@ -35,7 +35,7 @@ public class Festival {
     }
 
     public List<EventDate> getAllEventDates() {
-        List<EventDate> allEventDates = new ArrayList<EventDate>();
+        List<EventDate> allEventDates = new ArrayList<>();
 
         for (EventDate date = startEventDate; date.isBefore(endEventDate); date = date.plusDays(1)) {
             allEventDates.add(date);

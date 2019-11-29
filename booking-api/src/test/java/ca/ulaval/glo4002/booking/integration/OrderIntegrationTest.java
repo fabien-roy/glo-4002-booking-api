@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.integration;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
@@ -49,23 +49,23 @@ import static org.mockito.Mockito.mock;
 public class OrderIntegrationTest {
 
     private OrderResource resource;
-    private Festival festival;
+    private FestivalConfiguration festivalConfiguration;
     private OrderRepository repository;
     private PassBundleFactory passBundleFactory;
 
     @BeforeEach
     public void setUpResource() {
-        festival = new Festival();
+        festivalConfiguration = new FestivalConfiguration();
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
-        EventDateFactory eventDateFactory = new EventDateFactory(festival);
+        EventDateFactory eventDateFactory = new EventDateFactory(festivalConfiguration);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
-        OxygenFactory oxygenFactory = new OxygenFactory(festival);
+        OxygenFactory oxygenFactory = new OxygenFactory(festivalConfiguration);
 
-        OrderFactory orderFactory = new OrderFactory(festival, numberGenerator, passBundleFactory);
+        OrderFactory orderFactory = new OrderFactory(festivalConfiguration, numberGenerator, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -77,8 +77,8 @@ public class OrderIntegrationTest {
         PassBundleMapper passBundleMapper = new PassBundleMapper();
         OrderMapper orderMapper = new OrderMapper(passBundleMapper);
 
-        TripService tripService = new TripService(festival, tripRepository, shuttleFactory);
-        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festival, oxygenFactory, oxygenTankProducer);
+        TripService tripService = new TripService(festivalConfiguration, tripRepository, shuttleFactory);
+        OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festivalConfiguration, oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(repository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
         resource = new OrderResource(orderService);
@@ -92,7 +92,7 @@ public class OrderIntegrationTest {
         ));
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                festival.getMinimumEventDateToOrder().toLocalDateTime(),
+                festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(),
                 passBundle
         );
         repository.addOrder(order);
@@ -151,7 +151,7 @@ public class OrderIntegrationTest {
                 PassOptions.PACKAGE.toString()
         );
         OrderRequest orderRequest = new OrderRequest(
-                ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleRequest
         );

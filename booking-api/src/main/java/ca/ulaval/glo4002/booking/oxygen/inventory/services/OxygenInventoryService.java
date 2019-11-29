@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
@@ -21,13 +21,13 @@ public class OxygenInventoryService {
 	static final OxygenCategories OXYGEN_CATEGORY_FOR_ARTIST = OxygenCategories.E;
 	static final Integer OXYGEN_TANKS_NEEDED_PER_ARTIST = 6;
 
-	private final Festival festival;
+	private final FestivalConfiguration festivalConfiguration;
 	private final OxygenFactory factory;
 	private final OxygenTankProducer producer;
 
 	@Inject
-	public OxygenInventoryService(Festival festival, OxygenFactory factory, OxygenTankProducer producer) {
-		this.festival = festival;
+	public OxygenInventoryService(FestivalConfiguration festivalConfiguration, OxygenFactory factory, OxygenTankProducer producer) {
+		this.festivalConfiguration = festivalConfiguration;
 		this.factory = factory;
 		this.producer = producer;
 	}
@@ -45,7 +45,7 @@ public class OxygenInventoryService {
 	}
 
 	private void orderForFullFestival(OxygenCategories oxygenCategory, LocalDate orderDate) {
-		festival.getAllEventDates().forEach(eventDate -> orderForEventDate(oxygenCategory, orderDate));
+		festivalConfiguration.getAllEventDates().forEach(eventDate -> orderForEventDate(oxygenCategory, orderDate));
 	}
 
 	private void orderForEventDate(OxygenCategories oxygenCategory, LocalDate orderDate) {

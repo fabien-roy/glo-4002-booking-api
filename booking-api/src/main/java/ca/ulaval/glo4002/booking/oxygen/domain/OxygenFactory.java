@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 
@@ -12,11 +12,11 @@ import java.util.List;
 
 public class OxygenFactory {
 
-	private final Festival festival;
+	private final FestivalConfiguration festivalConfiguration;
 
 	@Inject
-	public OxygenFactory(Festival festival) {
-		this.festival = festival;
+	public OxygenFactory(FestivalConfiguration festivalConfiguration) {
+		this.festivalConfiguration = festivalConfiguration;
 	}
 
 	public List<OxygenTank> createOxygenTank(OxygenCategory category, LocalDate requestDate, Integer quantityToCover) {
@@ -81,7 +81,7 @@ public class OxygenFactory {
 
 	public OxygenCategory createCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
 		// TODO : Use OxygenDate
-		LocalDate readyBeforeDate = festival.getStartEventDate().plusDays(1).getValue();
+		LocalDate readyBeforeDate = festivalConfiguration.getStartEventDate().plusDays(1).getValue();
 
 		if(oxygenCategories == OxygenCategories.A) {
 			if(requestDate.plusDays(20).isBefore(readyBeforeDate)){

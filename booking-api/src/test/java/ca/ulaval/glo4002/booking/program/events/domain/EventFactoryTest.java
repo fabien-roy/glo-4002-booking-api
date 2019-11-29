@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.events.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 class EventFactoryTest {
 
     private EventFactory factory;
-    private Festival festival;
+    private FestivalConfiguration festivalConfiguration;
     private ArtistService artistService;
     private EventDateFactory eventDateFactory;
 
@@ -34,14 +34,14 @@ class EventFactoryTest {
         artistService = mock(ArtistService.class);
         eventDateFactory = mock(EventDateFactory.class);
 
-        this.factory = new EventFactory(festival, artistService, eventDateFactory);
+        this.factory = new EventFactory(festivalConfiguration, artistService, eventDateFactory);
     }
 
     @BeforeEach
     void setUpConfiguration() {
-        festival = mock(Festival.class);
+        festivalConfiguration = mock(FestivalConfiguration.class);
 
-        when(festival.getAllEventDates()).thenReturn(Arrays.asList(
+        when(festivalConfiguration.getAllEventDates()).thenReturn(Arrays.asList(
                 EventDate.getDefaultStartEventDate(),
                 EventDate.getDefaultEndEventDate())
         );
@@ -59,7 +59,7 @@ class EventFactoryTest {
 
     @Test
     void create_shouldCreateEventDates() {
-        List<EventDate> expectedEventDates = festival.getAllEventDates();
+        List<EventDate> expectedEventDates = festivalConfiguration.getAllEventDates();
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
 
         List<Event> events = factory.create(aProgramRequest);
@@ -180,7 +180,7 @@ class EventFactoryTest {
 
     private List<ProgramEventRequest> buildProgramRequest(Activities activity, String artist) {
         List<ProgramEventRequest> eventRequests = new ArrayList<>();
-        List<EventDate> eventDates = festival.getAllEventDates();
+        List<EventDate> eventDates = festivalConfiguration.getAllEventDates();
 
         for (int i = 0; i < eventDates.size(); i++) {
             eventRequests.add(buildEventRequest(eventDates.get(i), activity, artist + i));

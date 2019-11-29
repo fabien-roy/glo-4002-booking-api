@@ -9,10 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
-import ca.ulaval.glo4002.booking.program.artists.domain.ArtistConverter;
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
-import ca.ulaval.glo4002.booking.program.artists.domain.ExternalArtist;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistClient;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.InMemoryArtistRepository;
@@ -30,7 +27,7 @@ public class ArtistConverterTest {
 	// TODO : Mock ArtistRepository in ArtistConverter tests
 
 	private ArtistConverter artistConverter;
-	private Festival festival;
+	private FestivalConfiguration festivalConfiguration;
 	private ArtistRepository artistRepository;
 	private List<ExternalArtist> externalArtists;
 	private static WireMockServer wiremockServer;
@@ -210,16 +207,16 @@ public class ArtistConverterTest {
 	public void converterSetUp() {
 		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
 		artistRepository = new InMemoryArtistRepository();
-		artistConverter = new ArtistConverter(festival, artistRepository);
+		artistConverter = new ArtistConverter(festivalConfiguration, artistRepository);
 		externalArtists = ArtistClient.getArtists();
 	}
 
 	@BeforeEach
 	void setUpConfiguration() {
-		festival = mock(Festival.class);
+		festivalConfiguration = mock(FestivalConfiguration.class);
 
-		when(festival.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-		when(festival.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+		when(festivalConfiguration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+		when(festivalConfiguration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
 	}
 
 	@AfterAll

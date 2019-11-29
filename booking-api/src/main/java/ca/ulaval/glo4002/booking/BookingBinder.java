@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.festival.services.FestivalService;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
@@ -9,7 +10,6 @@ import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.orders.services.OrderService;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.festival.rest.ConfigurationResource;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.InMemoryOxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.mappers.OxygenHistoryMapper;
@@ -69,7 +69,7 @@ public class BookingBinder extends AbstractBinder {
 
     // TODO : Rename bindConfiguration
     private void bindConfiguration() {
-        bindAsContract(Festival.class).in(Singleton.class);
+        bindAsContract(FestivalConfiguration.class).in(Singleton.class);
     }
 
     private void bindGenerators() {

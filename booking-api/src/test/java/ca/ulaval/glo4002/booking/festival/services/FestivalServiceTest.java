@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.festival.services;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.festival.rest.EventDatesRequest;
@@ -13,15 +13,15 @@ import static org.mockito.Mockito.*;
 class FestivalServiceTest {
 
     private FestivalService service;
-    private Festival festival;
+    private FestivalConfiguration festivalConfiguration;
     private EventDateFactory eventDateFactory;
 
     @BeforeEach
     void setUpService() {
-        festival = mock(Festival.class);
+        festivalConfiguration = mock(FestivalConfiguration.class);
         eventDateFactory = mock(EventDateFactory.class);
 
-        service = new FestivalService(festival, eventDateFactory);
+        service = new FestivalService(festivalConfiguration, eventDateFactory);
     }
 
     @Test
@@ -33,7 +33,7 @@ class FestivalServiceTest {
 
         service.setEventDates(eventDatesRequest);
 
-        verify(festival).setStartEventDate(eq(expectedStartEventDate));
+        verify(festivalConfiguration).setStartEventDate(eq(expectedStartEventDate));
     }
 
     @Test
@@ -45,6 +45,6 @@ class FestivalServiceTest {
 
         service.setEventDates(eventDatesRequest);
 
-        verify(festival).setEndEventDate(eq(expectedEndEventDate));
+        verify(festivalConfiguration).setEndEventDate(eq(expectedEndEventDate));
     }
 }

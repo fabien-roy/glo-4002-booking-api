@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.events.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
@@ -15,13 +15,13 @@ import java.util.stream.Collectors;
 
 public class EventFactory {
 
-    private final Festival festival;
+    private final FestivalConfiguration festivalConfiguration;
     private final ArtistService artistService;
     private final EventDateFactory eventDateFactory;
 
     @Inject
-    public EventFactory(Festival festival, ArtistService artistService, EventDateFactory eventDateFactory) {
-        this.festival = festival;
+    public EventFactory(FestivalConfiguration festivalConfiguration, ArtistService artistService, EventDateFactory eventDateFactory) {
+        this.festivalConfiguration = festivalConfiguration;
         this.artistService = artistService;
         this.eventDateFactory = eventDateFactory;
     }
@@ -69,7 +69,7 @@ public class EventFactory {
     }
 
     private void validateAllPresent(List<String> eventDates) {
-        List<String> festivalEventDates = festival.getAllEventDates().stream().map(EventDate::toString).collect(Collectors.toList());
+        List<String> festivalEventDates = festivalConfiguration.getAllEventDates().stream().map(EventDate::toString).collect(Collectors.toList());
 
         boolean hasAllFestivalEventDates = eventDates.containsAll(festivalEventDates);
 

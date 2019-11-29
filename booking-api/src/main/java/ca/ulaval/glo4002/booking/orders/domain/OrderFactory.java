@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
@@ -17,13 +17,13 @@ public class OrderFactory {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_DATE_TIME;
 
-    private final Festival festival;
+    private final FestivalConfiguration festivalConfiguration;
     private final NumberGenerator numberGenerator;
     private final PassBundleFactory passBundleFactory;
 
     @Inject
-    public OrderFactory(Festival festival, NumberGenerator numberGenerator, PassBundleFactory passBundleFactory) {
-        this.festival = festival;
+    public OrderFactory(FestivalConfiguration festivalConfiguration, NumberGenerator numberGenerator, PassBundleFactory passBundleFactory) {
+        this.festivalConfiguration = festivalConfiguration;
         this.numberGenerator = numberGenerator;
         this.passBundleFactory = passBundleFactory;
     }
@@ -58,8 +58,8 @@ public class OrderFactory {
     }
 
     private void validateOrderDate(LocalDateTime orderDate) {
-        LocalDateTime minimalOrderDate = festival.getMinimumEventDateToOrder().toLocalDateTime();
-        LocalDateTime maximalOrderDate = festival.getMaximumEventDateToOrder().toLocalDateTime();
+        LocalDateTime minimalOrderDate = festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime();
+        LocalDateTime maximalOrderDate = festivalConfiguration.getMaximumEventDateToOrder().toLocalDateTime();
 
         // TODO : Could use EventDate.isBetweenOrEquals if OrderDate made sense as an EventDate
         if (orderDate.isBefore(minimalOrderDate) || orderDate.isAfter(maximalOrderDate)) {

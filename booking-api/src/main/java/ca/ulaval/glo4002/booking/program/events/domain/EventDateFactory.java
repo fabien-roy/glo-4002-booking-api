@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.events.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.program.events.rest.exceptions.InvalidEventDateException;
 
@@ -9,11 +9,11 @@ import java.time.LocalDate;
 
 public class EventDateFactory {
 
-    private final Festival festival;
+    private final FestivalConfiguration festivalConfiguration;
 
     @Inject
-    public EventDateFactory(Festival festival) {
-        this.festival = festival;
+    public EventDateFactory(FestivalConfiguration festivalConfiguration) {
+        this.festivalConfiguration = festivalConfiguration;
     }
 
     public EventDate create(String eventDate) {
@@ -38,8 +38,8 @@ public class EventDateFactory {
     }
 
     private void validateEventDate(EventDate eventDate) {
-        EventDate startEventDate = festival.getStartEventDate();
-        EventDate endEventDate = festival.getEndEventDate();
+        EventDate startEventDate = festivalConfiguration.getStartEventDate();
+        EventDate endEventDate = festivalConfiguration.getEndEventDate();
 
         if (!eventDate.isBetweenOrEquals(startEventDate, endEventDate)) {
             throw new InvalidEventDateException();

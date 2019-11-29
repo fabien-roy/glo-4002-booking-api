@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory.services;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -31,7 +31,7 @@ import static ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventor
 class OxygenInventoryServiceTest {
 
 	private OxygenInventoryService service;
-	private Festival festival;
+	private FestivalConfiguration festivalConfiguration;
 	private OxygenFactory factory;
 	private OxygenTankProducer producer;
 
@@ -39,17 +39,17 @@ class OxygenInventoryServiceTest {
 
 	@BeforeEach
 	void setUpService() {
-		factory = new OxygenFactory(festival);
+		factory = new OxygenFactory(festivalConfiguration);
 		producer = mock(OxygenTankProducer.class);
 
-		service = new OxygenInventoryService(festival, factory, producer);
+		service = new OxygenInventoryService(festivalConfiguration, factory, producer);
 	}
 
 	@BeforeEach
 	void setUpConfiguration() {
-		festival = mock(Festival.class);
+		festivalConfiguration = mock(FestivalConfiguration.class);
 
-		when(festival.getAllEventDates()).thenReturn(Arrays.asList(
+		when(festivalConfiguration.getAllEventDates()).thenReturn(Arrays.asList(
 				EventDate.getDefaultStartEventDate(),
 				EventDate.getDefaultEndEventDate())
 		);
@@ -58,7 +58,7 @@ class OxygenInventoryServiceTest {
 	@Test
 	void orderForPasses_shouldOrderForFullFestival_whenEventDatesIsNull() {
 		Pass aFullFestivalPass = new Pass(new Number(1L), mock(Money.class));
-		int numberOfFestivalDays = festival.getAllEventDates().size();
+		int numberOfFestivalDays = festivalConfiguration.getAllEventDates().size();
 
 		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aFullFestivalPass), AN_ORDER_DATE);
 

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.mock;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,8 +25,8 @@ class OxygenTankTest {
 	void setUpRequestDate() {
 		requestDate = new OxygenDate(LocalDate.of(2050, 7, 1));
 
-		Festival festival = mock(Festival.class);
-		OxygenFactory factory = new OxygenFactory(festival);
+		FestivalConfiguration festivalConfiguration = mock(FestivalConfiguration.class);
+		OxygenFactory factory = new OxygenFactory(festivalConfiguration);
 
 		categoryA = factory.createCategory(PassCategories.NEBULA);
 		categoryB = factory.createCategory(PassCategories.SUPERGIANT);

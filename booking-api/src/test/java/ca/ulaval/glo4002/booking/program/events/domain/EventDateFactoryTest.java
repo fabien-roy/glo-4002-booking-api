@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.events.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.program.events.rest.exceptions.InvalidEventDateException;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,24 +14,24 @@ import static org.mockito.Mockito.when;
 class EventDateFactoryTest {
 
     EventDateFactory factory;
-    private Festival festival;
+    private FestivalConfiguration festivalConfiguration;
 
     @BeforeEach
     void setUpFactory() {
-        factory = new EventDateFactory(festival);
+        factory = new EventDateFactory(festivalConfiguration);
     }
 
     @BeforeEach
     void setUpConfiguration() {
-        festival = mock(Festival.class);
+        festivalConfiguration = mock(FestivalConfiguration.class);
 
-        when(festival.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
-        when(festival.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
+        when(festivalConfiguration.getStartEventDate()).thenReturn(EventDate.getDefaultStartEventDate());
+        when(festivalConfiguration.getEndEventDate()).thenReturn(EventDate.getDefaultEndEventDate());
     }
 
     @Test
     void create_shouldCreateEventDate() {
-        EventDate expectedEventDate  = festival.getStartEventDate();
+        EventDate expectedEventDate  = festivalConfiguration.getStartEventDate();
 
         EventDate eventDate = factory.create(expectedEventDate.toString());
 
@@ -40,14 +40,14 @@ class EventDateFactoryTest {
 
     @Test
     void create_shouldThrowInvalidEventDateException_whenEventDateIsUnderBounds() {
-        EventDate aUnderBoundEventDate  = festival.getStartEventDate().minusDays(1);
+        EventDate aUnderBoundEventDate  = festivalConfiguration.getStartEventDate().minusDays(1);
 
         assertThrows(InvalidEventDateException.class, () -> factory.create(aUnderBoundEventDate.toString()));
     }
 
     @Test
     void create_shouldThrowInvalidEventDateException_whenEventDateIsOverBounds() {
-        EventDate aOverBoundEventDate  = festival.getEndEventDate().plusDays(1);
+        EventDate aOverBoundEventDate  = festivalConfiguration.getEndEventDate().plusDays(1);
 
         assertThrows(InvalidEventDateException.class, () -> factory.create(aOverBoundEventDate.toString()));
     }

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
@@ -22,20 +22,20 @@ import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatExcepti
 class OrderFactoryTest {
 
 	private OrderFactory factory;
-	private Festival festival;
+	private FestivalConfiguration festivalConfiguration;
 
 	@BeforeEach
 	void setUpFactory() {
-	    festival = new Festival(); // TODO : Should Configuration be mocked in OrderFactoryTest?
+	    festivalConfiguration = new FestivalConfiguration(); // TODO : Should Configuration be mocked in OrderFactoryTest?
 		NumberGenerator numberGenerator = new NumberGenerator();
 		PassBundleFactory passBundleFactory = mock(PassBundleFactory.class);
 
-		this.factory = new OrderFactory(festival, numberGenerator, passBundleFactory);
+		this.factory = new OrderFactory(festivalConfiguration, numberGenerator, passBundleFactory);
 	}
 
 	@Test
 	void build_shouldParseRequestWithCorrectAnOrderDate() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
 		PassBundleRequest passBundleRequest = mock(PassBundleRequest.class);
 		when(passBundleRequest.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM", passBundleRequest);
@@ -47,7 +47,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldParseRequestWithCorrectVendorCode() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
 		PassBundleRequest passBundleRequest = mock(PassBundleRequest.class);
 		when(passBundleRequest.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM",
@@ -60,7 +60,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldThrowInvalidFormatException_whenThereIsNoPass() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime().plusDays(1), ZoneId.systemDefault());
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM",
 				null);
 
@@ -78,7 +78,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldThrowInvalidanOrderDateException_whenAnOrderDateIsUnderBounds() {
-		LocalDateTime anUnderBoundValue = festival.getMinimumEventDateToOrder().toLocalDateTime().minusDays(1);
+		LocalDateTime anUnderBoundValue = festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime().minusDays(1);
 		ZonedDateTime anUnderBoundZonedValue = ZonedDateTime.of(anUnderBoundValue, ZoneId.systemDefault());
 		OrderRequest orderRequest = new OrderRequest(anUnderBoundZonedValue.toString(),
 				"TEAM", mock(PassBundleRequest.class));
@@ -88,7 +88,7 @@ class OrderFactoryTest {
 
 	@Test
 	void build_shouldThrowInvalidanOrderDateException_whenAnOrderDateIsOverBounds() {
-		LocalDateTime anOverBoundValue = festival.getMaximumEventDateToOrder().toLocalDateTime().plusDays(1);
+		LocalDateTime anOverBoundValue = festivalConfiguration.getMaximumEventDateToOrder().toLocalDateTime().plusDays(1);
 		ZonedDateTime anOverBoundZonedValue = ZonedDateTime.of(anOverBoundValue, ZoneId.systemDefault());
 		OrderRequest orderRequest = new OrderRequest(anOverBoundZonedValue.toString(),
 				"TEAM", mock(PassBundleRequest.class));
