@@ -1,16 +1,16 @@
 package ca.ulaval.glo4002.booking.program.rest;
 
-public class ProgramEventDto {
+public class ProgramEventRequest {
 
     private String eventDate;
     private String am;
     private String pm;
 
-    public ProgramEventDto() {
+    public ProgramEventRequest() {
         // Empty constructor for parsing
     }
 
-    public ProgramEventDto(String eventDate, String am, String pm) {
+    public ProgramEventRequest(String eventDate, String am, String pm) {
         this.eventDate = eventDate;
         this.am = am;
         this.pm = pm;

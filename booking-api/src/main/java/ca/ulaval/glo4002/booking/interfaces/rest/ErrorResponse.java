@@ -1,13 +1,11 @@
 package ca.ulaval.glo4002.booking.interfaces.rest;
 
-// TODO : Rename Dtos to Response and Request
-
-public class ErrorDto {
+public class ErrorResponse {
 
     private String error;
     private String description;
 
-    public ErrorDto(String error, String description) {
+    public ErrorResponse(String error, String description) {
         this.error = error;
         this.description = description;
     }

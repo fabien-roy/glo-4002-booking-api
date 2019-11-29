@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.interfaces.rest.mappers;
 
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
+import ca.ulaval.glo4002.booking.interfaces.rest.ErrorResponse;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -12,8 +12,8 @@ public class InvalidFormatExceptionMapper implements ExceptionMapper<InvalidForm
 
     @Override
     public Response toResponse(InvalidFormatException exception) {
-        ErrorDto errorDto = new ErrorDto("INVALID_FORMAT", "Invalid format");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_FORMAT", "Invalid format");
 
-        return Response.status(Response.Status.BAD_REQUEST).entity(errorDto).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
 }

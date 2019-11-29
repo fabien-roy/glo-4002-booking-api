@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
-import ca.ulaval.glo4002.booking.program.rest.ProgramDto;
+import ca.ulaval.glo4002.booking.program.rest.ProgramRequest;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,9 +38,9 @@ class ProgramServiceTest {
 
     @Test
     void add_shouldSaveEventsToRepository() {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
+        ProgramRequest aProgramRequest = mock(ProgramRequest.class);
 
-        service.add(aProgramDto);
+        service.add(aProgramRequest);
 
         verify(eventRepository).addAll(any());
     }
@@ -48,7 +48,7 @@ class ProgramServiceTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void add_shouldOrderTripsForEachArtist(int eventQuantity) {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
+        ProgramRequest aProgramRequest = mock(ProgramRequest.class);
         Event aEvent = mock(Event.class);
         BookingArtist expectedArtist = mock(BookingArtist.class);
         EventDate expectedEventDate = mock(EventDate.class);
@@ -56,7 +56,7 @@ class ProgramServiceTest {
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
         when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
 
-        service.add(aProgramDto);
+        service.add(aProgramRequest);
 
         verify(tripService, times(eventQuantity)).orderForArtist(eq(expectedArtist), eq(expectedEventDate));
     }
@@ -64,7 +64,7 @@ class ProgramServiceTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void add_shouldOrderOxygenTanksForEachArtist(int eventQuantity) {
-        ProgramDto aProgramDto = mock(ProgramDto.class);
+        ProgramRequest aProgramRequest = mock(ProgramRequest.class);
         Event aEvent = mock(Event.class);
         BookingArtist expectedArtist = mock(BookingArtist.class);
         EventDate expectedEventDate = mock(EventDate.class);
@@ -72,7 +72,7 @@ class ProgramServiceTest {
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
         when(eventFactory.build(any())).thenReturn(Collections.nCopies(eventQuantity, aEvent));
 
-        service.add(aProgramDto);
+        service.add(aProgramRequest);
 
         verify(oxygenInventoryService, times(eventQuantity)).orderForArtist(eq(expectedArtist), eq(expectedEventDate));
     }

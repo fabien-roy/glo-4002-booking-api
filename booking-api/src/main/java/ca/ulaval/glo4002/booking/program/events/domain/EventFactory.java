@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
-import ca.ulaval.glo4002.booking.program.rest.ProgramEventDto;
+import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class EventFactory {
         this.eventDateFactory = eventDateFactory;
     }
 
-    public List<Event> build(List<ProgramEventDto> eventDtos) {
+    public List<Event> build(List<ProgramEventRequest> eventDtos) {
         List<Event> events = new ArrayList<>();
 
         validateEventDates(eventDtos);
@@ -45,19 +45,19 @@ public class EventFactory {
         return events;
     }
 
-    private void validateEventDates(List<ProgramEventDto> eventDtos) {
-        List<String> eventDates = eventDtos.stream().map(ProgramEventDto::getEventDate).collect(Collectors.toList());
+    private void validateEventDates(List<ProgramEventRequest> eventDtos) {
+        List<String> eventDates = eventDtos.stream().map(ProgramEventRequest::getEventDate).collect(Collectors.toList());
 
         validateAllDifferent(eventDates);
         validateAllPresent(eventDates);
     }
 
-    private void validateArtists(List<ProgramEventDto> eventDtos) {
+    private void validateArtists(List<ProgramEventRequest> eventDtos) {
         boolean hasNull = eventDtos.stream().anyMatch(eventDto -> eventDto.getPm() == null);
 
         if (hasNull) throw new InvalidProgramException();
 
-        List<String> eventDates = eventDtos.stream().map(ProgramEventDto::getPm).collect(Collectors.toList());
+        List<String> eventDates = eventDtos.stream().map(ProgramEventRequest::getPm).collect(Collectors.toList());
 
         validateAllDifferent(eventDates);
     }

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.rest.mappers;
 
-import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
+import ca.ulaval.glo4002.booking.interfaces.rest.ErrorResponse;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 
 import javax.ws.rs.core.Response;
@@ -12,8 +12,8 @@ public class InvalidProgramExceptionMapper implements ExceptionMapper<InvalidPro
 
     @Override
     public Response toResponse(InvalidProgramException exception) {
-        ErrorDto errorDto = new ErrorDto("INVALID_PROGRAM", "Invalid program");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_PROGRAM", "Invalid program");
 
-        return Response.status(Response.Status.BAD_REQUEST).entity(errorDto).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
 }

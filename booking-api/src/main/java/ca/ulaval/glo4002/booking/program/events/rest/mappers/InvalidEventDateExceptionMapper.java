@@ -1,8 +1,7 @@
 package ca.ulaval.glo4002.booking.program.events.rest.mappers;
 
-import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
+import ca.ulaval.glo4002.booking.interfaces.rest.ErrorResponse;
 import ca.ulaval.glo4002.booking.program.events.rest.exceptions.InvalidEventDateException;
-import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -15,8 +14,8 @@ public class InvalidEventDateExceptionMapper implements ExceptionMapper<InvalidE
 
     @Override
     public Response toResponse(InvalidEventDateException exception) {
-        ErrorDto errorDto = new ErrorDto("INVALID_EVENT_DATE", "Event date should be between July 17 2050 and July 24 2050");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_EVENT_DATE", "Event date should be between July 17 2050 and July 24 2050");
 
-        return Response.status(Response.Status.BAD_REQUEST).entity(errorDto).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
 }

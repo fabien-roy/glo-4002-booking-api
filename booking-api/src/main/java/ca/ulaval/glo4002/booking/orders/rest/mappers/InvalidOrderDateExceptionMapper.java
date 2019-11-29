@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.rest.mappers;
 
-import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
-import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.rest.ErrorResponse;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
 
 import javax.ws.rs.core.Response;
@@ -15,8 +14,8 @@ public class InvalidOrderDateExceptionMapper implements ExceptionMapper<InvalidO
 
     @Override
     public Response toResponse(InvalidOrderDateException exception) {
-        ErrorDto errorDto = new ErrorDto("INVALID_ORDER_DATE", "Order date should be between January 1 2050 and July 16 2050");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_ORDER_DATE", "Order date should be between January 1 2050 and July 16 2050");
 
-        return Response.status(Response.Status.BAD_REQUEST).entity(errorDto).build();
+        return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
 }

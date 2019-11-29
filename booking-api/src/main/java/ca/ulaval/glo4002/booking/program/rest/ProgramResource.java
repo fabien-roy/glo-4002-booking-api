@@ -15,24 +15,24 @@ import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListDto;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 
 @Path("/program")
-public class ProgramController {
+@Produces(MediaType.APPLICATION_JSON)
+public class ProgramResource {
 
 	private final ArtistService artistService;
 	private final ProgramService programService;
 
 	@Inject
-	public ProgramController(ArtistService artistService, ProgramService programService) {
+	public ProgramResource(ArtistService artistService, ProgramService programService) {
 		this.artistService = artistService;
 		this.programService = programService;
 	}
 
 	@GET
 	@Path("/artists")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getArtists(@QueryParam("orderBy") String orderBy) {
 		ArtistListDto artistListDto;
 
-		// Make orderBy nullable in artist service
+		// TODO : Make orderBy nullable in artist service
 		if (orderBy == null) {
 			artistListDto = artistService.getAllUnordered();
 		} else {
@@ -44,8 +44,8 @@ public class ProgramController {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response add(ProgramDto programDto) {
-		programService.add(programDto);
+	public Response add(ProgramRequest programRequest) {
+		programService.add(programRequest);
 
 		return Response.ok().build();
 	}
