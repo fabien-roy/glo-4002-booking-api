@@ -3,9 +3,6 @@ package ca.ulaval.glo4002.booking.orders.rest;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo4002.booking.orders.rest.OrderController;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsPassesDto;
 import ca.ulaval.glo4002.booking.orders.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,22 +11,22 @@ import org.springframework.http.HttpHeaders;
 import javax.ws.rs.core.Response;
 
 
-class OrderControllerTest {
+class OrderResourceTest {
 
-	private OrderController controller;
+	private OrderResource controller;
 	private OrderService service;
 
 	@BeforeEach
-	void setUpController() {
+	void setUpResource() {
 		service = mock(OrderService.class);
 
-		controller = new OrderController(service);
+		controller = new OrderResource(service);
 	}
 
 	@Test
 	void getByOrderNumber_shouldReturnOk() {
 		String anOrderNumber = "VENDOR-123";
-		when(service.getByOrderNumber(anOrderNumber)).thenReturn(mock(OrderWithPassesAsPassesDto.class));
+		when(service.getByOrderNumber(anOrderNumber)).thenReturn(mock(OrderResponse.class));
 
 		Response response = controller.getByOrderNumber(anOrderNumber);
 
@@ -38,21 +35,21 @@ class OrderControllerTest {
 
 	@Test
 	void addOrder_shouldReturnCreated() {
-		OrderWithPassesAsEventDatesDto anOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-		when(service.order(anOrderDto)).thenReturn("anOrderNumber");
+		OrderRequest anOrderRequest = mock(OrderRequest.class);
+		when(service.order(anOrderRequest)).thenReturn("anOrderNumber");
 
-		Response response = controller.addOrder(anOrderDto);
+		Response response = controller.addOrder(anOrderRequest);
 
 		assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
 	}
 
 	@Test
 	void addOrder_shouldReturnLocationHeaders() {
-		OrderWithPassesAsEventDatesDto anOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
+		OrderRequest anOrderRequest = mock(OrderRequest.class);
 		String expectedOrderNumber = "expectedOrderNumber";
-		when(service.order(anOrderDto)).thenReturn(expectedOrderNumber);
+		when(service.order(anOrderRequest)).thenReturn(expectedOrderNumber);
 
-		Response response = controller.addOrder(anOrderDto);
+		Response response = controller.addOrder(anOrderRequest);
 
 		assertNotNull(response.getHeaders());
 		assertEquals(1, response.getHeaders().get(HttpHeaders.LOCATION).size());

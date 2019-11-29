@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
@@ -28,20 +28,20 @@ public class OrderFactory {
         this.passBundleFactory = passBundleFactory;
     }
 
-    public Order build(OrderWithPassesAsEventDatesDto orderDto) {
+    public Order create(OrderRequest orderRequest) {
         // TODO : Make passes nonNullable in Dto
-        if (orderDto.getPasses() == null) {
+        if (orderRequest.getPasses() == null) {
             throw new InvalidFormatException();
         }
 
-        OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderDto.getVendorCode());
-        LocalDateTime orderDate = buildOrderDate(orderDto.getOrderDate());
-        PassBundle passBundle = passBundleFactory.build(orderDto.getPasses());
+        OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderRequest.getVendorCode());
+        LocalDateTime orderDate = createOrderDate(orderRequest.getOrderDate());
+        PassBundle passBundle = passBundleFactory.build(orderRequest.getPasses());
 
         return new Order(orderNumber, orderDate, passBundle);
     }
 
-    private LocalDateTime buildOrderDate(String textOrderDate) {
+    private LocalDateTime createOrderDate(String textOrderDate) {
         LocalDateTime orderDate = parseLocalDateTime(textOrderDate);
 
         validateOrderDate(orderDate);

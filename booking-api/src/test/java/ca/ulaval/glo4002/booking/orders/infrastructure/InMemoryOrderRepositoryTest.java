@@ -26,13 +26,6 @@ class InMemoryOrderRepositoryTest {
 	}
 
 	@Test
-	void constructing_shouldBuildEmptyOrderList() {
-		List<Order> orders = repository.findAll();
-
-		assertTrue(orders.size() == 0);
-	}
-
-	@Test
 	void getOrderNumber_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
 		OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
 
@@ -102,6 +95,6 @@ class InMemoryOrderRepositoryTest {
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		repository.addOrder(anOrder);
 
-		assertTrue(repository.findAll().size() == 1);
+		assertEquals(1, repository.findAll().size());
 	}
 }

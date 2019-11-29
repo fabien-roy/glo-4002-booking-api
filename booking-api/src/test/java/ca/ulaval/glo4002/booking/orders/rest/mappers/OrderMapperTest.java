@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,40 +38,40 @@ class OrderMapperTest {
 	}
 
 	@Test
-	void toDto_shouldBuildDtoWithCorrectOrderPrice() {
-		OrderWithPassesAsPassesDto orderDto = orderMapper.toDto(order);
+	void toResponse_shouldBuildResponseWithCorrectOrderPrice() {
+		OrderResponse orderDto = orderMapper.toResponse(order);
 		BigDecimal priceValue = order.getPrice().getValue();
 
 		assertEquals(priceValue.doubleValue(), orderDto.getOrderPrice());
 	}
 
 	@Test
-	public void toDto_shouldBuildDtoOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
+	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
 		BigDecimal orderPrice = new BigDecimal(123.123);
 		Money price = new Money(orderPrice);
 		when(order.getPrice()).thenReturn(price);
 		String expectedOrderPrice = "123.12";
 
-		OrderWithPassesAsPassesDto orderDto = orderMapper.toDto(order);
+		OrderResponse orderResponse = orderMapper.toResponse(order);
 
-		assertEquals(expectedOrderPrice, Double.toString(orderDto.getOrderPrice()));
+		assertEquals(expectedOrderPrice, Double.toString(orderResponse.getOrderPrice()));
 	}
 
 	@Test
-	public void toDto_shouldBuildDtoOrderPriceWithTwoDigits_whenOrderPriceHasLesThanTwoDigits() {
+	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasLesThanTwoDigits() {
 		BigDecimal orderPrice = new BigDecimal(123.1);
 		Money price = new Money(orderPrice);
 		when(order.getPrice()).thenReturn(price);
 		String expectedOrderPrice = "123.1";
 
-		OrderWithPassesAsPassesDto orderDto = orderMapper.toDto(order);
+		OrderResponse orderResponse = orderMapper.toResponse(order);
 
-		assertEquals(expectedOrderPrice, Double.toString(orderDto.getOrderPrice()));
+		assertEquals(expectedOrderPrice, Double.toString(orderResponse.getOrderPrice()));
 	}
 
 	@Test
-	void toDto_shouldCallPassListMapper() {
-		orderMapper.toDto(order);
+	void toResponse_shouldCallPassListMapper() {
+		orderMapper.toResponse(order);
 
 		verify(passBundleMapper).toDto(any());
 	}

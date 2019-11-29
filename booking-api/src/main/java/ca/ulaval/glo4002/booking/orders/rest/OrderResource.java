@@ -15,27 +15,27 @@ import javax.ws.rs.core.Response;
 import java.net.URI;
 
 @Path("/orders")
-public class OrderController {
+@Produces(MediaType.APPLICATION_JSON)
+public class OrderResource {
 
 	private final OrderService service;
 
 	@Inject
-	public OrderController(OrderService service) {
+	public OrderResource(OrderService service) {
 		this.service = service;
 	}
 
 	@GET
-	@Path("/{requestedOrderNumber}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber) {
-		OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(requestedOrderNumber);
+	@Path("/{orderNumber}")
+	public Response getByOrderNumber(@PathParam("orderNumber") String orderNumber) {
+		OrderResponse orderDto = service.getByOrderNumber(orderNumber);
 
 		return Response.ok().entity(orderDto).build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addOrder(OrderWithPassesAsEventDatesDto requestedOrderDto) {
+	public Response addOrder(OrderRequest requestedOrderDto) {
 		String orderNumber = service.order(requestedOrderDto);
 
 		URI location = URI.create("/orders/" + orderNumber);

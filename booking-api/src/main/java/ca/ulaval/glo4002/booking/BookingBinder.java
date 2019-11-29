@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.festival.services.FestivalService;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
-import ca.ulaval.glo4002.booking.orders.rest.OrderController;
+import ca.ulaval.glo4002.booking.orders.rest.OrderResource;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.orders.services.OrderService;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
@@ -132,7 +132,7 @@ public class BookingBinder extends AbstractBinder {
     // TODO : Rename Controllers Resources
     private void bindControllers() {
         bindAsContract(ProgramController.class).in(Singleton.class);
-        bindAsContract(OrderController.class).in(Singleton.class);
+        bindAsContract(OrderResource.class).in(Singleton.class);
         bindAsContract(ShuttleManifestController.class).in(Singleton.class);
         bindAsContract(ReportController.class).in(Singleton.class);
         bindAsContract(ConfigurationResource.class).in(Singleton.class);

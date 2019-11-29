@@ -10,6 +10,7 @@ public class Number {
         this.value = value;
     }
 
+    // TODO : Parse String to Number should not be in constructor
     public Number(String value) {
         try {
             this.value = Long.parseLong(value);

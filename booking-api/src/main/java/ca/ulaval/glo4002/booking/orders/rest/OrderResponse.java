@@ -4,12 +4,12 @@ import ca.ulaval.glo4002.booking.passes.rest.PassDto;
 
 import java.util.List;
 
-public class OrderWithPassesAsPassesDto {
+public class OrderResponse {
 
     private double orderPrice;
     private List<PassDto> passes;
 
-    public OrderWithPassesAsPassesDto(double orderPrice, List<PassDto> passes) {
+    public OrderResponse(double orderPrice, List<PassDto> passes) {
         this.orderPrice = orderPrice;
         this.passes = passes;
     }

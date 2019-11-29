@@ -2,17 +2,17 @@ package ca.ulaval.glo4002.booking.orders.rest;
 
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
 
-public class OrderWithPassesAsEventDatesDto {
+public class OrderRequest {
 
 	private String orderDate;
 	private String vendorCode;
 	private PassBundleDto passes;
 
-	public OrderWithPassesAsEventDatesDto() {
+	public OrderRequest() {
 		// Empty constructor for parsing
 	}
 
-	public OrderWithPassesAsEventDatesDto(String orderDate, String vendorCode, PassBundleDto passes) {
+	public OrderRequest(String orderDate, String vendorCode, PassBundleDto passes) {
 		this.orderDate = orderDate;
 		this.vendorCode = vendorCode;
 		this.passes = passes;

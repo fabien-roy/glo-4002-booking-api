@@ -6,9 +6,9 @@ import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
-import ca.ulaval.glo4002.booking.orders.rest.OrderController;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.orders.rest.OrderResource;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
+import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.orders.services.OrderService;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
@@ -51,7 +51,7 @@ import static org.mockito.Mockito.mock;
 
 public class PassIntegrationTest {
 
-    private OrderController controller;
+    private OrderResource controller;
     private Festival festival;
     private OrderRepository orderRepository;
 
@@ -82,7 +82,7 @@ public class PassIntegrationTest {
         OxygenInventoryService oxygenInventoryService = new OxygenInventoryService(festival, oxygenFactory, oxygenTankProducer);
         OrderService orderService = new OrderService(orderRepository, orderFactory, orderMapper, tripService, oxygenInventoryService);
 
-        controller = new OrderController(orderService);
+        controller = new OrderResource(orderService);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class PassIntegrationTest {
         orderRepository.addOrder(order);
 
         Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(0);
+        PassDto passDto = ((OrderResponse) response.getEntity()).getPasses().get(0);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
@@ -128,7 +128,7 @@ public class PassIntegrationTest {
         orderRepository.addOrder(order);
 
         Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto passDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(0);
+        PassDto passDto = ((OrderResponse) response.getEntity()).getPasses().get(0);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(pass.getPassNumber().getValue(), passDto.getPassNumber());
@@ -159,8 +159,8 @@ public class PassIntegrationTest {
         orderRepository.addOrder(order);
 
         Response response = controller.getByOrderNumber(order.getOrderNumber().toString());
-        PassDto aPassDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(0);
-        PassDto anotherPassDto = ((OrderWithPassesAsPassesDto) response.getEntity()).getPasses().get(1);
+        PassDto aPassDto = ((OrderResponse) response.getEntity()).getPasses().get(0);
+        PassDto anotherPassDto = ((OrderResponse) response.getEntity()).getPasses().get(1);
 
         assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertEquals(aPass.getPassNumber().getValue(), aPassDto.getPassNumber());
@@ -180,7 +180,7 @@ public class PassIntegrationTest {
                 PassOptions.SINGLE_PASS.toString(),
                 Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString())
         );
-        OrderWithPassesAsEventDatesDto orderDto = new OrderWithPassesAsEventDatesDto(
+        OrderRequest orderDto = new OrderRequest(
                 ZonedDateTime.of(festival.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleDto

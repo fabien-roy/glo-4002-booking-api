@@ -4,8 +4,8 @@ import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
-import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsPassesDto;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
+import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
@@ -41,7 +41,6 @@ class OrderServiceTest {
 	private OrderFactory factory;
 	private TripService tripService;
 	private OxygenInventoryService oxygenInventoryService;
-	private String anOrderDate = "2050-05-21";
 
 	@BeforeEach
 	void setUpService() {
@@ -58,9 +57,9 @@ class OrderServiceTest {
 	void order_shouldAddOrder() {
 		String aVendorCode = "aVendorCode";
 		Order anOrder = mockOrder(aVendorCode, PassCategories.SUPERNOVA);
-		OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
+		OrderRequest orderRequest = mockOrderRequest(aVendorCode);
 
-		service.order(orderDto);
+		service.order(orderRequest);
 
 		verify(repository).addOrder(eq(anOrder));
 	}
@@ -68,11 +67,11 @@ class OrderServiceTest {
 	@Test
 	void order_shouldOrderTripsWithCorrectPassCategory() {
 		String aVendorCode = "aVendorCode";
-		OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
+		OrderRequest orderRequest = mockOrderRequest(aVendorCode);
 		PassCategories expectedPassCategory = PassCategories.SUPERNOVA;
 		mockOrder(aVendorCode, expectedPassCategory);
 
-		service.order(orderDto);
+		service.order(orderRequest);
 
 		verify(tripService).orderForPasses(eq(expectedPassCategory), any());
 	}
@@ -80,11 +79,11 @@ class OrderServiceTest {
 	@Test
 	void order_shouldOrderTripsWithCorrectPasses() {
 		String aVendorCode = "aVendorCode";
-		OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
+		OrderRequest orderRequest = mockOrderRequest(aVendorCode);
 		List<Pass> expectedPasses = new ArrayList<>();
 		mockOrder(aVendorCode, PassCategories.SUPERNOVA, expectedPasses);
 
-		service.order(orderDto);
+		service.order(orderRequest);
 
 		verify(tripService).orderForPasses(any(), eq(expectedPasses));
 	}
@@ -92,11 +91,11 @@ class OrderServiceTest {
 	@Test
 	void order_shouldOrderOxygenWithCorrectPassCategory() {
 		String aVendorCode = "aVendorCode";
-		OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
+		OrderRequest orderRequest = mockOrderRequest(aVendorCode);
 		PassCategories expectedPassCategory = PassCategories.SUPERNOVA;
 		mockOrder(aVendorCode, expectedPassCategory);
 
-		service.order(orderDto);
+		service.order(orderRequest);
 
 		verify(oxygenInventoryService).orderForPasses(eq(expectedPassCategory), any(), any());
 	}
@@ -104,11 +103,11 @@ class OrderServiceTest {
 	@Test
 	void order_shouldOrderOxygenWithCorrectPasses() {
 		String aVendorCode = "aVendorCode";
-		OrderWithPassesAsEventDatesDto orderDto = mockOrderDto(aVendorCode);
+		OrderRequest orderRequest = mockOrderRequest(aVendorCode);
 		List<Pass> expectedPasses = new ArrayList<>();
 		mockOrder(aVendorCode, PassCategories.SUPERNOVA, expectedPasses);
 
-		service.order(orderDto);
+		service.order(orderRequest);
 
 		verify(oxygenInventoryService).orderForPasses(any(), eq(expectedPasses), any());
 	}
@@ -119,12 +118,15 @@ class OrderServiceTest {
 		Pass aPass = mock(Pass.class);
 		when(aPass.getPassNumber()).thenReturn(new Number(1L));
 		when(aPass.getPrice()).thenReturn(new Money(new BigDecimal(0.0)));
-		PassBundle passBundle = new PassBundle(Collections.singletonList(aPass),
-				new PassCategory(PassCategories.SUPERNOVA, null), PassOptions.PACKAGE);
+		PassBundle passBundle = new PassBundle(
+				Collections.singletonList(aPass),
+				new PassCategory(PassCategories.SUPERNOVA, null),
+				PassOptions.PACKAGE
+		);
 		Order order = new Order(anOrderNumber, EventDate.getDefaultStartEventDate().minusDays(1).toLocalDateTime(), passBundle);
 		when(repository.getByOrderNumber(anOrderNumber)).thenReturn(order);
 
-		OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(anOrderNumber.toString());
+		OrderResponse orderDto = service.getByOrderNumber(anOrderNumber.toString());
 
 		assertEquals(order.getPrice().getValue().doubleValue(), orderDto.getOrderPrice());
 	}
@@ -141,12 +143,12 @@ class OrderServiceTest {
 		when(passBundle.getCategory()).thenReturn(passCategory);
 		when(passBundle.getPasses()).thenReturn(passes);
 		when(order.getPassBundle()).thenReturn(passBundle);
-		when(factory.build(any())).thenReturn(order);
+		when(factory.create(any())).thenReturn(order);
 
 		return order;
 	}
 
-	private OrderWithPassesAsEventDatesDto mockOrderDto(String vendorCode) {
-		return new OrderWithPassesAsEventDatesDto("aOrderDate", vendorCode, mock(PassBundleDto.class));
+	private OrderRequest mockOrderRequest(String vendorCode) {
+		return new OrderRequest("aOrderDate", vendorCode, mock(PassBundleDto.class));
 	}
 }

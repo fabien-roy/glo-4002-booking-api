@@ -52,21 +52,21 @@ class OrderTest {
 	}
 
 	@Test
-	void getPrice_shouldgetCorrectPrice() {
+	void getPrice_shouldGetCorrectPrice() {
 		order = new Order(orderNumber, orderDate, passBundle);
 
 		assertEquals(order.getPrice(), passBundle.getPrice());
 	}
 
 	@Test
-	void getPasses_shouldgetCorrectPassesList() {
+	void getPasses_shouldGetCorrectPassesList() {
 		order = new Order(orderNumber, orderDate, passBundle);
 
 		assertEquals(order.getPasses(), passBundle.getPasses());
 	}
 
 	@Test
-	void getVendorCode_shouldgetCorrectVendorCode() {
+	void getVendorCode_shouldGetCorrectVendorCode() {
 		order = new Order(orderNumber, orderDate, passBundle);
 
 		assertEquals(order.getVendorCode(), orderNumber.getVendorCode());
