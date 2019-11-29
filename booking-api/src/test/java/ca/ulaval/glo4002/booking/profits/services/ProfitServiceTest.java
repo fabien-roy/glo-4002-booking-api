@@ -7,8 +7,8 @@ import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.Trip;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
+import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

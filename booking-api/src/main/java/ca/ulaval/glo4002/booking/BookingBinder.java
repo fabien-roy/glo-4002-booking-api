@@ -37,15 +37,15 @@ import ca.ulaval.glo4002.booking.program.events.infrastructure.InMemoryEventRepo
 import ca.ulaval.glo4002.booking.program.rest.ProgramController;
 import ca.ulaval.glo4002.booking.program.services.ProgramService;
 import ca.ulaval.glo4002.booking.report.rest.ReportController;
-import ca.ulaval.glo4002.booking.shuttles.*;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestController;
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestMapper;
-import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestService;
-import ca.ulaval.glo4002.booking.shuttles.trips.InMemoryTripRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripMapper;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
+import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
+import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestController;
+import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
+import ca.ulaval.glo4002.booking.shuttles.manifest.services.ShuttleManifestService;
+import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.InMemoryTripRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.rest.mappers.TripMapper;
+import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import javax.inject.Singleton;

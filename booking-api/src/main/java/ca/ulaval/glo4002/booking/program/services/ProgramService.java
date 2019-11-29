@@ -9,7 +9,7 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryServic
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.program.rest.ProgramDto;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
+import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 
 public class ProgramService {
 

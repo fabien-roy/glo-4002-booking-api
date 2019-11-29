@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.profits.rest.ProfitsDto;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
 
 import javax.inject.Inject;
 

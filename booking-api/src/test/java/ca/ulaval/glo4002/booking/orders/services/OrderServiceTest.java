@@ -18,7 +18,7 @@ import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleDto;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.shuttles.trips.TripService;
+import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
