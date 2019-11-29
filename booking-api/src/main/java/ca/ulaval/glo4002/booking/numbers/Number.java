@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.numbers;
 
-import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
 
 public class Number {
 

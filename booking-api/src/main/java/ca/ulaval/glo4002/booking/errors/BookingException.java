@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.booking.errors;
 
-import ca.ulaval.glo4002.booking.errors.ErrorDto;
+import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
 import org.springframework.http.HttpStatus;
 
+// TODO : Remove BookingException
 public abstract class BookingException extends RuntimeException {
 
     protected String description;

@@ -1,5 +1,6 @@
-package ca.ulaval.glo4002.booking.errors;
+package ca.ulaval.glo4002.booking.interfaces;
 
+import ca.ulaval.glo4002.booking.errors.BookingException;
 import org.springframework.http.HttpStatus;
 
 public class InvalidFormatException extends BookingException {

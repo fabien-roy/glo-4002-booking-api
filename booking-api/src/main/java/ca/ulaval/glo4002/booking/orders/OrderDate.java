@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
 
 public class OrderDate {
 

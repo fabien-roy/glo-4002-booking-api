@@ -1,8 +1,10 @@
 package ca.ulaval.glo4002.booking.errors;
 
+import ca.ulaval.glo4002.booking.interfaces.rest.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+// TODO : Use correct ExceptionMapper (see CatchallExceptionMapper)
 public class ExceptionMapper {
 
 	public ResponseEntity mapError(Exception exception) {

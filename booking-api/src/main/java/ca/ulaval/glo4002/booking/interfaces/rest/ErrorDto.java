@@ -1,4 +1,6 @@
-package ca.ulaval.glo4002.booking.errors;
+package ca.ulaval.glo4002.booking.interfaces.rest;
+
+// TODO : Rename Dtos to Response and Request
 
 public class ErrorDto {
 

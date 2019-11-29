@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.program.artists;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
 
 public enum ArtistOrderings {
 

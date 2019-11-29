@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.passes;
 
-import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
 
 import java.util.HashMap;
 import java.util.Map;

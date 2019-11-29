@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.program.events;
 
 import ca.ulaval.glo4002.booking.festival.Festival;
-import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

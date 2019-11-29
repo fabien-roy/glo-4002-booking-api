@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
-import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
+import ca.ulaval.glo4002.booking.interfaces.InvalidFormatException;
 
 import javax.inject.Inject;
 import java.time.LocalDateTime;
