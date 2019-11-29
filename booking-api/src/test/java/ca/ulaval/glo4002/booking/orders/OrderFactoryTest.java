@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
 import ca.ulaval.glo4002.booking.passes.PassOptions;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
 
 class OrderFactoryTest {
 

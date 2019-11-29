@@ -3,14 +3,14 @@ package ca.ulaval.glo4002.booking.orders;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
 
 class OrderControllerTest {
 

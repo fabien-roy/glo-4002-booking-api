@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.report;
 
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportService;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import org.junit.jupiter.api.BeforeEach;

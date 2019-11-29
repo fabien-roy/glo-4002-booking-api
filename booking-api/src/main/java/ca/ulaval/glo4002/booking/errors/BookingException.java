@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.exceptions;
+package ca.ulaval.glo4002.booking.errors;
 
 import ca.ulaval.glo4002.booking.errors.ErrorDto;
 import org.springframework.http.HttpStatus;

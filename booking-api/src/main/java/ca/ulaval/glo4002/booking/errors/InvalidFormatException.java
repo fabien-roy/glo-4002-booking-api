@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.exceptions;
+package ca.ulaval.glo4002.booking.errors;
 
 import org.springframework.http.HttpStatus;
 

@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 
 @Path("/orders")
 public class OrderController {

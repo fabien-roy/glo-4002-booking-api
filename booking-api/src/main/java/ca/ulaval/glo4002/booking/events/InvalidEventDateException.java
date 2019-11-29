@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.events;
 
-import ca.ulaval.glo4002.booking.exceptions.BookingException;
+import ca.ulaval.glo4002.booking.errors.BookingException;
 import org.springframework.http.HttpStatus;
 
 public class InvalidEventDateException extends BookingException {

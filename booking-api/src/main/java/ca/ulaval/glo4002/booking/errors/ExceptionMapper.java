@@ -1,9 +1,7 @@
-package ca.ulaval.glo4002.booking.exceptions;
+package ca.ulaval.glo4002.booking.errors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import ca.ulaval.glo4002.booking.errors.ErrorDto;
 
 public class ExceptionMapper {
 

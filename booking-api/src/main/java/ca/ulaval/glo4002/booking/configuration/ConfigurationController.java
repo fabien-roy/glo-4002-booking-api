@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.configuration;
 
 import ca.ulaval.glo4002.booking.events.EventDateService;
 import ca.ulaval.glo4002.booking.events.EventDatesDto;
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import org.springframework.http.ResponseEntity;
 
 import javax.inject.Inject;

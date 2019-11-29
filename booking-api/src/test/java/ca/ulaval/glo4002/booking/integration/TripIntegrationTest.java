@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.events.EventDateFactory;
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.oxygen.*;
 import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;

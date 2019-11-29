@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 
 @Path("/shuttle-manifests")
 public class ShuttleManifestController {

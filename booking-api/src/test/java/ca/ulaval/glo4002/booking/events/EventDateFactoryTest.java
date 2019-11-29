@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.events;
 
 import ca.ulaval.glo4002.booking.configuration.Configuration;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

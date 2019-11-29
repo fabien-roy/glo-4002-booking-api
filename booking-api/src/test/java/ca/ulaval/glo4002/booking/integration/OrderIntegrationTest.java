@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.configuration.Configuration;
 import ca.ulaval.glo4002.booking.events.EventDateFactory;
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.InMemoryOxygenInventoryReposit
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.passes.*;
 import ca.ulaval.glo4002.booking.errors.ErrorDto;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundle;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleDto;
 import ca.ulaval.glo4002.booking.passes.bundles.PassBundleFactory;

@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.orders;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.errors.InvalidFormatException;
 
 public class OrderNumber {
 

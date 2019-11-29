@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders;
 
-import ca.ulaval.glo4002.booking.exceptions.BookingException;
+import ca.ulaval.glo4002.booking.errors.BookingException;
 import org.springframework.http.HttpStatus;
 
 public class OrderNotFoundException extends BookingException {

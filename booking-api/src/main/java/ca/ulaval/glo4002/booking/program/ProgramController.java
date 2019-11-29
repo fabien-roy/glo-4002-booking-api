@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import ca.ulaval.glo4002.booking.artists.ArtistListDto;
 import ca.ulaval.glo4002.booking.artists.ArtistService;
-import ca.ulaval.glo4002.booking.exceptions.ExceptionMapper;
+import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 
 @Path("/program")
 public class ProgramController {
