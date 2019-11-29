@@ -19,8 +19,7 @@ public class OxygenFactory {
 		this.festival = festival;
 	}
 
-
-	public List<OxygenTank> buildOxygenTank(OxygenCategory category, LocalDate requestDate, Integer quantityToCover) {
+	public List<OxygenTank> createOxygenTank(OxygenCategory category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		OxygenDate requestedDate = new OxygenDate(requestDate);
 
@@ -35,19 +34,20 @@ public class OxygenFactory {
 		return newTanks;
 	}
 
-	public OxygenCategory buildCategory(PassCategories category) {
+	public OxygenCategory createCategory(PassCategories category) {
 		switch(category) {
 			case SUPERNOVA:
-			    return buildCategory(OxygenCategories.E);
+			    return createCategory(OxygenCategories.E);
 			case SUPERGIANT:
-				return buildCategory(OxygenCategories.B);
+				return createCategory(OxygenCategories.B);
 			default:
 			case NEBULA:
-				return buildCategory(OxygenCategories.A);
+				return createCategory(OxygenCategories.A);
 		}
 	}
 
-	public OxygenCategory buildCategory(OxygenCategories category) {
+	// TODO : Can't OxygenFactory.createCategory only have PassCategories as a parameter?
+	public OxygenCategory createCategory(OxygenCategories category) {
 		switch(category) {
 			case E:
 				return new OxygenCategory(
@@ -79,26 +79,26 @@ public class OxygenFactory {
 		}
 	}
 
-	public OxygenCategory buildCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
-		// TODO : Use EventDate in OxygenFactory when OxygenDate is removed
+	public OxygenCategory createCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
+		// TODO : Use OxygenDate
 		LocalDate readyBeforeDate = festival.getStartEventDate().plusDays(1).getValue();
 
 		if(oxygenCategories == OxygenCategories.A) {
 			if(requestDate.plusDays(20).isBefore(readyBeforeDate)){
-				return buildCategory(PassCategories.NEBULA);
+				return createCategory(PassCategories.NEBULA);
 			} else if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-				return buildCategory(PassCategories.SUPERGIANT);
+				return createCategory(PassCategories.SUPERGIANT);
 			} else {
-				return buildCategory(PassCategories.SUPERNOVA);
+				return createCategory(PassCategories.SUPERNOVA);
 			}
 		} else if(oxygenCategories == OxygenCategories.B) {
 			if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-				return buildCategory(PassCategories.SUPERGIANT);
+				return createCategory(PassCategories.SUPERGIANT);
 			} else {
-				return buildCategory(PassCategories.SUPERNOVA);
+				return createCategory(PassCategories.SUPERNOVA);
 			}
 		} else {
-			return buildCategory(PassCategories.SUPERNOVA);
+			return createCategory(PassCategories.SUPERNOVA);
 		}
 	}
 }

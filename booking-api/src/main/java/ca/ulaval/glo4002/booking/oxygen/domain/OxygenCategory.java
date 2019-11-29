@@ -8,6 +8,8 @@ import java.time.LocalDate;
 
 public class OxygenCategory {
 
+    // TODO : Rethink OxygenCategory, it should actually be an OxygenProduction
+
     private OxygenCategories category;
     private Integer tanksNeededPerDay;
     private Integer produceTimeInDays;
@@ -15,8 +17,7 @@ public class OxygenCategory {
     private Integer numberOfProductionItem;
     private Money productionItemPrice;
 
-    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays,
-                          Integer numberOfTanksByBundle, Integer numberOfProductionItem, Money productionItemPrice) {
+    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Integer numberOfProductionItem, Money productionItemPrice) {
         this.category = category;
         this.tanksNeededPerDay = tanksNeededPerDay;
         this.produceTimeInDays = produceTimeInDays;
@@ -25,8 +26,7 @@ public class OxygenCategory {
         this.productionItemPrice = productionItemPrice;
     }
 
-    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays,
-                          Integer numberOfTanksByBundle, Money productionItemPrice) {
+    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Money productionItemPrice) {
         this.category = category;
         this.tanksNeededPerDay = tanksNeededPerDay;
         this.produceTimeInDays = produceTimeInDays;

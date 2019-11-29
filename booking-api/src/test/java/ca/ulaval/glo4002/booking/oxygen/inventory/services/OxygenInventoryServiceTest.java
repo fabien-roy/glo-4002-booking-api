@@ -90,7 +90,7 @@ class OxygenInventoryServiceTest {
 	@ParameterizedTest
 	@EnumSource(PassCategories.class)
 	void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
-		OxygenCategories expectedOxygenCategory = factory.buildCategory(passCategory).getCategory();
+		OxygenCategories expectedOxygenCategory = factory.createCategory(passCategory).getCategory();
 		EventDate aEventDate = EventDate.getDefaultStartEventDate();
 		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
 

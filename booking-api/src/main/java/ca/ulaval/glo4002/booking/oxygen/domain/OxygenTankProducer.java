@@ -14,13 +14,14 @@ import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 
 public class OxygenTankProducer {
 
+	// TODO : Completely rebuild OxygenTankProducer
+
 	private OxygenInventoryRepository inventoryRepository;
 	private OxygenHistoryRepository historyRepository;
 	private OxygenFactory factory;
 
 	@Inject
-	public OxygenTankProducer(OxygenInventoryRepository inventoryRepository, OxygenHistoryRepository historyRepository,
-			OxygenFactory factory) {
+	public OxygenTankProducer(OxygenInventoryRepository inventoryRepository, OxygenHistoryRepository historyRepository, OxygenFactory factory) {
 		this.inventoryRepository = inventoryRepository;
 		this.historyRepository = historyRepository;
 		this.factory = factory;
@@ -30,28 +31,24 @@ public class OxygenTankProducer {
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		OxygenHistory history = historyRepository.getHistory();
 		PassCategories passCategories = convertOxygenCategoryToPassCategories(requestedCategory);
-		OxygenCategory requestCategory = factory.buildCategory(passCategories);
-		OxygenCategory actualOxygenCategory = factory.buildCategoryForRequestDate(requestDate, requestedCategory);
+		OxygenCategory requestCategory = factory.createCategory(passCategories);
+		OxygenCategory actualOxygenCategory = factory.createCategoryForRequestDate(requestDate, requestedCategory);
 		OxygenCategories category = actualOxygenCategory.getCategory();
 
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = requestCategory.getTanksNeededPerDay();
 
-		quantityToCover = inventory.requestTankByCategory(requestedCategory, actualOxygenCategory.getCategory(),
-				quantityToCover);
+		quantityToCover = inventory.requestTankByCategory(requestedCategory, actualOxygenCategory.getCategory(), quantityToCover);
 
 		if (quantityToCover > 0) {
-			List<OxygenTank> producedTanks = factory.buildOxygenTank(actualOxygenCategory, requestDate,
-					quantityToCover);
+			List<OxygenTank> producedTanks = factory.createOxygenTank(actualOxygenCategory, requestDate, quantityToCover);
 			newTanks.addAll(producedTanks);
 
 			if (category == OxygenCategories.E) {
 				history.addTanksBought(requestDate, quantityToCover);
 			} else {
-				history.addMadeTanks(actualOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(),
-						producedTanks.size());
-				actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history,
-						producedTanks.size());
+				history.addMadeTanks(actualOxygenCategory.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
+				actualOxygenCategory.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
 			}
 
 			inventory.addTanksToInventory(category, newTanks);
@@ -68,7 +65,6 @@ public class OxygenTankProducer {
 			Integer numberOfTanks) {
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		OxygenHistory history = historyRepository.getHistory();
-		;
 		List<OxygenTank> newTanks = new ArrayList<>();
 		OxygenCategories category = oxygenCategory.getCategory();
 
@@ -76,7 +72,7 @@ public class OxygenTankProducer {
 
 		if (quantityToCover > 0) {
 			LocalDate readyDate = oxygenCategory.calculateReadyDateForCategory(requestDate).getValue();
-			newTanks = factory.buildOxygenTank(oxygenCategory, requestDate, quantityToCover);
+			newTanks = factory.createOxygenTank(oxygenCategory, requestDate, quantityToCover);
 
 			if (category == OxygenCategories.E) {
 				history.addTanksBought(readyDate, quantityToCover);
@@ -95,7 +91,7 @@ public class OxygenTankProducer {
 	}
 
 	private PassCategories convertOxygenCategoryToPassCategories(OxygenCategories oxygenCategories) {
-		PassCategories passCategories = PassCategories.SUPERNOVA;
+		PassCategories passCategories;
 
 		switch (oxygenCategories) {
 		case E:
@@ -104,14 +100,12 @@ public class OxygenTankProducer {
 		case B:
 			passCategories = PassCategories.SUPERGIANT;
 			break;
+		default:
 		case A:
 			passCategories = PassCategories.NEBULA;
-			break;
-		default:
 			break;
 		}
 
 		return passCategories;
 	}
-
 }

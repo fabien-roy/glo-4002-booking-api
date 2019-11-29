@@ -29,9 +29,9 @@ class OxygenTankTest {
 		Festival festival = mock(Festival.class);
 		OxygenFactory factory = new OxygenFactory(festival);
 
-		categoryA = factory.buildCategory(PassCategories.NEBULA);
-		categoryB = factory.buildCategory(PassCategories.SUPERGIANT);
-		categoryE = factory.buildCategory(PassCategories.SUPERNOVA);
+		categoryA = factory.createCategory(PassCategories.NEBULA);
+		categoryB = factory.createCategory(PassCategories.SUPERGIANT);
+		categoryE = factory.createCategory(PassCategories.SUPERNOVA);
 	}
 
 	@Test

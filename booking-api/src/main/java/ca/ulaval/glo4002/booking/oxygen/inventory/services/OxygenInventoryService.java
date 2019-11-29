@@ -33,7 +33,7 @@ public class OxygenInventoryService {
 	}
 
 	public void orderForPasses(PassCategories passCategory, List<Pass> passes, LocalDateTime orderDate) {
-		OxygenCategory oxygenCategory = factory.buildCategory(passCategory);
+		OxygenCategory oxygenCategory = factory.createCategory(passCategory);
 
 		passes.forEach(pass -> {
 			if (pass.getEventDate() == null) {
@@ -53,7 +53,7 @@ public class OxygenInventoryService {
 	}
 
     public void orderForArtist(BookingArtist artist, EventDate orderDate) {
-		OxygenCategory category = factory.buildCategory(OXYGEN_CATEGORY_FOR_ARTIST);
+		OxygenCategory category = factory.createCategory(OXYGEN_CATEGORY_FOR_ARTIST);
 		Integer amountOfOxygenTanksNeeded = artist.getNumberOfPeople() * OXYGEN_TANKS_NEEDED_PER_ARTIST;
 
 	    producer.produceOxygenByQuantity(category, orderDate.getValue(), amountOfOxygenTanksNeeded);

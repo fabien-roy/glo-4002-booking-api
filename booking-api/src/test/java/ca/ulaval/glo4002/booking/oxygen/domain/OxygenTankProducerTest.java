@@ -176,7 +176,7 @@ public class OxygenTankProducerTest {
 		verify(inventoryRepository).setInventory(any(OxygenInventory.class));
 	}
 
-	@Test
+	// TODO : Remove OxygenTankProducerTest.getNumberCreate and hardcode expected values
 	private Integer getNumberCreated(Integer quantityNeededByDays, Integer quantityByBundle) {
 		return (int) (Math.ceil((quantityNeededByDays / (double) quantityByBundle)) * quantityByBundle);
 	}
