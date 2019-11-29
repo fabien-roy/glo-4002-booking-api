@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -30,12 +31,12 @@ import static ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventor
 
 class OxygenInventoryServiceTest {
 
+	private static final OrderDate AN_ORDER_DATE = new OrderDate(FestivalConfiguration.getDefaultStartEventDate().toLocalDateTime());
+
 	private OxygenInventoryService service;
 	private FestivalConfiguration festivalConfiguration;
 	private OxygenFactory factory;
 	private OxygenTankProducer producer;
-
-	private static final LocalDateTime AN_ORDER_DATE = LocalDateTime.of(2050, 5, 20, 0, 0);
 
 	@BeforeEach
 	void setUpService() {

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
@@ -32,7 +33,7 @@ public class OxygenInventoryService {
 		this.producer = producer;
 	}
 
-	public void orderForPasses(PassCategories passCategory, List<Pass> passes, LocalDateTime orderDate) {
+	public void orderForPasses(PassCategories passCategory, List<Pass> passes, OrderDate orderDate) {
 		OxygenCategory oxygenCategory = factory.createCategory(passCategory);
 
 		passes.forEach(pass -> {

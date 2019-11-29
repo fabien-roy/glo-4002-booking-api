@@ -1,45 +1,41 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 
-import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.orders.rest.exceptions.InvalidOrderDateException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class OrderDate {
 
-	public static final LocalDateTime START_DATE_TIME = LocalDateTime.of(2050, 1, 1, 0, 0);
-	public static final LocalDateTime END_DATE_TIME = LocalDateTime.of(2050, 7, 17, 0, 0);
-	private LocalDateTime date;
+	private LocalDateTime value;
 
-	public OrderDate(String textDate) {
-		LocalDateTime parsedDate;
-
-		try {
-			parsedDate = ZonedDateTime.parse(textDate, DateTimeFormatter.ISO_DATE_TIME).toLocalDateTime();
-		} catch (Exception exception) {
-			throw new InvalidFormatException();
-		}
-
-		validateOrderDate(parsedDate);
-
-		this.date = parsedDate;
+	public OrderDate(LocalDateTime value) {
+		this.value = value;
 	}
 
-	public LocalDateTime getDate() {
-		return date;
+	public LocalDateTime getValue() {
+		return value;
 	}
 
 	@Override
 	public String toString() {
-		return date.toString();
+		return value.toString();
 	}
 
-	private void validateOrderDate(LocalDateTime date) {
-		if (date.isBefore(START_DATE_TIME) || date.isAfter(END_DATE_TIME)) {
-			throw new InvalidOrderDateException();
-		}
+	public boolean isBefore(OrderDate orderDate) {
+		return this.value.isBefore(orderDate.getValue());
 	}
 
+	public boolean isAfter(OrderDate orderDate) {
+		return this.value.isAfter(orderDate.getValue());
+	}
+
+	public boolean isBetweenOrEquals(OrderDate lowerDate, OrderDate higherDate) {
+		return !this.isBefore(lowerDate) && !this.isAfter(higherDate);
+	}
+
+	// TODO : Test
+	public LocalDate toLocalDate() {
+		return value.toLocalDate();
+	}
 }

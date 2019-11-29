@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
@@ -21,7 +22,6 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventory
 import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
@@ -63,12 +63,13 @@ class TripIntegrationTest {
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
+        OrderDateFactory orderDateFactory = new OrderDateFactory(festivalConfiguration);
         EventDateFactory eventDateFactory = new EventDateFactory(festivalConfiguration);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         shuttleFactory = new ShuttleFactory();
         OxygenFactory oxygenFactory = new OxygenFactory(festivalConfiguration);
-        OrderFactory orderFactory = new OrderFactory(festivalConfiguration, numberGenerator, passBundleFactory);
+        OrderFactory orderFactory = new OrderFactory(numberGenerator, orderDateFactory, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -267,7 +268,7 @@ class TripIntegrationTest {
         );
 
         return new OrderRequest(
-                ZonedDateTime.of(festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleRequest
         );

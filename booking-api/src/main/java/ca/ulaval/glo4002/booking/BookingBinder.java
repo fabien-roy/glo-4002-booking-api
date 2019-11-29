@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.festival.services.FestivalService;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
@@ -89,6 +90,7 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OxygenFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
+        bindAsContract(OrderDateFactory.class);
         bindAsContract(EventFactory.class);
         bindAsContract(EventDateFactory.class);
     }

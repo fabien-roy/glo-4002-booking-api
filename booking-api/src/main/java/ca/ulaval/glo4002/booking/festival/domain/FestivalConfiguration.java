@@ -1,8 +1,11 @@
 package ca.ulaval.glo4002.booking.festival.domain;
 
+import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,12 +50,18 @@ public class FestivalConfiguration {
         return allEventDates;
     }
 
-    public EventDate getMinimumEventDateToOrder() {
-        return startEventDate.minusDays(MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+    public OrderDate getStartOrderDate() {
+        EventDate startOrderDateAsEventDate = startEventDate.minusDays(MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        LocalDateTime startOrderDateValue = LocalDateTime.of(startOrderDateAsEventDate.getValue(), LocalTime.MIDNIGHT);
+
+        return new OrderDate(startOrderDateValue);
     }
 
-    public EventDate getMaximumEventDateToOrder() {
-        return startEventDate.minusDays(MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+    public OrderDate getEndOrderDate() {
+        EventDate endOrderDateAsEventDate = startEventDate.minusDays(MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        LocalDateTime endOrderDateValue = LocalDateTime.of(endOrderDateAsEventDate.getValue(), LocalTime.MIDNIGHT);
+
+        return new OrderDate(endOrderDateValue);
     }
 
     public static EventDate getDefaultStartEventDate() {

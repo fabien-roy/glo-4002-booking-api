@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,13 +17,13 @@ import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 class OrderTest {
 
 	private Order order;
-	private LocalDateTime orderDate;
+	private OrderDate orderDate;
 	private PassBundle passBundle;
 	private OrderNumber orderNumber;
 
 	@BeforeEach
 	void setUpVariables() {
-		orderDate = LocalDateTime.of(2050, 7, 1, 0, 0);
+		orderDate = new OrderDate(LocalDateTime.of(FestivalConfiguration.getDefaultStartEventDate().getValue(), LocalTime.MIDNIGHT));
 		passBundle = mock(PassBundle.class);
 		orderNumber = mock(OrderNumber.class);
 

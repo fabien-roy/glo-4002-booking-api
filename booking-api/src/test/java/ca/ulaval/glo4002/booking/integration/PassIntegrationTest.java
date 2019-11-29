@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
@@ -16,7 +17,6 @@ import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.*;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.InMemoryOxygenHistoryRepository;
@@ -61,12 +61,13 @@ public class PassIntegrationTest {
 
         NumberGenerator numberGenerator = new NumberGenerator();
 
+        OrderDateFactory orderDateFactory = new OrderDateFactory(festivalConfiguration);
         EventDateFactory eventDateFactory = new EventDateFactory(festivalConfiguration);
         PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
         PassBundleFactory passBundleFactory = new PassBundleFactory(passFactory);
         ShuttleFactory shuttleFactory = new ShuttleFactory();
         OxygenFactory oxygenFactory = new OxygenFactory(festivalConfiguration);
-        OrderFactory orderFactory = new OrderFactory(festivalConfiguration, numberGenerator, passBundleFactory);
+        OrderFactory orderFactory = new OrderFactory(numberGenerator, orderDateFactory, passBundleFactory);
 
         TripRepository tripRepository = new InMemoryTripRepository(shuttleFactory);
         OxygenInventoryRepository oxygenInventoryRepository = new InMemoryOxygenInventoryRepository();
@@ -96,7 +97,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festivalConfiguration.getStartOrderDate(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -122,7 +123,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festivalConfiguration.getStartOrderDate(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -153,7 +154,7 @@ public class PassIntegrationTest {
         );
         Order order = new Order(
                 new OrderNumber(new Number(1L), "VENDOR"),
-                festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(),
+                festivalConfiguration.getStartOrderDate(),
                 passBundle
         );
         orderRepository.addOrder(order);
@@ -184,7 +185,7 @@ public class PassIntegrationTest {
                 )
         );
         OrderRequest orderRequest = new OrderRequest(
-                ZonedDateTime.of(festivalConfiguration.getMinimumEventDateToOrder().toLocalDateTime(), ZoneId.systemDefault()).toString(),
+                ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue(), ZoneId.systemDefault()).toString(),
                 "VENDOR",
                 passBundleRequest
         );

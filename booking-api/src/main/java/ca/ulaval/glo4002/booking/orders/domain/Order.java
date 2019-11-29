@@ -11,10 +11,10 @@ import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 public class Order {
 
 	private OrderNumber orderNumber;
-	private LocalDateTime orderDate; // TODO : Use OrderDate in Order
+	private OrderDate orderDate;
 	private PassBundle passBundle;
 
-	public Order(OrderNumber orderNumber, LocalDateTime orderDate, PassBundle passBundle) {
+	public Order(OrderNumber orderNumber, OrderDate orderDate, PassBundle passBundle) {
 		this.orderNumber = orderNumber;
 		this.orderDate = orderDate;
 		this.passBundle = passBundle;
@@ -28,7 +28,7 @@ public class Order {
 		return orderNumber.getVendorCode();
 	}
 
-	public LocalDateTime getOrderDate() {
+	public OrderDate getOrderDate() {
 		return orderDate;
 	}
 

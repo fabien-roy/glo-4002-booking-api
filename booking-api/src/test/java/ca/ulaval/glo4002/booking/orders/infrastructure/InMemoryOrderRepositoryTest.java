@@ -8,6 +8,7 @@ import java.util.List;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -37,7 +38,7 @@ class InMemoryOrderRepositoryTest {
 	void getOrderNumber_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
 		OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
 		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
+		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		repository.addOrder(anOrder);
@@ -48,7 +49,7 @@ class InMemoryOrderRepositoryTest {
 	@Test
 	void getByOrderNumber_shouldReturnOrder() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		LocalDateTime anOrderDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
+		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		repository.addOrder(anOrder);
@@ -62,7 +63,7 @@ class InMemoryOrderRepositoryTest {
 	void getByOrderNumber_shouldReturnOrders_whenThereAreMultipleOrders() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
 		OrderNumber anotherOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
+		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		Order anotherOrder = new Order(anotherOrderNumber, anOrderDate, aPassBundle);
@@ -79,7 +80,7 @@ class InMemoryOrderRepositoryTest {
 	@Test
 	void addOrder_shouldAddOrder() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
+		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 
@@ -91,7 +92,7 @@ class InMemoryOrderRepositoryTest {
 	@Test
 	void findAll_shouldReturnEveryOrder() {
 		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		LocalDateTime anOrderDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toLocalDateTime();
+		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
 		repository.addOrder(anOrder);

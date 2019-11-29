@@ -1,9 +1,12 @@
 package ca.ulaval.glo4002.booking.festival.domain;
 
+import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 
@@ -82,20 +85,22 @@ class FestivalConfigurationTest {
     }
 
     @Test
-    void getMinimumEventDateToOrder_shouldReturnStartEventDateMinusMaximumDaysToOrderBeforeStartEventDate() {
+    void getStartOrderDate_shouldReturnStartEventDateMinusMaximumDaysToOrderBeforeStartEventDate() {
         EventDate expectedEventDate = festivalConfiguration.getStartEventDate().minusDays(FestivalConfiguration.MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
 
-        EventDate eventDate = festivalConfiguration.getMinimumEventDateToOrder();
+        OrderDate orderDate = festivalConfiguration.getStartOrderDate();
 
-        assertEquals(expectedEventDate, eventDate);
+        assertEquals(expectedOrderDate, orderDate);
     }
 
     @Test
     void getMaximumEventDateToOrder_shouldReturnStartEventDateMinusMinimumDaysToOrderBeforeStartEventDate() {
         EventDate expectedEventDate = festivalConfiguration.getStartEventDate().minusDays(FestivalConfiguration.MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
 
-        EventDate eventDate = festivalConfiguration.getMaximumEventDateToOrder();
+        OrderDate orderDate = festivalConfiguration.getEndOrderDate();
 
-        assertEquals(expectedEventDate, eventDate);
+        assertEquals(expectedOrderDate, orderDate);
     }
 }
