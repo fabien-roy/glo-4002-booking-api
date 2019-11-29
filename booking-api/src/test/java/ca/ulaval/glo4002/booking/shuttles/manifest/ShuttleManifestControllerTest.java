@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -17,10 +16,9 @@ class ShuttleManifestControllerTest {
 
     @BeforeEach
     void setUpController() {
-        ExceptionMapper exceptionMapper = new ExceptionMapper();
         service = mock(ShuttleManifestService.class);
 
-        controller = new ShuttleManifestController(exceptionMapper, service);
+        controller = new ShuttleManifestController(service);
     }
 
     @Test

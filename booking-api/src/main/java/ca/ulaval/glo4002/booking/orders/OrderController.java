@@ -13,17 +13,13 @@ import javax.ws.rs.core.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
-
 @Path("/orders")
 public class OrderController {
 
-	private final ExceptionMapper exceptionMapper;
 	private final OrderService service;
 
 	@Inject
-	public OrderController(ExceptionMapper exceptionMapper, OrderService service) {
-		this.exceptionMapper = exceptionMapper;
+	public OrderController(OrderService service) {
 		this.service = service;
 	}
 
@@ -31,13 +27,7 @@ public class OrderController {
 	@Path("/{requestedOrderNumber}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> getByOrderNumber(@PathParam("requestedOrderNumber") String requestedOrderNumber) {
-		OrderWithPassesAsPassesDto orderDto;
-
-		try {
-			orderDto = service.getByOrderNumber(requestedOrderNumber);
-		} catch (Exception exception) {
-			return exceptionMapper.mapError(exception);
-		}
+		OrderWithPassesAsPassesDto orderDto = service.getByOrderNumber(requestedOrderNumber);
 
 		return ResponseEntity.ok().body(orderDto);
 	}
@@ -45,13 +35,7 @@ public class OrderController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> addOrder(OrderWithPassesAsEventDatesDto requestedOrderDto) {
-		String orderNumber;
-
-		try {
-			orderNumber = service.order(requestedOrderDto);
-		} catch (Exception exception) {
-			return exceptionMapper.mapError(exception);
-		}
+		String orderNumber = service.order(requestedOrderDto);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.LOCATION, "/orders/" + orderNumber);

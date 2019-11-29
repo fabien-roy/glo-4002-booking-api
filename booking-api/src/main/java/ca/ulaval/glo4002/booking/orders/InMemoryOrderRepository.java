@@ -16,11 +16,10 @@ public class InMemoryOrderRepository implements OrderRepository {
 
 	@Override
 	public Order getByOrderNumber(OrderNumber orderNumber) {
-		Optional<Order> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber))
-				.findAny();
+		Optional<Order> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber)).findAny();
 
 		if (!foundOrder.isPresent()) {
-			throw new OrderNotFoundException(orderNumber.toString());
+			throw new OrderNotFoundException();
 		}
 
 		return foundOrder.get();

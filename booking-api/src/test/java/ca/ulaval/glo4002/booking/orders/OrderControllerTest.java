@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.orders;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,30 +19,9 @@ class OrderControllerTest {
 
 	@BeforeEach
 	void setUpController() {
-		ExceptionMapper exceptionMapper = new ExceptionMapper();
 		service = mock(OrderService.class);
 
-		controller = new OrderController(exceptionMapper, service);
-	}
-
-	@Test
-	void getByOrderNumber_shouldReturnBadRequest_whenBadRequest() {
-		String anOrderNumber = "anOrderNumber";
-		when(service.getByOrderNumber(anOrderNumber)).thenThrow(new InvalidFormatException());
-
-		ResponseEntity<?> response = controller.getByOrderNumber(anOrderNumber);
-
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-	}
-
-	@Test
-	void getByOrderNumber_shouldReturnNotFound_whenOrderIsNotFound() {
-		String anOrderNumber = "anOrderNumber";
-		when(service.getByOrderNumber(anOrderNumber)).thenThrow(new OrderNotFoundException(anOrderNumber));
-
-		ResponseEntity<?> response = controller.getByOrderNumber(anOrderNumber);
-
-		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		controller = new OrderController(service);
 	}
 
 	@Test
@@ -54,16 +32,6 @@ class OrderControllerTest {
 		ResponseEntity<?> response = controller.getByOrderNumber(anOrderNumber);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-	}
-
-	@Test
-	void addOrder_shouldReturnBadRequest_whenBadRequest() {
-		OrderWithPassesAsEventDatesDto anOrderDto = mock(OrderWithPassesAsEventDatesDto.class);
-		when(service.order(anOrderDto)).thenThrow(new InvalidFormatException());
-
-		ResponseEntity<?> response = controller.addOrder(anOrderDto);
-
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
 	}
 
 	@Test

@@ -1,18 +1,5 @@
 package ca.ulaval.glo4002.booking.program.events.rest.exceptions;
 
-import ca.ulaval.glo4002.booking.errors.BookingException;
-import org.springframework.http.HttpStatus;
+public class InvalidEventDateException extends RuntimeException {
 
-public class InvalidEventDateException extends BookingException {
-
-    public static final String MESSAGE = "INVALID_EVENT_DATE";
-    // The following start and end event dates are default. This is as required.
-    public static final String DESCRIPTION = "Event date should be between July 17 2050 and July 24 2050";
-
-    public InvalidEventDateException() {
-        super(MESSAGE);
-
-        description = DESCRIPTION;
-        status = HttpStatus.BAD_REQUEST;
-    }
 }

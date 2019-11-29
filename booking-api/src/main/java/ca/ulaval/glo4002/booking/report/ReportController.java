@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.report;
 
-import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.profits.ProfitService;
 import ca.ulaval.glo4002.booking.profits.ProfitsDto;
 import ca.ulaval.glo4002.booking.oxygen.report.OxygenReportDto;
@@ -14,13 +13,11 @@ import javax.ws.rs.core.MediaType;
 @Path("/report")
 public class ReportController {
 
-    private final ExceptionMapper exceptionMapper;
     private final OxygenReportService oxygenReportService;
     private final ProfitService profitService;
 
     @Inject
-    public ReportController(ExceptionMapper exceptionMapper, OxygenReportService oxygenReportService, ProfitService profitService) {
-        this.exceptionMapper = exceptionMapper;
+    public ReportController(OxygenReportService oxygenReportService, ProfitService profitService) {
         this.oxygenReportService = oxygenReportService;
         this.profitService = profitService;
     }
@@ -29,13 +26,7 @@ public class ReportController {
     @Path("/o2")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getOxygenReport() {
-        OxygenReportDto oxygenReportDto = null;
-
-        try {
-            oxygenReportDto = oxygenReportService.getOxygenReport();
-        } catch (Exception exception) {
-            exceptionMapper.mapError(exception);
-        }
+        OxygenReportDto oxygenReportDto = oxygenReportService.getOxygenReport();
 
         return ResponseEntity.ok().body(oxygenReportDto);
     }
@@ -44,14 +35,8 @@ public class ReportController {
     @Path("/profits")
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseEntity<?> getProfits() {
-        ProfitsDto profitsDto = null;
-
-        try {
-            profitService.calculateProfit();
-            profitsDto = profitService.get();
-        } catch (Exception exception) {
-            exceptionMapper.mapError(exception);
-        }
+        profitService.calculateProfit();
+        ProfitsDto profitsDto = profitService.get();
 
         return ResponseEntity.ok().body(profitsDto);
     }

@@ -5,7 +5,6 @@ import ca.ulaval.glo4002.booking.program.artists.*;
 import ca.ulaval.glo4002.booking.festival.Festival;
 import ca.ulaval.glo4002.booking.festival.ConfigurationController;
 import ca.ulaval.glo4002.booking.program.events.*;
-import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 import ca.ulaval.glo4002.booking.orders.*;
 import ca.ulaval.glo4002.booking.oxygen.*;
 import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;
@@ -106,7 +105,6 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindMappers() {
-        bindAsContract(ExceptionMapper.class);
         bindAsContract(PassBundleMapper.class);
         bindAsContract(OrderMapper.class);
         bindAsContract(TripMapper.class);

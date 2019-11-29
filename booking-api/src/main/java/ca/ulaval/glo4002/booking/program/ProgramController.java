@@ -13,18 +13,15 @@ import org.springframework.http.ResponseEntity;
 
 import ca.ulaval.glo4002.booking.program.artists.ArtistListDto;
 import ca.ulaval.glo4002.booking.program.artists.ArtistService;
-import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
 
 @Path("/program")
 public class ProgramController {
 
-    private final ExceptionMapper exceptionMapper;
 	private final ArtistService artistService;
 	private final ProgramService programService;
 
 	@Inject
-	public ProgramController(ExceptionMapper exceptionMapper, ArtistService artistService, ProgramService programService) {
-		this.exceptionMapper = exceptionMapper;
+	public ProgramController(ArtistService artistService, ProgramService programService) {
 		this.artistService = artistService;
 		this.programService = programService;
 	}
@@ -35,14 +32,11 @@ public class ProgramController {
 	public ResponseEntity<?> getArtists(@QueryParam("orderBy") String orderBy) {
 		ArtistListDto artistListDto;
 
-		try {
-			if (orderBy == null) {
-				artistListDto = artistService.getAllUnordered();
-			} else {
-				artistListDto = artistService.getAllOrdered(orderBy);
-			}
-		} catch (Exception exception) {
-			return exceptionMapper.mapError(exception);
+		// Make orderBy nullable in artist service
+		if (orderBy == null) {
+			artistListDto = artistService.getAllUnordered();
+		} else {
+			artistListDto = artistService.getAllOrdered(orderBy);
 		}
 
 		return ResponseEntity.ok().body(artistListDto);
@@ -51,11 +45,7 @@ public class ProgramController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public ResponseEntity<?> add(ProgramDto programDto) {
-		try {
-			programService.add(programDto);
-		} catch (Exception exception) {
-			return exceptionMapper.mapError(exception);
-		}
+		programService.add(programDto);
 
 		return ResponseEntity.ok().build();
 	}

@@ -9,17 +9,13 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.http.ResponseEntity;
 
-import ca.ulaval.glo4002.booking.errors.ExceptionMapper;
-
 @Path("/shuttle-manifests")
 public class ShuttleManifestController {
 
-    private final ExceptionMapper exceptionMapper;
 	private final ShuttleManifestService service;
 
 	@Inject
-	public ShuttleManifestController(ExceptionMapper exceptionMapper, ShuttleManifestService service) {
-		this.exceptionMapper = exceptionMapper;
+	public ShuttleManifestController(ShuttleManifestService service) {
 		this.service = service;
 	}
 
@@ -29,17 +25,9 @@ public class ShuttleManifestController {
 		ShuttleManifestDto shuttleManifestDto;
 
 		if (date == null) {
-			try {
-				shuttleManifestDto = service.getTrips();
-			} catch (Exception exception) {
-				return exceptionMapper.mapError(exception);
-			}
+			shuttleManifestDto = service.getTrips();
 		} else {
-			try {
-				shuttleManifestDto = service.getTripsForDate(date);
-			} catch (Exception exception) {
-				return exceptionMapper.mapError(exception);
-			}
+			shuttleManifestDto = service.getTripsForDate(date);
 		}
 
 		return ResponseEntity.ok().body(shuttleManifestDto);
