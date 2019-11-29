@@ -28,6 +28,7 @@ public class OrderFactory {
     }
 
     public Order build(OrderWithPassesAsEventDatesDto orderDto) {
+        // TODO : Make passes nonNullable in Dto
         if (orderDto.getPasses() == null) {
             throw new InvalidFormatException();
         }
