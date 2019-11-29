@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;

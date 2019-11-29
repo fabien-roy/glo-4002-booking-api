@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.ShuttleCategories;
 
 class TripMapperTest {

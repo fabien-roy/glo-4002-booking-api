@@ -5,9 +5,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 public class PassFactory {

@@ -1,0 +1,20 @@
+package ca.ulaval.glo4002.booking.program.rest;
+
+import java.util.List;
+
+public class ProgramDto {
+
+    private List<ProgramEventDto> program;
+
+    public ProgramDto() {
+        // Empty constructor for parsing
+    }
+
+    public ProgramDto(List<ProgramEventDto> program) {
+        this.program = program;
+    }
+
+    public List<ProgramEventDto> getProgram() {
+        return program;
+    }
+}

@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.trips;
 
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.ShuttleCategories;
 

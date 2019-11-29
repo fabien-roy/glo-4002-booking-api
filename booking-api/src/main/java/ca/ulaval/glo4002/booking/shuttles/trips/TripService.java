@@ -7,8 +7,8 @@ import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.program.artists.BookingArtist;
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.shuttles.Passenger;

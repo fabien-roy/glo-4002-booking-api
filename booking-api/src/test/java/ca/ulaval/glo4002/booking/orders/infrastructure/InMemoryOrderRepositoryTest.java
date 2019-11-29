@@ -9,7 +9,7 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

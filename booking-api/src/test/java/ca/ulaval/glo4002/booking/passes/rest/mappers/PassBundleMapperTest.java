@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.passes.rest.mappers;
 
 import ca.ulaval.glo4002.booking.passes.domain.*;
 import ca.ulaval.glo4002.booking.passes.rest.PassDto;
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;

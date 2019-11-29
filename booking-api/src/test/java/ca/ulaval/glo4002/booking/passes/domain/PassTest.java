@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.passes.domain;
 import java.math.BigDecimal;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.Test;
 

@@ -11,7 +11,7 @@ import ca.ulaval.glo4002.booking.shuttles.ShuttleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
 
 class TripTest {

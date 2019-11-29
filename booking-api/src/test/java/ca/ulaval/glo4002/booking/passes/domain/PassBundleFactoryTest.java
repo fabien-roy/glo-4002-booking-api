@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NebulaPriceCalculationStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricecalculationstrategy.NoDiscountPriceCalculationStrategy;

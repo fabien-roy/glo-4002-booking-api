@@ -16,7 +16,7 @@ import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassFactory;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.InMemoryOxygenHistoryRepository;

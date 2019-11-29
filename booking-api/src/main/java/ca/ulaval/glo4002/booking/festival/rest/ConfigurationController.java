@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.festival.rest;
 
 import ca.ulaval.glo4002.booking.festival.services.FestivalService;
-import ca.ulaval.glo4002.booking.program.events.EventDatesDto;
+import ca.ulaval.glo4002.booking.program.events.rest.EventDatesDto;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

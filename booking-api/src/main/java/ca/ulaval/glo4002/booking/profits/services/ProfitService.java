@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.profits.services;
 import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Profit;
 import ca.ulaval.glo4002.booking.profits.rest.ProfitsDto;
-import ca.ulaval.glo4002.booking.program.events.EventRepository;
+import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;

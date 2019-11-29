@@ -2,8 +2,7 @@ package ca.ulaval.glo4002.booking.oxygen.history.rest.mappers;
 
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemDto;
-import ca.ulaval.glo4002.booking.oxygen.history.rest.mappers.OxygenHistoryMapper;
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

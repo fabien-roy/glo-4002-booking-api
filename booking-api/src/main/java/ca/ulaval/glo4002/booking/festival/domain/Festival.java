@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.festival.domain;
 
-import ca.ulaval.glo4002.booking.program.events.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 
 import java.util.ArrayList;
 import java.util.List;
