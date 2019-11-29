@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory;
 
-import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
+import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

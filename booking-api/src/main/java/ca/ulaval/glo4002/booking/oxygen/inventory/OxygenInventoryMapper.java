@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.oxygen.OxygenCategories;
+import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 
 public class OxygenInventoryMapper {
 

@@ -1,9 +1,16 @@
 package ca.ulaval.glo4002.booking.integration;
 
 import ca.ulaval.glo4002.booking.festival.domain.Festival;
+import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
+import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
+import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
+import ca.ulaval.glo4002.booking.orders.rest.OrderController;
+import ca.ulaval.glo4002.booking.orders.rest.OrderWithPassesAsEventDatesDto;
+import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
+import ca.ulaval.glo4002.booking.orders.services.OrderService;
+import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
+import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.program.events.EventDateFactory;
-import ca.ulaval.glo4002.booking.orders.*;
-import ca.ulaval.glo4002.booking.oxygen.*;
 import ca.ulaval.glo4002.booking.oxygen.history.InMemoryOxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.history.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.InMemoryOxygenInventoryRepository;

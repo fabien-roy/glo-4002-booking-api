@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.profits;
 
 import ca.ulaval.glo4002.booking.program.events.EventRepository;
-import ca.ulaval.glo4002.booking.orders.OrderRepository;
+import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.shuttles.trips.TripRepository;
 
