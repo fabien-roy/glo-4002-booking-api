@@ -3,8 +3,6 @@ package ca.ulaval.glo4002.booking.shuttles.domain;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
-// TODO : Handle renaming in shuttles
-
 public class Shuttle {
 
 	private ShuttleCategories category;

@@ -8,7 +8,6 @@ import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
-import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +30,7 @@ class TripTest {
 	@BeforeEach
 	void setUpShuttle() {
 		ShuttleFactory shuttleFactory = new ShuttleFactory();
-		aShuttle = shuttleFactory.build(ShuttleCategories.ET_SPACESHIP);
+		aShuttle = shuttleFactory.create(ShuttleCategories.ET_SPACESHIP);
 	}
 	
 	@Test

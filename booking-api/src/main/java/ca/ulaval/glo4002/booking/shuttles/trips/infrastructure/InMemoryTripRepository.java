@@ -70,7 +70,7 @@ public class InMemoryTripRepository implements TripRepository {
 	}
 
 	private void addPassengersToNewTrip(List<Passenger> passengers, List<Trip> trips, ShuttleCategories shuttleCategory, EventDate tripDate) {
-		Shuttle departureShuttle = shuttleFactory.build(shuttleCategory);
+		Shuttle departureShuttle = shuttleFactory.create(shuttleCategory);
 		Trip trip = new Trip(tripDate, departureShuttle);
 		trip.addPassengers(passengers);
 		trips.add(trip);
@@ -87,7 +87,7 @@ public class InMemoryTripRepository implements TripRepository {
 		List<Trip> departuresOnDate = getAvailableTrips(trips, shuttleCategory, tripDate);
 
 		if (departuresOnDate.isEmpty()) {
-			Shuttle departureShuttle = shuttleFactory.build(shuttleCategory);
+			Shuttle departureShuttle = shuttleFactory.create(shuttleCategory);
 			nextTrip = new Trip(tripDate, departureShuttle);
 			trips.add(nextTrip);
 		} else {

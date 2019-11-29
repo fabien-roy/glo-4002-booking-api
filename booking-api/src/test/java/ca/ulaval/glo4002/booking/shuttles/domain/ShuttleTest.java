@@ -41,5 +41,4 @@ class ShuttleTest {
 
 		assertEquals(shuttle.getPrice(), price);
 	}
-
 }

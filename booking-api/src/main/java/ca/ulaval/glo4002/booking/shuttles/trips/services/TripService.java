@@ -46,7 +46,7 @@ public class TripService {
 	}
 
 	public void orderForPasses(PassCategories passCategory, List<Pass> passes) {
-		ShuttleCategories shuttleCategory = factory.buildCategory(passCategory);
+		ShuttleCategories shuttleCategory = factory.createCategory(passCategory);
 
 		passes.forEach(pass -> {
 			Passenger passenger = new Passenger(pass.getPassNumber());

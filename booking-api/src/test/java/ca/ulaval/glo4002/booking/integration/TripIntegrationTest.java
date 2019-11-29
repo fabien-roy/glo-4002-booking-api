@@ -176,7 +176,7 @@ class TripIntegrationTest {
     void addOrder_shouldAddArrivalTripsWithCorrectName(PassCategories passCategory) {
         String aDate = EventDate.getDefaultStartEventDate().toString();
         OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
-        ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
+        ShuttleCategories expectedShuttleCategory = shuttleFactory.createCategory(passCategory);
 
         orderResource.addOrder(orderDto);
         Response response = shuttleManifestController.get(aDate);
@@ -190,7 +190,7 @@ class TripIntegrationTest {
     void addOrder_shouldAddDepartureTripsWithCorrectName(PassCategories passCategory) {
         String aDate = EventDate.getDefaultStartEventDate().toString();
         OrderRequest orderDto = buildDto(passCategory, PassOptions.SINGLE_PASS, Collections.singletonList(aDate));
-        ShuttleCategories expectedShuttleCategory = shuttleFactory.buildCategory(passCategory);
+        ShuttleCategories expectedShuttleCategory = shuttleFactory.createCategory(passCategory);
 
         orderResource.addOrder(orderDto);
         Response response = shuttleManifestController.get(aDate);
@@ -274,8 +274,8 @@ class TripIntegrationTest {
     }
 
     private int getMaxCapacityForPassCategory(PassCategories passCategory) {
-        ShuttleCategories shuttleCategory = shuttleFactory.buildCategory(passCategory);
-        Shuttle shuttle = shuttleFactory.build(shuttleCategory);
+        ShuttleCategories shuttleCategory = shuttleFactory.createCategory(passCategory);
+        Shuttle shuttle = shuttleFactory.create(shuttleCategory);
 
         return shuttle.getMaxCapacity();
     }

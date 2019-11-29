@@ -19,5 +19,4 @@ class PassengerTest {
 
 		assertEquals(passNumber, passenger.getPassNumber());
 	}
-
 }

@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.domain;
 
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
-import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
-import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +16,10 @@ class ShuttleFactoryTest {
     }
 
     @Test
-    void build_shouldBuildEtSpaceshipShuttle_whenCategoryIsEtSpaceship() {
+    void create_shouldCreateEtSpaceshipShuttle_whenCategoryIsEtSpaceship() {
         ShuttleCategories category = ShuttleCategories.ET_SPACESHIP;
 
-        Shuttle shuttle = factory.build(category);
+        Shuttle shuttle = factory.create(category);
 
         assertEquals(ShuttleCategories.ET_SPACESHIP, shuttle.getCategory());
         assertEquals(ShuttleFactory.ET_SPACESHIP_MAX_CAPACITY, shuttle.getMaxCapacity());
@@ -30,10 +27,10 @@ class ShuttleFactoryTest {
     }
 
     @Test
-    void build_shouldBuildMillenniumFalconShuttle_whenCategoryIsMillenniumFalcon() {
+    void create_shouldCreateMillenniumFalconShuttle_whenCategoryIsMillenniumFalcon() {
         ShuttleCategories category = ShuttleCategories.MILLENNIUM_FALCON;
 
-        Shuttle shuttle = factory.build(category);
+        Shuttle shuttle = factory.create(category);
 
         assertEquals(ShuttleCategories.MILLENNIUM_FALCON, shuttle.getCategory());
         assertEquals(ShuttleFactory.MILLENNIUM_FALCON_MAX_CAPACITY, shuttle.getMaxCapacity());
@@ -41,10 +38,10 @@ class ShuttleFactoryTest {
     }
 
     @Test
-    void build_shouldBuildSpaceXShuttle_whenCategoryIsSpaceX() {
+    void create_shouldCreateSpaceXShuttle_whenCategoryIsSpaceX() {
         ShuttleCategories category = ShuttleCategories.SPACE_X;
 
-        Shuttle shuttle = factory.build(category);
+        Shuttle shuttle = factory.create(category);
 
         assertEquals(ShuttleCategories.SPACE_X, shuttle.getCategory());
         assertEquals(ShuttleFactory.SPACE_X_MAX_CAPACITY, shuttle.getMaxCapacity());
@@ -52,28 +49,28 @@ class ShuttleFactoryTest {
     }
 
     @Test
-    void buildCategory_shouldBuildEtSpaceship_whenCategoryIsSupernova() {
+    void createCategory_shouldCreateEtSpaceship_whenCategoryIsSupernova() {
         PassCategories passCategory = PassCategories.SUPERNOVA;
 
-        ShuttleCategories category = factory.buildCategory(passCategory);
+        ShuttleCategories category = factory.createCategory(passCategory);
 
         assertEquals(ShuttleCategories.ET_SPACESHIP, category);
     }
 
     @Test
-    void buildCategory_shouldBuildMillenniumFalcon_whenCategoryIsSupergiant() {
+    void createCategory_shouldCreateMillenniumFalcon_whenCategoryIsSupergiant() {
         PassCategories passCategory = PassCategories.SUPERGIANT;
 
-        ShuttleCategories category = factory.buildCategory(passCategory);
+        ShuttleCategories category = factory.createCategory(passCategory);
 
         assertEquals(ShuttleCategories.MILLENNIUM_FALCON, category);
     }
 
     @Test
-    void buildCategory_shouldBuildSpaceX_whenCategoryIsNebula() {
+    void createCategory_shouldCreateSpaceX_whenCategoryIsNebula() {
         PassCategories passCategory = PassCategories.NEBULA;
 
-        ShuttleCategories category = factory.buildCategory(passCategory);
+        ShuttleCategories category = factory.createCategory(passCategory);
 
         assertEquals(ShuttleCategories.SPACE_X, category);
     }

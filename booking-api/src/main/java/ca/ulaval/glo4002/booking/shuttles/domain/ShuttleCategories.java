@@ -1,8 +1,5 @@
 package ca.ulaval.glo4002.booking.shuttles.domain;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum ShuttleCategories {
 	
 	ET_SPACESHIP("ETSpaceship"),
