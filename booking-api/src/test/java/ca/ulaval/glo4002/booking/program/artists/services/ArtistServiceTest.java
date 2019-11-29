@@ -14,8 +14,7 @@ import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.InMemoryArtistRepository;
-import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListDto;
-import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
+import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -122,42 +121,42 @@ class ArtistServiceTest {
 
     @Test
     void getAll_shouldReturnAllArtistNames_whenOrderByIsNull() {
-        ArtistListDto artistListDto = service.getAllUnordered();
+        ArtistListResponse artistListResponse = service.getAllUnordered();
 
-        assertFalse(artistListDto.getArtists().isEmpty());
+        assertFalse(artistListResponse.getArtists().isEmpty());
     }
 
     @Test
     void getAll_shouldReturnAllArtistNamesUnordered_whenOrderByIsNull() {
-        ArtistListDto artistListDto = service.getAllUnordered();
+        ArtistListResponse artistListResponse = service.getAllUnordered();
         
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(0));
-        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(1));
-        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(2));
-        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(3));
-        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(4));
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(0));
+        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListResponse.getArtists().get(1));
+        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(2));
+        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListResponse.getArtists().get(3));
+        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(4));
     }
 
     @Test
     void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsByMostPopular() {
-        ArtistListDto artistListDto = service.getAllOrdered(ArtistOrderings.MOST_POPULAR.toString());
+        ArtistListResponse artistListResponse = service.getAllOrdered(ArtistOrderings.MOST_POPULAR.toString());
 
-        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(0));
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(1));
-        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(2));
-        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(3));
-        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(4));
+        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListResponse.getArtists().get(0));
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(1));
+        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(2));
+        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListResponse.getArtists().get(3));
+        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(4));
     }
 
     @Test
     void getAll_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsLowCosts() {
-        ArtistListDto artistListDto = service.getAllOrdered(ArtistOrderings.LOW_COSTS.toString());
+        ArtistListResponse artistListResponse = service.getAllOrdered(ArtistOrderings.LOW_COSTS.toString());
 
-        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(0));
-        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListDto.getArtists().get(1));
-        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListDto.getArtists().get(2));
-        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListDto.getArtists().get(3));
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListDto.getArtists().get(4));
+        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(0));
+        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(1));
+        assertEquals(firstPopularAndThirdCostArtist.getName(), artistListResponse.getArtists().get(2));
+        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListResponse.getArtists().get(3));
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(4));
     }
 
 

@@ -8,7 +8,7 @@ import ca.ulaval.glo4002.booking.program.services.ProgramService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListDto;
+import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 
@@ -31,7 +31,7 @@ class ProgramResourceTest {
     @Test
     void getArtistsOrderedValidOrdering_shouldReturnOk() {
         String ordering = ArtistOrderings.MOST_POPULAR.toString();
-        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
+        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListResponse.class));
 
         Response response = controller.getArtists(ordering);
 
@@ -40,7 +40,7 @@ class ProgramResourceTest {
 
     @Test
     void getArtistsUnordered_shouldReturnOk() {
-        when(artistService.getAllUnordered()).thenReturn(mock(ArtistListDto.class));
+        when(artistService.getAllUnordered()).thenReturn(mock(ArtistListResponse.class));
 
         Response response = controller.getArtists(null);
 
@@ -50,7 +50,7 @@ class ProgramResourceTest {
     @Test
     void getArtistsOrderedInValidOrdering_shouldReturnOk() {
         String ordering = "A string";
-        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListDto.class));
+        when(artistService.getAllOrdered(ordering)).thenReturn(mock(ArtistListResponse.class));
 
         Response response = controller.getArtists(ordering);
 

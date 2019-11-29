@@ -13,10 +13,17 @@ import ca.ulaval.glo4002.booking.program.artists.domain.ArtistConverter;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
-import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListDto;
+import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 
 public class ArtistService {
+
+	// TODO : Fully rethink ArtistService
+	//        Use ExternalArtistRepository, instead of ArtistClient
+	//        Call methods like repository.findAll() .findByName()
+	//        Let repository handle ordering
+    //        Call repository (external calls) in each service method
+	//        Let repository call ArtistConverter
 
 	private final ArtistRepository repository;
 
@@ -37,7 +44,7 @@ public class ArtistService {
 				.orElseThrow(InvalidProgramException::new);
 	}
 
-	public ArtistListDto getAllOrdered(String orderBy) {
+	public ArtistListResponse getAllOrdered(String orderBy) {
 		List<BookingArtist> bookingArtists = repository.findAll();
 		List<String> artistNames = new ArrayList<>();
 
@@ -51,13 +58,13 @@ public class ArtistService {
 			artistNames.addAll(getArtistNames(bookingArtists));
 		}
 
-		return new ArtistListDto(artistNames);
+		return new ArtistListResponse(artistNames);
 	}
 
-	public ArtistListDto getAllUnordered() {
+	public ArtistListResponse getAllUnordered() {
 		List<BookingArtist> bookingArtists = repository.findAll();
 		List<String> artistNames = getArtistNames(bookingArtists);
-		return new ArtistListDto(artistNames);
+		return new ArtistListResponse(artistNames);
 
 	}
 

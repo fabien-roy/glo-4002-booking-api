@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import ca.ulaval.glo4002.booking.program.services.ProgramService;
-import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListDto;
+import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 
 @Path("/program")
@@ -30,16 +30,16 @@ public class ProgramResource {
 	@GET
 	@Path("/artists")
 	public Response getArtists(@QueryParam("orderBy") String orderBy) {
-		ArtistListDto artistListDto;
+		ArtistListResponse artistListResponse;
 
 		// TODO : Make orderBy nullable in artist service
 		if (orderBy == null) {
-			artistListDto = artistService.getAllUnordered();
+			artistListResponse = artistService.getAllUnordered();
 		} else {
-			artistListDto = artistService.getAllOrdered(orderBy);
+			artistListResponse = artistService.getAllOrdered(orderBy);
 		}
 
-		return Response.ok().entity(artistListDto).build();
+		return Response.ok().entity(artistListResponse).build();
 	}
 
 	@POST
