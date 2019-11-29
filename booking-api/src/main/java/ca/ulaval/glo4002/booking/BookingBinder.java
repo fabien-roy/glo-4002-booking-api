@@ -67,7 +67,6 @@ public class BookingBinder extends AbstractBinder {
         bindClients();
     }
 
-    // TODO : Rename bindConfiguration
     private void bindConfiguration() {
         bindAsContract(FestivalConfiguration.class).in(Singleton.class);
     }
