@@ -36,7 +36,7 @@ import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.InMemoryEventRepository;
 import ca.ulaval.glo4002.booking.program.rest.ProgramController;
 import ca.ulaval.glo4002.booking.program.services.ProgramService;
-import ca.ulaval.glo4002.booking.report.ReportController;
+import ca.ulaval.glo4002.booking.report.rest.ReportController;
 import ca.ulaval.glo4002.booking.shuttles.*;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.shuttles.manifest.ShuttleManifestController;

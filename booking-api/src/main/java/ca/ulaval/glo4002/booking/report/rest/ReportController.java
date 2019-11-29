@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.report;
+package ca.ulaval.glo4002.booking.report.rest;
 
 import ca.ulaval.glo4002.booking.profits.services.ProfitService;
 import ca.ulaval.glo4002.booking.profits.rest.ProfitsDto;
@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+// TODO : Separate ReportController into two controllers
 
 @Path("/report")
 public class ReportController {

@@ -1,7 +1,8 @@
-package ca.ulaval.glo4002.booking.report;
+package ca.ulaval.glo4002.booking.report.rest;
 
 import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
 import ca.ulaval.glo4002.booking.profits.services.ProfitService;
+import ca.ulaval.glo4002.booking.report.rest.ReportController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
