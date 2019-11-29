@@ -18,11 +18,13 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.InMemoryOxygenI
 import ca.ulaval.glo4002.booking.oxygen.inventory.rest.mappers.OxygenInventoryMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportResource;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.mappers.OxygenReportMapper;
 import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.domain.PassFactory;
+import ca.ulaval.glo4002.booking.profits.rest.ProfitReportResource;
 import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.services.ProfitService;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistConverter;
@@ -36,7 +38,6 @@ import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.InMemoryEventRepository;
 import ca.ulaval.glo4002.booking.program.rest.ProgramResource;
 import ca.ulaval.glo4002.booking.program.services.ProgramService;
-import ca.ulaval.glo4002.booking.report.rest.ReportController;
 import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestController;
@@ -134,7 +135,8 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(ProgramResource.class).in(Singleton.class);
         bindAsContract(OrderResource.class).in(Singleton.class);
         bindAsContract(ShuttleManifestController.class).in(Singleton.class);
-        bindAsContract(ReportController.class).in(Singleton.class);
+        bindAsContract(OxygenReportResource.class).in(Singleton.class);
+        bindAsContract(ProfitReportResource.class).in(Singleton.class);
         bindAsContract(ConfigurationResource.class).in(Singleton.class);
     }
 }
