@@ -28,26 +28,26 @@ class PassFactoryTest {
     }
 
     @Test
-    void buildAll_shouldBuildASinglePass_whenThereNoEventDate() {
-        List<Pass> passes = factory.buildAll(null, mock(Money.class));
+    void createAll_shouldCreateASinglePass_whenThereNoEventDate() {
+        List<Pass> passes = factory.createAll(null, mock(Money.class));
 
         assertEquals(1, passes.size());
     }
 
     @Test
-    void buildAll_shouldBuildASinglePass_whenThereIsOnlyOneEventDate() {
+    void createAll_shouldCreateASinglePass_whenThereIsOnlyOneEventDate() {
         List<String> aEventDate = Collections.singletonList(EventDate.getDefaultStartEventDate().toString());
 
-        List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
+        List<Pass> passes = factory.createAll(aEventDate, mock(Money.class));
 
         assertEquals(1, passes.size());
     }
 
     @Test
-    void buildAll_shouldBuildMultiplePasses_whenThereAreMultipleEventDates() {
+    void createAll_shouldCreateMultiplePasses_whenThereAreMultipleEventDates() {
         List<String> aEventDate = Arrays.asList(EventDate.getDefaultStartEventDate().toString(), EventDate.getDefaultStartEventDate().plusDays(1).toString());
 
-        List<Pass> passes = factory.buildAll(aEventDate, mock(Money.class));
+        List<Pass> passes = factory.createAll(aEventDate, mock(Money.class));
 
         assertEquals(2, passes.size());
     }

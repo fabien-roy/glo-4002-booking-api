@@ -21,7 +21,7 @@ public class PassFactory {
 		this.eventDateFactory = eventDateFactory;
 	}
 
-	public List<Pass> buildAll(List<String> eventDates, Money passPrice) {
+	public List<Pass> createAll(List<String> eventDates, Money passPrice) {
 		List<Pass> passes = new ArrayList<>();
 
 		if (eventDates == null) {

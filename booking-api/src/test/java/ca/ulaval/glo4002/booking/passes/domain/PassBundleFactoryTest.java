@@ -50,12 +50,12 @@ class PassBundleFactoryTest {
 		EventDate aEventDate = EventDate.getDefaultStartEventDate();
 		Pass pass = new Pass(aNumber, aPrice, aEventDate);
 		PassFactory passFactory = mock(PassFactory.class);
-		when(passFactory.buildAll(any(), any())).thenReturn(Collections.singletonList(pass));
+		when(passFactory.createAll(any(), any())).thenReturn(Collections.singletonList(pass));
 		passBundleFactory = new PassBundleFactory(passFactory);
 
 		passBundleFactory.create(passBundleRequest);
 
-		verify(passFactory).buildAll(any(), any());
+		verify(passFactory).createAll(any(), any());
 	}
 
 	@Test

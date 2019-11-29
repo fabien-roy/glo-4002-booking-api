@@ -42,7 +42,7 @@ public class PassBundleFactory {
         Money passPrice = passCategory.getPricePerOption(parsedPassOption);
         passPrice = calculatePassPrice(passBundleRequest.getEventDates(), passPrice, priceDiscountStrategy);
 
-        List<Pass> passes = passFactory.buildAll(passBundleRequest.getEventDates(), passPrice);
+        List<Pass> passes = passFactory.createAll(passBundleRequest.getEventDates(), passPrice);
 
         return new PassBundle(passes, passCategory, parsedPassOption);
     }
