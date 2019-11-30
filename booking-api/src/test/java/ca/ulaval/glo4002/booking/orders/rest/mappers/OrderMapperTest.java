@@ -54,7 +54,7 @@ class OrderMapperTest {
 
 		OrderResponse orderResponse = orderMapper.toResponse(order);
 
-		assertEquals(expectedOrderPrice, Double.toString(orderResponse.getOrderPrice()));
+		assertEquals(expectedOrderPrice, String.valueOf(orderResponse.getOrderPrice()));
 	}
 
 	@Test
@@ -66,7 +66,7 @@ class OrderMapperTest {
 
 		OrderResponse orderResponse = orderMapper.toResponse(order);
 
-		assertEquals(expectedOrderPrice, Double.toString(orderResponse.getOrderPrice()));
+		assertEquals(expectedOrderPrice, String.valueOf(orderResponse.getOrderPrice()));
 	}
 
 	@Test

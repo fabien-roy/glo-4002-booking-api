@@ -23,8 +23,8 @@ public class OrderMapper {
     public OrderResponse toResponse(Order order) {
         List<PassResponse> passes = passBundleMapper.toResponse(order.getPassBundle());
 
-        double fullOrderPrice = order.getPrice().getValue().doubleValue();
-        double orderPrice = formatOrderPrice(fullOrderPrice);
+        float fullOrderPrice = order.getPrice().getValue().floatValue();
+        float orderPrice = formatOrderPrice(fullOrderPrice);
 
         return new OrderResponse(
                 orderPrice,
@@ -32,9 +32,9 @@ public class OrderMapper {
         );
     }
 
-    private double formatOrderPrice(double fullOrderPrice) {
+    private float formatOrderPrice(float fullOrderPrice) {
         BigDecimal orderPrice = BigDecimal.valueOf(fullOrderPrice);
 
-        return orderPrice.setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        return orderPrice.setScale(2, RoundingMode.HALF_EVEN).floatValue();
     }
 }

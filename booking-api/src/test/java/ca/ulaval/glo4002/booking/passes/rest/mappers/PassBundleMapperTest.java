@@ -52,8 +52,8 @@ class PassBundleMapperTest {
 
         List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertTrue(passResponses.stream().anyMatch(pass -> pass.getPassNumber().equals(aPassNumber.getValue())));
-        assertTrue(passResponses.stream().anyMatch(pass -> pass.getPassNumber().equals(anotherPassNumber.getValue())));
+        assertTrue(passResponses.stream().anyMatch(pass -> aPassNumber.getValue().equals(pass.getPassNumber())));
+        assertTrue(passResponses.stream().anyMatch(pass -> anotherPassNumber.getValue().equals(pass.getPassNumber())));
     }
 
     @Test

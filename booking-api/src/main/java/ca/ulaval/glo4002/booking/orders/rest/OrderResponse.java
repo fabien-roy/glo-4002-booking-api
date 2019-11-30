@@ -6,15 +6,15 @@ import java.util.List;
 
 public class OrderResponse {
 
-    private double orderPrice;
+    private float orderPrice;
     private List<PassResponse> passes;
 
-    public OrderResponse(double orderPrice, List<PassResponse> passes) {
+    public OrderResponse(float orderPrice, List<PassResponse> passes) {
         this.orderPrice = orderPrice;
         this.passes = passes;
     }
 
-    public double getOrderPrice() {
+    public float getOrderPrice() {
         return orderPrice;
     }
 
