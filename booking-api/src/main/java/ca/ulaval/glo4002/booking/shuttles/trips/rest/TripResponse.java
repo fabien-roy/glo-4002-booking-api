@@ -1,14 +1,12 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.rest;
 
-import java.util.List;
-
 public class TripResponse {
 
 	private String date;
 	private String shuttleName;
-	private List<Long> passengers;
+	private long[] passengers;
 	
-	public TripResponse(String date, String shuttleName, List<Long> passengers) {
+	public TripResponse(String date, String shuttleName, long[] passengers) {
 		this.date = date;
 		this.shuttleName = shuttleName;
 		this.passengers = passengers;
@@ -22,7 +20,7 @@ public class TripResponse {
 		return shuttleName;
 	}
 
-	public List<Long> getPassengers() {
+	public long[] getPassengers() {
 		return passengers;
 	}
 }

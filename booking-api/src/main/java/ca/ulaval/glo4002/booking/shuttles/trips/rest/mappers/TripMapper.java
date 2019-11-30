@@ -6,6 +6,7 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
 import ca.ulaval.glo4002.booking.shuttles.trips.rest.TripResponse;
+import org.apache.commons.lang.ArrayUtils;
 
 public class TripMapper {
 
@@ -19,7 +20,9 @@ public class TripMapper {
 
 			trip.getPassengersPassNumbers().stream().map(Number::getValue).forEach(passengers::add);
 
-			TripResponse tripResponse = new TripResponse(date, shuttleName, passengers);
+			long[] passengersArray = ArrayUtils.toPrimitive(passengers.toArray(new Long[0]));
+
+			TripResponse tripResponse = new TripResponse(date, shuttleName, passengersArray);
 			tripResponses.add(tripResponse);
 		}
 
