@@ -3,12 +3,12 @@ package ca.ulaval.glo4002.booking.oxygen.history.rest;
 public class OxygenHistoryItemResponse {
 
 	private String date;
-	private Integer qtyOxygenTankBought;
-	private Integer qtyWaterUsed;
-	private Integer qtyCandlesUsed;
-	private Integer qtyOxygenTankMade;
+	private int qtyOxygenTankBought;
+	private int qtyWaterUsed;
+	private int qtyCandlesUsed;
+	private int qtyOxygenTankMade;
 
-	public OxygenHistoryItemResponse(String date, Integer qtyOxygenTankBought, Integer qtyWaterUsed, Integer qtyCandlesUsed, Integer qtyOxygenTankMade) {
+	public OxygenHistoryItemResponse(String date, int qtyOxygenTankBought, int qtyWaterUsed, int qtyCandlesUsed, int qtyOxygenTankMade) {
 		this.date = date;
 		this.qtyOxygenTankBought = qtyOxygenTankBought;
 		this.qtyWaterUsed = qtyWaterUsed;
@@ -20,20 +20,19 @@ public class OxygenHistoryItemResponse {
 		return date;
 	}
 
-	public Integer getQtyOxygenTankBought() {
+	public int getQtyOxygenTankBought() {
 		return qtyOxygenTankBought;
 	}
 
-	public Integer getQtyWaterUsed() {
+	public int getQtyWaterUsed() {
 		return qtyWaterUsed;
 	}
 
-	public Integer getQtyCandlesUsed() {
+	public int getQtyCandlesUsed() {
 		return qtyCandlesUsed;
 	}
 
-	public Integer getQtyOxygenTankMade() {
+	public int getQtyOxygenTankMade() {
 		return qtyOxygenTankMade;
 	}
-
 }

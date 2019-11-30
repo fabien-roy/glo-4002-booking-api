@@ -3,9 +3,9 @@ package ca.ulaval.glo4002.booking.oxygen.inventory.rest;
 public class OxygenInventoryItemResponse {
 
 	private String gradeTankOxygen;
-	private Long quantity;
+	private int quantity;
 
-	public OxygenInventoryItemResponse(String gradeTankOxygen, Long quantity) {
+	public OxygenInventoryItemResponse(String gradeTankOxygen, int quantity) {
 		this.gradeTankOxygen = gradeTankOxygen;
 		this.quantity = quantity;
 	}
@@ -14,7 +14,7 @@ public class OxygenInventoryItemResponse {
 		return gradeTankOxygen;
 	}
 
-	public Long getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 }

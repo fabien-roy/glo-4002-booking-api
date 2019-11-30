@@ -12,9 +12,9 @@ public class OxygenInventoryMapper {
     // TODO : Test that item is not there when quantity is 0
 
 	public List<OxygenInventoryItemResponse> toResponse(OxygenInventory inventory) {
-		long eOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.E).longValue();
-		long bOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.B).longValue();
-		long aOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.A).longValue();
+		int eOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.E);
+		int bOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.B);
+		int aOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.A);
 
 		List<OxygenInventoryItemResponse> responses = new ArrayList<>();
 		if (eOxygenTankQuantity > 0) responses.add(new OxygenInventoryItemResponse(OxygenCategories.E.toString(), eOxygenTankQuantity));
