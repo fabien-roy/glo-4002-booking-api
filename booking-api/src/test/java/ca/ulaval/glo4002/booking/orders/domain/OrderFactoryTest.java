@@ -35,7 +35,7 @@ class OrderFactoryTest {
 	}
 
 	@Test
-	void build_shouldParseRequestWithCorrectVendorCode() {
+	void create_shouldParseRequestWithCorrectVendorCode() {
 		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
 		PassBundleRequest passBundleRequest = mock(PassBundleRequest.class);
 		when(passBundleRequest.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
@@ -47,7 +47,7 @@ class OrderFactoryTest {
 	}
 
 	@Test
-	void build_shouldThrowInvalidFormatException_whenThereIsNoPass() {
+	void create_shouldThrowInvalidFormatException_whenThereIsNoPass() {
 		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM", null);
 
