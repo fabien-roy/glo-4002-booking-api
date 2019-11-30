@@ -25,5 +25,5 @@ public class ExternalArtistConverterTest {
 		when(festivalConfiguration.getEndEventDate()).thenReturn(FestivalConfiguration.getDefaultEndEventDate());
 	}
 
-	// TODO
+	// TODO : Add tests for converter
 }

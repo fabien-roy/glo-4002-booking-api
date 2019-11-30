@@ -17,10 +17,9 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 
 public class ExternalArtistClientTest {
 
-	// TODO : Review this test class, use ObjectMapper
-
 	private static WireMockServer wiremockServer;
-	private static final String response = "[ {\n" + 
+	// TODO : Review this test class, use ObjectMapper
+	private static final String response = "[ {\n" +
 			"  \"id\" : 1,\n" + 
 			"  \"name\" : \"Sun 41\",\n" + 
 			"  \"nbPeople\" : 5,\n" + 
