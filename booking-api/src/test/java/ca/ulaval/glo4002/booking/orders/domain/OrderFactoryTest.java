@@ -22,11 +22,10 @@ import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatExcepti
 class OrderFactoryTest {
 
 	private OrderFactory factory;
-	private FestivalConfiguration festivalConfiguration; // TODO : Is FestivalConfiguration necessary in order factory tests?
 
 	@BeforeEach
 	void setUpFactory() {
-	    festivalConfiguration = new FestivalConfiguration();
+		FestivalConfiguration festivalConfiguration = new FestivalConfiguration();
 		NumberGenerator numberGenerator = new NumberGenerator();
 		OrderDateFactory orderDateFactory = mock(OrderDateFactory.class);
 		PassBundleFactory passBundleFactory = mock(PassBundleFactory.class);
@@ -36,7 +35,7 @@ class OrderFactoryTest {
 
 	@Test
 	void create_shouldParseRequestWithCorrectVendorCode() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(FestivalConfiguration.getDefaultStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
 		PassBundleRequest passBundleRequest = mock(PassBundleRequest.class);
 		when(passBundleRequest.getPassOption()).thenReturn(PassOptions.PACKAGE.toString());
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM", passBundleRequest);
@@ -48,7 +47,7 @@ class OrderFactoryTest {
 
 	@Test
 	void create_shouldThrowInvalidFormatException_whenThereIsNoPass() {
-		ZonedDateTime anOrderDate = ZonedDateTime.of(festivalConfiguration.getStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
+		ZonedDateTime anOrderDate = ZonedDateTime.of(FestivalConfiguration.getDefaultStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "TEAM", null);
 
 		assertThrows(InvalidFormatException.class, () -> factory.create(orderRequest));
