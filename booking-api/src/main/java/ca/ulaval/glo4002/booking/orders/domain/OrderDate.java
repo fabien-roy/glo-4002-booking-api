@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
