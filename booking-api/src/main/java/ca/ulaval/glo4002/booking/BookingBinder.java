@@ -29,9 +29,7 @@ import ca.ulaval.glo4002.booking.profits.rest.ProfitReportResource;
 import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.services.ProfitService;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistConverter;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistClient;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.InMemoryArtistRepository;
+import ca.ulaval.glo4002.booking.program.artists.infrastructure.*;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
@@ -77,11 +75,11 @@ public class BookingBinder extends AbstractBinder {
     }
     
     private void bindConverters() {
-    	bindAsContract(ArtistConverter.class);
+    	bindAsContract(ExternalArtistConverter.class);
     }
     
     private void bindClients() {
-    	bindAsContract(ArtistClient.class);
+    	bindAsContract(ExternalArtistClient.class);
     }
 
     private void bindFactories() {
@@ -100,7 +98,7 @@ public class BookingBinder extends AbstractBinder {
         bind(InMemoryOxygenHistoryRepository.class).to(OxygenHistoryRepository.class).in(Singleton.class);
         bind(InMemoryTripRepository.class).to(TripRepository.class).in(Singleton.class);
         bind(InMemoryOrderRepository.class).to(OrderRepository.class).in(Singleton.class);
-        bind(InMemoryArtistRepository.class).to(ArtistRepository.class).in(Singleton.class);
+        bind(ExternalArtistRepository.class).to(ArtistRepository.class).in(Singleton.class);
         bind(InMemoryEventRepository.class).to(EventRepository.class).in(Singleton.class);
     }
 

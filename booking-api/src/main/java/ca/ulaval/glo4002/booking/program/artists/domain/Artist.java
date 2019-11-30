@@ -5,7 +5,7 @@ import java.util.List;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
-public class BookingArtist {
+public class Artist {
 
     private Integer id;
     private String name;
@@ -15,7 +15,7 @@ public class BookingArtist {
     private Integer popularityRank;
     private List<Availability> availabilities;
 
-    public BookingArtist(Integer id, String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank, List<Availability> availabilities) {
+    public Artist(Integer id, String name, Money cost, Integer numberOfPeople, String musicStyle, Integer popularityRank, List<Availability> availabilities) {
     	this.id = id;
 		this.name = name;
 		this.cost = cost;

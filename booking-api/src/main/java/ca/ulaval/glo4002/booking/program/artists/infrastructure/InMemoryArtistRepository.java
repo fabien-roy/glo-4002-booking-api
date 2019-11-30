@@ -1,32 +1,37 @@
 package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO : Remove outdated InMemoryArtistRepository
 public class InMemoryArtistRepository implements ArtistRepository {
 	
-	private List<BookingArtist> artists;
+	private List<Artist> artists;
 	
 	public InMemoryArtistRepository() {
 		artists = new ArrayList<>();
 	}
 
-	@Override
-	public void saveAll(List<BookingArtist> bookingArtists) {
+	public void saveAll(List<Artist> artists) {
 		List<String> artistNames = new ArrayList<>();
-		artists.stream().map(BookingArtist::getName).forEach(artistNames::add);
+		this.artists.stream().map(Artist::getName).forEach(artistNames::add);
 
-		for(BookingArtist bookingArtist : bookingArtists) {
-			if (!artistNames.contains(bookingArtist.getName())) {
-				artists.add(bookingArtist);
+		for(Artist artist : artists) {
+			if (!artistNames.contains(artist.getName())) {
+				this.artists.add(artist);
 			}
 		}
 	}
 
 	@Override
-	public List<BookingArtist> findAll() {
+	public Artist findByName(String name) {
+		return null;
+	}
+
+	@Override
+	public List<Artist> findAll() {
 		return artists;
 	}
 }

@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.program.artists.domain.ExternalArtist;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistClient;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +15,9 @@ import org.junit.jupiter.api.Test;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 
-public class ArtistClientTest {
+public class ExternalArtistClientTest {
 
+	// TODO : Review this test class
 	private static WireMockServer wiremockServer;
 	private static final String response = "[ {\n" + 
 			"  \"id\" : 1,\n" + 
@@ -206,7 +205,7 @@ public class ArtistClientTest {
 
 	@Test
 	public void getArtists_returnsAllArtists() {
-		List<ExternalArtist> externalArtists = ArtistClient.getArtists();
+		List<ExternalArtist> externalArtists = new ExternalArtistClient().getArtists();
 
 		assertFalse(externalArtists.isEmpty());
 	}

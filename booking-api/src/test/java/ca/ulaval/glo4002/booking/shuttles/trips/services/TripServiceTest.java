@@ -16,7 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
@@ -49,7 +49,7 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
+		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
 		service.orderForArtist(aArtist, anEventDate);
@@ -63,7 +63,7 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
+		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
 		service.orderForArtist(aArtist, anEventDate);
@@ -77,7 +77,7 @@ class TripServiceTest {
 		Integer memberAmount = 2;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
+		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
 		service.orderForArtist(aArtist, anEventDate);
@@ -92,7 +92,7 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
+		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
 		service.orderForArtist(aArtist, anEventDate);
@@ -110,7 +110,7 @@ class TripServiceTest {
 		Integer memberAmount = 2;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		BookingArtist aArtist = new BookingArtist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
+		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
 		service.orderForArtist(aArtist, anEventDate);

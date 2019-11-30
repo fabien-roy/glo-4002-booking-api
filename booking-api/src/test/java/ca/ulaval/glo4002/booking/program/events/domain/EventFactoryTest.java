@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.program.events.domain;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -94,7 +94,7 @@ class EventFactoryTest {
     void create_shouldCreateArtist() {
         String artistName = "aArtist";
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, artistName);
-        BookingArtist expectedArtist = mock(BookingArtist.class);
+        Artist expectedArtist = mock(Artist.class);
         when(artistService.getByName(artistName + 0)).thenReturn(expectedArtist);
 
         List<Event> events = factory.create(aProgramRequest);
@@ -106,8 +106,8 @@ class EventFactoryTest {
     void create_shouldCreateArtists_whenThereAreMultipleEvents() {
         String firstArtistName = "aFirstArtist";
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, firstArtistName);
-        BookingArtist expectedFirstArtist = mock(BookingArtist.class);
-        BookingArtist expectedOtherArtist = mock(BookingArtist.class);
+        Artist expectedFirstArtist = mock(Artist.class);
+        Artist expectedOtherArtist = mock(Artist.class);
         when(artistService.getByName(firstArtistName)).thenReturn(expectedFirstArtist);
         when(artistService.getByName(not(eq(firstArtistName)))).thenReturn(expectedOtherArtist);
         aProgramRequest.set(0, buildEventRequest(FestivalConfiguration.getDefaultStartEventDate(), Activities.YOGA, firstArtistName));

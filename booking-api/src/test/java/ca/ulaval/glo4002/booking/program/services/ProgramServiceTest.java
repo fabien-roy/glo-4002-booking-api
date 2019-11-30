@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.program.services;
 
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.Event;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
@@ -50,7 +50,7 @@ class ProgramServiceTest {
     void add_shouldOrderTripsForEachArtist(int eventQuantity) {
         ProgramRequest aProgramRequest = mock(ProgramRequest.class);
         Event aEvent = mock(Event.class);
-        BookingArtist expectedArtist = mock(BookingArtist.class);
+        Artist expectedArtist = mock(Artist.class);
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
@@ -66,7 +66,7 @@ class ProgramServiceTest {
     void add_shouldOrderOxygenTanksForEachArtist(int eventQuantity) {
         ProgramRequest aProgramRequest = mock(ProgramRequest.class);
         Event aEvent = mock(Event.class);
-        BookingArtist expectedArtist = mock(BookingArtist.class);
+        Artist expectedArtist = mock(Artist.class);
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);

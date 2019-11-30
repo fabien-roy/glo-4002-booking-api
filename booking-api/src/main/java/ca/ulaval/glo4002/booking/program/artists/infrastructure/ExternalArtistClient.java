@@ -1,7 +1,5 @@
 package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
-import ca.ulaval.glo4002.booking.program.artists.domain.ExternalArtist;
-
 import java.util.List;
 
 import javax.ws.rs.client.Client;
@@ -9,11 +7,11 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
-public class ArtistClient {
+public class ExternalArtistClient {
 	
-	private static final String EXTERNAL_SERVICE_URL = "http://localhost:8080/artists";
+	private final String EXTERNAL_SERVICE_URL = "http://localhost:8080/artists";
 
-	public static List<ExternalArtist> getArtists() {
+	public List<ExternalArtist> getArtists() {
 		Client restClient = ClientBuilder.newClient();
 	
 		return restClient

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistConverter;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.InMemoryArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
@@ -31,11 +31,11 @@ class ArtistServiceTest {
     // TODO : ArtistService should mock repository and converter
 
     private ArtistService service;
-    private BookingArtist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
-    private BookingArtist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);
-    private BookingArtist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist", 100, 3);
-    private BookingArtist fourthPopularAndSecondCostArtist = buildArtist("fourthPopularAndSecondCostArtist", 300, 4);
-    private BookingArtist fifthPopularAndEqualFourthCostArtist = buildArtist("fifthPopularAndEqualFourthCostArtist", 100, 5);
+    private Artist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
+    private Artist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);
+    private Artist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist", 100, 3);
+    private Artist fourthPopularAndSecondCostArtist = buildArtist("fourthPopularAndSecondCostArtist", 300, 4);
+    private Artist fifthPopularAndEqualFourthCostArtist = buildArtist("fifthPopularAndEqualFourthCostArtist", 100, 5);
     private static WireMockServer wiremockServer;
     private static String response = "[ {\n" + 
 			"  \"id\" : 2,\n" + 
@@ -92,9 +92,8 @@ class ArtistServiceTest {
 
         FestivalConfiguration festivalConfiguration = new FestivalConfiguration();
         ArtistRepository repository = new InMemoryArtistRepository();
-        ArtistConverter converter = new ArtistConverter(festivalConfiguration, repository);
-    	
-        service = new ArtistService(repository, converter);
+
+        service = new ArtistService(repository);
 
     }
     
@@ -107,7 +106,7 @@ class ArtistServiceTest {
     void getByName_shouldReturnArtist() {
 	    String artistName = firstPopularAndThirdCostArtist.getName();
 
-	    BookingArtist artist = service.getByName(artistName);
+	    Artist artist = service.getByName(artistName);
 
 	    assertEquals(firstPopularAndThirdCostArtist.getName(), artist.getName());
     }
@@ -160,11 +159,11 @@ class ArtistServiceTest {
     }
 
 
-    private BookingArtist buildArtist(String name, Integer price, Integer popularityRank) {
+    private Artist buildArtist(String name, Integer price, Integer popularityRank) {
         Money cost = new Money(new BigDecimal(price));
         Integer aNumberOfPeople = 1;
         String aMusicStyle = "aMusicStyle";
 
-        return new BookingArtist(1, name, cost, aNumberOfPeople, aMusicStyle, popularityRank, new ArrayList<>());
+        return new Artist(1, name, cost, aNumberOfPeople, aMusicStyle, popularityRank, new ArrayList<>());
     }
 } 

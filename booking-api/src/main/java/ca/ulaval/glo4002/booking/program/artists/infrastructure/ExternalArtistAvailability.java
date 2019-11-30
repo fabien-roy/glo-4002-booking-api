@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.program.artists.domain;
+package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

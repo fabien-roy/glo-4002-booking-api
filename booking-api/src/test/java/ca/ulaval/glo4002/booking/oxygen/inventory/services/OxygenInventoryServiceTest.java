@@ -2,12 +2,11 @@ package ca.ulaval.glo4002.booking.oxygen.inventory.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -102,7 +101,7 @@ class OxygenInventoryServiceTest {
 
     @Test
     void orderForArtist_shouldProduceWithCorrectCategory() {
-        BookingArtist artist = mock(BookingArtist.class);
+        Artist artist = mock(Artist.class);
         EventDate orderDate = mock(EventDate.class);
         OxygenCategories expectedOxygenCategory = OXYGEN_CATEGORY_FOR_ARTIST;
 
@@ -113,7 +112,7 @@ class OxygenInventoryServiceTest {
 
     @Test
     void orderForArtist_shouldProduceWithCorrectOrderDate() {
-        BookingArtist artist = mock(BookingArtist.class);
+        Artist artist = mock(Artist.class);
         EventDate orderDate = mock(EventDate.class);
         LocalDate expectedOrderDateValue = FestivalConfiguration.getDefaultStartEventDate().getValue();
         when(orderDate.getValue()).thenReturn(expectedOrderDateValue);
@@ -126,7 +125,7 @@ class OxygenInventoryServiceTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void orderForArtist_shouldProduceWithCorrectAmountOfTanks(int numberOfPeople) {
-        BookingArtist artist = mock(BookingArtist.class);
+        Artist artist = mock(Artist.class);
         when(artist.getNumberOfPeople()).thenReturn(numberOfPeople);
         EventDate orderDate = mock(EventDate.class);
         Integer expectedAmountOfOxygenTanksNeeded = numberOfPeople * OXYGEN_TANKS_NEEDED_PER_ARTIST;

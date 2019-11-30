@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.program.events.domain;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
 
@@ -35,9 +35,9 @@ public class EventFactory {
         eventRequests.forEach(eventRequest -> {
             EventDate eventDate = eventDateFactory.create(eventRequest.getEventDate());
             Activities activity = Activities.get(eventRequest.getAm());
-            BookingArtist bookingArtist = artistService.getByName(eventRequest.getPm());
+            Artist artist = artistService.getByName(eventRequest.getPm());
 
-            Event event = new Event(eventDate, activity, bookingArtist);
+            Event event = new Event(eventDate, activity, artist);
 
             events.add(event);
         });

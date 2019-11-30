@@ -1,34 +1,27 @@
-package ca.ulaval.glo4002.booking.program.artists.domain;
+package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.program.artists.domain.Availability;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
+
+import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistClient;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtist;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistAvailability;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.profits.domain.Money;
-
-import javax.inject.Inject;
-
-// TODO : Remove outdated ArtistConverter
-public class ArtistConverter {
+public class ExternalArtistConverter {
 
 	private final FestivalConfiguration festivalConfiguration;
-	private final ArtistRepository artistRepository;
 
 	@Inject
-	public ArtistConverter(FestivalConfiguration festivalConfiguration, ArtistRepository artistRepository) {
+	public ExternalArtistConverter(FestivalConfiguration festivalConfiguration) {
 		this.festivalConfiguration = festivalConfiguration;
-		this.artistRepository = artistRepository;
 	}
 
-	public void convert() {
-		List<ExternalArtist> externalArtists = new ExternalArtistClient().getArtists();
+	public List<Artist> convert(List<ExternalArtist> externalArtists) {
 		List<Artist> artists = new ArrayList<>();
 
 		for (ExternalArtist externalArtist : externalArtists) {
@@ -49,7 +42,7 @@ public class ArtistConverter {
 			artists.add(artist);
 		}
 
-		// artistRepository.saveAll(artists);
+		return artists;
 	}
 
 	private List<Availability> convertAvailabilities(List<ExternalArtistAvailability> externalAvailabilities) {

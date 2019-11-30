@@ -10,10 +10,10 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistClient;
+import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistClient;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
+import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtist;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.InMemoryArtistRepository;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -208,7 +208,7 @@ public class ArtistConverterTest {
 		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
 		artistRepository = new InMemoryArtistRepository();
 		artistConverter = new ArtistConverter(festivalConfiguration, artistRepository);
-		externalArtists = ArtistClient.getArtists();
+		externalArtists = new ExternalArtistClient().getArtists();
 	}
 
 	@BeforeEach
@@ -228,7 +228,7 @@ public class ArtistConverterTest {
 	public void convert_convertedArtistsShouldAllBeConverted() {
 		artistConverter.convert();
 		
-		List<BookingArtist> artists = artistRepository.findAll();
+		List<Artist> artists = artistRepository.findAll();
 		
 		assertEquals(externalArtists.size(), artists.size());
 
@@ -238,7 +238,7 @@ public class ArtistConverterTest {
 	public void convert_convertArtistsShouldHaveRightNames() {
 		artistConverter.convert();
 		
-		List<BookingArtist> artists = artistRepository.findAll();
+		List<Artist> artists = artistRepository.findAll();
 		
 		assertEquals(externalArtists.get(0).getName(), artists.get(0).getName());
 		assertEquals(externalArtists.get(1).getName(), artists.get(1).getName());

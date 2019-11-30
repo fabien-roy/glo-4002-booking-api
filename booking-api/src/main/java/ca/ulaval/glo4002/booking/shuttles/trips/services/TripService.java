@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.program.artists.domain.BookingArtist;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
@@ -29,7 +29,7 @@ public class TripService {
 		this.factory = factory;
 	}
 
-	public void orderForArtist(BookingArtist artist, EventDate tripDate) {
+	public void orderForArtist(Artist artist, EventDate tripDate) {
 		ShuttleCategories shuttleCategory;
 
 		if (artist.getNumberOfPeople() > 1) {
