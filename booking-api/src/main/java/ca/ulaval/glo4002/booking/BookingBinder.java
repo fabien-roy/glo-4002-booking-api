@@ -28,7 +28,6 @@ import ca.ulaval.glo4002.booking.passes.domain.PassFactory;
 import ca.ulaval.glo4002.booking.profits.rest.ProfitReportResource;
 import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.services.ProfitService;
-import ca.ulaval.glo4002.booking.program.artists.domain.ArtistConverter;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.*;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
