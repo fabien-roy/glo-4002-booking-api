@@ -71,4 +71,12 @@ public class FestivalConfiguration {
     public static EventDate getDefaultEndEventDate() {
         return new EventDate(DEFAULT_END_DATE_VALUE);
     }
+
+    public static OrderDate getDefaultStartOrderDate() {
+        return null;
+    }
+
+    public static OrderDate getDefaultEndOrderDate() {
+        return null;
+    }
 }

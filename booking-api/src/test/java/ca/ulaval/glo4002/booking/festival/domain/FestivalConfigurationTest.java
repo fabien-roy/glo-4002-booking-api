@@ -41,12 +41,20 @@ class FestivalConfigurationTest {
 
     @Test
     void getStartOrderDate_shouldReturnDefaultStartOrderDate_whenNoneIsSet() {
-        // TODO
+        OrderDate expectedOrderDate = FestivalConfiguration.getDefaultStartOrderDate();
+
+        OrderDate orderDate = festivalConfiguration.getStartOrderDate();
+
+        assertEquals(expectedOrderDate, orderDate);
     }
 
     @Test
     void getEndOrderDate_shouldReturnDefaultEndOrderDate_whenNoneIsSet() {
-        // TODO
+        OrderDate expectedOrderDate = FestivalConfiguration.getDefaultEndOrderDate();
+
+        OrderDate orderDate = festivalConfiguration.getEndOrderDate();
+
+        assertEquals(expectedOrderDate, orderDate);
     }
 
     @Test
@@ -61,12 +69,26 @@ class FestivalConfigurationTest {
 
     @Test
     void setStartEventDate_shouldSetStartOrderDate() {
-        // TODO
+        EventDate newStartEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
+        EventDate expectedEventDate = newStartEventDate.minusDays(FestivalConfiguration.MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
+
+        festivalConfiguration.setStartEventDate(newStartEventDate);
+        OrderDate orderDate = festivalConfiguration.getStartOrderDate();
+
+        assertEquals(expectedOrderDate, orderDate);
     }
 
     @Test
     void setStartEventDate_shouldSetEndOrderDate() {
-        // TODO
+        EventDate newStartEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
+        EventDate expectedEventDate = newStartEventDate.minusDays(FestivalConfiguration.MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
+
+        festivalConfiguration.setStartEventDate(newStartEventDate);
+        OrderDate orderDate = festivalConfiguration.getEndOrderDate();
+
+        assertEquals(expectedOrderDate, orderDate);
     }
 
     @Test
@@ -102,27 +124,5 @@ class FestivalConfigurationTest {
         List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
         assertTrue(allEventDates.stream().allMatch(new HashSet<>()::add));
-    }
-
-    // TODO : Outdated?
-    @Test
-    void getStartOrderDate_shouldReturnStartEventDateMinusMaximumDaysToOrderBeforeStartEventDate() {
-        EventDate expectedEventDate = festivalConfiguration.getStartEventDate().minusDays(FestivalConfiguration.MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
-        OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
-
-        OrderDate orderDate = festivalConfiguration.getStartOrderDate();
-
-        assertEquals(expectedOrderDate, orderDate);
-    }
-
-    // TODO : Outdated?
-    @Test
-    void getEndOrderDate_shouldReturnStartEventDateMinusMinimumDaysToOrderBeforeStartEventDate() {
-        EventDate expectedEventDate = festivalConfiguration.getStartEventDate().minusDays(FestivalConfiguration.MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
-        OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
-
-        OrderDate orderDate = festivalConfiguration.getEndOrderDate();
-
-        assertEquals(expectedOrderDate, orderDate);
     }
 }
