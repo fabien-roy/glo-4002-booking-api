@@ -56,14 +56,6 @@ class ArtistServiceTest {
 	    assertEquals(firstPopularAndThirdCostArtist.getName(), artist.getName());
     }
 
-    // TODO : Move to repository
-    @Test
-    void getByName_shouldThrowInvalidProgramException_whenArtistNameDoesNotExist() {
-	    String anInvalidArtistName = "anInvalidArtistName";
-
-	    assertThrows(InvalidProgramException.class, () -> service.getByName(anInvalidArtistName));
-    }
-
     @Test
     void getAll_shouldReturnAllArtistNames_whenOrderByIsNull() {
         ArtistListResponse artistListResponse = service.getAllUnordered();
