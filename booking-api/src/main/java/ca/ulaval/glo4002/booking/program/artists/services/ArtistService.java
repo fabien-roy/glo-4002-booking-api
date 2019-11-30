@@ -30,10 +30,14 @@ public class ArtistService {
 	public ArtistListResponse getAllOrdered(String orderBy) {
 		List<Artist> artists = repository.findAll();
 
-		if (orderBy.equalsIgnoreCase(ArtistOrderings.LOW_COSTS.toString())) {
-			sortByLowCost(artists);
-		} else if (orderBy.equalsIgnoreCase(ArtistOrderings.MOST_POPULAR.toString())) {
-			sortByMostPopular(artists);
+		switch (ArtistOrderings.get(orderBy)) {
+			case LOW_COSTS:
+				sortByLowCost(artists);
+				break;
+			default:
+			case MOST_POPULAR:
+				sortByMostPopular(artists);
+				break;
 		}
 
 		List<String> artistNames = new ArrayList<>(getArtistNames(artists));

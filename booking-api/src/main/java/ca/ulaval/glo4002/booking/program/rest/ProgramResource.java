@@ -32,7 +32,6 @@ public class ProgramResource {
 	public Response getArtists(@QueryParam("orderBy") String orderBy) {
 		ArtistListResponse artistListResponse;
 
-		// TODO : Make orderBy nullable in artist service
 		if (orderBy == null) {
 			artistListResponse = artistService.getAllUnordered();
 		} else {

@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.artists.domain.ArtistConverter;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
@@ -90,7 +88,6 @@ class ArtistServiceTest {
     void setUpService() {
 		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
 
-        FestivalConfiguration festivalConfiguration = new FestivalConfiguration();
         ArtistRepository repository = new InMemoryArtistRepository();
 
         service = new ArtistService(repository);
