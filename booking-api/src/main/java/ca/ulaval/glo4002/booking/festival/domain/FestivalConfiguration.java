@@ -11,8 +11,8 @@ import java.util.List;
 
 public class FestivalConfiguration {
 
-    private static final LocalDate DEFAULT_START_DATE_VALUE = LocalDate.of(2050, 7, 17);
-    private static final LocalDate DEFAULT_END_DATE_VALUE = LocalDate.of(2050, 7, 24);
+    private static final LocalDate DEFAULT_START_EVENT_DATE_VALUE = LocalDate.of(2050, 7, 17);
+    private static final LocalDate DEFAULT_END_EVENT_DATE_VALUE = LocalDate.of(2050, 7, 24);
     private static final LocalDateTime DEFAULT_START_ORDER_DATE_VALUE = LocalDateTime.of(2050, 1, 1, 0, 0, 0);
     private static final LocalDateTime DEFAULT_END_ORDER_DATE_VALUE = LocalDateTime.of(2050, 7, 17, 0, 0, 0);
     static final Integer MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 180;
@@ -82,11 +82,11 @@ public class FestivalConfiguration {
     }
 
     public static EventDate getDefaultStartEventDate() {
-        return new EventDate(DEFAULT_START_DATE_VALUE);
+        return new EventDate(DEFAULT_START_EVENT_DATE_VALUE);
     }
 
     public static EventDate getDefaultEndEventDate() {
-        return new EventDate(DEFAULT_END_DATE_VALUE);
+        return new EventDate(DEFAULT_END_EVENT_DATE_VALUE);
     }
 
     public static OrderDate getDefaultStartOrderDate() {
