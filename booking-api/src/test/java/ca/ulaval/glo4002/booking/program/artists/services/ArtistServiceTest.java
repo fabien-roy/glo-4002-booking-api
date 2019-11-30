@@ -1,113 +1,62 @@
 package ca.ulaval.glo4002.booking.program.artists.services;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-
-import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.InMemoryArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import ca.ulaval.glo4002.booking.profits.domain.Money;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ArtistServiceTest {
 
-    // TODO : ArtistService should mock repository and converter
-
     private ArtistService service;
+    private ArtistRepository artistRepository;
+
     private Artist firstPopularAndThirdCostArtist = buildArtist("firstPopularAndThirdCostArtist", 200, 1);
     private Artist secondPopularAndFirstCostArtist = buildArtist("secondPopularAndFirstCostArtist", 500, 2);
     private Artist thirdPopularAndEqualFourthCostArtist = buildArtist("thirdPopularAndEqualFourthCostArtist", 100, 3);
     private Artist fourthPopularAndSecondCostArtist = buildArtist("fourthPopularAndSecondCostArtist", 300, 4);
     private Artist fifthPopularAndEqualFourthCostArtist = buildArtist("fifthPopularAndEqualFourthCostArtist", 100, 5);
-    private static WireMockServer wiremockServer;
-    private static String response = "[ {\n" + 
-			"  \"id\" : 2,\n" + 
-			"  \"name\" : \"secondPopularAndFirstCostArtist\",\n" + 
-			"  \"nbPeople\" : 4,\n" + 
-			"  \"musicStyle\" : \"pop\",\n" + 
-			"  \"price\" : 500,\n" + 
-			"  \"popularityRank\" : 2,\n" + 
-			"  \"availabilities\" : [ ]\n" + 
-			"}, {\n" + 
-			"  \"id\" : 3,\n" + 
-			"  \"name\" : \"firstPopularAndThirdCostArtist\",\n" + 
-			"  \"nbPeople\" : 1,\n" + 
-			"  \"musicStyle\" : \"pop\",\n" + 
-			"  \"price\" : 200,\n" + 
-			"  \"popularityRank\" : 1,\n" + 
-			"  \"availabilities\" : [ ]\n" + 
-			"}, {\n" + 
-			"  \"id\" : 4,\n" + 
-			"  \"name\" : \"thirdPopularAndEqualFourthCostArtist\",\n" + 
-			"  \"nbPeople\" : 4,\n" + 
-			"  \"musicStyle\" : \"folk\",\n" + 
-			"  \"price\" : 100,\n" + 
-			"  \"popularityRank\" : 3,\n" + 
-			"  \"availabilities\" : [ ]\n" + 
-			"}, {\n" + 
-			"  \"id\" : 5,\n" + 
-			"  \"name\" : \"fourthPopularAndSecondCostArtist\",\n" + 
-			"  \"nbPeople\" : 1,\n" + 
-			"  \"musicStyle\" : \"pop\",\n" + 
-			"  \"price\" : 300,\n" + 
-			"  \"popularityRank\" : 4,\n" + 
-			"  \"availabilities\" : [ ]\n" + 
-			"}, {\n" + 
-			"  \"id\" : 6,\n" + 
-			"  \"name\" : \"fifthPopularAndEqualFourthCostArtist\",\n" + 
-			"  \"nbPeople\" : 1,\n" + 
-			"  \"musicStyle\" : \"pop\",\n" + 
-			"  \"price\" : 100,\n" + 
-			"  \"popularityRank\" : 5,\n" + 
-			"  \"availabilities\" : [ ]\n" + 
-			"} ]";
-	
-	
-	@BeforeAll
-	public static void setUpServer() {
-		wiremockServer = new WireMockServer(8080);
-		wiremockServer.start();
-	}
 
     @BeforeEach
     void setUpService() {
-		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
-
-        ArtistRepository repository = new InMemoryArtistRepository();
-
-        service = new ArtistService(repository);
-
+        service = new ArtistService(artistRepository);
     }
-    
-    @AfterAll
-    public static void stopServer() {
-    	wiremockServer.stop();
+
+    @BeforeEach
+    void setUpRepository() {
+        artistRepository = mock(ArtistRepository.class);
+
+        when(artistRepository.findAll()).thenReturn(Arrays.asList(
+                secondPopularAndFirstCostArtist,
+                firstPopularAndThirdCostArtist,
+                thirdPopularAndEqualFourthCostArtist,
+                fourthPopularAndSecondCostArtist,
+                fifthPopularAndEqualFourthCostArtist
+        ));
     }
 
     @Test
     void getByName_shouldReturnArtist() {
 	    String artistName = firstPopularAndThirdCostArtist.getName();
+	    when(artistRepository.findByName(artistName)).thenReturn(firstPopularAndThirdCostArtist);
 
 	    Artist artist = service.getByName(artistName);
 
 	    assertEquals(firstPopularAndThirdCostArtist.getName(), artist.getName());
     }
 
+    // TODO : Move to repository
     @Test
     void getByName_shouldThrowInvalidProgramException_whenArtistNameDoesNotExist() {
 	    String anInvalidArtistName = "anInvalidArtistName";
