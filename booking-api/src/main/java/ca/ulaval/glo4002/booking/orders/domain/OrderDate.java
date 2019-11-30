@@ -35,7 +35,6 @@ public class OrderDate {
 		return !this.isBefore(lowerDate) && !this.isAfter(higherDate);
 	}
 
-	// TODO : Test
 	public LocalDate toLocalDate() {
 		return value.toLocalDate();
 	}
@@ -45,7 +44,6 @@ public class OrderDate {
 		return value.toString();
 	}
 
-	// TODO : Test OrderDate.equals
 	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof OrderDate)) return false;
@@ -55,7 +53,6 @@ public class OrderDate {
 		return this.value.equals(otherOrderDate.getValue());
 	}
 
-	// TODO : Test OrderDate.hashCode
 	@Override
 	public int hashCode() {
 		return value.hashCode();

@@ -101,7 +101,7 @@ class EventDateTest {
     }
 
     @Test
-    void toLocalDateTime_shouldReturnValueAsLocalDate() {
+    void toLocalDateTime_shouldReturnValueAsLocalDateTime() {
         LocalDate value = FestivalConfiguration.getDefaultEndEventDate().getValue();
         LocalDateTime expectedLocalDateTime = LocalDateTime.of(value, LocalTime.MIDNIGHT);
         eventDate = new EventDate(value);
