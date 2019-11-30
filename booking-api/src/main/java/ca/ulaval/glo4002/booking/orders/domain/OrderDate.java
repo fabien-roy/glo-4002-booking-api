@@ -15,12 +15,10 @@ public class OrderDate {
 		return value;
 	}
 
-	// TODO : Test
 	public OrderDate plusDays(int days) {
 		return new OrderDate(this.value.plusDays(days));
 	}
 
-	// TODO : Test
 	public OrderDate minusDays(int days) {
 		return new OrderDate(this.value.minusDays(days));
 	}
