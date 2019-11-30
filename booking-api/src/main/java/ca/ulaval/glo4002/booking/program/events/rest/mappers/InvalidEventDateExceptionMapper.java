@@ -14,7 +14,7 @@ public class InvalidEventDateExceptionMapper implements ExceptionMapper<InvalidE
 
     @Override
     public Response toResponse(InvalidEventDateException exception) {
-        ErrorResponse errorResponse = new ErrorResponse("INVALID_EVENT_DATE", "Event date should be between July 17 2050 and July 24 2050");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_EVENT_DATE", "event date should be between July 17 2050 and July 24 2050");
 
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }

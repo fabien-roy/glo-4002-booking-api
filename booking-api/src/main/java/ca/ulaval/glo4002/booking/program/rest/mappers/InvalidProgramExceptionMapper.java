@@ -12,7 +12,7 @@ public class InvalidProgramExceptionMapper implements ExceptionMapper<InvalidPro
 
     @Override
     public Response toResponse(InvalidProgramException exception) {
-        ErrorResponse errorResponse = new ErrorResponse("INVALID_PROGRAM", "Invalid program");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_PROGRAM", "invalid program");
 
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }

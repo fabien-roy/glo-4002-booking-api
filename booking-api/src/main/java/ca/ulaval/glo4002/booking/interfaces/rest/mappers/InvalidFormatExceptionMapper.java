@@ -12,7 +12,7 @@ public class InvalidFormatExceptionMapper implements ExceptionMapper<InvalidForm
 
     @Override
     public Response toResponse(InvalidFormatException exception) {
-        ErrorResponse errorResponse = new ErrorResponse("INVALID_FORMAT", "Invalid format");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_FORMAT", "invalid format");
 
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }

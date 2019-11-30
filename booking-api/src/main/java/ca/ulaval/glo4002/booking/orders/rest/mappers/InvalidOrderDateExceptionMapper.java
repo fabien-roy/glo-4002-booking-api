@@ -14,7 +14,7 @@ public class InvalidOrderDateExceptionMapper implements ExceptionMapper<InvalidO
 
     @Override
     public Response toResponse(InvalidOrderDateException exception) {
-        ErrorResponse errorResponse = new ErrorResponse("INVALID_ORDER_DATE", "Order date should be between January 1 2050 and July 16 2050");
+        ErrorResponse errorResponse = new ErrorResponse("INVALID_ORDER_DATE", "order date should be between January 1 2050 and July 16 2050");
 
         return Response.status(Response.Status.BAD_REQUEST).entity(errorResponse).build();
     }
