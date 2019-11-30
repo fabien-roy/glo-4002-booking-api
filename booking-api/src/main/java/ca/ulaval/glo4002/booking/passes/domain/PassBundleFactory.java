@@ -63,7 +63,7 @@ public class PassBundleFactory {
     }
 
     private PassCategories parsePassCategory(PassBundleRequest passBundleRequest) {
-        return PassCategories.get(passBundleRequest.getPassCategory());
+        return PassCategories.get(passBundleRequest.getPassCategory().toLowerCase());
     }
 
     private void validateEventDates(List<String> eventDates, PassOptions passOption) {
