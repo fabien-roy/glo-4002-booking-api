@@ -13,7 +13,7 @@ import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistClient;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtist;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.InMemoryArtistRepository;
+import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -206,7 +206,7 @@ public class ArtistConverterTest {
 	@BeforeEach
 	public void converterSetUp() {
 		stubFor(get(urlEqualTo("/artists")).willReturn(WireMock.aResponse().withHeader("Content-Type", "application/json").withBody(response)));
-		artistRepository = new InMemoryArtistRepository();
+		artistRepository = new ExternalArtistRepository();
 		artistConverter = new ArtistConverter(festivalConfiguration, artistRepository);
 		externalArtists = new ExternalArtistClient().getArtists();
 	}

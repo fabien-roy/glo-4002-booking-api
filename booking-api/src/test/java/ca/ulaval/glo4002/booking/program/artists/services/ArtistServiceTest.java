@@ -96,7 +96,6 @@ class ArtistServiceTest {
         assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(4));
     }
 
-
     private Artist buildArtist(String name, Integer price, Integer popularityRank) {
         Money cost = new Money(new BigDecimal(price));
         Integer aNumberOfPeople = 1;
