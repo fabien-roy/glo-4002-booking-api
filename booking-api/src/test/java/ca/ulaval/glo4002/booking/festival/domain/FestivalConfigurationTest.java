@@ -108,6 +108,7 @@ class FestivalConfigurationTest {
         List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
         assertTrue(allEventDates.stream().allMatch(eventDate -> eventDate.equals(startDate) || eventDate.isAfter(startDate)));
+        assertTrue(allEventDates.stream().anyMatch(eventDate -> eventDate.equals(startDate)));
     }
 
     @Test
@@ -117,6 +118,7 @@ class FestivalConfigurationTest {
         List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
         assertTrue(allEventDates.stream().allMatch(eventDate -> eventDate.equals(endDate) || eventDate.isBefore(endDate)));
+        assertTrue(allEventDates.stream().anyMatch(eventDate -> eventDate.equals(endDate)));
     }
 
     @Test
