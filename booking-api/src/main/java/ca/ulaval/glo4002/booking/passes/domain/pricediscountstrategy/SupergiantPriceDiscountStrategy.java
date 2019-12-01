@@ -12,8 +12,7 @@ public class SupergiantPriceDiscountStrategy implements PriceDiscountStrategy {
 	@Override
 	public Money calculateDiscount(int passQuantity, Money price) {
 		if (passQuantity >= PASS_QUANTITY_THRESHOLD) {
-			price.applyAmountDiscount(DISCOUNT_AMOUNT);
-			return price;
+			return price.applyAmountDiscount(DISCOUNT_AMOUNT);
 		} else {
 			return price;
 		}

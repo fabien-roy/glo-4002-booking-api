@@ -12,8 +12,7 @@ public class NebulaPriceDiscountStrategy implements PriceDiscountStrategy {
 	@Override
 	public Money calculateDiscount(int passQuantity, Money price) {
 		if (passQuantity > PASS_QUANTITY_THRESHOLD) {
-			price.applyPercentageDiscount(DISCOUNT_PERCENTAGE);
-			return price;
+			return price.applyPercentageDiscount(DISCOUNT_PERCENTAGE);
 		} else {
 			return price;
 		}
