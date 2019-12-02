@@ -14,8 +14,6 @@ public class ProfitReportTest {
     @BeforeEach
     void setupProfit() {
         profitReport = new ProfitReport();
-        profitReport.addExpense(new Money(new BigDecimal(1)));
-        profitReport.addRevenue(new Money(new BigDecimal(1)));
     }
 
     @Test
@@ -25,7 +23,7 @@ public class ProfitReportTest {
 
         profitReport.addExpense(expense);
 
-        assertEquals(amount.add(BigDecimal.valueOf(1)), profitReport.getExpense().getValue());
+        assertEquals(expense, profitReport.getExpense());
     }
 
     @Test
@@ -35,7 +33,7 @@ public class ProfitReportTest {
 
         profitReport.addRevenue(revenue);
 
-        assertEquals(amount.add(BigDecimal.valueOf(1)), profitReport.getRevenue().getValue());
+        assertEquals(revenue, profitReport.getRevenue());
     }
 
     @Test
@@ -47,8 +45,7 @@ public class ProfitReportTest {
 
         profitReport.addRevenue(revenue);
         profitReport.addExpense(expense);
-        profitReport.calculateProfit();
 
-        assertEquals(amountRevenue.subtract(amountExpense), profitReport.getTotalProfit().getValue());
+        assertEquals(revenue.subtract(expense), profitReport.getTotalProfit());
     }
 }

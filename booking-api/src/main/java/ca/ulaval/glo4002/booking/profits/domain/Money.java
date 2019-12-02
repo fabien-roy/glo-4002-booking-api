@@ -37,21 +37,21 @@ public class Money implements Comparable<Money> {
 	}
 
 	public Money multiply(BigDecimal factor) {
-		value = value.multiply(factor);
+		BigDecimal multipliedValue = value.multiply(factor);
 
-		return this;
+		return new Money(multipliedValue);
 	}
 
 	public Money add(Money money) {
-		this.value = this.value.add(money.getValue());
+		BigDecimal addedValue = this.value.add(money.getValue());
 
-		return new Money(this.value);
+		return new Money(addedValue);
 	}
 
 	public Money subtract(Money money) {
-		this.value = this.value.subtract(money.getValue());
+		BigDecimal subtractedValue = this.value.subtract(money.getValue());
 
-		return new Money(this.value);
+		return new Money(subtractedValue);
 	}
 
 	@Override

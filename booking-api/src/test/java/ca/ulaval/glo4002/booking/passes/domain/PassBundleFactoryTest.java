@@ -165,7 +165,7 @@ class PassBundleFactoryTest {
 
 		PassBundle passBundle = passBundleFactory.create(passBundleRequest);
 		Money passPrice = passBundle.getPasses().get(0).getPrice();
-		Money expectedPrice = priceDiscountStrategy.calculateDiscount(passQuantity, passPrice);
+		Money expectedPrice = priceDiscountStrategy.calculateDiscount(passQuantity, passPrice).multiply(BigDecimal.valueOf(passQuantity));
 
 		assertEquals(expectedPrice, passBundle.getPrice());
 	}

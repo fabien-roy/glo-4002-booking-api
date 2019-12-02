@@ -35,8 +35,6 @@ public class ProfitService {
         oxygenTankInventoryRepository.findAll().forEach(tank -> tank.updateProfit(profitReport));
         eventRepository.findAll().forEach(event -> event.updateProfit(profitReport));
 
-        profitReport.calculateProfit();
-
         return mapper.toResponse(profitReport);
     }
 }

@@ -60,14 +60,14 @@ class MoneyTest {
     
     @Test
     void add_shouldAddTheMoney() {
-    	aMoney.add(anotherMoney);
+    	aMoney = aMoney.add(anotherMoney);
     	
     	assertEquals(anAmount.add(anotherAmount), aMoney.getValue());
     }
     
     @Test
     void subtract_shouldSubtractTheMoney() {
-    	aMoney.subtract(anotherMoney);
+    	aMoney = aMoney.subtract(anotherMoney);
     	
     	assertEquals(anAmount.subtract(anotherAmount), aMoney.getValue());
     }
@@ -76,7 +76,7 @@ class MoneyTest {
     void multiply_shouldMultiplyTheMoney() {
     	BigDecimal multiplyResult = anAmount.multiply(anotherAmount);
     	
-    	aMoney.multiply(anotherAmount);
+    	aMoney = aMoney.multiply(anotherAmount);
     	
     	assertEquals(multiplyResult, aMoney.getValue());
     }
