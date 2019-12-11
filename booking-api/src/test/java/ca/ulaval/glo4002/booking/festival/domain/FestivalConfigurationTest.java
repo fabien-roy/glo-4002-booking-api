@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -125,6 +125,8 @@ class FestivalConfigurationTest {
     void getAllEventDates_shouldReturnUniqueEventDates() {
         List<EventDate> allEventDates = festivalConfiguration.getAllEventDates();
 
-        assertTrue(allEventDates.stream().allMatch(new HashSet<>()::add));
+        boolean hasDuplicates = allEventDates.stream().anyMatch(eventDate -> Collections.frequency(allEventDates, eventDate) > 1);
+
+        assertFalse(hasDuplicates);
     }
 }
