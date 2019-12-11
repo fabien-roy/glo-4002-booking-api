@@ -46,7 +46,7 @@ public class OxygenTankProducer {
 			if (category == OxygenCategories.E) {
 				history.addTanksBought(requestDate, quantityToCover);
 			} else {
-				history.addMadeTanks(actualOxygenProduction.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
+				history.addMadeTanks(actualOxygenProduction.calculateReadyDateForCategory(requestDate), producedTanks.size());
 				actualOxygenProduction.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
 			}
 
@@ -70,7 +70,7 @@ public class OxygenTankProducer {
 		Integer quantityToCover = inventory.requestTankByCategory(category, category, numberOfTanks);
 
 		if (quantityToCover > 0) {
-			LocalDate readyDate = oxygenProduction.calculateReadyDateForCategory(requestDate).getValue();
+			LocalDate readyDate = oxygenProduction.calculateReadyDateForCategory(requestDate);
 			newTanks = factory.createOxygenTank(oxygenProduction, requestDate, quantityToCover);
 
 			if (category == OxygenCategories.E) {

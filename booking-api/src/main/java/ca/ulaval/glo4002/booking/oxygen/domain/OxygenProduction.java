@@ -58,12 +58,8 @@ public class OxygenProduction {
         return new Money(tankPrice);
     }
 
-    public OxygenDate calculateReadyDateForCategory(LocalDate requestDate) {
-        OxygenDate readyDate = new OxygenDate(requestDate);
-
-        readyDate.addDays(produceTimeInDays);
-
-        return readyDate;
+    public LocalDate calculateReadyDateForCategory(LocalDate requestDate) {
+        return requestDate.plusDays(produceTimeInDays);
     }
 
     // TODO : OCP : This should be the job of OxygenHistory

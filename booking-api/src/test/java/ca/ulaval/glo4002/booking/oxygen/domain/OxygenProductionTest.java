@@ -1,15 +1,15 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
-import ca.ulaval.glo4002.booking.profits.domain.Money;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OxygenProductionTest {
 
@@ -17,7 +17,7 @@ public class OxygenProductionTest {
 	private OxygenProduction oxygenProductionB;
 	private OxygenProduction oxygenProductionE;
 
-	private static final LocalDate requestDate = LocalDate.of(2050, 01, 01);
+	private static final LocalDate requestDate = LocalDate.of(2050, 1, 1);
 
 	@BeforeEach
 	void setupOxygenCategory() {
@@ -55,27 +55,27 @@ public class OxygenProductionTest {
 
 	@Test
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsE() {
-		LocalDate ReadyDate = oxygenProductionE.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate readyDate = oxygenProductionE.calculateReadyDateForCategory(requestDate);
 
-		assertTrue(requestDate.isEqual(ReadyDate));
+		assertTrue(requestDate.isEqual(readyDate));
 	}
 
 	@Test
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsB() {
 		LocalDate expectedReadyDate = requestDate.plusDays(10);
 
-		LocalDate ReadyDate = oxygenProductionB.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate readyDate = oxygenProductionB.calculateReadyDateForCategory(requestDate);
 
-		assertTrue(expectedReadyDate.isEqual(ReadyDate));
+		assertTrue(expectedReadyDate.isEqual(readyDate));
 	}
 
 	@Test
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsA() {
 		LocalDate expectedReadyDate = requestDate.plusDays(20);
 
-		LocalDate ReadyDate = oxygenProductionA.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate readyDate = oxygenProductionA.calculateReadyDateForCategory(requestDate);
 
-		assertTrue(expectedReadyDate.isEqual(ReadyDate));
+		assertTrue(expectedReadyDate.isEqual(readyDate));
 	}
 
 	@Test
@@ -85,8 +85,7 @@ public class OxygenProductionTest {
 
 		oxygenProductionA.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
 
-		assertEquals(history.getHistoryItems().get(requestDate).getQtyCandlesUsed(),
-				OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED);
+		assertEquals(OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED, history.getHistoryItems().get(requestDate).getQtyCandlesUsed());
 	}
 
 	@Test
@@ -96,7 +95,6 @@ public class OxygenProductionTest {
 
 		oxygenProductionB.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
 
-		assertEquals(history.getHistoryItems().get(requestDate).getQtyWaterUsed(),
-				OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED);
+		assertEquals(OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED, history.getHistoryItems().get(requestDate).getQtyWaterUsed());
 	}
 }

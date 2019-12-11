@@ -21,11 +21,10 @@ public class OxygenFactory {
 
 	public List<OxygenTank> createOxygenTank(OxygenProduction category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
-		OxygenDate requestedDate = new OxygenDate(requestDate);
 
 		while (quantityToCover > 0) {
-			for (Integer i = 0; i < category.getNumberOfTanksByBundle(); i++) {
-				newTanks.add(new OxygenTank(category, requestedDate));
+			for (int i = 0; i < category.getNumberOfTanksByBundle(); i++) {
+				newTanks.add(new OxygenTank(category, requestDate));
 			}
 
 			quantityToCover -= category.getNumberOfTanksByBundle();
@@ -80,7 +79,6 @@ public class OxygenFactory {
 	}
 
 	public OxygenProduction createCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
-		// TODO : Use OxygenDate
 		LocalDate readyBeforeDate = festivalConfiguration.getStartEventDate().plusDays(1).getValue();
 
 		if(oxygenCategories == OxygenCategories.A) {
