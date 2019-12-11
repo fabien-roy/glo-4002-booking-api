@@ -1,18 +1,17 @@
 package ca.ulaval.glo4002.booking.program.artists.services;
 
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
+import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
+import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
+
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
-import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
-import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
-import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 
 public class ArtistService {
 
@@ -64,6 +63,7 @@ public class ArtistService {
 		artists.sort(Comparator
 				.comparing(((Function<Artist, Money>) Artist::getCost).andThen(Money::getValue))
 				.thenComparing(Artist::getPopularityRank)
+                .reversed()
 		);
 	}
 }

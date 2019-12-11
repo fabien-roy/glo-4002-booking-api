@@ -6,7 +6,6 @@ import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
-import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -90,11 +89,11 @@ class ArtistServiceTest {
     void getAllOrdered_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsLowCosts() {
         ArtistListResponse artistListResponse = service.getAllOrdered(ArtistOrderings.LOW_COSTS.toString());
 
-        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(0));
-        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(1));
+        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(0));
+        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListResponse.getArtists().get(1));
         assertEquals(firstPopularAndThirdCostArtist.getName(), artistListResponse.getArtists().get(2));
-        assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListResponse.getArtists().get(3));
-        assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(4));
+        assertEquals(fifthPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(3));
+        assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(4));
     }
 
     @Test
