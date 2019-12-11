@@ -1,17 +1,17 @@
 package ca.ulaval.glo4002.booking.oxygen.history.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class OxygenHistoryTest {
 
 	private OxygenHistory oxygenHistory;
-	private LocalDate aRequestDate = LocalDate.of(2050, 7, 1);
+	private LocalDate aRequestDate = FestivalConfiguration.getDefaultStartOrderDate().toLocalDate();
 
 	@BeforeEach
 	void setupHistory() {
@@ -19,35 +19,38 @@ class OxygenHistoryTest {
 	}
 
 	@Test
-	void constructing_shouldSetNoHistoryItems() {
-		assertTrue(oxygenHistory.getHistoryItems().isEmpty());
-	}
-
-	@Test
 	void addTanksBought_shouldAddTanksBought() {
-		oxygenHistory.addTanksBought(aRequestDate, 5);
+	    int amountTanksBought = 5;
 
-		assertEquals(oxygenHistory.getHistoryItems().get(aRequestDate).getQtyOxygenTankBought(), 5);
+		oxygenHistory.addTanksBought(aRequestDate, amountTanksBought);
+
+		assertEquals(amountTanksBought, oxygenHistory.getHistoryItems().get(aRequestDate).getQtyOxygenTankBought());
 	}
 
 	@Test
 	void addMadeTanks_shouldAddMadeTanks() {
-		oxygenHistory.addMadeTanks(aRequestDate, 5);
+	    int amountTanksMade = 5;
 
-		assertEquals(oxygenHistory.getHistoryItems().get(aRequestDate).getQtyOxygenTankMade(), 5);
+		oxygenHistory.addMadeTanks(aRequestDate, amountTanksMade);
+
+		assertEquals(amountTanksMade, oxygenHistory.getHistoryItems().get(aRequestDate).getQtyOxygenTankMade());
 	}
 
 	@Test
 	void addWaterUsed_shouldAddWaterUsed() {
-		oxygenHistory.addWaterUsed(aRequestDate, 5D);
+		double amountWaterUsed = 5D;
 
-		assertEquals(oxygenHistory.getHistoryItems().get(aRequestDate).getQtyWaterUsed(), 5D);
+		oxygenHistory.addWaterUsed(aRequestDate, amountWaterUsed);
+
+		assertEquals(amountWaterUsed, oxygenHistory.getHistoryItems().get(aRequestDate).getQtyWaterUsed());
 	}
 
 	@Test
 	void addCandlesUsed_shouldAddCandlesUsed() {
-		oxygenHistory.addCandlesUsed(aRequestDate, 5);
+	    int amountCandleUsed = 5;
 
-		assertEquals(oxygenHistory.getHistoryItems().get(aRequestDate).getQtyCandlesUsed(), 5);
+		oxygenHistory.addCandlesUsed(aRequestDate, amountCandleUsed);
+
+		assertEquals(amountCandleUsed, oxygenHistory.getHistoryItems().get(aRequestDate).getQtyCandlesUsed());
 	}
 }
