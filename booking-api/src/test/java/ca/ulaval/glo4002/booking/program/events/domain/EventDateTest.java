@@ -138,15 +138,4 @@ class EventDateTest {
 
         assertFalse(result);
     }
-
-    @Test
-    void hashCode_shouldReturnValueHashCode() {
-        LocalDate aValue = FestivalConfiguration.getDefaultStartEventDate().getValue();
-        int expectedHashCode = aValue.hashCode();
-        eventDate = new EventDate(aValue);
-
-        int hashCode = eventDate.hashCode();
-
-        assertEquals(expectedHashCode, hashCode);
-    }
-}
+t }

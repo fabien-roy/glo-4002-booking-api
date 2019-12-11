@@ -47,15 +47,6 @@ class MoneyTest {
     }
 
     @Test
-    void hashCode_shouldReturnValueHashCode() {
-        int expectedHashCode = anAmount.hashCode();
-
-        int hashCode = aMoney.hashCode();
-
-        assertEquals(expectedHashCode, hashCode);
-    }
-    
-    @Test
     void add_shouldAddTheMoney() {
     	aMoney = aMoney.add(anotherMoney);
     	

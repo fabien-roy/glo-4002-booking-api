@@ -79,15 +79,4 @@ class OrderDateTest {
 
         assertFalse(result);
     }
-
-    @Test
-    void hashCode_shouldReturnValueHashCode() {
-        LocalDateTime aValue = FestivalConfiguration.getDefaultStartOrderDate().getValue();
-        int expectedHashCode = aValue.hashCode();
-        orderDate = new OrderDate(aValue);
-
-        int hashCode = orderDate.hashCode();
-
-        assertEquals(expectedHashCode, hashCode);
-    }
 }

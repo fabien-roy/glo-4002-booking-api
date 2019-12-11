@@ -44,15 +44,4 @@ class NumberTest {
 
         assertFalse(result);
     }
-
-    @Test
-    void hashCode_shouldReturnValueHashCode() {
-        Long aValue = 1L;
-        int expectedHashCode = aValue.hashCode();
-        number = new Number(aValue);
-
-        int hashCode = number.hashCode();
-
-        assertEquals(expectedHashCode, hashCode);
-    }
 }

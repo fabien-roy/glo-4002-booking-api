@@ -1,12 +1,10 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.numbers.Number;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
+import static org.junit.jupiter.api.Assertions.*;
 
 class OrderNumberTest {
 
@@ -76,17 +74,5 @@ class OrderNumberTest {
 		boolean result = orderNumber.equals(otherOrderNumber);
 
 		assertTrue(result);
-	}
-
-	@Test
-	void hashCode_shouldReturnNumberPlusVendorCodeHashCode() {
-		Number aNumber = new Number(1L);
-		String aVendorCode = "VENDOR";
-		int expectedHashCode = aNumber.hashCode() + aVendorCode.hashCode();
-		orderNumber = new OrderNumber(aNumber, aVendorCode);
-
-		int hashCode = orderNumber.hashCode();
-
-		assertEquals(expectedHashCode, hashCode);
 	}
 }
