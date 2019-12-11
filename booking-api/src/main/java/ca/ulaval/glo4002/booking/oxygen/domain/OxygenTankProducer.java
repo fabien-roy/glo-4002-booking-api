@@ -47,7 +47,7 @@ public class OxygenTankProducer {
 				history.addTanksBought(requestDate, quantityToCover);
 			} else {
 				history.addMadeTanks(actualOxygenProduction.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
-				history.addCategoryProduction(requestDate, actualOxygenProduction.getCategory(), actualOxygenProduction.getNumberOfUnitsUsed()); // TODO : Test this call
+				history.addCategoryProduction(requestDate, actualOxygenProduction.getCategory(), actualOxygenProduction.getNumberOfUnitsUsed() * quantityToCover); // TODO : Test this call
 			}
 
 			inventory.addTanksToInventory(category, newTanks);
