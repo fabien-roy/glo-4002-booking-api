@@ -8,8 +8,6 @@ import java.time.LocalDate;
 
 public class OxygenProduction {
 
-    // TODO : Rethink OxygenCategory, it should actually be an OxygenProduction
-
     private OxygenCategories category;
     private Integer tanksNeededPerDay;
     private Integer produceTimeInDays;
@@ -47,10 +45,11 @@ public class OxygenProduction {
         return numberOfTanksByBundle;
     }
 
+    // TODO : This should not be in OxygenProduction
     public Money calculatePriceForCategory() {
-        BigDecimal tankPrice = new BigDecimal(String.valueOf(productionItemPrice.getValue()));;
+        BigDecimal tankPrice = productionItemPrice.getValue();
 
-        if(category != OxygenCategories.E) {
+        if (category != OxygenCategories.E) {
             tankPrice = tankPrice.multiply(BigDecimal.valueOf(numberOfProductionItem));
             tankPrice = tankPrice.divide(BigDecimal.valueOf(numberOfTanksByBundle));
         }
@@ -70,5 +69,4 @@ public class OxygenProduction {
             history.addWaterUsed(requestDate, (double) numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);
         }
     }
-
 }
