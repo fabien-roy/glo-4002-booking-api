@@ -1,22 +1,16 @@
 package ca.ulaval.glo4002.booking.orders.infrastructure;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class InMemoryOrderRepositoryTest {
 
@@ -57,24 +51,6 @@ class InMemoryOrderRepositoryTest {
 		Order foundOrder = repository.getByOrderNumber(anOrderNumber);
 
 		assertEquals(anOrderNumber, foundOrder.getOrderNumber());
-	}
-
-	@Test
-	void getByOrderNumber_shouldReturnOrders_whenThereAreMultipleOrders() {
-		OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		OrderNumber anotherOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
-		OrderDate anOrderDate = mock(OrderDate.class);
-		PassBundle aPassBundle = mock(PassBundle.class);
-		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
-		Order anotherOrder = new Order(anotherOrderNumber, anOrderDate, aPassBundle);
-		repository.addOrder(anOrder);
-		repository.addOrder(anotherOrder);
-
-		Order foundOrder = repository.getByOrderNumber(anOrderNumber);
-		Order otherFoundOrder = repository.getByOrderNumber(anotherOrderNumber);
-
-		assertEquals(anOrderNumber, foundOrder.getOrderNumber());
-		assertEquals(anotherOrderNumber, otherFoundOrder.getOrderNumber());
 	}
 
 	@Test
