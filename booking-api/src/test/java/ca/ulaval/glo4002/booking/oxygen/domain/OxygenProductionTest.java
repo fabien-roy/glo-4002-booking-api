@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -84,25 +83,5 @@ public class OxygenProductionTest {
 		LocalDate ReadyDate = oxygenProductionA.calculateReadyDateForCategory(requestDate).getValue();
 
 		assertTrue(expectedReadyDate.isEqual(ReadyDate));
-	}
-
-	@Test
-	void addCategoryProductionInformationToHistory_shouldAddCandleToHistory_whenCategoryIsA() {
-		OxygenHistory history = new OxygenHistory();
-		Integer numberOfTanks = 5;
-
-		oxygenProductionA.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
-
-		assertEquals(OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED, history.getHistoryItems().get(requestDate).getQtyCandlesUsed());
-	}
-
-	@Test
-	void addCategoryProductionInformationToHistory_shouldAddWaterToHistory_whenCategoryIsB() {
-		OxygenHistory history = new OxygenHistory();
-		Integer numberOfTanks = 3;
-
-		oxygenProductionB.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
-
-		assertEquals(OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED, history.getHistoryItems().get(requestDate).getQtyWaterUsed());
 	}
 }

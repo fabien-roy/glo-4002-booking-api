@@ -1,16 +1,15 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+
+import javax.inject.Inject;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OxygenTankProducer {
 
@@ -48,7 +47,7 @@ public class OxygenTankProducer {
 				history.addTanksBought(requestDate, quantityToCover);
 			} else {
 				history.addMadeTanks(actualOxygenProduction.calculateReadyDateForCategory(requestDate).getValue(), producedTanks.size());
-				actualOxygenProduction.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
+				history.addCategoryProduction(requestDate, actualOxygenProduction.getCategory(), actualOxygenProduction.getNumberOfUnitsUsed()); // TODO : Test this call
 			}
 
 			inventory.addTanksToInventory(category, newTanks);
@@ -78,7 +77,7 @@ public class OxygenTankProducer {
 				history.addTanksBought(readyDate, quantityToCover);
 			} else {
 				history.addMadeTanks(readyDate, quantityToCover);
-				oxygenProduction.addCategoryProductionInformationToHistory(requestDate, history, quantityToCover);
+				history.addCategoryProduction(requestDate, oxygenProduction.getCategory(), oxygenProduction.getNumberOfUnitsUsed() * quantityToCover); // TODO : Test this call
 			}
 
 			inventory.requestTankByCategory(category, category, quantityToCover);

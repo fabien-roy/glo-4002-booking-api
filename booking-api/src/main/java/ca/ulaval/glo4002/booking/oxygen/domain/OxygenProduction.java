@@ -1,6 +1,5 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 import java.math.BigDecimal;
@@ -45,6 +44,10 @@ public class OxygenProduction {
         return numberOfTanksByBundle;
     }
 
+    public Integer getNumberOfUnitsUsed() {
+        return numberOfProductionItem / numberOfTanksByBundle;
+    }
+
     // TODO : OCP : OxygenProduction.calculatePriceForCategory must be elsewhere
     public Money calculatePriceForCategory() {
         BigDecimal tankPrice = new BigDecimal(String.valueOf(productionItemPrice.getValue()));;
@@ -63,14 +66,5 @@ public class OxygenProduction {
         readyDate.addDays(produceTimeInDays);
 
         return readyDate;
-    }
-
-    // TODO : Move this to OxygenHistory
-    public void addCategoryProductionInformationToHistory(LocalDate requestDate, OxygenHistory history, Integer numberOfTanks) {
-        if(category == OxygenCategories.A) {
-            history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);
-        } else if(category == OxygenCategories.B) {
-            history.addWaterUsed(requestDate, (double) numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);
-        }
     }
 }

@@ -1,5 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen.history.domain;
 
+import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
+
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.TreeMap;
@@ -15,6 +17,20 @@ public class OxygenHistory {
 
 	public Map<LocalDate, OxygenHistoryItem> getHistoryItems() {
 	    return historyItems;
+	}
+
+	public void addCategoryProduction(LocalDate requestDate, OxygenCategories category, Integer numberOfUnitsUsed) {
+		switch (category) {
+			case A:
+				addCandlesUsed(requestDate, numberOfUnitsUsed);
+				break;
+			case B:
+				addWaterUsed(requestDate, numberOfUnitsUsed.doubleValue());
+				break;
+			default:
+			case E:
+				break;
+		}
 	}
 
 	public void addTanksBought(LocalDate date, Integer amountOfTanksBought) {

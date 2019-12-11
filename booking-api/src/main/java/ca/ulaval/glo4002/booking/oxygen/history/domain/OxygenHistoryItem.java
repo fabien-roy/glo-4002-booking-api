@@ -4,7 +4,7 @@ public class OxygenHistoryItem {
 
     private Integer qtyOxygenTankBought;
     private Integer qtyOxygenTankMade;
-    private Double qtyWaterUsed;
+    private Double qtyWaterUsed; // TODO : Check why this is a Double
     private Integer qtyCandlesUsed;
 
     public OxygenHistoryItem() {
