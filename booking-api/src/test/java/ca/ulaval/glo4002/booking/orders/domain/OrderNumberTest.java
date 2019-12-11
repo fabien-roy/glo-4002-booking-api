@@ -11,6 +11,13 @@ class OrderNumberTest {
 	private OrderNumber orderNumber;
 
 	@Test
+	void constructing_shouldThrowInvalidFormatException_whenOrderNumberIsInvalid() {
+		String invalidOrderNumber = "invalid" + OrderNumber.SEPARATOR + "TEAM";
+
+		assertThrows(InvalidFormatException.class, () -> new OrderNumber(invalidOrderNumber));
+	}
+
+	@Test
 	void constructing_shouldThrowInvalidFormatException_whenOrderNumberHasNoSeparator() {
 		String orderNumberWithoutSeparator = "123TEAM";
 
