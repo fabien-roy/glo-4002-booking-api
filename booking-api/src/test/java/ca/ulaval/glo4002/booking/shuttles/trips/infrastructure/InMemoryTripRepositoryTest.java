@@ -1,14 +1,12 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.infrastructure;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
-import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.InMemoryTripRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +16,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InMemoryTripRepositoryTest {
+
+	// TODO : When refactoring InMemoryTripRepository, check review comments for tests
 	
 	private TripRepository repository;
 
