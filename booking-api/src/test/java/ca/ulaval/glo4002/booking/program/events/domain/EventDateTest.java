@@ -1,10 +1,7 @@
 package ca.ulaval.glo4002.booking.program.events.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,9 +13,9 @@ class EventDateTest {
 
     private EventDate eventDate;
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
-    void plusDays_shouldAddCorrectNumberOfDays(int days) {
+    @Test
+    void plusDays_shouldAddCorrectNumberOfDays() {
+        int days = 2;
         LocalDate originalValue = FestivalConfiguration.getDefaultStartEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.plusDays(days);
@@ -28,9 +25,9 @@ class EventDateTest {
         assertEquals(expectedValue, newEventDate.getValue());
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
-    void minusDays_shouldSubtractCorrectNumberOfDays(int days) {
+    @Test
+    void minusDays_shouldSubtractCorrectNumberOfDays() {
+        int days = 2;
         LocalDate originalValue = FestivalConfiguration.getDefaultEndEventDate().getValue();
         eventDate = new EventDate(originalValue);
         LocalDate expectedValue = originalValue.minusDays(days);
