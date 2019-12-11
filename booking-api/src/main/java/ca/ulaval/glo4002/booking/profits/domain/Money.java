@@ -59,10 +59,8 @@ public class Money implements Comparable<Money> {
 		return comparator.compare(this, other);
 	}
 
-	// TODO : Test Money.applyAmountDiscount
 	public Money applyAmountDiscount(BigDecimal discount) {
-		AmountDiscount amountDiscount = new AmountDiscount(discount);
-		BigDecimal discountedValue = amountDiscount.apply(this.value);
+		BigDecimal discountedValue = value.subtract(discount);
 
 		return new Money(discountedValue);
 	}

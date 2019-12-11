@@ -1,14 +1,11 @@
 package ca.ulaval.glo4002.booking.profits.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import ca.ulaval.glo4002.booking.profits.domain.Money;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyTest {
 
@@ -79,5 +76,15 @@ class MoneyTest {
     	aMoney = aMoney.multiply(anotherAmount);
     	
     	assertEquals(multiplyResult, aMoney.getValue());
+    }
+
+    @Test
+    void applyAmount_shouldApplyTheDiscount() {
+        BigDecimal amount = BigDecimal.valueOf(10.0);
+        BigDecimal expectedValue = BigDecimal.valueOf(245.0);
+
+        aMoney = aMoney.applyAmountDiscount(amount);
+
+        assertEquals(expectedValue, aMoney.getValue());
     }
 }
