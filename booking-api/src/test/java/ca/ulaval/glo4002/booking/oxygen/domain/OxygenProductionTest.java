@@ -11,26 +11,26 @@ import org.junit.jupiter.api.Test;
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 
-public class OxygenCategoryTest {
+public class OxygenProductionTest {
 
-	private OxygenCategory oxygenCategoryA;
-	private OxygenCategory oxygenCategoryB;
-	private OxygenCategory oxygenCategoryE;
+	private OxygenProduction oxygenProductionA;
+	private OxygenProduction oxygenProductionB;
+	private OxygenProduction oxygenProductionE;
 
 	private static final LocalDate requestDate = LocalDate.of(2050, 01, 01);
 
 	@BeforeEach
 	void setupOxygenCategory() {
-		oxygenCategoryA = new OxygenCategory(OxygenCategories.A, 3, 20, 5, 15, new Money(BigDecimal.valueOf(650)));
-		oxygenCategoryB = new OxygenCategory(OxygenCategories.B, 3, 10, 3, 8, new Money(BigDecimal.valueOf(600)));
-		oxygenCategoryE = new OxygenCategory(OxygenCategories.E, 5, 0, 1, new Money(BigDecimal.valueOf(5000)));
+		oxygenProductionA = new OxygenProduction(OxygenCategories.A, 3, 20, 5, 15, new Money(BigDecimal.valueOf(650)));
+		oxygenProductionB = new OxygenProduction(OxygenCategories.B, 3, 10, 3, 8, new Money(BigDecimal.valueOf(600)));
+		oxygenProductionE = new OxygenProduction(OxygenCategories.E, 5, 0, 1, new Money(BigDecimal.valueOf(5000)));
 	}
 
 	@Test
 	void calculatePriceForCategory_shouldReturnTheCorrectPrice_whenCategoryIsE() {
 		Money expectedPrice = new Money(BigDecimal.valueOf(5000));
 
-		Money price = oxygenCategoryE.calculatePriceForCategory();
+		Money price = oxygenProductionE.calculatePriceForCategory();
 
 		assertEquals(expectedPrice, price);
 	}
@@ -39,7 +39,7 @@ public class OxygenCategoryTest {
 	void calculatePriceForCategory_shouldReturnTheCorrectPrice_whenCategoryIsB() {
 		Money expectedPrice = new Money(BigDecimal.valueOf(600 * 8 / 3));
 
-		Money price = oxygenCategoryB.calculatePriceForCategory();
+		Money price = oxygenProductionB.calculatePriceForCategory();
 
 		assertEquals(expectedPrice, price);
 	}
@@ -48,14 +48,14 @@ public class OxygenCategoryTest {
 	void calculatePriceForCategory_shouldReturnTheCorrectPrice_whenCategoryIsA() {
 		Money expectedPrice = new Money(BigDecimal.valueOf(650 * 15 / 5));
 
-		Money price = oxygenCategoryA.calculatePriceForCategory();
+		Money price = oxygenProductionA.calculatePriceForCategory();
 
 		assertEquals(expectedPrice, price);
 	}
 
 	@Test
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsE() {
-		LocalDate ReadyDate = oxygenCategoryE.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate ReadyDate = oxygenProductionE.calculateReadyDateForCategory(requestDate).getValue();
 
 		assertTrue(requestDate.isEqual(ReadyDate));
 	}
@@ -64,7 +64,7 @@ public class OxygenCategoryTest {
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsB() {
 		LocalDate expectedReadyDate = requestDate.plusDays(10);
 
-		LocalDate ReadyDate = oxygenCategoryB.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate ReadyDate = oxygenProductionB.calculateReadyDateForCategory(requestDate).getValue();
 
 		assertTrue(expectedReadyDate.isEqual(ReadyDate));
 	}
@@ -73,7 +73,7 @@ public class OxygenCategoryTest {
 	void calculateReadyDateForCategory_shouldReturnTheCorrectReadyDate_whenCategoryIsA() {
 		LocalDate expectedReadyDate = requestDate.plusDays(20);
 
-		LocalDate ReadyDate = oxygenCategoryA.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate ReadyDate = oxygenProductionA.calculateReadyDateForCategory(requestDate).getValue();
 
 		assertTrue(expectedReadyDate.isEqual(ReadyDate));
 	}
@@ -83,7 +83,7 @@ public class OxygenCategoryTest {
 		OxygenHistory history = new OxygenHistory();
 		Integer numberOfTanks = 5;
 
-		oxygenCategoryA.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
+		oxygenProductionA.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
 
 		assertEquals(history.getHistoryItems().get(requestDate).getQtyCandlesUsed(),
 				OxygenTank.CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED);
@@ -94,7 +94,7 @@ public class OxygenCategoryTest {
 		OxygenHistory history = new OxygenHistory();
 		Integer numberOfTanks = 3;
 
-		oxygenCategoryB.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
+		oxygenProductionB.addCategoryProductionInformationToHistory(requestDate, history, numberOfTanks);
 
 		assertEquals(history.getHistoryItems().get(requestDate).getQtyWaterUsed(),
 				OxygenTank.CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED);

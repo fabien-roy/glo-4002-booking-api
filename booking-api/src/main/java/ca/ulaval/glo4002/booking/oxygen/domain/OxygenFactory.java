@@ -19,7 +19,7 @@ public class OxygenFactory {
 		this.festivalConfiguration = festivalConfiguration;
 	}
 
-	public List<OxygenTank> createOxygenTank(OxygenCategory category, LocalDate requestDate, Integer quantityToCover) {
+	public List<OxygenTank> createOxygenTank(OxygenProduction category, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		OxygenDate requestedDate = new OxygenDate(requestDate);
 
@@ -34,7 +34,7 @@ public class OxygenFactory {
 		return newTanks;
 	}
 
-	public OxygenCategory createCategory(PassCategories category) {
+	public OxygenProduction createCategory(PassCategories category) {
 		switch(category) {
 			case SUPERNOVA:
 			    return createCategory(OxygenCategories.E);
@@ -47,10 +47,10 @@ public class OxygenFactory {
 	}
 
 	// TODO : Can't OxygenFactory.createCategory only have PassCategories as a parameter?
-	public OxygenCategory createCategory(OxygenCategories category) {
+	public OxygenProduction createCategory(OxygenCategories category) {
 		switch(category) {
 			case E:
-				return new OxygenCategory(
+				return new OxygenProduction(
 						OxygenCategories.E,
 						5,
 						0,
@@ -58,7 +58,7 @@ public class OxygenFactory {
 						new Money(BigDecimal.valueOf(5000))
 				);
 			case B:
-				return new OxygenCategory(
+				return new OxygenProduction(
 						OxygenCategories.B,
 						3,
 						10,
@@ -68,7 +68,7 @@ public class OxygenFactory {
 				);
 			default:
 			case A:
-				return new OxygenCategory(
+				return new OxygenProduction(
 						OxygenCategories.A,
 						3,
 						20,
@@ -79,7 +79,7 @@ public class OxygenFactory {
 		}
 	}
 
-	public OxygenCategory createCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
+	public OxygenProduction createCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
 		// TODO : Use OxygenDate
 		LocalDate readyBeforeDate = festivalConfiguration.getStartEventDate().plusDays(1).getValue();
 

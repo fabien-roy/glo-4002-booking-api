@@ -11,7 +11,6 @@ import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
@@ -129,7 +128,7 @@ public class OxygenTankProducerTest {
 	@Test
 	void produceOxygenByQuantity_shouldReturnAnEmptyList_whenReserveHasEnoughTanks() {
 		OxygenCategories aCategory = OxygenCategories.A;
-		OxygenCategory category = mock(OxygenCategory.class);
+		OxygenProduction category = mock(OxygenProduction.class);
 		when(inventory.requestTankByCategory(eq(aCategory), eq(aCategory), anyInt())).thenReturn(0);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, INVALID_CATEGORY_A_BUILD_DATE, 1);
@@ -139,7 +138,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenByQuantity_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() {
-		OxygenCategory category = mock(OxygenCategory.class);
+		OxygenProduction category = mock(OxygenProduction.class);
 		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
@@ -149,7 +148,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenByQuantity_shouldUpdateInventory() {
-		OxygenCategory category = mock(OxygenCategory.class);
+		OxygenProduction category = mock(OxygenProduction.class);
 		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
@@ -159,7 +158,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenByQuantity_shouldUpdateHistory() {
-		OxygenCategory category = mock(OxygenCategory.class);
+		OxygenProduction category = mock(OxygenProduction.class);
 		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);

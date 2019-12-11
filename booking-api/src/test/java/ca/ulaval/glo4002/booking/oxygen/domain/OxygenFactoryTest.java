@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -19,9 +18,9 @@ public class OxygenFactoryTest {
     private OxygenFactory factory;
     private FestivalConfiguration festivalConfiguration;
 
-    private OxygenCategory categoryA;
-    private OxygenCategory categoryB;
-    private OxygenCategory categoryE;
+    private OxygenProduction categoryA;
+    private OxygenProduction categoryB;
+    private OxygenProduction categoryE;
 
     @BeforeEach
     void setupFactory() {
@@ -74,7 +73,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryE_whenCategoryIsSupernova() {
         PassCategories passCategory = PassCategories.SUPERNOVA;
 
-        OxygenCategory category = factory.createCategory(passCategory);
+        OxygenProduction category = factory.createCategory(passCategory);
 
         assertEquals(OxygenCategories.E, category.getCategory());
     }
@@ -83,7 +82,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryB_whenCategoryIsSupergiant() {
         PassCategories passCategory = PassCategories.SUPERGIANT;
 
-        OxygenCategory category = factory.createCategory(passCategory);
+        OxygenProduction category = factory.createCategory(passCategory);
 
         assertEquals(OxygenCategories.B, category.getCategory());
     }
@@ -92,7 +91,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryA_whenCategoryIsNebula() {
         PassCategories passCategory = PassCategories.NEBULA;
 
-        OxygenCategory category = factory.createCategory(passCategory);
+        OxygenProduction category = factory.createCategory(passCategory);
 
         assertEquals(OxygenCategories.A, category.getCategory());
     }
@@ -101,7 +100,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryE_whenCategoryIsE() {
         OxygenCategories oxygenCategory = OxygenCategories.E;
 
-        OxygenCategory category = factory.createCategory(oxygenCategory);
+        OxygenProduction category = factory.createCategory(oxygenCategory);
 
         assertEquals(OxygenCategories.E, category.getCategory());
     }
@@ -110,7 +109,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryB_whenCategoryIsB() {
         OxygenCategories oxygenCategory = OxygenCategories.B;
 
-        OxygenCategory category = factory.createCategory(oxygenCategory);
+        OxygenProduction category = factory.createCategory(oxygenCategory);
 
         assertEquals(OxygenCategories.B, category.getCategory());
     }
@@ -119,49 +118,49 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryA_whenCategoryIsA() {
         OxygenCategories oxygenCategory = OxygenCategories.A;
 
-        OxygenCategory category = factory.createCategory(oxygenCategory);
+        OxygenProduction category = factory.createCategory(oxygenCategory);
 
         assertEquals(OxygenCategories.A, category.getCategory());
     }
 
     @Test
     void createCategoryForRequestDate_shouldReturnNewCategoryA_whenDateIsInRange() {
-        OxygenCategory category = factory.createCategoryForRequestDate(LocalDate.of(2050, 6, 27), OxygenCategories.A);
+        OxygenProduction category = factory.createCategoryForRequestDate(LocalDate.of(2050, 6, 27), OxygenCategories.A);
 
         assertEquals(OxygenCategories.A, category.getCategory());
     }
 
     @Test
     void createCategoryForRequestDate_shouldReturnNewCategoryB_whenDateIsNotInRangeForAButOkForB() {
-        OxygenCategory category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 7), OxygenCategories.A);
+        OxygenProduction category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 7), OxygenCategories.A);
 
         assertEquals(OxygenCategories.B, category.getCategory());
     }
 
     @Test
     void createCategoryForRequestDate_shouldReturnNewCategoryE_whenDateIsNotInRangeForAOrBButOkForE() {
-        OxygenCategory category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.A);
+        OxygenProduction category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.A);
 
         assertEquals(OxygenCategories.E, category.getCategory());
     }
 
     @Test
     void createCategoryForRequestDate_shouldReturnNewCategoryB_whenDateIsInRange() {
-        OxygenCategory category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 7), OxygenCategories.B);
+        OxygenProduction category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 7), OxygenCategories.B);
 
         assertEquals(OxygenCategories.B, category.getCategory());
     }
 
     @Test
     void createCategoryForRequestDate_shouldReturnNewCategoryE_whenDateIsNotInRangeFoBButOkForE() {
-        OxygenCategory category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.B);
+        OxygenProduction category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.B);
 
         assertEquals(OxygenCategories.E, category.getCategory());
     }
 
     @Test
     void createCategoryForRequestDate_shouldReturnNewCategoryE_whenDateIsInRange() {
-        OxygenCategory category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.E);
+        OxygenProduction category = factory.createCategoryForRequestDate(LocalDate.of(2050, 7, 17), OxygenCategories.E);
 
         assertEquals(OxygenCategories.E, category.getCategory());
     }

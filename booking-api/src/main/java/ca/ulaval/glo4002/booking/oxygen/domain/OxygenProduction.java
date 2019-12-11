@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.profits.domain.Money;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class OxygenCategory {
+public class OxygenProduction {
 
     // TODO : Rethink OxygenCategory, it should actually be an OxygenProduction
 
@@ -17,7 +17,7 @@ public class OxygenCategory {
     private Integer numberOfProductionItem;
     private Money productionItemPrice;
 
-    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Integer numberOfProductionItem, Money productionItemPrice) {
+    public OxygenProduction(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Integer numberOfProductionItem, Money productionItemPrice) {
         this.category = category;
         this.tanksNeededPerDay = tanksNeededPerDay;
         this.produceTimeInDays = produceTimeInDays;
@@ -26,7 +26,7 @@ public class OxygenCategory {
         this.productionItemPrice = productionItemPrice;
     }
 
-    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Money productionItemPrice) {
+    public OxygenProduction(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Money productionItemPrice) {
         this.category = category;
         this.tanksNeededPerDay = tanksNeededPerDay;
         this.produceTimeInDays = produceTimeInDays;
@@ -66,6 +66,7 @@ public class OxygenCategory {
         return readyDate;
     }
 
+    // TODO : OCP : This should be the job of OxygenHistory
     public void addCategoryProductionInformationToHistory(LocalDate requestDate, OxygenHistory history, Integer numberOfTanks) {
         if(category == OxygenCategories.A) {
             history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);

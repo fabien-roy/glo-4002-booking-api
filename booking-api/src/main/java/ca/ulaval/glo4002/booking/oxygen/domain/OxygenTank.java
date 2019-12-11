@@ -16,12 +16,12 @@ public class OxygenTank {
     public static final int CATEGORY_E_NUMBER_OF_RESOURCES_NEEDED = 1;
     public static final int CATEGORY_E_RESOURCE_PRICE = 5000;
 
-    private OxygenCategory category;
+    private OxygenProduction category;
     private OxygenDate requestDate;
     private OxygenDate readyDate;
     private Money price;
 
-    public OxygenTank(OxygenCategory category, OxygenDate requestDate) {
+    public OxygenTank(OxygenProduction category, OxygenDate requestDate) {
         this.category = category;
         this.requestDate = requestDate;
 
@@ -29,7 +29,7 @@ public class OxygenTank {
         this.readyDate = category.calculateReadyDateForCategory(requestDate.getValue());
     }
 
-    public OxygenCategory getCategory() {
+    public OxygenProduction getCategory() {
         return this.category;
     }
 
