@@ -17,9 +17,9 @@ class OxygenTankTest {
 
 	private OxygenTank oxygenTank;
 	private OxygenDate requestDate;
-	private OxygenCategory categoryA;
-	private OxygenCategory categoryB;
-	private OxygenCategory categoryE;
+	private OxygenProduction categoryA;
+	private OxygenProduction categoryB;
+	private OxygenProduction categoryE;
 
 	@BeforeEach
 	void setUpRequestDate() {

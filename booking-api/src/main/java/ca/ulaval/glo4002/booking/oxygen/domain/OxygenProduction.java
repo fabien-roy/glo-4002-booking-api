@@ -6,9 +6,7 @@ import ca.ulaval.glo4002.booking.profits.domain.Money;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class OxygenCategory {
-
-    // TODO : Rethink OxygenCategory, it should actually be an OxygenProduction
+public class OxygenProduction {
 
     private OxygenCategories category;
     private Integer tanksNeededPerDay;
@@ -17,7 +15,7 @@ public class OxygenCategory {
     private Integer numberOfProductionItem;
     private Money productionItemPrice;
 
-    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Integer numberOfProductionItem, Money productionItemPrice) {
+    public OxygenProduction(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Integer numberOfProductionItem, Money productionItemPrice) {
         this.category = category;
         this.tanksNeededPerDay = tanksNeededPerDay;
         this.produceTimeInDays = produceTimeInDays;
@@ -26,7 +24,7 @@ public class OxygenCategory {
         this.productionItemPrice = productionItemPrice;
     }
 
-    public OxygenCategory(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Money productionItemPrice) {
+    public OxygenProduction(OxygenCategories category, Integer tanksNeededPerDay, Integer produceTimeInDays, Integer numberOfTanksByBundle, Money productionItemPrice) {
         this.category = category;
         this.tanksNeededPerDay = tanksNeededPerDay;
         this.produceTimeInDays = produceTimeInDays;
@@ -47,10 +45,11 @@ public class OxygenCategory {
         return numberOfTanksByBundle;
     }
 
+    // TODO : OCP : OxygenProduction.calculatePriceForCategory must be elsewhere
     public Money calculatePriceForCategory() {
         BigDecimal tankPrice = new BigDecimal(String.valueOf(productionItemPrice.getValue()));;
 
-        if(category != OxygenCategories.E) {
+        if (category != OxygenCategories.E) {
             tankPrice = tankPrice.multiply(BigDecimal.valueOf(numberOfProductionItem));
             tankPrice = tankPrice.divide(BigDecimal.valueOf(numberOfTanksByBundle));
         }
@@ -66,6 +65,7 @@ public class OxygenCategory {
         return readyDate;
     }
 
+    // TODO : Move this to OxygenHistory
     public void addCategoryProductionInformationToHistory(LocalDate requestDate, OxygenHistory history, Integer numberOfTanks) {
         if(category == OxygenCategories.A) {
             history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);
@@ -73,5 +73,4 @@ public class OxygenCategory {
             history.addWaterUsed(requestDate, (double) numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);
         }
     }
-
 }

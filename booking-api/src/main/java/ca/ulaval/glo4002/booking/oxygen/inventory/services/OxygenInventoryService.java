@@ -10,7 +10,7 @@ import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategory;
+import ca.ulaval.glo4002.booking.oxygen.domain.OxygenProduction;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
@@ -33,13 +33,13 @@ public class OxygenInventoryService {
 	}
 
 	public void orderForPasses(PassCategories passCategory, List<Pass> passes, OrderDate orderDate) {
-		OxygenCategory oxygenCategory = factory.createCategory(passCategory);
+		OxygenProduction oxygenProduction = factory.createCategory(passCategory);
 
 		passes.forEach(pass -> {
 			if (pass.getEventDate() == null) {
-				orderForFullFestival(oxygenCategory.getCategory(), orderDate.toLocalDate());
+				orderForFullFestival(oxygenProduction.getCategory(), orderDate.toLocalDate());
 			} else {
-				orderForEventDate(oxygenCategory.getCategory(), orderDate.toLocalDate());
+				orderForEventDate(oxygenProduction.getCategory(), orderDate.toLocalDate());
 			}
 		});
 	}
@@ -53,7 +53,7 @@ public class OxygenInventoryService {
 	}
 
     public void orderForArtist(Artist artist, EventDate orderDate) {
-		OxygenCategory category = factory.createCategory(OXYGEN_CATEGORY_FOR_ARTIST);
+		OxygenProduction category = factory.createCategory(OXYGEN_CATEGORY_FOR_ARTIST);
 		Integer amountOfOxygenTanksNeeded = artist.getNumberOfPeople() * OXYGEN_TANKS_NEEDED_PER_ARTIST;
 
 	    producer.produceOxygenByQuantity(category, orderDate.getValue(), amountOfOxygenTanksNeeded);
