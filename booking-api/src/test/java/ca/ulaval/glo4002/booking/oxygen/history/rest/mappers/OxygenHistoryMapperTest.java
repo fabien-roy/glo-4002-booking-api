@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.oxygen.history.rest.mappers;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.rest.OxygenHistoryItemResponse;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,7 +20,7 @@ class OxygenHistoryMapperTest {
     @BeforeEach
     void setUpMapper() {
         mapper = new OxygenHistoryMapper();
-        history = new OxygenHistory();
+        history = new OxygenHistory(); // TODO : Mock OxygenHistory
     }
 
     @Test
@@ -79,12 +78,15 @@ class OxygenHistoryMapperTest {
     void toResponse_shouldReturnMultipleHistoryItems_whenHistoryHasMultipleItems() {
         LocalDate date = FestivalConfiguration.getDefaultStartEventDate().getValue();
         LocalDate anotherDate = date.plusDays(1);
-        history.addMadeTanks(date, 1);
-        history.addTanksBought(anotherDate, 1);
+        int amountOfTanksMade = 1;
+        int amountOfTanksBought = 2;
+        history.addMadeTanks(date, amountOfTanksMade);
+        history.addTanksBought(anotherDate, amountOfTanksBought);
 
         List<OxygenHistoryItemResponse> itemResponses = mapper.toResponse(history);
 
-        assertEquals(2, itemResponses.size());
+        assertEquals(amountOfTanksMade, itemResponses.get(0).getQtyOxygenTankMade());
+        assertEquals(amountOfTanksBought, itemResponses.get(1).getQtyOxygenTankBought());
     }
 
     @Test
