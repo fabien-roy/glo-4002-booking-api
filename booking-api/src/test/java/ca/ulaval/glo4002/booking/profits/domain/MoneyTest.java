@@ -80,11 +80,24 @@ class MoneyTest {
 
     @Test
     void applyAmount_shouldApplyTheDiscount() {
+        aMoney = new Money(BigDecimal.valueOf(100.0));
         BigDecimal amount = BigDecimal.valueOf(10.0);
-        BigDecimal expectedValue = BigDecimal.valueOf(245.0);
+        BigDecimal expectedValue = BigDecimal.valueOf(90.0);
 
         aMoney = aMoney.applyAmountDiscount(amount);
 
         assertEquals(expectedValue, aMoney.getValue());
+    }
+
+    @Test
+    void apply_shouldApply() {
+        aMoney = new Money(BigDecimal.valueOf(100.0));
+        BigDecimal percentage = BigDecimal.valueOf(.1);
+        BigDecimal expectedValue = BigDecimal.valueOf(90.0);
+
+        aMoney = aMoney.applyPercentageDiscount(percentage);
+
+        // Using BigDecimal.compareTo since "0.0 != 0.00"
+        assertEquals(0, expectedValue.compareTo(aMoney.getValue()));
     }
 }

@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.profits.domain.PercentageDiscount;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 
 class NebulaPriceDiscountStrategyTest {

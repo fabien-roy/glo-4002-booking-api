@@ -65,10 +65,9 @@ public class Money implements Comparable<Money> {
 		return new Money(discountedValue);
 	}
 
-	// TODO : Test Money.applyPercentageDiscount
 	public Money applyPercentageDiscount(BigDecimal discount) {
-		PercentageDiscount percentageDiscount = new PercentageDiscount(discount);
-		BigDecimal discountedValue = percentageDiscount.apply(this.value);
+		BigDecimal valueToSubtract = value.multiply(discount);
+		BigDecimal discountedValue = value.subtract(valueToSubtract);
 
 		return new Money(discountedValue);
 	}
