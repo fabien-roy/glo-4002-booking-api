@@ -1,15 +1,12 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
-import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 
 import javax.inject.Inject;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class OrderFactory {
 
@@ -24,8 +21,9 @@ public class OrderFactory {
         this.passBundleFactory = passBundleFactory;
     }
 
+    // TODO : Factories should not handle UI objects (use mappers)
     public Order create(OrderRequest orderRequest) {
-        // TODO : Make passes nonNullable in Requests
+        // TODO : Make passes nonNullable in Requests (or throw in mapper)
         if (orderRequest.getPasses() == null) {
             throw new InvalidFormatException();
         }

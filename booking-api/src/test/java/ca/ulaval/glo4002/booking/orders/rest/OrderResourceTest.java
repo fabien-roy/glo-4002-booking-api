@@ -1,8 +1,5 @@
 package ca.ulaval.glo4002.booking.orders.rest;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 import ca.ulaval.glo4002.booking.orders.services.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +7,10 @@ import org.springframework.http.HttpHeaders;
 
 import javax.ws.rs.core.Response;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class OrderResourceTest {
 
@@ -26,7 +27,8 @@ class OrderResourceTest {
 	@Test
 	void getByOrderNumber_shouldReturnOk() {
 		String anOrderNumber = "VENDOR-123";
-		when(service.getByOrderNumber(anOrderNumber)).thenReturn(mock(OrderResponse.class));
+		OrderResponse orderResponse = mock(OrderResponse.class);
+		when(service.getByOrderNumber(anOrderNumber)).thenReturn(orderResponse);
 
 		Response response = resource.getByOrderNumber(anOrderNumber);
 
