@@ -1,10 +1,9 @@
 package ca.ulaval.glo4002.booking.oxygen.history.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistoryItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OxygenHistoryItemTest {
 
@@ -13,26 +12,6 @@ public class OxygenHistoryItemTest {
 	@BeforeEach
 	void setupOxygenHistoryItem() {
 		oxygenHistoryItem = new OxygenHistoryItem();
-	}
-
-	@Test
-	void constructing_setQtyOxygenTankBoughtTo0() {
-		assertEquals(0, oxygenHistoryItem.getQtyOxygenTankBought());
-	}
-
-	@Test
-	void constructing_setQtyOxygenTankMadeTo0() {
-		assertEquals(0, oxygenHistoryItem.getQtyOxygenTankMade());
-	}
-
-	@Test
-	void constructing_setQtyWaterUsedTo0() {
-		assertEquals(0D, oxygenHistoryItem.getQtyWaterUsed());
-	}
-
-	@Test
-	void constructing_setQtyCandlesUsedTo0() {
-		assertEquals(0, oxygenHistoryItem.getQtyCandlesUsed());
 	}
 
 	@Test
@@ -46,28 +25,28 @@ public class OxygenHistoryItemTest {
 
 	@Test
 	void addWaterUsed_shouldAddWaterUsed() {
-		Double nbTanksBought = 5D;
+		Double nbWaterUsed = 5D;
 
-		oxygenHistoryItem.addWaterUsed(nbTanksBought);
+		oxygenHistoryItem.addWaterUsed(nbWaterUsed);
 
-		assertEquals(nbTanksBought, oxygenHistoryItem.getQtyWaterUsed());
+		assertEquals(nbWaterUsed, oxygenHistoryItem.getQtyWaterUsed());
 	}
 
 	@Test
 	void addCandleUsed_shouldAddCandleUsed() {
-		Integer nbTanksBought = 5;
+		Integer nbCandleUsed = 5;
 
-		oxygenHistoryItem.addCandleUsed(nbTanksBought);
+		oxygenHistoryItem.addCandleUsed(nbCandleUsed);
 
-		assertEquals(nbTanksBought, oxygenHistoryItem.getQtyCandlesUsed());
+		assertEquals(nbCandleUsed, oxygenHistoryItem.getQtyCandlesUsed());
 	}
 
 	@Test
 	void addTankMade_shouldAddTankMade() {
-		Integer nbTanksBought = 5;
+		Integer nbTanksMade = 5;
 
-		oxygenHistoryItem.addTanksMade(nbTanksBought);
+		oxygenHistoryItem.addTanksMade(nbTanksMade);
 
-		assertEquals(nbTanksBought, oxygenHistoryItem.getQtyOxygenTankMade());
+		assertEquals(nbTanksMade, oxygenHistoryItem.getQtyOxygenTankMade());
 	}
 }

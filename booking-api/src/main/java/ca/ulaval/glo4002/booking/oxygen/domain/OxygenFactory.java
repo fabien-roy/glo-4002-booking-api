@@ -12,6 +12,8 @@ import java.util.List;
 
 public class OxygenFactory {
 
+	// TODO : Refactor OxygenFactory
+
 	private final FestivalConfiguration festivalConfiguration;
 
 	@Inject
