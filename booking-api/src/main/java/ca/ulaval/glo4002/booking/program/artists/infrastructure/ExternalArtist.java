@@ -1,23 +1,11 @@
 package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import java.util.List;
 
 public class ExternalArtist {
 
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@JsonPropertyOrder({
-		"id",
-		"name",
-		"nbPeople", 
-		"musicStyle",
-		"price",
-		"popularityRank"
-	})
-	
 	@JsonProperty("id")
 	private Integer id;
 	
