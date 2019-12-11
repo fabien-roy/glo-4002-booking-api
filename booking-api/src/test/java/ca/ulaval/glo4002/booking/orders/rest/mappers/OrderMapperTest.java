@@ -1,19 +1,17 @@
 package ca.ulaval.glo4002.booking.orders.rest.mappers;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.math.BigDecimal;
-
 import ca.ulaval.glo4002.booking.orders.domain.Order;
-import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
+import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class OrderMapperTest {
 
@@ -29,25 +27,14 @@ class OrderMapperTest {
 
 	@BeforeEach
 	void setUpOrder() {
-		OrderNumber orderNumber = mock(OrderNumber.class);
 		order = mock(Order.class);
-		when(orderNumber.toString()).thenReturn("expectedOrderNumber");
-		when(order.getOrderNumber()).thenReturn(orderNumber);
-		when(order.getPrice()).thenReturn(new Money(new BigDecimal(500)));
+		when(order.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
 		when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
 	}
 
 	@Test
-	void toResponse_shouldBuildResponseWithCorrectOrderPrice() {
-		OrderResponse orderResponse = orderMapper.toResponse(order);
-		BigDecimal priceValue = order.getPrice().getValue();
-
-		assertEquals(priceValue.doubleValue(), orderResponse.getOrderPrice());
-	}
-
-	@Test
 	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
-		BigDecimal orderPrice = new BigDecimal(123.123);
+		BigDecimal orderPrice = BigDecimal.valueOf(123.123);
 		Money price = new Money(orderPrice);
 		when(order.getPrice()).thenReturn(price);
 		String expectedOrderPrice = "123.12";
@@ -59,7 +46,7 @@ class OrderMapperTest {
 
 	@Test
 	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasLesThanTwoDigits() {
-		BigDecimal orderPrice = new BigDecimal(123.1);
+		BigDecimal orderPrice = BigDecimal.valueOf(123.1);
 		Money price = new Money(orderPrice);
 		when(order.getPrice()).thenReturn(price);
 		String expectedOrderPrice = "123.1";
@@ -70,7 +57,7 @@ class OrderMapperTest {
 	}
 
 	@Test
-	void toResponse_shouldCallPassListMapper() {
+	void toResponse_shouldCreatePassBundle() {
 		orderMapper.toResponse(order);
 
 		verify(passBundleMapper).toResponse(any());
