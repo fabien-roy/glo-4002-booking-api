@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OxygenProductionTest {
 
@@ -60,9 +59,9 @@ public class OxygenProductionTest {
 		int expectedNumberOfDaysToProduce = 0;
 		LocalDate expectedReadyDate = requestDate.plusDays(expectedNumberOfDaysToProduce);
 
-		LocalDate ReadyDate = oxygenProductionE.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate readyDate = oxygenProductionE.calculateReadyDateForCategory(requestDate);
 
-		assertTrue(expectedReadyDate.isEqual(ReadyDate));
+		assertEquals(expectedReadyDate, readyDate);
 	}
 
 	@Test
@@ -70,9 +69,9 @@ public class OxygenProductionTest {
 		int expectedNumberOfDaysToProduce = 10;
 		LocalDate expectedReadyDate = requestDate.plusDays(expectedNumberOfDaysToProduce);
 
-		LocalDate ReadyDate = oxygenProductionB.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate readyDate = oxygenProductionB.calculateReadyDateForCategory(requestDate);
 
-		assertTrue(expectedReadyDate.isEqual(ReadyDate));
+		assertEquals(expectedReadyDate, readyDate);
 	}
 
 	@Test
@@ -80,8 +79,8 @@ public class OxygenProductionTest {
 		int expectedNumberOfDaysToProduce = 20;
 		LocalDate expectedReadyDate = requestDate.plusDays(expectedNumberOfDaysToProduce);
 
-		LocalDate ReadyDate = oxygenProductionA.calculateReadyDateForCategory(requestDate).getValue();
+		LocalDate readyDate = oxygenProductionA.calculateReadyDateForCategory(requestDate);
 
-		assertTrue(expectedReadyDate.isEqual(ReadyDate));
+		assertEquals(expectedReadyDate, readyDate);
 	}
 }

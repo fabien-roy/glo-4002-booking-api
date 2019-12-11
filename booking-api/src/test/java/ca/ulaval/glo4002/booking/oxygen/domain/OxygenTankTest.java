@@ -1,29 +1,28 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.profits.domain.Money;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 class OxygenTankTest {
 
 	private OxygenTank oxygenTank;
-	private OxygenDate requestDate;
+	private LocalDate requestDate;
 	private OxygenProduction categoryA;
 	private OxygenProduction categoryB;
 	private OxygenProduction categoryE;
 
 	@BeforeEach
 	void setUpRequestDate() {
-		requestDate = new OxygenDate(LocalDate.of(2050, 7, 1));
+		requestDate = LocalDate.of(2050, 7, 1);
 
 		FestivalConfiguration festivalConfiguration = mock(FestivalConfiguration.class);
 		OxygenFactory factory = new OxygenFactory(festivalConfiguration);
@@ -63,29 +62,32 @@ class OxygenTankTest {
 
 	@Test
 	void getReadyDate_shouldReturn20DaysLaterDate_whenOxygenCategoryA() {
-		OxygenDate expectedDate = new OxygenDate(requestDate.getValue());
-		expectedDate.addDays(20);
+	    int expectedNumberOfDaysAdded = 20;
+		LocalDate expectedDate = requestDate.plusDays(expectedNumberOfDaysAdded);
 
 		oxygenTank = new OxygenTank(categoryA, requestDate);
 
-		assertEquals(expectedDate.toString(), oxygenTank.getReadyDate().toString());
+		assertEquals(expectedDate, oxygenTank.getReadyDate());
 	}
 
 	@Test
 	void getReadyDate_shouldReturn10DaysLater_whenOxygenCategoryB() {
-		OxygenDate expectedDate = new OxygenDate(requestDate.getValue());
-		expectedDate.addDays(10);
+		int expectedNumberOfDaysAdded = 10;
+		LocalDate expectedDate = requestDate.plusDays(expectedNumberOfDaysAdded);
 
 		oxygenTank = new OxygenTank(categoryB, requestDate);
 
-		assertEquals(expectedDate.toString(), oxygenTank.getReadyDate().toString());
+		assertEquals(expectedDate, oxygenTank.getReadyDate());
 	}
 
 	@Test
 	void getReadyDate_shouldReturnSameDay_whenOxygenCategoryE() {
+		int expectedNumberOfDaysAdded = 0;
+		LocalDate expectedDate = requestDate.plusDays(expectedNumberOfDaysAdded);
+
 		oxygenTank = new OxygenTank(categoryE, requestDate);
 
-		assertEquals(requestDate.toString(), oxygenTank.getReadyDate().toString());
+		assertEquals(expectedDate, oxygenTank.getReadyDate());
 	}
 
 	@Test
