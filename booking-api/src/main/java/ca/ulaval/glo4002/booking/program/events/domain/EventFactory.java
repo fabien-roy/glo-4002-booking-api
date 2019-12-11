@@ -13,10 +13,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// TODO : EventFactory should not handle UI (a mapper would be more appropriate)
 public class EventFactory {
 
     private final FestivalConfiguration festivalConfiguration;
-    private final ArtistService artistService;
+    private final ArtistService artistService; // TODO : Do not use ArtistService in EventFactory
     private final EventDateFactory eventDateFactory;
 
     @Inject

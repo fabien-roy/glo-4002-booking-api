@@ -95,7 +95,8 @@ class EventFactoryTest {
         String artistName = "aArtist";
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, artistName);
         Artist expectedArtist = mock(Artist.class);
-        when(artistService.getByName(artistName + 0)).thenReturn(expectedArtist);
+        String expectedArtistName = "aArtist0"; // Since we use numbers in the artist building for tests
+        when(artistService.getByName(expectedArtistName)).thenReturn(expectedArtist);
 
         List<Event> events = factory.create(aProgramRequest);
 
