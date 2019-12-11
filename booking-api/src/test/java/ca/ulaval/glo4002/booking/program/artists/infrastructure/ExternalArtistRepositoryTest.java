@@ -28,14 +28,15 @@ class ExternalArtistRepositoryTest {
     }
 
     @Test
-    void findAll_shouldCallClient() {
+    void findAll_shouldUseClientToGetArtists() {
         repository.findAll();
 
         verify(externalArtistClient).getArtists();
     }
 
+    // TODO : Converter should actually be used in service
     @Test
-    void findAll_shouldCallConverter() {
+    void findAll_shouldConvertArtists() {
         repository.findAll();
 
         verify(externalArtistConverter).convert(any());

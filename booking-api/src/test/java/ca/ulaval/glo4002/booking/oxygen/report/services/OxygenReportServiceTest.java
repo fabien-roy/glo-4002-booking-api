@@ -42,14 +42,14 @@ class OxygenReportServiceTest {
     }
 
     @Test
-    void getOxygenReport_shouldCallMapper() {
+    void getOxygenReport_shouldMapOxygenReport() {
         service.getOxygenReport();
 
         verify(mapper).toResponse(any(), any());
     }
 
     @Test
-    void getOxygenReport_shouldCallMapperWithInventory() {
+    void getOxygenReport_shouldMapOxygenReportWithInventory() {
         OxygenInventory expectedInventory = mock(OxygenInventory.class);
         when(inventoryRepository.getInventory()).thenReturn(expectedInventory);
 
@@ -59,7 +59,7 @@ class OxygenReportServiceTest {
     }
 
     @Test
-    void getOxygenReport_shouldCallMapperWithHistory() {
+    void getOxygenReport_shouldMapOxygenReportWithHistory() {
         OxygenHistory expectedHistory = mock(OxygenHistory.class);
         when(historyRepository.getHistory()).thenReturn(expectedHistory);
 

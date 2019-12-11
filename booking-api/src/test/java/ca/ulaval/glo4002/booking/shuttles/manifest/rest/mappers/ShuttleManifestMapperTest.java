@@ -23,7 +23,7 @@ class ShuttleManifestMapperTest {
     }
 
     @Test
-    void toResponse_shouldCallTripMapperTwoTimes() {
+    void toResponse_shouldMapArrivalsAndDepartures() {
         List<Trip> arrivals = new ArrayList<>();
         List<Trip> departures = new ArrayList<>();
 

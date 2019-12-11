@@ -12,7 +12,7 @@ import static org.mockito.Mockito.verify;
 class EventTest {
 
     @Test
-    void updateProfit_shouldCallUpdateProfitOfArtist() {
+    void updateProfit_shouldUpdateProfitOfArtist() {
         ProfitReport profitReport = new ProfitReport();
         EventDate eventDate = mock(EventDate.class);
         Activities activity = Activities.CARDIO;

@@ -32,7 +32,7 @@ class OxygenReportMapperTest {
     }
 
     @Test
-    void toResponse_shouldCallInventoryMapperWithInventory() {
+    void toResponse_shouldMapInventory() {
         OxygenInventory inventory = mock(OxygenInventory.class);
 
         oxygenReportMapper.toResponse(inventory, mock(OxygenHistory.class));
@@ -41,7 +41,7 @@ class OxygenReportMapperTest {
     }
 
     @Test
-    void toResponse_shouldCallHistoryMapperWithHistory() {
+    void toResponse_shouldMapHistory() {
         OxygenHistory history = mock(OxygenHistory.class);
 
         oxygenReportMapper.toResponse(mock(OxygenInventory.class), history);

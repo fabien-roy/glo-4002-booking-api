@@ -28,7 +28,7 @@ class ShuttleManifestServiceTest {
 	}
 
 	@Test
-	void getWithDate_shouldCallMapper() {
+	void getWithDate_shouldMapToResponse() {
 		String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
 
 		service.getTripsForDate(aDate);
@@ -37,7 +37,7 @@ class ShuttleManifestServiceTest {
 	}
 
 	@Test
-	void getWithDate_shouldCallRepositoryForArrivals() {
+	void getWithDate_shouldGetArrivalsFromRepository() {
 		EventDate aDate = FestivalConfiguration.getDefaultStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
@@ -46,7 +46,7 @@ class ShuttleManifestServiceTest {
 	}
 
 	@Test
-	void getWithDate_shouldCallRepositoryForDepartures() {
+	void getWithDate_shouldGetDeparturesFromRepository() {
 		EventDate aDate = FestivalConfiguration.getDefaultStartEventDate();
 
 		service.getTripsForDate(aDate.toString());
@@ -55,21 +55,21 @@ class ShuttleManifestServiceTest {
 	}
 
 	@Test
-	void getWithoutDate_shouldCallMapper() {
+	void getWithoutDate_shouldMapToResponse() {
 		service.getTrips();
 
 		verify(mapper).toResponse(any(), any());
 	}
 
 	@Test
-	void getWithoutDate_shouldCallRepositoryForArrivals() {
+	void getWithoutDate_shouldArrivalsFromRepository() {
 		service.getTrips();
 
 		verify(tripRepository).getArrivals();
 	}
 
 	@Test
-	void getWithoutDate_shouldCallRepositoryForDepartures() {
+	void getWithoutDate_shouldDeparturesFromRepository() {
 		service.getTrips();
 
 		verify(tripRepository).getDepartures();
