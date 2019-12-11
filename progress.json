@@ -1,5 +1,5 @@
 
 {
-  "completed": ["ACP", "OXY", "TRANS", "CLASS", "CALC"],
+  "completed": ["ACP", "OXY", "TRANS", "CLASS", "CALC", "REP"],
   "started": ["DEV"]
 }
