@@ -138,4 +138,4 @@ class EventDateTest {
 
         assertFalse(result);
     }
-t }
+}
