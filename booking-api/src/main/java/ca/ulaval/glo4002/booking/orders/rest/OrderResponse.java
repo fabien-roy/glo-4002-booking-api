@@ -21,8 +21,4 @@ public class OrderResponse {
     public List<PassResponse> getPasses() {
         return passes;
     }
-
-    public void setPasses(List<PassResponse> passes) {
-        this.passes = passes;
-    }
 }

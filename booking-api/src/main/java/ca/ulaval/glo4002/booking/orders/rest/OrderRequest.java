@@ -29,8 +29,4 @@ public class OrderRequest {
 	public PassBundleRequest getPasses() {
 		return passes;
 	}
-
-	public void setPasses(PassBundleRequest passes) {
-		this.passes = passes;
-	}
 }
