@@ -23,10 +23,10 @@ class InMemoryOxygenInventoryRepositoryTest {
 	}
 
 	@Test
-	void setInventory_shouldSetInventory() {
+	void updateInventory_shouldUpdateInventory() {
 		OxygenInventory expectedInventory = new OxygenInventory();
 
-		repository.setInventory(expectedInventory);
+		repository.updateInventory(expectedInventory);
 		OxygenInventory inventory = repository.getInventory();
 
 		assertEquals(expectedInventory, inventory);
@@ -38,7 +38,7 @@ class InMemoryOxygenInventoryRepositoryTest {
 		OxygenInventory inventory = new OxygenInventory();
 		inventory.addTanksToInventory(OxygenCategories.E, Collections.singletonList(expectedOxygenTank));
 
-		repository.setInventory(inventory);
+		repository.updateInventory(inventory);
 		List<OxygenTank> oxygenTanks = repository.findAll();
 
 		assertTrue(oxygenTanks.stream().allMatch(expectedOxygenTank::equals));

@@ -1,12 +1,10 @@
 package ca.ulaval.glo4002.booking.oxygen.history.infrastructure;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
-import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.InMemoryOxygenHistoryRepository;
-import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InMemoryOxygenHistoryRepositoryTest {
 
@@ -18,10 +16,10 @@ class InMemoryOxygenHistoryRepositoryTest {
 	}
 
 	@Test
-	void setHistory_shouldSetHistory() {
+	void updateHistory_shouldUpdateHistory() {
 		OxygenHistory expectedHistory = new OxygenHistory();
 
-		repository.setHistory(expectedHistory);
+		repository.updateHistory(expectedHistory);
 		OxygenHistory history = repository.getHistory();
 
 		assertEquals(expectedHistory, history);

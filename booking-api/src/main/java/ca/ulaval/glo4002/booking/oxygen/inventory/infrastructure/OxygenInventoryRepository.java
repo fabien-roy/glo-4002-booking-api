@@ -9,7 +9,7 @@ public interface OxygenInventoryRepository {
 
 	OxygenInventory getInventory();
 
-	void setInventory(OxygenInventory inventory);
+	void updateInventory(OxygenInventory inventory);
 
     List<OxygenTank> findAll();
 }

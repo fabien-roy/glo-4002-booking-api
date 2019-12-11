@@ -6,5 +6,5 @@ public interface OxygenHistoryRepository {
 
 	OxygenHistory getHistory();
 
-	void setHistory(OxygenHistory inventory);
+	void updateHistory(OxygenHistory inventory);
 }

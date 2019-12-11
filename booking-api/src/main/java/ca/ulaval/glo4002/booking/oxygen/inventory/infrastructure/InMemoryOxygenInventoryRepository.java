@@ -19,7 +19,7 @@ public class InMemoryOxygenInventoryRepository implements OxygenInventoryReposit
 	}
 
 	@Override
-	public void setInventory(OxygenInventory inventory) {
+	public void updateInventory(OxygenInventory inventory) {
 		this.inventory = inventory;
 	}
 

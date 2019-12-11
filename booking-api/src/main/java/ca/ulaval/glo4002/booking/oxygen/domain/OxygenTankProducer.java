@@ -54,8 +54,8 @@ public class OxygenTankProducer {
 			inventory.requestTankByCategory(category, category, quantityToCover);
 		}
 
-		inventoryRepository.setInventory(inventory);
-		historyRepository.setHistory(history);
+		inventoryRepository.updateInventory(inventory);
+		historyRepository.updateHistory(history);
 
 		return newTanks;
 	}
@@ -83,8 +83,8 @@ public class OxygenTankProducer {
 			inventory.requestTankByCategory(category, category, quantityToCover);
 		}
 
-		inventoryRepository.setInventory(inventory);
-		historyRepository.setHistory(history);
+		inventoryRepository.updateInventory(inventory);
+		historyRepository.updateHistory(history);
 
 		return newTanks;
 	}

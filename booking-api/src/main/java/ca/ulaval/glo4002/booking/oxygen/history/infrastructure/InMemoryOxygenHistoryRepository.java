@@ -16,7 +16,7 @@ public class InMemoryOxygenHistoryRepository implements OxygenHistoryRepository 
 	}
 
 	@Override
-	public void setHistory(OxygenHistory history) {
+	public void updateHistory(OxygenHistory history) {
 		this.history = history;
 	}
 }

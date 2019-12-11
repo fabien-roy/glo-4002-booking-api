@@ -113,7 +113,7 @@ public class OxygenTankProducerTest {
 
 		producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
-		verify(inventoryRepository).setInventory(any(OxygenInventory.class));
+		verify(inventoryRepository).updateInventory(any(OxygenInventory.class));
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class OxygenTankProducerTest {
 
 		producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
-		verify(inventoryRepository).setInventory(any(OxygenInventory.class));
+		verify(inventoryRepository).updateInventory(any(OxygenInventory.class));
 	}
 
 	@Test
@@ -153,7 +153,7 @@ public class OxygenTankProducerTest {
 
 		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
 
-		verify(inventoryRepository).setInventory(any(OxygenInventory.class));
+		verify(inventoryRepository).updateInventory(any(OxygenInventory.class));
 	}
 
 	@Test
@@ -163,6 +163,6 @@ public class OxygenTankProducerTest {
 
 		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
 
-		verify(inventoryRepository).setInventory(any(OxygenInventory.class));
+		verify(inventoryRepository).updateInventory(any(OxygenInventory.class));
 	}
 }
