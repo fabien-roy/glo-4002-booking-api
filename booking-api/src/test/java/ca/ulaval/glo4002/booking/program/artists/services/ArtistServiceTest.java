@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.program.artists.services;
 
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
@@ -57,14 +58,14 @@ class ArtistServiceTest {
     }
 
     @Test
-    void getAll_shouldReturnAllArtistNames_whenOrderByIsNull() {
+    void getAllUnordered_shouldReturnAllArtistNames_whenOrderByIsNull() {
         ArtistListResponse artistListResponse = service.getAllUnordered();
 
         assertFalse(artistListResponse.getArtists().isEmpty());
     }
 
     @Test
-    void getAll_shouldReturnAllArtistNamesUnordered_whenOrderByIsNull() {
+    void getAllUnordered_shouldReturnAllArtistNamesUnordered_whenOrderByIsNull() {
         ArtistListResponse artistListResponse = service.getAllUnordered();
         
         assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(0));
@@ -75,7 +76,7 @@ class ArtistServiceTest {
     }
 
     @Test
-    void getAll_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsByMostPopular() {
+    void getAllOrdered_shouldReturnAllArtistNamesOrderedByPopularity_whenOrderByIsByMostPopular() {
         ArtistListResponse artistListResponse = service.getAllOrdered(ArtistOrderings.MOST_POPULAR.toString());
 
         assertEquals(firstPopularAndThirdCostArtist.getName(), artistListResponse.getArtists().get(0));
@@ -86,7 +87,7 @@ class ArtistServiceTest {
     }
 
     @Test
-    void getAll_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsLowCosts() {
+    void getAllOrdered_shouldReturnAllArtistNamesOrderedByCostAndByPopularity_whenOrderByIsLowCosts() {
         ArtistListResponse artistListResponse = service.getAllOrdered(ArtistOrderings.LOW_COSTS.toString());
 
         assertEquals(thirdPopularAndEqualFourthCostArtist.getName(), artistListResponse.getArtists().get(0));
@@ -94,6 +95,13 @@ class ArtistServiceTest {
         assertEquals(firstPopularAndThirdCostArtist.getName(), artistListResponse.getArtists().get(2));
         assertEquals(fourthPopularAndSecondCostArtist.getName(), artistListResponse.getArtists().get(3));
         assertEquals(secondPopularAndFirstCostArtist.getName(), artistListResponse.getArtists().get(4));
+    }
+
+    @Test
+    void getAllOrdered_shouldThrowInvalidFormatException_whenArtistOrderingIsInvalid() {
+        String invalidOrdering = "invalidOrdering";
+
+        assertThrows(InvalidFormatException.class, () -> service.getAllOrdered(invalidOrdering));
     }
 
     private Artist buildArtist(String name, Integer price, Integer popularityRank) {
