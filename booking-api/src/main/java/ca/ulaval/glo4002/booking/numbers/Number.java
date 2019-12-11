@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.numbers;
 
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
+// TODO : Separate order id and pass number
 public class Number {
 
     private Long value;

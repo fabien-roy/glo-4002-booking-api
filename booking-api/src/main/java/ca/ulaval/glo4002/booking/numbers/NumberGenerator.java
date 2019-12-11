@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.numbers;
 
 public class NumberGenerator {
 
-    private Number nextNumber;
+    private Number nextNumber; // TODO : Make this thread safe
 
     public NumberGenerator() {
         this.nextNumber = new Number(100000L);
