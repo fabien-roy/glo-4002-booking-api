@@ -1,12 +1,12 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.rest.mappers;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
 import ca.ulaval.glo4002.booking.shuttles.trips.rest.TripResponse;
 import org.apache.commons.lang.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TripMapper {
 
@@ -18,7 +18,7 @@ public class TripMapper {
 			String shuttleName = trip.getShuttleCategory().toString();
 			List<Long> passengers = new ArrayList<>();
 
-			trip.getPassengersPassNumbers().stream().map(Number::getValue).forEach(passengers::add);
+			trip.getPassengersPassNumbers().stream().map(PassNumber::getValue).forEach(passengers::add);
 
 			long[] passengersArray = ArrayUtils.toPrimitive(passengers.toArray(new Long[0]));
 

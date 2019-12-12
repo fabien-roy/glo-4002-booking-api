@@ -1,16 +1,14 @@
 package ca.ulaval.glo4002.booking.passes.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.SupergiantPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,15 +16,15 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
-import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.SupergiantPriceDiscountStrategy;
-import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 class PassBundleFactoryTest {
 
@@ -34,7 +32,7 @@ class PassBundleFactoryTest {
 
 	@BeforeEach
 	void setUpFactory() {
-		NumberGenerator numberGenerator = new NumberGenerator();
+		PassNumberGenerator numberGenerator = new PassNumberGenerator();
 		EventDateFactory eventDateFactory = mock(EventDateFactory.class);
 		PassFactory passFactory = new PassFactory(numberGenerator, eventDateFactory);
 		passBundleFactory = new PassBundleFactory(passFactory);
@@ -45,7 +43,7 @@ class PassBundleFactoryTest {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String aPassOption = PassOptions.SINGLE_PASS.toString();
 		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, aPassOption, new ArrayList<>());
-		Number aNumber = new Number(1L);
+		PassNumber aNumber = new PassNumber(1L);
 		BigDecimal aBigDecimal = new BigDecimal(100.0);
 		Money aPrice = new Money(aBigDecimal);
 		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();

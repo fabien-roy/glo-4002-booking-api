@@ -1,13 +1,13 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -57,7 +57,7 @@ class OxygenInventoryServiceTest {
 
 	@Test
 	void orderForPasses_shouldOrderForFullFestival_whenEventDatesIsNull() {
-		Pass aFullFestivalPass = new Pass(new Number(1L), mock(Money.class));
+		Pass aFullFestivalPass = new Pass(new PassNumber(1L), mock(Money.class));
 		int numberOfFestivalDays = festivalConfiguration.getAllEventDates().size();
 
 		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aFullFestivalPass), AN_ORDER_DATE);
@@ -68,7 +68,7 @@ class OxygenInventoryServiceTest {
 	@Test
 	void orderForPasses_shouldOrderForEventDate() {
 		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
+		Pass aPass = new Pass(new PassNumber(1L), mock(Money.class), aEventDate);
 
 		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass), AN_ORDER_DATE);
 
@@ -79,8 +79,8 @@ class OxygenInventoryServiceTest {
 	void orderForPasses_shouldOrderForEventDates_whenThereAreMultiplePasses() {
 		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		EventDate anotherEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
-		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
-		Pass anotherPass = new Pass(new Number(1L), mock(Money.class), anotherEventDate);
+		Pass aPass = new Pass(new PassNumber(1L), mock(Money.class), aEventDate);
+		Pass anotherPass = new Pass(new PassNumber(1L), mock(Money.class), anotherEventDate);
 
 		service.orderForPasses(PassCategories.SUPERNOVA, Arrays.asList(aPass, anotherPass), AN_ORDER_DATE);
 
@@ -92,7 +92,7 @@ class OxygenInventoryServiceTest {
 	void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
 		OxygenCategories expectedOxygenCategory = factory.createCategory(passCategory).getCategory();
 		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		Pass aPass = new Pass(new Number(1L), mock(Money.class), aEventDate);
+		Pass aPass = new Pass(new PassNumber(1L), mock(Money.class), aEventDate);
 
 		service.orderForPasses(passCategory, Collections.singletonList(aPass), AN_ORDER_DATE);
 

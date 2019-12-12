@@ -12,11 +12,11 @@ import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 public class PassFactory {
 
-	private final NumberGenerator numberGenerator;
+	private final PassNumberGenerator numberGenerator;
 	private final EventDateFactory eventDateFactory;
 
 	@Inject
-	public PassFactory(NumberGenerator numberGenerator, EventDateFactory eventDateFactory) {
+	public PassFactory(PassNumberGenerator numberGenerator, EventDateFactory eventDateFactory) {
 		this.numberGenerator = numberGenerator;
 		this.eventDateFactory = eventDateFactory;
 	}

@@ -1,16 +1,17 @@
 package ca.ulaval.glo4002.booking.shuttles.domain;
 
-import ca.ulaval.glo4002.booking.numbers.Number;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 
 public class Passenger {
-	
-	private Number passNumber;
 
-	public Passenger(Number passNumber) {
+    // TODO : Have "PassengerNumber"
+	private PassNumber passNumber;
+
+	public Passenger(PassNumber passNumber) {
 		this.passNumber = passNumber;
 	}
 	
-	public Number getPassNumber() {
+	public PassNumber getPassNumber() {
 		return passNumber;
 	}
 }

@@ -1,14 +1,14 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.domain;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Trip {
 	
@@ -30,9 +30,9 @@ public class Trip {
 		return shuttle.getCategory();
 	}
 	
-	public List<Number> getPassengersPassNumbers() {
-		List<Number> passNumbers = new ArrayList<>();
-		
+	public List<PassNumber> getPassengersPassNumbers() {
+		List<PassNumber> passNumbers = new ArrayList<>();
+
 		passengers.stream().map(Passenger::getPassNumber).forEach(passNumbers::add);
 		
 		return passNumbers;

@@ -1,10 +1,8 @@
 package ca.ulaval.glo4002.booking.passes.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
-import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
 class PassFactoryTest {
@@ -22,7 +19,7 @@ class PassFactoryTest {
 
     @BeforeEach
     void setUpFactory() {
-        NumberGenerator numberGenerator = new NumberGenerator();
+        PassNumberGenerator numberGenerator = new PassNumberGenerator();
         EventDateFactory eventDateFactory = mock(EventDateFactory.class);
 
         factory = new PassFactory(numberGenerator, eventDateFactory);

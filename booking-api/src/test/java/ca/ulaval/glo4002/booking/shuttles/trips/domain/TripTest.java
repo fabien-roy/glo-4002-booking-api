@@ -1,10 +1,8 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
@@ -12,8 +10,9 @@ import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.numbers.Number;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class TripTest {
 
@@ -23,9 +22,9 @@ class TripTest {
 	@BeforeEach
 	void setUpPassengers() {
 		aPassenger = mock(Passenger.class);
-		when(aPassenger.getPassNumber()).thenReturn(new Number(10000000L));
+		when(aPassenger.getPassNumber()).thenReturn(new PassNumber(10000000L));
 		Passenger anotherPassenger = mock(Passenger.class);
-		when(anotherPassenger.getPassNumber()).thenReturn(new Number(10000001L));
+		when(anotherPassenger.getPassNumber()).thenReturn(new PassNumber(10000001L));
 	}
 
 	@BeforeEach

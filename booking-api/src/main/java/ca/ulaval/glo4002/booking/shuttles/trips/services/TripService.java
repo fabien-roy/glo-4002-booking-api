@@ -1,20 +1,19 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.services;
 
-import java.util.Collections;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
+
+import javax.inject.Inject;
+import java.util.Collections;
+import java.util.List;
 
 public class TripService {
 
@@ -38,7 +37,7 @@ public class TripService {
 			shuttleCategory = ShuttleCategories.ET_SPACESHIP;
 		}
 
-		Number passengerNumber = new Number(artist.getId().longValue());
+		PassNumber passengerNumber = new PassNumber(artist.getId().longValue());
 		List<Passenger> passengers = Collections.nCopies(artist.getNumberOfPeople(), new Passenger(passengerNumber));
 
 		repository.addPassengersToNewArrival(passengers, shuttleCategory, tripDate);
