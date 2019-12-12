@@ -2,11 +2,11 @@ package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.numbers.Number;
 
-public class OrderIdGenerator {
+public class OrderIdentifierGenerator {
 
     private Number nextNumber; // TODO : Make this thread safe
 
-    public OrderIdGenerator() {
+    public OrderIdentifierGenerator() {
         this.nextNumber = new Number(100000L);
     }
 

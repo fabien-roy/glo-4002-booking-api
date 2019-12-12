@@ -2,16 +2,16 @@ package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
-public class OrderId {
+public class OrderIdentifier {
 
     private Long value;
 
-    public OrderId(Long value) {
+    public OrderIdentifier(Long value) {
         this.value = value;
     }
 
     // TODO : Parse String to Number should not be in constructor
-    public OrderId(String value) {
+    public OrderIdentifier(String value) {
         try {
             this.value = Long.parseLong(value);
         } catch (Exception exception) {
@@ -30,9 +30,9 @@ public class OrderId {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof OrderId)) return false;
+        if (!(other instanceof OrderIdentifier)) return false;
 
-        OrderId otherNumber = (OrderId) other;
+        OrderIdentifier otherNumber = (OrderIdentifier) other;
 
         return this.value.equals(otherNumber.getValue());
     }
