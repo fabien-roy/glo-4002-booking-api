@@ -1,17 +1,17 @@
-package ca.ulaval.glo4002.booking.numbers;
+package ca.ulaval.glo4002.booking.passes.domain;
 
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
-public class Number {
+public class PassNumber {
 
     private Long value;
 
-    public Number(Long value) {
+    public PassNumber(Long value) {
         this.value = value;
     }
 
     // TODO : Parse String to Number should not be in constructor
-    public Number(String value) {
+    public PassNumber(String value) {
         try {
             this.value = Long.parseLong(value);
         } catch (Exception exception) {
@@ -30,9 +30,9 @@ public class Number {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Number)) return false;
+        if (!(other instanceof PassNumber)) return false;
 
-        Number otherNumber = (Number) other;
+        PassNumber otherNumber = (PassNumber) other;
 
         return this.value.equals(otherNumber.getValue());
     }
