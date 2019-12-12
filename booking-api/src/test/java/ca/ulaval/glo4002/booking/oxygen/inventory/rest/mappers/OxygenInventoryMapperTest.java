@@ -17,10 +17,9 @@ public class OxygenInventoryMapperTest {
 	private static final OxygenCategories CATEGORY_A = OxygenCategories.A;
 	private static final OxygenCategories CATEGORY_B = OxygenCategories.B;
 	private static final OxygenCategories CATEGORY_E = OxygenCategories.E;
-
-	private static  final Integer CATEGORY_A_NUMBER = 5;
-	private static  final Integer CATEGORY_B_NUMBER = 10;
-	private static  final Integer CATEGORY_E_NUMBER = 15;
+	private static final Integer CATEGORY_A_QUANTITY = 5;
+	private static final Integer CATEGORY_B_QUANTITY = 10;
+	private static final Integer CATEGORY_E_QUANTITY = 15;
 
     private OxygenInventoryMapper oxygenInventoryMapper;
     private OxygenInventory inventory;
@@ -33,18 +32,9 @@ public class OxygenInventoryMapperTest {
     @BeforeEach
     void setUpInventory() {
         inventory = mock(OxygenInventory.class);
-        when(inventory.getAllQuantityByCategory(CATEGORY_A)).thenReturn(CATEGORY_A_NUMBER);
-        when(inventory.getAllQuantityByCategory(CATEGORY_B)).thenReturn(CATEGORY_B_NUMBER);
-        when(inventory.getAllQuantityByCategory(CATEGORY_E)).thenReturn(CATEGORY_E_NUMBER);
-    }
-
-    @Test
-    void toResponse_shouldBuildResponseWithCorrectOxygenCategoriesOrder() {
-        List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
-
-        assertEquals(OxygenCategories.E.toString(), oxygenInventoryItemResponse.get(0).getGradeTankOxygen());
-        assertEquals(OxygenCategories.B.toString(), oxygenInventoryItemResponse.get(1).getGradeTankOxygen());
-        assertEquals(OxygenCategories.A.toString(), oxygenInventoryItemResponse.get(2).getGradeTankOxygen());
+        when(inventory.getAllQuantityByCategory(CATEGORY_A)).thenReturn(CATEGORY_A_QUANTITY);
+        when(inventory.getAllQuantityByCategory(CATEGORY_B)).thenReturn(CATEGORY_B_QUANTITY);
+        when(inventory.getAllQuantityByCategory(CATEGORY_E)).thenReturn(CATEGORY_E_QUANTITY);
     }
 
     @Test
@@ -52,7 +42,7 @@ public class OxygenInventoryMapperTest {
         List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
         Integer quantityE = Math.toIntExact(oxygenInventoryItemResponse.get(0).getQuantity());
 
-        assertEquals(CATEGORY_E_NUMBER, quantityE);
+        assertEquals(CATEGORY_E_QUANTITY, quantityE);
     }
 
     @Test
@@ -60,7 +50,7 @@ public class OxygenInventoryMapperTest {
         List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
         Integer quantityB = Math.toIntExact(oxygenInventoryItemResponse.get(1).getQuantity());
 
-        assertEquals(CATEGORY_B_NUMBER, quantityB);
+        assertEquals(CATEGORY_B_QUANTITY, quantityB);
     }
 
     @Test
@@ -68,6 +58,6 @@ public class OxygenInventoryMapperTest {
         List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
         Integer quantityA = Math.toIntExact(oxygenInventoryItemResponse.get(2).getQuantity());
 
-        assertEquals(CATEGORY_A_NUMBER, quantityA);
+        assertEquals(CATEGORY_A_QUANTITY, quantityA);
     }
 }
