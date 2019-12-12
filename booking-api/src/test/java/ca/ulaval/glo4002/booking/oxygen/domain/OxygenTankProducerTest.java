@@ -61,7 +61,7 @@ public class OxygenTankProducerTest {
 	@Test
 	void produceOxygenForOrder_shouldReturnAnEmptyList_whenReserveHasEnoughTanks() {
 		OxygenCategories aCategory = OxygenCategories.A;
-		when(inventory.requestTankByCategory(eq(aCategory), eq(aCategory), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(aCategory), eq(aCategory), anyInt())).thenReturn(0);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenForOrder(aCategory, INVALID_CATEGORY_A_BUILD_DATE);
 
@@ -70,7 +70,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenForOrder_shouldReturnTheCorrectAmountOfTanksNeededToCoverReserve() {
-		when(inventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.A, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
+		when(inventory.assignTanksByCategory(OxygenCategories.A, OxygenCategories.A, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenForOrder(OxygenCategories.A, VALID_CATEGORY_A_BUILD_DATE);
 
@@ -80,7 +80,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenForOrder_shouldReturnTheCorrectAmountOfBTanks_withNoTimeToCreateATanks() {
-		when(inventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.B, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
+		when(inventory.assignTanksByCategory(OxygenCategories.A, OxygenCategories.B, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenForOrder(OxygenCategories.A, INVALID_CATEGORY_A_BUILD_DATE);
 
@@ -90,7 +90,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenForOrder_shouldReturnTheCorrectAmountOfETanks_whenNoTimeToCreateCategoryAAndB() {
-		when(inventory.requestTankByCategory(OxygenCategories.A, OxygenCategories.E, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
+		when(inventory.assignTanksByCategory(OxygenCategories.A, OxygenCategories.E, CATEGORY_A_TANKS_NEEDED_BY_DAYS)).thenReturn(CATEGORY_A_TANKS_NEEDED_BY_DAYS);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenForOrder(OxygenCategories.A, INVALID_CATEGORY_B_BUILD_DATE);
 
@@ -100,7 +100,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenForOrder_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() {
-		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
@@ -109,7 +109,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenForOrder_shouldUpdateInventory() {
-		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
@@ -118,7 +118,7 @@ public class OxygenTankProducerTest {
 
 	@Test
 	void produceOxygenForOrder_shouldUpdateHistory() {
-		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		producer.produceOxygenForOrder(OxygenCategories.E, VALID_CATEGORY_E_BUILD_DATE);
 
@@ -129,7 +129,7 @@ public class OxygenTankProducerTest {
 	void produceOxygenByQuantity_shouldReturnAnEmptyList_whenReserveHasEnoughTanks() {
 		OxygenCategories aCategory = OxygenCategories.A;
 		OxygenProduction category = mock(OxygenProduction.class);
-		when(inventory.requestTankByCategory(eq(aCategory), eq(aCategory), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(aCategory), eq(aCategory), anyInt())).thenReturn(0);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, INVALID_CATEGORY_A_BUILD_DATE, 1);
 
@@ -139,7 +139,7 @@ public class OxygenTankProducerTest {
 	@Test
 	void produceOxygenByQuantity_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() {
 		OxygenProduction category = mock(OxygenProduction.class);
-		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
 
@@ -149,7 +149,7 @@ public class OxygenTankProducerTest {
 	@Test
 	void produceOxygenByQuantity_shouldUpdateInventory() {
 		OxygenProduction category = mock(OxygenProduction.class);
-		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
 
@@ -159,7 +159,7 @@ public class OxygenTankProducerTest {
 	@Test
 	void produceOxygenByQuantity_shouldUpdateHistory() {
 		OxygenProduction category = mock(OxygenProduction.class);
-		when(inventory.requestTankByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
 
 		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
 

@@ -37,7 +37,7 @@ public class OxygenTankProducer {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		Integer quantityToCover = requestCategory.getTanksNeededPerDay();
 
-		quantityToCover = inventory.requestTankByCategory(requestedCategory, actualOxygenProduction.getCategory(), quantityToCover);
+		quantityToCover = inventory.assignTanksByCategory(requestedCategory, actualOxygenProduction.getCategory(), quantityToCover);
 
 		if (quantityToCover > 0) {
 			List<OxygenTank> producedTanks = factory.createOxygenTank(actualOxygenProduction, requestDate, quantityToCover);
@@ -51,7 +51,7 @@ public class OxygenTankProducer {
 			}
 
 			inventory.addTanksToInventory(category, newTanks);
-			inventory.requestTankByCategory(category, category, quantityToCover);
+			inventory.assignTanksByCategory(category, category, quantityToCover);
 		}
 
 		inventoryRepository.updateInventory(inventory);
@@ -67,7 +67,7 @@ public class OxygenTankProducer {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		OxygenCategories category = oxygenProduction.getCategory();
 
-		Integer quantityToCover = inventory.requestTankByCategory(category, category, numberOfTanks);
+		Integer quantityToCover = inventory.assignTanksByCategory(category, category, numberOfTanks);
 
 		if (quantityToCover > 0) {
 			LocalDate readyDate = oxygenProduction.calculateReadyDateForCategory(requestDate);
@@ -80,7 +80,7 @@ public class OxygenTankProducer {
 				oxygenProduction.addCategoryProductionInformationToHistory(requestDate, history, quantityToCover);
 			}
 
-			inventory.requestTankByCategory(category, category, quantityToCover);
+			inventory.assignTanksByCategory(category, category, quantityToCover);
 		}
 
 		inventoryRepository.updateInventory(inventory);
