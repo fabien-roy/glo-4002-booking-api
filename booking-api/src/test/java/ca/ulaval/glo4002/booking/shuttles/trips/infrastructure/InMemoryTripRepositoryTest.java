@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.infrastructure;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
@@ -30,7 +29,7 @@ class InMemoryTripRepositoryTest {
 	void getDeparturesForDate_shouldReturnDeparturesForDate() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate expectedTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
+		Passenger aPassenger = new Passenger(1L);
 		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
 
 		List<Trip> trips = repository.getDeparturesForDate(expectedTripDate);
@@ -42,7 +41,7 @@ class InMemoryTripRepositoryTest {
 	void getArrivalsForDate_shouldReturnArrivalsForDate() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate expectedTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
+		Passenger aPassenger = new Passenger(1L);
 		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
 
 		List<Trip> trips = repository.getArrivalsForDate(expectedTripDate);
@@ -54,7 +53,7 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
+		Passenger aPassenger = new Passenger(1L);
 
 	    repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 
@@ -65,8 +64,8 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToDepartures_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
-		Passenger anotherPassenger = new Passenger(new PassNumber(2L));
+		Passenger aPassenger = new Passenger(1L);
+		Passenger anotherPassenger = new Passenger(2L);
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 
 		repository.addPassengerToDepartures(anotherPassenger, aCategory, aTripDate);
@@ -78,8 +77,8 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToDepartures_shouldAddNewDepartureTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
-		Passenger anotherPassenger = new Passenger(new PassNumber(2L));
+		Passenger aPassenger = new Passenger(1L);
+		Passenger anotherPassenger = new Passenger(2L);
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToDepartures(anotherPassenger, aCategory, aTripDate);
@@ -92,8 +91,8 @@ class InMemoryTripRepositoryTest {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
-		Passenger anotherPassenger = new Passenger(new PassNumber(2L));
+		Passenger aPassenger = new Passenger(1L);
+		Passenger anotherPassenger = new Passenger(2L);
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToDepartures(anotherPassenger, anotherCategory, aTripDate);
@@ -105,7 +104,7 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToDepartures_shouldAddTripDateToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate expectedTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
+		Passenger aPassenger = new Passenger(1L);
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, expectedTripDate);
 		Trip trip = repository.getDeparturesForDate(expectedTripDate).get(0);
@@ -117,33 +116,33 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToDepartures_shouldAddPassengerToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassNumber expectedPassNumber = new PassNumber(1L);
-		Passenger aPassenger = new Passenger(expectedPassNumber);
+		Long expectedPassengerNumber = 1L;
+		Passenger aPassenger = new Passenger(expectedPassengerNumber);
 
 		repository.addPassengerToDepartures(aPassenger, aCategory, aTripDate);
-		PassNumber passNumber = repository.getDeparturesForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
+		Long passengerNumber = repository.getDeparturesForDate(aTripDate).get(0).getPassengerNumbers().get(0);
 
-		assertEquals(expectedPassNumber, passNumber);
+		assertEquals(expectedPassengerNumber, passengerNumber);
 	}
 
 	@Test
 	void addPassengersToNewDeparture_shouldAddPassengerToNewDeparture() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassNumber expectedPassNumber = new PassNumber(1L);
+		Long expectedPassNumber = 1L;
 		List<Passenger> somePassengers = Collections.singletonList(new Passenger(expectedPassNumber));
 
 		repository.addPassengersToNewDeparture(somePassengers, aCategory, aTripDate);
-		PassNumber passNumber = repository.getDeparturesForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
+		Long passengerNumber = repository.getDeparturesForDate(aTripDate).get(0).getPassengerNumbers().get(0);
 
-		assertEquals(expectedPassNumber, passNumber);
+		assertEquals(expectedPassNumber, passengerNumber);
 	}
 
 	@Test
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
+		Passenger aPassenger = new Passenger(1L);
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 
@@ -154,8 +153,8 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToArrivals_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
-		Passenger anotherPassenger = new Passenger(new PassNumber(2L));
+		Passenger aPassenger = new Passenger(1L);
+		Passenger anotherPassenger = new Passenger(2L);
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 
 		repository.addPassengerToArrivals(anotherPassenger, aCategory, aTripDate);
@@ -167,8 +166,8 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
-		Passenger anotherPassenger = new Passenger(new PassNumber(2L));
+		Passenger aPassenger = new Passenger(1L);
+		Passenger anotherPassenger = new Passenger(2L);
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToArrivals(anotherPassenger, aCategory, aTripDate);
@@ -181,8 +180,8 @@ class InMemoryTripRepositoryTest {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
-		Passenger anotherPassenger = new Passenger(new PassNumber(2L));
+		Passenger aPassenger = new Passenger(1L);
+		Passenger anotherPassenger = new Passenger(2L);
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
 		repository.addPassengerToArrivals(anotherPassenger, anotherCategory, aTripDate);
@@ -194,7 +193,7 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToArrivals_shouldAddTripDateToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate expectedTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		Passenger aPassenger = new Passenger(new PassNumber(1L));
+		Passenger aPassenger = new Passenger(1L);
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, expectedTripDate);
 		Trip trip = repository.getArrivalsForDate(expectedTripDate).get(0);
@@ -206,25 +205,25 @@ class InMemoryTripRepositoryTest {
 	void addPassengerToArrivals_shouldAddPassengerToDepartureTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassNumber expectedPassNumber = new PassNumber(1L);
-		Passenger aPassenger = new Passenger(expectedPassNumber);
+		Long expectedPassengerNumber = 1L;
+		Passenger aPassenger = new Passenger(expectedPassengerNumber);
 
 		repository.addPassengerToArrivals(aPassenger, aCategory, aTripDate);
-		PassNumber passNumber = repository.getArrivalsForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
+		Long passengerNumber = repository.getArrivalsForDate(aTripDate).get(0).getPassengerNumbers().get(0);
 
-		assertEquals(expectedPassNumber, passNumber);
+		assertEquals(expectedPassengerNumber, passengerNumber);
 	}
 
 	@Test
 	void addPassengersToNewArrival_shouldAddPassengerToNewArrival() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassNumber expectedPassNumber = new PassNumber(1L);
-		List<Passenger> somePassengers = Collections.singletonList(new Passenger(expectedPassNumber));
+		Long expectedPassengerNumber = 1L;
+		List<Passenger> somePassengers = Collections.singletonList(new Passenger(expectedPassengerNumber));
 
 		repository.addPassengersToNewArrival(somePassengers, aCategory, aTripDate);
-		PassNumber passNumber = repository.getArrivalsForDate(aTripDate).get(0).getPassengersPassNumbers().get(0);
+		Long passengerNumber = repository.getArrivalsForDate(aTripDate).get(0).getPassengerNumbers().get(0);
 
-		assertEquals(expectedPassNumber, passNumber);
+		assertEquals(expectedPassengerNumber, passengerNumber);
 	}
 }

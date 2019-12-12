@@ -98,9 +98,9 @@ class TripServiceTest {
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.equals(passenger.getPassNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.equals(passenger.getPassNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
 	}
 
 	@Test
@@ -116,9 +116,9 @@ class TripServiceTest {
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.equals(passenger.getPassNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.equals(passenger.getPassNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
 	}
 
 	@Test

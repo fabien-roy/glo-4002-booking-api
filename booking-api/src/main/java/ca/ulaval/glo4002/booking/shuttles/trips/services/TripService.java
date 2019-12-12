@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.shuttles.trips.services;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
@@ -37,7 +36,7 @@ public class TripService {
 			shuttleCategory = ShuttleCategories.ET_SPACESHIP;
 		}
 
-		PassNumber passengerNumber = new PassNumber(artist.getId().longValue());
+		Long passengerNumber = artist.getId().longValue();
 		List<Passenger> passengers = Collections.nCopies(artist.getNumberOfPeople(), new Passenger(passengerNumber));
 
 		repository.addPassengersToNewArrival(passengers, shuttleCategory, tripDate);
@@ -48,7 +47,7 @@ public class TripService {
 		ShuttleCategories shuttleCategory = factory.createCategory(passCategory);
 
 		passes.forEach(pass -> {
-			Passenger passenger = new Passenger(pass.getPassNumber());
+			Passenger passenger = new Passenger(pass.getPassNumber().getValue());
 
 			if (pass.getEventDate() == null) {
 				orderForFullFestival(passenger, shuttleCategory);

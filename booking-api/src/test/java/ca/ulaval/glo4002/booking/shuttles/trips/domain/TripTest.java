@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
@@ -22,9 +21,9 @@ class TripTest {
 	@BeforeEach
 	void setUpPassengers() {
 		aPassenger = mock(Passenger.class);
-		when(aPassenger.getPassNumber()).thenReturn(new PassNumber(10000000L));
+		when(aPassenger.getNumber()).thenReturn(10000000L);
 		Passenger anotherPassenger = mock(Passenger.class);
-		when(anotherPassenger.getPassNumber()).thenReturn(new PassNumber(10000001L));
+		when(anotherPassenger.getNumber()).thenReturn(10000001L);
 	}
 
 	@BeforeEach
@@ -40,6 +39,6 @@ class TripTest {
 
 		trip.addPassenger(aPassenger);
 		
-		assertEquals(aPassenger.getPassNumber(), trip.getPassengersPassNumbers().get(0));
+		assertEquals(aPassenger.getNumber(), trip.getPassengerNumbers().get(0));
 	}
 }
