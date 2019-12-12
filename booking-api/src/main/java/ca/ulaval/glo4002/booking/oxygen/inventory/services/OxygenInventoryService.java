@@ -1,20 +1,19 @@
 package ca.ulaval.glo4002.booking.oxygen.inventory.services;
 
-import java.time.LocalDate;
-import java.util.List;
-
-import javax.inject.Inject;
-
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenProduction;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
+import ca.ulaval.glo4002.booking.oxygen.domain.OxygenProduction;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
+
+import javax.inject.Inject;
+import java.time.LocalDate;
+import java.util.List;
 
 public class OxygenInventoryService {
 
@@ -35,6 +34,7 @@ public class OxygenInventoryService {
 	public void orderForPasses(PassCategories passCategory, List<Pass> passes, OrderDate orderDate) {
 		OxygenProduction oxygenProduction = factory.createCategory(passCategory);
 
+		// TODO : PassBundle should be able to get event dates
 		passes.forEach(pass -> {
 			if (pass.getEventDate() == null) {
 				orderForFullFestival(oxygenProduction.getCategory(), orderDate.toLocalDate());
