@@ -4,6 +4,7 @@ import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.festival.services.FestivalService;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
+import ca.ulaval.glo4002.booking.orders.domain.OrderIdentifierGenerator;
 import ca.ulaval.glo4002.booking.orders.infrastructure.InMemoryOrderRepository;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResource;
@@ -23,6 +24,7 @@ import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportResource;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.mappers.OxygenReportMapper;
 import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.domain.PassFactory;
 import ca.ulaval.glo4002.booking.profits.rest.ProfitReportResource;
@@ -36,7 +38,6 @@ import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.InMemoryEventRepository;
 import ca.ulaval.glo4002.booking.program.rest.ProgramResource;
 import ca.ulaval.glo4002.booking.program.services.ProgramService;
-import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestResource;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
@@ -70,7 +71,8 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindGenerators() {
-        bindAsContract(NumberGenerator.class);
+        bindAsContract(OrderIdentifierGenerator.class);
+        bindAsContract(PassNumberGenerator.class);
     }
     
     private void bindConverters() {

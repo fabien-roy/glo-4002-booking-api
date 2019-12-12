@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;

@@ -1,14 +1,12 @@
 package ca.ulaval.glo4002.booking.passes.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 
 import javax.inject.Inject;
-
-import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
-import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.profits.domain.Money;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PassFactory {
 
