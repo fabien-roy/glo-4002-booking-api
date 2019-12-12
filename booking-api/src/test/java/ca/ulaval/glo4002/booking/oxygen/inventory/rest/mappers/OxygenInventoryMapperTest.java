@@ -17,9 +17,9 @@ public class OxygenInventoryMapperTest {
 	private static final OxygenCategories CATEGORY_A = OxygenCategories.A;
 	private static final OxygenCategories CATEGORY_B = OxygenCategories.B;
 	private static final OxygenCategories CATEGORY_E = OxygenCategories.E;
-	private static final Integer CATEGORY_A_QUANTITY = 5;
-	private static final Integer CATEGORY_B_QUANTITY = 10;
-	private static final Integer CATEGORY_E_QUANTITY = 15;
+	private static final int CATEGORY_A_QUANTITY = 5;
+	private static final int CATEGORY_B_QUANTITY = 10;
+	private static final int CATEGORY_E_QUANTITY = 15;
 
     private OxygenInventoryMapper oxygenInventoryMapper;
     private OxygenInventory inventory;
@@ -40,7 +40,7 @@ public class OxygenInventoryMapperTest {
     @Test
     void toResponse_shouldBuildResponseWithCorrectTanksQuantityE() {
         List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
-        Integer quantityE = Math.toIntExact(oxygenInventoryItemResponse.get(0).getQuantity());
+        int quantityE = oxygenInventoryItemResponse.get(0).getQuantity();
 
         assertEquals(CATEGORY_E_QUANTITY, quantityE);
     }
@@ -48,7 +48,7 @@ public class OxygenInventoryMapperTest {
     @Test
     void toResponse_shouldBuildResponseWithCorrectTanksQuantityB() {
         List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
-        Integer quantityB = Math.toIntExact(oxygenInventoryItemResponse.get(1).getQuantity());
+        int quantityB = oxygenInventoryItemResponse.get(1).getQuantity();
 
         assertEquals(CATEGORY_B_QUANTITY, quantityB);
     }
@@ -56,7 +56,7 @@ public class OxygenInventoryMapperTest {
     @Test
     void toResponse_shouldBuildResponseWithCorrectTanksQuantityA() {
         List<OxygenInventoryItemResponse> oxygenInventoryItemResponse = oxygenInventoryMapper.toResponse(inventory);
-        Integer quantityA = Math.toIntExact(oxygenInventoryItemResponse.get(2).getQuantity());
+        int quantityA = oxygenInventoryItemResponse.get(2).getQuantity();
 
         assertEquals(CATEGORY_A_QUANTITY, quantityA);
     }
