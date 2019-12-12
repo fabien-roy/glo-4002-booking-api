@@ -28,6 +28,8 @@ import static org.mockito.Mockito.*;
 
 class OxygenInventoryServiceTest {
 
+    // TODO : This is a mess. Refactor everything. Check comments.
+
 	private static final OrderDate AN_ORDER_DATE = new OrderDate(FestivalConfiguration.getDefaultStartEventDate().toLocalDateTime());
 
 	private OxygenInventoryService service;
