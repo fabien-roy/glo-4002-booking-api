@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.numbers.NumberGenerator;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
 import ca.ulaval.glo4002.booking.passes.rest.PassBundleRequest;
@@ -24,7 +23,7 @@ class OrderFactoryTest {
 
 	@BeforeEach
 	void setUpFactory() {
-		NumberGenerator numberGenerator = new NumberGenerator();
+		OrderIdentifierGenerator numberGenerator = new OrderIdentifierGenerator();
 		orderDateFactory = mock(OrderDateFactory.class);
 		passBundleFactory = mock(PassBundleFactory.class);
 

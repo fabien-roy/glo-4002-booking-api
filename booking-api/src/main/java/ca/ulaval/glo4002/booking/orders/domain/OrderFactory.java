@@ -10,13 +10,13 @@ import javax.inject.Inject;
 
 public class OrderFactory {
 
-    private final NumberGenerator numberGenerator;
+    private final OrderIdentifierGenerator orderIdentifierGenerator;
     private final OrderDateFactory orderDateFactory;
     private final PassBundleFactory passBundleFactory;
 
     @Inject
-    public OrderFactory(NumberGenerator numberGenerator, OrderDateFactory orderDateFactory, PassBundleFactory passBundleFactory) {
-        this.numberGenerator = numberGenerator;
+    public OrderFactory(OrderIdentifierGenerator orderIdentifierGenerator, OrderDateFactory orderDateFactory, PassBundleFactory passBundleFactory) {
+        this.orderIdentifierGenerator = orderIdentifierGenerator;
         this.orderDateFactory = orderDateFactory;
         this.passBundleFactory = passBundleFactory;
     }
@@ -28,7 +28,7 @@ public class OrderFactory {
             throw new InvalidFormatException();
         }
 
-        OrderNumber orderNumber = new OrderNumber(numberGenerator.generate(), orderRequest.getVendorCode());
+        OrderNumber orderNumber = new OrderNumber(orderIdentifierGenerator.generate(), orderRequest.getVendorCode());
         OrderDate orderDate = orderDateFactory.create(orderRequest.getOrderDate()); // TODO : Test this call
         PassBundle passBundle = passBundleFactory.create(orderRequest.getPasses());
 

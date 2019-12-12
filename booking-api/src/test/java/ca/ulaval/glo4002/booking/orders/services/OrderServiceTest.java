@@ -1,10 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.services;
 
-import ca.ulaval.glo4002.booking.numbers.Number;
-import ca.ulaval.glo4002.booking.orders.domain.Order;
-import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
-import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
+import ca.ulaval.glo4002.booking.orders.domain.*;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
@@ -120,7 +116,7 @@ class OrderServiceTest {
 
 	@Test
 	void getByOrderNumber_shouldGetOrder() {
-		OrderNumber orderNumber = new OrderNumber(new Number(1L), "VENDOR");
+		OrderNumber orderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
 	    when(order.getOrderNumber()).thenReturn(orderNumber);
 	    when(repository.getByOrderNumber(order.getOrderNumber())).thenReturn(order);
 

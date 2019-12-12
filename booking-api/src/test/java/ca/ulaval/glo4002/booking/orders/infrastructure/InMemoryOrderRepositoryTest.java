@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.orders.infrastructure;
 
-import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
+import ca.ulaval.glo4002.booking.orders.domain.OrderIdentifier;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
@@ -23,15 +23,15 @@ class InMemoryOrderRepositoryTest {
 
 	@Test
 	void getOrderNumber_shouldThrowOrderNotFoundException_whenThereIsNoOrder() {
-		OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
+		OrderNumber aNonExistentOrderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
 
 		assertThrows(OrderNotFoundException.class, () -> repository.getByOrderNumber(aNonExistentOrderNumber));
 	}
 
 	@Test
 	void getOrderNumber_shouldThrowOrderNotFoundException_whenOrderDoesNotExist() {
-		OrderNumber aNonExistentOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
+		OrderNumber aNonExistentOrderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
+		OrderNumber anOrderNumber = new OrderNumber(new OrderIdentifier(2L), "VENDOR");
 		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
@@ -42,7 +42,7 @@ class InMemoryOrderRepositoryTest {
 
 	@Test
 	void getByOrderNumber_shouldReturnOrder() {
-		OrderNumber anOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
+		OrderNumber anOrderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
 		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
@@ -55,7 +55,7 @@ class InMemoryOrderRepositoryTest {
 
 	@Test
 	void addOrder_shouldAddOrder() {
-		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
+		OrderNumber anOrderNumber = new OrderNumber(new OrderIdentifier(2L), "VENDOR");
 		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);
@@ -67,7 +67,7 @@ class InMemoryOrderRepositoryTest {
 
 	@Test
 	void findAll_shouldReturnEveryOrder() {
-		OrderNumber anOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
+		OrderNumber anOrderNumber = new OrderNumber(new OrderIdentifier(2L), "VENDOR");
 		OrderDate anOrderDate = mock(OrderDate.class);
 		PassBundle aPassBundle = mock(PassBundle.class);
 		Order anOrder = new Order(anOrderNumber, anOrderDate, aPassBundle);

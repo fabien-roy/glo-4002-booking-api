@@ -1,34 +1,33 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.numbers.Number;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 
 public class OrderNumber {
 
-	private Number orderNumber;
+	private OrderIdentifier orderIdentifier;
 	private String vendorCode;
 
 	public static final String SEPARATOR = "-";
 
-	public OrderNumber(Number orderNumber, String vendorCode) {
-		this.orderNumber = orderNumber;
+	public OrderNumber(OrderIdentifier orderIdentifier, String vendorCode) {
+		this.orderIdentifier = orderIdentifier;
 		this.vendorCode = vendorCode;
 	}
 
-	public OrderNumber(String orderNumber) {
-		validateOrderNumber(orderNumber);
+	public OrderNumber(String orderIdentifier) {
+		validateOrderNumber(orderIdentifier);
 
-		int separatorIndex = orderNumber.indexOf(SEPARATOR);
+		int separatorIndex = orderIdentifier.indexOf(SEPARATOR);
 
-		String parsedVendorCode = orderNumber.substring(0, separatorIndex);
-		String parsedNumber = orderNumber.substring(separatorIndex + 1);
+		String parsedVendorCode = orderIdentifier.substring(0, separatorIndex);
+		String parsedNumber = orderIdentifier.substring(separatorIndex + 1);
 
-		this.orderNumber = new Number(parsedNumber);
+		this.orderIdentifier = new OrderIdentifier(parsedNumber);
 		this.vendorCode = parsedVendorCode;
 	}
 
-	public Number getOrderNumber() {
-		return orderNumber;
+	public OrderIdentifier getOrderIdentifier() {
+		return orderIdentifier;
 	}
 
 	public String getVendorCode() {
@@ -37,7 +36,7 @@ public class OrderNumber {
 
 	@Override
 	public String toString() {
-		return vendorCode + SEPARATOR + orderNumber.toString();
+		return vendorCode + SEPARATOR + orderIdentifier.toString();
 	}
 
 	@Override
@@ -47,13 +46,13 @@ public class OrderNumber {
 
 		OrderNumber otherOrderNumber = (OrderNumber) other;
 
-		return orderNumber.equals(otherOrderNumber.getOrderNumber())
+		return orderIdentifier.equals(otherOrderNumber.getOrderIdentifier())
 				&& vendorCode.equals(otherOrderNumber.getVendorCode());
 	}
 
 	@Override
 	public int hashCode() {
-		return orderNumber.hashCode() + vendorCode.hashCode();
+		return orderIdentifier.hashCode() + vendorCode.hashCode();
 	}
 
 	private void validateOrderNumber(String orderNumber) {

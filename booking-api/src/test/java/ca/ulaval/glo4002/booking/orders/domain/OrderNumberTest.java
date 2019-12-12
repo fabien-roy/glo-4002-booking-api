@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.numbers.Number;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,11 +32,11 @@ class OrderNumberTest {
 
 	@Test
 	void toString_shouldReturnCorrectFormat() {
-		Number anOrderNumber = new Number(1L);
+		OrderIdentifier anOrderIdentifier = new OrderIdentifier(1L);
 		String aVendor = "VENDOR";
-		String expectedOrderNumber = aVendor + OrderNumber.SEPARATOR + anOrderNumber.toString();
+		String expectedOrderNumber = aVendor + OrderNumber.SEPARATOR + anOrderIdentifier.toString();
 
-		orderNumber = new OrderNumber(anOrderNumber, aVendor);
+		orderNumber = new OrderNumber(anOrderIdentifier, aVendor);
 		String textOrderNumber = orderNumber.toString();
 
 		assertEquals(expectedOrderNumber, textOrderNumber);
@@ -45,7 +44,7 @@ class OrderNumberTest {
 
 	@Test
 	void equals_shouldReturnFalse_whenObjectIsNotNumber() {
-		orderNumber = new OrderNumber(new Number(1L), "VENDOR");
+		orderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
 		Object anObject = new Object();
 
 		boolean isSameObject = orderNumber.equals(anObject);
@@ -55,8 +54,8 @@ class OrderNumberTest {
 
 	@Test
 	void equals_shouldReturnFalse_whenNumberIsNotSameValue() {
-		orderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		OrderNumber differentOrderNumber = new OrderNumber(new Number(2L), "VENDOR");
+		orderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
+		OrderNumber differentOrderNumber = new OrderNumber(new OrderIdentifier(2L), "VENDOR");
 
 		boolean isSameOrderNumber = orderNumber.equals(differentOrderNumber);
 
@@ -65,8 +64,8 @@ class OrderNumberTest {
 
 	@Test
 	void equals_shouldReturnFalse_whenVendorCodeIsNotSameValue() {
-		orderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		OrderNumber otherOrderNumber = new OrderNumber(new Number(1L), "OTHER_VENDOR");
+		orderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
+		OrderNumber otherOrderNumber = new OrderNumber(new OrderIdentifier(1L), "OTHER_VENDOR");
 
 		boolean result = orderNumber.equals(otherOrderNumber);
 
@@ -75,8 +74,8 @@ class OrderNumberTest {
 
 	@Test
 	void equals_shouldReturnFalse_whenSameValue() {
-		orderNumber = new OrderNumber(new Number(1L), "VENDOR");
-		OrderNumber otherOrderNumber = new OrderNumber(new Number(1L), "VENDOR");
+		orderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
+		OrderNumber otherOrderNumber = new OrderNumber(new OrderIdentifier(1L), "VENDOR");
 
 		boolean result = orderNumber.equals(otherOrderNumber);
 
