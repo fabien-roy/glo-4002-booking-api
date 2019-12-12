@@ -1,22 +1,11 @@
 package ca.ulaval.glo4002.booking.passes.domain;
 
-import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-
 public class PassNumber {
 
     private Long value;
 
     public PassNumber(Long value) {
         this.value = value;
-    }
-
-    // TODO : Parse String to Number should not be in constructor
-    public PassNumber(String value) {
-        try {
-            this.value = Long.parseLong(value);
-        } catch (Exception exception) {
-            throw new InvalidFormatException();
-        }
     }
 
     public Long getValue() {
