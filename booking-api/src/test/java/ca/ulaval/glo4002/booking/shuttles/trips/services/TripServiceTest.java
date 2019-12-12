@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.shuttles.trips.services;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -87,25 +86,25 @@ class TripServiceTest {
 
 	@Test
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
-		PassNumber expectedPassNumber = new PassNumber(1L);
+		Long expectedPassengerNumber = 1L;
 		Integer memberAmount = 1;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
+		Artist aArtist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
 		service.orderForArtist(aArtist, anEventDate);
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
 	}
 
 	@Test
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
-		PassNumber expectedPassNumber = new PassNumber(1L);
+		Long expectedPassengerNumber = 1L;
 		Integer memberAmount = 2;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
@@ -116,9 +115,9 @@ class TripServiceTest {
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassNumber.getValue().equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
 	}
 
 	@Test
@@ -126,7 +125,7 @@ class TripServiceTest {
 		PassCategories category = PassCategories.SUPERNOVA;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Pass aPass = new Pass(mock(PassNumber.class), money, anEventDate);
+		Pass aPass = new Pass(1L, money, anEventDate);
 		List<Pass> somePasses = Collections.singletonList(aPass);
 
 		service.orderForPasses(category, somePasses);
@@ -139,7 +138,7 @@ class TripServiceTest {
 		PassCategories category = PassCategories.SUPERNOVA;
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Pass aPass = new Pass(mock(PassNumber.class), money, anEventDate);
+		Pass aPass = new Pass(1L, money, anEventDate);
 		List<Pass> somePasses = Collections.singletonList(aPass);
 
 		service.orderForPasses(category, somePasses);
@@ -153,9 +152,8 @@ class TripServiceTest {
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
 		Money money = mock(Money.class);
-		PassNumber number = mock(PassNumber.class);
-		Pass aPass = new Pass(number, money, anEventDate);
-		Pass anotherPass = new Pass(number, money, anotherEventDate);
+		Pass aPass = new Pass(1L, money, anEventDate);
+		Pass anotherPass = new Pass(1L, money, anotherEventDate);
 		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
 
 		service.orderForPasses(category, somePasses);
@@ -170,9 +168,8 @@ class TripServiceTest {
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
 		Money money = mock(Money.class);
-		PassNumber number = mock(PassNumber.class);
-		Pass aPass = new Pass(number, money, anEventDate);
-		Pass anotherPass = new Pass(number, money, anotherEventDate);
+		Pass aPass = new Pass(1L, money, anEventDate);
+		Pass anotherPass = new Pass(1L, money, anotherEventDate);
 		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
 
 		service.orderForPasses(category, somePasses);
@@ -187,9 +184,8 @@ class TripServiceTest {
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
 		Money money = mock(Money.class);
-		PassNumber number = mock(PassNumber.class);
-		Pass aPass = new Pass(number, money, anEventDate);
-		Pass anotherPass = new Pass(number, money, anotherEventDate);
+		Pass aPass = new Pass(1L, money, anEventDate);
+		Pass anotherPass = new Pass(1L, money, anotherEventDate);
 		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
 
 		service.orderForPasses(category, somePasses);
@@ -203,9 +199,8 @@ class TripServiceTest {
 		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
 		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
 		Money money = mock(Money.class);
-		PassNumber number = mock(PassNumber.class);
-		Pass aPass = new Pass(number, money, anEventDate);
-		Pass anotherPass = new Pass(number, money, anotherEventDate);
+		Pass aPass = new Pass(1L, money, anEventDate);
+		Pass anotherPass = new Pass(1L, money, anotherEventDate);
 		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
 
 		service.orderForPasses(category, somePasses);
@@ -217,8 +212,7 @@ class TripServiceTest {
 	void orderForPasses_shouldAddPassengerToDeparturesOfEndDate_whenPassHasNoEventDate() {
 		PassCategories category = PassCategories.SUPERNOVA;
 		Money money = mock(Money.class);
-		PassNumber number = mock(PassNumber.class);
-		Pass aPass = new Pass(number, money);
+		Pass aPass = new Pass(1L, money);
 		List<Pass> somePasses = Collections.singletonList(aPass);
 
 		service.orderForPasses(category, somePasses);
@@ -230,8 +224,7 @@ class TripServiceTest {
 	void orderForPasses_shouldAddPassengerToArrivalsOfStartDate_whenPassHasNoEventDate() {
 		PassCategories category = PassCategories.SUPERNOVA;
 		Money money = mock(Money.class);
-		PassNumber number = mock(PassNumber.class);
-		Pass aPass = new Pass(number, money);
+		Pass aPass = new Pass(1L, money);
 		List<Pass> somePasses = Collections.singletonList(aPass);
 
 		service.orderForPasses(category, somePasses);

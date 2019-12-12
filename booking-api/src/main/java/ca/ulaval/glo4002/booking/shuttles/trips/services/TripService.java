@@ -47,7 +47,7 @@ public class TripService {
 		ShuttleCategories shuttleCategory = factory.createCategory(passCategory);
 
 		passes.forEach(pass -> {
-			Passenger passenger = new Passenger(pass.getPassNumber().getValue());
+			Passenger passenger = new Passenger(pass.getPassNumber());
 
 			if (pass.getEventDate() == null) {
 				orderForFullFestival(passenger, shuttleCategory);

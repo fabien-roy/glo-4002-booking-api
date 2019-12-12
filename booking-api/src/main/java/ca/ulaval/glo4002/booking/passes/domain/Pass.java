@@ -5,22 +5,22 @@ import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 
 public class Pass {
 
-    private PassNumber passNumber;
+    private Long passNumber;
     private Money price;
     private EventDate eventDate;
 
-    public Pass(PassNumber passNumber, Money price) {
+    public Pass(Long passNumber, Money price) {
         this.passNumber = passNumber;
         this.price = price;
     }
 
-    public Pass(PassNumber passNumber, Money price, EventDate eventDate) {
+    public Pass(Long passNumber, Money price, EventDate eventDate) {
         this.passNumber = passNumber;
         this.price = price;
         this.eventDate = eventDate;
     }
 
-    public PassNumber getPassNumber() {
+    public Long getPassNumber() {
         return passNumber;
     }
 

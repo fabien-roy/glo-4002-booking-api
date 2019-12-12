@@ -43,11 +43,10 @@ class PassBundleFactoryTest {
 		String aPassCategory = PassCategories.SUPERNOVA.toString();
 		String aPassOption = PassOptions.SINGLE_PASS.toString();
 		PassBundleRequest passBundleRequest = new PassBundleRequest(aPassCategory, aPassOption, new ArrayList<>());
-		PassNumber aNumber = new PassNumber(1L);
-		BigDecimal aBigDecimal = new BigDecimal(100.0);
+		BigDecimal aBigDecimal = BigDecimal.valueOf(100);
 		Money aPrice = new Money(aBigDecimal);
 		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		Pass pass = new Pass(aNumber, aPrice, aEventDate);
+		Pass pass = new Pass(1L, aPrice, aEventDate);
 		PassFactory passFactory = mock(PassFactory.class);
 		when(passFactory.createAll(any(), any())).thenReturn(Collections.singletonList(pass));
 		passBundleFactory = new PassBundleFactory(passFactory);

@@ -17,15 +17,15 @@ class PassNumberGeneratorTest {
 
     @Test
     void generate_shouldReturnNumber() {
-        PassNumber number = generator.generate();
+        Long number = generator.generate();
 
         assertNotNull(number);
     }
 
     @Test
     void generate_shouldReturnDifferentNumbers() {
-        PassNumber number = generator.generate();
-        PassNumber otherNumber = generator.generate();
+        Long number = generator.generate();
+        Long otherNumber = generator.generate();
 
         assertNotEquals(number, otherNumber);
     }

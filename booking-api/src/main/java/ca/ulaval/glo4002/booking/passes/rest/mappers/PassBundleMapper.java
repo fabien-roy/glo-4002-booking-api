@@ -19,7 +19,7 @@ public class PassBundleMapper {
                 if (pass.getEventDate() != null) eventDate = pass.getEventDate().toString();
 
                 passResponses.add(new PassResponse(
-                    pass.getPassNumber().getValue(),
+                    pass.getPassNumber(),
                     passCategory,
                     passOption,
                     eventDate

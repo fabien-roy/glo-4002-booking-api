@@ -29,8 +29,7 @@ class PassBundleMapperTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     void toResponse_shouldBuildCorrectQuantityOfResponses(int expectedSize) {
-        PassNumber aPassNumber = new PassNumber(1L);
-        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass aPass = new Pass(1L, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.nCopies(expectedSize, aPass));
         PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, aPassCategory, PassOptions.SINGLE_PASS);
@@ -42,8 +41,8 @@ class PassBundleMapperTest {
 
     @Test
     void toResponse_shouldBuildResponseWithCorrectPassNumbers() {
-        PassNumber aPassNumber = new PassNumber(1L);
-        PassNumber anotherPassNumber = new PassNumber(2L);
+        Long aPassNumber = 1L;
+        Long anotherPassNumber = 2L;
         Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
         Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
@@ -52,14 +51,13 @@ class PassBundleMapperTest {
 
         List<PassResponse> passResponses = mapper.toResponse(passBundle);
 
-        assertTrue(passResponses.stream().anyMatch(pass -> aPassNumber.getValue().equals(pass.getPassNumber())));
-        assertTrue(passResponses.stream().anyMatch(pass -> anotherPassNumber.getValue().equals(pass.getPassNumber())));
+        assertTrue(passResponses.stream().anyMatch(pass -> aPassNumber.equals(pass.getPassNumber())));
+        assertTrue(passResponses.stream().anyMatch(pass -> anotherPassNumber.equals(pass.getPassNumber())));
     }
 
     @Test
     void toResponse_shouldBuildResponseWithCorrectCategory() {
-        PassNumber aPassNumber = new PassNumber(1L);
-        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass aPass = new Pass(1L, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassCategory passCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, passCategory, PassOptions.SINGLE_PASS);
@@ -71,10 +69,8 @@ class PassBundleMapperTest {
 
     @Test
     void toResponse_shouldSetSameCategoryForAllPasses() {
-        PassNumber aPassNumber = new PassNumber(1L);
-        PassNumber anotherPassNumber = new PassNumber(2L);
-        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
-        Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass aPass = new Pass(1L, mock(Money.class), mock(EventDate.class));
+        Pass anotherPass = new Pass(2L, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassCategory passCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, passCategory, PassOptions.SINGLE_PASS);
@@ -86,8 +82,7 @@ class PassBundleMapperTest {
 
     @Test
     void toResponse_shouldBuildResponseWithCorrectOption() {
-        PassNumber aPassNumber = new PassNumber(1L);
-        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass aPass = new Pass(1L, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
         PassOptions passOption = PassOptions.SINGLE_PASS;
         String expectedPassOptionName = passOption.toString();
@@ -101,10 +96,8 @@ class PassBundleMapperTest {
 
     @Test
     void toResponse_shouldSetSameOptionForAllPasses() {
-        PassNumber aPassNumber = new PassNumber(1L);
-        PassNumber anotherPassNumber = new PassNumber(2L);
-        Pass aPass = new Pass(aPassNumber, mock(Money.class), mock(EventDate.class));
-        Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), mock(EventDate.class));
+        Pass aPass = new Pass(1L, mock(Money.class), mock(EventDate.class));
+        Pass anotherPass = new Pass(2L, mock(Money.class), mock(EventDate.class));
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassOptions passOption = PassOptions.SINGLE_PASS;
@@ -118,14 +111,12 @@ class PassBundleMapperTest {
 
     @Test
     void toResponse_shouldBuildResponseWithCorrectEventDates() {
-        PassNumber aPassNumber = new PassNumber(1L);
-        PassNumber anotherPassNumber = new PassNumber(2L);
         EventDate aEventDate = mock(EventDate.class);
         EventDate anotherEventDate = mock(EventDate.class);
         when(aEventDate.toString()).thenReturn(FestivalConfiguration.getDefaultStartEventDate().toLocalDateTime().toString());
         when(anotherEventDate.toString()).thenReturn(FestivalConfiguration.getDefaultEndEventDate().toLocalDateTime().toString());
-        Pass aPass = new Pass(aPassNumber, mock(Money.class), aEventDate);
-        Pass anotherPass = new Pass(anotherPassNumber, mock(Money.class), anotherEventDate);
+        Pass aPass = new Pass(1L, mock(Money.class), aEventDate);
+        Pass anotherPass = new Pass(2L, mock(Money.class), anotherEventDate);
         List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
         PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
         PassBundle passBundle = new PassBundle(passes, aPassCategory, PassOptions.SINGLE_PASS);
