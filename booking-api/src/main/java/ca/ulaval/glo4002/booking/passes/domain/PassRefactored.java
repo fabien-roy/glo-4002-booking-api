@@ -10,7 +10,7 @@ public class PassRefactored {
 
 	// TODO : Set number with PassRefactoredFactory
 	private long number; // TODO : Use PassNumber
-	private PassCategories category; // TODO : Handle the fact that category is now an enum
+	private PassCategories category;
 	private PassOptions option;
 	private Money price;
 	private List<EventDate> eventDates;
@@ -26,17 +26,16 @@ public class PassRefactored {
 		this.departureDates = departureDates;
 	}
 
-	// TODO : Use correctly updateProfit
-	public void updateProfit(ProfitReport profitReport) {
-		profitReport.addRevenue(price);
-	}
-
 	public PassCategories getCategory() {
 		return category;
 	}
 
 	public PassOptions getOption() {
 	    return option;
+	}
+
+	public Money getPrice() {
+		return price;
 	}
 
 	public List<EventDate> getEventDates() {
@@ -49,5 +48,10 @@ public class PassRefactored {
 
 	public List<EventDate> getDepartureDates() {
 		return departureDates;
+	}
+
+	// TODO : Use correctly updateProfit
+	public void updateProfit(ProfitReport profitReport) {
+		profitReport.addRevenue(price);
 	}
 }

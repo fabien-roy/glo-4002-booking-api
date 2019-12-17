@@ -6,18 +6,19 @@ import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -222,61 +223,143 @@ class PassRefactoredMapperTest {
 
     @Test
     void fromRequest_shouldSetCorrectPrice_whenCategoryIsSupernovaAndOptionIsPackage() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(700000.0));
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.PACKAGE.toString();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForASinglePass_whenCategoryIsSupernovaAndOptionIsSinglePass() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(150000.0));
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForMultiplePasses_whenCategoryIsSupernovaAndOptionIsSinglePass() {
-        // TODO
-    }
+        Money expectedPrice = new Money(BigDecimal.valueOf(300000.0));
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = festivalConfiguration.getAllEventDates().stream().map(EventDate::toString).collect(Collectors.toList());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-    @Test
-    void fromRequest_shouldSetCorrectPriceForMultiplePassesOverThreshold_whenCategoryIsSupernovaAndOptionIsSinglePass() {
-        // TODO
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPrice_whenCategoryIsSupergiantAndOptionIsPackage() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(500000.0));
+        String category = PassCategories.SUPERGIANT.toString();
+        String option = PassOptions.PACKAGE.toString();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForASinglePass_whenCategoryIsSupergiantAndOptionIsSinglePass() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(100000.0));
+        String category = PassCategories.SUPERGIANT.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForMultiplePasses_whenCategoryIsSupergiantAndOptionIsSinglePass() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(200000.0));
+        String category = PassCategories.SUPERGIANT.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = Collections.nCopies(2, festivalConfiguration.getStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForMultiplePassesOverThreshold_whenCategoryIsSupergiantAndOptionIsSinglePass() {
-        // TODO
+        int threshold = 5;
+        Money expectedPrice = new Money(BigDecimal.valueOf(450000.0));
+        String category = PassCategories.SUPERGIANT.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = Collections.nCopies(threshold, festivalConfiguration.getStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPrice_whenCategoryIsNebulaAndOptionIsPackage() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(250000.0));
+        String category = PassCategories.NEBULA.toString();
+        String option = PassOptions.PACKAGE.toString();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForASinglePass_whenCategoryIsNebulaAndOptionIsSinglePass() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(50000.0));
+        String category = PassCategories.NEBULA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForMultiplePasses_whenCategoryIsNebulaAndOptionIsSinglePass() {
-        // TODO
+        Money expectedPrice = new Money(BigDecimal.valueOf(100000.0));
+        String category = PassCategories.NEBULA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = Collections.nCopies(2, festivalConfiguration.getStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 
     @Test
     void fromRequest_shouldSetCorrectPriceForMultiplePassesOverThreshold_whenCategoryIsNebulaAndOptionIsSinglePass() {
-        // TODO
+        int threshold = 4;
+        Money expectedPrice = new Money(BigDecimal.valueOf(180000.0));
+        String category = PassCategories.NEBULA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<String> eventDates = Collections.nCopies(threshold, festivalConfiguration.getStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedPrice, pass.getPrice());
     }
 }
