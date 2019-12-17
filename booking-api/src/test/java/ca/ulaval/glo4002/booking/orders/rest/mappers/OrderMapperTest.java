@@ -1,9 +1,11 @@
 package ca.ulaval.glo4002.booking.orders.rest.mappers;
 
 import ca.ulaval.glo4002.booking.orders.domain.Order;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
+import ca.ulaval.glo4002.booking.passes.rest.mappers.PassRefactoredMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,12 +19,17 @@ class OrderMapperTest {
 
 	private OrderMapper orderMapper;
 	private PassBundleMapper passBundleMapper;
+	private OrderDateFactory orderDateFactory;
+	private PassRefactoredMapper passMapper;
 	private Order order;
 
 	@BeforeEach
 	void setUpMapper() {
 		passBundleMapper = mock(PassBundleMapper.class);
-		orderMapper = new OrderMapper(passBundleMapper);
+		orderDateFactory = mock(OrderDateFactory.class);
+		passMapper = mock(PassRefactoredMapper.class);
+
+		orderMapper = new OrderMapper(passBundleMapper, orderDateFactory, passMapper);
 	}
 
 	@BeforeEach
@@ -31,6 +38,8 @@ class OrderMapperTest {
 		when(order.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
 		when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
 	}
+
+	// TODO : Add tests for fromRequest
 
 	@Test
 	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
