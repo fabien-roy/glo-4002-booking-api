@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.passes.rest.mappers;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
@@ -7,6 +8,9 @@ import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -64,12 +68,21 @@ class PassRefactoredMapperTest {
 
     @Test
     void fromRequest_shouldThrowInvalidFormatException_whenOptionIsPackageAndThereAreEventDates() {
-        // TODO
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.PACKAGE.toString();
+        List<String> eventDates = Collections.singletonList(FestivalConfiguration.getDefaultStartEventDate().toString());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+
+        assertThrows(InvalidFormatException.class, () -> mapper.fromRequest(request));
     }
 
     @Test
     void fromRequest_shouldThrowInvalidFormatException_whenOptionIsSingleAndThereAreNoEventDates() {
-        // TODO
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        assertThrows(InvalidFormatException.class, () -> mapper.fromRequest(request));
     }
 
     @Test
