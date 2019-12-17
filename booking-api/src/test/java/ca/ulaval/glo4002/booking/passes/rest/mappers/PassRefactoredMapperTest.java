@@ -124,6 +124,7 @@ class PassRefactoredMapperTest {
         EventDate expectedEventDate = festivalConfiguration.getStartEventDate();
         List<String> eventDates = Collections.singletonList(expectedEventDate.toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        when(eventDateMapper.fromString(eventDates)).thenReturn(Collections.singletonList(expectedEventDate));
 
         PassRefactored pass = mapper.fromRequest(request);
 
@@ -137,6 +138,7 @@ class PassRefactoredMapperTest {
         List<EventDate> expectedEventDates = festivalConfiguration.getAllEventDates();
         List<String> eventDates = expectedEventDates.stream().map(EventDate::toString).collect(Collectors.toList());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        when(eventDateMapper.fromString(eventDates)).thenReturn(expectedEventDates);
 
         PassRefactored pass = mapper.fromRequest(request);
 
