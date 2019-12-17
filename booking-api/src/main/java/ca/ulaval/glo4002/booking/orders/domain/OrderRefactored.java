@@ -22,6 +22,10 @@ public class OrderRefactored {
 		return orderNumber;
 	}
 
+	public OrderDate getOrderDate() {
+		return orderDate;
+	}
+
 	public PassRefactored getPass() {
 		return pass;
 	}

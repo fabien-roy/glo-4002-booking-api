@@ -32,7 +32,7 @@ public class OrderMapper {
 
     public OrderRefactored fromRequest(OrderRefactoredRequest request) {
         if (request.getPass() == null) {
-            throw new InvalidFormatException(); // TODO : Test
+            throw new InvalidFormatException();
         }
 
         OrderDate orderDate = orderDateFactory.create(request.getOrderDate()); // TODO : This should be a mapper
@@ -47,10 +47,7 @@ public class OrderMapper {
         float fullOrderPrice = order.getPrice().getValue().floatValue();
         float orderPrice = formatOrderPrice(fullOrderPrice);
 
-        return new OrderResponse(
-                orderPrice,
-                passes
-        );
+        return new OrderResponse(orderPrice, passes);
     }
 
     private float formatOrderPrice(float fullOrderPrice) {

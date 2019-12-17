@@ -1,9 +1,16 @@
 package ca.ulaval.glo4002.booking.orders.rest.mappers;
 
+import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
+import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassRefactoredMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
@@ -11,8 +18,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class OrderMapperTest {
@@ -39,7 +49,39 @@ class OrderMapperTest {
 		when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
 	}
 
-	// TODO : Add tests for fromRequest
+	@Test
+	void fromRequest_shouldThrowInvalidFormatException_whenThereIsNoPass() {
+		ZonedDateTime anOrderDate = generateOrderDate();
+		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", null);
+
+		assertThrows(InvalidFormatException.class, () -> orderMapper.fromRequest(orderRequest));
+	}
+
+	@Test
+	void fromRequest_shouldSetOrderDate() {
+		ZonedDateTime anOrderDate = generateOrderDate();
+		OrderDate expectedOrderDate = mock(OrderDate.class);
+		when(orderDateFactory.create(eq(anOrderDate.toString()))).thenReturn(expectedOrderDate);
+		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
+		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", passRequest);
+
+		OrderRefactored order = orderMapper.fromRequest(orderRequest);
+
+		assertEquals(expectedOrderDate, order.getOrderDate());
+	}
+
+	@Test
+	void fromRequest_shouldSetPass() {
+		ZonedDateTime anOrderDate = generateOrderDate();
+		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
+		PassRefactored expectedPass = mock(PassRefactored.class);
+		when(passMapper.fromRequest(eq(passRequest))).thenReturn(expectedPass);
+		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", passRequest);
+
+		OrderRefactored order = orderMapper.fromRequest(orderRequest);
+
+		assertEquals(expectedPass, order.getPass());
+	}
 
 	@Test
 	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
@@ -70,5 +112,9 @@ class OrderMapperTest {
 		orderMapper.toResponse(order);
 
 		verify(passBundleMapper).toResponse(any());
+	}
+
+	private ZonedDateTime generateOrderDate() {
+		return ZonedDateTime.of(FestivalConfiguration.getDefaultStartOrderDate().getValue().plusDays(1), ZoneId.systemDefault());
 	}
 }

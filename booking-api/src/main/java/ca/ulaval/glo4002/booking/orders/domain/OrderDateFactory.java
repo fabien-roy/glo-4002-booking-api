@@ -29,6 +29,7 @@ public class OrderDateFactory {
         return parsedOrderDate;
     }
 
+    // Why in world are those two separate concepts
     public OrderDate parse(String orderDate) {
         LocalDateTime orderDateValue;
 
