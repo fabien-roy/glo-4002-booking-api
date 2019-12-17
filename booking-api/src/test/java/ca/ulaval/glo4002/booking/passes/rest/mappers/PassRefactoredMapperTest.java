@@ -62,9 +62,32 @@ class PassRefactoredMapperTest {
         assertEquals(expectedOption, pass.getOption());
     }
 
-    // TODO : Throw if package has eventDates
+    @Test
+    void fromRequest_shouldThrowInvalidFormatException_whenOptionIsPackageAndThereAreEventDates() {
+        // TODO
+    }
 
-    // TODO : Throw if singlePass has no eventDates
+    @Test
+    void fromRequest_shouldThrowInvalidFormatException_whenOptionIsSingleAndThereAreNoEventDates() {
+        // TODO
+    }
 
-    // TODO : Set eventDates
+    @Test
+    void fromRequest_shouldSetAllFestivalDates_whenOptionIsPackage() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetASingleEventDate_whenOptionIsSinglePassAndThereIsASingleEventDate() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetMultipleEventDates_whenOptionIsSinglePassAndThereAreMultipleEventDates() {
+        // TODO
+    }
+
+    // TODO : Arrival and departure dates
+
+    // TODO : Money calculation
 }

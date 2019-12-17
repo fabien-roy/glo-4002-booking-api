@@ -10,7 +10,7 @@ import java.util.Collections;
 public class PassRefactoredMapper {
 
     // TODO : Handle price calculation
-    // TODO : Use EventDateMapper (is currently EventDateFactory)
+    // TODO : Use EventDateMapper (is currently EventDateFactory) -> when null, use method to get all event dates
     // TODO : Set arrival and departure dates
 
     public PassRefactored fromRequest(PassRefactoredRequest request) {
