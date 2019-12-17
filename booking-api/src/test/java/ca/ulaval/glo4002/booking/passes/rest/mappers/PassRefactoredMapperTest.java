@@ -220,5 +220,63 @@ class PassRefactoredMapperTest {
         assertEquals(expectedDepartureDate, pass.getDepartureDates().get(0));
     }
 
-    // TODO : Money calculation
+    @Test
+    void fromRequest_shouldSetCorrectPrice_whenCategoryIsSupernovaAndOptionIsPackage() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForASinglePass_whenCategoryIsSupernovaAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForMultiplePasses_whenCategoryIsSupernovaAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForMultiplePassesOverThreshold_whenCategoryIsSupernovaAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPrice_whenCategoryIsSupergiantAndOptionIsPackage() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForASinglePass_whenCategoryIsSupergiantAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForMultiplePasses_whenCategoryIsSupergiantAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForMultiplePassesOverThreshold_whenCategoryIsSupergiantAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPrice_whenCategoryIsNebulaAndOptionIsPackage() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForASinglePass_whenCategoryIsNebulaAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForMultiplePasses_whenCategoryIsNebulaAndOptionIsSinglePass() {
+        // TODO
+    }
+
+    @Test
+    void fromRequest_shouldSetCorrectPriceForMultiplePassesOverThreshold_whenCategoryIsNebulaAndOptionIsSinglePass() {
+        // TODO
+    }
 }
