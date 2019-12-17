@@ -5,11 +5,14 @@ import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatExcepti
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,12 +30,12 @@ public class PassRefactoredMapper {
     public PassRefactored fromRequest(PassRefactoredRequest request) {
         PassCategories category = parsePassCategory(request.getPassCategory());
         PassOptions option = parsePassOption(request.getPassOption());
+        Money price = calculatePrice(request.getEventDates(), category, option);
         List<EventDate> eventDates = buildEventDates(request.getEventDates(), option);
         List<EventDate> arrivalDates = buildArrivalDates(eventDates, option);
         List<EventDate> departureDates = buildDepartureDates(eventDates, option);
 
-        // TODO : Handle price calculation
-        return new PassRefactored(category, option, null, eventDates, arrivalDates, departureDates);
+        return new PassRefactored(category, option, price, eventDates, arrivalDates, departureDates);
     }
 
     private PassCategories parsePassCategory(String category) {
@@ -41,6 +44,44 @@ public class PassRefactoredMapper {
 
     private PassOptions parsePassOption(String option) {
         return PassOptions.get(option);
+    }
+
+    private Money calculatePrice(List<String> eventDates, PassCategories category, PassOptions option) {
+        switch (option) {
+            case PACKAGE:
+                switch (category) {
+                    case SUPERNOVA:
+                        return new Money(BigDecimal.valueOf(700000));
+                    case SUPERGIANT:
+                        return new Money(BigDecimal.valueOf(500000));
+                    default:
+                    case NEBULA:
+                        return new Money(BigDecimal.valueOf(250000));
+                }
+
+            default:
+            case SINGLE_PASS:
+                PriceDiscountStrategy priceDiscountStrategy;
+                Money singlePassPrice;
+
+                switch (category) {
+                    case SUPERNOVA:
+                        priceDiscountStrategy = null;
+                        singlePassPrice = null;
+                        break;
+                    case SUPERGIANT:
+                        priceDiscountStrategy = null;
+                        singlePassPrice = null;
+                        break;
+                    default:
+                    case NEBULA:
+                        priceDiscountStrategy = null;
+                        singlePassPrice = null;
+                        break;
+                }
+
+                return priceDiscountStrategy.calculateDiscount(eventDates.size(), singlePassPrice);
+        }
     }
 
     private List<EventDate> buildEventDates(List<String> eventDates, PassOptions option) {
