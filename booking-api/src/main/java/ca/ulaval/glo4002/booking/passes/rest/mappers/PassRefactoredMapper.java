@@ -32,8 +32,10 @@ public class PassRefactoredMapper {
         PassCategories category = parsePassCategory(request.getPassCategory());
         PassOptions option = parsePassOption(request.getPassOption());
         List<EventDate> eventDates = buildEventDates(request.getEventDates(), option);
+        List<EventDate> arrivalDates = buildArrivalDates(eventDates, option);
+        List<EventDate> departureDates = buildDepartureDates(eventDates, option);
 
-        return new PassRefactored(category, option, null, eventDates, Collections.emptyList(), Collections.emptyList());
+        return new PassRefactored(category, option, null, eventDates, arrivalDates, departureDates);
     }
 
     private PassCategories parsePassCategory(String category) {
@@ -68,5 +70,25 @@ public class PassRefactoredMapper {
         }
 
         return builtEventDates;
+    }
+
+    private List<EventDate> buildArrivalDates(List<EventDate> eventDates, PassOptions option) {
+        switch (option) {
+            case PACKAGE:
+                return Collections.singletonList(festivalConfiguration.getStartEventDate());
+            default:
+            case SINGLE_PASS:
+                return eventDates;
+        }
+    }
+
+    private List<EventDate> buildDepartureDates(List<EventDate> eventDates, PassOptions option) {
+        switch (option) {
+            case PACKAGE:
+                return Collections.singletonList(festivalConfiguration.getEndEventDate());
+            default:
+            case SINGLE_PASS:
+                return eventDates;
+        }
     }
 }
