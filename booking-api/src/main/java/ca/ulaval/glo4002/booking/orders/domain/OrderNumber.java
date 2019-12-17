@@ -14,13 +14,13 @@ public class OrderNumber {
 		this.vendorCode = vendorCode;
 	}
 
-	public OrderNumber(String orderIdentifier) {
-		validateOrderNumber(orderIdentifier);
+	public OrderNumber(String orderNumber) {
+		validateOrderNumber(orderNumber);
 
-		int separatorIndex = orderIdentifier.indexOf(SEPARATOR);
+		int separatorIndex = orderNumber.indexOf(SEPARATOR);
 
-		String parsedVendorCode = orderIdentifier.substring(0, separatorIndex);
-		String parsedNumber = orderIdentifier.substring(separatorIndex + 1);
+		String parsedVendorCode = orderNumber.substring(0, separatorIndex);
+		String parsedNumber = orderNumber.substring(separatorIndex + 1);
 
 		this.orderIdentifier = new OrderIdentifier(parsedNumber);
 		this.vendorCode = parsedVendorCode;
