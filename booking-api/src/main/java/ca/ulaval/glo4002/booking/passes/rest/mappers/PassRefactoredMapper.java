@@ -5,7 +5,10 @@ import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatExcepti
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
+import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.SupergiantPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -66,17 +69,17 @@ public class PassRefactoredMapper {
 
                 switch (category) {
                     case SUPERNOVA:
-                        priceDiscountStrategy = null;
-                        singlePassPrice = null;
+                        priceDiscountStrategy = new NoPriceDiscountStrategy();
+                        singlePassPrice = new Money(BigDecimal.valueOf(150000));
                         break;
                     case SUPERGIANT:
-                        priceDiscountStrategy = null;
-                        singlePassPrice = null;
+                        priceDiscountStrategy = new SupergiantPriceDiscountStrategy();
+                        singlePassPrice = new Money(BigDecimal.valueOf(100000));
                         break;
                     default:
                     case NEBULA:
-                        priceDiscountStrategy = null;
-                        singlePassPrice = null;
+                        priceDiscountStrategy = new NebulaPriceDiscountStrategy();
+                        singlePassPrice = new Money(BigDecimal.valueOf(50000));
                         break;
                 }
 
