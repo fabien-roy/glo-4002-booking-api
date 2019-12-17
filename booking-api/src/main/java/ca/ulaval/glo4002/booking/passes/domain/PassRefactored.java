@@ -38,4 +38,8 @@ public class PassRefactored {
 	public PassOptions getOption() {
 	    return option;
 	}
+
+	public List<EventDate> getEventDates() {
+		return eventDates;
+	}
 }
