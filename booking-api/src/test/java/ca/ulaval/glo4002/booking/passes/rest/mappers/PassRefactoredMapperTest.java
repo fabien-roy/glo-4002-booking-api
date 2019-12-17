@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +15,28 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PassRefactoredMapperTest {
 
     private PassRefactoredMapper mapper;
+    private FestivalConfiguration festivalConfiguration;
+    private EventDateMapper eventDateMapper;
 
     @BeforeEach
     void setUpMapper() {
-        mapper = new PassRefactoredMapper();
+        eventDateMapper = mock(EventDateMapper.class);
+
+        mapper = new PassRefactoredMapper(festivalConfiguration, eventDateMapper);
+    }
+
+    @BeforeEach
+    void setUpConfiguration() {
+        festivalConfiguration = mock(FestivalConfiguration.class);
+
+        when(festivalConfiguration.getStartEventDate()).thenReturn(FestivalConfiguration.getDefaultStartEventDate());
+        when(festivalConfiguration.getEndEventDate()).thenReturn(FestivalConfiguration.getDefaultEndEventDate());
     }
 
     @Test
