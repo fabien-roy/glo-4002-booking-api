@@ -10,6 +10,8 @@ import java.util.List;
 
 public class PassFactory {
 
+	// TODO : Refactor PassFactory with new logic
+
 	private final PassNumberGenerator numberGenerator;
 	private final EventDateFactory eventDateFactory;
 
