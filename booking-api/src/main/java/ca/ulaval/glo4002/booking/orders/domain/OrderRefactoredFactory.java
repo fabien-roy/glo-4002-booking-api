@@ -15,7 +15,6 @@ public class OrderRefactoredFactory {
         this.passNumberGenerator = passNumberGenerator;
     }
 
-    // TODO : Make sure new mapper throws is there is no pass
     public OrderRefactored create(OrderRefactored order, String vendorCode) {
         OrderIdentifier orderIdentifier = orderIdentifierGenerator.generate();
         OrderNumber orderNumber = new OrderNumber(orderIdentifier, vendorCode);

@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.orders.rest.mappers;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
@@ -20,13 +19,13 @@ import java.util.List;
 public class OrderMapper {
 
     private final PassBundleMapper passBundleMapper;
-    private final OrderDateFactory orderDateFactory;
+    private final OrderDateMapper orderDateMapper;
     private final PassRefactoredMapper passMapper;
 
     @Inject
-    public OrderMapper(PassBundleMapper passBundleMapper, OrderDateFactory orderDateFactory, PassRefactoredMapper passMapper) {
+    public OrderMapper(PassBundleMapper passBundleMapper, OrderDateMapper orderDateMapper, PassRefactoredMapper passMapper) {
         this.passBundleMapper = passBundleMapper;
-        this.orderDateFactory = orderDateFactory;
+        this.orderDateMapper = orderDateMapper;
         this.passMapper = passMapper;
     }
 
@@ -35,7 +34,7 @@ public class OrderMapper {
             throw new InvalidFormatException();
         }
 
-        OrderDate orderDate = orderDateFactory.create(request.getOrderDate()); // TODO : This should be a mapper
+        OrderDate orderDate = orderDateMapper.fromString(request.getOrderDate());
         PassRefactored pass = passMapper.fromRequest(request.getPass());
 
         return new OrderRefactored(orderDate, pass);

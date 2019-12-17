@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.orders.domain.OrderDateFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
@@ -29,17 +28,17 @@ class OrderMapperTest {
 
 	private OrderMapper orderMapper;
 	private PassBundleMapper passBundleMapper;
-	private OrderDateFactory orderDateFactory;
+	private OrderDateMapper orderDateMapper;
 	private PassRefactoredMapper passMapper;
 	private Order order;
 
 	@BeforeEach
 	void setUpMapper() {
 		passBundleMapper = mock(PassBundleMapper.class);
-		orderDateFactory = mock(OrderDateFactory.class);
+		orderDateMapper = mock(OrderDateMapper.class);
 		passMapper = mock(PassRefactoredMapper.class);
 
-		orderMapper = new OrderMapper(passBundleMapper, orderDateFactory, passMapper);
+		orderMapper = new OrderMapper(passBundleMapper, orderDateMapper, passMapper);
 	}
 
 	@BeforeEach
@@ -61,7 +60,7 @@ class OrderMapperTest {
 	void fromRequest_shouldSetOrderDate() {
 		ZonedDateTime anOrderDate = generateOrderDate();
 		OrderDate expectedOrderDate = mock(OrderDate.class);
-		when(orderDateFactory.create(eq(anOrderDate.toString()))).thenReturn(expectedOrderDate);
+		when(orderDateMapper.fromString(eq(anOrderDate.toString()))).thenReturn(expectedOrderDate);
 		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
 		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", passRequest);
 
