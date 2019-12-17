@@ -15,10 +15,6 @@ import java.util.List;
 
 public class PassRefactoredMapper {
 
-    // TODO : Handle price calculation
-    // TODO : Use EventDateMapper (is currently EventDateFactory) -> when null, use method in festival configuration to get all event dates
-    // TODO : Set arrival and departure dates
-
     private final FestivalConfiguration festivalConfiguration;
     private final EventDateMapper eventDateMapper;
 
@@ -35,6 +31,7 @@ public class PassRefactoredMapper {
         List<EventDate> arrivalDates = buildArrivalDates(eventDates, option);
         List<EventDate> departureDates = buildDepartureDates(eventDates, option);
 
+        // TODO : Handle price calculation
         return new PassRefactored(category, option, null, eventDates, arrivalDates, departureDates);
     }
 

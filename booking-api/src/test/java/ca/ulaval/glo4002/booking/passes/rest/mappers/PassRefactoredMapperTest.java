@@ -144,7 +144,81 @@ class PassRefactoredMapperTest {
         assertEquals(expectedEventDates.get(1), pass.getEventDates().get(1));
     }
 
-    // TODO : Arrival and departure dates
+    @Test
+    void fromRequest_shouldSetArrivalDatesForEachEventDate_whenOptionIsSinglePass() {
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<EventDate> expectedArrivalDates = festivalConfiguration.getAllEventDates();
+        List<String> eventDates = expectedArrivalDates.stream().map(EventDate::toString).collect(Collectors.toList());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        when(eventDateMapper.fromString(eventDates)).thenReturn(expectedArrivalDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedArrivalDates.get(0), pass.getArrivalDates().get(0));
+        assertEquals(expectedArrivalDates.get(1), pass.getArrivalDates().get(1));
+    }
+
+    @Test
+    void fromRequest_shouldSetASingleArrivalDate_whenOptionIsPackage() {
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.PACKAGE.toString();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(1, pass.getArrivalDates().size());
+    }
+
+    @Test
+    void fromRequest_shouldSetArrivalDateOfFestivalStart_whenOptionIsPackage() {
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.PACKAGE.toString();
+        EventDate expectedArrivalDate = festivalConfiguration.getStartEventDate();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedArrivalDate, pass.getArrivalDates().get(0));
+    }
+
+    @Test
+    void fromRequest_shouldSetDepartureDatesForEachEventDate_whenOptionIsSinglePass() {
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.SINGLE_PASS.toString();
+        List<EventDate> expectedDepartureDates = festivalConfiguration.getAllEventDates();
+        List<String> eventDates = expectedDepartureDates.stream().map(EventDate::toString).collect(Collectors.toList());
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        when(eventDateMapper.fromString(eventDates)).thenReturn(expectedDepartureDates);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedDepartureDates.get(0), pass.getDepartureDates().get(0));
+        assertEquals(expectedDepartureDates.get(1), pass.getDepartureDates().get(1));
+    }
+
+    @Test
+    void fromRequest_shouldSetASingleDepartureDate_whenOptionIsPackage() {
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.PACKAGE.toString();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(1, pass.getDepartureDates().size());
+    }
+
+    @Test
+    void fromRequest_shouldSetDepartureDateOfFestivalStart_whenOptionIsPackage() {
+        String category = PassCategories.SUPERNOVA.toString();
+        String option = PassOptions.PACKAGE.toString();
+        EventDate expectedDepartureDate = festivalConfiguration.getEndEventDate();
+        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+
+        PassRefactored pass = mapper.fromRequest(request);
+
+        assertEquals(expectedDepartureDate, pass.getDepartureDates().get(0));
+    }
 
     // TODO : Money calculation
 }

@@ -42,4 +42,12 @@ public class PassRefactored {
 	public List<EventDate> getEventDates() {
 		return eventDates;
 	}
+
+	public List<EventDate> getArrivalDates() {
+		return arrivalDates;
+	}
+
+	public List<EventDate> getDepartureDates() {
+		return departureDates;
+	}
 }
