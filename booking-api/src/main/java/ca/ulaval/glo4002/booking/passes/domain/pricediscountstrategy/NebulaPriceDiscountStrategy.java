@@ -1,8 +1,8 @@
 package ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy;
 
-import java.math.BigDecimal;
-
 import ca.ulaval.glo4002.booking.profits.domain.Money;
+
+import java.math.BigDecimal;
 
 public class NebulaPriceDiscountStrategy implements PriceDiscountStrategy {
 
@@ -12,7 +12,7 @@ public class NebulaPriceDiscountStrategy implements PriceDiscountStrategy {
 	@Override
 	public Money calculateDiscount(int passQuantity, Money price) {
 		if (passQuantity > PASS_QUANTITY_THRESHOLD) {
-			return price.applyPercentageDiscount(DISCOUNT_PERCENTAGE);
+			 return price.applyPercentageDiscount(DISCOUNT_PERCENTAGE);
 		} else {
 			return price;
 		}

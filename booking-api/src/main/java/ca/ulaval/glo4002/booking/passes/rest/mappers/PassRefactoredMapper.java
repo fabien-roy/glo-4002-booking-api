@@ -33,10 +33,12 @@ public class PassRefactoredMapper {
     public PassRefactored fromRequest(PassRefactoredRequest request) {
         PassCategories category = parsePassCategory(request.getPassCategory());
         PassOptions option = parsePassOption(request.getPassOption());
-        Money price = calculatePrice(request.getEventDates(), category, option);
+
         List<EventDate> eventDates = buildEventDates(request.getEventDates(), option);
         List<EventDate> arrivalDates = buildArrivalDates(eventDates, option);
         List<EventDate> departureDates = buildDepartureDates(eventDates, option);
+
+        Money price = calculatePrice(request.getEventDates(), category, option);
 
         return new PassRefactored(category, option, price, eventDates, arrivalDates, departureDates);
     }
@@ -83,7 +85,9 @@ public class PassRefactoredMapper {
                         break;
                 }
 
-                return priceDiscountStrategy.calculateDiscount(eventDates.size(), singlePassPrice);
+                singlePassPrice = priceDiscountStrategy.calculateDiscount(eventDates.size(), singlePassPrice);
+
+                return singlePassPrice.multiply(BigDecimal.valueOf(eventDates.size()));
         }
     }
 

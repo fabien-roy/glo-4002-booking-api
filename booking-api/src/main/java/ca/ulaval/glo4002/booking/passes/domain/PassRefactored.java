@@ -8,7 +8,6 @@ import java.util.List;
 
 public class PassRefactored {
 
-	// TODO : Set number with PassRefactoredFactory
 	private long number; // TODO : Use PassNumber
 	private PassCategories category;
 	private PassOptions option;
@@ -24,6 +23,14 @@ public class PassRefactored {
 		this.eventDates = eventDates;
 		this.arrivalDates = arrivalDates;
 		this.departureDates = departureDates;
+	}
+
+	public void setNumber(long number) {
+		this.number = number;
+	}
+
+	public long getNumber() {
+		return number;
 	}
 
 	public PassCategories getCategory() {
