@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PassRefactoredMapperTest {
 
@@ -28,20 +29,17 @@ class PassRefactoredMapperTest {
 
     @BeforeEach
     void setUpMapper() {
-        eventDateMapper = mock(EventDateMapper.class);
-
-        mapper = new PassRefactoredMapper(festivalConfiguration, eventDateMapper);
-    }
-
-    @BeforeEach
-    void setUpConfiguration() {
-        festivalConfiguration = mock(FestivalConfiguration.class);
         EventDate startEventDate = FestivalConfiguration.getDefaultStartEventDate();
         EventDate endEventDate = FestivalConfiguration.getDefaultEndEventDate();
+
+        eventDateMapper = mock(EventDateMapper.class);
+        festivalConfiguration = mock(FestivalConfiguration.class);
 
         when(festivalConfiguration.getStartEventDate()).thenReturn(startEventDate);
         when(festivalConfiguration.getEndEventDate()).thenReturn(endEventDate);
         when(festivalConfiguration.getAllEventDates()).thenReturn(Arrays.asList(startEventDate, startEventDate.plusDays(1)));
+
+        mapper = new PassRefactoredMapper(festivalConfiguration, eventDateMapper);
     }
 
     @Test
