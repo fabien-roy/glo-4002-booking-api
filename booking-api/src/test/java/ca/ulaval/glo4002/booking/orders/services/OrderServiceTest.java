@@ -2,12 +2,13 @@ package ca.ulaval.glo4002.booking.orders.services;
 
 import ca.ulaval.glo4002.booking.orders.domain.*;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,15 +20,13 @@ import static org.mockito.Mockito.*;
 
 class OrderServiceTest {
 
-    // TODO : Review OrderServiceTest when called services will receive Order
-
 	private OrderService service;
 	private OrderRepository repository;
-	private OrderFactory factory;
+	private OrderRefactoredFactory factory;
 	private TripService tripService;
 	private OxygenInventoryService oxygenInventoryService;
-	private Order order;
-	private PassBundle passBundle; // TODO : Useless when services called by OrderService will receive Order
+	private OrderRefactored order;
+	private List<PassRefactored> passes;
 
 	@BeforeEach
 	void setUpService() {
@@ -41,18 +40,18 @@ class OrderServiceTest {
 
 	@BeforeEach
 	void setUpOrder() {
-	    passBundle = mock(PassBundle.class);
+	    passes = Collections.singletonList(mock(PassRefactored.class));
 		OrderNumber orderNumber = mock(OrderNumber.class);
-		order = mock(Order.class);
+		order = mock(OrderRefactored.class);
 		when(order.getOrderNumber()).thenReturn(orderNumber);
-		when(order.getPassBundle()).thenReturn(passBundle);
-		factory = mock(OrderFactory.class);
-		when(factory.create(any())).thenReturn(order);
+		when(order.getPasses()).thenReturn(passes);
+		factory = mock(OrderRefactoredFactory.class);
+		when(factory.create(any(), any())).thenReturn(order);
 	}
 
 	@Test
 	void order_shouldAddOrder() {
-		OrderRequest orderRequest = mock(OrderRequest.class);
+		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
 
 		service.order(orderRequest);
 
@@ -60,58 +59,34 @@ class OrderServiceTest {
 	}
 
 	@Test
-	void order_shouldOrderTripsWithCorrectPassCategory() {
-		OrderRequest orderRequest = mock(OrderRequest.class);
-		PassCategories expectedPassCategory = PassCategories.SUPERNOVA;
-		when(passBundle.getCategory()).thenReturn(expectedPassCategory);
+	void order_shouldOrderTrips() {
+		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
 
 		service.order(orderRequest);
 
-		verify(tripService).orderForPasses(eq(expectedPassCategory), any());
-	}
-
-	@Test
-	void order_shouldOrderTripsWithCorrectPasses() {
-		OrderRequest orderRequest = mock(OrderRequest.class);
-		List<Pass> expectedPasses = Collections.singletonList(mock(Pass.class));
-		when(order.getPasses()).thenReturn(expectedPasses);
-
-		service.order(orderRequest);
-
-		verify(tripService).orderForPasses(any(), eq(expectedPasses));
-	}
-
-	@Test
-	void order_shouldOrderOxygenWithCorrectPassCategory() {
-		OrderRequest orderRequest = mock(OrderRequest.class);
-		PassCategories expectedPassCategory = PassCategories.SUPERNOVA;
-		when(passBundle.getCategory()).thenReturn(expectedPassCategory);
-
-		service.order(orderRequest);
-
-		verify(oxygenInventoryService).orderForPasses(eq(expectedPassCategory), any(), any());
+		verify(tripService).orderForPasses(eq(passes)));
 	}
 
 	@Test
 	void order_shouldOrderOxygenWithCorrectPasses() {
-		OrderRequest orderRequest = mock(OrderRequest.class);
-		List<Pass> expectedPasses = Collections.singletonList(mock(Pass.class));
+		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
+		List<PassRefactored> expectedPasses = Collections.singletonList(mock(PassRefactored.class));
 		when(order.getPasses()).thenReturn(expectedPasses);
 
 		service.order(orderRequest);
 
-		verify(oxygenInventoryService).orderForPasses(any(), eq(expectedPasses), any());
+		verify(oxygenInventoryService).orderForPasses(eq(expectedPasses), any());
 	}
 
 	@Test
 	void order_shouldOrderOxygenWithCorrectDate() {
-		OrderRequest orderRequest = mock(OrderRequest.class);
+		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
 		OrderDate expectedOrderDate = mock(OrderDate.class);
 		when(order.getOrderDate()).thenReturn(expectedOrderDate);
 
 		service.order(orderRequest);
 
-		verify(oxygenInventoryService).orderForPasses(any(), any(), eq(expectedOrderDate));
+		verify(oxygenInventoryService).orderForPasses(any(), eq(expectedOrderDate));
 	}
 
 	@Test

@@ -35,8 +35,8 @@ public class OrderService {
 		order = factory.create(order, orderRequest.getVendorCode());
 
 		repository.addOrder(order);
-		tripService.orderForPasses(order.getPasses().get(0).getCategory(), order.getPasses()); // TODO : Send passes to TripService
-		oxygenInventoryService.orderForPasses(order.getPasses().get(0).getCategory(), order.getPasses(), order.getOrderDate()); // TODO : Send passes to OxygenInventoryService
+		tripService.orderForPasses(order.getPasses());
+		oxygenInventoryService.orderForPasses(order.getPasses(), order.getOrderDate());
 		OrderNumber orderNumber = order.getOrderNumber();
 
 		return orderNumber.toString();
