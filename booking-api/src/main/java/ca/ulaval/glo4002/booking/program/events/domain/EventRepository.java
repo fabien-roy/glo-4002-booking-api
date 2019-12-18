@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.program.events.infrastructure;
+package ca.ulaval.glo4002.booking.program.events.domain;
 
 import ca.ulaval.glo4002.booking.program.events.domain.Event;
 

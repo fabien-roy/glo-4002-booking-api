@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.orders.infrastructure;
 import ca.ulaval.glo4002.booking.orders.domain.OrderIdentifier;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

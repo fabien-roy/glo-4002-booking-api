@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.artists.domain.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 
 import javax.inject.Inject;

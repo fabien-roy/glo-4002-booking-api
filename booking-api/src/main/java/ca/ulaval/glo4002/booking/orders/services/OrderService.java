@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.orders.services;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
-import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;

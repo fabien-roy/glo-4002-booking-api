@@ -6,6 +6,7 @@ import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
+import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 
 import javax.inject.Inject;
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
-import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 
 import javax.inject.Inject;
 import java.util.Collections;

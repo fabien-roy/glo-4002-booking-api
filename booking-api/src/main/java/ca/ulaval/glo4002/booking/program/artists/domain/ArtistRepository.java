@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.program.artists.infrastructure;
+package ca.ulaval.glo4002.booking.program.artists.domain;
 
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 

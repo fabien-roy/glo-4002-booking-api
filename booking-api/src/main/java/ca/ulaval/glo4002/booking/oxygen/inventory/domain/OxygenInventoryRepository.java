@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure;
+package ca.ulaval.glo4002.booking.oxygen.inventory.domain;
 
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;

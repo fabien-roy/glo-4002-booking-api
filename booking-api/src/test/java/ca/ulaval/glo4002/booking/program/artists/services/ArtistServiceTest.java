@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatExcepti
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
+import ca.ulaval.glo4002.booking.program.artists.domain.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -5,11 +5,9 @@ import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestResponse;
 import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
-import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 
 import javax.inject.Inject;
-import java.time.LocalDate;
 import java.util.List;
 
 public class ShuttleManifestService {

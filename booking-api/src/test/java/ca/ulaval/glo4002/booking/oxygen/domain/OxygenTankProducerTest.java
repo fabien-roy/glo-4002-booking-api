@@ -2,9 +2,9 @@ package ca.ulaval.glo4002.booking.oxygen.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
-import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
-import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventoryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

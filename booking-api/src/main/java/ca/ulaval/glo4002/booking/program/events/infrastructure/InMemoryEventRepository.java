@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.program.events.infrastructure;
 
 import ca.ulaval.glo4002.booking.program.events.domain.Event;
+import ca.ulaval.glo4002.booking.program.events.domain.EventRepository;
 
 import java.util.ArrayList;
 import java.util.List;

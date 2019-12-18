@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.orders.services;
 
 import ca.ulaval.glo4002.booking.orders.domain.*;
-import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;

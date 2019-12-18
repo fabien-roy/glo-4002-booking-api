@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.oxygen.history.infrastructure;
 
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
+import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistoryRepository;
 
 public class InMemoryOxygenHistoryRepository implements OxygenHistoryRepository {
 

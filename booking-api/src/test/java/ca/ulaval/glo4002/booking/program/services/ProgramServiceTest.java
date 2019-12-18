@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.Event;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
-import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
+import ca.ulaval.glo4002.booking.program.events.domain.EventRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.program.rest.ProgramRequest;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;

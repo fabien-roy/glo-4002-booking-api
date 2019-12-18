@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.orders.infrastructure;
 
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 
 import java.util.ArrayList;

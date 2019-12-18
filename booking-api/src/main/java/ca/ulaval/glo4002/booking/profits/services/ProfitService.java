@@ -3,10 +3,10 @@ package ca.ulaval.glo4002.booking.profits.services;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.rest.ProfitResponse;
-import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
-import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
-import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.infrastructure.TripRepository;
+import ca.ulaval.glo4002.booking.program.events.domain.EventRepository;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRepository;
+import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 
 import javax.inject.Inject;
 

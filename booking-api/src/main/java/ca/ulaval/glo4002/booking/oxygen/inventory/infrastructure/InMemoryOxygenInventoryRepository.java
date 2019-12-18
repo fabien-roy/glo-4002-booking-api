@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure;
 
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
+import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventoryRepository;
 
 import java.util.List;
 

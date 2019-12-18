@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.program.artists.services;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
-import ca.ulaval.glo4002.booking.program.artists.infrastructure.ArtistRepository;
+import ca.ulaval.glo4002.booking.program.artists.domain.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
 
 import javax.inject.Inject;
