@@ -21,15 +21,17 @@ public class OxygenFactory {
 		this.festivalConfiguration = festivalConfiguration;
 	}
 
-	public List<OxygenTank> createOxygenTank(OxygenProduction category, LocalDate requestDate, Integer quantityToCover) {
+	// TODO : Changing quantityToCover is weird
+	public List<OxygenTank> createOxygenTank(OxygenProduction production, LocalDate requestDate, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
+		int numberOfTanksByBundle = production.getNumberOfTanksByBundle();
 
 		while (quantityToCover > 0) {
-			for (int i = 0; i < category.getNumberOfTanksByBundle(); i++) {
-				newTanks.add(new OxygenTank(category, requestDate));
+			for (int i = 0; i < numberOfTanksByBundle; i++) {
+				newTanks.add(new OxygenTank(production, requestDate));
 			}
 
-			quantityToCover -= category.getNumberOfTanksByBundle();
+			quantityToCover -= numberOfTanksByBundle;
 		}
 
 		return newTanks;

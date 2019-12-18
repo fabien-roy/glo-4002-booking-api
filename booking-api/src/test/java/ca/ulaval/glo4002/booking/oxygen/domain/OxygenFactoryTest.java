@@ -32,60 +32,44 @@ public class OxygenFactoryTest {
     }
 
     @Test
-    void create_shouldCreateOxygenCategoryA_whenCategoryIsNebula() {
+    void create_shouldSetOxygenCategory() {
+        OxygenCategories oxygenCategory = OxygenCategories.A;
+        OxygenProduction production = mock(OxygenProduction.class);
+        when(production.getNumberOfTanksByBundle()).thenReturn(1);
+        when(production.getCategory()).thenReturn(oxygenCategory);
         LocalDate aValidRequestDate = festivalConfiguration.getStartEventDate().minusDays(21).getValue();
         Integer aNumberOfTanks = 5;
 
-        List<OxygenTank> createdTanks = factory.createOxygenTank(categoryA, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.createOxygenTank(production, aValidRequestDate, aNumberOfTanks);
 
-        assertEquals(OxygenCategories.A, createdTanks.get(0).getCategory().getCategory());
-    }
-
-    @Test
-    void create_shouldCreateOxygenCategoryB_whenCategoryIsSupergiant() {
-        LocalDate aValidRequestDate = festivalConfiguration.getStartEventDate().minusDays(15).getValue();
-        Integer aNumberOfTanks = 3;
-
-        List<OxygenTank> createdTanks = factory.createOxygenTank(categoryB, aValidRequestDate, aNumberOfTanks);
-
-        assertEquals(OxygenCategories.B, createdTanks.get(0).getCategory().getCategory());
-    }
-
-    @Test
-    void create_shouldCreateOxygenCategoryE_whenCategoryIsSupernova() {
-        LocalDate aValidRequestDate = festivalConfiguration.getStartEventDate().getValue();
-        Integer aNumberOfTanks = 1;
-
-        List<OxygenTank> createdTanks = factory.createOxygenTank(categoryE, aValidRequestDate, aNumberOfTanks);
-
-        assertEquals(OxygenCategories.E, createdTanks.get(0).getCategory().getCategory());
+        assertEquals(oxygenCategory, createdTanks.get(0).getCategory().getCategory());
     }
 
     @Test
     void createCategory_shouldReturnCategoryE_whenCategoryIsSupernova() {
         PassCategories passCategory = PassCategories.SUPERNOVA;
 
-        OxygenProduction category = factory.createCategory(passCategory);
+        OxygenCategories category = factory.createCategory(passCategory);
 
-        assertEquals(OxygenCategories.E, category.getCategory());
+        assertEquals(OxygenCategories.E, category);
     }
 
     @Test
     void createCategory_shouldReturnCategoryB_whenCategoryIsSupergiant() {
         PassCategories passCategory = PassCategories.SUPERGIANT;
 
-        OxygenProduction category = factory.createCategory(passCategory);
+        OxygenCategories category = factory.createCategory(passCategory);
 
-        assertEquals(OxygenCategories.B, category.getCategory());
+        assertEquals(OxygenCategories.B, category);
     }
 
     @Test
     void createCategory_shouldReturnCategoryA_whenCategoryIsNebula() {
         PassCategories passCategory = PassCategories.NEBULA;
 
-        OxygenProduction category = factory.createCategory(passCategory);
+        OxygenCategories category = factory.createCategory(passCategory);
 
-        assertEquals(OxygenCategories.A, category.getCategory());
+        assertEquals(OxygenCategories.A, category);
     }
 
     @Test
