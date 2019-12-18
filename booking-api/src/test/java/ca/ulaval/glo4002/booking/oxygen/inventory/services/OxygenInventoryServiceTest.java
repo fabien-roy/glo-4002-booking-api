@@ -40,7 +40,9 @@ class OxygenInventoryServiceTest {
 	@Test
 	void orderForPasses_shouldOrderForEventDate() {
 		OrderDate expectedOrderDate = AN_ORDER_DATE;
-		List<PassRefactored> passes = Collections.singletonList(mock(PassRefactored.class));
+		PassRefactored pass = mock(PassRefactored.class);
+		when(pass.getEventDates()).thenReturn(Collections.singletonList(mock(EventDate.class)));
+		List<PassRefactored> passes = Collections.singletonList(pass);
 
 		service.orderForPasses(passes, expectedOrderDate);
 
@@ -51,18 +53,24 @@ class OxygenInventoryServiceTest {
 	void orderForPasses_shouldOrderForEventDates_whenThereAreMultiplePasses() {
 		int passQuantity = 2;
 		OrderDate expectedOrderDate = AN_ORDER_DATE;
-		List<PassRefactored> passes = Collections.nCopies(passQuantity, mock(PassRefactored.class));
+		PassRefactored pass = mock(PassRefactored.class);
+		when(pass.getCategory()).thenReturn(PassCategories.SUPERNOVA);
+		when(pass.getEventDates()).thenReturn(Collections.singletonList(mock(EventDate.class)));
+		List<PassRefactored> passes = Collections.nCopies(passQuantity, pass);
 
 		service.orderForPasses(passes, expectedOrderDate);
 
-		verify(producer, times(passQuantity)).produceOxygenForOrder(any(), eq(expectedOrderDate.toLocalDate()));
+		verify(producer, times(passQuantity)).produceOxygenForOrder(any(), any());
 	}
 
 	@Test
 	void orderForPasses_shouldOrderWithCorrectOxygenCategory() {
 	    PassCategories passCategory = PassCategories.SUPERNOVA;
 	    OxygenCategories expectedOxygenCategory = OxygenCategories.A;
-		List<PassRefactored> passes = Collections.singletonList(mock(PassRefactored.class));
+		PassRefactored pass = mock(PassRefactored.class);
+		when(pass.getCategory()).thenReturn(passCategory);
+		when(pass.getEventDates()).thenReturn(Collections.singletonList(mock(EventDate.class)));
+		List<PassRefactored> passes = Collections.singletonList(pass);
 		when(factory.createCategory(passCategory)).thenReturn(expectedOxygenCategory);
 
 		service.orderForPasses(passes, AN_ORDER_DATE);
