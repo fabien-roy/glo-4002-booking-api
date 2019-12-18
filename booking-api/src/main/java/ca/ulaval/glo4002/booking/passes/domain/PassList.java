@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 
 import java.util.List;
 
-public class PassRefactored {
+public class PassList {
 
 	private long number; // TODO : Use PassNumber
 	private PassCategories category;
@@ -16,7 +16,7 @@ public class PassRefactored {
 	private List<EventDate> arrivalDates;
 	private List<EventDate> departureDates;
 
-	public PassRefactored(PassCategories category, PassOptions option, Money price, List<EventDate> eventDates, List<EventDate> arrivalDates, List<EventDate> departureDates) {
+	public PassList(PassCategories category, PassOptions option, Money price, List<EventDate> eventDates, List<EventDate> arrivalDates, List<EventDate> departureDates) {
 		this.category = category;
 		this.option = option;
 		this.price = price;

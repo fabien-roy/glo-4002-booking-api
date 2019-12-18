@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.PassList;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
@@ -8,9 +8,9 @@ public class OrderRefactored {
 
 	private OrderNumber orderNumber;
 	private OrderDate orderDate;
-	private PassRefactored pass;
+	private PassList pass;
 
-	public OrderRefactored(OrderDate orderDate, PassRefactored pass) {
+	public OrderRefactored(OrderDate orderDate, PassList pass) {
 		this.orderDate = orderDate;
 		this.pass = pass;
 	}
@@ -27,7 +27,7 @@ public class OrderRefactored {
 		return orderDate;
 	}
 
-	public PassRefactored getPass() {
+	public PassList getPass() {
 		return pass;
 	}
 

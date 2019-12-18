@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.PassList;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
@@ -17,6 +17,7 @@ import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class PassRefactoredMapper {
         this.eventDateMapper = eventDateMapper;
     }
 
-    public PassRefactored fromRequest(PassRefactoredRequest request) {
+    public PassList fromRequest(PassRefactoredRequest request) {
         PassCategories category = parsePassCategory(request.getPassCategory());
         PassOptions option = parsePassOption(request.getPassOption());
 
@@ -41,12 +42,39 @@ public class PassRefactoredMapper {
 
         Money price = calculatePrice(request.getEventDates(), category, option);
 
-        return new PassRefactored(category, option, price, eventDates, arrivalDates, departureDates);
+        return new PassList(category, option, price, eventDates, arrivalDates, departureDates);
     }
 
-    // TODO : Add tests and logic
-    public List<PassResponse> toResponse(PassRefactored pass) {
-        return null;
+    public List<PassResponse> toResponse(PassList pass) {
+        String passCategory = pass.getCategory().toString();
+        String passOption = pass.getOption().toString();
+
+        List<PassResponse> passResponses = new ArrayList<>();
+
+        switch (pass.getOption()) {
+            case PACKAGE:
+                passResponses.add(new PassResponse(
+                        pass.getNumber(),
+                        passCategory,
+                        passOption
+                ));
+
+                break;
+            default:
+            case SINGLE_PASS:
+                pass.getEventDates().forEach(eventDate -> passResponses.add(
+                        new PassResponse(
+                            pass.getNumber(),
+                            passCategory,
+                            passOption,
+                            eventDate.toString()
+                        ))
+                );
+
+                break;
+        }
+
+        return passResponses;
     }
 
     private PassCategories parsePassCategory(String category) {

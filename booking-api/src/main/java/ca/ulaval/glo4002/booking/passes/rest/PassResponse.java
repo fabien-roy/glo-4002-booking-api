@@ -7,6 +7,12 @@ public class PassResponse {
     private String passOption;
     private String eventDate;
 
+    public PassResponse(long passNumber, String passCategory, String passOption) {
+        this.passNumber = passNumber;
+        this.passCategory = passCategory;
+        this.passOption = passOption;
+    }
+
     public PassResponse(long passNumber, String passCategory, String passOption, String eventDate) {
         this.passNumber = passNumber;
         this.passCategory = passCategory;
