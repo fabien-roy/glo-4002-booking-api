@@ -52,7 +52,7 @@ public class PassMapper {
             switch(pass.getOption()) {
                 case PACKAGE:
                     passResponses.add(new PassResponse(
-                            pass.getNumber(),
+                            pass.getNumber().getValue(),
                             passCategory,
                             passOption
                     ));
@@ -62,7 +62,7 @@ public class PassMapper {
                 case SINGLE_PASS:
                     passResponses.add(
                         new PassResponse(
-                                pass.getNumber(),
+                                pass.getNumber().getValue(),
                                 passCategory,
                                 passOption,
                                 pass.getEventDates().get(0).toString()

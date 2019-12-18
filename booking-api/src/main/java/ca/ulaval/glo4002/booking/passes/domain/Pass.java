@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Pass {
 
-	private long number; // TODO : Use PassNumber
+	private PassNumber number;
 	private List<EventDate> eventDates;
 	private PassCategories category;
 	private PassOptions option;
@@ -20,11 +20,11 @@ public class Pass {
 		this.price = price;
 	}
 
-	public void setNumber(long number) {
+	public void setNumber(PassNumber number) {
 		this.number = number;
 	}
 
-	public long getNumber() {
+	public PassNumber getNumber() {
 		return number;
 	}
 

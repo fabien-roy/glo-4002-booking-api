@@ -42,7 +42,7 @@ public class TripService {
 	public void orderForPasses(List<Pass> passes) {
 		passes.forEach(pass -> {
 			ShuttleCategories category = factory.createCategory(pass.getCategory()); // TODO : Use a mapper
-			Passenger passenger = new Passenger(pass.getNumber());
+			Passenger passenger = new Passenger(pass.getNumber().getValue());
 
 			repository.addPassengerToArrivals(passenger, category, pass.getArrivalDate());
 			repository.addPassengerToDepartures(passenger, category, pass.getDepartureDate());

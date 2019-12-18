@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.shuttles.trips.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
@@ -114,6 +115,7 @@ class TripServiceTest {
 	void orderForPasses_shouldAddPassengerToDeparturesOnce_whenThereIsASinglePass() {
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		pass.setNumber(new PassNumber(1L));
 		List<Pass> passes = Collections.singletonList(pass);
 
 		service.orderForPasses(passes);
@@ -125,6 +127,7 @@ class TripServiceTest {
 	void orderForPasses_shouldAddPassengerToArrivalsOnce_whenThereIsASinglePass() {
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		pass.setNumber(new PassNumber(1L));
 		List<Pass> passes = Collections.singletonList(pass);
 
 		service.orderForPasses(passes);
@@ -137,6 +140,7 @@ class TripServiceTest {
 		int passQuantity = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		pass.setNumber(new PassNumber(1L));
 		List<Pass> passes = Collections.nCopies(passQuantity, pass);
 
 		service.orderForPasses(passes);
@@ -149,6 +153,7 @@ class TripServiceTest {
 		int passQuantity = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		pass.setNumber(new PassNumber(1L));
 		List<Pass> passes = Collections.nCopies(passQuantity, pass);
 
 		service.orderForPasses(passes);

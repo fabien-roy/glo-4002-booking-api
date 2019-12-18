@@ -288,6 +288,7 @@ class PassMapperTest {
     void toResponse_shouldBuildASinglePass_whenOptionIsPackage() {
         PassOptions option = PassOptions.PACKAGE;
         Pass pass = new Pass(Collections.emptyList(), PassCategories.SUPERNOVA, option, mock(Money.class));
+        pass.setNumber(new PassNumber(1L));
 
         List<PassResponse> passResponses = mapper.toResponse(Collections.singletonList(pass));
 
@@ -298,6 +299,7 @@ class PassMapperTest {
     void toResponse_shouldSetEventDate_whenThereIsASinglePass() {
         EventDate expectedEventDate = FestivalConfiguration.getDefaultStartEventDate();
         Pass pass = new Pass(Collections.singletonList(expectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        pass.setNumber(new PassNumber(1L));
 
         List<PassResponse> passResponses = mapper.toResponse(Collections.singletonList(pass));
 
@@ -309,7 +311,9 @@ class PassMapperTest {
         EventDate expectedEventDate = FestivalConfiguration.getDefaultStartEventDate();
         EventDate otherExpectedEventDate = expectedEventDate.plusDays(1);
         Pass pass = new Pass(Collections.singletonList(expectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        pass.setNumber(new PassNumber(1L));
         Pass otherPass = new Pass(Collections.singletonList(otherExpectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        otherPass.setNumber(new PassNumber(2L));
         List<Pass> passes = Arrays.asList(pass, otherPass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
@@ -320,7 +324,7 @@ class PassMapperTest {
 
     @Test
     void toResponse_shouldSetPassNumber() {
-        long expectedPassNumber = 1L;
+        PassNumber expectedPassNumber = new PassNumber(1L);
         EventDate eventDate = mock(EventDate.class);
         Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.PACKAGE, mock(Money.class));
         pass.setNumber(expectedPassNumber);
@@ -328,13 +332,14 @@ class PassMapperTest {
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
 
-        assertEquals(expectedPassNumber, passResponses.get(0).getPassNumber());
+        assertEquals(expectedPassNumber.getValue(), passResponses.get(0).getPassNumber());
     }
 
     @Test
     void toResponse_shouldSetCategory() {
         PassCategories expectedCategory = PassCategories.SUPERNOVA;
         Pass pass = new Pass(Collections.emptyList(), expectedCategory, PassOptions.PACKAGE, mock(Money.class));
+        pass.setNumber(new PassNumber(1L));
         List<Pass> passes = Collections.singletonList(pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
@@ -346,6 +351,7 @@ class PassMapperTest {
     void toResponse_shouldSetCategoryForAllPasses() {
         PassCategories expectedCategory = PassCategories.SUPERNOVA;
         Pass pass = new Pass(Collections.singletonList(mock(EventDate.class)), expectedCategory, PassOptions.SINGLE_PASS, mock(Money.class));
+        pass.setNumber(new PassNumber(1L));
         List<Pass> passes = Collections.nCopies(2, pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
@@ -358,6 +364,7 @@ class PassMapperTest {
     void toResponse_shouldSetOption() {
         PassOptions expectedOption = PassOptions.PACKAGE;
         Pass pass = new Pass(Collections.emptyList(), PassCategories.SUPERNOVA, expectedOption, mock(Money.class));
+        pass.setNumber(new PassNumber(1L));
         List<Pass> passes = Collections.singletonList(pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
@@ -370,6 +377,7 @@ class PassMapperTest {
         PassOptions expectedOption = PassOptions.SINGLE_PASS;
         EventDate eventDate = mock(EventDate.class);
         Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, expectedOption, mock(Money.class));
+        pass.setNumber(new PassNumber(1L));
         List<Pass> passes = Collections.nCopies(2, pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);

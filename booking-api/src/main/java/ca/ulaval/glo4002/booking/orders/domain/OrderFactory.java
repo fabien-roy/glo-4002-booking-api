@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
+import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
 
 import javax.inject.Inject;
@@ -23,7 +24,7 @@ public class OrderFactory {
         order.setOrderNumber(orderNumber);
 
         order.getPasses().forEach(pass -> {
-            long passNumber = passNumberGenerator.generate();
+            PassNumber passNumber = passNumberGenerator.generate();
             pass.setNumber(passNumber);
         });
 

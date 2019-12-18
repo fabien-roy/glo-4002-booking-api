@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
-import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.passes.domain.Pass;
+import ca.ulaval.glo4002.booking.passes.domain.*;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +42,7 @@ class OrderFactoryTest {
 
     @Test
     void create_shouldSetPassNumber_whenThereIsASinglePass() {
-        long expectedPassNumber = 1L;
+        PassNumber expectedPassNumber = new PassNumber(1L);
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
         Pass pass = new Pass(
@@ -63,7 +60,7 @@ class OrderFactoryTest {
 
     @Test
     void create_shouldSetPassNumbers_whenThereAreMultiplePasses() {
-        long expectedPassNumber = 1L;
+        PassNumber expectedPassNumber = new PassNumber(1L);
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
         Pass pass = new Pass(

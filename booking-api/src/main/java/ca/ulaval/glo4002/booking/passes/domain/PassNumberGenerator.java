@@ -2,16 +2,16 @@ package ca.ulaval.glo4002.booking.passes.domain;
 
 public class PassNumberGenerator {
 
-    private Long nextNumber; // TODO : Make this thread safe
+    private PassNumber nextNumber; // TODO : Make this thread safe
 
     public PassNumberGenerator() {
-        this.nextNumber = 100000L;
+        this.nextNumber = new PassNumber(100000L);
     }
 
-    public Long generate() {
-        Long number = nextNumber;
+    public PassNumber generate() {
+        PassNumber number = nextNumber;
 
-        nextNumber = nextNumber + 1;
+        nextNumber = new PassNumber(nextNumber.getValue() + 1);
 
         return number;
     }
