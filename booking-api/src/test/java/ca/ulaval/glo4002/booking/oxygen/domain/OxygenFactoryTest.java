@@ -15,6 +15,8 @@ import static org.mockito.Mockito.when;
 
 public class OxygenFactoryTest {
 
+    // TODO : Refactor usage in date in these tests
+
     private OxygenFactory factory;
     private FestivalConfiguration festivalConfiguration;
 
