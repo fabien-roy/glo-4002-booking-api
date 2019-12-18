@@ -40,6 +40,16 @@ public class OrderMapper {
         return new OrderRefactored(orderDate, pass);
     }
 
+    // TODO : Test
+    public OrderResponse toResponse(OrderRefactored order) {
+        List<PassResponse> passes = passMapper.toResponse(order.getPass());
+
+        float fullOrderPrice = order.getPrice().getValue().floatValue();
+        float orderPrice = formatOrderPrice(fullOrderPrice);
+
+        return new OrderResponse(orderPrice, passes);
+    }
+
     public OrderResponse toResponse(Order order) {
         List<PassResponse> passes = passBundleMapper.toResponse(order.getPassBundle());
 

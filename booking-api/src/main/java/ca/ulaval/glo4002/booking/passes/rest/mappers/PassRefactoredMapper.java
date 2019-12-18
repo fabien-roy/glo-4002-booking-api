@@ -10,6 +10,7 @@ import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDisc
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.SupergiantPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
@@ -41,6 +42,11 @@ public class PassRefactoredMapper {
         Money price = calculatePrice(request.getEventDates(), category, option);
 
         return new PassRefactored(category, option, price, eventDates, arrivalDates, departureDates);
+    }
+
+    // TODO : Add tests and logic
+    public List<PassResponse> toResponse(PassRefactored pass) {
+        return null;
     }
 
     private PassCategories parsePassCategory(String category) {

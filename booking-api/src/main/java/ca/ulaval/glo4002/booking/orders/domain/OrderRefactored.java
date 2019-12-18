@@ -1,6 +1,7 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
 public class OrderRefactored {
@@ -32,6 +33,10 @@ public class OrderRefactored {
 
 	public void setPassNumber(long passNumber) {
 		this.pass.setNumber(passNumber);
+	}
+
+	public Money getPrice() {
+		return pass.getPrice();
 	}
 
 	// TODO : Use updateProfit

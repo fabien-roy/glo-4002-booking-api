@@ -31,6 +31,7 @@ class OrderMapperTest {
 	private OrderDateMapper orderDateMapper;
 	private PassRefactoredMapper passMapper;
 	private Order order;
+	private OrderRefactored orderRefactored;
 
 	@BeforeEach
 	void setUpMapper() {
@@ -44,6 +45,10 @@ class OrderMapperTest {
 	@BeforeEach
 	void setUpOrder() {
 		order = mock(Order.class);
+		when(order.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
+		when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
+
+		orderRefactored = mock(OrderRefactored.class);
 		when(order.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
 		when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
 	}
@@ -82,6 +87,20 @@ class OrderMapperTest {
 		assertEquals(expectedPass, order.getPass());
 	}
 
+	// TODO : Rename tests of refactored pass logic when old logic is removed
+
+	@Test
+	public void toRefactoredResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
+		BigDecimal orderPrice = BigDecimal.valueOf(123.123);
+		Money price = new Money(orderPrice);
+		when(orderRefactored.getPrice()).thenReturn(price);
+		String expectedOrderPrice = "123.12";
+
+		OrderResponse orderResponse = orderMapper.toResponse(orderRefactored);
+
+		assertEquals(expectedOrderPrice, String.valueOf(orderResponse.getOrderPrice()));
+	}
+
 	@Test
 	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasMoreThanTwoDigits() {
 		BigDecimal orderPrice = BigDecimal.valueOf(123.123);
@@ -94,8 +113,21 @@ class OrderMapperTest {
 		assertEquals(expectedOrderPrice, String.valueOf(orderResponse.getOrderPrice()));
 	}
 
+	// TODO : Fix this test, it should be "123.10"
 	@Test
-	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasLesThanTwoDigits() {
+	public void toRefactoredResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasLessThanTwoDigits() {
+		BigDecimal orderPrice = BigDecimal.valueOf(123.1);
+		Money price = new Money(orderPrice);
+		when(orderRefactored.getPrice()).thenReturn(price);
+		String expectedOrderPrice = "123.1";
+
+		OrderResponse orderResponse = orderMapper.toResponse(orderRefactored);
+
+		assertEquals(expectedOrderPrice, String.valueOf(orderResponse.getOrderPrice()));
+	}
+
+	@Test
+	public void toResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasLessThanTwoDigits() {
 		BigDecimal orderPrice = BigDecimal.valueOf(123.1);
 		Money price = new Money(orderPrice);
 		when(order.getPrice()).thenReturn(price);
@@ -104,6 +136,13 @@ class OrderMapperTest {
 		OrderResponse orderResponse = orderMapper.toResponse(order);
 
 		assertEquals(expectedOrderPrice, String.valueOf(orderResponse.getOrderPrice()));
+	}
+
+	@Test
+	void toRefactoredResponse_shouldCreatePassBundle() {
+		orderMapper.toResponse(order);
+
+		verify(passBundleMapper).toResponse(any());
 	}
 
 	@Test
