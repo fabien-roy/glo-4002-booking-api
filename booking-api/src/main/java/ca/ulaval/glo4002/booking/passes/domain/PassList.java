@@ -8,6 +8,7 @@ import java.util.List;
 
 public class PassList {
 
+	// TODO : Have a list of PassRefactored
 	private long number; // TODO : Use PassNumber
 	private PassCategories category;
 	private PassOptions option;

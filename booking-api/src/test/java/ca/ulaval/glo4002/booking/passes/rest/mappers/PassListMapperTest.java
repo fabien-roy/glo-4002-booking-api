@@ -397,7 +397,7 @@ class PassListMapperTest {
     @Test
     void toResponse_shouldSetPassNumber() {
         long expectedPassNumber = 1L;
-        PassList pass = new PassList(PassCategories.SUPERNOVA, PassOptions.PACKAGE, mock(Money.class), eventDates, Collections.emptyList(), Collections.emptyList());
+        PassList pass = new PassList(PassCategories.SUPERNOVA, PassOptions.PACKAGE, mock(Money.class), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
         pass.setNumber(expectedPassNumber);
 
         List<PassResponse> passResponses = mapper.toResponse(pass);
@@ -408,8 +408,7 @@ class PassListMapperTest {
     @Test
     void toResponse_shouldSetCategory() {
         PassCategories expectedCategory = PassCategories.SUPERNOVA;
-        List<EventDate> eventDates = Collections.singletonList(FestivalConfiguration.getDefaultStartEventDate());
-        PassList pass = new PassList(expectedCategory, PassOptions.PACKAGE, mock(Money.class), eventDates, Collections.emptyList(), Collections.emptyList());
+        PassList pass = new PassList(expectedCategory, PassOptions.PACKAGE, mock(Money.class), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
         List<PassResponse> passResponses = mapper.toResponse(pass);
 
@@ -417,42 +416,38 @@ class PassListMapperTest {
     }
 
     @Test
-    void toResponse_shouldSetSameCategoryForAllPasses() {
+    void toResponse_shouldSetCategoryForAllPasses() {
         PassCategories expectedCategory = PassCategories.SUPERNOVA;
-        List<EventDate> eventDates = Collections.singletonList(FestivalConfiguration.getDefaultStartEventDate());
-        PassList pass = new PassList(expectedCategory, PassOptions.PACKAGE, mock(Money.class), eventDates, Collections.emptyList(), Collections.emptyList());
+        EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+        List<EventDate> eventDates = Arrays.asList(eventDate, eventDate.plusDays(1));
+        PassList pass = new PassList(expectedCategory, PassOptions.SINGLE_PASS, mock(Money.class), eventDates, Collections.emptyList(), Collections.emptyList());
 
         List<PassResponse> passResponses = mapper.toResponse(pass);
 
         assertEquals(expectedCategory.toString(), passResponses.get(0).getPassCategory());
+        assertEquals(expectedCategory.toString(), passResponses.get(1).getPassCategory());
     }
 
     @Test
-    void toResponse_shouldBuildResponseWithCorrectOption() {
-        Pass aPass = new Pass(1L, mock(Money.class), mock(EventDate.class));
-        List<Pass> passes = new ArrayList<>(Collections.singletonList(aPass));
-        PassOptions passOption = PassOptions.SINGLE_PASS;
-        String expectedPassOptionName = passOption.toString();
-        PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
-        PassBundle passBundle = new PassBundle(passes, aPassCategory, passOption);
+    void toResponse_shouldSetOption() {
+        PassOptions expectedOption = PassOptions.PACKAGE;
+        PassList pass = new PassList(PassCategories.SUPERNOVA, expectedOption, mock(Money.class), Collections.emptyList(), Collections.emptyList(), Collections.emptyList());
 
-        List<PassResponse> passResponses = mapper.toResponse(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(pass);
 
-        assertEquals(expectedPassOptionName, passResponses.get(0).getPassOption());
+        assertEquals(expectedOption.toString(), passResponses.get(0).getPassOption());
     }
 
     @Test
-    void toResponse_shouldSetSameOptionForAllPasses() {
-        Pass aPass = new Pass(1L, mock(Money.class), mock(EventDate.class));
-        Pass anotherPass = new Pass(2L, mock(Money.class), mock(EventDate.class));
-        List<Pass> passes = new ArrayList<>(Arrays.asList(aPass, anotherPass));
-        PassCategory aPassCategory = new PassCategory(PassCategories.SUPERNOVA, new HashMap<>());
-        PassOptions passOption = PassOptions.SINGLE_PASS;
-        String expectedPassOptionName = passOption.toString();
-        PassBundle passBundle = new PassBundle(passes, aPassCategory, passOption);
+    void toResponse_shouldSetOptionForAllPasses() {
+        PassOptions expectedOption = PassOptions.SINGLE_PASS;
+        EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+        List<EventDate> eventDates = Arrays.asList(eventDate, eventDate.plusDays(1));
+        PassList pass = new PassList(PassCategories.SUPERNOVA, expectedOption, mock(Money.class), eventDates, Collections.emptyList(), Collections.emptyList());
 
-        List<PassResponse> passResponses = mapper.toResponse(passBundle);
+        List<PassResponse> passResponses = mapper.toResponse(pass);
 
-        assertTrue(passResponses.stream().allMatch(pass -> pass.getPassOption().equals(expectedPassOptionName)));
+        assertEquals(expectedOption.toString(), passResponses.get(0).getPassOption());
+        assertEquals(expectedOption.toString(), passResponses.get(1).getPassOption());
     }
 }
