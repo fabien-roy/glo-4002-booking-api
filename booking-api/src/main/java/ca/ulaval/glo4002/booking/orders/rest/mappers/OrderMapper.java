@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.orders.rest.mappers;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
@@ -25,7 +25,7 @@ public class OrderMapper {
         this.passMapper = passMapper;
     }
 
-    public Order fromRequest(OrderRefactoredRequest request) {
+    public Order fromRequest(OrderRequest request) {
         if (request.getPass() == null) {
             throw new InvalidFormatException();
         }

@@ -29,7 +29,7 @@ public class OrderResource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addOrder(OrderRefactoredRequest orderRequest) {
+	public Response addOrder(OrderRequest orderRequest) {
 		String orderNumber = service.order(orderRequest);
 
 		URI location = URI.create("/orders/" + orderNumber);

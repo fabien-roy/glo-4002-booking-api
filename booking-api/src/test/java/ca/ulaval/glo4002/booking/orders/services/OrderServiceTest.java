@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.orders.services;
 
 import ca.ulaval.glo4002.booking.orders.domain.*;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
@@ -48,7 +48,7 @@ class OrderServiceTest {
 
 	@Test
 	void order_shouldAddOrder() {
-		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
+		OrderRequest orderRequest = mock(OrderRequest.class);
 
 		service.order(orderRequest);
 
@@ -57,7 +57,7 @@ class OrderServiceTest {
 
 	@Test
 	void order_shouldOrderTrips() {
-		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
+		OrderRequest orderRequest = mock(OrderRequest.class);
 
 		service.order(orderRequest);
 
@@ -66,7 +66,7 @@ class OrderServiceTest {
 
 	@Test
 	void order_shouldOrderOxygenWithCorrectPasses() {
-		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
+		OrderRequest orderRequest = mock(OrderRequest.class);
 		List<Pass> expectedPasses = Collections.singletonList(mock(Pass.class));
 		when(order.getPasses()).thenReturn(expectedPasses);
 
@@ -77,7 +77,7 @@ class OrderServiceTest {
 
 	@Test
 	void order_shouldOrderOxygenWithCorrectDate() {
-		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
+		OrderRequest orderRequest = mock(OrderRequest.class);
 		OrderDate expectedOrderDate = mock(OrderDate.class);
 		when(order.getOrderDate()).thenReturn(expectedOrderDate);
 

@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
@@ -29,7 +29,7 @@ public class OrderService {
 		this.oxygenInventoryService = oxygenInventoryService;
 	}
 
-	public String order(OrderRefactoredRequest orderRequest) {
+	public String order(OrderRequest orderRequest) {
 		Order order = mapper.fromRequest(orderRequest);
 		order = factory.create(order, orderRequest.getVendorCode());
 

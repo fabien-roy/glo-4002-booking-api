@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
@@ -50,7 +50,7 @@ class OrderMapperTest {
 	@Test
 	void fromRequest_shouldThrowInvalidFormatException_whenThereIsNoPass() {
 		ZonedDateTime anOrderDate = generateOrderDate();
-		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", null);
+		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "VENDOR", null);
 
 		assertThrows(InvalidFormatException.class, () -> orderMapper.fromRequest(orderRequest));
 	}
@@ -61,7 +61,7 @@ class OrderMapperTest {
 		OrderDate expectedOrderDate = mock(OrderDate.class);
 		when(orderDateMapper.fromString(eq(anOrderDate.toString()))).thenReturn(expectedOrderDate);
 		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
-		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", passRequest);
+		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "VENDOR", passRequest);
 
 		Order order = orderMapper.fromRequest(orderRequest);
 
@@ -74,7 +74,7 @@ class OrderMapperTest {
 		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
 		Pass expectedPass = mock(Pass.class);
 		when(passMapper.fromRequest(eq(passRequest))).thenReturn(Collections.singletonList(expectedPass));
-		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", passRequest);
+		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "VENDOR", passRequest);
 
 		Order order = orderMapper.fromRequest(orderRequest);
 
