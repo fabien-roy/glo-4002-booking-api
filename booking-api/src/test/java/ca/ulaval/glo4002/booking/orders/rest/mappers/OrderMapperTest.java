@@ -10,6 +10,7 @@ import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassRefactoredMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
@@ -19,6 +20,9 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -49,8 +53,8 @@ class OrderMapperTest {
 		when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
 
 		orderRefactored = mock(OrderRefactored.class);
-		when(order.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
-		when(order.getPassBundle()).thenReturn(mock(PassBundle.class));
+		when(orderRefactored.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
+		when(orderRefactored.getPass()).thenReturn(mock(PassRefactored.class));
 	}
 
 	@Test
@@ -139,10 +143,26 @@ class OrderMapperTest {
 	}
 
 	@Test
-	void toRefactoredResponse_shouldCreatePassBundle() {
-		orderMapper.toResponse(order);
+	void toRefactoredResponse_shouldSetPass_whenThereIsASinglePass() {
+		List<PassResponse> expectedPasses = Collections.singletonList(mock(PassResponse.class));
+		when(passMapper.toResponse(any())).thenReturn(expectedPasses);
 
-		verify(passBundleMapper).toResponse(any());
+		OrderResponse orderResponse = orderMapper.toResponse(orderRefactored);
+
+		assertEquals(expectedPasses.get(0), orderResponse.getPasses().get(0));
+	}
+
+	@Test
+	void toRefactoredResponse_shouldSetPass_whenThereIsAreMultiplePasses() {
+	    PassResponse expectedPass = mock(PassResponse.class);
+		PassResponse otherExpectedPass = mock(PassResponse.class);
+		List<PassResponse> expectedPasses = Arrays.asList(expectedPass, otherExpectedPass);
+		when(passMapper.toResponse(any())).thenReturn(expectedPasses);
+
+		OrderResponse orderResponse = orderMapper.toResponse(orderRefactored);
+
+		assertEquals(expectedPasses.get(0), orderResponse.getPasses().get(0));
+		assertEquals(expectedPasses.get(1), orderResponse.getPasses().get(1));
 	}
 
 	@Test
