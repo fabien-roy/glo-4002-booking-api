@@ -6,6 +6,8 @@ import java.util.List;
 
 public class ExternalArtist {
 
+    // TODO : Repair Integer -> int
+
 	@JsonProperty("id")
 	private Integer id;
 	
