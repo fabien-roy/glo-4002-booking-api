@@ -3,11 +3,8 @@ package ca.ulaval.glo4002.booking.orders.services;
 import ca.ulaval.glo4002.booking.orders.domain.*;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
-import ca.ulaval.glo4002.booking.passes.domain.Pass;
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +61,7 @@ class OrderServiceTest {
 
 		service.order(orderRequest);
 
-		verify(tripService).orderForPasses(eq(passes)));
+		verify(tripService).orderForPasses(eq(passes));
 	}
 
 	@Test

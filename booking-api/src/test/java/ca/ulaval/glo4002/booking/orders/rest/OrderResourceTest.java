@@ -37,7 +37,7 @@ class OrderResourceTest {
 
 	@Test
 	void addOrder_shouldReturnCreated() {
-		OrderRequest anOrderRequest = mock(OrderRequest.class);
+		OrderRefactoredRequest anOrderRequest = mock(OrderRefactoredRequest.class);
 		when(service.order(anOrderRequest)).thenReturn("anOrderNumber");
 
 		Response response = resource.addOrder(anOrderRequest);
@@ -47,7 +47,7 @@ class OrderResourceTest {
 
 	@Test
 	void addOrder_shouldReturnLocationHeaders() {
-		OrderRequest anOrderRequest = mock(OrderRequest.class);
+		OrderRefactoredRequest anOrderRequest = mock(OrderRefactoredRequest.class);
 		String expectedOrderNumber = "expectedOrderNumber";
 		when(service.order(anOrderRequest)).thenReturn(expectedOrderNumber);
 
