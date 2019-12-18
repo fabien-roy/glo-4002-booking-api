@@ -45,7 +45,7 @@ public class OrderService {
 	public OrderResponse getByOrderNumber(String requestedOrderNumber) {
 		OrderNumber orderNumber = new OrderNumber(requestedOrderNumber); // TODO : A Mapper should parse a String to a OrderNumber
 
-		Order order = repository.getByOrderNumber(orderNumber);
+		OrderRefactored order = repository.getByOrderNumber(orderNumber);
 
 		return mapper.toResponse(order);
 	}
