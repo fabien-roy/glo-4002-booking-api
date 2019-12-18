@@ -100,7 +100,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryE_whenCategoryIsE() {
         OxygenCategories oxygenCategory = OxygenCategories.E;
 
-        OxygenProduction category = factory.createCategory(oxygenCategory);
+        OxygenProduction category = factory.createProduction(oxygenCategory);
 
         assertEquals(OxygenCategories.E, category.getCategory());
     }
@@ -109,7 +109,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryB_whenCategoryIsB() {
         OxygenCategories oxygenCategory = OxygenCategories.B;
 
-        OxygenProduction category = factory.createCategory(oxygenCategory);
+        OxygenProduction category = factory.createProduction(oxygenCategory);
 
         assertEquals(OxygenCategories.B, category.getCategory());
     }
@@ -118,7 +118,7 @@ public class OxygenFactoryTest {
     void createCategory_shouldReturnCategoryA_whenCategoryIsA() {
         OxygenCategories oxygenCategory = OxygenCategories.A;
 
-        OxygenProduction category = factory.createCategory(oxygenCategory);
+        OxygenProduction category = factory.createProduction(oxygenCategory);
 
         assertEquals(OxygenCategories.A, category.getCategory());
     }

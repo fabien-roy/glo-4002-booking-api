@@ -35,21 +35,26 @@ public class OxygenFactory {
 		return newTanks;
 	}
 
-	public OxygenProduction createCategory(PassCategories category) {
+	public OxygenCategories createCategory(PassCategories category) {
 		switch(category) {
 			case SUPERNOVA:
-			    return createCategory(OxygenCategories.E);
+			    return OxygenCategories.E;
 			case SUPERGIANT:
-				return createCategory(OxygenCategories.B);
+				return OxygenCategories.B;
 			default:
 			case NEBULA:
-				return createCategory(OxygenCategories.A);
+				return OxygenCategories.A;
 		}
 	}
 
-	// TODO : Can't OxygenFactory.createCategory only have PassCategories as a parameter?
-	public OxygenProduction createCategory(OxygenCategories category) {
-		switch(category) {
+	public OxygenProduction createProduction(PassCategories passCategory) {
+	    OxygenCategories oxygenCategory = createCategory(passCategory);
+
+	    return createProduction(oxygenCategory);
+	}
+
+	public OxygenProduction createProduction(OxygenCategories oxygenCategory) {
+		switch(oxygenCategory) {
 			case E:
 				return new OxygenProduction(
 						OxygenCategories.E,
@@ -83,22 +88,22 @@ public class OxygenFactory {
 	public OxygenProduction createCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
 		LocalDate readyBeforeDate = festivalConfiguration.getStartEventDate().plusDays(1).getValue();
 
-		if(oxygenCategories == OxygenCategories.A) {
-			if(requestDate.plusDays(20).isBefore(readyBeforeDate)){
-				return createCategory(PassCategories.NEBULA);
-			} else if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-				return createCategory(PassCategories.SUPERGIANT);
+		if (oxygenCategories == OxygenCategories.A) {
+			if (requestDate.plusDays(20).isBefore(readyBeforeDate)){
+				return createProduction(PassCategories.NEBULA);
+			} else if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
+				return createProduction(PassCategories.SUPERGIANT);
 			} else {
-				return createCategory(PassCategories.SUPERNOVA);
+				return createProduction(PassCategories.SUPERNOVA);
 			}
-		} else if(oxygenCategories == OxygenCategories.B) {
-			if(requestDate.plusDays(10).isBefore(readyBeforeDate)) {
-				return createCategory(PassCategories.SUPERGIANT);
+		} else if (oxygenCategories == OxygenCategories.B) {
+			if (requestDate.plusDays(10).isBefore(readyBeforeDate)) {
+				return createProduction(PassCategories.SUPERGIANT);
 			} else {
-				return createCategory(PassCategories.SUPERNOVA);
+				return createProduction(PassCategories.SUPERNOVA);
 			}
 		} else {
-			return createCategory(PassCategories.SUPERNOVA);
+			return createProduction(PassCategories.SUPERNOVA);
 		}
 	}
 }

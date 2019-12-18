@@ -1,27 +1,26 @@
 package ca.ulaval.glo4002.booking.oxygen.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
-import java.time.LocalDate;
-import java.util.List;
-
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 public class OxygenTankProducerTest {
 
-	// TODO : Mock OxygenFactory in OxygenTankProducer tests
+	// TODO : Refactor OxygenTankProducerTest
 
 	private OxygenTankProducer producer;
-	private FestivalConfiguration festivalConfiguration;
 	private OxygenInventoryRepository inventoryRepository;
 	private OxygenHistoryRepository historyRepository;
 	private OxygenInventory inventory;
@@ -45,17 +44,9 @@ public class OxygenTankProducerTest {
 		when(inventoryRepository.getInventory()).thenReturn(inventory);
 		when(historyRepository.getHistory()).thenReturn(history);
 
-		OxygenFactory factory = new OxygenFactory(festivalConfiguration);
+		OxygenFactory factory = mock(OxygenFactory.class);
 
 		producer = new OxygenTankProducer(inventoryRepository, historyRepository, factory);
-	}
-
-	@BeforeEach
-	void setUpConfiguration() {
-		festivalConfiguration = mock(FestivalConfiguration.class);
-
-		when(festivalConfiguration.getStartEventDate()).thenReturn(FestivalConfiguration.getDefaultStartEventDate());
-		when(festivalConfiguration.getEndEventDate()).thenReturn(FestivalConfiguration.getDefaultEndEventDate());
 	}
 
 	@Test
@@ -128,41 +119,40 @@ public class OxygenTankProducerTest {
 	@Test
 	void produceOxygenByQuantity_shouldReturnAnEmptyList_whenReserveHasEnoughTanks() {
 		OxygenCategories aCategory = OxygenCategories.A;
-		OxygenProduction category = mock(OxygenProduction.class);
 		when(inventory.assignTanksByCategory(eq(aCategory), eq(aCategory), anyInt())).thenReturn(0);
 
-		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, INVALID_CATEGORY_A_BUILD_DATE, 1);
+		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(aCategory, INVALID_CATEGORY_A_BUILD_DATE, 1);
 
 		assertTrue(createdTanks.isEmpty());
 	}
 
 	@Test
 	void produceOxygenByQuantity_shouldReturnEmptyList_whenCategoryIsSupernovaButReserveCanCoverAllTanksNeeded() {
-		OxygenProduction category = mock(OxygenProduction.class);
-		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		OxygenCategories aCategory = OxygenCategories.E;
+		when(inventory.assignTanksByCategory(eq(aCategory), any(), anyInt())).thenReturn(0);
 
-		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
+		List<OxygenTank> createdTanks = producer.produceOxygenByQuantity(aCategory, VALID_CATEGORY_E_BUILD_DATE, 1);
 
 		assertTrue(createdTanks.isEmpty());
 	}
 
 	@Test
 	void produceOxygenByQuantity_shouldUpdateInventory() {
-		OxygenProduction category = mock(OxygenProduction.class);
-		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		OxygenCategories aCategory = OxygenCategories.E;
+		when(inventory.assignTanksByCategory(eq(aCategory), any(), anyInt())).thenReturn(0);
 
-		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
+		producer.produceOxygenByQuantity(aCategory, VALID_CATEGORY_E_BUILD_DATE, 1);
 
 		verify(inventoryRepository).updateInventory(any(OxygenInventory.class));
 	}
 
 	@Test
 	void produceOxygenByQuantity_shouldUpdateHistory() {
-		OxygenProduction category = mock(OxygenProduction.class);
-		when(inventory.assignTanksByCategory(eq(OxygenCategories.E), any(), anyInt())).thenReturn(0);
+		OxygenCategories aCategory = OxygenCategories.E;
+		when(inventory.assignTanksByCategory(eq(aCategory), any(), anyInt())).thenReturn(0);
 
-		producer.produceOxygenByQuantity(category, VALID_CATEGORY_E_BUILD_DATE, 1);
+		producer.produceOxygenByQuantity(aCategory, VALID_CATEGORY_E_BUILD_DATE, 1);
 
-		verify(inventoryRepository).updateInventory(any(OxygenInventory.class));
+		verify(historyRepository).updateHistory(any(OxygenHistory.class));
 	}
 }

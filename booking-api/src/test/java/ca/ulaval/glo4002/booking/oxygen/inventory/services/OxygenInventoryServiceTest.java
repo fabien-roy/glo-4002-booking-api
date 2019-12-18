@@ -5,20 +5,18 @@ import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
-import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService.OXYGEN_CATEGORY_FOR_ARTIST;
 import static ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService.OXYGEN_TANKS_NEEDED_PER_ARTIST;
@@ -27,73 +25,49 @@ import static org.mockito.Mockito.*;
 
 class OxygenInventoryServiceTest {
 
-    // TODO : This is a mess. Refactor everything. Check comments.
-
 	private static final OrderDate AN_ORDER_DATE = new OrderDate(FestivalConfiguration.getDefaultStartEventDate().toLocalDateTime());
 
 	private OxygenInventoryService service;
-	private FestivalConfiguration festivalConfiguration;
 	private OxygenFactory factory;
 	private OxygenTankProducer producer;
 
 	@BeforeEach
 	void setUpService() {
-		factory = new OxygenFactory(festivalConfiguration);
+		factory = mock(OxygenFactory.class);
 		producer = mock(OxygenTankProducer.class);
 
-		service = new OxygenInventoryService(festivalConfiguration, factory, producer);
-	}
-
-	@BeforeEach
-	void setUpConfiguration() {
-		festivalConfiguration = mock(FestivalConfiguration.class);
-
-		when(festivalConfiguration.getAllEventDates()).thenReturn(Arrays.asList(
-				FestivalConfiguration.getDefaultStartEventDate(),
-				FestivalConfiguration.getDefaultEndEventDate())
-		);
-	}
-
-	@Test
-	void orderForPasses_shouldOrderForFullFestival_whenEventDatesIsNull() {
-		Pass aFullFestivalPass = new Pass(1L, mock(Money.class));
-		int numberOfFestivalDays = festivalConfiguration.getAllEventDates().size();
-
-		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aFullFestivalPass), AN_ORDER_DATE);
-
-		verify(producer, times(numberOfFestivalDays)).produceOxygenForOrder(any(), any());
+		service = new OxygenInventoryService(factory, producer);
 	}
 
 	@Test
 	void orderForPasses_shouldOrderForEventDate() {
-		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		Pass aPass = new Pass(1L, mock(Money.class), aEventDate);
+		OrderDate expectedOrderDate = AN_ORDER_DATE;
+		List<PassRefactored> passes = Collections.singletonList(mock(PassRefactored.class));
 
-		service.orderForPasses(PassCategories.SUPERNOVA, Collections.singletonList(aPass), AN_ORDER_DATE);
+		service.orderForPasses(passes, expectedOrderDate);
 
-		verify(producer).produceOxygenForOrder(any(), any());
+		verify(producer).produceOxygenForOrder(any(), eq(expectedOrderDate.toLocalDate()));
 	}
 
 	@Test
 	void orderForPasses_shouldOrderForEventDates_whenThereAreMultiplePasses() {
-		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		EventDate anotherEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
-		Pass aPass = new Pass(1L, mock(Money.class), aEventDate);
-		Pass anotherPass = new Pass(1L, mock(Money.class), anotherEventDate);
+		int passQuantity = 2;
+		OrderDate expectedOrderDate = AN_ORDER_DATE;
+		List<PassRefactored> passes = Collections.nCopies(passQuantity, mock(PassRefactored.class));
 
-		service.orderForPasses(PassCategories.SUPERNOVA, Arrays.asList(aPass, anotherPass), AN_ORDER_DATE);
+		service.orderForPasses(passes, expectedOrderDate);
 
-		verify(producer, times(2)).produceOxygenForOrder(any(), any());
+		verify(producer, times(passQuantity)).produceOxygenForOrder(any(), eq(expectedOrderDate.toLocalDate()));
 	}
 
-	@ParameterizedTest
-	@EnumSource(PassCategories.class)
-	void orderForPasses_shouldOrderWithCorrectOxygenCategory(PassCategories passCategory) {
-		OxygenCategories expectedOxygenCategory = factory.createCategory(passCategory).getCategory();
-		EventDate aEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		Pass aPass = new Pass(1L, mock(Money.class), aEventDate);
+	@Test
+	void orderForPasses_shouldOrderWithCorrectOxygenCategory() {
+	    PassCategories passCategory = PassCategories.SUPERNOVA;
+	    OxygenCategories expectedOxygenCategory = OxygenCategories.A;
+		List<PassRefactored> passes = Collections.singletonList(mock(PassRefactored.class));
+		when(factory.createCategory(passCategory)).thenReturn(expectedOxygenCategory);
 
-		service.orderForPasses(passCategory, Collections.singletonList(aPass), AN_ORDER_DATE);
+		service.orderForPasses(passes, AN_ORDER_DATE);
 
 		verify(producer).produceOxygenForOrder(eq(expectedOxygenCategory), any());
 	}
