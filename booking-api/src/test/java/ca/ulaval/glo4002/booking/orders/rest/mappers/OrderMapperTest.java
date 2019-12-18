@@ -8,11 +8,11 @@ import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
-import ca.ulaval.glo4002.booking.passes.domain.PassList;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.passes.rest.mappers.PassRefactoredMapper;
+import ca.ulaval.glo4002.booking.passes.rest.mappers.PassMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ class OrderMapperTest {
 	private OrderMapper orderMapper;
 	private PassBundleMapper passBundleMapper;
 	private OrderDateMapper orderDateMapper;
-	private PassRefactoredMapper passMapper;
+	private PassMapper passMapper;
 	private Order order;
 	private OrderRefactored orderRefactored;
 
@@ -41,7 +41,7 @@ class OrderMapperTest {
 	void setUpMapper() {
 		passBundleMapper = mock(PassBundleMapper.class);
 		orderDateMapper = mock(OrderDateMapper.class);
-		passMapper = mock(PassRefactoredMapper.class);
+		passMapper = mock(PassMapper.class);
 
 		orderMapper = new OrderMapper(passBundleMapper, orderDateMapper, passMapper);
 	}
@@ -54,7 +54,7 @@ class OrderMapperTest {
 
 		orderRefactored = mock(OrderRefactored.class);
 		when(orderRefactored.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
-		when(orderRefactored.getPassList()).thenReturn(mock(PassList.class));
+		when(orderRefactored.getPasses()).thenReturn(Collections.singletonList(mock(PassRefactored.class)));
 	}
 
 	@Test
@@ -82,13 +82,13 @@ class OrderMapperTest {
 	void fromRequest_shouldSetPass() {
 		ZonedDateTime anOrderDate = generateOrderDate();
 		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
-		PassList expectedPass = mock(PassList.class);
-		when(passMapper.fromRequest(eq(passRequest))).thenReturn(expectedPass);
+		PassRefactored expectedPass = mock(PassRefactored.class);
+		when(passMapper.fromRequest(eq(passRequest))).thenReturn(Collections.singletonList(expectedPass));
 		OrderRefactoredRequest orderRequest = new OrderRefactoredRequest(anOrderDate.toString(), "VENDOR", passRequest);
 
 		OrderRefactored order = orderMapper.fromRequest(orderRequest);
 
-		assertEquals(expectedPass, order.getPassList());
+		assertEquals(expectedPass, order.getPasses().get(0));
 	}
 
 	// TODO : Rename tests of refactored pass logic when old logic is removed

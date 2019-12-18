@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.passes.rest.mappers;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.passes.domain.PassList;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
@@ -22,59 +21,56 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PassRefactoredMapper {
+public class PassMapper {
 
     private final FestivalConfiguration festivalConfiguration;
     private final EventDateMapper eventDateMapper;
 
     @Inject
-    public PassRefactoredMapper(FestivalConfiguration festivalConfiguration, EventDateMapper eventDateMapper) {
+    public PassMapper(FestivalConfiguration festivalConfiguration, EventDateMapper eventDateMapper) {
         this.festivalConfiguration = festivalConfiguration;
         this.eventDateMapper = eventDateMapper;
     }
 
-    public PassList fromRequest(PassRefactoredRequest request) {
+    public List<PassRefactored> fromRequest(PassRefactoredRequest request) {
         PassCategories category = parsePassCategory(request.getPassCategory());
         PassOptions option = parsePassOption(request.getPassOption());
 
         List<EventDate> eventDates = buildEventDates(request.getEventDates(), option);
-        List<PassRefactored> passes = buildPasses(eventDates, option);
-        List<EventDate> arrivalDates = buildArrivalDates(eventDates, option);
-        List<EventDate> departureDates = buildDepartureDates(eventDates, option);
-
         Money price = calculatePrice(request.getEventDates(), category, option);
 
-        return new PassList(passes, category, option, price, arrivalDates, departureDates);
+        return buildPasses(eventDates, category, option, price);
     }
 
-    public List<PassResponse> toResponse(PassList passList) {
-        String passCategory = passList.getCategory().toString();
-        String passOption = passList.getOption().toString();
-
+    public List<PassResponse> toResponse(List<PassRefactored> passes) {
         List<PassResponse> passResponses = new ArrayList<>();
 
-        switch (passList.getOption()) {
-            case PACKAGE:
-                passResponses.add(new PassResponse(
-                        passList.getPasses().get(0).getNumber(),
-                        passCategory,
-                        passOption
-                ));
+        passes.forEach(pass -> {
+            String passCategory = pass.getCategory().toString();
+            String passOption = pass.getOption().toString();
 
-                break;
-            default:
-            case SINGLE_PASS:
-                passList.getPasses().forEach(pass -> passResponses.add(
-                        new PassResponse(
+            switch(pass.getOption()) {
+                case PACKAGE:
+                    passResponses.add(new PassResponse(
                             pass.getNumber(),
                             passCategory,
-                            passOption,
-                            pass.getEventDates().get(0).toString()
-                        ))
-                );
+                            passOption
+                    ));
 
-                break;
-        }
+                    break;
+                default:
+                case SINGLE_PASS:
+                    passResponses.add(
+                        new PassResponse(
+                                pass.getNumber(),
+                                passCategory,
+                                passOption,
+                                pass.getEventDates().get(0).toString()
+                        ));
+
+                    break;
+            }
+        });
 
         return passResponses;
     }
@@ -121,9 +117,7 @@ public class PassRefactoredMapper {
                         break;
                 }
 
-                singlePassPrice = priceDiscountStrategy.calculateDiscount(eventDates.size(), singlePassPrice);
-
-                return singlePassPrice.multiply(BigDecimal.valueOf(eventDates.size()));
+                return priceDiscountStrategy.calculateDiscount(eventDates.size(), singlePassPrice);
         }
     }
 
@@ -153,44 +147,24 @@ public class PassRefactoredMapper {
         return builtEventDates;
     }
 
-    private List<PassRefactored> buildPasses(List<EventDate> eventDates, PassOptions option) {
+    private List<PassRefactored> buildPasses(List<EventDate> eventDates, PassCategories category, PassOptions option, Money price) {
         List<PassRefactored> passes = new ArrayList<>();
 
         switch (option) {
             case PACKAGE:
-                passes.add(new PassRefactored(eventDates));
+                passes.add(new PassRefactored(eventDates, category, option, price));
 
                 break;
             default:
             case SINGLE_PASS:
                 eventDates.forEach(eventDate -> {
                     List<EventDate> singleEventDate = Collections.singletonList(eventDate);
-                    passes.add(new PassRefactored(singleEventDate));
+                    passes.add(new PassRefactored(singleEventDate, category, option, price));
                 });
 
                 break;
         }
 
         return passes;
-    }
-
-    private List<EventDate> buildArrivalDates(List<EventDate> eventDates, PassOptions option) {
-        switch (option) {
-            case PACKAGE:
-                return Collections.singletonList(festivalConfiguration.getStartEventDate());
-            default:
-            case SINGLE_PASS:
-                return eventDates;
-        }
-    }
-
-    private List<EventDate> buildDepartureDates(List<EventDate> eventDates, PassOptions option) {
-        switch (option) {
-            case PACKAGE:
-                return Collections.singletonList(festivalConfiguration.getEndEventDate());
-            default:
-            case SINGLE_PASS:
-                return eventDates;
-        }
     }
 }

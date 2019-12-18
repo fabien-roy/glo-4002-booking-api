@@ -1,8 +1,10 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.*;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
+import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -33,8 +35,8 @@ class OrderRefactoredFactoryTest {
         OrderNumber expectedOrderNumber = new OrderNumber(orderIdentifier, vendorCode);
         when(orderIdentifierGenerator.generate()).thenReturn(orderIdentifier);
         OrderDate orderDate = mock(OrderDate.class);
-        PassList pass = mock(PassList.class);
-        OrderRefactored order = new OrderRefactored(orderDate, pass);
+        PassRefactored pass = mock(PassRefactored.class);
+        OrderRefactored order = new OrderRefactored(orderDate, Collections.singletonList(pass));
 
         order = factory.create(order, vendorCode);
 
@@ -46,20 +48,17 @@ class OrderRefactoredFactoryTest {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
-        PassRefactored pass = new PassRefactored(Collections.singletonList(mock(EventDate.class)));
-        PassList passList = new PassList(
-                Collections.singletonList(pass),
+        PassRefactored pass = new PassRefactored(
+                Collections.emptyList(),
                 PassCategories.SUPERNOVA,
                 PassOptions.PACKAGE,
-                mock(Money.class),
-                Collections.emptyList(),
-                Collections.emptyList()
+                mock(Money.class)
         );
-        OrderRefactored order = new OrderRefactored(orderDate, passList);
+        OrderRefactored order = new OrderRefactored(orderDate, Collections.singletonList(pass));
 
         order = factory.create(order, "VENDOR");
 
-        assertEquals(expectedPassNumber, order.getPassList().getPasses().get(0).getNumber());
+        assertEquals(expectedPassNumber, order.getPasses().get(0).getNumber());
     }
 
     @Test
@@ -67,20 +66,17 @@ class OrderRefactoredFactoryTest {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
-        PassRefactored pass = new PassRefactored(Collections.singletonList(mock(EventDate.class)));
-        PassList passList = new PassList(
-                Collections.nCopies(2, pass),
+        PassRefactored pass = new PassRefactored(
+                Collections.emptyList(),
                 PassCategories.SUPERNOVA,
                 PassOptions.SINGLE_PASS,
-                mock(Money.class),
-                Collections.emptyList(),
-                Collections.emptyList()
+                mock(Money.class)
         );
-        OrderRefactored order = new OrderRefactored(orderDate, passList);
+        OrderRefactored order = new OrderRefactored(orderDate, Collections.nCopies(2, pass));
 
         order = factory.create(order, "VENDOR");
 
-        assertEquals(expectedPassNumber, order.getPassList().getPasses().get(0).getNumber());
-        assertEquals(expectedPassNumber, order.getPassList().getPasses().get(1).getNumber());
+        assertEquals(expectedPassNumber, order.getPasses().get(0).getNumber());
+        assertEquals(expectedPassNumber, order.getPasses().get(1).getNumber());
     }
 }

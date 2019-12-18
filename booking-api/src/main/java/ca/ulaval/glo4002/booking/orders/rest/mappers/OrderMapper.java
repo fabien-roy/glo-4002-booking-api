@@ -6,10 +6,10 @@ import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
-import ca.ulaval.glo4002.booking.passes.domain.PassList;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
-import ca.ulaval.glo4002.booking.passes.rest.mappers.PassRefactoredMapper;
+import ca.ulaval.glo4002.booking.passes.rest.mappers.PassMapper;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
@@ -20,10 +20,10 @@ public class OrderMapper {
 
     private final PassBundleMapper passBundleMapper;
     private final OrderDateMapper orderDateMapper;
-    private final PassRefactoredMapper passMapper;
+    private final PassMapper passMapper;
 
     @Inject
-    public OrderMapper(PassBundleMapper passBundleMapper, OrderDateMapper orderDateMapper, PassRefactoredMapper passMapper) {
+    public OrderMapper(PassBundleMapper passBundleMapper, OrderDateMapper orderDateMapper, PassMapper passMapper) {
         this.passBundleMapper = passBundleMapper;
         this.orderDateMapper = orderDateMapper;
         this.passMapper = passMapper;
@@ -35,14 +35,14 @@ public class OrderMapper {
         }
 
         OrderDate orderDate = orderDateMapper.fromString(request.getOrderDate());
-        PassList pass = passMapper.fromRequest(request.getPass());
+        List<PassRefactored> passes = passMapper.fromRequest(request.getPass());
 
-        return new OrderRefactored(orderDate, pass);
+        return new OrderRefactored(orderDate, passes);
     }
 
     // TODO : Test
     public OrderResponse toResponse(OrderRefactored order) {
-        List<PassResponse> passes = passMapper.toResponse(order.getPassList());
+        List<PassResponse> passes = passMapper.toResponse(order.getPasses());
 
         float fullOrderPrice = order.getPrice().getValue().floatValue();
         float orderPrice = formatOrderPrice(fullOrderPrice);

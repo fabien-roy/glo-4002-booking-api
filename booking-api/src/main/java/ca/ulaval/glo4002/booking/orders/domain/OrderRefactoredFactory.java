@@ -22,7 +22,7 @@ public class OrderRefactoredFactory {
         OrderNumber orderNumber = new OrderNumber(orderIdentifier, vendorCode);
         order.setOrderNumber(orderNumber);
 
-        order.getPassList().getPasses().forEach(pass -> {
+        order.getPasses().forEach(pass -> {
             long passNumber = passNumberGenerator.generate();
             pass.setNumber(passNumber);
         });
