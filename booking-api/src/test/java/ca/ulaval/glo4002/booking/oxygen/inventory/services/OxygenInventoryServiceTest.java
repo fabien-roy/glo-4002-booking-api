@@ -11,8 +11,6 @@ import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -80,7 +78,7 @@ class OxygenInventoryServiceTest {
 
         service.orderForArtist(artist, orderDate);
 
-        verify(producer).produceOxygenByQuantity(argThat(category -> category.getCategory().equals(expectedOxygenCategory)), any(), any());
+        verify(producer).produceOxygenByQuantity(argThat(category -> category.equals(expectedOxygenCategory)), any(), any());
     }
 
     @Test
@@ -95,9 +93,9 @@ class OxygenInventoryServiceTest {
         verify(producer).produceOxygenByQuantity(any(), eq(expectedOrderDateValue), any());
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3})
-    void orderForArtist_shouldProduceWithCorrectAmountOfTanks(int numberOfPeople) {
+    @Test
+    void orderForArtist_shouldProduceWithCorrectAmountOfTanks() {
+	    int numberOfPeople = 2;
         Artist artist = mock(Artist.class);
         when(artist.getNumberOfPeople()).thenReturn(numberOfPeople);
         EventDate orderDate = mock(EventDate.class);
