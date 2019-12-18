@@ -3,12 +3,10 @@ package ca.ulaval.glo4002.booking.orders.rest.mappers;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
-import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
-import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassMapper;
 
 import javax.inject.Inject;
@@ -18,18 +16,16 @@ import java.util.List;
 
 public class OrderMapper {
 
-    private final PassBundleMapper passBundleMapper;
     private final OrderDateMapper orderDateMapper;
     private final PassMapper passMapper;
 
     @Inject
-    public OrderMapper(PassBundleMapper passBundleMapper, OrderDateMapper orderDateMapper, PassMapper passMapper) {
-        this.passBundleMapper = passBundleMapper;
+    public OrderMapper(OrderDateMapper orderDateMapper, PassMapper passMapper) {
         this.orderDateMapper = orderDateMapper;
         this.passMapper = passMapper;
     }
 
-    public OrderRefactored fromRequest(OrderRefactoredRequest request) {
+    public Order fromRequest(OrderRefactoredRequest request) {
         if (request.getPass() == null) {
             throw new InvalidFormatException();
         }
@@ -37,21 +33,12 @@ public class OrderMapper {
         OrderDate orderDate = orderDateMapper.fromString(request.getOrderDate());
         List<PassRefactored> passes = passMapper.fromRequest(request.getPass());
 
-        return new OrderRefactored(orderDate, passes);
+        return new Order(orderDate, passes);
     }
 
     // TODO : Test
-    public OrderResponse toResponse(OrderRefactored order) {
-        List<PassResponse> passes = passMapper.toResponse(order.getPasses());
-
-        float fullOrderPrice = order.getPrice().getValue().floatValue();
-        float orderPrice = formatOrderPrice(fullOrderPrice);
-
-        return new OrderResponse(orderPrice, passes);
-    }
-
     public OrderResponse toResponse(Order order) {
-        List<PassResponse> passes = passBundleMapper.toResponse(order.getPassBundle());
+        List<PassResponse> passes = passMapper.toResponse(order.getPasses());
 
         float fullOrderPrice = order.getPrice().getValue().floatValue();
         float orderPrice = formatOrderPrice(fullOrderPrice);

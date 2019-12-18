@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.profits.services;
 
-import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
+import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
@@ -24,7 +24,7 @@ class ProfitServiceTest {
 
 	private List<Trip> tripList;
 	private List<Event> eventList;
-	private List<OrderRefactored> orderList;
+	private List<Order> orderList;
 	private List<OxygenTank> tanksList;
 
 	private static final Integer NUMBER_OF_TRIP = 10;
@@ -39,7 +39,7 @@ class ProfitServiceTest {
     	ProfitMapper mapper = new ProfitMapper();
     	Trip mockedTrip = mock(Trip.class);
     	Event mockedEvent = mock(Event.class);
-    	OrderRefactored mockedOrder = mock(OrderRefactored.class);
+    	Order mockedOrder = mock(Order.class);
     	OxygenTank mockedTank = mock(OxygenTank.class);
     	
     	tripList = Collections.nCopies(NUMBER_OF_TRIP, mockedTrip);

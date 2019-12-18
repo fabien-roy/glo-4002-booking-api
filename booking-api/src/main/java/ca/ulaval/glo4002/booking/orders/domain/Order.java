@@ -1,50 +1,51 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.Pass;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-
-import java.time.LocalDateTime;
-import java.util.List;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public class Order {
 
 	private OrderNumber orderNumber;
 	private OrderDate orderDate;
-	private PassBundle passBundle;
+	private List<PassRefactored> passes;
 
-	public Order(OrderNumber orderNumber, OrderDate orderDate, PassBundle passBundle) {
-		this.orderNumber = orderNumber;
+	public Order(OrderDate orderDate, List<PassRefactored> passes) {
 		this.orderDate = orderDate;
-		this.passBundle = passBundle;
+		this.passes = passes;
+	}
+
+	public void setOrderNumber(OrderNumber orderNumber) {
+		this.orderNumber = orderNumber;
 	}
 
 	public OrderNumber getOrderNumber() {
 		return orderNumber;
 	}
 
-	public String getVendorCode() {
-		return orderNumber.getVendorCode();
-	}
-
 	public OrderDate getOrderDate() {
 		return orderDate;
 	}
 
-	public PassBundle getPassBundle() {
-		return passBundle;
+	public List<PassRefactored> getPasses() {
+		return passes;
 	}
 
 	public Money getPrice() {
-		return passBundle.getPrice();
+		Money price = new Money(BigDecimal.ZERO);
+
+		for (PassRefactored pass : passes) {
+			price = price.add(pass.getPrice());
+		}
+
+		return price;
 	}
 
-	public List<Pass> getPasses() {
-		return passBundle.getPasses();
-	}
-
+	// TODO : Use updateProfit
 	public void updateProfit(ProfitReport profitReport) {
-		passBundle.updateProfit(profitReport);
+	    profitReport.addRevenue(getPrice());
 	}
 }

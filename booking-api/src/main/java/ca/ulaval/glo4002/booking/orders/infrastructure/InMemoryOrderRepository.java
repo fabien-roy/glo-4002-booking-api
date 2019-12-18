@@ -1,7 +1,7 @@
 package ca.ulaval.glo4002.booking.orders.infrastructure;
 
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
-import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
+import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.rest.exceptions.OrderNotFoundException;
 
 import java.util.ArrayList;
@@ -10,15 +10,15 @@ import java.util.Optional;
 
 public class InMemoryOrderRepository implements OrderRepository {
 
-	private List<OrderRefactored> orders;
+	private List<Order> orders;
 
 	public InMemoryOrderRepository() {
 		orders = new ArrayList<>();
 	}
 
 	@Override
-	public OrderRefactored getByOrderNumber(OrderNumber orderNumber) {
-		Optional<OrderRefactored> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber)).findAny();
+	public Order getByOrderNumber(OrderNumber orderNumber) {
+		Optional<Order> foundOrder = orders.stream().filter(order -> order.getOrderNumber().equals(orderNumber)).findAny();
 
 		if (!foundOrder.isPresent()) {
 			throw new OrderNotFoundException(orderNumber.toString());
@@ -28,12 +28,12 @@ public class InMemoryOrderRepository implements OrderRepository {
 	}
 
 	@Override
-	public void addOrder(OrderRefactored order) {
+	public void addOrder(Order order) {
 		orders.add(order);
 	}
 
 	@Override
-	public List<OrderRefactored> findAll() {
+	public List<Order> findAll() {
 	    return orders;
 	}
 }

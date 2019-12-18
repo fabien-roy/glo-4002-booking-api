@@ -19,10 +19,10 @@ class OrderServiceTest {
 
 	private OrderService service;
 	private OrderRepository repository;
-	private OrderRefactoredFactory factory;
+	private OrderFactory factory;
 	private TripService tripService;
 	private OxygenInventoryService oxygenInventoryService;
-	private OrderRefactored order;
+	private Order order;
 	private List<PassRefactored> passes;
 
 	@BeforeEach
@@ -39,10 +39,10 @@ class OrderServiceTest {
 	void setUpOrder() {
 	    passes = Collections.singletonList(mock(PassRefactored.class));
 		OrderNumber orderNumber = mock(OrderNumber.class);
-		order = mock(OrderRefactored.class);
+		order = mock(Order.class);
 		when(order.getOrderNumber()).thenReturn(orderNumber);
 		when(order.getPasses()).thenReturn(passes);
-		factory = mock(OrderRefactoredFactory.class);
+		factory = mock(OrderFactory.class);
 		when(factory.create(any(), any())).thenReturn(order);
 	}
 

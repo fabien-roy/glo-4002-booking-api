@@ -1,57 +1,41 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class OrderTest {
 
-	private Order order;
-	private PassBundle passBundle;
-	private OrderNumber orderNumber;
+    private Order order;
 
-	@BeforeEach
-	void setUpOrder() {
-		OrderDate orderDate = FestivalConfiguration.getDefaultStartOrderDate();
-		passBundle = mock(PassBundle.class);
-		orderNumber = mock(OrderNumber.class);
+    @Test
+    void getPrice_shouldReturnPassPrice_whenThereIsASinglePass() {
+        Money expectedPrice = new Money(BigDecimal.valueOf(100));
+        PassRefactored pass = mock(PassRefactored.class);
+        when(pass.getPrice()).thenReturn(expectedPrice);
 
-		when(passBundle.getPrice()).thenReturn(mock(Money.class));
-		when(passBundle.getPasses()).thenReturn(new ArrayList<>());
-		when(orderNumber.getVendorCode()).thenReturn("VENDOR");
+        order = new Order(mock(OrderDate.class), Collections.singletonList(pass));
 
-		order = new Order(orderNumber, orderDate, passBundle);
-	}
+        assertEquals(expectedPrice, order.getPrice());
+    }
 
-	@Test
-	void getPrice_shouldGetCorrectPrice() {
-		assertEquals(order.getPrice(), passBundle.getPrice());
-	}
+    @Test
+    void getPrice_shouldReturnTotalPrice_whenThereIsAreMultiplePasses() {
+        int passQuantity = 2;
+        Money passPrice = new Money(BigDecimal.valueOf(100));
+        Money expectedPrice = passPrice.multiply(BigDecimal.valueOf(passQuantity));
+        PassRefactored pass = mock(PassRefactored.class);
+        when(pass.getPrice()).thenReturn(passPrice);
 
-	@Test
-	void getPasses_shouldGetCorrectPassesList() {
-		assertEquals(order.getPasses(), passBundle.getPasses());
-	}
+        order = new Order(mock(OrderDate.class), Collections.nCopies(passQuantity, pass));
 
-	@Test
-	void getVendorCode_shouldGetCorrectVendorCode() {
-		assertEquals(order.getVendorCode(), orderNumber.getVendorCode());
-	}
-
-	@Test
-	void updateProfit_shouldUpdateProfitOfPassBundle() {
-		ProfitReport profitReport = mock(ProfitReport.class);
-
-		order.updateProfit(profitReport);
-
-		verify(passBundle).updateProfit(eq(profitReport));
-	}
+        assertEquals(expectedPrice, order.getPrice());
+    }
 }

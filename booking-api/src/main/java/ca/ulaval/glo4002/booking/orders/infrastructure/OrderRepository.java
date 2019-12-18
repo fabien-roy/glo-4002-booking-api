@@ -1,15 +1,15 @@
 package ca.ulaval.glo4002.booking.orders.infrastructure;
 
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
-import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
+import ca.ulaval.glo4002.booking.orders.domain.Order;
 
 import java.util.List;
 
 public interface OrderRepository {
 
-    OrderRefactored getByOrderNumber(OrderNumber orderNumber);
+    Order getByOrderNumber(OrderNumber orderNumber);
 
-    void addOrder(OrderRefactored order);
+    void addOrder(Order order);
 
-    List<OrderRefactored> findAll();
+    List<Order> findAll();
 }

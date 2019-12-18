@@ -1,37 +1,32 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
-import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderDateMapper;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundle;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
+import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
 
 import javax.inject.Inject;
 
 public class OrderFactory {
 
+    // TODO : Maybe price calculation should be in factory
+
     private final OrderIdentifierGenerator orderIdentifierGenerator;
-    private final OrderDateMapper orderDateMapper;
-    private final PassBundleFactory passBundleFactory;
+    private final PassNumberGenerator passNumberGenerator;
 
     @Inject
-    public OrderFactory(OrderIdentifierGenerator orderIdentifierGenerator, OrderDateMapper orderDateMapper, PassBundleFactory passBundleFactory) {
+    public OrderFactory(OrderIdentifierGenerator orderIdentifierGenerator, PassNumberGenerator passNumberGenerator) {
         this.orderIdentifierGenerator = orderIdentifierGenerator;
-        this.orderDateMapper = orderDateMapper;
-        this.passBundleFactory = passBundleFactory;
+        this.passNumberGenerator = passNumberGenerator;
     }
 
-    // TODO : Factories should not handle UI objects (use mappers)
-    public Order create(OrderRequest orderRequest) {
-        // TODO : Make passes nonNullable in Requests (or throw in mapper)
-        if (orderRequest.getPasses() == null) {
-            throw new InvalidFormatException();
-        }
+    public Order create(Order order, String vendorCode) {
+        OrderIdentifier orderIdentifier = orderIdentifierGenerator.generate();
+        OrderNumber orderNumber = new OrderNumber(orderIdentifier, vendorCode);
+        order.setOrderNumber(orderNumber);
 
-        OrderNumber orderNumber = new OrderNumber(orderIdentifierGenerator.generate(), orderRequest.getVendorCode());
-        OrderDate orderDate = orderDateMapper.fromString(orderRequest.getOrderDate()); // TODO : Test this call
-        PassBundle passBundle = passBundleFactory.create(orderRequest.getPasses());
+        order.getPasses().forEach(pass -> {
+            long passNumber = passNumberGenerator.generate();
+            pass.setNumber(passNumber);
+        });
 
-        return new Order(orderNumber, orderDate, passBundle);
+        return order;
     }
 }
