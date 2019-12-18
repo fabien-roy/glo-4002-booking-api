@@ -1,10 +1,9 @@
 package ca.ulaval.glo4002.booking.shuttles.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ShuttleFactoryTest {
 
@@ -46,32 +45,5 @@ class ShuttleFactoryTest {
         assertEquals(ShuttleCategories.SPACE_X, shuttle.getCategory());
         assertEquals(ShuttleFactory.SPACE_X_MAX_CAPACITY, shuttle.getMaxCapacity());
         assertEquals(ShuttleFactory.SPACE_X_PRICE, shuttle.getPrice());
-    }
-
-    @Test
-    void createCategory_shouldCreateEtSpaceship_whenCategoryIsSupernova() {
-        PassCategories passCategory = PassCategories.SUPERNOVA;
-
-        ShuttleCategories category = factory.createCategory(passCategory);
-
-        assertEquals(ShuttleCategories.ET_SPACESHIP, category);
-    }
-
-    @Test
-    void createCategory_shouldCreateMillenniumFalcon_whenCategoryIsSupergiant() {
-        PassCategories passCategory = PassCategories.SUPERGIANT;
-
-        ShuttleCategories category = factory.createCategory(passCategory);
-
-        assertEquals(ShuttleCategories.MILLENNIUM_FALCON, category);
-    }
-
-    @Test
-    void createCategory_shouldCreateSpaceX_whenCategoryIsNebula() {
-        PassCategories passCategory = PassCategories.NEBULA;
-
-        ShuttleCategories category = factory.createCategory(passCategory);
-
-        assertEquals(ShuttleCategories.SPACE_X, category);
     }
 }

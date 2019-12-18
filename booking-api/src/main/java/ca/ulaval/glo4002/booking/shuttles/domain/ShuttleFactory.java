@@ -1,9 +1,8 @@
 package ca.ulaval.glo4002.booking.shuttles.domain;
 
-import java.math.BigDecimal;
-
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+
+import java.math.BigDecimal;
 
 public class ShuttleFactory {
 	
@@ -37,18 +36,6 @@ public class ShuttleFactory {
 						SPACE_X_MAX_CAPACITY,
 						SPACE_X_PRICE
 				);
-		}
-	}
-
-	public ShuttleCategories createCategory(PassCategories category) {
-		switch(category) {
-			case SUPERNOVA:
-				return ShuttleCategories.ET_SPACESHIP;
-			case SUPERGIANT:
-				return ShuttleCategories.MILLENNIUM_FALCON;
-			default:
-			case NEBULA:
-				return ShuttleCategories.SPACE_X;
 		}
 	}
 }

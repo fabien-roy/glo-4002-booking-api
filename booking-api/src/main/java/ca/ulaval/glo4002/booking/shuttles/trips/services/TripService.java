@@ -1,11 +1,11 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.services;
 
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
+import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
-import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 
 import javax.inject.Inject;
@@ -15,12 +15,10 @@ import java.util.List;
 public class TripService {
 
 	private final TripRepository repository;
-	private final ShuttleFactory factory;
 
 	@Inject
-	public TripService(TripRepository repository, ShuttleFactory factory) {
+	public TripService(TripRepository repository) {
 		this.repository = repository;
-		this.factory = factory;
 	}
 
 	public void orderForArtist(Artist artist, EventDate tripDate) {
@@ -41,11 +39,23 @@ public class TripService {
 
 	public void orderForPasses(List<Pass> passes) {
 		passes.forEach(pass -> {
-			ShuttleCategories category = factory.createCategory(pass.getCategory()); // TODO : Use a mapper
+			ShuttleCategories category = getShuttleCategoryForPassCategory(pass.getCategory());
 			Passenger passenger = new Passenger(pass.getNumber().getValue());
 
 			repository.addPassengerToArrivals(passenger, category, pass.getArrivalDate());
 			repository.addPassengerToDepartures(passenger, category, pass.getDepartureDate());
 		});
+	}
+
+	private ShuttleCategories getShuttleCategoryForPassCategory(PassCategories passCategory) {
+		switch(passCategory) {
+			case SUPERNOVA:
+				return ShuttleCategories.ET_SPACESHIP;
+			case SUPERGIANT:
+				return ShuttleCategories.MILLENNIUM_FALCON;
+			default:
+			case NEBULA:
+				return ShuttleCategories.SPACE_X;
+		}
 	}
 }

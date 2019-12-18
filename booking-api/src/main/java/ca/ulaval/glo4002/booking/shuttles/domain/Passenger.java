@@ -2,13 +2,13 @@ package ca.ulaval.glo4002.booking.shuttles.domain;
 
 public class Passenger {
 
-	private Long number;
+	private long number; // Not using a value object, since Passenger is nothing but a number
 
-	public Passenger(Long number) {
+	public Passenger(long number) {
 		this.number = number;
 	}
 	
-	public Long getNumber() {
+	public long getNumber() {
 		return number;
 	}
 }

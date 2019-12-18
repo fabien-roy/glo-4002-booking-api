@@ -1,16 +1,15 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
-import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,9 +28,8 @@ class TripServiceTest {
 	@BeforeEach
 	void setUpService() {
 		repository = mock(TripRepository.class);
-		ShuttleFactory shuttleFactory = new ShuttleFactory();
 
-		service = new TripService(repository, shuttleFactory);
+		service = new TripService(repository);
 	}
 
 	@Test
@@ -159,5 +157,50 @@ class TripServiceTest {
 		service.orderForPasses(passes);
 
 		verify(repository, times(passQuantity)).addPassengerToDepartures(any(), any(), eq(eventDate));
+	}
+
+	@Test
+	void orderForPasses_shouldAddPassengerWithEtSpaceshipCategory_whenPassCategoryIsSupernova() {
+		ShuttleCategories expectedShuttleCategory = ShuttleCategories.ET_SPACESHIP;
+		PassCategories passCategory = PassCategories.SUPERNOVA;
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+		Pass pass = new Pass(Collections.singletonList(eventDate), passCategory, PassOptions.SINGLE_PASS, mock(Money.class));
+		pass.setNumber(new PassNumber(1L));
+		List<Pass> passes = Collections.singletonList(pass);
+
+		service.orderForPasses(passes);
+
+		verify(repository).addPassengerToArrivals(any(), eq(expectedShuttleCategory), any());
+		verify(repository).addPassengerToDepartures(any(), eq(expectedShuttleCategory), any());
+	}
+
+	@Test
+	void orderForPasses_shouldAddPassengerWithMillenniumFalconCategory_whenPassCategoryIsSupergiant() {
+		ShuttleCategories expectedShuttleCategory = ShuttleCategories.MILLENNIUM_FALCON;
+		PassCategories passCategory = PassCategories.SUPERGIANT;
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+		Pass pass = new Pass(Collections.singletonList(eventDate), passCategory, PassOptions.SINGLE_PASS, mock(Money.class));
+		pass.setNumber(new PassNumber(1L));
+		List<Pass> passes = Collections.singletonList(pass);
+
+		service.orderForPasses(passes);
+
+		verify(repository).addPassengerToArrivals(any(), eq(expectedShuttleCategory), any());
+		verify(repository).addPassengerToDepartures(any(), eq(expectedShuttleCategory), any());
+	}
+
+	@Test
+	void orderForPasses_shouldAddPassengerWithSpaceXCategory_whenPassCategoryIsNebula() {
+		ShuttleCategories expectedShuttleCategory = ShuttleCategories.SPACE_X;
+		PassCategories passCategory = PassCategories.NEBULA;
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+		Pass pass = new Pass(Collections.singletonList(eventDate), passCategory, PassOptions.SINGLE_PASS, mock(Money.class));
+		pass.setNumber(new PassNumber(1L));
+		List<Pass> passes = Collections.singletonList(pass);
+
+		service.orderForPasses(passes);
+
+		verify(repository).addPassengerToArrivals(any(), eq(expectedShuttleCategory), any());
+		verify(repository).addPassengerToDepartures(any(), eq(expectedShuttleCategory), any());
 	}
 }
