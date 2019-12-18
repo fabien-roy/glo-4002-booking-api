@@ -1,8 +1,9 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
+import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
+import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,7 +23,6 @@ import static org.mockito.Mockito.*;
 class TripServiceTest {
 
 	private TripService service;
-	private FestivalConfiguration festivalConfiguration;
 	private TripRepository repository;
 
 	@BeforeEach
@@ -31,69 +30,60 @@ class TripServiceTest {
 		repository = mock(TripRepository.class);
 		ShuttleFactory shuttleFactory = new ShuttleFactory();
 
-		service = new TripService(festivalConfiguration, repository, shuttleFactory);
-	}
-
-	@BeforeEach
-	void setUpConfiguration() {
-		festivalConfiguration = mock(FestivalConfiguration.class);
-
-		when(festivalConfiguration.getStartEventDate()).thenReturn(FestivalConfiguration.getDefaultStartEventDate());
-		when(festivalConfiguration.getEndEventDate()).thenReturn(FestivalConfiguration.getDefaultEndEventDate());
+		service = new TripService(repository, shuttleFactory);
 	}
 
 	@Test
-	void orderForArtist_shouldOrderTripForArtistAtCorrectDate_whenThereIsASingleMember() {
+	void orderForArtist_shouldOrderTripForArtistAtCorrectDate() {
 		Integer memberAmount = 1;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
-				new ArrayList<>());
+		Artist artist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1, new ArrayList<>());
 
-		service.orderForArtist(aArtist, anEventDate);
+		service.orderForArtist(artist, eventDate);
 
-		verify(repository).addPassengersToNewArrival(any(), any(), eq(anEventDate));
-		verify(repository).addPassengersToNewDeparture(any(), any(), eq(anEventDate));
+		verify(repository).addPassengersToNewArrival(any(), any(), eq(eventDate));
+		verify(repository).addPassengersToNewDeparture(any(), any(), eq(eventDate));
 	}
 
 	@Test
 	void orderForArtist_shouldOrderEtSpaceshipTripForArtist_whenThereIsASingleMember() {
+	    ShuttleCategories expectedCategory = ShuttleCategories.ET_SPACESHIP;
 		Integer memberAmount = 1;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
-				new ArrayList<>());
+		Artist artist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1, new ArrayList<>());
 
-		service.orderForArtist(aArtist, anEventDate);
+		service.orderForArtist(artist, eventDate);
 
-		verify(repository).addPassengersToNewArrival(any(), eq(ShuttleCategories.ET_SPACESHIP), any());
-		verify(repository).addPassengersToNewDeparture(any(), eq(ShuttleCategories.ET_SPACESHIP), any());
+		verify(repository).addPassengersToNewArrival(any(), eq(expectedCategory), any());
+		verify(repository).addPassengersToNewDeparture(any(), eq(expectedCategory), any());
 	}
 
 	@Test
 	void orderForArtist_shouldOrderMillenniumFalconTripForArtist_whenThereAreMultipleMembers() {
+		ShuttleCategories expectedCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		Integer memberAmount = 2;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
-				new ArrayList<>());
+		Artist artist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1, new ArrayList<>());
 
-		service.orderForArtist(aArtist, anEventDate);
+		service.orderForArtist(artist, eventDate);
 
-		verify(repository).addPassengersToNewArrival(any(), eq(ShuttleCategories.MILLENNIUM_FALCON), any());
-		verify(repository).addPassengersToNewDeparture(any(), eq(ShuttleCategories.MILLENNIUM_FALCON), any());
+		verify(repository).addPassengersToNewArrival(any(), eq(expectedCategory), any());
+		verify(repository).addPassengersToNewDeparture(any(), eq(expectedCategory), any());
 	}
 
 	@Test
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
 		Long expectedPassengerNumber = 1L;
 		Integer memberAmount = 1;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist aArtist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, "aMusicStyle", 1,
+		Artist artist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
-		service.orderForArtist(aArtist, anEventDate);
+		service.orderForArtist(artist, eventDate);
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
@@ -106,12 +96,12 @@ class TripServiceTest {
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
 		Long expectedPassengerNumber = 1L;
 		Integer memberAmount = 2;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
 		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
 				new ArrayList<>());
 
-		service.orderForArtist(aArtist, anEventDate);
+		service.orderForArtist(aArtist, eventDate);
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
@@ -122,113 +112,47 @@ class TripServiceTest {
 
 	@Test
 	void orderForPasses_shouldAddPassengerToDeparturesOnce_whenThereIsASinglePass() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money, anEventDate);
-		List<Pass> somePasses = Collections.singletonList(aPass);
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<PassRefactored> passes = Collections.singletonList(pass);
 
-		service.orderForPasses(category, somePasses);
+		service.orderForPasses(passes);
 
-		verify(repository, times(1)).addPassengerToDepartures(any(), any(), eq(anEventDate));
+		verify(repository, times(1)).addPassengerToDepartures(any(), any(), eq(eventDate));
 	}
 
 	@Test
 	void orderForPasses_shouldAddPassengerToArrivalsOnce_whenThereIsASinglePass() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money, anEventDate);
-		List<Pass> somePasses = Collections.singletonList(aPass);
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<PassRefactored> passes = Collections.singletonList(pass);
 
-		service.orderForPasses(category, somePasses);
+		service.orderForPasses(passes);
 
-		verify(repository, times(1)).addPassengerToArrivals(any(), any(), eq(anEventDate));
+		verify(repository, times(1)).addPassengerToArrivals(any(), any(), eq(eventDate));
 	}
 
 	@Test
 	void orderForPasses_shouldAddPassengerToCorrectDeparturesDates_whenThereAreMultiplePasses() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money, anEventDate);
-		Pass anotherPass = new Pass(1L, money, anotherEventDate);
-		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
+		int passQuantity = 2;
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<PassRefactored> passes = Collections.nCopies(passQuantity, pass);
 
-		service.orderForPasses(category, somePasses);
+		service.orderForPasses(passes);
 
-		verify(repository).addPassengerToDepartures(any(), any(), eq(anEventDate));
-		verify(repository).addPassengerToDepartures(any(), any(), eq(anotherEventDate));
-	}
-
-	@Test
-	void orderForPasses_shouldAddPassengerToCorrectArrivalsDates_whenThereAreMultiplePasses() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money, anEventDate);
-		Pass anotherPass = new Pass(1L, money, anotherEventDate);
-		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
-
-		service.orderForPasses(category, somePasses);
-
-		verify(repository).addPassengerToArrivals(any(), any(), eq(anEventDate));
-		verify(repository).addPassengerToArrivals(any(), any(), eq(anotherEventDate));
+		verify(repository, times(passQuantity)).addPassengerToArrivals(any(), any(), eq(eventDate));
 	}
 
 	@Test
 	void orderForPasses_shouldAddPassengerToDeparturesMultipleTimes_whenThereAreMultiplePasses() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money, anEventDate);
-		Pass anotherPass = new Pass(1L, money, anotherEventDate);
-		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
+		int passQuantity = 2;
+		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
+		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<PassRefactored> passes = Collections.nCopies(passQuantity, pass);
 
-		service.orderForPasses(category, somePasses);
+		service.orderForPasses(passes);
 
-		verify(repository, times(2)).addPassengerToDepartures(any(), any(), any());
-	}
-
-	@Test
-	void orderForPasses_shouldAddPassengerToArrivalsMultipleTimes_whenThereAreMultiplePasses() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		EventDate anEventDate = FestivalConfiguration.getDefaultStartEventDate();
-		EventDate anotherEventDate = FestivalConfiguration.getDefaultEndEventDate();
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money, anEventDate);
-		Pass anotherPass = new Pass(1L, money, anotherEventDate);
-		List<Pass> somePasses = Arrays.asList(aPass, anotherPass);
-
-		service.orderForPasses(category, somePasses);
-
-		verify(repository, times(2)).addPassengerToArrivals(any(), any(), any());
-	}
-
-	@Test
-	void orderForPasses_shouldAddPassengerToDeparturesOfEndDate_whenPassHasNoEventDate() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money);
-		List<Pass> somePasses = Collections.singletonList(aPass);
-
-		service.orderForPasses(category, somePasses);
-
-		verify(repository).addPassengerToDepartures(any(), any(), eq(FestivalConfiguration.getDefaultEndEventDate()));
-	}
-
-	@Test
-	void orderForPasses_shouldAddPassengerToArrivalsOfStartDate_whenPassHasNoEventDate() {
-		PassCategories category = PassCategories.SUPERNOVA;
-		Money money = mock(Money.class);
-		Pass aPass = new Pass(1L, money);
-		List<Pass> somePasses = Collections.singletonList(aPass);
-
-		service.orderForPasses(category, somePasses);
-
-		verify(repository).addPassengerToArrivals(any(), any(), eq(FestivalConfiguration.getDefaultStartEventDate()));
+		verify(repository, times(passQuantity)).addPassengerToDepartures(any(), any(), eq(eventDate));
 	}
 }

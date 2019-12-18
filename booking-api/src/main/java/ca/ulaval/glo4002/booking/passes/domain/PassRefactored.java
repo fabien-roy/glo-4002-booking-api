@@ -43,4 +43,12 @@ public class PassRefactored {
 	public Money getPrice() {
 		return price;
 	}
+
+	public EventDate getArrivalDate() {
+		return eventDates.get(0);
+	}
+
+	public EventDate getDepartureDate() {
+	    return eventDates.get(eventDates.size() - 1);
+	}
 }
