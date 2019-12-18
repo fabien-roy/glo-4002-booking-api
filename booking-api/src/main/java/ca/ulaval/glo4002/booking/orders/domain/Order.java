@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -42,10 +41,5 @@ public class Order {
 		}
 
 		return price;
-	}
-
-	// TODO : Use updateProfit
-	public void updateProfit(ProfitReport profitReport) {
-	    profitReport.addRevenue(getPrice());
 	}
 }

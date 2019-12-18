@@ -14,7 +14,6 @@ import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +36,7 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1, new ArrayList<>());
+		Artist artist = new Artist(1, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
@@ -51,7 +50,7 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1, new ArrayList<>());
+		Artist artist = new Artist(1, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
@@ -65,7 +64,7 @@ class TripServiceTest {
 		Integer memberAmount = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1, new ArrayList<>());
+		Artist artist = new Artist(1, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
@@ -79,8 +78,7 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, "aMusicStyle", 1,
-				new ArrayList<>());
+		Artist artist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
@@ -97,10 +95,9 @@ class TripServiceTest {
 		Integer memberAmount = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist aArtist = new Artist(1, "aArtist", money, memberAmount, "aMusicStyle", 1,
-				new ArrayList<>());
+		Artist artist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, 1);
 
-		service.orderForArtist(aArtist, eventDate);
+		service.orderForArtist(artist, eventDate);
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()

@@ -1,7 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.domain;
 
 import ca.ulaval.glo4002.booking.profits.domain.Money;
-import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.Shuttle;
@@ -52,9 +51,5 @@ public class Trip {
 
 	public boolean isFull() {
 		return shuttle.getMaxCapacity() == passengers.size();
-	}
-
-	public void updateProfit(ProfitReport profitReport) {
-		shuttle.updateProfit(profitReport);
 	}
 }

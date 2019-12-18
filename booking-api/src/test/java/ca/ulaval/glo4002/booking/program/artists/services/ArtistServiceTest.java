@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -106,8 +105,7 @@ class ArtistServiceTest {
     private Artist buildArtist(String name, Integer price, Integer popularityRank) {
         Money cost = new Money(new BigDecimal(price));
         Integer aNumberOfPeople = 1;
-        String aMusicStyle = "aMusicStyle";
 
-        return new Artist(1, name, cost, aNumberOfPeople, aMusicStyle, popularityRank, new ArrayList<>());
+        return new Artist(1, name, cost, aNumberOfPeople, popularityRank);
     }
 } 
