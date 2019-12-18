@@ -2,71 +2,64 @@ package ca.ulaval.glo4002.booking.profits.services;
 
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderRepository;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTank;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventoryRepository;
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
-import ca.ulaval.glo4002.booking.program.events.domain.Event;
 import ca.ulaval.glo4002.booking.program.events.domain.EventRepository;
-import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class ProfitServiceTest {
 
-	// TODO : ProfitService is missing a lot of tests
-
-	private List<Trip> tripList;
-	private List<Event> eventList;
-	private List<Order> orderList;
-	private List<OxygenTank> tanksList;
-
-	private static final Integer NUMBER_OF_TRIP = 10;
-	private static final Integer NUMBER_OF_EVENT = 8;
-	private static final Integer NUMBER_OF_ORDER = 200;
-	private static final Integer NUMBER_OF_TANK = 50;
-
-	ProfitService profitService;
+	private ProfitService profitService;
+	private OrderRepository orderRepository;
+	private OxygenInventoryRepository oxygenInventoryRepository;
+	private TripRepository tripRepository;
+	private EventRepository eventRepository;
+	private ProfitMapper mapper;
 
     @BeforeEach
     void setUpService() {
-    	ProfitMapper mapper = new ProfitMapper();
-    	Trip mockedTrip = mock(Trip.class);
-    	Event mockedEvent = mock(Event.class);
-    	Order mockedOrder = mock(Order.class);
-    	OxygenTank mockedTank = mock(OxygenTank.class);
-    	
-    	tripList = Collections.nCopies(NUMBER_OF_TRIP, mockedTrip);
-    	eventList = Collections.nCopies(NUMBER_OF_EVENT, mockedEvent);
-    	orderList = Collections.nCopies(NUMBER_OF_ORDER, mockedOrder);
-    	tanksList = Collections.nCopies(NUMBER_OF_TANK, mockedTank);
-    	
-    	TripRepository mockedTripRepository = mock(TripRepository.class);
-    	OrderRepository mockedOrderRepository = mock(OrderRepository.class);
-    	EventRepository mockedEventRepository = mock(EventRepository.class);
-		OxygenInventoryRepository mockedInventoryRepository = mock(OxygenInventoryRepository.class);
-    	
-    	when(mockedTripRepository.getDepartures()).thenReturn(tripList);
-    	when(mockedEventRepository.findAll()).thenReturn(eventList);
-    	when(mockedOrderRepository.findAll()).thenReturn(orderList);
-    	when(mockedInventoryRepository.findAll()).thenReturn(tanksList);
+        orderRepository = mock(OrderRepository.class);
+        oxygenInventoryRepository = mock(OxygenInventoryRepository.class);
+        tripRepository = mock(TripRepository.class);
+        eventRepository = mock(EventRepository.class);
+    	mapper = mock(ProfitMapper.class);
 
-    	profitService = new ProfitService(mockedOrderRepository, mockedInventoryRepository, mockedTripRepository, mockedEventRepository, mapper);
+    	profitService = new ProfitService(orderRepository, oxygenInventoryRepository, tripRepository, eventRepository, mapper);
     }
 
     @Test
-    void calculateProfit_shouldUpdateProfitValueForEachObjectThatHaveAPrice() {
-		profitService.getReport();
+    void getProfit_shouldAddRevenueForOrder_whenThereIsASingleOrder() {
+        Money expectedRevenue = new Money(BigDecimal.valueOf(100));
+        Order order = mock(Order.class);
+        when(order.getPrice()).thenReturn(expectedRevenue);
+        when(orderRepository.findAll()).thenReturn(Collections.singletonList(order));
 
-		tripList.forEach(trip -> verify(trip, times(NUMBER_OF_TRIP)).updateProfit(any()));
-		eventList.forEach(event -> verify(event, times(NUMBER_OF_EVENT)).updateProfit(any()));
-		orderList.forEach(order -> verify(order, times(NUMBER_OF_ORDER)).updateProfit(any()));
-		tanksList.forEach(tank -> verify(tank, times(NUMBER_OF_TANK)).updateProfit(any()));
+        profitService.getReport();
+
+        verify(mapper).toResponse(argThat(profitReport -> profitReport.getRevenue().equals(expectedRevenue)));
     }
+
+    @Test
+    void getProfit_shouldAddRevenueForOrder_whenThereAreMultipleOrders() {
+        int orderQuantity = 2;
+        Money orderPrice = new Money(BigDecimal.valueOf(100));
+        Money expectedRevenue = orderPrice.multiply(BigDecimal.valueOf(orderQuantity));
+        Order order = mock(Order.class);
+        when(order.getPrice()).thenReturn(orderPrice);
+        when(orderRepository.findAll()).thenReturn(Collections.nCopies(orderQuantity, order));
+
+        profitService.getReport();
+
+        verify(mapper).toResponse(argThat(profitReport -> profitReport.getRevenue().equals(expectedRevenue)));
+    }
+
+    // TODO : Rest of tests
 }
