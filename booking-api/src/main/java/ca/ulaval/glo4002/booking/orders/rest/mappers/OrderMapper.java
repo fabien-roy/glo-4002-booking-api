@@ -26,12 +26,12 @@ public class OrderMapper {
     }
 
     public Order fromRequest(OrderRequest request) {
-        if (request.getPass() == null) {
+        if (request.getPasses() == null) {
             throw new InvalidFormatException();
         }
 
         OrderDate orderDate = orderDateMapper.fromString(request.getOrderDate());
-        List<Pass> passes = passMapper.fromRequest(request.getPass());
+        List<Pass> passes = passMapper.fromRequest(request.getPasses());
 
         return new Order(orderDate, passes);
     }

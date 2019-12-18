@@ -7,7 +7,7 @@ import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.passes.domain.Pass;
-import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.passes.rest.PassRequest;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassMapper;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
@@ -60,7 +60,7 @@ class OrderMapperTest {
 		ZonedDateTime anOrderDate = generateOrderDate();
 		OrderDate expectedOrderDate = mock(OrderDate.class);
 		when(orderDateMapper.fromString(eq(anOrderDate.toString()))).thenReturn(expectedOrderDate);
-		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
+		PassRequest passRequest = mock(PassRequest.class);
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "VENDOR", passRequest);
 
 		Order order = orderMapper.fromRequest(orderRequest);
@@ -71,7 +71,7 @@ class OrderMapperTest {
 	@Test
 	void fromRequest_shouldSetPass() {
 		ZonedDateTime anOrderDate = generateOrderDate();
-		PassRefactoredRequest passRequest = mock(PassRefactoredRequest.class);
+		PassRequest passRequest = mock(PassRequest.class);
 		Pass expectedPass = mock(Pass.class);
 		when(passMapper.fromRequest(eq(passRequest))).thenReturn(Collections.singletonList(expectedPass));
 		OrderRequest orderRequest = new OrderRequest(anOrderDate.toString(), "VENDOR", passRequest);

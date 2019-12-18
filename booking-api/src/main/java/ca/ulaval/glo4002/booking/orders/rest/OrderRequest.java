@@ -1,21 +1,21 @@
 package ca.ulaval.glo4002.booking.orders.rest;
 
-import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.passes.rest.PassRequest;
 
 public class OrderRequest {
 
 	private String orderDate;
 	private String vendorCode;
-	private PassRefactoredRequest pass;
+	private PassRequest passes;
 
 	public OrderRequest() {
 		// Empty constructor for parsing
 	}
 
-	public OrderRequest(String orderDate, String vendorCode, PassRefactoredRequest pass) {
+	public OrderRequest(String orderDate, String vendorCode, PassRequest passes) {
 		this.orderDate = orderDate;
 		this.vendorCode = vendorCode;
-		this.pass = pass;
+		this.passes = passes;
 	}
 
 	public String getOrderDate() {
@@ -26,7 +26,7 @@ public class OrderRequest {
 		return vendorCode;
 	}
 
-	public PassRefactoredRequest getPass() {
-		return pass;
+	public PassRequest getPasses() {
+		return passes;
 	}
 }

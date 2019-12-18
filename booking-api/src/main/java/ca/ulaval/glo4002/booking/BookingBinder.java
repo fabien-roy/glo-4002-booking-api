@@ -37,6 +37,7 @@ import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.EventRepository;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.InMemoryEventRepository;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 import ca.ulaval.glo4002.booking.program.rest.ProgramResource;
 import ca.ulaval.glo4002.booking.program.services.ProgramService;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleFactory;
@@ -119,6 +120,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindMappers() {
+        bindAsContract(EventDateMapper.class);
         bindAsContract(PassMapper.class);
         bindAsContract(OrderMapper.class);
         bindAsContract(TripMapper.class);

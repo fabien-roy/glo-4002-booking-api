@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.passes.rest.mappers;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.passes.domain.*;
-import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.passes.rest.PassRequest;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -44,7 +44,7 @@ class PassMapperTest {
     void fromRequest_shouldThrowInvalidFormatException_whenCategoryIsInvalid() {
         String invalidCategory = "invalidCategory";
         String option = PassOptions.PACKAGE.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(invalidCategory, option);
+        PassRequest request = new PassRequest(invalidCategory, option);
 
         assertThrows(InvalidFormatException.class, () -> mapper.fromRequest(request));
     }
@@ -54,7 +54,7 @@ class PassMapperTest {
         PassCategories expectedCategory = PassCategories.SUPERNOVA;
         String category = expectedCategory.toString();
         String option = PassOptions.PACKAGE.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+        PassRequest request = new PassRequest(category, option);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -65,7 +65,7 @@ class PassMapperTest {
     void fromRequest_shouldThrowInvalidFormatException_whenOptionIsInvalid() {
         String category = PassCategories.SUPERNOVA.toString();
         String invalidOption = "invalidOption";
-        PassRefactoredRequest request = new PassRefactoredRequest(category, invalidOption);
+        PassRequest request = new PassRequest(category, invalidOption);
 
         assertThrows(InvalidFormatException.class, () -> mapper.fromRequest(request));
     }
@@ -75,7 +75,7 @@ class PassMapperTest {
         PassOptions expectedOption = PassOptions.PACKAGE;
         String category = PassCategories.SUPERNOVA.toString();
         String option = expectedOption.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+        PassRequest request = new PassRequest(category, option);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -87,7 +87,7 @@ class PassMapperTest {
         String category = PassCategories.SUPERNOVA.toString();
         String option = PassOptions.PACKAGE.toString();
         List<String> eventDates = Collections.singletonList(FestivalConfiguration.getDefaultStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         assertThrows(InvalidFormatException.class, () -> mapper.fromRequest(request));
     }
@@ -96,7 +96,7 @@ class PassMapperTest {
     void fromRequest_shouldThrowInvalidFormatException_whenOptionIsSingleAndThereAreNoEventDates() {
         String category = PassCategories.SUPERNOVA.toString();
         String option = PassOptions.SINGLE_PASS.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+        PassRequest request = new PassRequest(category, option);
 
         assertThrows(InvalidFormatException.class, () -> mapper.fromRequest(request));
     }
@@ -105,7 +105,7 @@ class PassMapperTest {
     void fromRequest_shouldSetAllFestivalDates_whenOptionIsPackage() {
         String category = PassCategories.SUPERNOVA.toString();
         String option = PassOptions.PACKAGE.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+        PassRequest request = new PassRequest(category, option);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -119,7 +119,7 @@ class PassMapperTest {
         String option = PassOptions.SINGLE_PASS.toString();
         EventDate expectedEventDate = festivalConfiguration.getStartEventDate();
         List<String> eventDates = Collections.singletonList(expectedEventDate.toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
         when(eventDateMapper.fromString(eventDates)).thenReturn(Collections.singletonList(expectedEventDate));
 
         List<Pass> passes = mapper.fromRequest(request);
@@ -133,7 +133,7 @@ class PassMapperTest {
         String option = PassOptions.SINGLE_PASS.toString();
         List<EventDate> expectedEventDates = festivalConfiguration.getAllEventDates();
         List<String> eventDates = expectedEventDates.stream().map(EventDate::toString).collect(Collectors.toList());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
         when(eventDateMapper.fromString(eventDates)).thenReturn(expectedEventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
@@ -147,7 +147,7 @@ class PassMapperTest {
         Money expectedPrice = new Money(BigDecimal.valueOf(700000.0));
         String category = PassCategories.SUPERNOVA.toString();
         String option = PassOptions.PACKAGE.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+        PassRequest request = new PassRequest(category, option);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -160,7 +160,7 @@ class PassMapperTest {
         String category = PassCategories.SUPERNOVA.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -173,7 +173,7 @@ class PassMapperTest {
         String category = PassCategories.SUPERNOVA.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = festivalConfiguration.getAllEventDates().stream().map(EventDate::toString).collect(Collectors.toList());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -185,7 +185,7 @@ class PassMapperTest {
         Money expectedPrice = new Money(BigDecimal.valueOf(500000.0));
         String category = PassCategories.SUPERGIANT.toString();
         String option = PassOptions.PACKAGE.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+        PassRequest request = new PassRequest(category, option);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -198,7 +198,7 @@ class PassMapperTest {
         String category = PassCategories.SUPERGIANT.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -211,7 +211,7 @@ class PassMapperTest {
         String category = PassCategories.SUPERGIANT.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = Collections.nCopies(2, festivalConfiguration.getStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -225,7 +225,7 @@ class PassMapperTest {
         String category = PassCategories.SUPERGIANT.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = Collections.nCopies(threshold, festivalConfiguration.getStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -237,7 +237,7 @@ class PassMapperTest {
         Money expectedPrice = new Money(BigDecimal.valueOf(250000.0));
         String category = PassCategories.NEBULA.toString();
         String option = PassOptions.PACKAGE.toString();
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option);
+        PassRequest request = new PassRequest(category, option);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -250,7 +250,7 @@ class PassMapperTest {
         String category = PassCategories.NEBULA.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -263,7 +263,7 @@ class PassMapperTest {
         String category = PassCategories.NEBULA.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = Collections.nCopies(2, festivalConfiguration.getStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -277,7 +277,7 @@ class PassMapperTest {
         String category = PassCategories.NEBULA.toString();
         String option = PassOptions.SINGLE_PASS.toString();
         List<String> eventDates = Collections.nCopies(threshold, festivalConfiguration.getStartEventDate().toString());
-        PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
+        PassRequest request = new PassRequest(category, option, eventDates);
 
         List<Pass> passes = mapper.fromRequest(request);
 

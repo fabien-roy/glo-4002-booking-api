@@ -9,7 +9,7 @@ import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPrice
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.SupergiantPriceDiscountStrategy;
-import ca.ulaval.glo4002.booking.passes.rest.PassRefactoredRequest;
+import ca.ulaval.glo4002.booking.passes.rest.PassRequest;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -32,7 +32,7 @@ public class PassMapper {
         this.eventDateMapper = eventDateMapper;
     }
 
-    public List<Pass> fromRequest(PassRefactoredRequest request) {
+    public List<Pass> fromRequest(PassRequest request) {
         PassCategories category = parsePassCategory(request.getPassCategory());
         PassOptions option = parsePassOption(request.getPassOption());
 
