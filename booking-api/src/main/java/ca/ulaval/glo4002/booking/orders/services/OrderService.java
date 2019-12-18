@@ -2,7 +2,6 @@ package ca.ulaval.glo4002.booking.orders.services;
 
 import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
-import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
 import ca.ulaval.glo4002.booking.orders.domain.OrderRefactoredFactory;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
