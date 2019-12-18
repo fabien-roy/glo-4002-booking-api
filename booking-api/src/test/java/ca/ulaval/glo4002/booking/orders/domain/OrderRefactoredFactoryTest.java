@@ -2,6 +2,7 @@ package ca.ulaval.glo4002.booking.orders.domain;
 
 import ca.ulaval.glo4002.booking.passes.domain.*;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -45,8 +46,9 @@ class OrderRefactoredFactoryTest {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
+        PassRefactored pass = new PassRefactored(mock(EventDate.class));
         PassList passList = new PassList(
-                Collections.singletonList(mock(PassRefactored.class)),
+                Collections.singletonList(pass),
                 PassCategories.SUPERNOVA,
                 PassOptions.PACKAGE,
                 mock(Money.class),
@@ -63,11 +65,11 @@ class OrderRefactoredFactoryTest {
     @Test
     void create_shouldSetPassNumbers_whenThereAreMultiplePasses() {
         long expectedPassNumber = 1L;
-        long otherExpectedPassNumber = 2L;
-        when(passNumberGenerator.generate()).thenReturn(expectedPassNumber).thenReturn(otherExpectedPassNumber);
+        when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
+        PassRefactored pass = new PassRefactored(mock(EventDate.class));
         PassList passList = new PassList(
-                Collections.nCopies(2, mock(PassRefactored.class)),
+                Collections.nCopies(2, pass),
                 PassCategories.SUPERNOVA,
                 PassOptions.SINGLE_PASS,
                 mock(Money.class),
@@ -79,6 +81,6 @@ class OrderRefactoredFactoryTest {
         order = factory.create(order, "VENDOR");
 
         assertEquals(expectedPassNumber, order.getPassList().getPasses().get(0).getNumber());
-        assertEquals(otherExpectedPassNumber, order.getPassList().getPasses().get(1).getNumber());
+        assertEquals(expectedPassNumber, order.getPassList().getPasses().get(1).getNumber());
     }
 }
