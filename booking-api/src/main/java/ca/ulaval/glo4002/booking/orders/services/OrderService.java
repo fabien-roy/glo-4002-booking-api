@@ -1,10 +1,11 @@
 package ca.ulaval.glo4002.booking.orders.services;
 
 import ca.ulaval.glo4002.booking.orders.domain.Order;
-import ca.ulaval.glo4002.booking.orders.domain.OrderFactory;
 import ca.ulaval.glo4002.booking.orders.domain.OrderNumber;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRefactored;
+import ca.ulaval.glo4002.booking.orders.domain.OrderRefactoredFactory;
 import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
-import ca.ulaval.glo4002.booking.orders.rest.OrderRequest;
+import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
@@ -15,13 +16,13 @@ import javax.inject.Inject;
 public class OrderService {
 
 	private final OrderRepository repository;
-	private final OrderFactory factory;
+	private final OrderRefactoredFactory factory;
 	private final OrderMapper mapper;
 	private final TripService tripService;
 	private final OxygenInventoryService oxygenInventoryService;
 
 	@Inject
-	public OrderService(OrderRepository repository, OrderFactory factory, OrderMapper mapper, TripService tripService, OxygenInventoryService oxygenInventoryService) {
+	public OrderService(OrderRepository repository, OrderRefactoredFactory factory, OrderMapper mapper, TripService tripService, OxygenInventoryService oxygenInventoryService) {
 		this.repository = repository;
 		this.factory = factory;
 		this.mapper = mapper;
@@ -29,12 +30,13 @@ public class OrderService {
 		this.oxygenInventoryService = oxygenInventoryService;
 	}
 
-	public String order(OrderRequest orderRequest) {
-		Order order = factory.create(orderRequest);
+	public String order(OrderRefactoredRequest orderRequest) {
+		OrderRefactored order = mapper.fromRequest(orderRequest);
+		order = factory.create(order, orderRequest.getVendorCode());
 
 		repository.addOrder(order);
-		tripService.orderForPasses(order.getPassBundle().getCategory(), order.getPasses()); // TODO : Send Order to TripService
-		oxygenInventoryService.orderForPasses(order.getPassBundle().getCategory(), order.getPasses(), order.getOrderDate()); // TODO : Send Order to OxygenInventoryService
+		tripService.orderForPasses(order.getPasses().get(0).getCategory(), order.getPasses()); // TODO : Send passes to TripService
+		oxygenInventoryService.orderForPasses(order.getPasses().get(0).getCategory(), order.getPasses(), order.getOrderDate()); // TODO : Send passes to OxygenInventoryService
 		OrderNumber orderNumber = order.getOrderNumber();
 
 		return orderNumber.toString();
