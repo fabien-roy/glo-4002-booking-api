@@ -6,6 +6,8 @@ import javax.inject.Inject;
 
 public class OrderRefactoredFactory {
 
+    // TODO : Maybe price calculation should be in factory
+
     private final OrderIdentifierGenerator orderIdentifierGenerator;
     private final PassNumberGenerator passNumberGenerator;
 
@@ -20,8 +22,10 @@ public class OrderRefactoredFactory {
         OrderNumber orderNumber = new OrderNumber(orderIdentifier, vendorCode);
         order.setOrderNumber(orderNumber);
 
-        long passNumber = passNumberGenerator.generate();
-        order.setPassNumber(passNumber);
+        order.getPassList().getPasses().forEach(pass -> {
+            long passNumber = passNumberGenerator.generate();
+            pass.setNumber(passNumber);
+        });
 
         return order;
     }

@@ -8,11 +8,11 @@ public class OrderRefactored {
 
 	private OrderNumber orderNumber;
 	private OrderDate orderDate;
-	private PassList pass;
+	private PassList passList;
 
 	public OrderRefactored(OrderDate orderDate, PassList pass) {
 		this.orderDate = orderDate;
-		this.pass = pass;
+		this.passList = pass;
 	}
 
 	public void setOrderNumber(OrderNumber orderNumber) {
@@ -27,20 +27,16 @@ public class OrderRefactored {
 		return orderDate;
 	}
 
-	public PassList getPass() {
-		return pass;
-	}
-
-	public void setPassNumber(long passNumber) {
-		this.pass.setNumber(passNumber);
+	public PassList getPassList() {
+		return passList;
 	}
 
 	public Money getPrice() {
-		return pass.getPrice();
+		return passList.getPrice();
 	}
 
 	// TODO : Use updateProfit
 	public void updateProfit(ProfitReport profitReport) {
-		pass.updateProfit(profitReport);
+		passList.updateProfit(profitReport);
 	}
 }

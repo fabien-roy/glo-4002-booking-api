@@ -54,7 +54,7 @@ class OrderMapperTest {
 
 		orderRefactored = mock(OrderRefactored.class);
 		when(orderRefactored.getPrice()).thenReturn(new Money(BigDecimal.valueOf(500)));
-		when(orderRefactored.getPass()).thenReturn(mock(PassList.class));
+		when(orderRefactored.getPassList()).thenReturn(mock(PassList.class));
 	}
 
 	@Test
@@ -88,7 +88,7 @@ class OrderMapperTest {
 
 		OrderRefactored order = orderMapper.fromRequest(orderRequest);
 
-		assertEquals(expectedPass, order.getPass());
+		assertEquals(expectedPass, order.getPassList());
 	}
 
 	// TODO : Rename tests of refactored pass logic when old logic is removed

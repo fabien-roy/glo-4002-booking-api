@@ -8,30 +8,24 @@ import java.util.List;
 
 public class PassList {
 
-	// TODO : Have a list of PassRefactored
-	private long number; // TODO : Use PassNumber
+    List<PassRefactored> passes;
 	private PassCategories category;
 	private PassOptions option;
 	private Money price;
-	private List<EventDate> eventDates;
 	private List<EventDate> arrivalDates;
 	private List<EventDate> departureDates;
 
-	public PassList(PassCategories category, PassOptions option, Money price, List<EventDate> eventDates, List<EventDate> arrivalDates, List<EventDate> departureDates) {
+	public PassList(List<PassRefactored> passes, PassCategories category, PassOptions option, Money price, List<EventDate> arrivalDates, List<EventDate> departureDates) {
+		this.passes = passes;
 		this.category = category;
 		this.option = option;
 		this.price = price;
-		this.eventDates = eventDates;
 		this.arrivalDates = arrivalDates;
 		this.departureDates = departureDates;
 	}
 
-	public void setNumber(long number) {
-		this.number = number;
-	}
-
-	public long getNumber() {
-		return number;
+	public List<PassRefactored> getPasses() {
+		return passes;
 	}
 
 	public PassCategories getCategory() {
@@ -44,10 +38,6 @@ public class PassList {
 
 	public Money getPrice() {
 		return price;
-	}
-
-	public List<EventDate> getEventDates() {
-		return eventDates;
 	}
 
 	public List<EventDate> getArrivalDates() {

@@ -1,9 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
-import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.passes.domain.PassList;
+import ca.ulaval.glo4002.booking.passes.domain.*;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,22 +41,44 @@ class OrderRefactoredFactoryTest {
     }
 
     @Test
-    void create_shouldSetPassNumber() {
+    void create_shouldSetPassNumber_whenThereIsASinglePass() {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
-        PassList pass = new PassList(
+        PassList passList = new PassList(
+                Collections.singletonList(mock(PassRefactored.class)),
                 PassCategories.SUPERNOVA,
                 PassOptions.PACKAGE,
                 mock(Money.class),
                 Collections.emptyList(),
-                Collections.emptyList(),
                 Collections.emptyList()
         );
-        OrderRefactored order = new OrderRefactored(orderDate, pass);
+        OrderRefactored order = new OrderRefactored(orderDate, passList);
 
         order = factory.create(order, "VENDOR");
 
-        assertEquals(expectedPassNumber, order.getPass().getNumber());
+        assertEquals(expectedPassNumber, order.getPassList().getPasses().get(0).getNumber());
+    }
+
+    @Test
+    void create_shouldSetPassNumbers_whenThereAreMultiplePasses() {
+        long expectedPassNumber = 1L;
+        long otherExpectedPassNumber = 2L;
+        when(passNumberGenerator.generate()).thenReturn(expectedPassNumber).thenReturn(otherExpectedPassNumber);
+        OrderDate orderDate = mock(OrderDate.class);
+        PassList passList = new PassList(
+                Collections.nCopies(2, mock(PassRefactored.class)),
+                PassCategories.SUPERNOVA,
+                PassOptions.SINGLE_PASS,
+                mock(Money.class),
+                Collections.emptyList(),
+                Collections.emptyList()
+        );
+        OrderRefactored order = new OrderRefactored(orderDate, passList);
+
+        order = factory.create(order, "VENDOR");
+
+        assertEquals(expectedPassNumber, order.getPassList().getPasses().get(0).getNumber());
+        assertEquals(otherExpectedPassNumber, order.getPassList().getPasses().get(1).getNumber());
     }
 }

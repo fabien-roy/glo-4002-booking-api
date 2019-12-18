@@ -42,7 +42,7 @@ public class OrderMapper {
 
     // TODO : Test
     public OrderResponse toResponse(OrderRefactored order) {
-        List<PassResponse> passes = passMapper.toResponse(order.getPass());
+        List<PassResponse> passes = passMapper.toResponse(order.getPassList());
 
         float fullOrderPrice = order.getPrice().getValue().floatValue();
         float orderPrice = formatOrderPrice(fullOrderPrice);
