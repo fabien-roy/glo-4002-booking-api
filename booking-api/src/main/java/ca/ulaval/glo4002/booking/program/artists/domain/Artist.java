@@ -4,13 +4,15 @@ import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 public class Artist {
 
-    private Integer id;
+	// TODO : Maybe add value objects for id and popularityRank
+
+    private int id;
     private String name;
     private Money cost;
-    private Integer numberOfPeople;
-    private Integer popularityRank;
+    private int numberOfPeople;
+    private int popularityRank;
 
-    public Artist(Integer id, String name, Money cost, Integer numberOfPeople, Integer popularityRank) {
+    public Artist(int id, String name, Money cost, int numberOfPeople, int popularityRank) {
     	this.id = id;
 		this.name = name;
 		this.cost = cost;
@@ -18,7 +20,7 @@ public class Artist {
 		this.popularityRank = popularityRank;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -30,11 +32,11 @@ public class Artist {
 		return cost;
 	}
 
-	public Integer getNumberOfPeople() {
+	public int getNumberOfPeople() {
 		return numberOfPeople;
 	}
 
-    public Integer getPopularityRank() {
+    public int getPopularityRank() {
         return popularityRank;
     }
 }

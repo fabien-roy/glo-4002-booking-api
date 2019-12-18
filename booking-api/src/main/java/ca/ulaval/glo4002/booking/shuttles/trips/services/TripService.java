@@ -30,7 +30,7 @@ public class TripService {
 			shuttleCategory = ShuttleCategories.ET_SPACESHIP;
 		}
 
-		long passengerNumber = artist.getId().longValue();
+		long passengerNumber = artist.getId();
 		List<Passenger> passengers = Collections.nCopies(artist.getNumberOfPeople(), new Passenger(passengerNumber));
 
 		repository.addPassengersToNewArrival(passengers, shuttleCategory, tripDate);
