@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.oxygen.history.domain.OxygenHistory;
 import ca.ulaval.glo4002.booking.oxygen.history.infrastructure.OxygenHistoryRepository;
 import ca.ulaval.glo4002.booking.oxygen.inventory.domain.OxygenInventory;
 import ca.ulaval.glo4002.booking.oxygen.inventory.infrastructure.OxygenInventoryRepository;
-import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 
 import javax.inject.Inject;
 import java.time.LocalDate;
@@ -26,32 +25,31 @@ public class OxygenTankProducer {
 		this.factory = factory;
 	}
 
-	public List<OxygenTank> produceOxygenForOrder(OxygenCategories requestedCategory, LocalDate requestDate) {
+	public List<OxygenTank> produceOxygenForOrder(OxygenCategories requestedCategory, LocalDate requestedDate) {
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		OxygenHistory history = historyRepository.getHistory();
-		PassCategories passCategories = convertOxygenCategoryToPassCategories(requestedCategory);
-		OxygenProduction requestProduction = factory.createProduction(passCategories);
-		OxygenProduction actualOxygenProduction = factory.createCategoryForRequestDate(requestDate, requestedCategory);
-		OxygenCategories category = actualOxygenProduction.getCategory();
+		OxygenProduction requestedProduction = factory.createProduction(requestedCategory);
+		OxygenProduction actualProduction = factory.createProductionForRequestDate(requestedDate, requestedCategory);
+		OxygenCategories actualCategory = actualProduction.getCategory();
 
 		List<OxygenTank> newTanks = new ArrayList<>();
-		Integer quantityToCover = requestProduction.getTanksNeededPerDay();
+		Integer quantityToCover = requestedProduction.getTanksNeededPerDay();
 
-		quantityToCover = inventory.assignTanksByCategory(requestedCategory, actualOxygenProduction.getCategory(), quantityToCover);
+		quantityToCover = inventory.assignTanksByCategory(requestedCategory, actualCategory, quantityToCover);
 
 		if (quantityToCover > 0) {
-			List<OxygenTank> producedTanks = factory.createOxygenTank(actualOxygenProduction, requestDate, quantityToCover);
+			List<OxygenTank> producedTanks = factory.createOxygenTank(actualProduction, requestedDate, quantityToCover);
 			newTanks.addAll(producedTanks);
 
-			if (category == OxygenCategories.E) {
-				history.addTanksBought(requestDate, quantityToCover);
+			if (actualCategory == OxygenCategories.E) {
+				history.addTanksBought(requestedDate, quantityToCover);
 			} else {
-				history.addMadeTanks(actualOxygenProduction.calculateReadyDateForCategory(requestDate), producedTanks.size());
-				actualOxygenProduction.addCategoryProductionInformationToHistory(requestDate, history, producedTanks.size());
+				history.addMadeTanks(actualProduction.calculateReadyDateForCategory(requestedDate), producedTanks.size());
+				actualProduction.addCategoryProductionInformationToHistory(requestedDate, history, producedTanks.size());
 			}
 
-			inventory.addTanksToInventory(category, newTanks);
-			inventory.assignTanksByCategory(category, category, quantityToCover);
+			inventory.addTanksToInventory(actualCategory, newTanks);
+			inventory.assignTanksByCategory(actualCategory, actualCategory, quantityToCover);
 		}
 
 		inventoryRepository.updateInventory(inventory);
@@ -61,7 +59,7 @@ public class OxygenTankProducer {
 	}
 
 	public List<OxygenTank> produceOxygenByQuantity(OxygenCategories category, LocalDate requestDate, Integer numberOfTanks) {
-	    OxygenProduction oxygenProduction = factory.createProduction(category);
+	    OxygenProduction production = factory.createProduction(category);
 		OxygenInventory inventory = inventoryRepository.getInventory();
 		OxygenHistory history = historyRepository.getHistory();
 		List<OxygenTank> newTanks = new ArrayList<>();
@@ -69,14 +67,14 @@ public class OxygenTankProducer {
 		Integer quantityToCover = inventory.assignTanksByCategory(category, category, numberOfTanks);
 
 		if (quantityToCover > 0) {
-			LocalDate readyDate = oxygenProduction.calculateReadyDateForCategory(requestDate);
-			newTanks = factory.createOxygenTank(oxygenProduction, requestDate, quantityToCover);
+			LocalDate readyDate = production.calculateReadyDateForCategory(requestDate);
+			newTanks = factory.createOxygenTank(production, requestDate, quantityToCover);
 
 			if (category == OxygenCategories.E) {
 				history.addTanksBought(readyDate, quantityToCover);
 			} else {
 				history.addMadeTanks(readyDate, quantityToCover);
-				oxygenProduction.addCategoryProductionInformationToHistory(requestDate, history, quantityToCover);
+				production.addCategoryProductionInformationToHistory(requestDate, history, quantityToCover);
 			}
 
 			inventory.assignTanksByCategory(category, category, quantityToCover);
@@ -86,24 +84,5 @@ public class OxygenTankProducer {
 		historyRepository.updateHistory(history);
 
 		return newTanks;
-	}
-
-	private PassCategories convertOxygenCategoryToPassCategories(OxygenCategories oxygenCategories) {
-		PassCategories passCategories;
-
-		switch (oxygenCategories) {
-		case E:
-			passCategories = PassCategories.SUPERNOVA;
-			break;
-		case B:
-			passCategories = PassCategories.SUPERGIANT;
-			break;
-		default:
-		case A:
-			passCategories = PassCategories.NEBULA;
-			break;
-		}
-
-		return passCategories;
 	}
 }

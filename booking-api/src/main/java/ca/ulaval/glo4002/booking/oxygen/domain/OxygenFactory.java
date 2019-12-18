@@ -85,7 +85,7 @@ public class OxygenFactory {
 		}
 	}
 
-	public OxygenProduction createCategoryForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
+	public OxygenProduction createProductionForRequestDate(LocalDate requestDate, OxygenCategories oxygenCategories) {
 		LocalDate readyBeforeDate = festivalConfiguration.getStartEventDate().plusDays(1).getValue();
 
 		if (oxygenCategories == OxygenCategories.A) {
