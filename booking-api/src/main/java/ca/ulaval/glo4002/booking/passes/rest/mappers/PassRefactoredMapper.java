@@ -38,7 +38,7 @@ public class PassRefactoredMapper {
         PassOptions option = parsePassOption(request.getPassOption());
 
         List<EventDate> eventDates = buildEventDates(request.getEventDates(), option);
-        List<PassRefactored> passes = buildPasses(eventDates);
+        List<PassRefactored> passes = buildPasses(eventDates, option);
         List<EventDate> arrivalDates = buildArrivalDates(eventDates, option);
         List<EventDate> departureDates = buildDepartureDates(eventDates, option);
 
@@ -69,7 +69,7 @@ public class PassRefactoredMapper {
                             pass.getNumber(),
                             passCategory,
                             passOption,
-                            pass.getEventDate().toString()
+                            pass.getEventDates().get(0).toString()
                         ))
                 );
 
@@ -153,10 +153,23 @@ public class PassRefactoredMapper {
         return builtEventDates;
     }
 
-    private List<PassRefactored> buildPasses(List<EventDate> eventDates) {
+    private List<PassRefactored> buildPasses(List<EventDate> eventDates, PassOptions option) {
         List<PassRefactored> passes = new ArrayList<>();
 
-        eventDates.forEach(eventDate -> passes.add(new PassRefactored(eventDate)));
+        switch (option) {
+            case PACKAGE:
+                passes.add(new PassRefactored(eventDates));
+
+                break;
+            default:
+            case SINGLE_PASS:
+                eventDates.forEach(eventDate -> {
+                    List<EventDate> singleEventDate = Collections.singletonList(eventDate);
+                    passes.add(new PassRefactored(singleEventDate));
+                });
+
+                break;
+        }
 
         return passes;
     }

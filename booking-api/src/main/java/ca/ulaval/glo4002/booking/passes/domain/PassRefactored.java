@@ -2,13 +2,15 @@ package ca.ulaval.glo4002.booking.passes.domain;
 
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 
+import java.util.List;
+
 public class PassRefactored {
 
 	private long number; // TODO : Use PassNumber
-	private EventDate eventDate; // TODO : Use a List of EventDate (will help with departures and arrivals)
+	private List<EventDate> eventDates;
 
-	public PassRefactored(EventDate eventDate) {
-		this.eventDate = eventDate;
+	public PassRefactored(List<EventDate> eventDates) {
+		this.eventDates = eventDates;
 	}
 
 	public void setNumber(long number) {
@@ -19,7 +21,7 @@ public class PassRefactored {
 		return number;
 	}
 
-	public EventDate getEventDate() {
-		return eventDate;
+	public List<EventDate> getEventDates() {
+		return eventDates;
 	}
 }

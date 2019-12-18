@@ -46,7 +46,7 @@ class OrderRefactoredFactoryTest {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
-        PassRefactored pass = new PassRefactored(mock(EventDate.class));
+        PassRefactored pass = new PassRefactored(Collections.singletonList(mock(EventDate.class)));
         PassList passList = new PassList(
                 Collections.singletonList(pass),
                 PassCategories.SUPERNOVA,
@@ -67,7 +67,7 @@ class OrderRefactoredFactoryTest {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
-        PassRefactored pass = new PassRefactored(mock(EventDate.class));
+        PassRefactored pass = new PassRefactored(Collections.singletonList(mock(EventDate.class)));
         PassList passList = new PassList(
                 Collections.nCopies(2, pass),
                 PassCategories.SUPERNOVA,
