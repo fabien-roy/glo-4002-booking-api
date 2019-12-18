@@ -11,9 +11,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-class PassRefactoredTest {
+class PassTest {
 
-    private PassRefactored pass;
+    private Pass pass;
 
     @Test
     void getArrivalDate_shouldReturnFirstEventDate() {
@@ -21,7 +21,7 @@ class PassRefactoredTest {
         EventDate departureDate = expectedArrivalDate.plusDays(1);
         List<EventDate> eventDates = Arrays.asList(expectedArrivalDate, departureDate);
 
-        pass = new PassRefactored(eventDates, PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        pass = new Pass(eventDates, PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
 
         assertEquals(expectedArrivalDate, pass.getArrivalDate());
     }
@@ -32,7 +32,7 @@ class PassRefactoredTest {
         EventDate expectedDepartureDate = arrivalDate.plusDays(1);
         List<EventDate> eventDates = Arrays.asList(arrivalDate, expectedDepartureDate);
 
-        pass = new PassRefactored(eventDates, PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        pass = new Pass(eventDates, PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
 
         assertEquals(expectedDepartureDate, pass.getDepartureDate());
     }

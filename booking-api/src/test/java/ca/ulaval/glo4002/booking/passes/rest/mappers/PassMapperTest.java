@@ -56,7 +56,7 @@ class PassMapperTest {
         String option = PassOptions.PACKAGE.toString();
         PassRefactoredRequest request = new PassRefactoredRequest(category, option);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedCategory, passes.get(0).getCategory());
     }
@@ -77,7 +77,7 @@ class PassMapperTest {
         String option = expectedOption.toString();
         PassRefactoredRequest request = new PassRefactoredRequest(category, option);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedOption, passes.get(0).getOption());
     }
@@ -107,7 +107,7 @@ class PassMapperTest {
         String option = PassOptions.PACKAGE.toString();
         PassRefactoredRequest request = new PassRefactoredRequest(category, option);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(festivalConfiguration.getAllEventDates().get(0), passes.get(0).getEventDates().get(0));
         assertEquals(festivalConfiguration.getAllEventDates().get(1), passes.get(0).getEventDates().get(1));
@@ -122,7 +122,7 @@ class PassMapperTest {
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
         when(eventDateMapper.fromString(eventDates)).thenReturn(Collections.singletonList(expectedEventDate));
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedEventDate, passes.get(0).getEventDates().get(0));
     }
@@ -136,7 +136,7 @@ class PassMapperTest {
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
         when(eventDateMapper.fromString(eventDates)).thenReturn(expectedEventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedEventDates.get(0), passes.get(0).getEventDates().get(0));
         assertEquals(expectedEventDates.get(1), passes.get(1).getEventDates().get(0));
@@ -149,7 +149,7 @@ class PassMapperTest {
         String option = PassOptions.PACKAGE.toString();
         PassRefactoredRequest request = new PassRefactoredRequest(category, option);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -162,7 +162,7 @@ class PassMapperTest {
         List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -175,7 +175,7 @@ class PassMapperTest {
         List<String> eventDates = festivalConfiguration.getAllEventDates().stream().map(EventDate::toString).collect(Collectors.toList());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -187,7 +187,7 @@ class PassMapperTest {
         String option = PassOptions.PACKAGE.toString();
         PassRefactoredRequest request = new PassRefactoredRequest(category, option);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -200,7 +200,7 @@ class PassMapperTest {
         List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -213,7 +213,7 @@ class PassMapperTest {
         List<String> eventDates = Collections.nCopies(2, festivalConfiguration.getStartEventDate().toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -227,7 +227,7 @@ class PassMapperTest {
         List<String> eventDates = Collections.nCopies(threshold, festivalConfiguration.getStartEventDate().toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -239,7 +239,7 @@ class PassMapperTest {
         String option = PassOptions.PACKAGE.toString();
         PassRefactoredRequest request = new PassRefactoredRequest(category, option);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -252,7 +252,7 @@ class PassMapperTest {
         List<String> eventDates = Collections.singletonList(festivalConfiguration.getStartEventDate().toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -265,7 +265,7 @@ class PassMapperTest {
         List<String> eventDates = Collections.nCopies(2, festivalConfiguration.getStartEventDate().toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -279,7 +279,7 @@ class PassMapperTest {
         List<String> eventDates = Collections.nCopies(threshold, festivalConfiguration.getStartEventDate().toString());
         PassRefactoredRequest request = new PassRefactoredRequest(category, option, eventDates);
 
-        List<PassRefactored> passes = mapper.fromRequest(request);
+        List<Pass> passes = mapper.fromRequest(request);
 
         assertEquals(expectedPrice, passes.get(0).getPrice());
     }
@@ -287,7 +287,7 @@ class PassMapperTest {
     @Test
     void toResponse_shouldBuildASinglePass_whenOptionIsPackage() {
         PassOptions option = PassOptions.PACKAGE;
-        PassRefactored pass = new PassRefactored(Collections.emptyList(), PassCategories.SUPERNOVA, option, mock(Money.class));
+        Pass pass = new Pass(Collections.emptyList(), PassCategories.SUPERNOVA, option, mock(Money.class));
 
         List<PassResponse> passResponses = mapper.toResponse(Collections.singletonList(pass));
 
@@ -297,7 +297,7 @@ class PassMapperTest {
     @Test
     void toResponse_shouldSetEventDate_whenThereIsASinglePass() {
         EventDate expectedEventDate = FestivalConfiguration.getDefaultStartEventDate();
-        PassRefactored pass = new PassRefactored(Collections.singletonList(expectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        Pass pass = new Pass(Collections.singletonList(expectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
 
         List<PassResponse> passResponses = mapper.toResponse(Collections.singletonList(pass));
 
@@ -308,9 +308,9 @@ class PassMapperTest {
     void toResponse_shouldSetEventDates_whenThereIsAreMultiplePasses() {
         EventDate expectedEventDate = FestivalConfiguration.getDefaultStartEventDate();
         EventDate otherExpectedEventDate = expectedEventDate.plusDays(1);
-        PassRefactored pass = new PassRefactored(Collections.singletonList(expectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
-        PassRefactored otherPass = new PassRefactored(Collections.singletonList(otherExpectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
-        List<PassRefactored> passes = Arrays.asList(pass, otherPass);
+        Pass pass = new Pass(Collections.singletonList(expectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        Pass otherPass = new Pass(Collections.singletonList(otherExpectedEventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+        List<Pass> passes = Arrays.asList(pass, otherPass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
 
@@ -322,9 +322,9 @@ class PassMapperTest {
     void toResponse_shouldSetPassNumber() {
         long expectedPassNumber = 1L;
         EventDate eventDate = mock(EventDate.class);
-        PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.PACKAGE, mock(Money.class));
+        Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.PACKAGE, mock(Money.class));
         pass.setNumber(expectedPassNumber);
-        List<PassRefactored> passes = Collections.singletonList(pass);
+        List<Pass> passes = Collections.singletonList(pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
 
@@ -334,8 +334,8 @@ class PassMapperTest {
     @Test
     void toResponse_shouldSetCategory() {
         PassCategories expectedCategory = PassCategories.SUPERNOVA;
-        PassRefactored pass = new PassRefactored(Collections.emptyList(), expectedCategory, PassOptions.PACKAGE, mock(Money.class));
-        List<PassRefactored> passes = Collections.singletonList(pass);
+        Pass pass = new Pass(Collections.emptyList(), expectedCategory, PassOptions.PACKAGE, mock(Money.class));
+        List<Pass> passes = Collections.singletonList(pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
 
@@ -345,8 +345,8 @@ class PassMapperTest {
     @Test
     void toResponse_shouldSetCategoryForAllPasses() {
         PassCategories expectedCategory = PassCategories.SUPERNOVA;
-        PassRefactored pass = new PassRefactored(Collections.singletonList(mock(EventDate.class)), expectedCategory, PassOptions.SINGLE_PASS, mock(Money.class));
-        List<PassRefactored> passes = Collections.nCopies(2, pass);
+        Pass pass = new Pass(Collections.singletonList(mock(EventDate.class)), expectedCategory, PassOptions.SINGLE_PASS, mock(Money.class));
+        List<Pass> passes = Collections.nCopies(2, pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
 
@@ -357,8 +357,8 @@ class PassMapperTest {
     @Test
     void toResponse_shouldSetOption() {
         PassOptions expectedOption = PassOptions.PACKAGE;
-        PassRefactored pass = new PassRefactored(Collections.emptyList(), PassCategories.SUPERNOVA, expectedOption, mock(Money.class));
-        List<PassRefactored> passes = Collections.singletonList(pass);
+        Pass pass = new Pass(Collections.emptyList(), PassCategories.SUPERNOVA, expectedOption, mock(Money.class));
+        List<Pass> passes = Collections.singletonList(pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
 
@@ -369,8 +369,8 @@ class PassMapperTest {
     void toResponse_shouldSetOptionForAllPasses() {
         PassOptions expectedOption = PassOptions.SINGLE_PASS;
         EventDate eventDate = mock(EventDate.class);
-        PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, expectedOption, mock(Money.class));
-        List<PassRefactored> passes = Collections.nCopies(2, pass);
+        Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, expectedOption, mock(Money.class));
+        List<Pass> passes = Collections.nCopies(2, pass);
 
         List<PassResponse> passResponses = mapper.toResponse(passes);
 

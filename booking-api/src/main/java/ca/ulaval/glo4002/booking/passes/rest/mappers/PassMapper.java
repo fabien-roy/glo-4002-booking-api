@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NebulaPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.NoPriceDiscountStrategy;
 import ca.ulaval.glo4002.booking.passes.domain.pricediscountstrategy.PriceDiscountStrategy;
@@ -32,7 +32,7 @@ public class PassMapper {
         this.eventDateMapper = eventDateMapper;
     }
 
-    public List<PassRefactored> fromRequest(PassRefactoredRequest request) {
+    public List<Pass> fromRequest(PassRefactoredRequest request) {
         PassCategories category = parsePassCategory(request.getPassCategory());
         PassOptions option = parsePassOption(request.getPassOption());
 
@@ -42,7 +42,7 @@ public class PassMapper {
         return buildPasses(eventDates, category, option, price);
     }
 
-    public List<PassResponse> toResponse(List<PassRefactored> passes) {
+    public List<PassResponse> toResponse(List<Pass> passes) {
         List<PassResponse> passResponses = new ArrayList<>();
 
         passes.forEach(pass -> {
@@ -147,19 +147,19 @@ public class PassMapper {
         return builtEventDates;
     }
 
-    private List<PassRefactored> buildPasses(List<EventDate> eventDates, PassCategories category, PassOptions option, Money price) {
-        List<PassRefactored> passes = new ArrayList<>();
+    private List<Pass> buildPasses(List<EventDate> eventDates, PassCategories category, PassOptions option, Money price) {
+        List<Pass> passes = new ArrayList<>();
 
         switch (option) {
             case PACKAGE:
-                passes.add(new PassRefactored(eventDates, category, option, price));
+                passes.add(new Pass(eventDates, category, option, price));
 
                 break;
             default:
             case SINGLE_PASS:
                 eventDates.forEach(eventDate -> {
                     List<EventDate> singleEventDate = Collections.singletonList(eventDate);
-                    passes.add(new PassRefactored(singleEventDate, category, option, price));
+                    passes.add(new Pass(singleEventDate, category, option, price));
                 });
 
                 break;

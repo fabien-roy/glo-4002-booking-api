@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.services;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
@@ -39,7 +39,7 @@ public class TripService {
 		repository.addPassengersToNewDeparture(passengers, shuttleCategory, tripDate);
 	}
 
-	public void orderForPasses(List<PassRefactored> passes) {
+	public void orderForPasses(List<Pass> passes) {
 		passes.forEach(pass -> {
 			ShuttleCategories category = factory.createCategory(pass.getCategory()); // TODO : Use a mapper
 			Passenger passenger = new Passenger(pass.getNumber());

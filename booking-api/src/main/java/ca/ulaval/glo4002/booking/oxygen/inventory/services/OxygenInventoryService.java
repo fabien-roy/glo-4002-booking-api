@@ -3,9 +3,8 @@ package ca.ulaval.glo4002.booking.oxygen.inventory.services;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
-import ca.ulaval.glo4002.booking.oxygen.domain.OxygenProduction;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 
@@ -27,7 +26,7 @@ public class OxygenInventoryService {
 		this.producer = producer;
 	}
 
-	public void orderForPasses(List<PassRefactored> passes, OrderDate orderDate) {
+	public void orderForPasses(List<Pass> passes, OrderDate orderDate) {
 		passes.forEach(pass -> {
 			OxygenCategories oxygenCategory = factory.createCategory(pass.getCategory()); // TODO : This should be a mapper
 

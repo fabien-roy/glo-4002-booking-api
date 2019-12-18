@@ -6,7 +6,7 @@ import ca.ulaval.glo4002.booking.oxygen.domain.OxygenCategories;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenFactory;
 import ca.ulaval.glo4002.booking.oxygen.domain.OxygenTankProducer;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,9 +40,9 @@ class OxygenInventoryServiceTest {
 	@Test
 	void orderForPasses_shouldOrderForEventDate() {
 		OrderDate expectedOrderDate = AN_ORDER_DATE;
-		PassRefactored pass = mock(PassRefactored.class);
+		Pass pass = mock(Pass.class);
 		when(pass.getEventDates()).thenReturn(Collections.singletonList(mock(EventDate.class)));
-		List<PassRefactored> passes = Collections.singletonList(pass);
+		List<Pass> passes = Collections.singletonList(pass);
 
 		service.orderForPasses(passes, expectedOrderDate);
 
@@ -53,10 +53,10 @@ class OxygenInventoryServiceTest {
 	void orderForPasses_shouldOrderForEventDates_whenThereAreMultiplePasses() {
 		int passQuantity = 2;
 		OrderDate expectedOrderDate = AN_ORDER_DATE;
-		PassRefactored pass = mock(PassRefactored.class);
+		Pass pass = mock(Pass.class);
 		when(pass.getCategory()).thenReturn(PassCategories.SUPERNOVA);
 		when(pass.getEventDates()).thenReturn(Collections.singletonList(mock(EventDate.class)));
-		List<PassRefactored> passes = Collections.nCopies(passQuantity, pass);
+		List<Pass> passes = Collections.nCopies(passQuantity, pass);
 
 		service.orderForPasses(passes, expectedOrderDate);
 
@@ -67,10 +67,10 @@ class OxygenInventoryServiceTest {
 	void orderForPasses_shouldOrderWithCorrectOxygenCategory() {
 	    PassCategories passCategory = PassCategories.SUPERNOVA;
 	    OxygenCategories expectedOxygenCategory = OxygenCategories.A;
-		PassRefactored pass = mock(PassRefactored.class);
+		Pass pass = mock(Pass.class);
 		when(pass.getCategory()).thenReturn(passCategory);
 		when(pass.getEventDates()).thenReturn(Collections.singletonList(mock(EventDate.class)));
-		List<PassRefactored> passes = Collections.singletonList(pass);
+		List<Pass> passes = Collections.singletonList(pass);
 		when(factory.createCategory(passCategory)).thenReturn(expectedOxygenCategory);
 
 		service.orderForPasses(passes, AN_ORDER_DATE);

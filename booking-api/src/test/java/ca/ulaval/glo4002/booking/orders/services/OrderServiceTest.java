@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.orders.infrastructure.OrderRepository;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.mappers.OrderMapper;
 import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ class OrderServiceTest {
 	private TripService tripService;
 	private OxygenInventoryService oxygenInventoryService;
 	private Order order;
-	private List<PassRefactored> passes;
+	private List<Pass> passes;
 
 	@BeforeEach
 	void setUpService() {
@@ -37,7 +37,7 @@ class OrderServiceTest {
 
 	@BeforeEach
 	void setUpOrder() {
-	    passes = Collections.singletonList(mock(PassRefactored.class));
+	    passes = Collections.singletonList(mock(Pass.class));
 		OrderNumber orderNumber = mock(OrderNumber.class);
 		order = mock(Order.class);
 		when(order.getOrderNumber()).thenReturn(orderNumber);
@@ -67,7 +67,7 @@ class OrderServiceTest {
 	@Test
 	void order_shouldOrderOxygenWithCorrectPasses() {
 		OrderRefactoredRequest orderRequest = mock(OrderRefactoredRequest.class);
-		List<PassRefactored> expectedPasses = Collections.singletonList(mock(PassRefactored.class));
+		List<Pass> expectedPasses = Collections.singletonList(mock(Pass.class));
 		when(order.getPasses()).thenReturn(expectedPasses);
 
 		service.order(orderRequest);

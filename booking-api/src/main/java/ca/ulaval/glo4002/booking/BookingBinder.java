@@ -23,10 +23,8 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryServic
 import ca.ulaval.glo4002.booking.oxygen.report.rest.OxygenReportResource;
 import ca.ulaval.glo4002.booking.oxygen.report.rest.mappers.OxygenReportMapper;
 import ca.ulaval.glo4002.booking.oxygen.report.services.OxygenReportService;
-import ca.ulaval.glo4002.booking.passes.domain.PassBundleFactory;
-import ca.ulaval.glo4002.booking.passes.domain.PassFactory;
 import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
-import ca.ulaval.glo4002.booking.passes.rest.mappers.PassBundleMapper;
+import ca.ulaval.glo4002.booking.passes.rest.mappers.PassMapper;
 import ca.ulaval.glo4002.booking.profits.rest.ProfitReportResource;
 import ca.ulaval.glo4002.booking.profits.rest.mappers.ProfitMapper;
 import ca.ulaval.glo4002.booking.profits.services.ProfitService;
@@ -87,8 +85,6 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindFactories() {
-        bindAsContract(PassFactory.class);
-        bindAsContract(PassBundleFactory.class);
         bindAsContract(OxygenFactory.class);
         bindAsContract(ShuttleFactory.class);
         bindAsContract(OrderFactory.class);
@@ -123,7 +119,7 @@ public class BookingBinder extends AbstractBinder {
     }
 
     private void bindMappers() {
-        bindAsContract(PassBundleMapper.class);
+        bindAsContract(PassMapper.class);
         bindAsContract(OrderMapper.class);
         bindAsContract(TripMapper.class);
         bindAsContract(ShuttleManifestMapper.class);

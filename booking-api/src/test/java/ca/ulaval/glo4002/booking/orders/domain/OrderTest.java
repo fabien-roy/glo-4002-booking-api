@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ class OrderTest {
     @Test
     void getPrice_shouldReturnPassPrice_whenThereIsASinglePass() {
         Money expectedPrice = new Money(BigDecimal.valueOf(100));
-        PassRefactored pass = mock(PassRefactored.class);
+        Pass pass = mock(Pass.class);
         when(pass.getPrice()).thenReturn(expectedPrice);
 
         order = new Order(mock(OrderDate.class), Collections.singletonList(pass));
@@ -31,7 +31,7 @@ class OrderTest {
         int passQuantity = 2;
         Money passPrice = new Money(BigDecimal.valueOf(100));
         Money expectedPrice = passPrice.multiply(BigDecimal.valueOf(passQuantity));
-        PassRefactored pass = mock(PassRefactored.class);
+        Pass pass = mock(Pass.class);
         when(pass.getPrice()).thenReturn(passPrice);
 
         order = new Order(mock(OrderDate.class), Collections.nCopies(passQuantity, pass));

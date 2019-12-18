@@ -5,7 +5,7 @@ import ca.ulaval.glo4002.booking.orders.domain.Order;
 import ca.ulaval.glo4002.booking.orders.domain.OrderDate;
 import ca.ulaval.glo4002.booking.orders.rest.OrderRefactoredRequest;
 import ca.ulaval.glo4002.booking.orders.rest.OrderResponse;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.passes.rest.PassResponse;
 import ca.ulaval.glo4002.booking.passes.rest.mappers.PassMapper;
 
@@ -31,7 +31,7 @@ public class OrderMapper {
         }
 
         OrderDate orderDate = orderDateMapper.fromString(request.getOrderDate());
-        List<PassRefactored> passes = passMapper.fromRequest(request.getPass());
+        List<Pass> passes = passMapper.fromRequest(request.getPass());
 
         return new Order(orderDate, passes);
     }

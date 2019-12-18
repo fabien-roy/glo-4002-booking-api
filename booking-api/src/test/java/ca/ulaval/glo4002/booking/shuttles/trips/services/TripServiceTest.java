@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.shuttles.trips.services;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
@@ -113,8 +113,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToDeparturesOnce_whenThereIsASinglePass() {
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
-		List<PassRefactored> passes = Collections.singletonList(pass);
+		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<Pass> passes = Collections.singletonList(pass);
 
 		service.orderForPasses(passes);
 
@@ -124,8 +124,8 @@ class TripServiceTest {
 	@Test
 	void orderForPasses_shouldAddPassengerToArrivalsOnce_whenThereIsASinglePass() {
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
-		List<PassRefactored> passes = Collections.singletonList(pass);
+		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<Pass> passes = Collections.singletonList(pass);
 
 		service.orderForPasses(passes);
 
@@ -136,8 +136,8 @@ class TripServiceTest {
 	void orderForPasses_shouldAddPassengerToCorrectDeparturesDates_whenThereAreMultiplePasses() {
 		int passQuantity = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
-		List<PassRefactored> passes = Collections.nCopies(passQuantity, pass);
+		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<Pass> passes = Collections.nCopies(passQuantity, pass);
 
 		service.orderForPasses(passes);
 
@@ -148,8 +148,8 @@ class TripServiceTest {
 	void orderForPasses_shouldAddPassengerToDeparturesMultipleTimes_whenThereAreMultiplePasses() {
 		int passQuantity = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
-		PassRefactored pass = new PassRefactored(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
-		List<PassRefactored> passes = Collections.nCopies(passQuantity, pass);
+		Pass pass = new Pass(Collections.singletonList(eventDate), PassCategories.SUPERNOVA, PassOptions.SINGLE_PASS, mock(Money.class));
+		List<Pass> passes = Collections.nCopies(passQuantity, pass);
 
 		service.orderForPasses(passes);
 

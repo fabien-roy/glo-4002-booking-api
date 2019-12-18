@@ -3,7 +3,7 @@ package ca.ulaval.glo4002.booking.orders.domain;
 import ca.ulaval.glo4002.booking.passes.domain.PassCategories;
 import ca.ulaval.glo4002.booking.passes.domain.PassNumberGenerator;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class OrderFactoryTest {
         OrderNumber expectedOrderNumber = new OrderNumber(orderIdentifier, vendorCode);
         when(orderIdentifierGenerator.generate()).thenReturn(orderIdentifier);
         OrderDate orderDate = mock(OrderDate.class);
-        PassRefactored pass = mock(PassRefactored.class);
+        Pass pass = mock(Pass.class);
         Order order = new Order(orderDate, Collections.singletonList(pass));
 
         order = factory.create(order, vendorCode);
@@ -48,7 +48,7 @@ class OrderFactoryTest {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
-        PassRefactored pass = new PassRefactored(
+        Pass pass = new Pass(
                 Collections.emptyList(),
                 PassCategories.SUPERNOVA,
                 PassOptions.PACKAGE,
@@ -66,7 +66,7 @@ class OrderFactoryTest {
         long expectedPassNumber = 1L;
         when(passNumberGenerator.generate()).thenReturn(expectedPassNumber);
         OrderDate orderDate = mock(OrderDate.class);
-        PassRefactored pass = new PassRefactored(
+        Pass pass = new Pass(
                 Collections.emptyList(),
                 PassCategories.SUPERNOVA,
                 PassOptions.SINGLE_PASS,

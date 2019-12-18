@@ -1,6 +1,6 @@
 package ca.ulaval.glo4002.booking.orders.domain;
 
-import ca.ulaval.glo4002.booking.passes.domain.PassRefactored;
+import ca.ulaval.glo4002.booking.passes.domain.Pass;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 
@@ -11,9 +11,9 @@ public class Order {
 
 	private OrderNumber orderNumber;
 	private OrderDate orderDate;
-	private List<PassRefactored> passes;
+	private List<Pass> passes;
 
-	public Order(OrderDate orderDate, List<PassRefactored> passes) {
+	public Order(OrderDate orderDate, List<Pass> passes) {
 		this.orderDate = orderDate;
 		this.passes = passes;
 	}
@@ -30,14 +30,14 @@ public class Order {
 		return orderDate;
 	}
 
-	public List<PassRefactored> getPasses() {
+	public List<Pass> getPasses() {
 		return passes;
 	}
 
 	public Money getPrice() {
 		Money price = new Money(BigDecimal.ZERO);
 
-		for (PassRefactored pass : passes) {
+		for (Pass pass : passes) {
 			price = price.add(pass.getPrice());
 		}
 
