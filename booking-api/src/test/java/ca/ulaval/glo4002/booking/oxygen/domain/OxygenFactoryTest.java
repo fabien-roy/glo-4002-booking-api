@@ -42,9 +42,9 @@ public class OxygenFactoryTest {
         LocalDate aValidRequestDate = festivalConfiguration.getStartEventDate().minusDays(21).getValue();
         Integer aNumberOfTanks = 5;
 
-        List<OxygenTank> createdTanks = factory.createOxygenTank(production, aValidRequestDate, aNumberOfTanks);
+        List<OxygenTank> createdTanks = factory.createOxygenTank(production, aNumberOfTanks);
 
-        assertEquals(oxygenCategory, createdTanks.get(0).getCategory().getCategory());
+        assertEquals(oxygenCategory, createdTanks.get(0).getProduction().getCategory());
     }
 
     @Test

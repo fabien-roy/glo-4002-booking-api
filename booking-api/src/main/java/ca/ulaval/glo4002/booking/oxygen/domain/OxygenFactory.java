@@ -22,13 +22,13 @@ public class OxygenFactory {
 	}
 
 	// TODO : Changing quantityToCover is weird
-	public List<OxygenTank> createOxygenTank(OxygenProduction production, LocalDate requestDate, Integer quantityToCover) {
+	public List<OxygenTank> createOxygenTank(OxygenProduction production, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		int numberOfTanksByBundle = production.getNumberOfTanksByBundle();
 
 		while (quantityToCover > 0) {
 			for (int i = 0; i < numberOfTanksByBundle; i++) {
-				newTanks.add(new OxygenTank(production, requestDate));
+				newTanks.add(new OxygenTank(production));
 			}
 
 			quantityToCover -= numberOfTanksByBundle;

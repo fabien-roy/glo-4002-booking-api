@@ -7,9 +7,15 @@ public class ProfitReport {
     private Money expense;
     private Money revenue;
 
+    // TODO : Remove empty constructor
     public ProfitReport() {
         this.expense = new Money(new BigDecimal(0));
         this.revenue = new Money(new BigDecimal(0));
+    }
+
+    public ProfitReport(Money expense, Money revenue) {
+        this.expense = expense;
+        this.revenue = revenue;
     }
 
     public void addRevenue(Money revenue){

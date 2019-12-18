@@ -1,5 +1,6 @@
 package ca.ulaval.glo4002.booking.shuttles.trips.domain;
 
+import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.profits.domain.ProfitReport;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
@@ -43,6 +44,10 @@ public class Trip {
 
 	public void addPassengers(List<Passenger> passengers) {
 		this.passengers.addAll(passengers);
+	}
+
+	public Money getPrice() {
+		return shuttle.getPrice();
 	}
 
 	public boolean isFull() {

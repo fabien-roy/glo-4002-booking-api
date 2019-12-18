@@ -38,7 +38,7 @@ public class OxygenTankProducer {
 		quantityToCover = inventory.assignTanksByCategory(requestedCategory, actualCategory, quantityToCover);
 
 		if (quantityToCover > 0) {
-			List<OxygenTank> producedTanks = factory.createOxygenTank(actualProduction, requestedDate, quantityToCover);
+			List<OxygenTank> producedTanks = factory.createOxygenTank(actualProduction, quantityToCover);
 			newTanks.addAll(producedTanks);
 
 			if (actualCategory == OxygenCategories.E) {
@@ -68,7 +68,7 @@ public class OxygenTankProducer {
 
 		if (quantityToCover > 0) {
 			LocalDate readyDate = production.calculateReadyDateForCategory(requestDate);
-			newTanks = factory.createOxygenTank(production, requestDate, quantityToCover);
+			newTanks = factory.createOxygenTank(production, quantityToCover);
 
 			if (category == OxygenCategories.E) {
 				history.addTanksBought(readyDate, quantityToCover);
