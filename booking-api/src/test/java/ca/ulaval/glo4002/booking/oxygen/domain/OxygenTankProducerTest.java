@@ -25,6 +25,7 @@ public class OxygenTankProducerTest {
 	private OxygenHistoryRepository historyRepository;
 	private OxygenInventory inventory;
 	private OxygenHistory history;
+	private FestivalConfiguration festivalConfiguration;
 
 	private static final LocalDate VALID_CATEGORY_A_BUILD_DATE = FestivalConfiguration.getDefaultStartEventDate().minusDays(21).getValue();
 	private static final LocalDate VALID_CATEGORY_E_BUILD_DATE = FestivalConfiguration.getDefaultStartEventDate().getValue();
@@ -44,9 +45,17 @@ public class OxygenTankProducerTest {
 		when(inventoryRepository.getInventory()).thenReturn(inventory);
 		when(historyRepository.getHistory()).thenReturn(history);
 
-		OxygenFactory factory = mock(OxygenFactory.class);
+		OxygenFactory factory = new OxygenFactory(festivalConfiguration); // TODO : Mock OxygenFactory
 
 		producer = new OxygenTankProducer(inventoryRepository, historyRepository, factory);
+	}
+
+	@BeforeEach
+	void setUpConfiguration() {
+		festivalConfiguration = mock(FestivalConfiguration.class);
+
+		when(festivalConfiguration.getStartEventDate()).thenReturn(FestivalConfiguration.getDefaultStartEventDate());
+		when(festivalConfiguration.getEndEventDate()).thenReturn(FestivalConfiguration.getDefaultEndEventDate());
 	}
 
 	@Test
