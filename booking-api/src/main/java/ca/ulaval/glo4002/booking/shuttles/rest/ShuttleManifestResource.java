@@ -1,6 +1,6 @@
-package ca.ulaval.glo4002.booking.shuttles.manifest.rest;
+package ca.ulaval.glo4002.booking.shuttles.rest;
 
-import ca.ulaval.glo4002.booking.shuttles.manifest.services.ShuttleManifestService;
+import ca.ulaval.glo4002.booking.shuttles.services.ShuttleManifestService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

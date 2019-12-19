@@ -1,10 +1,10 @@
-package ca.ulaval.glo4002.booking.shuttles.manifest.rest;
+package ca.ulaval.glo4002.booking.shuttles.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import ca.ulaval.glo4002.booking.shuttles.manifest.services.ShuttleManifestService;
+import ca.ulaval.glo4002.booking.shuttles.services.ShuttleManifestService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers;
+package ca.ulaval.glo4002.booking.shuttles.rest.mappers;
 
-import ca.ulaval.glo4002.booking.shuttles.manifest.rest.ShuttleManifestResponse;
+import ca.ulaval.glo4002.booking.shuttles.rest.ShuttleManifestResponse;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.Trip;
 import ca.ulaval.glo4002.booking.shuttles.trips.rest.TripResponse;
 import ca.ulaval.glo4002.booking.shuttles.trips.rest.mappers.TripMapper;

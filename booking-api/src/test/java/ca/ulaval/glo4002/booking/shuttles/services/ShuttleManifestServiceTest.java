@@ -1,9 +1,9 @@
-package ca.ulaval.glo4002.booking.shuttles.manifest.services;
+package ca.ulaval.glo4002.booking.shuttles.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
-import ca.ulaval.glo4002.booking.shuttles.manifest.rest.mappers.ShuttleManifestMapper;
+import ca.ulaval.glo4002.booking.shuttles.rest.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

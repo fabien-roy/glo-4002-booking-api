@@ -1,4 +1,4 @@
-package ca.ulaval.glo4002.booking.shuttles.manifest.rest;
+package ca.ulaval.glo4002.booking.shuttles.rest;
 
 import ca.ulaval.glo4002.booking.shuttles.trips.rest.TripResponse;
 
