@@ -1,11 +1,12 @@
 package ca.ulaval.glo4002.booking.program.services;
 
+import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.Event;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
 import ca.ulaval.glo4002.booking.program.events.domain.EventRepository;
-import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryService;
+import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
 import ca.ulaval.glo4002.booking.program.rest.ProgramRequest;
 import ca.ulaval.glo4002.booking.shuttles.trips.services.TripService;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -38,11 +40,17 @@ class ProgramServiceTest {
 
     @Test
     void add_shouldSaveEventsToRepository() {
-        ProgramRequest aProgramRequest = mock(ProgramRequest.class);
+        Event expectedEvent = mock(Event.class);
+        List<Event> expectedEvents = Collections.singletonList(expectedEvent);
+        ProgramRequest programRequest = mock(ProgramRequest.class);
+        ProgramEventRequest programEventRequest = mock(ProgramEventRequest.class);
+        List<ProgramEventRequest> programEventRequests = Collections.singletonList(programEventRequest);
+        when(programRequest.getProgram()).thenReturn(programEventRequests);
+        when(eventFactory.create(programEventRequests)).thenReturn(expectedEvents);
 
-        service.add(aProgramRequest);
+        service.add(programRequest);
 
-        verify(eventRepository).addAll(any());
+        verify(eventRepository).addAll(eq(expectedEvents));
     }
 
     @ParameterizedTest
