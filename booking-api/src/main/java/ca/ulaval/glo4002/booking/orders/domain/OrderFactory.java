@@ -7,8 +7,6 @@ import javax.inject.Inject;
 
 public class OrderFactory {
 
-    // TODO : Maybe price calculation should be in factory
-
     private final OrderIdentifierGenerator orderIdentifierGenerator;
     private final PassNumberGenerator passNumberGenerator;
 

@@ -4,13 +4,12 @@ import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatExcepti
 
 public class OrderIdentifier {
 
-    private Long value;
+    private long value;
 
-    public OrderIdentifier(Long value) {
+    public OrderIdentifier(long value) {
         this.value = value;
     }
 
-    // TODO : Parse String to Number should not be in constructor
     public OrderIdentifier(String value) {
         try {
             this.value = Long.parseLong(value);
@@ -19,13 +18,13 @@ public class OrderIdentifier {
         }
     }
 
-    public Long getValue() {
+    public long getValue() {
         return value;
     }
 
     @Override
     public String toString() {
-        return value.toString();
+        return Long.toString(value);
     }
 
     @Override
@@ -34,11 +33,11 @@ public class OrderIdentifier {
 
         OrderIdentifier otherNumber = (OrderIdentifier) other;
 
-        return this.value.equals(otherNumber.getValue());
+        return this.value == otherNumber.getValue();
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Long.hashCode(value);
     }
 }
