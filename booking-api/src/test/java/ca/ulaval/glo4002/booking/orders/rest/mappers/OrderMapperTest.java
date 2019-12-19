@@ -93,7 +93,6 @@ class OrderMapperTest {
 		assertEquals(expectedOrderPrice, String.valueOf(orderResponse.getOrderPrice()));
 	}
 
-	// TODO : Fix this test, it should be "123.10"
 	@Test
 	public void toRefactoredResponse_shouldBuildResponseOrderPriceWithTwoDigits_whenOrderPriceHasLessThanTwoDigits() {
 		BigDecimal orderPrice = BigDecimal.valueOf(123.1);

@@ -36,7 +36,6 @@ public class OrderMapper {
         return new Order(orderDate, passes);
     }
 
-    // TODO : Test
     public OrderResponse toResponse(Order order) {
         List<PassResponse> passes = passMapper.toResponse(order.getPasses());
 

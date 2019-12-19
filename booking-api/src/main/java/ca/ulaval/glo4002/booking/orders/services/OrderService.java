@@ -42,7 +42,7 @@ public class OrderService {
 	}
 
 	public OrderResponse getByOrderNumber(String requestedOrderNumber) {
-		OrderNumber orderNumber = new OrderNumber(requestedOrderNumber); // TODO : A Mapper should parse a String to a OrderNumber
+		OrderNumber orderNumber = new OrderNumber(requestedOrderNumber);
 
 		Order order = repository.getByOrderNumber(orderNumber);
 
