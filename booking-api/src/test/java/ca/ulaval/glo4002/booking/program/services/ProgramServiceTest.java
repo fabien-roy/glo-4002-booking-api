@@ -23,7 +23,7 @@ class ProgramServiceTest {
 
     private ProgramService service;
     private EventRepository eventRepository;
-    private ArtistRepository artistRepository; // TODO : Check eventMapper is called with correct artists
+    private ArtistRepository artistRepository;
     private EventMapper eventMapper;
     private TripService tripService;
     private OxygenInventoryService oxygenInventoryService;
@@ -47,11 +47,35 @@ class ProgramServiceTest {
         ProgramEventRequest programEventRequest = mock(ProgramEventRequest.class);
         List<ProgramEventRequest> programEventRequests = Collections.singletonList(programEventRequest);
         when(programRequest.getProgram()).thenReturn(programEventRequests);
-        when(eventMapper.fromRequests(eq(programEventRequests), any())).thenReturn(expectedEvents);
+        when(eventMapper.fromRequests(any(), any())).thenReturn(expectedEvents);
 
         service.add(programRequest);
 
         verify(eventRepository).addAll(eq(expectedEvents));
+    }
+
+    @Test
+    void add_shouldMapEvents_withEventRequests() {
+        ProgramRequest programRequest = mock(ProgramRequest.class);
+        ProgramEventRequest programEventRequest = mock(ProgramEventRequest.class);
+        List<ProgramEventRequest> programEventRequests = Collections.singletonList(programEventRequest);
+        when(programRequest.getProgram()).thenReturn(programEventRequests);
+
+        service.add(programRequest);
+
+        verify(eventMapper).fromRequests(eq(programEventRequests), any());
+    }
+
+    @Test
+    void add_shouldMapEvents_withExistingArtists() {
+        Artist existingArtist = mock(Artist.class);
+        List<Artist> existingArtists = Collections.singletonList(existingArtist);
+        when(artistRepository.findAll()).thenReturn(existingArtists);
+        ProgramRequest programRequest = mock(ProgramRequest.class);
+
+        service.add(programRequest);
+
+        verify(eventMapper).fromRequests(any(), eq(existingArtists));
     }
 
     @Test
