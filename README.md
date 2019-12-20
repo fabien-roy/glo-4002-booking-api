@@ -1,6 +1,6 @@
 # Projet 2019 - Équipe 5 : Random Pogo
 
-## MEP 2.0
+## MEP 3.1
 
 Cette application à été développée par Random Pogo. Elle permet aux festivaliers de réserver leur place pour GLOW-4002. Après la réservation de billet(s), les transport et les bombonne d'oxygène nécessaire pour chaque festivalier sont gérer par l'application. Les organisateurs peuvent également accéder à une liste d'artistes qu'ils peuvent réserver pour faire partie de la programmation. Ils peuvent également planifier des activités, et recevront l'oxygène en conséquence. Les organisateurs ont aussi accès aux statistiques financières du festivalConfiguration.
 
@@ -301,9 +301,13 @@ Retourne les profits / pertes du festivalConfiguration. Exemple :
 }
 ```
 
-## Équipe
+## Équipe (MEP 1.0, 2.0)
 
 - Brian Cloutier
 - Fabien Roy
 - Guillaume Bégin
 - Marie-Claude Gauthier
+
+## Équipe (MEP 3.0, 3.1)
+
+- Fabien Roy
