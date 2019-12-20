@@ -14,8 +14,6 @@ import static org.mockito.Mockito.when;
 
 class EventDateMapperTest {
 
-    // TODO : Rename tests
-
     EventDateMapper mapper;
     private FestivalConfiguration festivalConfiguration;
 
@@ -33,7 +31,7 @@ class EventDateMapperTest {
     }
 
     @Test
-    void create_shouldCreateEventDate() {
+    void fromString_shouldCreateEventDate() {
         EventDate expectedEventDate  = festivalConfiguration.getStartEventDate();
 
         EventDate eventDate = mapper.fromString(expectedEventDate.toString());
@@ -42,21 +40,21 @@ class EventDateMapperTest {
     }
 
     @Test
-    void create_shouldThrowInvalidEventDateException_whenEventDateIsUnderBounds() {
+    void fromString_shouldThrowInvalidEventDateException_whenEventDateIsUnderBounds() {
         EventDate aUnderBoundEventDate  = festivalConfiguration.getStartEventDate().minusDays(1);
 
         assertThrows(InvalidEventDateException.class, () -> mapper.fromString(aUnderBoundEventDate.toString()));
     }
 
     @Test
-    void create_shouldThrowInvalidEventDateException_whenEventDateIsOverBounds() {
+    void fromString_shouldThrowInvalidEventDateException_whenEventDateIsOverBounds() {
         EventDate aOverBoundEventDate  = festivalConfiguration.getEndEventDate().plusDays(1);
 
         assertThrows(InvalidEventDateException.class, () -> mapper.fromString(aOverBoundEventDate.toString()));
     }
 
     @Test
-    void create_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
+    void fromString_shouldThrowInvalidFormatException_whenEventDateIsInvalid() {
         String anInvalidDate = "anInvalidDate";
 
         assertThrows(InvalidFormatException.class, () -> mapper.fromString(anInvalidDate));
