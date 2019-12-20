@@ -3,6 +3,7 @@ package ca.ulaval.glo4002.booking.program.artists.services;
 import ca.ulaval.glo4002.booking.interfaces.rest.exceptions.InvalidFormatException;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.artists.domain.ArtistId;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistOrderings;
 import ca.ulaval.glo4002.booking.program.artists.domain.ArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.rest.ArtistListResponse;
@@ -103,9 +104,10 @@ class ArtistServiceTest {
     }
 
     private Artist buildArtist(String name, Integer price, Integer popularityRank) {
+        ArtistId id = new ArtistId(1);
         Money cost = new Money(new BigDecimal(price));
-        Integer aNumberOfPeople = 1;
+        int aNumberOfPeople = 1;
 
-        return new Artist(1, name, cost, aNumberOfPeople, popularityRank);
+        return new Artist(id, name, cost, aNumberOfPeople, popularityRank);
     }
 } 

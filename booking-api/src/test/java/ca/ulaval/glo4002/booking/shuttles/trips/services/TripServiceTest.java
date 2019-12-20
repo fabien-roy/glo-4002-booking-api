@@ -7,6 +7,7 @@ import ca.ulaval.glo4002.booking.passes.domain.PassNumber;
 import ca.ulaval.glo4002.booking.passes.domain.PassOptions;
 import ca.ulaval.glo4002.booking.profits.domain.Money;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
+import ca.ulaval.glo4002.booking.program.artists.domain.ArtistId;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.shuttles.domain.Passenger;
 import ca.ulaval.glo4002.booking.shuttles.domain.ShuttleCategories;
@@ -36,7 +37,8 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(1, "aArtist", money, memberAmount, 1);
+		ArtistId id = new ArtistId(1);
+		Artist artist = new Artist(id, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
@@ -50,7 +52,8 @@ class TripServiceTest {
 		Integer memberAmount = 1;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(1, "aArtist", money, memberAmount, 1);
+		ArtistId id = new ArtistId(1);
+		Artist artist = new Artist(id, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
@@ -64,7 +67,8 @@ class TripServiceTest {
 		Integer memberAmount = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(1, "aArtist", money, memberAmount, 1);
+		ArtistId id = new ArtistId(1);
+		Artist artist = new Artist(id, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
@@ -74,36 +78,38 @@ class TripServiceTest {
 
 	@Test
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumberAsId_whenThereIsASingleMember() {
-		Long expectedPassengerNumber = 1L;
+		int expectedPassengerNumber = 1;
 		Integer memberAmount = 1;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, 1);
+		ArtistId id = new ArtistId(expectedPassengerNumber);
+		Artist artist = new Artist(id, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber == passenger.getNumber())), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber == passenger.getNumber())), any(), any());
 	}
 
 	@Test
 	void orderForArtist_shouldOrderTripForArtistWithPassengerNumbersAsIds_whenThereAreMultipleMembers() {
-		Long expectedPassengerNumber = 1L;
+		int expectedPassengerNumber = 1;
 		Integer memberAmount = 2;
 		EventDate eventDate = FestivalConfiguration.getDefaultStartEventDate();
 		Money money = mock(Money.class);
-		Artist artist = new Artist(expectedPassengerNumber.intValue(), "aArtist", money, memberAmount, 1);
+		ArtistId id = new ArtistId(expectedPassengerNumber);
+		Artist artist = new Artist(id, "aArtist", money, memberAmount, 1);
 
 		service.orderForArtist(artist, eventDate);
 
 		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber == passenger.getNumber())), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()
-				.allMatch(passenger -> expectedPassengerNumber.equals(passenger.getNumber()))), any(), any());
+				.allMatch(passenger -> expectedPassengerNumber == passenger.getNumber())), any(), any());
 	}
 
 	@Test

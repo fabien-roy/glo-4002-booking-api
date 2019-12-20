@@ -32,7 +32,7 @@ public class ExternalArtistConverterTest {
 
 		List<Artist> artists = converter.convert(externalArtists);
 
-		assertEquals(expectedId, artists.get(0).getId());
+		assertEquals(expectedId, artists.get(0).getId().getValue());
 	}
 
 	@Test
@@ -47,8 +47,8 @@ public class ExternalArtistConverterTest {
 
 		List<Artist> artists = converter.convert(externalArtists);
 
-		assertEquals(expectedId, artists.get(0).getId());
-		assertEquals(otherExpectedId, artists.get(1).getId());
+		assertEquals(expectedId, artists.get(0).getId().getValue());
+		assertEquals(otherExpectedId, artists.get(1).getId().getValue());
 	}
 
 	@Test
