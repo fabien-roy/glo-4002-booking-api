@@ -31,7 +31,7 @@ public class EventDateFactory {
             LocalDate localDate = LocalDate.parse(eventDate);
             parsedEventDate = new EventDate(localDate);
         } catch (Exception exception) {
-            throw new InvalidFormatException(); // TODO : If EventDate is invalid in DEV, it should throw InvalidProgramException
+            throw new InvalidFormatException();
         }
 
         return parsedEventDate;

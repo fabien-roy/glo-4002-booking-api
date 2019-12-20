@@ -15,8 +15,8 @@ public class FestivalConfiguration {
     private static final LocalDate DEFAULT_END_EVENT_DATE_VALUE = LocalDate.of(2050, 7, 24);
     private static final LocalDateTime DEFAULT_START_ORDER_DATE_VALUE = LocalDateTime.of(2050, 1, 1, 0, 0, 0);
     private static final LocalDateTime DEFAULT_END_ORDER_DATE_VALUE = LocalDateTime.of(2050, 7, 17, 0, 0, 0);
-    static final Integer MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 180;
-    static final Integer MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 0;
+    private static final Integer MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 180;
+    private static final Integer MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE = 0;
 
     private EventDate startEventDate;
     private EventDate endEventDate;
