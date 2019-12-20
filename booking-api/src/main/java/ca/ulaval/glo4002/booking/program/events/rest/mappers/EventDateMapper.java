@@ -7,12 +7,8 @@ import ca.ulaval.glo4002.booking.program.events.rest.exceptions.InvalidEventDate
 
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class EventDateMapper {
-
-    // TODO : This is temporary and does not work, was copied from EventDateFactory
 
     private final FestivalConfiguration festivalConfiguration;
 
@@ -21,18 +17,12 @@ public class EventDateMapper {
         this.festivalConfiguration = festivalConfiguration;
     }
 
-    public List<EventDate> fromString(List<String> eventDates) {
-        List<EventDate> parsedEventDates = new ArrayList<>();
+    public EventDate fromString(String eventDate) {
+        EventDate parsedEventDate = parse(eventDate);
 
-        eventDates.forEach(eventDate ->{
-            EventDate parsedEventDate = parse(eventDate);
+        validateEventDate(parsedEventDate);
 
-            validateEventDate(parsedEventDate);
-
-            parsedEventDates.add(parsedEventDate);
-        });
-
-        return parsedEventDates;
+        return parsedEventDate;
     }
 
     public EventDate parse(String eventDate) {
@@ -42,7 +32,7 @@ public class EventDateMapper {
             LocalDate localDate = LocalDate.parse(eventDate);
             parsedEventDate = new EventDate(localDate);
         } catch (Exception exception) {
-            throw new InvalidFormatException(); // TODO : If EventDate is invalid in DEV, it should throw InvalidProgramException
+            throw new InvalidFormatException();
         }
 
         return parsedEventDate;

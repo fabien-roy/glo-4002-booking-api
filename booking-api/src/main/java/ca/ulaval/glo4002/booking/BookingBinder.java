@@ -33,7 +33,6 @@ import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistCl
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistConverter;
 import ca.ulaval.glo4002.booking.program.artists.infrastructure.ExternalArtistRepository;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
 import ca.ulaval.glo4002.booking.program.events.domain.EventRepository;
 import ca.ulaval.glo4002.booking.program.events.infrastructure.InMemoryEventRepository;
@@ -91,7 +90,6 @@ public class BookingBinder extends AbstractBinder {
         bindAsContract(OrderFactory.class);
         bindAsContract(OrderDateMapper.class);
         bindAsContract(EventFactory.class);
-        bindAsContract(EventDateFactory.class);
     }
 
     private void bindRepositories() {

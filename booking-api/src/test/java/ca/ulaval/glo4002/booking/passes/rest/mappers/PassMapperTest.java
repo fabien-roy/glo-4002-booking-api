@@ -32,7 +32,7 @@ class PassMapperTest {
         eventDateMapper = mock(EventDateMapper.class);
         festivalConfiguration = mock(FestivalConfiguration.class);
 
-        when(eventDateMapper.fromString(any())).thenReturn(Collections.singletonList(mock(EventDate.class)));
+        when(eventDateMapper.fromString(any())).thenReturn(mock(EventDate.class));
         when(festivalConfiguration.getStartEventDate()).thenReturn(startEventDate);
         when(festivalConfiguration.getEndEventDate()).thenReturn(endEventDate);
         when(festivalConfiguration.getAllEventDates()).thenReturn(Arrays.asList(startEventDate, startEventDate.plusDays(1)));
@@ -120,7 +120,7 @@ class PassMapperTest {
         EventDate expectedEventDate = festivalConfiguration.getStartEventDate();
         List<String> eventDates = Collections.singletonList(expectedEventDate.toString());
         PassRequest request = new PassRequest(category, option, eventDates);
-        when(eventDateMapper.fromString(eventDates)).thenReturn(Collections.singletonList(expectedEventDate));
+        when(eventDateMapper.fromString(eventDates.get(0))).thenReturn(expectedEventDate);
 
         List<Pass> passes = mapper.fromRequest(request);
 
@@ -134,7 +134,8 @@ class PassMapperTest {
         List<EventDate> expectedEventDates = festivalConfiguration.getAllEventDates();
         List<String> eventDates = expectedEventDates.stream().map(EventDate::toString).collect(Collectors.toList());
         PassRequest request = new PassRequest(category, option, eventDates);
-        when(eventDateMapper.fromString(eventDates)).thenReturn(expectedEventDates);
+        when(eventDateMapper.fromString(eventDates.get(0))).thenReturn(expectedEventDates.get(0));
+        when(eventDateMapper.fromString(eventDates.get(1))).thenReturn(expectedEventDates.get(1));
 
         List<Pass> passes = mapper.fromRequest(request);
 

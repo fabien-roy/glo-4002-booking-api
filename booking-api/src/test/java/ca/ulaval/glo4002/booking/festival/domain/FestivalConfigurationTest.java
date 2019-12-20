@@ -70,7 +70,7 @@ class FestivalConfigurationTest {
     @Test
     void setStartEventDate_shouldSetStartOrderDate() {
         EventDate newStartEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
-        EventDate expectedEventDate = newStartEventDate.minusDays(FestivalConfiguration.MAXIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        EventDate expectedEventDate = newStartEventDate.minusDays(180);
         OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
 
         festivalConfiguration.setStartEventDate(newStartEventDate);
@@ -82,7 +82,7 @@ class FestivalConfigurationTest {
     @Test
     void setStartEventDate_shouldSetEndOrderDate() {
         EventDate newStartEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
-        EventDate expectedEventDate = newStartEventDate.minusDays(FestivalConfiguration.MINIMUM_DAYS_TO_ORDER_BEFORE_START_EVENT_DATE);
+        EventDate expectedEventDate = newStartEventDate;
         OrderDate expectedOrderDate = new OrderDate(LocalDateTime.of(expectedEventDate.getValue(), LocalTime.MIDNIGHT));
 
         festivalConfiguration.setStartEventDate(newStartEventDate);

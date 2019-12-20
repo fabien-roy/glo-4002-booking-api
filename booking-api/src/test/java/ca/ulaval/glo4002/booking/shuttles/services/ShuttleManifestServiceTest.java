@@ -2,7 +2,7 @@ package ca.ulaval.glo4002.booking.shuttles.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 import ca.ulaval.glo4002.booking.shuttles.rest.mappers.ShuttleManifestMapper;
 import ca.ulaval.glo4002.booking.shuttles.trips.domain.TripRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,23 +15,24 @@ class ShuttleManifestServiceTest {
 	private ShuttleManifestService service;
 	private TripRepository tripRepository;
 	private ShuttleManifestMapper mapper;
+	private EventDateMapper eventDateMapper;
 
 	@BeforeEach
 	void setUpService() {
 		tripRepository = mock(TripRepository.class);
-		FestivalConfiguration festivalConfiguration = new FestivalConfiguration();
-		EventDateFactory eventDateFactory = new EventDateFactory(festivalConfiguration);
+		eventDateMapper = mock(EventDateMapper.class);
 
 		mapper = mock(ShuttleManifestMapper.class);
 
-		this.service = new ShuttleManifestService(tripRepository, mapper, eventDateFactory);
+		this.service = new ShuttleManifestService(tripRepository, mapper, eventDateMapper);
 	}
 
 	@Test
 	void getWithDate_shouldMapToResponse() {
-		String aDate = FestivalConfiguration.getDefaultStartEventDate().toString();
+		EventDate aDate = FestivalConfiguration.getDefaultStartEventDate();
+		when(eventDateMapper.fromString(aDate.toString())).thenReturn(aDate);
 
-		service.getTripsForDate(aDate);
+		service.getTripsForDate(aDate.toString());
 
 		verify(mapper).toResponse(any(), any());
 	}
@@ -39,6 +40,7 @@ class ShuttleManifestServiceTest {
 	@Test
 	void getWithDate_shouldGetArrivalsFromRepository() {
 		EventDate aDate = FestivalConfiguration.getDefaultStartEventDate();
+		when(eventDateMapper.fromString(aDate.toString())).thenReturn(aDate);
 
 		service.getTripsForDate(aDate.toString());
 
@@ -48,6 +50,7 @@ class ShuttleManifestServiceTest {
 	@Test
 	void getWithDate_shouldGetDeparturesFromRepository() {
 		EventDate aDate = FestivalConfiguration.getDefaultStartEventDate();
+		when(eventDateMapper.fromString(aDate.toString())).thenReturn(aDate);
 
 		service.getTripsForDate(aDate.toString());
 

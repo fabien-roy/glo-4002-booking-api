@@ -1,9 +1,9 @@
 package ca.ulaval.glo4002.booking.festival.services;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.program.events.domain.EventDateFactory;
 import ca.ulaval.glo4002.booking.festival.rest.EventDatesRequest;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +14,14 @@ class FestivalServiceTest {
 
     private FestivalService service;
     private FestivalConfiguration festivalConfiguration;
-    private EventDateFactory eventDateFactory;
+    private EventDateMapper eventDateMapper;
 
     @BeforeEach
     void setUpService() {
         festivalConfiguration = mock(FestivalConfiguration.class);
-        eventDateFactory = mock(EventDateFactory.class);
+        eventDateMapper = mock(EventDateMapper.class);
 
-        service = new FestivalService(festivalConfiguration, eventDateFactory);
+        service = new FestivalService(festivalConfiguration, eventDateMapper);
     }
 
     @Test
@@ -29,7 +29,7 @@ class FestivalServiceTest {
         EventDate expectedStartEventDate = FestivalConfiguration.getDefaultStartEventDate().plusDays(1);
         EventDatesRequest eventDatesRequest = mock(EventDatesRequest.class);
         when(eventDatesRequest.getBeginDate()).thenReturn(expectedStartEventDate.toString());
-        when(eventDateFactory.parse(expectedStartEventDate.toString())).thenReturn(expectedStartEventDate);
+        when(eventDateMapper.parse(expectedStartEventDate.toString())).thenReturn(expectedStartEventDate);
 
         service.setEventDates(eventDatesRequest);
 
@@ -41,7 +41,7 @@ class FestivalServiceTest {
         EventDate expectedEndEventDate = FestivalConfiguration.getDefaultEndEventDate().minusDays(1);
         EventDatesRequest eventDatesRequest = mock(EventDatesRequest.class);
         when(eventDatesRequest.getEndDate()).thenReturn(expectedEndEventDate.toString());
-        when(eventDateFactory.parse(expectedEndEventDate.toString())).thenReturn(expectedEndEventDate);
+        when(eventDateMapper.parse(expectedEndEventDate.toString())).thenReturn(expectedEndEventDate);
 
         service.setEventDates(eventDatesRequest);
 

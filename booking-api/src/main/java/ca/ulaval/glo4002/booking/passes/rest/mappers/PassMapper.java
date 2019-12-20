@@ -122,7 +122,7 @@ public class PassMapper {
     }
 
     private List<EventDate> buildEventDates(List<String> eventDates, PassOptions option) {
-        List<EventDate> builtEventDates;
+        List<EventDate> builtEventDates = new ArrayList<>();
 
         switch (option) {
             case PACKAGE:
@@ -139,7 +139,10 @@ public class PassMapper {
                     throw new InvalidFormatException();
                 }
 
-                builtEventDates = eventDateMapper.fromString(eventDates);
+                for (String eventDate : eventDates) {
+                    EventDate builtEventDate = eventDateMapper.fromString(eventDate);
+                    builtEventDates.add(builtEventDate);
+                }
 
                 break;
         }

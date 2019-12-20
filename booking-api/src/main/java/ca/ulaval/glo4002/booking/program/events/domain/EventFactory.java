@@ -2,10 +2,11 @@ package ca.ulaval.glo4002.booking.program.events.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
-import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
-import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
+import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
+import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -18,13 +19,13 @@ public class EventFactory {
 
     private final FestivalConfiguration festivalConfiguration;
     private final ArtistService artistService; // TODO : Do not use ArtistService in EventFactory
-    private final EventDateFactory eventDateFactory;
+    private final EventDateMapper eventDateMapper;
 
     @Inject
-    public EventFactory(FestivalConfiguration festivalConfiguration, ArtistService artistService, EventDateFactory eventDateFactory) {
+    public EventFactory(FestivalConfiguration festivalConfiguration, ArtistService artistService, EventDateMapper eventDateMapper) {
         this.festivalConfiguration = festivalConfiguration;
         this.artistService = artistService;
-        this.eventDateFactory = eventDateFactory;
+        this.eventDateMapper = eventDateMapper;
     }
 
     public List<Event> create(List<ProgramEventRequest> eventRequests) {
@@ -34,7 +35,7 @@ public class EventFactory {
         validateArtists(eventRequests);
 
         eventRequests.forEach(eventRequest -> {
-            EventDate eventDate = eventDateFactory.create(eventRequest.getEventDate());
+            EventDate eventDate = eventDateMapper.fromString(eventRequest.getEventDate());
             Activities activity = Activities.get(eventRequest.getAm());
             Artist artist = artistService.getByName(eventRequest.getPm());
 

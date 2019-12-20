@@ -2,10 +2,11 @@ package ca.ulaval.glo4002.booking.program.events.domain;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
-import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
-import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
+import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
 import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
+import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,14 +28,14 @@ class EventFactoryTest {
     private EventFactory factory;
     private FestivalConfiguration festivalConfiguration;
     private ArtistService artistService;
-    private EventDateFactory eventDateFactory;
+    private EventDateMapper eventDateMapper;
 
     @BeforeEach
     void setUpFactory() {
         artistService = mock(ArtistService.class);
-        eventDateFactory = mock(EventDateFactory.class);
+        eventDateMapper = mock(EventDateMapper.class);
 
-        this.factory = new EventFactory(festivalConfiguration, artistService, eventDateFactory);
+        this.factory = new EventFactory(festivalConfiguration, artistService, eventDateMapper);
     }
 
     @BeforeEach
@@ -191,7 +192,7 @@ class EventFactoryTest {
     }
 
     private ProgramEventRequest buildEventRequest(EventDate eventDate, Activities activity, String artist) {
-        when(eventDateFactory.create(eq(eventDate.toString()))).thenReturn(eventDate);
+        when(eventDateMapper.fromString(eq(eventDate.toString()))).thenReturn(eventDate);
 
         return new ProgramEventRequest(eventDate.toString(), activity.toString(), artist);
     }
