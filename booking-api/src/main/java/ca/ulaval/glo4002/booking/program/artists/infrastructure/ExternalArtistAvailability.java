@@ -1,13 +1,10 @@
 package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ExternalArtistAvailability {
 	
-    @JsonProperty("availability")
-    private String date;
+    private String availability;
     
-    public String getDate() {
-    	return date;
+    public String getAvailability() {
+    	return availability;
     }
 }

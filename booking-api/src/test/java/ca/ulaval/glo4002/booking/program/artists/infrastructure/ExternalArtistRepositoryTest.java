@@ -34,7 +34,6 @@ class ExternalArtistRepositoryTest {
         verify(externalArtistClient).getArtists();
     }
 
-    // TODO : Converter should actually be used in service
     @Test
     void findAll_shouldConvertArtists() {
         repository.findAll();

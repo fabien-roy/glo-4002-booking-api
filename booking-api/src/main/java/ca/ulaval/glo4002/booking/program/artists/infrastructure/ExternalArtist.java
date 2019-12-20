@@ -1,34 +1,18 @@
 package ca.ulaval.glo4002.booking.program.artists.infrastructure;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 
 public class ExternalArtist {
 
-    // TODO : Repair Integer -> int
-
-	@JsonProperty("id")
-	private Integer id;
-	
-	@JsonProperty("name")
+	private int id;
     private String name;
-
-	@JsonProperty("nbPeople")
-    private Integer nbPeople;
-
-	@JsonProperty("musicStyle")
+    private int nbPeople;
     private String musicStyle;
-
-	@JsonProperty("price")
-    private Integer price;
-
-	@JsonProperty("popularityRank")
-    private Integer popularityRank;
-	
+    private int price;
+    private int popularityRank;
 	private List<ExternalArtistAvailability> availabilities;
 
-    public Integer getId() {
+    public int getId() {
     	return id;
     }
     
@@ -40,19 +24,11 @@ public class ExternalArtist {
         return nbPeople;
     }
 
-    public String getMusicStyle()  {
-        return musicStyle;
-    }
-
-    public Integer getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public Integer getPopularityRank() {
+    public int getPopularityRank() {
     	return popularityRank;
-    }
-
-    public List<ExternalArtistAvailability> getAvailabilities() {
-    	return availabilities;
     }
 }
