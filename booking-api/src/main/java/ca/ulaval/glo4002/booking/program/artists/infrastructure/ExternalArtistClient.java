@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 public class ExternalArtistClient {
 	
-	private final String EXTERNAL_SERVICE_URL = "http://localhost:8080/artists";
+	private static final String EXTERNAL_SERVICE_URL = "http://localhost:8080/artists";
 
 	public List<ExternalArtist> getArtists() {
 		Client restClient = ClientBuilder.newClient();
