@@ -1,35 +1,19 @@
 # Known technical debts
 
-**This file must be updated before MEP 3.0.**
+## TRANS
 
-We aren't perfect. Here's what we know.
+### Next available trip
 
-## DEV
+While TRANS was mostly refactored following given comments, one part was left behind to invest time elsewhere. Right now, trip repository is in charge of adding a passenger to a trip for a certain shuttle category (or adding to a new one if all are full / none are there).
 
-DEV is the only use-case we have not finished. The only missing thing is ordering oxygen tanks for activities.
+This should actually be the job a service. The service would try to add the passenger to a trip. If the shuttle associated to this trip is full, the service would make a new one, add in the passenger and send it to the repository. Otherwise, the service would simply add the passenger to the last avaible trip and update.
 
-## EventRepository
+## OXY
 
-InMemoryEventRepository should always override the list events. This was not done.
+OXY was the most left behind use-case of the whole refactor. The producer, inventory and service all need to be refactored completly to be clearer and more stable. 
 
-## ArtistClient
+## Configuration
 
-ArtistClient is static. This makes some parts of our testing unmockable.
+### Dependency injection of service layer
 
-## EventDate
-
-Start and end event dates are instances LocalDate. They should be instanced of EventDate.
-
-## ExceptionMapper
-
-ExceptionMapper should be the one to create ErrorDto and get the correct HttpStatus. Those are currently done by the exceptions.
-
-## Tests
-
-### Missing tests
-
-OXY and CALC were slightly rushed at the end of the project. Because of this, their tests are not perfect.
-
-### Integration tests
-
-Our integration tests are not excluded by maven. They should be.
+`BookingBinder.java` inject dependencies throughout the app using HK2. Normally, we should only inject dependencies for the infrastructure and rest layers. As of right now, both services and domain layer also get their dependencies injected that way. Those should be injected manually.
