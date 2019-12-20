@@ -67,12 +67,10 @@ public class BookingBinder extends AbstractBinder {
         bindClients();
     }
 
-    // TODO : Bind configuration manually
     private void bindConfiguration() {
         bindAsContract(FestivalConfiguration.class).in(Singleton.class);
     }
 
-    // TODO : Bind generators manually
     private void bindGenerators() {
         bindAsContract(OrderIdentifierGenerator.class);
         bindAsContract(PassNumberGenerator.class);
@@ -86,7 +84,6 @@ public class BookingBinder extends AbstractBinder {
     	bindAsContract(ExternalArtistClient.class);
     }
 
-    // TODO : Bind factories manually
     private void bindFactories() {
         bindAsContract(OxygenFactory.class);
         bindAsContract(ShuttleFactory.class);
@@ -103,12 +100,10 @@ public class BookingBinder extends AbstractBinder {
         bind(InMemoryEventRepository.class).to(EventRepository.class).in(Singleton.class);
     }
 
-    // TODO : Bind producers manually
     private void bindProducers() {
         bindAsContract(OxygenTankProducer.class);
     }
 
-    // TODO : Bind services manually
     private void bindServices() {
         bindAsContract(OrderService.class);
         bindAsContract(OxygenInventoryService.class);

@@ -12,8 +12,6 @@ import java.util.List;
 
 public class OxygenFactory {
 
-	// TODO : Refactor OxygenFactory
-
 	private final FestivalConfiguration festivalConfiguration;
 
 	@Inject
@@ -21,7 +19,6 @@ public class OxygenFactory {
 		this.festivalConfiguration = festivalConfiguration;
 	}
 
-	// TODO : Changing quantityToCover is weird
 	public List<OxygenTank> createOxygenTank(OxygenProduction production, Integer quantityToCover) {
 		List<OxygenTank> newTanks = new ArrayList<>();
 		int numberOfTanksByBundle = production.getNumberOfTanksByBundle();

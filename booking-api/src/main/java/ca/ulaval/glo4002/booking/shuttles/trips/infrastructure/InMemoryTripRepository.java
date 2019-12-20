@@ -15,8 +15,6 @@ import java.util.stream.Collectors;
 
 public class InMemoryTripRepository implements TripRepository {
 
-	// TODO : Rethink TripRepository : should return last trip for category, service handles creation if full
-
 	private List<Trip> departures;
 	private List<Trip> arrivals;
 	private final ShuttleFactory shuttleFactory;
@@ -72,7 +70,6 @@ public class InMemoryTripRepository implements TripRepository {
 		addPassengersToNewTrip(passengers, departures, shuttleCategory, tripDate);
 	}
 
-	// TODO : This should be done by a service
 	private void addPassengersToNewTrip(List<Passenger> passengers, List<Trip> trips, ShuttleCategories shuttleCategory, EventDate tripDate) {
 		Shuttle departureShuttle = shuttleFactory.create(shuttleCategory);
 		Trip trip = new Trip(tripDate, departureShuttle);
@@ -101,7 +98,6 @@ public class InMemoryTripRepository implements TripRepository {
 		return nextTrip;
 	}
 
-	// TODO : This should be done by a service
 	private List<Trip> getAvailableTrips(List<Trip> trips, ShuttleCategories category, EventDate tripDate) {
 		return trips
 				.stream()

@@ -4,7 +4,6 @@ import ca.ulaval.glo4002.booking.profits.domain.Money;
 
 public class OxygenTank {
 
-    // TODO : Those numbers should not be here...
     public static final int CATEGORY_A_NUMBER_OF_RESOURCES_NEEDED = 15;
     public static final int CATEGORY_B_NUMBER_OF_RESOURCES_NEEDED = 8;
 

@@ -184,7 +184,6 @@ public class OxygenInventoryTest {
 		assertTrue(allTanks.isEmpty());
 	}
 
-	// TODO : For all getAllTanksForCategory : Test inUse
 	@Test
 	void getAllTanksForCategory_shouldReturnAllTanksForCategoryA_whenThereAreSomeNotInUseCategoryATanks() {
 		Integer expectedQuantity = CATEGORY_A_QUANTITY;

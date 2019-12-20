@@ -9,8 +9,6 @@ import java.util.List;
 
 public class OxygenInventoryMapper {
 
-    // TODO : Test that item is not there when quantity is 0
-
 	public List<OxygenInventoryItemResponse> toResponse(OxygenInventory inventory) {
 		int eOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.E);
 		int bOxygenTankQuantity = inventory.getAllQuantityByCategory(OxygenCategories.B);

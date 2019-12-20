@@ -2,9 +2,6 @@ package ca.ulaval.glo4002.booking.oxygen.history.domain;
 
 public class OxygenHistoryItem {
 
-    // TODO : Keep date in OxygenHistoryItem
-
-    // TODO : Use double for quantities
     private Integer qtyOxygenTankBought;
     private Integer qtyOxygenTankMade;
     private Double qtyWaterUsed;

@@ -28,7 +28,7 @@ public class OxygenInventoryService {
 
 	public void orderForPasses(List<Pass> passes, OrderDate orderDate) {
 		passes.forEach(pass -> {
-			OxygenCategories oxygenCategory = factory.createCategory(pass.getCategory()); // TODO : This should be a mapper
+			OxygenCategories oxygenCategory = factory.createCategory(pass.getCategory());
 
 			pass.getEventDates().forEach(eventDate -> orderForEventDate(oxygenCategory, orderDate.toLocalDate()));
 		});

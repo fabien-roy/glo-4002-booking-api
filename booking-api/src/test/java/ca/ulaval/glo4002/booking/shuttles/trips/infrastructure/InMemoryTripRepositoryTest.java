@@ -17,8 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class InMemoryTripRepositoryTest {
 
-	// TODO : When refactoring InMemoryTripRepository, check review comments for tests
-	
 	private TripRepository repository;
 
 	@BeforeEach

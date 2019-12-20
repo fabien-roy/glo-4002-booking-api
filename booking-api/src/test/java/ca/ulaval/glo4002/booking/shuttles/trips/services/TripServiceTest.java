@@ -87,7 +87,6 @@ class TripServiceTest {
 
 		service.orderForArtist(artist, eventDate);
 
-		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
 				.allMatch(passenger -> expectedPassengerNumber == passenger.getNumber())), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()
@@ -105,7 +104,6 @@ class TripServiceTest {
 
 		service.orderForArtist(artist, eventDate);
 
-		// TODO : Simplify those assertions
 		verify(repository).addPassengersToNewDeparture(argThat((List<Passenger> passengers) -> passengers.stream()
 				.allMatch(passenger -> expectedPassengerNumber == passenger.getNumber())), any(), any());
 		verify(repository).addPassengersToNewArrival(argThat((List<Passenger> passengers) -> passengers.stream()

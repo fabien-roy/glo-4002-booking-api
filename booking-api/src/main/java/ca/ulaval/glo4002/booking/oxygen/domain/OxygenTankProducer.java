@@ -12,8 +12,6 @@ import java.util.List;
 
 public class OxygenTankProducer {
 
-	// TODO : Completely rebuild OxygenTankProducer
-
 	private OxygenInventoryRepository inventoryRepository;
 	private OxygenHistoryRepository historyRepository;
 	private OxygenFactory factory;

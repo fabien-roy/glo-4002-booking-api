@@ -18,8 +18,6 @@ import static org.mockito.Mockito.*;
 
 public class OxygenTankProducerTest {
 
-	// TODO : Refactor OxygenTankProducerTest
-
 	private OxygenTankProducer producer;
 	private OxygenInventoryRepository inventoryRepository;
 	private OxygenHistoryRepository historyRepository;
@@ -45,7 +43,7 @@ public class OxygenTankProducerTest {
 		when(inventoryRepository.getInventory()).thenReturn(inventory);
 		when(historyRepository.getHistory()).thenReturn(history);
 
-		OxygenFactory factory = new OxygenFactory(festivalConfiguration); // TODO : Mock OxygenFactory
+		OxygenFactory factory = new OxygenFactory(festivalConfiguration);
 
 		producer = new OxygenTankProducer(inventoryRepository, historyRepository, factory);
 	}

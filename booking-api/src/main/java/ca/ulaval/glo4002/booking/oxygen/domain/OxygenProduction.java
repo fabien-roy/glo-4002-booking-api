@@ -45,7 +45,6 @@ public class OxygenProduction {
         return numberOfTanksByBundle;
     }
 
-    // TODO : This should not be in OxygenProduction
     public Money calculatePriceForCategory() {
         BigDecimal tankPrice = productionItemPrice.getValue();
 
@@ -61,7 +60,6 @@ public class OxygenProduction {
         return requestDate.plusDays(produceTimeInDays);
     }
 
-    // TODO : OCP : This should be the job of OxygenHistory
     public void addCategoryProductionInformationToHistory(LocalDate requestDate, OxygenHistory history, Integer numberOfTanks) {
         if(category == OxygenCategories.A) {
             history.addCandlesUsed(requestDate,numberOfProductionItem / numberOfTanksByBundle * numberOfTanks);

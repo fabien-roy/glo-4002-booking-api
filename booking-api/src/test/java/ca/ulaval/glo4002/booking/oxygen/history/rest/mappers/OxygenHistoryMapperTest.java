@@ -20,7 +20,7 @@ class OxygenHistoryMapperTest {
     @BeforeEach
     void setUpMapper() {
         mapper = new OxygenHistoryMapper();
-        history = new OxygenHistory(); // TODO : Mock OxygenHistory
+        history = new OxygenHistory();
     }
 
     @Test
