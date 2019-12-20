@@ -47,16 +47,6 @@ class ArtistServiceTest {
     }
 
     @Test
-    void getByName_shouldReturnArtist() {
-	    String artistName = firstPopularAndThirdCostArtist.getName();
-	    when(artistRepository.findByName(artistName)).thenReturn(firstPopularAndThirdCostArtist);
-
-	    Artist artist = service.getByName(artistName);
-
-	    assertEquals(firstPopularAndThirdCostArtist.getName(), artist.getName());
-    }
-
-    @Test
     void getAllUnordered_shouldReturnAllArtistNames_whenOrderByIsNull() {
         ArtistListResponse artistListResponse = service.getAllUnordered();
 

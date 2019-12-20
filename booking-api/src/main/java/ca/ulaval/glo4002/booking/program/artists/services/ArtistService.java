@@ -22,10 +22,6 @@ public class ArtistService {
 		this.repository = repository;
 	}
 
-	public Artist getByName(String name) {
-		return repository.findByName(name);
-	}
-
 	public ArtistListResponse getAllOrdered(String orderBy) {
 		List<Artist> artists = repository.findAll();
 
