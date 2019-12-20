@@ -4,7 +4,7 @@ import ca.ulaval.glo4002.booking.oxygen.inventory.services.OxygenInventoryServic
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.events.domain.Event;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
-import ca.ulaval.glo4002.booking.program.events.domain.EventFactory;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventMapper;
 import ca.ulaval.glo4002.booking.program.events.domain.EventRepository;
 import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
 import ca.ulaval.glo4002.booking.program.rest.ProgramRequest;
@@ -22,18 +22,18 @@ class ProgramServiceTest {
 
     private ProgramService service;
     private EventRepository eventRepository;
-    private EventFactory eventFactory;
+    private EventMapper eventMapper;
     private TripService tripService;
     private OxygenInventoryService oxygenInventoryService;
 
     @BeforeEach
     void setUpService() {
         eventRepository = mock(EventRepository.class);
-        eventFactory = mock(EventFactory.class);
+        eventMapper = mock(EventMapper.class);
         tripService = mock(TripService.class);
         oxygenInventoryService = mock(OxygenInventoryService.class);
 
-        service = new ProgramService(eventRepository, eventFactory, tripService, oxygenInventoryService);
+        service = new ProgramService(eventRepository, eventMapper, tripService, oxygenInventoryService);
     }
 
     @Test
@@ -44,7 +44,7 @@ class ProgramServiceTest {
         ProgramEventRequest programEventRequest = mock(ProgramEventRequest.class);
         List<ProgramEventRequest> programEventRequests = Collections.singletonList(programEventRequest);
         when(programRequest.getProgram()).thenReturn(programEventRequests);
-        when(eventFactory.create(programEventRequests)).thenReturn(expectedEvents);
+        when(eventMapper.fromRequests(programEventRequests)).thenReturn(expectedEvents);
 
         service.add(programRequest);
 
@@ -59,7 +59,7 @@ class ProgramServiceTest {
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
-        when(eventFactory.create(any())).thenReturn(Collections.singletonList(aEvent));
+        when(eventMapper.fromRequests(any())).thenReturn(Collections.singletonList(aEvent));
 
         service.add(aProgramRequest);
 
@@ -75,7 +75,7 @@ class ProgramServiceTest {
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
-        when(eventFactory.create(any())).thenReturn(Collections.nCopies(artistQuantity, aEvent));
+        when(eventMapper.fromRequests(any())).thenReturn(Collections.nCopies(artistQuantity, aEvent));
 
         service.add(aProgramRequest);
 
@@ -90,7 +90,7 @@ class ProgramServiceTest {
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
-        when(eventFactory.create(any())).thenReturn(Collections.singletonList(aEvent));
+        when(eventMapper.fromRequests(any())).thenReturn(Collections.singletonList(aEvent));
 
         service.add(aProgramRequest);
 
@@ -106,7 +106,7 @@ class ProgramServiceTest {
         EventDate expectedEventDate = mock(EventDate.class);
         when(aEvent.getArtist()).thenReturn(expectedArtist);
         when(aEvent.getEventDate()).thenReturn(expectedEventDate);
-        when(eventFactory.create(any())).thenReturn(Collections.nCopies(artistQuantity, aEvent));
+        when(eventMapper.fromRequests(any())).thenReturn(Collections.nCopies(artistQuantity, aEvent));
 
         service.add(aProgramRequest);
 

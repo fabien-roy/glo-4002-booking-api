@@ -1,10 +1,13 @@
-package ca.ulaval.glo4002.booking.program.events.domain;
+package ca.ulaval.glo4002.booking.program.events.rest.mappers;
 
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
 import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
+import ca.ulaval.glo4002.booking.program.events.domain.Event;
+import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventDateMapper;
+import ca.ulaval.glo4002.booking.program.events.rest.mappers.EventMapper;
 import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
 import ca.ulaval.glo4002.booking.program.rest.exceptions.InvalidProgramException;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,9 +26,9 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class EventFactoryTest {
+class EventMapperTest {
 
-    private EventFactory factory;
+    private EventMapper factory;
     private FestivalConfiguration festivalConfiguration;
     private ArtistService artistService;
     private EventDateMapper eventDateMapper;
@@ -35,7 +38,7 @@ class EventFactoryTest {
         artistService = mock(ArtistService.class);
         eventDateMapper = mock(EventDateMapper.class);
 
-        this.factory = new EventFactory(festivalConfiguration, artistService, eventDateMapper);
+        this.factory = new EventMapper(festivalConfiguration, artistService, eventDateMapper);
     }
 
     @BeforeEach
@@ -53,7 +56,7 @@ class EventFactoryTest {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
         Integer expectedSize = aProgramRequest.size();
 
-        List<Event> events = factory.create(aProgramRequest);
+        List<Event> events = factory.fromRequests(aProgramRequest);
 
         assertEquals(expectedSize, events.size());
     }
@@ -63,7 +66,7 @@ class EventFactoryTest {
         List<EventDate> expectedEventDates = festivalConfiguration.getAllEventDates();
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
 
-        List<Event> events = factory.create(aProgramRequest);
+        List<Event> events = factory.fromRequests(aProgramRequest);
 
         assertTrue(events.stream().allMatch(event -> expectedEventDates.contains(event.getEventDate())));
     }
@@ -73,7 +76,7 @@ class EventFactoryTest {
     void create_shouldCreateActivity(Activities activity) {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(activity, "aArtist");
 
-        List<Event> events = factory.create(aProgramRequest);
+        List<Event> events = factory.fromRequests(aProgramRequest);
 
         assertEquals(activity, events.get(0).getActivity());
     }
@@ -85,7 +88,7 @@ class EventFactoryTest {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(otherEventsActivity, "aArtist");
         aProgramRequest.set(0, buildEventRequest(FestivalConfiguration.getDefaultStartEventDate(), firstEventActivity, "aArtist"));
 
-        List<Event> events = factory.create(aProgramRequest);
+        List<Event> events = factory.fromRequests(aProgramRequest);
 
         assertEquals(firstEventActivity, events.get(0).getActivity());
         assertTrue(events.subList(1, events.size() - 1).stream().allMatch(event -> event.getActivity().equals(otherEventsActivity)));
@@ -99,7 +102,7 @@ class EventFactoryTest {
         String expectedArtistName = "aArtist0"; // Since we use numbers in the artist building for tests
         when(artistService.getByName(expectedArtistName)).thenReturn(expectedArtist);
 
-        List<Event> events = factory.create(aProgramRequest);
+        List<Event> events = factory.fromRequests(aProgramRequest);
 
         assertEquals(expectedArtist, events.get(0).getArtist());
     }
@@ -114,7 +117,7 @@ class EventFactoryTest {
         when(artistService.getByName(not(eq(firstArtistName)))).thenReturn(expectedOtherArtist);
         aProgramRequest.set(0, buildEventRequest(FestivalConfiguration.getDefaultStartEventDate(), Activities.YOGA, firstArtistName));
 
-        List<Event> events = factory.create(aProgramRequest);
+        List<Event> events = factory.fromRequests(aProgramRequest);
 
         assertEquals(expectedFirstArtist, events.get(0).getArtist());
         assertTrue(events.subList(1, events.size() - 1).stream().allMatch(event -> event.getArtist().equals(expectedOtherArtist)));
@@ -127,7 +130,7 @@ class EventFactoryTest {
         aProgramRequest.set(0, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "aArtist"));
         aProgramRequest.set(1, new ProgramEventRequest(aEventDate.toString(), Activities.YOGA.toString(), "anotherArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
+        assertThrows(InvalidProgramException.class, () -> factory.fromRequests(aProgramRequest));
     }
 
     @Test
@@ -135,14 +138,14 @@ class EventFactoryTest {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
         aProgramRequest.set(0, new ProgramEventRequest(null, Activities.YOGA.toString(), "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
+        assertThrows(InvalidProgramException.class, () -> factory.fromRequests(aProgramRequest));
     }
 
     @Test
     void create_shouldThrowInvalidProgramException_whenProgramDoesNotIncludeAllFestivalDates() {
         ProgramEventRequest aEventRequest = new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(), Activities.YOGA.toString(),"aArtist");
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(Collections.singletonList(aEventRequest)));
+        assertThrows(InvalidProgramException.class, () -> factory.fromRequests(Collections.singletonList(aEventRequest)));
     }
 
     @Test
@@ -151,7 +154,7 @@ class EventFactoryTest {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
         aProgramRequest.set(0, new ProgramEventRequest(null, anInvalidActivity, "aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
+        assertThrows(InvalidProgramException.class, () -> factory.fromRequests(aProgramRequest));
     }
 
     @Test
@@ -159,7 +162,7 @@ class EventFactoryTest {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
         aProgramRequest.set(0, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(),null,"aArtist"));
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
+        assertThrows(InvalidProgramException.class, () -> factory.fromRequests(aProgramRequest));
     }
 
     @Test
@@ -167,7 +170,7 @@ class EventFactoryTest {
         List<ProgramEventRequest> aProgramRequest = buildProgramRequest(Activities.YOGA, "aArtist");
         aProgramRequest.set(0, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), null));
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
+        assertThrows(InvalidProgramException.class, () -> factory.fromRequests(aProgramRequest));
     }
 
     @Test
@@ -177,7 +180,7 @@ class EventFactoryTest {
         aProgramRequest.set(0, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().toString(), Activities.YOGA.toString(), aArtist));
         aProgramRequest.set(1, new ProgramEventRequest(FestivalConfiguration.getDefaultStartEventDate().plusDays(1).toString(), Activities.YOGA.toString(), aArtist));
 
-        assertThrows(InvalidProgramException.class, () -> factory.create(aProgramRequest));
+        assertThrows(InvalidProgramException.class, () -> factory.fromRequests(aProgramRequest));
     }
 
     private List<ProgramEventRequest> buildProgramRequest(Activities activity, String artist) {
