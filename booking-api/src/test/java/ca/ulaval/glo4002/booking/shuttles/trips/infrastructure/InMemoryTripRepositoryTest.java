@@ -140,7 +140,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenThereIsNone() {
+	void addPassengerToArrivals_shouldAddNewArrivalTrip_whenThereIsNone() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(1L);
@@ -151,7 +151,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddToExistingDepartureTrip_whenTripIsNotFull() {
+	void addPassengerToArrivals_shouldAddToExistingArrivalTrip_whenTripIsNotFull() {
 		ShuttleCategories aCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(1L);
@@ -164,7 +164,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsFull() {
+	void addPassengerToArrivals_shouldAddNewArrivalTrip_whenTripIsFull() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(1L);
@@ -177,7 +177,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddNewDepartureTrip_whenTripIsNotSameCategory() {
+	void addPassengerToArrivals_shouldAddNewArrivalTrip_whenTripIsNotSameCategory() {
 		ShuttleCategories aCategory = ShuttleCategories.SPACE_X;
 		ShuttleCategories anotherCategory = ShuttleCategories.MILLENNIUM_FALCON;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
@@ -191,7 +191,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddTripDateToDepartureTrips() {
+	void addPassengerToArrivals_shouldAddTripDateToArrivalTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate expectedTripDate = FestivalConfiguration.getDefaultStartEventDate();
 		Passenger aPassenger = new Passenger(1L);
@@ -203,7 +203,7 @@ class InMemoryTripRepositoryTest {
 	}
 
 	@Test
-	void addPassengerToArrivals_shouldAddPassengerToDepartureTrips() {
+	void addPassengerToArrivals_shouldAddPassengerToArrivalTrips() {
 		ShuttleCategories aCategory = ShuttleCategories.ET_SPACESHIP;
 		EventDate aTripDate = FestivalConfiguration.getDefaultStartEventDate();
 		Long expectedPassengerNumber = 1L;
