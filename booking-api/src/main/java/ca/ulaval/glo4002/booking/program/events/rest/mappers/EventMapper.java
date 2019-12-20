@@ -3,7 +3,6 @@ package ca.ulaval.glo4002.booking.program.events.rest.mappers;
 import ca.ulaval.glo4002.booking.festival.domain.FestivalConfiguration;
 import ca.ulaval.glo4002.booking.program.activities.domain.Activities;
 import ca.ulaval.glo4002.booking.program.artists.domain.Artist;
-import ca.ulaval.glo4002.booking.program.artists.services.ArtistService;
 import ca.ulaval.glo4002.booking.program.events.domain.Event;
 import ca.ulaval.glo4002.booking.program.events.domain.EventDate;
 import ca.ulaval.glo4002.booking.program.rest.ProgramEventRequest;
@@ -18,17 +17,15 @@ import java.util.stream.Collectors;
 public class EventMapper {
 
     private final FestivalConfiguration festivalConfiguration;
-    private final ArtistService artistService; // TODO : Do not use ArtistService in EventFactory
     private final EventDateMapper eventDateMapper;
 
     @Inject
-    public EventMapper(FestivalConfiguration festivalConfiguration, ArtistService artistService, EventDateMapper eventDateMapper) {
+    public EventMapper(FestivalConfiguration festivalConfiguration, EventDateMapper eventDateMapper) {
         this.festivalConfiguration = festivalConfiguration;
-        this.artistService = artistService;
         this.eventDateMapper = eventDateMapper;
     }
 
-    public List<Event> fromRequests(List<ProgramEventRequest> eventRequests) {
+    public List<Event> fromRequests(List<ProgramEventRequest> eventRequests, List<Artist> existingArtists) {
         List<Event> events = new ArrayList<>();
 
         validateEventDates(eventRequests);
@@ -37,7 +34,7 @@ public class EventMapper {
         eventRequests.forEach(eventRequest -> {
             EventDate eventDate = eventDateMapper.fromString(eventRequest.getEventDate());
             Activities activity = Activities.get(eventRequest.getAm());
-            Artist artist = artistService.getByName(eventRequest.getPm());
+            Artist artist = getArtistByName(eventRequest.getPm(), existingArtists);
 
             Event event = new Event(eventDate, activity, artist);
 
@@ -52,6 +49,14 @@ public class EventMapper {
 
         validateAllDifferent(eventDates);
         validateAllPresent(eventDates);
+    }
+
+    private Artist getArtistByName(String name, List<Artist> existingArtists) {
+        return existingArtists
+                .stream()
+                .filter(artist -> artist.getName().equals(name))
+                .findAny()
+                .orElseThrow(InvalidProgramException::new);
     }
 
     private void validateArtists(List<ProgramEventRequest> eventRequests) {

@@ -14,6 +14,8 @@ import static org.mockito.Mockito.when;
 
 class EventDateMapperTest {
 
+    // TODO : Rename tests
+
     EventDateMapper mapper;
     private FestivalConfiguration festivalConfiguration;
 
